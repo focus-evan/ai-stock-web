@@ -9,6 +9,8 @@ const queryClient = new QueryClient({
 			refetchOnWindowFocus: false, // 窗口聚焦时是否重新获取数据
 			refetchOnReconnect: false, // 网络恢复时是否重新获取数据
 			retry: 0, // 重试次数
+			staleTime: 5 * 60 * 1000, // 5 minutes - data is considered fresh for 5 minutes
+			gcTime: 10 * 60 * 1000, // 10 minutes - cache garbage collection time (formerly cacheTime)
 		},
 		mutations: {
 			retry: 0, // 重试次数

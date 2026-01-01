@@ -1,4 +1,4 @@
-import { about, access, home, outside, personalCenter, routeNest, system } from "#/src/router/extra-info";
+import { about, access, home, ipo, outside, personalCenter, routeNest, system } from "#/src/router/extra-info";
 import { defineFakeRoute } from "vite-plugin-fake-server/client";
 import { ADMIN_TOKEN } from "./constants";
 import { resultSuccess } from "./utils";
@@ -86,6 +86,25 @@ const homeRouter = {
 		title: "common.menu.home",
 		order: home,
 	},
+};
+
+const ipoRouter = {
+	path: "/ipo",
+	handle: {
+		icon: "StockOutlined",
+		title: "common.menu.ipo",
+		order: ipo,
+	},
+	children: [
+		{
+			path: "/ipo/list",
+			component: "/ipo/index.tsx",
+			handle: {
+				icon: "UnorderedListOutlined",
+				title: "common.menu.ipoList",
+			},
+		},
+	],
 };
 
 const aboutRouter = {
@@ -288,6 +307,7 @@ export default defineFakeRoute([
 			return resultSuccess(
 				[
 					homeRouter,
+					ipoRouter,
 					accessRouter,
 					aboutRouter,
 					systemManagementRouter,

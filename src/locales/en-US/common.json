@@ -31,7 +31,9 @@
 		"dept": "Department Management",
 		"personalCenter": "Personal Center",
 		"profile": "My Profile",
-		"settings": "Settings"
+		"settings": "Settings",
+		"ipo": "IPO",
+		"ipoList": "IPO List"
 	},
 	"appLoading": "Loading Resources...",
 	"back": "Back",

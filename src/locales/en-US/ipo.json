@@ -1,0 +1,38 @@
+{
+    "title": "IPO Data",
+    "stockCode": "Stock Code",
+    "companyName": "Company Name",
+    "market": "Market",
+    "exchange": "Exchange",
+    "listingStatus": "Listing Status",
+    "ipoDate": "IPO Date",
+    "exchanges": {
+        "shanghai": "Shanghai Stock Exchange",
+        "shenzhen": "Shenzhen Stock Exchange",
+        "beijing": "Beijing Stock Exchange",
+        "hongkong": "Hong Kong Stock Exchange"
+    },
+    "status": {
+        "accepted": "Accepted",
+        "inReview": "In Review",
+        "approved": "Approved",
+        "unauthorized": "Unauthorized",
+        "ipoSuspension": "IPO Suspension",
+        "issuedButNotListed": "Issued But Not Listed",
+        "normallyListed": "Normally Listed"
+    },
+    "filters": {
+        "dateRange": "Date Range",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "clearFilters": "Clear Filters"
+    },
+    "errors": {
+        "fetchFailed": "Failed to fetch data",
+        "networkError": "Cannot connect to server, please check network connection",
+        "serverError": "Server error, please try again later",
+        "noPermission": "You don't have permission to access this data",
+        "retry": "Retry"
+    },
+    "noData": "No data available"
+}

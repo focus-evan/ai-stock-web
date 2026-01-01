@@ -1,0 +1,38 @@
+{
+    "title": "IPO数据",
+    "stockCode": "股票代码",
+    "companyName": "公司名称",
+    "market": "市场",
+    "exchange": "交易所",
+    "listingStatus": "上市状态",
+    "ipoDate": "IPO日期",
+    "exchanges": {
+        "shanghai": "上交所",
+        "shenzhen": "深交所",
+        "beijing": "北交所",
+        "hongkong": "香港交易所"
+    },
+    "status": {
+        "accepted": "已受理",
+        "inReview": "审核中",
+        "approved": "已过会",
+        "unauthorized": "未过会",
+        "ipoSuspension": "暂缓发行",
+        "issuedButNotListed": "已发行未上市",
+        "normallyListed": "正常上市"
+    },
+    "filters": {
+        "dateRange": "日期范围",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "clearFilters": "清除筛选"
+    },
+    "errors": {
+        "fetchFailed": "获取数据失败",
+        "networkError": "无法连接到服务器，请检查网络连接",
+        "serverError": "服务器错误，请稍后重试",
+        "noPermission": "您没有权限访问此数据",
+        "retry": "重试"
+    },
+    "noData": "暂无数据"
+}

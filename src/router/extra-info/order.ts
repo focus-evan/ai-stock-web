@@ -5,6 +5,7 @@
  */
 
 export const home = 1;
+export const ipo = 5;
 export const access = 10;
 export const routeNest = 20;
 
