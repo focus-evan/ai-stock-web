@@ -18,7 +18,7 @@ const routes: AppRouteRecordRaw[] = [
 		Component: ContainerLayout,
 		handle: {
 			icon: "SettingOutlined",
-			title: "common.menu.system",
+			title: "系统管理",
 			order: system,
 			roles: ["admin"],
 		},
@@ -28,7 +28,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: User,
 				handle: {
 					icon: "UserOutlined",
-					title: "common.menu.user",
+					title: "用户管理",
 					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
@@ -42,7 +42,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Role,
 				handle: {
 					icon: "TeamOutlined",
-					title: "common.menu.role",
+					title: "角色管理",
 					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
@@ -56,7 +56,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Menu,
 				handle: {
 					icon: "MenuOutlined",
-					title: "common.menu.menu",
+					title: "菜单管理",
 					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
@@ -71,7 +71,7 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					keepAlive: false,
 					icon: "ApartmentOutlined",
-					title: "common.menu.dept",
+					title: "部门管理",
 					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
@@ -85,7 +85,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: DataSync,
 				handle: {
 					icon: "SyncOutlined",
-					title: "common.menu.dataSync",
+					title: "数据同步",
 					roles: ["admin"],
 				},
 			},
@@ -94,7 +94,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Cache,
 				handle: {
 					icon: "DatabaseOutlined",
-					title: "common.menu.cache",
+					title: "缓存管理",
 					roles: ["admin"],
 				},
 			},
@@ -103,7 +103,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Monitor,
 				handle: {
 					icon: "DashboardOutlined",
-					title: "common.menu.monitor",
+					title: "系统监控",
 					roles: ["admin"],
 				},
 			},

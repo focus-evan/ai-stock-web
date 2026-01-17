@@ -1,7 +1,6 @@
 import type { AppRouteRecordRaw } from "#src/router/types";
 import ContainerLayout from "#src/layout/container-layout";
 
-import { $t } from "#src/locales";
 import { home } from "#src/router/extra-info";
 import { HomeOutlined } from "@ant-design/icons";
 import { createElement, lazy } from "react";
@@ -14,7 +13,7 @@ const routes: AppRouteRecordRaw[] = [
 		Component: ContainerLayout,
 		handle: {
 			order: home,
-			title: $t("common.menu.home"),
+			title: "首页",
 			icon: createElement(HomeOutlined),
 		},
 		children: [
@@ -22,7 +21,7 @@ const routes: AppRouteRecordRaw[] = [
 				index: true,
 				Component: Home,
 				handle: {
-					title: $t("common.menu.home"),
+					title: "首页",
 					icon: createElement(HomeOutlined),
 				},
 			},

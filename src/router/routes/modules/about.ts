@@ -1,6 +1,5 @@
 import type { AppRouteRecordRaw } from "#src/router/types";
 import ContainerLayout from "#src/layout/container-layout";
-import { $t } from "#src/locales";
 import { about } from "#src/router/extra-info";
 
 import { CopyrightOutlined } from "@ant-design/icons";
@@ -14,7 +13,7 @@ const routes: AppRouteRecordRaw[] = [
 		Component: ContainerLayout,
 		handle: {
 			order: about,
-			title: $t("common.menu.about"),
+			title: "关于",
 			icon: createElement(CopyrightOutlined),
 		},
 		children: [
@@ -27,7 +26,7 @@ const routes: AppRouteRecordRaw[] = [
 				// },
 				handle: {
 					// roles: ["common"],
-					title: $t("common.menu.about"),
+					title: "关于",
 					icon: createElement(CopyrightOutlined),
 				},
 			},
