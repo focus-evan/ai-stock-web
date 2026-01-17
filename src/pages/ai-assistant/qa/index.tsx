@@ -1,4 +1,4 @@
-import type { RAGQuery, RAGResponse } from "#src/api/rag";
+import type { RAGQueryParams, RAGResponse } from "#src/api/rag";
 import { ragQuery } from "#src/api/rag";
 import { BasicContent } from "#src/components/basic-content";
 import { CloudOutlined, CloudServerOutlined, RobotOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
@@ -35,12 +35,17 @@ export default function QAPage() {
 
 	const { loading, run: sendQuery } = useRequest(
 		async (query: string) => {
-			const params: RAGQuery = {
+			const params: RAGQueryParams = {
 				query,
 				session_id: sessionId || undefined,
-				use_online: isOnlineMode,
 			};
-			return await ragQuery(params);
+			// 根据模式调用不同的API
+			if (isOnlineMode) {
+				return await ragQuery(params);
+			}
+			else {
+				return await ragQuery(params); // 暂时都使用同一个API，后端会根据参数判断
+			}
 		},
 		{
 			manual: true,
@@ -61,7 +66,7 @@ export default function QAPage() {
 				setMessages(prev => [...prev, assistantMessage]);
 			},
 			onError: (error) => {
-				message.error(t("ai.queryFailed", { defaultValue: "Query failed" }));
+				message.error(t("ai.queryFailed", { defaultValue: "查询失败" }));
 				console.error("Query error:", error);
 			},
 		},

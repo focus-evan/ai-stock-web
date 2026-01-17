@@ -12,7 +12,7 @@ const systemManagementRouter = {
 	path: "/system",
 	handle: {
 		icon: "SettingOutlined",
-		title: "common.menu.system",
+		title: "系统管理",
 		order: system,
 		roles: ["admin"],
 	},
@@ -22,7 +22,7 @@ const systemManagementRouter = {
 			component: "/system/user/index.tsx",
 			handle: {
 				icon: "UserOutlined",
-				title: "common.menu.user",
+				title: "用户管理",
 				roles: ["admin"],
 				permissions: [
 					"permission:button:add",
@@ -36,7 +36,7 @@ const systemManagementRouter = {
 			component: "/system/role/index.tsx",
 			handle: {
 				icon: "TeamOutlined",
-				title: "common.menu.role",
+				title: "角色管理",
 				roles: ["admin"],
 				permissions: [
 					"permission:button:add",
@@ -50,7 +50,7 @@ const systemManagementRouter = {
 			component: "/system/menu/index.tsx",
 			handle: {
 				icon: "MenuOutlined",
-				title: "common.menu.menu",
+				title: "菜单管理",
 				roles: ["admin"],
 				permissions: [
 					"permission:button:add",
@@ -65,7 +65,7 @@ const systemManagementRouter = {
 			handle: {
 				keepAlive: false,
 				icon: "ApartmentOutlined",
-				title: "common.menu.dept",
+				title: "部门管理",
 				roles: ["admin"],
 				permissions: [
 					"permission:button:add",
@@ -82,7 +82,7 @@ const homeRouter = {
 	component: "/home/index.tsx",
 	handle: {
 		icon: "HomeOutlined",
-		title: "common.menu.home",
+		title: "首页",
 		order: home,
 	},
 };
@@ -91,7 +91,7 @@ const aiAssistantRouter = {
 	path: "/ai-assistant",
 	handle: {
 		icon: "RobotOutlined",
-		title: "common.menu.aiAssistant",
+		title: "AI助手",
 		order: aiAssistant,
 	},
 	children: [
@@ -100,7 +100,7 @@ const aiAssistantRouter = {
 			component: "/ai-assistant/qa/index.tsx",
 			handle: {
 				icon: "CommentOutlined",
-				title: "common.menu.qa",
+				title: "智能问答",
 			},
 		},
 		{
@@ -108,7 +108,7 @@ const aiAssistantRouter = {
 			component: "/ai-assistant/documents/index.tsx",
 			handle: {
 				icon: "FileTextOutlined",
-				title: "common.menu.documents",
+				title: "文档管理",
 			},
 		},
 		{
@@ -116,7 +116,7 @@ const aiAssistantRouter = {
 			component: "/ai-assistant/sessions/index.tsx",
 			handle: {
 				icon: "HistoryOutlined",
-				title: "common.menu.sessions",
+				title: "会话管理",
 			},
 		},
 	],
@@ -126,7 +126,7 @@ const stockDataRouter = {
 	path: "/stock-data",
 	handle: {
 		icon: "LineChartOutlined",
-		title: "common.menu.stockData",
+		title: "股票数据",
 		order: stockData,
 	},
 	children: [
@@ -135,7 +135,7 @@ const stockDataRouter = {
 			component: "/stock-data/stocks/index.tsx",
 			handle: {
 				icon: "StockOutlined",
-				title: "common.menu.stocks",
+				title: "股票查询",
 			},
 		},
 		{
@@ -143,7 +143,7 @@ const stockDataRouter = {
 			component: "/ipo/index.tsx",
 			handle: {
 				icon: "RiseOutlined",
-				title: "common.menu.ipo",
+				title: "IPO数据",
 			},
 		},
 		{
@@ -151,7 +151,7 @@ const stockDataRouter = {
 			component: "/stock-data/shareholders/index.tsx",
 			handle: {
 				icon: "TeamOutlined",
-				title: "common.menu.shareholders",
+				title: "股东信息",
 			},
 		},
 	],
@@ -162,7 +162,7 @@ const aboutRouter = {
 	component: "/about/index.tsx",
 	handle: {
 		icon: "CopyrightOutlined",
-		title: "common.menu.about",
+		title: "关于",
 		order: about,
 	},
 };
@@ -171,21 +171,21 @@ const personalCenterRouter = {
 	path: "/personal-center",
 	handle: {
 		order: personalCenter,
-		title: "common.menu.personalCenter",
+		title: "个人中心",
 		icon: "RiAccountCircleLine",
 	},
 	children: [
 		{
 			path: "/personal-center/my-profile",
 			handle: {
-				title: "common.menu.profile",
+				title: "我的资料",
 				icon: "ProfileCardIcon",
 			},
 		},
 		{
 			path: "/personal-center/settings",
 			handle: {
-				title: "common.menu.settings",
+				title: "设置",
 				icon: "RiUserSettingsLine",
 			},
 		},
