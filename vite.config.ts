@@ -1,6 +1,5 @@
 /// <reference types="vitest/config" />
 
-import process from "node:process";
 import { cleanupSVG, isEmptyColor, parseColors, runSVGO, SVG } from "@iconify/tools";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
@@ -20,12 +19,10 @@ const __APP_INFO__ = {
 	lastBuildTime: dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 };
 
-const isDev = process.env.NODE_ENV === "development";
-
 // https://vitejs.dev/config/
 export default defineConfig({
 
-	base: isDev ? "/" : "/react-antd-admin/",
+	base: "/",
 	plugins: [
 		tailwindcss(),
 		react(),

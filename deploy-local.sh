@@ -141,6 +141,16 @@ deploy_files() {
 configure_nginx() {
     log_info "配置Nginx..."
     
+    # 检查 Nginx 是否安装
+    if ! command -v nginx &> /dev/null; then
+        log_warning "Nginx 未安装，跳过 Nginx 配置"
+        log_info "文件已部署到: ${DEPLOY_DIR}"
+        log_info "如需通过 Nginx 访问，请先安装 Nginx："
+        log_info "  Ubuntu/Debian: apt install -y nginx"
+        log_info "  CentOS/AliyunOS: yum install -y nginx"
+        return 0
+    fi
+    
     # 确定Nginx配置目录
     if [ -d "/etc/nginx/conf.d" ]; then
         NGINX_CONF_DIR="/etc/nginx/conf.d"
@@ -236,6 +246,13 @@ set_permissions() {
 # 健康检查
 health_check() {
     log_info "执行健康检查..."
+    
+    # 检查 Nginx 是否安装
+    if ! command -v nginx &> /dev/null; then
+        log_warning "Nginx 未安装，跳过健康检查"
+        log_info "文件已成功部署到: ${DEPLOY_DIR}"
+        return 0
+    fi
     
     local max_attempts=5
     local attempt=1
