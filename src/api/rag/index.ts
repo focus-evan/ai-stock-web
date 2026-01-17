@@ -15,7 +15,7 @@ export * from "./types";
  */
 export function ragQuery(params: RAGQueryParams) {
 	return request
-		.post("agent/rag", {
+		.post("/api/agent/rag", {
 			json: params,
 			ignoreLoading: false,
 			timeout: 180000, // 3分钟
@@ -29,7 +29,7 @@ export function ragQuery(params: RAGQueryParams) {
  */
 export function ragQueryOffline(params: RAGQueryParams) {
 	return request
-		.post("agent/rag/offline", {
+		.post("/api/agent/rag/offline", {
 			json: params,
 			ignoreLoading: false,
 			timeout: 180000, // 3分钟
@@ -41,7 +41,7 @@ export function ragQueryOffline(params: RAGQueryParams) {
  * RAG流式问答（在线）- 返回ReadableStream
  */
 export function ragQueryStream(params: RAGQueryParams) {
-	return request.post("agent/rag/stream", {
+	return request.post("/api/agent/rag/stream", {
 		json: params,
 	});
 }
@@ -50,7 +50,7 @@ export function ragQueryStream(params: RAGQueryParams) {
  * RAG流式问答（离线）
  */
 export function ragQueryStreamOffline(params: RAGQueryParams) {
-	return request.post("agent/rag/stream/offline", {
+	return request.post("/api/agent/rag/stream/offline", {
 		json: params,
 	});
 }
@@ -60,7 +60,7 @@ export function ragQueryStreamOffline(params: RAGQueryParams) {
  */
 export function clearSessionMemory(session_id: string) {
 	return request
-		.post("agent/rag/clear-memory", {
+		.post("/api/agent/rag/clear-memory", {
 			searchParams: { session_id },
 		})
 		.json<{ status: string, message: string, session_id: string }>();
@@ -70,7 +70,7 @@ export function clearSessionMemory(session_id: string) {
  * 查询会话列表
  */
 export function getSessionList() {
-	return request.get("agent/rag/sessions").json<SessionListResponse>();
+	return request.get("/api/agent/rag/sessions").json<SessionListResponse>();
 }
 
 /**
@@ -78,7 +78,7 @@ export function getSessionList() {
  */
 export function getRAGLog(request_id: string, include_answers: boolean = false) {
 	return request
-		.get(`agent/rag/logs/${request_id}`, {
+		.get(`/api/agent/rag/logs/${request_id}`, {
 			searchParams: { include_answers },
 		})
 		.json<RAGLogResponse>();
@@ -89,7 +89,7 @@ export function getRAGLog(request_id: string, include_answers: boolean = false) 
  */
 export function simpleSearch(params: { query: string, collection_name?: string, top_k?: number }) {
 	return request
-		.post("agent/search-simple", {
+		.post("/api/agent/search-simple", {
 			json: params,
 		})
 		.json<SimpleSearchResponse>();

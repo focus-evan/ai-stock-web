@@ -13,7 +13,7 @@ export * from "./types";
  */
 export function getShareholders(stock_code: string) {
 	return request
-		.get("shareholder/query", {
+		.get("/api/shareholder/query", {
 			searchParams: { stock_code } as any,
 		})
 		.json<ShareholderQueryResponse>();
@@ -24,7 +24,7 @@ export function getShareholders(stock_code: string) {
  */
 export function queryShareholdersPost(params: ShareholderQueryParams) {
 	return request
-		.post("shareholder/query", {
+		.post("/api/shareholder/query", {
 			json: params,
 		})
 		.json<ShareholderQueryResponse>();
@@ -35,7 +35,7 @@ export function queryShareholdersPost(params: ShareholderQueryParams) {
  */
 export function queryShareholders(params: ShareholderQueryParams) {
 	return request
-		.get("shareholder/query", {
+		.get("/api/shareholder/query", {
 			searchParams: params as any,
 		})
 		.json<ShareholderQueryResponse>();
@@ -46,7 +46,7 @@ export function queryShareholders(params: ShareholderQueryParams) {
  */
 export function getControllingShareholderPost(company_name: string) {
 	return request
-		.post("shareholder/controlling", {
+		.post("/api/shareholder/controlling", {
 			json: { company_name },
 		})
 		.json<ControllingShareholderResponse>();
@@ -57,7 +57,7 @@ export function getControllingShareholderPost(company_name: string) {
  */
 export function getControllingShareholder(company_name: string) {
 	return request
-		.get("shareholder/controlling", {
+		.get("/api/shareholder/controlling", {
 			searchParams: { company_name } as any,
 		})
 		.json<ControllingShareholderResponse>();
@@ -68,7 +68,7 @@ export function getControllingShareholder(company_name: string) {
  */
 export function refreshShareholderInfo(company_name: string) {
 	return request
-		.post("shareholder/refresh", {
+		.post("/api/shareholder/refresh", {
 			json: { company_name },
 			timeout: 30000,
 		})

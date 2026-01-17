@@ -10,7 +10,7 @@ export * from "./types";
  */
 export function fetchIPOList(params: IPOQueryParams) {
 	return request
-		.get("lixingren/ipo/query", {
+		.get("/api/lixingren/ipo/query", {
 			searchParams: params as any,
 			ignoreLoading: false,
 		})
@@ -23,7 +23,7 @@ export function fetchIPOList(params: IPOQueryParams) {
  */
 export function fetchIPOStatistics() {
 	return request
-		.get("lixingren/ipo/statistics", {
+		.get("/api/lixingren/ipo/statistics", {
 			ignoreLoading: true,
 		})
 		.json<IPOStatisticsResponse>();
@@ -34,7 +34,7 @@ export function fetchIPOStatistics() {
  */
 export function crawlAllIPO() {
 	return request
-		.post("lixingren/crawl/all", {
+		.post("/api/lixingren/crawl/all", {
 			timeout: 120000, // 2分钟超时
 		})
 		.json<{ status: string, message: string, total_crawled: number, by_exchange: Record<string, number> }>();
@@ -45,7 +45,7 @@ export function crawlAllIPO() {
  */
 export function crawlExchangeIPO(exchange: string) {
 	return request
-		.post(`lixingren/crawl/${exchange}`, {
+		.post(`/api/lixingren/crawl/${exchange}`, {
 			timeout: 60000,
 		})
 		.json<{ status: string, message: string, exchange: string, crawled_count: number }>();
@@ -56,7 +56,7 @@ export function crawlExchangeIPO(exchange: string) {
  */
 export function crawlAkShareAll() {
 	return request
-		.post("lixingren/crawl/akshare/all", {
+		.post("/api/lixingren/crawl/akshare/all", {
 			timeout: 120000,
 		})
 		.json<{ status: string, message: string, a_share_count: number, hk_share_count: number, total: number }>();
@@ -67,7 +67,7 @@ export function crawlAkShareAll() {
  */
 export function crawlAkShareAShare() {
 	return request
-		.post("lixingren/crawl/akshare/a-share", {
+		.post("/api/lixingren/crawl/akshare/a-share", {
 			timeout: 60000,
 		})
 		.json<{ status: string, message: string, crawled_count: number }>();
@@ -78,7 +78,7 @@ export function crawlAkShareAShare() {
  */
 export function crawlAkShareHKShare() {
 	return request
-		.post("lixingren/crawl/akshare/hk-share", {
+		.post("/api/lixingren/crawl/akshare/hk-share", {
 			timeout: 60000,
 		})
 		.json<{ status: string, message: string, crawled_count: number }>();
