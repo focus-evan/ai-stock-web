@@ -16,7 +16,7 @@ export * from "./types";
  * 获取单个股票信息
  */
 export function getStockInfo(stock_code: string) {
-	return request.get(`/api/lixingren/stock/${stock_code}`).json<StockInfo>();
+	return request.get(`lixingren/stock/${stock_code}`).json<StockInfo>();
 }
 
 /**
@@ -24,7 +24,7 @@ export function getStockInfo(stock_code: string) {
  */
 export function getStockList(params: StockQueryParams) {
 	return request
-		.get("/api/lixingren/stocks", {
+		.get("lixingren/stocks", {
 			searchParams: params as any,
 		})
 		.json<StockListResponse>();
@@ -35,8 +35,8 @@ export function getStockList(params: StockQueryParams) {
  */
 export function searchStocks(params: StockSearchParams) {
 	return request
-		.get("/api/lixingren/search", {
-			searchParams: params,
+		.get("lixingren/search", {
+			searchParams: params as any,
 		})
 		.json<StockInfo[]>();
 }
@@ -46,7 +46,7 @@ export function searchStocks(params: StockSearchParams) {
  */
 export function syncStocks(params: StockSyncParams) {
 	return request
-		.post("/api/lixingren/sync", {
+		.post("lixingren/sync", {
 			json: params,
 			timeout: 60000,
 		})
@@ -58,7 +58,7 @@ export function syncStocks(params: StockSyncParams) {
  */
 export function syncStocksAsync(params: StockSyncParams) {
 	return request
-		.post("/api/lixingren/sync/async", {
+		.post("lixingren/sync/async", {
 			json: params,
 		})
 		.json<TaskResponse>();
@@ -69,7 +69,7 @@ export function syncStocksAsync(params: StockSyncParams) {
  */
 export function syncPreDisclosure() {
 	return request
-		.post("/api/lixingren/sync/pre-disclosure", {
+		.post("lixingren/sync/pre-disclosure", {
 			timeout: 60000,
 		})
 		.json<StockSyncResponse>();
@@ -80,7 +80,7 @@ export function syncPreDisclosure() {
  */
 export function syncAllUnlisted() {
 	return request
-		.post("/api/lixingren/sync/all-unlisted", {
+		.post("lixingren/sync/all-unlisted", {
 			timeout: 60000,
 		})
 		.json<StockSyncResponse>();
@@ -91,7 +91,7 @@ export function syncAllUnlisted() {
  */
 export function deleteStock(stock_code: string) {
 	return request
-		.delete(`/api/lixingren/stock/${stock_code}`)
+		.delete(`lixingren/stock/${stock_code}`)
 		.json<{ status: string, message: string, stock_code: string }>();
 }
 
@@ -99,5 +99,5 @@ export function deleteStock(stock_code: string) {
  * 获取统计信息
  */
 export function getStockStatistics() {
-	return request.get("/api/lixingren/statistics").json<StockStatistics>();
+	return request.get("lixingren/statistics").json<StockStatistics>();
 }
