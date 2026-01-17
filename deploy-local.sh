@@ -19,7 +19,7 @@ NC='\033[0m' # No Color
 # 配置变量
 ENVIRONMENT=${1:-production}
 PROJECT_NAME="financial-data-platform"
-BUILD_DIR="dist"
+BUILD_DIR="build"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="backups"
 DEPLOY_DIR="/var/www/html/${PROJECT_NAME}"
