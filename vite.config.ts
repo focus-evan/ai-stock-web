@@ -98,7 +98,7 @@ export default defineConfig({
 							return color;
 						},
 					});
-					return svgObject.toString({ height: "1em", width: "1em" });;
+					return svgObject.toString({ height: "1em", width: "1em" }); ;
 				}
 				return svg;
 			},
@@ -117,7 +117,7 @@ export default defineConfig({
 		// https://vitejs.dev/config/server-options#server-proxy
 		proxy: {
 			"/api": {
-				target: "http://120.26.22.21:8000",
+				target: "http://121.196.147.222:8000",
 				changeOrigin: true,
 			},
 		},

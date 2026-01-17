@@ -1,0 +1,98 @@
+name: Deploy to Aliyun ECS
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Run tests
+        run: pnpm test -- --run
+        continue-on-error: true
+      
+      - name: Build project
+        run: pnpm build
+        env:
+          NODE_ENV: production
+      
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Backup remote files
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            if [ -d "/var/www/html/financial-data-platform" ]; then
+              mkdir -p /var/www/html/backups
+              timestamp=$(date +%Y%m%d_%H%M%S)
+              tar -czf /var/www/html/backups/financial-data-platform_${timestamp}.tar.gz \
+                -C /var/www/html/financial-data-platform . 2>/dev/null || true
+              
+              # Keep only last 5 backups
+              cd /var/www/html/backups
+              ls -t financial-data-platform_*.tar.gz | tail -n +6 | xargs -r rm
+            fi
+          EOF
+      
+      - name: Deploy to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh" \
+            dist/ \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/html/financial-data-platform/
+      
+      - name: Set permissions
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            chown -R www-data:www-data /var/www/html/financial-data-platform
+            chmod -R 755 /var/www/html/financial-data-platform
+          EOF
+      
+      - name: Reload Nginx
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "systemctl reload nginx"
+      
+      - name: Health check
+        run: |
+          sleep 5
+          curl -f http://${{ secrets.SERVER_HOST }} || exit 1
+      
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "✅ Deployment successful!"
+          echo "🌐 URL: http://${{ secrets.SERVER_HOST }}"
+      
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Please check the logs for details."

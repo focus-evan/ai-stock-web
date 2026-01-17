@@ -8,6 +8,9 @@ const User = lazy(() => import("#src/pages/system/user"));
 const Dept = lazy(() => import("#src/pages/system/dept"));
 const Role = lazy(() => import("#src/pages/system/role"));
 const Menu = lazy(() => import("#src/pages/system/menu"));
+const DataSync = lazy(() => import("#src/pages/system/sync"));
+const Cache = lazy(() => import("#src/pages/system/cache"));
+const Monitor = lazy(() => import("#src/pages/system/monitor"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -75,6 +78,33 @@ const routes: AppRouteRecordRaw[] = [
 						"permission:button:update",
 						"permission:button:delete",
 					],
+				},
+			},
+			{
+				path: "/system/data-sync",
+				Component: DataSync,
+				handle: {
+					icon: "SyncOutlined",
+					title: "common.menu.dataSync",
+					roles: ["admin"],
+				},
+			},
+			{
+				path: "/system/cache",
+				Component: Cache,
+				handle: {
+					icon: "DatabaseOutlined",
+					title: "common.menu.cache",
+					roles: ["admin"],
+				},
+			},
+			{
+				path: "/system/monitor",
+				Component: Monitor,
+				handle: {
+					icon: "DashboardOutlined",
+					title: "common.menu.monitor",
+					roles: ["admin"],
 				},
 			},
 		],

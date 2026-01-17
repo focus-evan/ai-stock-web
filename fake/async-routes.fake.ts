@@ -1,4 +1,4 @@
-import { about, access, home, ipo, outside, personalCenter, routeNest, system } from "#/src/router/extra-info";
+import { about, access, aiAssistant, home, outside, personalCenter, routeNest, stockData, system } from "#/src/router/extra-info";
 import { defineFakeRoute } from "vite-plugin-fake-server/client";
 import { ADMIN_TOKEN } from "./constants";
 import { resultSuccess } from "./utils";
@@ -88,20 +88,71 @@ const homeRouter = {
 	},
 };
 
-const ipoRouter = {
-	path: "/ipo",
+const aiAssistantRouter = {
+	path: "/ai-assistant",
 	handle: {
-		icon: "StockOutlined",
-		title: "common.menu.ipo",
-		order: ipo,
+		icon: "RobotOutlined",
+		title: "common.menu.aiAssistant",
+		order: aiAssistant,
 	},
 	children: [
 		{
-			path: "/ipo/list",
+			path: "/ai-assistant/qa",
+			component: "/ai-assistant/qa/index.tsx",
+			handle: {
+				icon: "CommentOutlined",
+				title: "common.menu.qa",
+			},
+		},
+		{
+			path: "/ai-assistant/documents",
+			component: "/ai-assistant/documents/index.tsx",
+			handle: {
+				icon: "FileTextOutlined",
+				title: "common.menu.documents",
+			},
+		},
+		{
+			path: "/ai-assistant/sessions",
+			component: "/ai-assistant/sessions/index.tsx",
+			handle: {
+				icon: "HistoryOutlined",
+				title: "common.menu.sessions",
+			},
+		},
+	],
+};
+
+const stockDataRouter = {
+	path: "/stock-data",
+	handle: {
+		icon: "LineChartOutlined",
+		title: "common.menu.stockData",
+		order: stockData,
+	},
+	children: [
+		{
+			path: "/stock-data/stocks",
+			component: "/stock-data/stocks/index.tsx",
+			handle: {
+				icon: "StockOutlined",
+				title: "common.menu.stocks",
+			},
+		},
+		{
+			path: "/stock-data/ipo",
 			component: "/ipo/index.tsx",
 			handle: {
-				icon: "UnorderedListOutlined",
-				title: "common.menu.ipoList",
+				icon: "RiseOutlined",
+				title: "common.menu.ipo",
+			},
+		},
+		{
+			path: "/stock-data/shareholders",
+			component: "/stock-data/shareholders/index.tsx",
+			handle: {
+				icon: "TeamOutlined",
+				title: "common.menu.shareholders",
 			},
 		},
 	],
@@ -307,7 +358,8 @@ export default defineFakeRoute([
 			return resultSuccess(
 				[
 					homeRouter,
-					ipoRouter,
+					aiAssistantRouter,
+					stockDataRouter,
 					accessRouter,
 					aboutRouter,
 					systemManagementRouter,

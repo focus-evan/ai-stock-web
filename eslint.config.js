@@ -2,6 +2,16 @@ import antfu from "@antfu/eslint-config";
 
 export default antfu({
 	react: true,
+	ignores: [
+		"**/*.sh",
+		"**/*.md",
+		"**/Makefile",
+		"deploy.sh",
+		"deploy-config.sh",
+		"scripts/**",
+		".github/**",
+		"**/*.css",
+	],
 	rules: {
 		"style/quotes": ["error", "double"],
 		"style/semi": ["error", "always"],

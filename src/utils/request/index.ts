@@ -14,8 +14,8 @@ import { refreshTokenAndRetry } from "./refresh";
 // 请求白名单, 请求白名单内的接口不需要携带 token
 const requestWhiteList = [loginPath];
 
-// 请求超时时间
-const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 10000;
+// 请求超时时间 (30秒，用于长时间运行的操作如文档上传、数据同步)
+const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 30000;
 
 const defaultConfig: Options = {
 	// The input argument cannot start with a slash / when using prefixUrl option.

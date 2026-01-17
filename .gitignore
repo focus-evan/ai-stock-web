@@ -38,3 +38,20 @@ yarn.lock
 .eslintcache
 analyzer
 TODO.md
+
+# Deployment
+backups/
+*.tar.gz
+deploy-secrets.sh
+deploy.sh
+deploy-config.sh
+scripts/*.sh
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+
+# Logs
+*.log
+logs/
