@@ -43,12 +43,17 @@ export interface DocumentListResponse {
 export interface Collection {
 	name: string
 	points_count: number
-	vector_size: number
+	vectors_count: number | null
+	config: {
+		vector_size: number
+		distance_metric: string
+	}
 }
 
 export interface CollectionListResponse {
+	status: string
+	total_collections: number
 	collections: Collection[]
-	total: number
 }
 
 export interface CreateCollectionParams {

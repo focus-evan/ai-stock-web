@@ -217,7 +217,8 @@ export default function DocumentsPage() {
 									{" "}
 									(
 									{col.points_count || 0}
-									)
+									{" "}
+									docs)
 								</Select.Option>
 							))}
 						</Select>
