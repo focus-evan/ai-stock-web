@@ -14,7 +14,7 @@ const routes: AppRouteRecordRaw[] = [
 		Component: ContainerLayout,
 		handle: {
 			icon: "LineChartOutlined",
-			title: "common.menu.stockData",
+			title: "股票数据",
 			order: stockData,
 		},
 		children: [
@@ -23,7 +23,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Stocks,
 				handle: {
 					icon: "StockOutlined",
-					title: "common.menu.stocks",
+					title: "股票查询",
 				},
 			},
 			{
@@ -31,7 +31,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: IPO,
 				handle: {
 					icon: "RiseOutlined",
-					title: "common.menu.ipo",
+					title: "IPO数据",
 				},
 			},
 			{
@@ -39,7 +39,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Shareholders,
 				handle: {
 					icon: "TeamOutlined",
-					title: "common.menu.shareholders",
+					title: "股东信息",
 				},
 			},
 		],

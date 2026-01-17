@@ -14,7 +14,7 @@ const routes: AppRouteRecordRaw[] = [
 		Component: ContainerLayout,
 		handle: {
 			icon: "RobotOutlined",
-			title: "common.menu.aiAssistant",
+			title: "AI助手",
 			order: aiAssistant,
 		},
 		children: [
@@ -23,7 +23,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: QA,
 				handle: {
 					icon: "CommentOutlined",
-					title: "common.menu.qa",
+					title: "智能问答",
 				},
 			},
 			{
@@ -31,7 +31,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Documents,
 				handle: {
 					icon: "FileTextOutlined",
-					title: "common.menu.documents",
+					title: "文档管理",
 				},
 			},
 			{
@@ -39,7 +39,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: Sessions,
 				handle: {
 					icon: "HistoryOutlined",
-					title: "common.menu.sessions",
+					title: "会话管理",
 				},
 			},
 		],

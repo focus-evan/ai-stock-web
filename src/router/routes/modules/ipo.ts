@@ -7,27 +7,27 @@ import { lazy } from "react";
 const IPO = lazy(() => import("#src/pages/ipo"));
 
 const routes: AppRouteRecordRaw[] = [
-    {
-        path: "/ipo",
-        Component: ContainerLayout,
-        handle: {
-            icon: "StockOutlined",
-            title: "common.menu.ipo",
-            order: ipo,
-            roles: ["admin", "user"],
-        },
-        children: [
-            {
-                path: "/ipo/list",
-                Component: IPO,
-                handle: {
-                    icon: "UnorderedListOutlined",
-                    title: "common.menu.ipoList",
-                    roles: ["admin", "user"],
-                },
-            },
-        ],
-    },
+	{
+		path: "/ipo",
+		Component: ContainerLayout,
+		handle: {
+			icon: "StockOutlined",
+			title: "IPO数据",
+			order: ipo,
+			roles: ["admin", "user"],
+		},
+		children: [
+			{
+				path: "/ipo/list",
+				Component: IPO,
+				handle: {
+					icon: "UnorderedListOutlined",
+					title: "IPO列表",
+					roles: ["admin", "user"],
+				},
+			},
+		],
+	},
 ];
 
 export default routes;

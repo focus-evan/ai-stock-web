@@ -8,10 +8,6 @@ export const home = 1;
 export const aiAssistant = 3;
 export const ipo = 5;
 export const stockData = 6;
-export const access = 10;
-export const routeNest = 20;
-
-export const outside = 40;
 
 export const exception = 90;
 export const system = 100;
