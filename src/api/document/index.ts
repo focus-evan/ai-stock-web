@@ -13,9 +13,42 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
- * 上传文档（同步）
+ * 上传文档（同步）- 支持进度回调
  */
-export function uploadDocument(formData: FormData) {
+export async function uploadDocument(
+	file: File,
+	collectionName: string,
+	onProgress?: (progress: number) => void,
+) {
+	const formData = new FormData();
+	formData.append("file", file);
+	formData.append("collection_name", collectionName);
+
+	// 模拟进度（因为 ky 不直接支持上传进度）
+	if (onProgress) {
+		onProgress(0);
+		setTimeout(() => onProgress(30), 100);
+		setTimeout(() => onProgress(60), 500);
+	}
+
+	const result = await request
+		.post("agent/upload", {
+			body: formData,
+			timeout: 60000, // 60秒超时
+		})
+		.json<UploadResponse>();
+
+	if (onProgress) {
+		onProgress(100);
+	}
+
+	return result;
+}
+
+/**
+ * 上传文档（原始方法，使用 FormData）
+ */
+export function uploadDocumentWithFormData(formData: FormData) {
 	return request
 		.post("agent/upload", {
 			body: formData,
@@ -46,7 +79,18 @@ export function getTaskStatus(task_id: string) {
 /**
  * 创建Collection
  */
-export function createCollection(params: CreateCollectionParams) {
+export function createCollection(name: string, description?: string) {
+	return request
+		.post("agent/collection/create", {
+			json: { name, description },
+		})
+		.json<CreateCollectionResponse>();
+}
+
+/**
+ * 创建Collection（使用参数对象）
+ */
+export function createCollectionWithParams(params: CreateCollectionParams) {
 	return request
 		.post("agent/collection/create", {
 			json: params,
@@ -85,4 +129,29 @@ export function getCollectionDocuments(params: {
  */
 export function getAllCollections() {
 	return request.get("api/collections").json<CollectionListResponse>();
+}
+
+/**
+ * 查询所有Collections（别名）
+ */
+export function getCollections() {
+	return getAllCollections();
+}
+
+/**
+ * 查询文档列表
+ */
+export function getDocuments(params: {
+	collection_name?: string
+	limit?: number
+	offset?: number
+}) {
+	return getCollectionDocuments(params);
+}
+
+/**
+ * 删除文档
+ */
+export function deleteDocument(docId: string) {
+	return request.delete(`agent/document/${docId}`).json();
 }

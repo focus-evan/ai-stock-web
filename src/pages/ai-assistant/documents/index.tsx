@@ -1,4 +1,4 @@
-import type { Collection, Document } from "#src/api/document";
+import type { Collection, DocumentItem } from "#src/api/document";
 import type { UploadProps } from "antd";
 import {
 	createCollection,
@@ -30,7 +30,6 @@ import {
 	Select,
 	Space,
 	Table,
-	Tag,
 	Upload,
 } from "antd";
 import { useState } from "react";
@@ -45,10 +44,12 @@ export default function DocumentsPage() {
 
 	// Fetch collections
 	const {
-		data: collections = [],
+		data: collectionsResponse,
 		loading: collectionsLoading,
 		refresh: refreshCollections,
 	} = useRequest(getCollections);
+
+	const collections = collectionsResponse?.collections || [];
 
 	// Fetch documents
 	const {
@@ -139,7 +140,7 @@ export default function DocumentsPage() {
 	const columns = [
 		{
 			title: t("ai.fileName", { defaultValue: "File Name" }),
-			dataIndex: "file_name",
+			dataIndex: ["metadata", "file_name"],
 			key: "file_name",
 			render: (text: string) => (
 				<Space>
@@ -149,46 +150,22 @@ export default function DocumentsPage() {
 			),
 		},
 		{
-			title: t("ai.collection", { defaultValue: "Collection" }),
-			dataIndex: "collection_name",
-			key: "collection_name",
-			render: (text: string) => <Tag color="blue">{text}</Tag>,
+			title: t("ai.content", { defaultValue: "Content" }),
+			dataIndex: "content",
+			key: "content",
+			ellipsis: true,
+			render: (text: string) => text?.substring(0, 100) + (text?.length > 100 ? "..." : ""),
 		},
 		{
-			title: t("ai.uploadTime", { defaultValue: "Upload Time" }),
-			dataIndex: "upload_time",
-			key: "upload_time",
-			render: (text: string) => new Date(text).toLocaleString(),
-		},
-		{
-			title: t("ai.fileSize", { defaultValue: "File Size" }),
-			dataIndex: "file_size",
-			key: "file_size",
-			render: (size: number) => {
-				if (size < 1024)
-					return `${size} B`;
-				if (size < 1024 * 1024)
-					return `${(size / 1024).toFixed(2)} KB`;
-				return `${(size / (1024 * 1024)).toFixed(2)} MB`;
-			},
-		},
-		{
-			title: t("ai.status", { defaultValue: "Status" }),
-			dataIndex: "status",
-			key: "status",
-			render: (status: string) => {
-				const colorMap: { [key: string]: string } = {
-					processed: "success",
-					processing: "processing",
-					failed: "error",
-				};
-				return <Tag color={colorMap[status] || "default"}>{status}</Tag>;
-			},
+			title: t("ai.page", { defaultValue: "Page" }),
+			dataIndex: ["metadata", "page"],
+			key: "page",
+			render: (page?: number) => page || "-",
 		},
 		{
 			title: t("common.action", { defaultValue: "Action" }),
 			key: "action",
-			render: (_: any, record: Document) => (
+			render: (_: any, record: DocumentItem) => (
 				<Popconfirm
 					title={t("ai.confirmDelete", { defaultValue: "Are you sure to delete this document?" })}
 					onConfirm={() => handleDelete(record.id)}
@@ -239,7 +216,7 @@ export default function DocumentsPage() {
 									{col.name}
 									{" "}
 									(
-									{col.document_count || 0}
+									{col.points_count || 0}
 									)
 								</Select.Option>
 							))}
@@ -265,13 +242,13 @@ export default function DocumentsPage() {
 
 					<Table
 						columns={columns}
-						dataSource={documentsData?.data || []}
+						dataSource={documentsData?.documents || []}
 						loading={documentsLoading}
 						rowKey="id"
 						pagination={{
 							total: documentsData?.total || 0,
-							pageSize: documentsData?.page_size || 10,
-							current: documentsData?.page || 1,
+							pageSize: documentsData?.limit || 10,
+							current: Math.floor((documentsData?.offset || 0) / (documentsData?.limit || 10)) + 1,
 							showSizeChanger: true,
 							showTotal: total => t("common.total", { defaultValue: `Total ${total} items`, total }),
 						}}

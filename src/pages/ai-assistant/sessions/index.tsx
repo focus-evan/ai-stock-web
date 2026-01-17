@@ -1,5 +1,6 @@
-import type { Session } from "#src/api/rag";
-import { clearSession, deleteSession, getSessions } from "#src/api/rag";
+import type { SessionInfo } from "#src/api/rag";
+import { clearSessionMemory } from "#src/api/rag";
+import { deleteSession, getAllSessions } from "#src/api/system";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	ClearOutlined,
@@ -16,10 +17,12 @@ export default function SessionsPage() {
 
 	// Fetch sessions
 	const {
-		data: sessionsData,
+		data: sessionsResponse,
 		loading: sessionsLoading,
 		refresh: refreshSessions,
-	} = useRequest(getSessions);
+	} = useRequest(getAllSessions);
+
+	const sessions = sessionsResponse?.sessions || [];
 
 	// Delete session
 	const { run: handleDelete } = useRequest(
@@ -42,7 +45,7 @@ export default function SessionsPage() {
 	// Clear session
 	const { run: handleClear } = useRequest(
 		async (sessionId: string) => {
-			return await clearSession(sessionId);
+			return await clearSessionMemory(sessionId);
 		},
 		{
 			manual: true,
@@ -120,7 +123,7 @@ export default function SessionsPage() {
 		{
 			title: t("common.action", { defaultValue: "Action" }),
 			key: "action",
-			render: (_: any, record: Session) => (
+			render: (_: any, record: SessionInfo) => (
 				<Space>
 					<Popconfirm
 						title={t("ai.confirmClearSession", { defaultValue: "Clear session memory?" })}
@@ -162,13 +165,12 @@ export default function SessionsPage() {
 			>
 				<Table
 					columns={columns}
-					dataSource={sessionsData?.data || []}
+					dataSource={sessions}
 					loading={sessionsLoading}
 					rowKey="session_id"
 					pagination={{
-						total: sessionsData?.total || 0,
-						pageSize: sessionsData?.page_size || 10,
-						current: sessionsData?.page || 1,
+						total: sessionsResponse?.total || 0,
+						pageSize: 10,
 						showSizeChanger: true,
 						showTotal: total => t("common.total", { defaultValue: `Total ${total} items`, total }),
 					}}

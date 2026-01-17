@@ -1,5 +1,5 @@
 import type { StockInfo, StockQueryParams } from "#src/api/stock";
-import { getStockDetail, getStocks } from "#src/api/stock";
+import { getStockInfo, getStockList } from "#src/api/stock";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	EyeOutlined,
@@ -40,7 +40,7 @@ export default function StocksPage() {
 		loading: stocksLoading,
 		refresh: refreshStocks,
 	} = useRequest(
-		() => getStocks(searchParams),
+		() => getStockList(searchParams),
 		{
 			refreshDeps: [searchParams],
 		},
@@ -49,7 +49,7 @@ export default function StocksPage() {
 	// Fetch stock detail
 	const { run: fetchStockDetail, loading: detailLoading } = useRequest(
 		async (stockCode: string) => {
-			return await getStockDetail(stockCode);
+			return await getStockInfo(stockCode);
 		},
 		{
 			manual: true,
