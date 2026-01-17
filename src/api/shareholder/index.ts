@@ -9,6 +9,17 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
+ * 查询股东信息（通过股票代码）
+ */
+export function getShareholders(stock_code: string) {
+	return request
+		.get("shareholder/query", {
+			searchParams: { stock_code } as any,
+		})
+		.json<ShareholderQueryResponse>();
+}
+
+/**
  * 查询股东信息（POST）
  */
 export function queryShareholdersPost(params: ShareholderQueryParams) {
@@ -25,7 +36,7 @@ export function queryShareholdersPost(params: ShareholderQueryParams) {
 export function queryShareholders(params: ShareholderQueryParams) {
 	return request
 		.get("shareholder/query", {
-			searchParams: params,
+			searchParams: params as any,
 		})
 		.json<ShareholderQueryResponse>();
 }
@@ -47,7 +58,7 @@ export function getControllingShareholderPost(company_name: string) {
 export function getControllingShareholder(company_name: string) {
 	return request
 		.get("shareholder/controlling", {
-			searchParams: { company_name },
+			searchParams: { company_name } as any,
 		})
 		.json<ControllingShareholderResponse>();
 }

@@ -174,7 +174,7 @@ export default function ShareholdersPage() {
 
 					<Table
 						columns={columns}
-						dataSource={shareholdersData?.data || []}
+						dataSource={shareholdersData?.shareholders || []}
 						loading={shareholdersLoading}
 						rowKey={record => `${record.shareholder_name}-${record.rank}`}
 						pagination={false}
@@ -185,7 +185,7 @@ export default function ShareholdersPage() {
 						}}
 					/>
 
-					{shareholdersData && shareholdersData.data && shareholdersData.data.length > 0 && (
+					{shareholdersData && shareholdersData.shareholders && shareholdersData.shareholders.length > 0 && (
 						<div style={{ marginTop: 16, padding: 16, background: "#f0f5ff", borderRadius: 4 }}>
 							<Space direction="vertical">
 								<div>
@@ -195,7 +195,7 @@ export default function ShareholdersPage() {
 										:
 									</strong>
 									{" "}
-									{shareholdersData.data[0]?.shareholder_name}
+									{shareholdersData.shareholders[0]?.shareholder_name}
 								</div>
 								<div>
 									<strong>
@@ -203,7 +203,7 @@ export default function ShareholdersPage() {
 										:
 									</strong>
 									{" "}
-									{shareholdersData.data.length}
+									{shareholdersData.shareholders.length}
 								</div>
 							</Space>
 						</div>
