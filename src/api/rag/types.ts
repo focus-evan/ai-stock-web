@@ -21,12 +21,15 @@ export interface Source {
 }
 
 export interface RAGResponse {
-	answer: string
-	sources: Source[]
+	answer?: string // 兼容旧格式
+	response?: string // 新格式
+	sources?: Source[]
 	session_id: string
 	request_id: string
 	tool_calls?: any[]
 	thinking_process?: string
+	intermediate_steps?: any[]
+	raw_response?: string
 }
 
 export interface SessionInfo {

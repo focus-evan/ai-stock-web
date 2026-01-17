@@ -1,5 +1,5 @@
 import type { RAGQueryParams, RAGResponse } from "#src/api/rag";
-import { ragQuery } from "#src/api/rag";
+import { ragQuery, ragQueryOffline } from "#src/api/rag";
 import { BasicContent } from "#src/components/basic-content";
 import { CloudOutlined, CloudServerOutlined, RobotOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
@@ -44,7 +44,7 @@ export default function QAPage() {
 				return await ragQuery(params);
 			}
 			else {
-				return await ragQuery(params); // 暂时都使用同一个API，后端会根据参数判断
+				return await ragQueryOffline(params);
 			}
 		},
 		{
@@ -59,8 +59,8 @@ export default function QAPage() {
 				const assistantMessage: Message = {
 					id: data.request_id || Date.now().toString(),
 					role: "assistant",
-					content: data.answer,
-					sources: data.sources,
+					content: data.response || data.answer || "", // 兼容两种格式
+					sources: data.sources || [],
 					timestamp: new Date(),
 				};
 				setMessages(prev => [...prev, assistantMessage]);

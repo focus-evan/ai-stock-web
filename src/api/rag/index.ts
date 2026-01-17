@@ -11,24 +11,28 @@ export * from "./types";
 
 /**
  * RAG问答（在线）
+ * 超时时间：3分钟（AI推理需要较长时间）
  */
 export function ragQuery(params: RAGQueryParams) {
 	return request
 		.post("agent/rag", {
 			json: params,
 			ignoreLoading: false,
+			timeout: 180000, // 3分钟
 		})
 		.json<RAGResponse>();
 }
 
 /**
  * RAG问答（离线）
+ * 超时时间：3分钟（AI推理需要较长时间）
  */
 export function ragQueryOffline(params: RAGQueryParams) {
 	return request
 		.post("agent/rag/offline", {
 			json: params,
 			ignoreLoading: false,
+			timeout: 180000, // 3分钟
 		})
 		.json<RAGResponse>();
 }
