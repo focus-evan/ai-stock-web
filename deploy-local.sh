@@ -141,9 +141,21 @@ deploy_files() {
 configure_nginx() {
     log_info "配置Nginx..."
     
+    # 确定Nginx配置目录
+    if [ -d "/etc/nginx/conf.d" ]; then
+        NGINX_CONF_DIR="/etc/nginx/conf.d"
+        NGINX_CONF_FILE="${NGINX_CONF_DIR}/${PROJECT_NAME}.conf"
+    elif [ -d "/etc/nginx/sites-available" ]; then
+        NGINX_CONF_DIR="/etc/nginx/sites-available"
+        NGINX_CONF_FILE="${NGINX_CONF_DIR}/${PROJECT_NAME}"
+    else
+        log_error "无法找到Nginx配置目录"
+        exit 1
+    fi
+    
     # 检查Nginx配置文件是否存在
-    if [ ! -f "/etc/nginx/sites-available/${PROJECT_NAME}" ]; then
-        cat > /etc/nginx/sites-available/${PROJECT_NAME} << 'NGINX_CONF'
+    if [ ! -f "${NGINX_CONF_FILE}" ]; then
+        cat > ${NGINX_CONF_FILE} << 'NGINX_CONF'
 server {
     listen 80;
     server_name _;
@@ -187,12 +199,14 @@ server {
 }
 NGINX_CONF
         
-        # 创建软链接
-        ln -sf /etc/nginx/sites-available/${PROJECT_NAME} /etc/nginx/sites-enabled/
+        # 如果是sites-available目录，创建软链接
+        if [ -d "/etc/nginx/sites-enabled" ]; then
+            ln -sf ${NGINX_CONF_FILE} /etc/nginx/sites-enabled/
+        fi
         
-        log_info "Nginx配置文件已创建"
+        log_info "Nginx配置文件已创建: ${NGINX_CONF_FILE}"
     else
-        log_info "Nginx配置文件已存在"
+        log_info "Nginx配置文件已存在: ${NGINX_CONF_FILE}"
     fi
     
     # 测试Nginx配置
