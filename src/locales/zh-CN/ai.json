@@ -37,6 +37,8 @@
 	"messageCount": "消息数",
 	"createdAt": "创建时间",
 	"lastActivity": "最后活动",
+	"chunkCount": "分块数",
+	"documentId": "文档ID",
 	"justNow": "刚刚",
 	"minutesAgo": "{{count}} 分钟前",
 	"hoursAgo": "{{count}} 小时前",

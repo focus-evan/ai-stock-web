@@ -1,4 +1,4 @@
-import type { Collection, DocumentItem } from "#src/api/document";
+import type { Collection } from "#src/api/document";
 import type { UploadProps } from "antd";
 import {
 	createCollection,
@@ -140,7 +140,7 @@ export default function DocumentsPage() {
 	const columns = [
 		{
 			title: t("ai.fileName", { defaultValue: "File Name" }),
-			dataIndex: ["metadata", "file_name"],
+			dataIndex: "file_name",
 			key: "file_name",
 			render: (text: string) => (
 				<Space>
@@ -150,25 +150,24 @@ export default function DocumentsPage() {
 			),
 		},
 		{
-			title: t("ai.content", { defaultValue: "Content" }),
-			dataIndex: "content",
-			key: "content",
-			ellipsis: true,
-			render: (text: string) => text?.substring(0, 100) + (text?.length > 100 ? "..." : ""),
+			title: t("ai.chunkCount", { defaultValue: "Chunks" }),
+			dataIndex: "chunk_count",
+			key: "chunk_count",
 		},
 		{
-			title: t("ai.page", { defaultValue: "Page" }),
-			dataIndex: ["metadata", "page"],
-			key: "page",
-			render: (page?: number) => page || "-",
+			title: t("ai.documentId", { defaultValue: "Document ID" }),
+			dataIndex: "doc_id",
+			key: "doc_id",
+			ellipsis: true,
+			render: (text: string) => `${text?.substring(0, 20)}...`,
 		},
 		{
 			title: t("common.action", { defaultValue: "Action" }),
 			key: "action",
-			render: (_: any, record: DocumentItem) => (
+			render: (_: any, record: any) => (
 				<Popconfirm
 					title={t("ai.confirmDelete", { defaultValue: "Are you sure to delete this document?" })}
-					onConfirm={() => handleDelete(record.id)}
+					onConfirm={() => handleDelete(record.doc_id)}
 				>
 					<Button type="link" danger icon={<DeleteOutlined />}>
 						{t("common.delete", { defaultValue: "Delete" })}
@@ -245,11 +244,10 @@ export default function DocumentsPage() {
 						columns={columns}
 						dataSource={documentsData?.documents || []}
 						loading={documentsLoading}
-						rowKey="id"
+						rowKey="doc_id"
 						pagination={{
-							total: documentsData?.total || 0,
-							pageSize: documentsData?.limit || 10,
-							current: Math.floor((documentsData?.offset || 0) / (documentsData?.limit || 10)) + 1,
+							total: documentsData?.total_documents || 0,
+							pageSize: 10,
 							showSizeChanger: true,
 							showTotal: total => t("common.total", { defaultValue: `Total ${total} items`, total }),
 						}}

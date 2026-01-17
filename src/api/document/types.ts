@@ -33,11 +33,19 @@ export interface DocumentItem {
 	}
 }
 
+export interface DocumentSummaryItem {
+	doc_id: string
+	file_name: string
+	chunk_count: number
+}
+
 export interface DocumentListResponse {
-	documents: DocumentItem[]
-	total: number
-	limit: number
-	offset: number
+	status: string
+	collection_name: string
+	total_points: number
+	total_documents: number
+	scanned_points: number
+	documents: DocumentSummaryItem[]
 }
 
 export interface Collection {

@@ -37,6 +37,8 @@
 	"messageCount": "Messages",
 	"createdAt": "Created At",
 	"lastActivity": "Last Activity",
+	"chunkCount": "Chunks",
+	"documentId": "Document ID",
 	"justNow": "Just now",
 	"minutesAgo": "{{count}} minutes ago",
 	"hoursAgo": "{{count}} hours ago",
