@@ -361,7 +361,7 @@ export default function DocumentsPage() {
 					>
 						<Select>
 							<Select.Option value={1024}>1024 (BAAI/bge-large-zh)</Select.Option>
-							<Select.Option value={1536}>1536 (text-embedding-v3)</Select.Option>
+							<Select.Option value={1024}>1024 (text-embedding-v3)</Select.Option>
 						</Select>
 					</Form.Item>
 
