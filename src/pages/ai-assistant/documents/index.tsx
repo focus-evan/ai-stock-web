@@ -47,7 +47,12 @@ export default function DocumentsPage() {
 		data: collectionsResponse,
 		loading: collectionsLoading,
 		refresh: refreshCollections,
-	} = useRequest(getCollections);
+	} = useRequest(getCollections, {
+		onError: (error) => {
+			console.error("Failed to fetch collections:", error);
+			message.error(t("ai.fetchCollectionsFailed", { defaultValue: "Failed to load collections" }));
+		},
+	});
 
 	const collections = collectionsResponse?.collections || [];
 
@@ -59,15 +64,22 @@ export default function DocumentsPage() {
 	} = useRequest(
 		() => getDocuments({ collection_name: selectedCollection || undefined }),
 		{
+			ready: !!selectedCollection, // 只有选择了 Collection 才加载文档
 			refreshDeps: [selectedCollection],
+			onError: (error) => {
+				console.error("Failed to fetch documents:", error);
+				message.error(t("ai.fetchDocumentsFailed", { defaultValue: "Failed to load documents" }));
+			},
 		},
 	);
 
 	// Upload document
 	const { run: handleUpload } = useRequest(
 		async (file: File, collectionName: string) => {
-			return await uploadDocument(file, collectionName, (progress) => {
-				setUploadProgress(prev => ({ ...prev, [file.name]: progress }));
+			return await uploadDocument(file, collectionName, {
+				onProgress: (progress: number) => {
+					setUploadProgress(prev => ({ ...prev, [file.name]: progress }));
+				},
 			});
 		},
 		{
