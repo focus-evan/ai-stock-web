@@ -11,6 +11,13 @@ TypeError: Request with GET/HEAD method cannot have body
 
 ## 快速修复（3分钟）
 
+**当前配置状态**:
+- ✅ `vite.config.ts`: `enableProd: true`（其他模块继续使用 Mock）
+- ✅ `fake/document.fake.ts`: 已删除（文档管理使用真实 API）
+- ✅ 所有代码修复已完成
+
+**需要做的**: 重新构建部署，让浏览器加载新的 JS 文件
+
 在服务器上执行：
 
 ```bash
@@ -19,6 +26,17 @@ cd /data/ai-stock-web
 
 # 2. 执行快速部署脚本
 sudo ./deploy-config.sh
+```
+
+**或者手动执行**:
+
+```bash
+cd /data/ai-stock-web
+git pull
+rm -rf build/ node_modules/.vite
+npm run build
+sudo ./deploy-local.sh
+sudo systemctl restart nginx
 ```
 
 ## 验证修复
