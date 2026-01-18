@@ -16,13 +16,23 @@ export interface DatabaseHealthResponse {
 
 export interface CacheStatsResponse {
 	total_items: number
+	total_keys: number // 添加 total_keys
 	total_size_mb: number
+	total_size: number // 添加 total_size（MB）
 	hit_rate: number
+	hits: number // 添加 hits
+	misses: number // 添加 misses
 	by_type: Record<string, number>
+	cache_types?: Record<string, { // 添加 cache_types
+		keys: number
+		size: number
+		hits?: number
+		misses?: number
+	}>
 }
 
 export interface ClearCacheParams {
-	cache_type?: "all" | "query" | "session"
+	cache_type?: "all" | "query" | "session" | "stock" | "ipo" | "rag" | "document"
 }
 
 export interface ClearCacheResponse {

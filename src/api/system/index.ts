@@ -33,10 +33,15 @@ export function checkDatabaseHealth() {
 /**
  * 清除缓存
  */
-export function clearCache(params: ClearCacheParams = {}) {
+export function clearCache(params: ClearCacheParams | string = {}) {
+	// 如果传入的是字符串，转换为对象
+	const requestParams: ClearCacheParams = typeof params === "string"
+		? { cache_type: params as any }
+		: params;
+
 	return request
 		.post("agent/cache/clear", {
-			json: params,
+			json: requestParams,
 		})
 		.json<ClearCacheResponse>();
 }

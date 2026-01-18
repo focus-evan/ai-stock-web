@@ -39,7 +39,7 @@ export default function CachePage() {
 	// Clear cache
 	const { run: handleClearCache, loading: clearLoading } = useRequest(
 		async (cacheType: string) => {
-			return await clearCache(cacheType);
+			return await clearCache({ cache_type: cacheType as any });
 		},
 		{
 			manual: true,
@@ -87,28 +87,28 @@ export default function CachePage() {
 							<Col xs={24} sm={12} md={6}>
 								<Statistic
 									title={t("system.totalKeys", { defaultValue: "Total Keys" })}
-									value={cacheStats.total_keys}
+									value={cacheStats.total_keys || cacheStats.total_items || 0}
 									prefix={<DatabaseOutlined />}
 								/>
 							</Col>
 							<Col xs={24} sm={12} md={6}>
 								<Statistic
 									title={t("system.cacheSize", { defaultValue: "Cache Size" })}
-									value={cacheStats.total_size}
+									value={cacheStats.total_size || cacheStats.total_size_mb || 0}
 									suffix="MB"
 								/>
 							</Col>
 							<Col xs={24} sm={12} md={6}>
 								<Statistic
 									title={t("system.cacheHits", { defaultValue: "Cache Hits" })}
-									value={cacheStats.hits}
+									value={cacheStats.hits || 0}
 									valueStyle={{ color: "#52c41a" }}
 								/>
 							</Col>
 							<Col xs={24} sm={12} md={6}>
 								<Statistic
 									title={t("system.cacheMisses", { defaultValue: "Cache Misses" })}
-									value={cacheStats.misses}
+									value={cacheStats.misses || 0}
 									valueStyle={{ color: "#ff4d4f" }}
 								/>
 							</Col>
@@ -133,7 +133,7 @@ export default function CachePage() {
 										{t("system.overallHitRate", { defaultValue: "Overall Hit Rate" })}
 									</div>
 									<Progress
-										percent={Number(calculateHitRate(cacheStats.hits, cacheStats.misses))}
+										percent={Number(calculateHitRate(cacheStats.hits || 0, cacheStats.misses || 0))}
 										status="active"
 										strokeColor={{
 											"0%": "#108ee9",
@@ -147,15 +147,16 @@ export default function CachePage() {
 									<div style={{ fontSize: 16, marginBottom: 8 }}>
 										{t("system.cacheBreakdown", { defaultValue: "Cache Breakdown" })}
 									</div>
-									{cacheStats.cache_types && Object.entries(cacheStats.cache_types).map(([type, stats]: [string, any]) => (
+									{cacheStats.cache_types && Object.entries(cacheStats.cache_types).map(([type, stats]) => (
 										<div key={type}>
 											<div style={{ marginBottom: 4 }}>
 												{type}
 												:
-												{stats.keys}
+												{" "}
+												{stats.keys || 0}
 												{" "}
 												keys (
-												{stats.size}
+												{stats.size || 0}
 												{" "}
 												MB)
 											</div>
