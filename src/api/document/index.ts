@@ -13,33 +13,66 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
- * 上传文档（同步）- 支持进度回调
+ * 上传文档（同步）- 支持进度回调和策略参数
  */
 export async function uploadDocument(
 	file: File,
 	collectionName: string,
-	onProgress?: (progress: number) => void,
+	options?: {
+		onProgress?: (progress: number) => void
+		chunkingStrategyCode?: string
+		chunkingStrategyParams?: {
+			chunk_size?: number
+			chunk_overlap?: number
+		}
+		embeddingStrategyCode?: string
+		embeddingStrategyParams?: {
+			model_name?: string
+		}
+	},
 ) {
 	const formData = new FormData();
-	formData.append("file", file);
-	formData.append("collection_name", collectionName);
+	formData.append("files", file);
+
+	// 构建查询参数
+	const searchParams: Record<string, string> = {
+		collection_name: collectionName,
+	};
+
+	if (options?.chunkingStrategyCode) {
+		searchParams.chunking_strategy_code = options.chunkingStrategyCode;
+	}
+	if (options?.chunkingStrategyParams) {
+		searchParams.chunking_strategy_params = JSON.stringify(
+			options.chunkingStrategyParams,
+		);
+	}
+	if (options?.embeddingStrategyCode) {
+		searchParams.embedding_strategy_code = options.embeddingStrategyCode;
+	}
+	if (options?.embeddingStrategyParams) {
+		searchParams.embedding_strategy_params = JSON.stringify(
+			options.embeddingStrategyParams,
+		);
+	}
 
 	// 模拟进度（因为 ky 不直接支持上传进度）
-	if (onProgress) {
-		onProgress(0);
-		setTimeout(() => onProgress(30), 100);
-		setTimeout(() => onProgress(60), 500);
+	if (options?.onProgress) {
+		options.onProgress(0);
+		setTimeout(() => options.onProgress?.(30), 100);
+		setTimeout(() => options.onProgress?.(60), 500);
 	}
 
 	const result = await request
 		.post("agent/upload", {
 			body: formData,
+			searchParams,
 			timeout: 60000, // 60秒超时
 		})
 		.json<UploadResponse>();
 
-	if (onProgress) {
-		onProgress(100);
+	if (options?.onProgress) {
+		options.onProgress(100);
 	}
 
 	return result;
@@ -128,7 +161,7 @@ export function getCollectionDocuments(params: {
  * 查询所有Collections
  */
 export function getAllCollections() {
-	return request.get("collections").json<CollectionListResponse>();
+	return request.get("api/collections").json<CollectionListResponse>();
 }
 
 /**
