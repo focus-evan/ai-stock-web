@@ -226,6 +226,13 @@ export function deleteDocument(docId: string) {
 }
 
 /**
+ * 删除Collection及其所有数据
+ */
+export function deleteCollection(collectionName: string) {
+	return request.delete(`agent/collection/${collectionName}`).json();
+}
+
+/**
  * 查询文档详情（包含所有分块）
  */
 export function getDocumentDetail(docId: string, collectionName: string) {

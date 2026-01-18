@@ -2,6 +2,7 @@ import type { Collection } from "#src/api/document";
 import type { UploadProps } from "antd";
 import {
 	createCollection,
+	deleteCollection,
 	deleteDocument,
 	getCollections,
 	getDocumentDetail,
@@ -118,6 +119,25 @@ export default function DocumentsPage() {
 			onError: (error) => {
 				message.error(t("ai.deleteFailed", { defaultValue: "Delete failed" }));
 				console.error("Delete error:", error);
+			},
+		},
+	);
+
+	// Delete collection
+	const { run: handleDeleteCollection } = useRequest(
+		async (collectionName: string) => {
+			return await deleteCollection(collectionName);
+		},
+		{
+			manual: true,
+			onSuccess: () => {
+				message.success(t("ai.collectionDeleted", { defaultValue: "Collection deleted successfully" }));
+				setSelectedCollection("");
+				refreshCollections();
+			},
+			onError: (error) => {
+				message.error(t("ai.collectionDeleteFailed", { defaultValue: "Failed to delete collection" }));
+				console.error("Delete collection error:", error);
 			},
 		},
 	);
@@ -287,6 +307,23 @@ export default function DocumentsPage() {
 								{t("ai.uploadDocument", { defaultValue: "Upload Document" })}
 							</Button>
 						</Upload>
+
+						<Popconfirm
+							title={t("ai.confirmDeleteCollection", { defaultValue: "Are you sure to delete this collection and all its documents?" })}
+							description={t("ai.deleteCollectionWarning", { defaultValue: "This action cannot be undone!" })}
+							onConfirm={() => handleDeleteCollection(selectedCollection)}
+							okText={t("common.yes", { defaultValue: "Yes" })}
+							cancelText={t("common.no", { defaultValue: "No" })}
+							disabled={!selectedCollection}
+						>
+							<Button
+								icon={<DeleteOutlined />}
+								danger
+								disabled={!selectedCollection}
+							>
+								{t("ai.deleteCollection", { defaultValue: "Delete Collection" })}
+							</Button>
+						</Popconfirm>
 					</Space>
 
 					{Object.keys(uploadProgress).length > 0 && (
