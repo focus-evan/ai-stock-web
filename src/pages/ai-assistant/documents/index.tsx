@@ -360,11 +360,8 @@ export default function DocumentsPage() {
 						tooltip={t("ai.vectorSizeTooltip", { defaultValue: "Dimension of the vector embeddings (default: 1024)" })}
 					>
 						<Select>
-							<Select.Option value={384}>384 (Small models)</Select.Option>
-							<Select.Option value={768}>768 (BERT-base)</Select.Option>
-							<Select.Option value={1024}>1024 (Recommended)</Select.Option>
-							<Select.Option value={1536}>1536 (OpenAI ada-002)</Select.Option>
-							<Select.Option value={3072}>3072 (Large models)</Select.Option>
+							<Select.Option value={1024}>1024 (BAAI/bge-large-zh)</Select.Option>
+							<Select.Option value={1536}>1536 (text-embedding-v3)</Select.Option>
 						</Select>
 					</Form.Item>
 
