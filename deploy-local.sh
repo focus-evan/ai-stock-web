@@ -24,6 +24,16 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="backups"
 DEPLOY_DIR="/var/www/html/${PROJECT_NAME}"
 
+# 包管理器（优先使用 pnpm）
+if command -v pnpm &> /dev/null; then
+    PKG_MANAGER="pnpm"
+elif command -v npm &> /dev/null; then
+    PKG_MANAGER="npm"
+else
+    log_error "未找到包管理器 (npm/pnpm)"
+    exit 1
+fi
+
 # 日志函数
 log_info() {
     echo -e "${BLUE}[INFO]${NC} $1"
@@ -45,13 +55,27 @@ log_error() {
 check_requirements() {
     log_info "检查部署环境..."
     
-    local required_commands=("node" "pnpm")
-    for cmd in "${required_commands[@]}"; do
-        if ! command -v $cmd &> /dev/null; then
-            log_error "$cmd 未安装，请先安装"
-            exit 1
-        fi
-    done
+    # 检查 Node.js
+    if ! command -v node &> /dev/null; then
+        log_error "Node.js 未安装"
+        exit 1
+    fi
+    NODE_VERSION=$(node -v)
+    log_success "Node.js 版本: ${NODE_VERSION}"
+    
+    # 检查包管理器
+    if command -v pnpm &> /dev/null; then
+        PKG_MANAGER="pnpm"
+        PKG_VERSION=$(pnpm -v)
+        log_success "使用 pnpm 版本: ${PKG_VERSION}"
+    elif command -v npm &> /dev/null; then
+        PKG_MANAGER="npm"
+        PKG_VERSION=$(npm -v)
+        log_success "使用 npm 版本: ${PKG_VERSION}"
+    else
+        log_error "未找到包管理器 (npm/pnpm)"
+        exit 1
+    fi
     
     log_success "环境检查通过"
 }
@@ -60,19 +84,45 @@ check_requirements() {
 clean_build() {
     log_info "清理旧的构建文件..."
     
+    # 清理构建目录
     if [ -d "$BUILD_DIR" ]; then
         rm -rf $BUILD_DIR
-        log_success "清理完成"
-    else
-        log_info "没有需要清理的文件"
+        log_success "构建目录已清理"
     fi
+    
+    # 清理 Vite 缓存
+    if [ -d "node_modules/.vite" ]; then
+        rm -rf node_modules/.vite
+        log_success "Vite 缓存已清理"
+    fi
+    
+    # 清理 TypeScript 缓存
+    if [ -f "tsconfig.tsbuildinfo" ]; then
+        rm -f tsconfig.tsbuildinfo
+        log_success "TypeScript 缓存已清理"
+    fi
+    
+    log_success "清理完成"
 }
 
 # 安装依赖
 install_dependencies() {
     log_info "安装项目依赖..."
     
-    pnpm install
+    # 检查 node_modules 是否存在
+    if [ ! -d "node_modules" ]; then
+        log_info "依赖未安装，正在安装..."
+        $PKG_MANAGER install
+    else
+        log_info "依赖已存在，检查是否需要更新..."
+        # 检查 package.json 是否比 node_modules 新
+        if [ "package.json" -nt "node_modules" ]; then
+            log_info "package.json 已更新，重新安装依赖..."
+            $PKG_MANAGER install
+        else
+            log_success "依赖已是最新"
+        fi
+    fi
     
     log_success "依赖安装完成"
 }
@@ -84,8 +134,21 @@ build_project() {
     # 设置环境变量
     export NODE_ENV=${ENVIRONMENT}
     
+    # 显示构建配置
+    log_info "构建配置:"
+    log_info "  - 包管理器: ${PKG_MANAGER}"
+    log_info "  - Node 版本: $(node -v)"
+    log_info "  - 环境: ${ENVIRONMENT}"
+    
+    # 检查 fake/document.fake.ts 状态
+    if [ -f "fake/document.fake.ts" ]; then
+        log_warning "fake/document.fake.ts 存在，文档管理将使用 Mock 数据"
+    else
+        log_success "fake/document.fake.ts 不存在，文档管理将使用真实 API"
+    fi
+    
     # 执行构建
-    if pnpm build; then
+    if $PKG_MANAGER run build; then
         log_success "构建完成"
     else
         log_error "构建失败"
@@ -101,6 +164,10 @@ build_project() {
     # 显示构建产物大小
     local build_size=$(du -sh $BUILD_DIR | cut -f1)
     log_info "构建产物大小: ${build_size}"
+    
+    # 显示构建产物文件列表（主要文件）
+    log_info "构建产物:"
+    ls -lh $BUILD_DIR/assets/*.js 2>/dev/null | head -5 | awk '{print "  - " $9 " (" $5 ")"}'
 }
 
 # 备份当前版本
@@ -237,7 +304,19 @@ NGINX_CONF
 set_permissions() {
     log_info "设置文件权限..."
     
-    chown -R www-data:www-data ${DEPLOY_DIR}
+    # 检测系统用户
+    if id "www-data" &>/dev/null; then
+        WEB_USER="www-data"
+    elif id "nginx" &>/dev/null; then
+        WEB_USER="nginx"
+    else
+        log_warning "未找到 www-data 或 nginx 用户，使用 root"
+        WEB_USER="root"
+    fi
+    
+    log_info "使用用户: ${WEB_USER}"
+    
+    chown -R ${WEB_USER}:${WEB_USER} ${DEPLOY_DIR}
     chmod -R 755 ${DEPLOY_DIR}
     
     log_success "权限设置完成"
@@ -299,6 +378,34 @@ main() {
         log_error "请使用root权限运行此脚本"
         log_info "使用: sudo ./deploy-local.sh"
         exit 1
+    fi
+    
+    # 验证配置
+    log_info "验证配置..."
+    
+    # 检查 .env.production
+    if [ ! -f ".env.production" ]; then
+        log_error ".env.production 文件不存在"
+        exit 1
+    fi
+    
+    if ! grep -q "VITE_API_BASE_URL" .env.production; then
+        log_error ".env.production 缺少 VITE_API_BASE_URL 配置"
+        exit 1
+    fi
+    
+    # 检查 fake/document.fake.ts
+    if [ -f "fake/document.fake.ts" ]; then
+        log_warning "检测到 fake/document.fake.ts，文档管理将使用 Mock 数据"
+        log_warning "如需使用真实 API，请删除此文件后重新部署"
+        read -p "是否继续部署？(y/N) " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log_info "部署已取消"
+            exit 0
+        fi
+    else
+        log_success "配置验证通过（文档管理使用真实 API）"
     fi
     
     # 执行部署流程
