@@ -10,7 +10,7 @@
 ### 1.1 上传文档（同步）
 **函数**: `uploadDocument(file, collectionName, options?)`
 
-**接口**: `POST /agent/upload`
+**接口**: `POST /api/agent/upload`
 
 **查询参数**:
 - `collection_name`: string - Collection 名称（必填）
@@ -55,7 +55,7 @@
 
 **请求示例**:
 ```
-POST /agent/upload?collection_name=s-kd&chunking_strategy_code=chunking_smart&chunking_strategy_params={"chunk_size":512,"chunk_overlap":100}&embedding_strategy_code=bge_large_zh&embedding_strategy_params={"model_name":"BAAI/bge-large-zh"}
+POST /api/agent/upload?collection_name=s-kd&chunking_strategy_code=chunking_smart&chunking_strategy_params={"chunk_size":512,"chunk_overlap":100}&embedding_strategy_code=bge_large_zh&embedding_strategy_params={"model_name":"BAAI/bge-large-zh"}
 Content-Type: multipart/form-data
 
 files: [文件内容]
@@ -68,7 +68,7 @@ files: [文件内容]
 ### 1.2 上传文档（FormData 方式）
 **函数**: `uploadDocumentWithFormData(formData)`
 
-**接口**: `POST /agent/upload`
+**接口**: `POST /api/agent/upload`
 
 **参数**:
 - `formData`: FormData - 包含文件和 collection_name 的表单数据
@@ -82,7 +82,7 @@ files: [文件内容]
 ### 1.3 上传文档（异步）
 **函数**: `uploadDocumentAsync(formData)`
 
-**接口**: `POST /agent/upload/async`
+**接口**: `POST /api/agent/upload/async`
 
 **参数**:
 - `formData`: FormData - 包含文件和 collection_name 的表单数据
@@ -101,7 +101,7 @@ files: [文件内容]
 ### 1.4 查询上传任务状态
 **函数**: `getTaskStatus(task_id)`
 
-**接口**: `GET /agent/task/{task_id}`
+**接口**: `GET /api/agent/task/{task_id}`
 
 **参数**:
 - `task_id`: string - 任务 ID
@@ -124,7 +124,7 @@ files: [文件内容]
 ### 2.1 创建 Collection
 **函数**: `createCollection(name, description?)`
 
-**接口**: `POST /agent/collection/create`
+**接口**: `POST /api/agent/collection/create`
 
 **参数**:
 - `name`: string - Collection 名称
@@ -156,7 +156,7 @@ files: [文件内容]
 ### 2.2 创建 Collection（参数对象方式）
 **函数**: `createCollectionWithParams(params)`
 
-**接口**: `POST /agent/collection/create`
+**接口**: `POST /api/agent/collection/create`
 
 **参数**: `CreateCollectionParams`
 ```typescript
@@ -315,7 +315,7 @@ files: [文件内容]
 ### 4.1 删除文档
 **函数**: `deleteDocument(docId)`
 
-**接口**: `DELETE /agent/document/{docId}`
+**接口**: `DELETE /api/agent/document/{docId}`
 
 **参数**:
 - `docId`: string - 文档 ID
@@ -384,10 +384,10 @@ await deleteDocument('doc-id-123');
 
 ## 注意事项
 
-1. **API 路径前缀**: 
-   - Collection 列表接口使用 `/api/collections`
-   - Collection 信息和文档列表接口使用 `/api/agent/` 前缀
-   - 上传接口使用 `/agent/upload`（无 `/api` 前缀）
+1. **API 路径统一**: 
+   - 所有文档管理接口现在统一使用 `/api/` 前缀
+   - Collection 列表: `/api/collections`
+   - 其他接口: `/api/agent/` 前缀
 
 2. **超时设置**: 文档上传接口设置了 60 秒超时时间，适用于大文件上传
 
@@ -409,6 +409,10 @@ await deleteDocument('doc-id-123');
    - 默认向量维度: 1024
    - 默认距离度量: Cosine
    - `vectors_count` 字段可能为 null
+
+9. **GET 请求参数过滤**: 
+   - GET 请求会自动过滤掉 undefined 值，避免请求错误
+   - 只传递有效的查询参数
 
 ---
 
