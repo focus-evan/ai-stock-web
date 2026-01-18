@@ -4,6 +4,7 @@ import type {
 	CollectionListResponse,
 	CreateCollectionParams,
 	CreateCollectionResponse,
+	DocumentDetailResponse,
 	DocumentListResponse,
 	UploadResponse,
 	UploadTaskResponse,
@@ -222,4 +223,15 @@ export function getDocuments(params?: {
  */
 export function deleteDocument(docId: string) {
 	return request.delete(`agent/document/${docId}`).json();
+}
+
+/**
+ * 查询文档详情（包含所有分块）
+ */
+export function getDocumentDetail(docId: string, collectionName: string) {
+	return request
+		.get(`agent/document/${docId}`, {
+			searchParams: { collection_name: collectionName },
+		})
+		.json<DocumentDetailResponse>();
 }

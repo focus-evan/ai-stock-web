@@ -354,6 +354,96 @@ files: [文件内容]
 
 ---
 
+### 3.2 查询文档详情
+**函数**: `getDocumentDetail(docId, collectionName)`
+
+**接口**: `GET /api/agent/document/{docId}`
+
+**查询参数**:
+- `collection_name`: string - Collection 名称（必填）
+
+**路径参数**:
+- `docId`: string - 文档 ID
+
+**响应类型**: `DocumentDetailResponse`
+```typescript
+{
+  status: string
+  doc_id: string
+  file_name: string
+  chunk_count: number
+  chunks: Array<{
+    point_id: string
+    text: string
+    metadata: {
+      _node_type: string
+      creation_date: string
+      doc_id: string
+      document_id: string
+      file_name: string
+      file_path: string
+      file_size: number
+      file_type: string
+      last_modified_date: string
+      ref_doc_id: string
+      [key: string]: any
+    }
+  }>
+  collection_name: string
+}
+```
+
+**请求示例**:
+```
+GET /api/agent/document/3d1c3782-d4e1-448e-a423-1c1d7cffa6db?collection_name=company
+```
+
+**响应示例**:
+```json
+{
+  "status": "success",
+  "doc_id": "3d1c3782-d4e1-448e-a423-1c1d7cffa6db",
+  "file_name": "2022.08.10公司-阿里反垄断如何应对.txt",
+  "chunk_count": 18,
+  "chunks": [
+    {
+      "point_id": "0ba1ff84-d86c-4ec5-a8f4-a7876d4a46f7",
+      "text": "文档内容片段...",
+      "metadata": {
+        "_node_type": "TextNode",
+        "creation_date": "2026-01-18",
+        "doc_id": "3d1c3782-d4e1-448e-a423-1c1d7cffa6db",
+        "document_id": "3d1c3782-d4e1-448e-a423-1c1d7cffa6db",
+        "file_name": "2022.08.10公司-阿里反垄断如何应对.txt",
+        "file_path": "/tmp/tmpgu8rjil2/2022.08.10公司-阿里反垄断如何应对.txt",
+        "file_size": 36888,
+        "file_type": "text/plain",
+        "last_modified_date": "2026-01-18",
+        "ref_doc_id": "3d1c3782-d4e1-448e-a423-1c1d7cffa6db"
+      }
+    }
+  ],
+  "collection_name": "company"
+}
+```
+
+**使用示例**:
+```typescript
+import { getDocumentDetail } from '@/api/document';
+
+// 查询文档详情
+const detail = await getDocumentDetail(
+  '3d1c3782-d4e1-448e-a423-1c1d7cffa6db',
+  'company'
+);
+
+console.log(`文档: ${detail.file_name}`);
+console.log(`分块数: ${detail.chunk_count}`);
+console.log(`分块列表:`, detail.chunks);
+```
+
+---
+
 ## 4. 文档删除接口
 
 ### 4.1 删除文档

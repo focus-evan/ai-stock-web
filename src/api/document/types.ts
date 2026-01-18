@@ -39,6 +39,33 @@ export interface DocumentSummaryItem {
 	chunk_count: number
 }
 
+export interface DocumentChunk {
+	point_id: string
+	text: string
+	metadata: {
+		_node_type: string
+		creation_date: string
+		doc_id: string
+		document_id: string
+		file_name: string
+		file_path: string
+		file_size: number
+		file_type: string
+		last_modified_date: string
+		ref_doc_id: string
+		[key: string]: any
+	}
+}
+
+export interface DocumentDetailResponse {
+	status: string
+	doc_id: string
+	file_name: string
+	chunk_count: number
+	chunks: DocumentChunk[]
+	collection_name: string
+}
+
 export interface DocumentListResponse {
 	status: string
 	collection_name: string
