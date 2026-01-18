@@ -436,6 +436,25 @@ export default function DocumentsPage() {
 							</Descriptions>
 						</Card>
 
+						{/* Vector Configuration */}
+						{documentDetail.vector_config && (
+							<Card size="small" title={t("ai.vectorConfig", { defaultValue: "Vector Configuration" })}>
+								<Descriptions column={1} size="small">
+									<Descriptions.Item label={t("ai.vectorSize", { defaultValue: "Vector Size" })}>
+										<Tag color="purple">{documentDetail.vector_config.vector_size}</Tag>
+									</Descriptions.Item>
+									<Descriptions.Item label={t("ai.distanceMetric", { defaultValue: "Distance Metric" })}>
+										<Tag color="cyan">{documentDetail.vector_config.distance}</Tag>
+									</Descriptions.Item>
+									{documentDetail.vector_config.embedding_model_hint && (
+										<Descriptions.Item label={t("ai.embeddingModel", { defaultValue: "Embedding Model" })}>
+											<Tag color="orange">{documentDetail.vector_config.embedding_model_hint}</Tag>
+										</Descriptions.Item>
+									)}
+								</Descriptions>
+							</Card>
+						)}
+
 						{/* Chunks List */}
 						<Card
 							size="small"

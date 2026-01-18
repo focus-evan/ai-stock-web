@@ -64,6 +64,11 @@ export interface DocumentDetailResponse {
 	chunk_count: number
 	chunks: DocumentChunk[]
 	collection_name: string
+	vector_config?: {
+		vector_size: number
+		distance: string
+		embedding_model_hint?: string
+	}
 }
 
 export interface DocumentListResponse {

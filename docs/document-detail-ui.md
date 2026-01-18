@@ -27,6 +27,11 @@
 - 文件类型
 - 创建日期
 
+**向量配置卡片** (新增):
+- 向量维度 (vector_size)
+- 距离度量 (distance)
+- 嵌入模型 (embedding_model_hint)
+
 **分块列表**:
 - 分块编号（#1, #2, ...）
 - 分块 ID（前 8 位）
@@ -49,6 +54,12 @@
 │  │ File Size: 36.02 KB              │  │
 │  │ File Type: text/plain            │  │
 │  │ Creation Date: 2026-01-18        │  │
+│  └──────────────────────────────────┘  │
+│                                         │
+│  ┌─ Vector Configuration ───────────┐  │
+│  │ Vector Size: 1024                │  │
+│  │ Distance Metric: Cosine          │  │
+│  │ Embedding Model: BAAI/bge-large-zh│ │
 │  └──────────────────────────────────┘  │
 │                                         │
 │  ┌─ Chunks (18) ────────────────────┐  │
@@ -82,6 +93,9 @@
    - Collection: 蓝色
    - 分块数量: 绿色
    - 分块编号: 紫色
+   - 向量维度: 紫色
+   - 距离度量: 青色
+   - 嵌入模型: 橙色
 
 ## 使用流程
 
@@ -239,6 +253,10 @@ const handleViewDetail = (docId: string) => {
   "ai.chunks": "Chunks",
   "ai.noContent": "No content",
   "ai.fetchDetailFailed": "Failed to load document detail",
+  "ai.vectorConfig": "Vector Configuration",
+  "ai.vectorSize": "Vector Size",
+  "ai.distanceMetric": "Distance Metric",
+  "ai.embeddingModel": "Embedding Model",
   "common.view": "View"
 }
 ```
@@ -256,6 +274,10 @@ const handleViewDetail = (docId: string) => {
   "ai.chunks": "分块",
   "ai.noContent": "无内容",
   "ai.fetchDetailFailed": "加载文档详情失败",
+  "ai.vectorConfig": "向量配置",
+  "ai.vectorSize": "向量维度",
+  "ai.distanceMetric": "距离度量",
+  "ai.embeddingModel": "嵌入模型",
   "common.view": "查看"
 }
 ```
