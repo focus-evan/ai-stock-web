@@ -122,21 +122,42 @@ files: [文件内容]
 ## 2. Collection 管理接口
 
 ### 2.1 创建 Collection
-**函数**: `createCollection(name, description?)`
+**函数**: `createCollection(collectionName, options?)`
 
 **接口**: `POST /api/agent/collection/create`
 
 **参数**:
-- `name`: string - Collection 名称
-- `description`: string - 可选的描述
+- `collectionName`: string - Collection 名称（必填）
+- `options`: object - 可选配置
+  - `description`: string - 描述（可选）
+  - `vector_size`: number - 向量维度（可选，默认 1024）
+  - `distance`: "Cosine" | "Euclid" | "Dot" - 距离度量（可选，默认 "Cosine"）
+  - `on_disk`: boolean - 是否存储在磁盘（可选，默认 false）
 
 **请求体**:
 ```json
 {
-  "name": "string",
-  "description": "string"
+  "collection_name": "company",
+  "vector_size": 1024,
+  "distance": "Cosine",
+  "on_disk": false
 }
 ```
+
+**参数说明**:
+- `vector_size`: 向量维度
+  - 384: 小型模型
+  - 768: BERT-base
+  - 1024: 推荐值（默认）
+  - 1536: OpenAI ada-002
+  - 3072: 大型模型
+- `distance`: 距离度量方式
+  - "Cosine": 余弦相似度（推荐，默认）
+  - "Euclid": 欧几里得距离
+  - "Dot": 点积
+- `on_disk`: 存储模式
+  - false: 内存存储（更快，默认）
+  - true: 磁盘存储（更可扩展）
 
 **响应类型**: `CreateCollectionResponse`
 ```typescript
@@ -151,6 +172,19 @@ files: [文件内容]
 }
 ```
 
+**响应示例**:
+```json
+{
+  "status": "success",
+  "message": "Collection created successfully",
+  "collection_name": "company",
+  "config": {
+    "vector_size": 1024,
+    "distance_metric": "Cosine"
+  }
+}
+```
+
 ---
 
 ### 2.2 创建 Collection（参数对象方式）
@@ -161,10 +195,20 @@ files: [文件内容]
 **参数**: `CreateCollectionParams`
 ```typescript
 {
-  collection_name: string
-  vector_size?: number
-  distance?: "Cosine" | "Euclid" | "Dot"
-  on_disk?: boolean
+  collection_name: string        // 必填
+  vector_size?: number          // 可选，默认 1024
+  distance?: "Cosine" | "Euclid" | "Dot"  // 可选，默认 "Cosine"
+  on_disk?: boolean             // 可选，默认 false
+}
+```
+
+**请求体示例**:
+```json
+{
+  "collection_name": "company",
+  "vector_size": 1024,
+  "distance": "Cosine",
+  "on_disk": false
 }
 ```
 

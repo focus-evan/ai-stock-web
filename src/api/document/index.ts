@@ -110,12 +110,27 @@ export function getTaskStatus(task_id: string) {
 }
 
 /**
- * 创建Collection
+ * 创建Collection（使用新的参数格式）
  */
-export function createCollection(name: string, description?: string) {
+export function createCollection(
+	collectionName: string,
+	options?: {
+		description?: string
+		vector_size?: number
+		distance?: "Cosine" | "Euclid" | "Dot"
+		on_disk?: boolean
+	},
+) {
+	const params: CreateCollectionParams = {
+		collection_name: collectionName,
+		vector_size: options?.vector_size || 1024,
+		distance: options?.distance || "Cosine",
+		on_disk: options?.on_disk ?? false,
+	};
+
 	return request
 		.post("agent/collection/create", {
-			json: { name, description },
+			json: params,
 		})
 		.json<CreateCollectionResponse>();
 }
@@ -124,9 +139,17 @@ export function createCollection(name: string, description?: string) {
  * 创建Collection（使用参数对象）
  */
 export function createCollectionWithParams(params: CreateCollectionParams) {
+	// 确保必填字段存在
+	const requestParams: CreateCollectionParams = {
+		collection_name: params.collection_name,
+		vector_size: params.vector_size || 1024,
+		distance: params.distance || "Cosine",
+		on_disk: params.on_disk ?? false,
+	};
+
 	return request
 		.post("agent/collection/create", {
-			json: params,
+			json: requestParams,
 		})
 		.json<CreateCollectionResponse>();
 }

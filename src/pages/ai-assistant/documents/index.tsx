@@ -118,8 +118,19 @@ export default function DocumentsPage() {
 
 	// Create collection
 	const { run: handleCreateCollection, loading: creatingCollection } = useRequest(
-		async (values: { name: string, description?: string }) => {
-			return await createCollection(values.name, values.description);
+		async (values: {
+			name: string
+			description?: string
+			vector_size?: number
+			distance?: "Cosine" | "Euclid" | "Dot"
+			on_disk?: boolean
+		}) => {
+			return await createCollection(values.name, {
+				description: values.description,
+				vector_size: values.vector_size,
+				distance: values.distance,
+				on_disk: values.on_disk,
+			});
 		},
 		{
 			manual: true,
@@ -276,11 +287,17 @@ export default function DocumentsPage() {
 					form.resetFields();
 				}}
 				confirmLoading={creatingCollection}
+				width={600}
 			>
 				<Form
 					form={form}
 					layout="vertical"
 					onFinish={handleCreateCollection}
+					initialValues={{
+						vector_size: 1024,
+						distance: "Cosine",
+						on_disk: false,
+					}}
 				>
 					<Form.Item
 						name="name"
@@ -289,6 +306,7 @@ export default function DocumentsPage() {
 					>
 						<Input placeholder={t("ai.collectionNamePlaceholder", { defaultValue: "Enter collection name" })} />
 					</Form.Item>
+
 					<Form.Item
 						name="description"
 						label={t("ai.description", { defaultValue: "Description" })}
@@ -297,6 +315,43 @@ export default function DocumentsPage() {
 							rows={3}
 							placeholder={t("ai.descriptionPlaceholder", { defaultValue: "Enter description (optional)" })}
 						/>
+					</Form.Item>
+
+					<Form.Item
+						name="vector_size"
+						label={t("ai.vectorSize", { defaultValue: "Vector Size" })}
+						tooltip={t("ai.vectorSizeTooltip", { defaultValue: "Dimension of the vector embeddings (default: 1024)" })}
+					>
+						<Select>
+							<Select.Option value={384}>384 (Small models)</Select.Option>
+							<Select.Option value={768}>768 (BERT-base)</Select.Option>
+							<Select.Option value={1024}>1024 (Recommended)</Select.Option>
+							<Select.Option value={1536}>1536 (OpenAI ada-002)</Select.Option>
+							<Select.Option value={3072}>3072 (Large models)</Select.Option>
+						</Select>
+					</Form.Item>
+
+					<Form.Item
+						name="distance"
+						label={t("ai.distanceMetric", { defaultValue: "Distance Metric" })}
+						tooltip={t("ai.distanceMetricTooltip", { defaultValue: "Method to calculate similarity between vectors" })}
+					>
+						<Select>
+							<Select.Option value="Cosine">Cosine (Recommended)</Select.Option>
+							<Select.Option value="Euclid">Euclidean</Select.Option>
+							<Select.Option value="Dot">Dot Product</Select.Option>
+						</Select>
+					</Form.Item>
+
+					<Form.Item
+						name="on_disk"
+						label={t("ai.storageMode", { defaultValue: "Storage Mode" })}
+						tooltip={t("ai.storageModeTooltip", { defaultValue: "Store vectors on disk to save memory (slower but more scalable)" })}
+					>
+						<Select>
+							<Select.Option value={false}>In Memory (Faster)</Select.Option>
+							<Select.Option value={true}>On Disk (More Scalable)</Select.Option>
+						</Select>
 					</Form.Item>
 				</Form>
 			</Modal>
