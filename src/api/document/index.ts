@@ -64,7 +64,7 @@ export async function uploadDocument(
 	}
 
 	const result = await request
-		.post("api/agent/upload", {
+		.post("agent/upload", {
 			body: formData,
 			searchParams,
 			timeout: 60000, // 60秒超时
@@ -83,7 +83,7 @@ export async function uploadDocument(
  */
 export function uploadDocumentWithFormData(formData: FormData) {
 	return request
-		.post("api/agent/upload", {
+		.post("agent/upload", {
 			body: formData,
 			ignoreLoading: false,
 			timeout: 60000, // 60秒超时
@@ -96,7 +96,7 @@ export function uploadDocumentWithFormData(formData: FormData) {
  */
 export function uploadDocumentAsync(formData: FormData) {
 	return request
-		.post("api/agent/upload/async", {
+		.post("agent/upload/async", {
 			body: formData,
 		})
 		.json<UploadTaskResponse>();
@@ -106,7 +106,7 @@ export function uploadDocumentAsync(formData: FormData) {
  * 查询上传任务状态
  */
 export function getTaskStatus(task_id: string) {
-	return request.get(`api/agent/task/${task_id}`).json<TaskResponse>();
+	return request.get(`agent/task/${task_id}`).json<TaskResponse>();
 }
 
 /**
@@ -114,7 +114,7 @@ export function getTaskStatus(task_id: string) {
  */
 export function createCollection(name: string, description?: string) {
 	return request
-		.post("api/agent/collection/create", {
+		.post("agent/collection/create", {
 			json: { name, description },
 		})
 		.json<CreateCollectionResponse>();
@@ -125,7 +125,7 @@ export function createCollection(name: string, description?: string) {
  */
 export function createCollectionWithParams(params: CreateCollectionParams) {
 	return request
-		.post("api/agent/collection/create", {
+		.post("agent/collection/create", {
 			json: params,
 		})
 		.json<CreateCollectionResponse>();
@@ -136,7 +136,7 @@ export function createCollectionWithParams(params: CreateCollectionParams) {
  */
 export function getCollectionInfo(collection_name: string = "base") {
 	return request
-		.get("api/agent/collection-info", {
+		.get("agent/collection-info", {
 			searchParams: { collection_name },
 		})
 		.json<CollectionInfo>();
@@ -163,7 +163,7 @@ export function getCollectionDocuments(params?: {
 	}
 
 	return request
-		.get("api/agent/collection/documents", {
+		.get("agent/collection/documents", {
 			searchParams: filteredParams,
 		})
 		.json<DocumentListResponse>();
@@ -173,7 +173,7 @@ export function getCollectionDocuments(params?: {
  * 查询所有Collections
  */
 export function getAllCollections() {
-	return request.get("api/collections").json<CollectionListResponse>();
+	return request.get("collections").json<CollectionListResponse>();
 }
 
 /**
@@ -198,5 +198,5 @@ export function getDocuments(params?: {
  * 删除文档
  */
 export function deleteDocument(docId: string) {
-	return request.delete(`api/agent/document/${docId}`).json();
+	return request.delete(`agent/document/${docId}`).json();
 }

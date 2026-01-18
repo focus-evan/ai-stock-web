@@ -384,10 +384,12 @@ await deleteDocument('doc-id-123');
 
 ## 注意事项
 
-1. **API 路径统一**: 
-   - 所有文档管理接口现在统一使用 `/api/` 前缀
-   - Collection 列表: `/api/collections`
-   - 其他接口: `/api/agent/` 前缀
+1. **API 路径规则**: 
+   - 项目配置了 `VITE_API_BASE_URL = "/api"`，所有请求会自动添加 `/api` 前缀
+   - 代码中的路径不需要再加 `api/` 前缀
+   - 实际请求路径 = `/api/` + 代码中的路径
+   - 例如：代码中 `collections` → 实际请求 `/api/collections`
+   - 例如：代码中 `agent/upload` → 实际请求 `/api/agent/upload`
 
 2. **超时设置**: 文档上传接口设置了 60 秒超时时间，适用于大文件上传
 
