@@ -4,13 +4,14 @@ import {
 	createCollection,
 	deleteDocument,
 	getCollections,
+	getDocumentDetail,
 	getDocuments,
 	uploadDocument,
-
 } from "#src/api/document";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	DeleteOutlined,
+	EyeOutlined,
 	FileTextOutlined,
 	FolderOutlined,
 	PlusOutlined,
@@ -21,8 +22,11 @@ import { useRequest } from "ahooks";
 import {
 	Button,
 	Card,
+	Descriptions,
+	Drawer,
 	Form,
 	Input,
+	List,
 	message,
 	Modal,
 	Popconfirm,
@@ -30,6 +34,7 @@ import {
 	Select,
 	Space,
 	Table,
+	Tag,
 	Upload,
 } from "antd";
 import { useState } from "react";
@@ -41,6 +46,7 @@ export default function DocumentsPage() {
 	const [selectedCollection, setSelectedCollection] = useState<string>("");
 	const [isCollectionModalOpen, setIsCollectionModalOpen] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+	const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
 
 	// Fetch collections
 	const {
@@ -147,6 +153,28 @@ export default function DocumentsPage() {
 		},
 	);
 
+	// Get document detail
+	const {
+		data: documentDetail,
+		loading: detailLoading,
+		run: fetchDocumentDetail,
+	} = useRequest(
+		(docId: string) => getDocumentDetail(docId, selectedCollection),
+		{
+			manual: true,
+			onError: (error) => {
+				message.error(t("ai.fetchDetailFailed", { defaultValue: "Failed to load document detail" }));
+				console.error("Fetch detail error:", error);
+			},
+		},
+	);
+
+	// Handle view document detail
+	const handleViewDetail = (docId: string) => {
+		setIsDetailDrawerOpen(true);
+		fetchDocumentDetail(docId);
+	};
+
 	const uploadProps: UploadProps = {
 		beforeUpload: (file) => {
 			if (!selectedCollection) {
@@ -188,14 +216,23 @@ export default function DocumentsPage() {
 			title: t("common.action", { defaultValue: "Action" }),
 			key: "action",
 			render: (_: any, record: any) => (
-				<Popconfirm
-					title={t("ai.confirmDelete", { defaultValue: "Are you sure to delete this document?" })}
-					onConfirm={() => handleDelete(record.doc_id)}
-				>
-					<Button type="link" danger icon={<DeleteOutlined />}>
-						{t("common.delete", { defaultValue: "Delete" })}
+				<Space>
+					<Button
+						type="link"
+						icon={<EyeOutlined />}
+						onClick={() => handleViewDetail(record.doc_id)}
+					>
+						{t("common.view", { defaultValue: "View" })}
 					</Button>
-				</Popconfirm>
+					<Popconfirm
+						title={t("ai.confirmDelete", { defaultValue: "Are you sure to delete this document?" })}
+						onConfirm={() => handleDelete(record.doc_id)}
+					>
+						<Button type="link" danger icon={<DeleteOutlined />}>
+							{t("common.delete", { defaultValue: "Delete" })}
+						</Button>
+					</Popconfirm>
+				</Space>
 			),
 		},
 	];
@@ -355,6 +392,120 @@ export default function DocumentsPage() {
 					</Form.Item>
 				</Form>
 			</Modal>
+
+			{/* Document Detail Drawer */}
+			<Drawer
+				title={t("ai.documentDetail", { defaultValue: "Document Detail" })}
+				open={isDetailDrawerOpen}
+				onClose={() => setIsDetailDrawerOpen(false)}
+				width={800}
+				loading={detailLoading}
+			>
+				{documentDetail && (
+					<Space direction="vertical" style={{ width: "100%" }} size="large">
+						{/* Document Info */}
+						<Card size="small" title={t("ai.basicInfo", { defaultValue: "Basic Information" })}>
+							<Descriptions column={1} size="small">
+								<Descriptions.Item label={t("ai.fileName", { defaultValue: "File Name" })}>
+									{documentDetail.file_name}
+								</Descriptions.Item>
+								<Descriptions.Item label={t("ai.documentId", { defaultValue: "Document ID" })}>
+									<code style={{ fontSize: 12 }}>{documentDetail.doc_id}</code>
+								</Descriptions.Item>
+								<Descriptions.Item label={t("ai.collection", { defaultValue: "Collection" })}>
+									<Tag color="blue">{documentDetail.collection_name}</Tag>
+								</Descriptions.Item>
+								<Descriptions.Item label={t("ai.chunkCount", { defaultValue: "Chunks" })}>
+									<Tag color="green">{documentDetail.chunk_count}</Tag>
+								</Descriptions.Item>
+								{documentDetail.chunks[0]?.metadata && (
+									<>
+										<Descriptions.Item label={t("ai.fileSize", { defaultValue: "File Size" })}>
+											{(documentDetail.chunks[0].metadata.file_size / 1024).toFixed(2)}
+											{" "}
+											KB
+										</Descriptions.Item>
+										<Descriptions.Item label={t("ai.fileType", { defaultValue: "File Type" })}>
+											{documentDetail.chunks[0].metadata.file_type}
+										</Descriptions.Item>
+										<Descriptions.Item label={t("ai.creationDate", { defaultValue: "Creation Date" })}>
+											{documentDetail.chunks[0].metadata.creation_date}
+										</Descriptions.Item>
+									</>
+								)}
+							</Descriptions>
+						</Card>
+
+						{/* Chunks List */}
+						<Card
+							size="small"
+							title={(
+								<Space>
+									<FileTextOutlined />
+									{t("ai.chunks", { defaultValue: "Chunks" })}
+									<Tag color="blue">{documentDetail.chunks.length}</Tag>
+								</Space>
+							)}
+						>
+							<List
+								dataSource={documentDetail.chunks}
+								renderItem={(chunk, index) => (
+									<List.Item key={chunk.point_id}>
+										<List.Item.Meta
+											title={(
+												<Space>
+													<Tag color="purple">
+														#
+														{index + 1}
+													</Tag>
+													<span style={{ fontSize: 12, color: "#999" }}>
+														ID:
+														{" "}
+														{chunk.point_id.substring(0, 8)}
+														...
+													</span>
+												</Space>
+											)}
+											description={(
+												<div>
+													{chunk.text
+														? (
+															<div
+																style={{
+																	padding: 12,
+																	background: "#f5f5f5",
+																	borderRadius: 4,
+																	marginTop: 8,
+																	whiteSpace: "pre-wrap",
+																	wordBreak: "break-word",
+																	maxHeight: 200,
+																	overflow: "auto",
+																}}
+															>
+																{chunk.text}
+															</div>
+														)
+														: (
+															<div style={{ color: "#999", fontStyle: "italic" }}>
+																{t("ai.noContent", { defaultValue: "No content" })}
+															</div>
+														)}
+												</div>
+											)}
+										/>
+									</List.Item>
+								)}
+								pagination={{
+									pageSize: 5,
+									size: "small",
+									showSizeChanger: true,
+									showTotal: total => t("common.total", { defaultValue: `Total ${total} items`, total }),
+								}}
+							/>
+						</Card>
+					</Space>
+				)}
+			</Drawer>
 		</BasicContent>
 	);
 }
