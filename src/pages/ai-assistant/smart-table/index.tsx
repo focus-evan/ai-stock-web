@@ -6,6 +6,8 @@ import { useRequest } from "ahooks";
 import { Button, Card, Col, Empty, Input, message, Row, Spin, Statistic } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./styles.css";
 
 const { TextArea } = Input;
@@ -334,9 +336,21 @@ export default function SmartTablePage() {
 										{msg.role === "user" ? <UserOutlined /> : <RobotOutlined />}
 									</div>
 									<div className="qa-message-content">
-										<div className="qa-message-text" style={{ whiteSpace: "pre-wrap" }}>
-											{msg.content}
-										</div>
+										{msg.role === "assistant"
+											? (
+												<div className="qa-message-text qa-message-text-markdown">
+													<ReactMarkdown
+														remarkPlugins={[remarkGfm]}
+													>
+														{msg.content}
+													</ReactMarkdown>
+												</div>
+											)
+											: (
+												<div className="qa-message-text" style={{ whiteSpace: "pre-wrap" }}>
+													{msg.content}
+												</div>
+											)}
 										{msg.tableData && renderTableData(msg.tableData)}
 										{msg.metadata && (
 											<div className="qa-message-metadata">
