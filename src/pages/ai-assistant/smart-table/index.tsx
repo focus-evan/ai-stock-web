@@ -308,7 +308,7 @@ export default function SmartTablePage() {
 				title={(
 					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 						<TableOutlined />
-						{t("ai.smartTable", { defaultValue: "智能表格" })}
+						{t("ai.smartTable", { defaultValue: "财富三张表互动Demo-大脑能力" })}
 					</div>
 				)}
 				extra={(
@@ -381,7 +381,8 @@ export default function SmartTablePage() {
 							value={inputValue}
 							onChange={e => setInputValue(e.target.value)}
 							onKeyPress={handleKeyPress}
-							placeholder={t("ai.tableInputPlaceholder", { defaultValue: "请输入您的财务信息..." })}
+							// 默认不展示具体提示词，由上方交互引导
+							placeholder={t("ai.tableInputPlaceholder", { defaultValue: "" })}
 							autoSize={{ minRows: 1, maxRows: 4 }}
 							disabled={loading}
 							style={{ flex: 1 }}
