@@ -65,11 +65,13 @@
 }
 
 .qa-message-user {
-	flex-direction: row-reverse;
+	/* 用户在左侧 */
+	flex-direction: row;
 }
 
 .qa-message-assistant {
-	flex-direction: row;
+	/* Agent 在右侧 */
+	flex-direction: row-reverse;
 }
 
 .qa-message-avatar {
@@ -86,13 +88,13 @@
 .qa-message-user .qa-message-avatar {
 	background: #1890ff;
 	color: white;
-	margin-left: 12px;
+	margin-right: 12px;
 }
 
 .qa-message-assistant .qa-message-avatar {
 	background: #52c41a;
 	color: white;
-	margin-right: 12px;
+	margin-left: 12px;
 }
 
 .qa-message-content {
@@ -111,13 +113,13 @@
 .qa-message-user .qa-message-text {
 	background: #1890ff;
 	color: white;
-	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
 }
 
 .qa-message-assistant .qa-message-text {
 	background: white;
 	border: 1px solid #e8e8e8;
-	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
 }
 
 .qa-message-time {
@@ -127,7 +129,7 @@
 	padding: 0 4px;
 }
 
-.qa-message-user .qa-message-time {
+.qa-message-assistant .qa-message-time {
 	text-align: right;
 }
 
