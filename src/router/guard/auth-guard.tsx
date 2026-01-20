@@ -42,7 +42,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 	const getUserInfo = useUserStore(state => state.getUserInfo);
 	const userRoles = useUserStore(state => state.roles);
 	const { setAccessStore, isAccessChecked, routeList } = useAccessStore();
-	const { enableBackendAccess, enableFrontendAceess } = usePreferencesStore(state => state);
+	const { enableBackendAccess } = usePreferencesStore(state => state);
 
 	const isPathInNoLoginWhiteList = noLoginWhiteList.includes(pathname);
 
@@ -108,9 +108,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 			 * @zh 启用了前端路由
 			 * @en If frontend routing is enabled
 			 */
-			if (enableFrontendAceess) {
-				routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
-			}
+			routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
 
 			const uniqueRoutes = removeDuplicateRoutes(routes);
 			setAccessStore(uniqueRoutes);
