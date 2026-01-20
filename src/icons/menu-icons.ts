@@ -23,6 +23,7 @@ import {
 	StockOutlined,
 	SubnodeOutlined,
 	SyncOutlined,
+	TableOutlined,
 	TeamOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
@@ -66,4 +67,5 @@ export const menuIcons: Record<string, any> = {
 	DatabaseOutlined,
 	DashboardOutlined,
 	SyncOutlined,
+	TableOutlined,
 };
