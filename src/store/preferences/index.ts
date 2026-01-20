@@ -17,7 +17,7 @@ export const DEFAULT_PREFERENCES = {
 	enableBackTopButton: true,
 	pageLayout: "layout-right",
 	enableBackendAccess: true,
-	enableFrontendAceess: false,
+	enableFrontendAceess: true,
 	language: "zh-CN",
 	enableDynamicTitle: true,
 	enableCheckUpdates: true,
