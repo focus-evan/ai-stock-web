@@ -325,7 +325,7 @@ export default function SmartTablePage() {
 					{messages.length === 0
 						? (
 							<Empty
-								description={t("ai.startTableInput", { defaultValue: "开始填写财务规划表格" })}
+								description={t("ai.startTableInput", { defaultValue: "跟我一起完成财富三张表，你可以从跟我说：『S老师，你好』开始" })}
 								style={{ marginTop: "20%" }}
 							/>
 						)
