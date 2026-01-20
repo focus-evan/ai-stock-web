@@ -33,7 +33,8 @@ export default function SmartTablePage() {
 	const { t } = useTranslation();
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [inputValue, setInputValue] = useState("");
-	const [sessionId, setSessionId] = useState<string>("");
+	// 为了兼容第三方接口要求，session_id 需要始终有值，首次请求也带上
+	const [sessionId, setSessionId] = useState<string>(() => `session_${Date.now()}`);
 	const [userId] = useState<string>(() => `user_${Date.now()}`);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +42,8 @@ export default function SmartTablePage() {
 		async (question: string) => {
 			const params: TableInputParams = {
 				question,
-				session_id: sessionId || undefined,
+				// 第三方接口期望始终存在 session_id 字段，这里强制携带
+				session_id: sessionId,
 				user_id: userId,
 				similarity_top_k: 3,
 			};
@@ -51,7 +53,7 @@ export default function SmartTablePage() {
 			manual: true,
 			onSuccess: (data: TableInputResponse) => {
 				// Update session ID
-				if (data.session_id && !sessionId) {
+				if (data.session_id) {
 					setSessionId(data.session_id);
 				}
 
