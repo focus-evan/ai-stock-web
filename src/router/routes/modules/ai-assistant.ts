@@ -5,6 +5,7 @@ import { aiAssistant } from "#src/router/extra-info";
 import { lazy } from "react";
 
 const QA = lazy(() => import("#src/pages/ai-assistant/qa"));
+const SmartTable = lazy(() => import("#src/pages/ai-assistant/smart-table"));
 const Documents = lazy(() => import("#src/pages/ai-assistant/documents"));
 const Sessions = lazy(() => import("#src/pages/ai-assistant/sessions"));
 
@@ -24,6 +25,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "CommentOutlined",
 					title: "智能问答",
+				},
+			},
+			{
+				path: "/ai-assistant/smart-table",
+				Component: SmartTable,
+				handle: {
+					icon: "TableOutlined",
+					title: "智能表格",
 				},
 			},
 			{

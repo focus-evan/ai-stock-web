@@ -1,0 +1,41 @@
+/* Smart Table Page Styles */
+
+.table-data-container {
+	margin-top: 16px;
+	padding: 16px;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	border-radius: 8px;
+	border: 1px solid #e8e8e8;
+}
+
+.table-header {
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	color: #1890ff;
+	margin-bottom: 8px;
+}
+
+.next-question {
+	margin-top: 16px;
+	padding: 12px;
+	background: #fff3cd;
+	border-left: 4px solid #ffc107;
+	border-radius: 4px;
+	color: #856404;
+}
+
+.qa-message-metadata {
+	display: flex;
+	gap: 12px;
+	margin-top: 8px;
+	padding: 8px;
+	background: #f5f5f5;
+	border-radius: 4px;
+	font-size: 12px;
+	color: #666;
+}
+
+.qa-message-metadata span {
+	display: inline-block;
+}

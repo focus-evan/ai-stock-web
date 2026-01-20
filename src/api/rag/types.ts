@@ -68,3 +68,25 @@ export interface SimpleSearchResponse {
 	results: SearchResult[]
 	total: number
 }
+
+/**
+ * Table Input API types
+ */
+export interface TableInputParams {
+	question: string
+	session_id?: string
+	user_id?: string
+	similarity_top_k?: number
+}
+
+export interface TableInputResponse {
+	request_id: string
+	session_id: string
+	user_id: string
+	answer: string
+	reference_docs: any[]
+	prompt_tokens: number
+	completion_tokens: number
+	response_time_ms: number
+	model_name: string
+}

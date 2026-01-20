@@ -94,3 +94,17 @@ export function simpleSearch(params: { query: string, collection_name?: string, 
 		})
 		.json<SimpleSearchResponse>();
 }
+
+/**
+ * 智能表格输入
+ * 超时时间：3分钟（AI推理需要较长时间）
+ */
+export function tableInput(params: import("./types").TableInputParams) {
+	return request
+		.post("rag/table/input", {
+			json: params,
+			ignoreLoading: false,
+			timeout: 180000, // 3分钟
+		})
+		.json<import("./types").TableInputResponse>();
+}
