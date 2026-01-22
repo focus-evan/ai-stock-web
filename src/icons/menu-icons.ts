@@ -5,6 +5,7 @@ import {
 	CommentOutlined,
 	ContainerOutlined,
 	CopyrightOutlined,
+	CreditCardOutlined,
 	DashboardOutlined,
 	DatabaseOutlined,
 	EyeOutlined,
@@ -14,6 +15,7 @@ import {
 	LineChartOutlined,
 	LockOutlined,
 	MenuOutlined,
+	MessageOutlined,
 	NodeExpandOutlined,
 	RiseOutlined,
 	RobotOutlined,
@@ -68,4 +70,6 @@ export const menuIcons: Record<string, any> = {
 	DashboardOutlined,
 	SyncOutlined,
 	TableOutlined,
+	MessageOutlined,
+	CreditCardOutlined,
 };

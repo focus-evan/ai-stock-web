@@ -119,6 +119,12 @@ export default defineConfig({
 				secure: false, // 忽略 SSL 证书验证
 				rewrite: path => path.replace(/^\/api/, ""),
 			},
+			"/api/agent/free": {
+				target: "https://agents-test.baozangshijie.cn:8443",
+				changeOrigin: true,
+				secure: false, // 忽略 SSL 证书验证
+				rewrite: path => path.replace(/^\/api/, ""),
+			},
 			"/api": {
 				target: "http://121.196.147.222:8000",
 				changeOrigin: true,
