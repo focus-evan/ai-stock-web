@@ -24,7 +24,7 @@ interface AccessState {
 /**
  * 菜单显示配置（允许列表）：控制最终在侧边菜单中展示哪些菜单
  * - 一级菜单：只展示 AI 助手
- * - AI 助手下：展示「财富三张表互动Demo-大脑能力」、「自由问答」、「自由卡片问答」
+ * - AI 助手下：展示「财富三张表互动Demo-大脑能力」、「自由问答」（已合并卡片问答功能）
  *
  * 说明：即使后端动态菜单返回了「智能问答/文档管理/会话管理」，这里也会统一过滤掉。
  */
@@ -32,7 +32,6 @@ const MENU_ALLOWLIST: Record<string, true | Record<string, true>> = {
 	"/ai-assistant": {
 		"/ai-assistant/smart-table": true,
 		"/ai-assistant/free-style": true,
-		"/ai-assistant/free-style-cards": true,
 	},
 };
 
