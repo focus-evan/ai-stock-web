@@ -117,14 +117,18 @@ export interface FreeStyleResponse {
  */
 export interface FreeStyleCard {
 	type: "ConclusionCard" | "ReasonCard" | "NextStepCard" | "QuestionCard" | string
-	content: string
+	title?: string | null
+	confidence_tag?: "HIGH" | "MEDIUM" | "LOW" | string | null
+	reasons?: string[] | null
+	action?: string | null
+	what_to_check?: string | null
+	question?: string | null
 }
 
 export interface FreeStyleCardsResponse {
 	request_id: string
 	session_id: string
 	user_id: string
-	answer: string
 	cards: FreeStyleCard[]
 	prompt_tokens: number
 	completion_tokens: number
