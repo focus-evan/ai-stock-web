@@ -90,3 +90,44 @@ export interface TableInputResponse {
 	response_time_ms: number
 	model_name: string
 }
+
+/**
+ * Free Style API types (自由问答)
+ */
+export interface FreeStyleParams {
+	question: string
+	session_id?: string
+	user_id?: string
+	similarity_top_k?: number
+}
+
+export interface FreeStyleResponse {
+	request_id: string
+	session_id: string
+	user_id: string
+	answer: string
+	prompt_tokens: number
+	completion_tokens: number
+	response_time_ms: number
+	model_name: string
+}
+
+/**
+ * Free Style Cards API types (自由卡片问答)
+ */
+export interface FreeStyleCard {
+	type: "ConclusionCard" | "ReasonCard" | "NextStepCard" | "QuestionCard" | string
+	content: string
+}
+
+export interface FreeStyleCardsResponse {
+	request_id: string
+	session_id: string
+	user_id: string
+	answer: string
+	cards: FreeStyleCard[]
+	prompt_tokens: number
+	completion_tokens: number
+	response_time_ms: number
+	model_name: string
+}

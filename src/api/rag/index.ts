@@ -108,3 +108,31 @@ export function tableInput(params: import("./types").TableInputParams) {
 		})
 		.json<import("./types").TableInputResponse>();
 }
+
+/**
+ * 自由问答
+ * 超时时间：3分钟（AI推理需要较长时间）
+ */
+export function freeStyle(params: import("./types").FreeStyleParams) {
+	return request
+		.post("agent/free/style", {
+			json: params,
+			ignoreLoading: false,
+			timeout: 180000, // 3分钟
+		})
+		.json<import("./types").FreeStyleResponse>();
+}
+
+/**
+ * 自由卡片问答
+ * 超时时间：3分钟（AI推理需要较长时间）
+ */
+export function freeStyleCards(params: import("./types").FreeStyleParams) {
+	return request
+		.post("agent/free/style/cards", {
+			json: params,
+			ignoreLoading: false,
+			timeout: 180000, // 3分钟
+		})
+		.json<import("./types").FreeStyleCardsResponse>();
+}

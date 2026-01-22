@@ -8,12 +8,16 @@ const QA = lazy(() => import("#src/pages/ai-assistant/qa"));
 const SmartTable = lazy(() => import("#src/pages/ai-assistant/smart-table"));
 const Documents = lazy(() => import("#src/pages/ai-assistant/documents"));
 const Sessions = lazy(() => import("#src/pages/ai-assistant/sessions"));
+const FreeStyle = lazy(() => import("#src/pages/ai-assistant/free-style"));
+const FreeStyleCards = lazy(() => import("#src/pages/ai-assistant/free-style-cards"));
 
 // 菜单显示配置：通过该配置控制是否展示 AI 助手各子菜单
-// 当前默认只展示「财富三张表互动Demo-大脑能力」（智能表格）
+// 当前默认只展示「财富三张表互动Demo-大脑能力」（智能表格）、「自由问答」、「自由卡片问答」
 const aiAssistantMenuConfig = {
 	showQA: false,
 	showSmartTable: true,
+	showFreeStyle: true,
+	showFreeStyleCards: true,
 	showDocuments: false,
 	showSessions: false,
 } satisfies Record<string, boolean>;
@@ -48,6 +52,30 @@ const routes: AppRouteRecordRaw[] = [
 					handle: {
 						icon: "TableOutlined",
 						title: "财富三张表互动Demo-大脑能力",
+					},
+				}] as AppRouteRecordRaw[]
+				: []),
+
+			// 自由问答
+			...(aiAssistantMenuConfig.showFreeStyle
+				? [{
+					path: "/ai-assistant/free-style",
+					Component: FreeStyle,
+					handle: {
+						icon: "MessageOutlined",
+						title: "自由问答",
+					},
+				}] as AppRouteRecordRaw[]
+				: []),
+
+			// 自由卡片问答
+			...(aiAssistantMenuConfig.showFreeStyleCards
+				? [{
+					path: "/ai-assistant/free-style-cards",
+					Component: FreeStyleCards,
+					handle: {
+						icon: "CreditCardOutlined",
+						title: "自由卡片问答",
 					},
 				}] as AppRouteRecordRaw[]
 				: []),
