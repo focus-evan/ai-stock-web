@@ -129,7 +129,7 @@ export function freeStyle(params: import("./types").FreeStyleParams) {
  */
 export function freeStyleCards(params: import("./types").FreeStyleParams) {
 	return request
-		.post("agent/free/style/cards", {
+		.post("agent/free/style/cards/online", {
 			json: params,
 			ignoreLoading: false,
 			timeout: 180000, // 3分钟
