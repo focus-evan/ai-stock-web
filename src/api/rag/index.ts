@@ -115,7 +115,7 @@ export function tableInput(params: import("./types").TableInputParams) {
  */
 export function freeStyle(params: import("./types").FreeStyleParams) {
 	return request
-		.post("agent/free/style", {
+		.post("agent/free/style/online", {
 			json: params,
 			ignoreLoading: false,
 			timeout: 180000, // 3分钟
