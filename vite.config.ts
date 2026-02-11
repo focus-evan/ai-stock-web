@@ -114,13 +114,13 @@ export default defineConfig({
 		// https://vitejs.dev/config/server-options#server-proxy
 		proxy: {
 			"/api/rag": {
-				target: "https://agents-test.baozangshijie.cn:8443",
+				target: "https://agents.baozangshijie.cn:8443",
 				changeOrigin: true,
 				secure: false, // 忽略 SSL 证书验证
 				rewrite: path => path.replace(/^\/api/, ""),
 			},
 			"/api/agent/free": {
-				target: "https://agents-test.baozangshijie.cn:8443",
+				target: "https://agents.baozangshijie.cn:8443",
 				changeOrigin: true,
 				secure: false, // 忽略 SSL 证书验证
 				rewrite: path => path.replace(/^\/api/, ""),
