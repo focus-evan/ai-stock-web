@@ -12,14 +12,13 @@ const FreeStyle = lazy(() => import("#src/pages/ai-assistant/free-style"));
 const FreeStyleCards = lazy(() => import("#src/pages/ai-assistant/free-style-cards"));
 
 // 菜单显示配置：通过该配置控制是否展示 AI 助手各子菜单
-// 当前默认只展示「财富三张表互动Demo-大脑能力」（智能表格）、「自由问答」（已合并卡片问答功能）
 const aiAssistantMenuConfig = {
-	showQA: false,
+	showQA: true,
 	showSmartTable: true,
 	showFreeStyle: true,
-	showFreeStyleCards: false, // 已合并到自由问答页面
-	showDocuments: false,
-	showSessions: false,
+	showFreeStyleCards: true,
+	showDocuments: true,
+	showSessions: true,
 } satisfies Record<string, boolean>;
 
 const routes: AppRouteRecordRaw[] = [
