@@ -14,7 +14,6 @@ const routes: AppRouteRecordRaw[] = [
 			icon: "StockOutlined",
 			title: "IPO数据",
 			order: ipo,
-			roles: ["admin", "user"],
 		},
 		children: [
 			{
@@ -23,7 +22,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "UnorderedListOutlined",
 					title: "IPO列表",
-					roles: ["admin", "user"],
 				},
 			},
 		],

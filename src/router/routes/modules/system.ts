@@ -20,7 +20,6 @@ const routes: AppRouteRecordRaw[] = [
 			icon: "SettingOutlined",
 			title: "系统管理",
 			order: system,
-			roles: ["admin"],
 		},
 		children: [
 			{
@@ -29,7 +28,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "UserOutlined",
 					title: "用户管理",
-					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
 						"permission:button:update",
@@ -43,7 +41,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "TeamOutlined",
 					title: "角色管理",
-					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
 						"permission:button:update",
@@ -57,7 +54,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "MenuOutlined",
 					title: "菜单管理",
-					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
 						"permission:button:update",
@@ -72,7 +68,6 @@ const routes: AppRouteRecordRaw[] = [
 					keepAlive: false,
 					icon: "ApartmentOutlined",
 					title: "部门管理",
-					roles: ["admin"],
 					permissions: [
 						"permission:button:add",
 						"permission:button:update",
@@ -86,7 +81,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "SyncOutlined",
 					title: "数据同步",
-					roles: ["admin"],
 				},
 			},
 			{
@@ -95,7 +89,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "DatabaseOutlined",
 					title: "缓存管理",
-					roles: ["admin"],
 				},
 			},
 			{
@@ -104,7 +97,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "DashboardOutlined",
 					title: "系统监控",
-					roles: ["admin"],
 				},
 			},
 		],
