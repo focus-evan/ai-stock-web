@@ -3,7 +3,7 @@
 ###############################################################################
 # 开发环境启动脚本
 # 用途: 在开发环境启动项目，支持后台运行
-# 使用方法: 
+# 使用方法:
 #   ./dev.sh start   - 启动开发服务器（后台运行）
 #   ./dev.sh stop    - 停止开发服务器
 #   ./dev.sh restart - 重启开发服务器
@@ -16,7 +16,7 @@ set -e
 # 配置
 PID_FILE="dev.pid"
 LOG_FILE="dev.log"
-PORT=3333
+PORT=6666
 
 # 颜色定义
 RED='\033[0;31m'
@@ -52,15 +52,15 @@ get_server_ip() {
     if command -v hostname &> /dev/null; then
         SERVER_IP=$(hostname -I 2>/dev/null | awk '{print $1}')
     fi
-    
+
     if [ -z "$SERVER_IP" ]; then
         SERVER_IP=$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d/ -f1 | head -1)
     fi
-    
+
     if [ -z "$SERVER_IP" ]; then
         SERVER_IP="localhost"
     fi
-    
+
     echo "$SERVER_IP"
 }
 
@@ -83,15 +83,15 @@ start_server() {
         exit 1
     fi
 
-    
+
     clear
-    
+
     echo ""
     log_header "=========================================="
     log_header "  财务数据平台 - 开发环境启动"
     log_header "=========================================="
     echo ""
-    
+
     # 1. 检查 Node.js
     log_info "检查 Node.js 环境..."
     if ! command -v node &> /dev/null; then
@@ -100,7 +100,7 @@ start_server() {
     fi
     NODE_VERSION=$(node -v)
     log_success "Node.js 版本: ${NODE_VERSION}"
-    
+
     # 2. 检查包管理器
     log_info "检查包管理器..."
     if command -v pnpm &> /dev/null; then
@@ -115,7 +115,7 @@ start_server() {
         log_error "未找到包管理器 (npm/pnpm)"
         exit 1
     fi
-    
+
     # 3. 检查依赖
     log_info "检查项目依赖..."
     if [ ! -d "node_modules" ]; then
@@ -125,7 +125,7 @@ start_server() {
     else
         log_success "依赖已安装"
     fi
-    
+
     # 4. 检查环境变量文件
     log_info "检查环境配置..."
     if [ -f ".env" ]; then
@@ -133,7 +133,7 @@ start_server() {
     else
         log_warning ".env 文件不存在，使用默认配置"
     fi
-    
+
     # 5. 检查文档管理配置
     log_info "检查文档管理 API 配置..."
     if [ -f "fake/document.fake.ts" ]; then
@@ -142,7 +142,7 @@ start_server() {
     else
         log_success "文档管理将使用真实后端 API"
     fi
-    
+
     # 6. 检查端口占用
     log_info "检查端口 ${PORT}..."
     if command -v lsof &> /dev/null; then
@@ -172,10 +172,10 @@ start_server() {
     else
         log_info "无法检查端口占用（跳过）"
     fi
-    
+
     # 7. 获取服务器 IP
     SERVER_IP=$(get_server_ip)
-    
+
     # 8. 显示配置信息
     echo ""
     log_header "=========================================="
@@ -201,23 +201,23 @@ start_server() {
     echo ""
     log_header "=========================================="
     echo ""
-    
+
     # 9. 启动开发服务器（后台运行）
     log_info "启动开发服务器（后台运行）..."
-    
+
     # 清空旧日志
     > "$LOG_FILE"
-    
+
     # 使用 nohup 后台运行
     nohup $PKG_MANAGER run dev > "$LOG_FILE" 2>&1 &
-    
+
     # 保存 PID
     echo $! > "$PID_FILE"
-    
+
     # 等待服务器启动
     log_info "等待服务器启动..."
     sleep 3
-    
+
     # 检查是否启动成功
     if is_running; then
         log_success "开发服务器已启动！"
@@ -234,7 +234,7 @@ start_server() {
         echo "  - 停止服务: ./dev.sh stop"
         echo "  - 重启服务: ./dev.sh restart"
         echo ""
-        
+
         # 显示最近的日志
         log_info "最近日志:"
         tail -20 "$LOG_FILE"
@@ -251,13 +251,13 @@ stop_server() {
         log_warning "开发服务器未运行"
         exit 1
     fi
-    
+
     PID=$(cat "$PID_FILE")
     log_info "停止开发服务器 (PID: $PID)..."
-    
+
     # 尝试优雅停止
     kill "$PID" 2>/dev/null || true
-    
+
     # 等待进程结束
     for i in {1..10}; do
         if ! ps -p "$PID" > /dev/null 2>&1; then
@@ -265,16 +265,16 @@ stop_server() {
         fi
         sleep 1
     done
-    
+
     # 如果还在运行，强制终止
     if ps -p "$PID" > /dev/null 2>&1; then
         log_warning "进程未响应，强制终止..."
         kill -9 "$PID" 2>/dev/null || true
     fi
-    
+
     # 清理 PID 文件
     rm -f "$PID_FILE"
-    
+
     log_success "开发服务器已停止"
 }
 
@@ -289,7 +289,7 @@ show_status() {
         echo "  访问地址:   http://$(get_server_ip):${PORT}"
         echo "  日志文件:   ${LOG_FILE}"
         echo ""
-        
+
         # 显示进程信息
         if command -v ps &> /dev/null; then
             log_info "进程信息:"
@@ -297,7 +297,7 @@ show_status() {
         fi
     else
         log_warning "开发服务器未运行"
-        
+
         # 检查是否有残留的 PID 文件
         if [ -f "$PID_FILE" ]; then
             log_info "清理残留的 PID 文件..."
@@ -312,10 +312,10 @@ show_logs() {
         log_warning "日志文件不存在"
         exit 1
     fi
-    
+
     log_info "显示日志 (按 Ctrl+C 退出)..."
     echo ""
-    
+
     # 如果服务器在运行，实时显示日志
     if is_running; then
         tail -f "$LOG_FILE"
@@ -328,19 +328,19 @@ show_logs() {
 # 重启服务器
 restart_server() {
     log_info "重启开发服务器..."
-    
+
     if is_running; then
         stop_server
         sleep 2
     fi
-    
+
     start_server
 }
 
 # 主函数
 main() {
     ACTION=${1:-start}
-    
+
     case "$ACTION" in
         start)
             start_server

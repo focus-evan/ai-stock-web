@@ -110,7 +110,7 @@ export default defineConfig({
 		setupFiles: ["./src/setupTests.ts"],
 	},
 	server: {
-		port: 3333,
+		port: 6666,
 		// https://vitejs.dev/config/server-options#server-proxy
 		proxy: {
 			"/api/rag": {
