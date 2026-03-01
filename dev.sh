@@ -16,7 +16,7 @@ set -e
 # 配置
 PID_FILE="dev.pid"
 LOG_FILE="dev.log"
-PORT=6666
+PORT=3666
 
 # 颜色定义
 RED='\033[0;31m'
