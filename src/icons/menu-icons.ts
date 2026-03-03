@@ -6,6 +6,7 @@ import {
 	ContainerOutlined,
 	CopyrightOutlined,
 	CreditCardOutlined,
+	CrownOutlined,
 	DashboardOutlined,
 	DatabaseOutlined,
 	EyeOutlined,
@@ -27,6 +28,8 @@ import {
 	SyncOutlined,
 	TableOutlined,
 	TeamOutlined,
+	ThunderboltOutlined,
+	UnorderedListOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
 import { EmbeddedIcon, ExternalIcon, OutsidePageIcon, ProfileCardIcon } from "./local-icons";
@@ -72,4 +75,7 @@ export const menuIcons: Record<string, any> = {
 	TableOutlined,
 	MessageOutlined,
 	CreditCardOutlined,
+	ThunderboltOutlined,
+	CrownOutlined,
+	UnorderedListOutlined,
 };
