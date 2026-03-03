@@ -6,15 +6,19 @@ import { BasicContent } from "#src/components/basic-content";
 import {
 	ClockCircleOutlined,
 	CrownOutlined,
+	ExperimentOutlined,
 	FireOutlined,
 	InfoCircleOutlined,
 	ReloadOutlined,
 	RiseOutlined,
 	StockOutlined,
+	StopOutlined,
 	ThunderboltOutlined,
 	TrophyOutlined,
+	WarningOutlined,
 } from "@ant-design/icons";
 import {
+	Alert,
 	Button,
 	Card,
 	Col,
@@ -50,24 +54,31 @@ function formatAmount(val: number): string {
 /** 推荐等级标签颜色 */
 function getLevelColor(level: string): string {
 	switch (level) {
-		case "强烈推荐":
-			return "red";
-		case "推荐":
-			return "orange";
-		default:
-			return "blue";
+		case "强烈推荐": return "red";
+		case "推荐": return "orange";
+		case "回避": return "default";
+		default: return "blue";
 	}
 }
 
 /** 推荐等级图标 */
 function getLevelIcon(level: string) {
 	switch (level) {
-		case "强烈推荐":
-			return <FireOutlined />;
-		case "推荐":
-			return <TrophyOutlined />;
-		default:
-			return <StockOutlined />;
+		case "强烈推荐": return <FireOutlined />;
+		case "推荐": return <TrophyOutlined />;
+		case "回避": return <StopOutlined />;
+		default: return <StockOutlined />;
+	}
+}
+
+/** 情绪周期颜色 */
+function getSentimentColor(phase: string): string {
+	switch (phase) {
+		case "启动": return "#52c41a";
+		case "发酵": return "#1890ff";
+		case "高潮": return "#fa541c";
+		case "退潮": return "#8c8c8c";
+		default: return "#1890ff";
 	}
 }
 
@@ -197,10 +208,7 @@ export default function DragonHead() {
 			render: (days: number) => {
 				const color = days >= 4 ? "#f5222d" : days >= 3 ? "#fa541c" : days >= 2 ? "#fa8c16" : "#1890ff";
 				return (
-					<Tag
-						color={color}
-						style={{ fontWeight: 700, fontSize: 14 }}
-					>
+					<Tag color={color} style={{ fontWeight: 700, fontSize: 14 }}>
 						{days}
 						连板
 					</Tag>
@@ -219,10 +227,7 @@ export default function DragonHead() {
 				const isEarly = time < "10:00";
 				return (
 					<Tooltip title={isEarly ? "早盘封板，资金抢筹" : "封板时间"}>
-						<Tag
-							icon={<ClockCircleOutlined />}
-							color={isEarly ? "green" : "default"}
-						>
+						<Tag icon={<ClockCircleOutlined />} color={isEarly ? "green" : "default"}>
 							{time}
 						</Tag>
 					</Tooltip>
@@ -268,6 +273,7 @@ export default function DragonHead() {
 				{ text: "强烈推荐", value: "强烈推荐" },
 				{ text: "推荐", value: "推荐" },
 				{ text: "关注", value: "关注" },
+				{ text: "回避", value: "回避" },
 			],
 			onFilter: (value, record) => record.recommendation_level === value,
 			render: (level: string) => (
@@ -281,19 +287,33 @@ export default function DragonHead() {
 			),
 		},
 		{
-			title: "推荐理由",
+			title: data?.llm_enhanced ? "GPT推荐理由" : "推荐理由",
 			dataIndex: "reasons",
 			key: "reasons",
-			width: 220,
-			render: (reasons: string[]) => (
-				<Space direction="vertical" size={0}>
-					{reasons?.map((reason, idx) => (
+			width: 280,
+			render: (_: string[], record: StockRecommendation) => (
+				<Space direction="vertical" size={2}>
+					{record.reasons?.map((reason, idx) => (
 						<Text key={idx} style={{ fontSize: 12 }}>
 							•
 							{" "}
 							{reason}
 						</Text>
 					))}
+					{record.operation_suggestion && (
+						<Tag color="blue" style={{ fontSize: 11, marginTop: 2 }}>
+							💡
+							{" "}
+							{record.operation_suggestion}
+						</Tag>
+					)}
+					{record.risk_warning && (
+						<Text type="warning" style={{ fontSize: 11 }}>
+							⚠️
+							{" "}
+							{record.risk_warning}
+						</Text>
+					)}
 				</Space>
 			),
 		},
@@ -322,11 +342,7 @@ export default function DragonHead() {
 					title="数据获取失败"
 					subTitle={error}
 					extra={(
-						<Button
-							type="primary"
-							icon={<ReloadOutlined />}
-							onClick={fetchData}
-						>
+						<Button type="primary" icon={<ReloadOutlined />} onClick={fetchData}>
 							重新加载
 						</Button>
 					)}
@@ -339,10 +355,7 @@ export default function DragonHead() {
 	if (!data || data.recommendations.length === 0) {
 		return (
 			<BasicContent>
-				<Empty
-					description="暂无龙头战法推荐数据"
-					style={{ marginTop: 80 }}
-				>
+				<Empty description="暂无龙头战法推荐数据" style={{ marginTop: 80 }}>
 					<Button type="primary" onClick={fetchData} icon={<ReloadOutlined />}>
 						刷新数据
 					</Button>
@@ -368,6 +381,11 @@ export default function DragonHead() {
 						<Title level={4} style={{ margin: 0 }}>
 							龙头战法推荐
 						</Title>
+						{data.llm_enhanced && (
+							<Tag color="purple" icon={<ExperimentOutlined />}>
+								GPT-5.2 增强
+							</Tag>
+						)}
 						<Tag color="processing">
 							{data.trading_date}
 						</Tag>
@@ -387,6 +405,49 @@ export default function DragonHead() {
 					</Button>
 				</div>
 
+				{/* GPT-5.2 市场情绪研判 */}
+				{data.market_sentiment && (
+					<Alert
+						style={{ marginBottom: 16 }}
+						type={
+							data.market_sentiment.risk_level === "高"
+								? "error"
+								: data.market_sentiment.risk_level === "中"
+									? "warning"
+									: "success"
+						}
+						showIcon
+						icon={<ExperimentOutlined />}
+						message={(
+							<Space>
+								<Text strong>GPT-5.2 市场情绪研判</Text>
+								<Tag
+									color={getSentimentColor(data.market_sentiment.phase)}
+									style={{ fontWeight: 700 }}
+								>
+									{data.market_sentiment.phase}
+									期
+								</Tag>
+								<Tag
+									color={
+										data.market_sentiment.risk_level === "高"
+											? "red"
+											: data.market_sentiment.risk_level === "中"
+												? "orange"
+												: "green"
+									}
+								>
+									<WarningOutlined />
+									{" "}
+									风险
+									{data.market_sentiment.risk_level}
+								</Tag>
+							</Space>
+						)}
+						description={data.market_sentiment.description}
+					/>
+				)}
+
 				{/* 统计卡片 */}
 				<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
 					{/* 今日主线题材 */}
@@ -399,33 +460,49 @@ export default function DragonHead() {
 									<span>今日主线题材</span>
 								</Space>
 							)}
-							styles={{
-								body: { padding: "12px 16px" },
-							}}
+							styles={{ body: { padding: "12px 16px" } }}
 						>
 							{data.main_themes.length > 0
 								? (
-									<Space wrap>
-										{data.main_themes.map((theme, idx) => (
-											<Tag
-												key={idx}
-												color={idx === 0 ? "red" : idx === 1 ? "orange" : "gold"}
-												style={{ fontSize: 14, padding: "4px 12px" }}
-											>
-												<RiseOutlined />
-												{" "}
-												{theme.name}
-												{theme.details.change_pct
-													? (
-														<span style={{ marginLeft: 4 }}>
-															{theme.details.change_pct > 0 ? "+" : ""}
-															{theme.details.change_pct.toFixed(2)}
-															%
-														</span>
-													)
-													: null}
-											</Tag>
-										))}
+									<Space direction="vertical" size={8} style={{ width: "100%" }}>
+										<Space wrap>
+											{data.main_themes.map((theme, idx) => {
+												const analysis = data.theme_analysis?.find(t => t.name === theme.name);
+												return (
+													<Tooltip
+														key={idx}
+														title={analysis
+															? `驱动力: ${analysis.catalyst}\n持续性: ${analysis.sustainability}`
+															: undefined}
+													>
+														<Tag
+															color={idx === 0 ? "red" : idx === 1 ? "orange" : "gold"}
+															style={{ fontSize: 14, padding: "4px 12px" }}
+														>
+															<RiseOutlined />
+															{" "}
+															{theme.name}
+															{theme.details.change_pct
+																? (
+																	<span style={{ marginLeft: 4 }}>
+																		{theme.details.change_pct > 0 ? "+" : ""}
+																		{theme.details.change_pct.toFixed(2)}
+																		%
+																	</span>
+																)
+																: null}
+															{analysis && (
+																<span style={{ marginLeft: 6 }}>
+																	[
+																	{analysis.logic_hardness}
+																	]
+																</span>
+															)}
+														</Tag>
+													</Tooltip>
+												);
+											})}
+										</Space>
 									</Space>
 								)
 								: (
@@ -444,9 +521,7 @@ export default function DragonHead() {
 									<span>新闻情绪共振</span>
 								</Space>
 							)}
-							styles={{
-								body: { padding: "12px 16px" },
-							}}
+							styles={{ body: { padding: "12px 16px" } }}
 						>
 							<Space direction="vertical" style={{ width: "100%" }}>
 								<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -499,9 +574,7 @@ export default function DragonHead() {
 									<span>推荐概览</span>
 								</Space>
 							)}
-							styles={{
-								body: { padding: "12px 16px" },
-							}}
+							styles={{ body: { padding: "12px 16px" } }}
 						>
 							<Row gutter={16}>
 								<Col span={8}>
@@ -543,9 +616,7 @@ export default function DragonHead() {
 							</Tag>
 						</Space>
 					)}
-					styles={{
-						body: { padding: 0 },
-					}}
+					styles={{ body: { padding: 0 } }}
 				>
 					<Table<StockRecommendation>
 						columns={columns}
@@ -553,13 +624,15 @@ export default function DragonHead() {
 						rowKey="code"
 						size="middle"
 						pagination={false}
-						scroll={{ x: 1400 }}
+						scroll={{ x: 1500 }}
 						loading={loading}
 						rowClassName={(record) => {
 							if (record.recommendation_level === "强烈推荐")
 								return "dragon-head-row-strong";
 							if (record.recommendation_level === "推荐")
 								return "dragon-head-row-recommend";
+							if (record.recommendation_level === "回避")
+								return "dragon-head-row-avoid";
 							return "";
 						}}
 					/>
@@ -569,8 +642,10 @@ export default function DragonHead() {
 				<Card
 					title={(
 						<Space>
-							<InfoCircleOutlined style={{ color: "#1890ff" }} />
-							<span>策略推荐逻辑说明</span>
+							{data.llm_enhanced
+								? <ExperimentOutlined style={{ color: "#722ed1" }} />
+								: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
+							<span>{data.llm_enhanced ? "GPT-5.2 策略深度分析报告" : "策略推荐逻辑说明"}</span>
 						</Space>
 					)}
 					style={{ marginTop: 16 }}
@@ -585,7 +660,6 @@ export default function DragonHead() {
 						{data.strategy_explanation
 							.split("\n")
 							.map((line, idx) => {
-								// Simple markdown-like rendering
 								if (line.startsWith("## ")) {
 									return (
 										<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
@@ -602,11 +676,7 @@ export default function DragonHead() {
 								}
 								if (line.startsWith("⚠️")) {
 									return (
-										<Paragraph
-											key={idx}
-											type="warning"
-											style={{ fontWeight: 600 }}
-										>
+										<Paragraph key={idx} type="warning" style={{ fontWeight: 600 }}>
 											{line}
 										</Paragraph>
 									);
@@ -652,6 +722,13 @@ export default function DragonHead() {
 				}
 				.dragon-head-row-recommend:hover > td {
 					background-color: rgba(250, 140, 22, 0.08) !important;
+				}
+				.dragon-head-row-avoid {
+					background-color: rgba(140, 140, 140, 0.06) !important;
+					opacity: 0.7;
+				}
+				.dragon-head-row-avoid:hover > td {
+					background-color: rgba(140, 140, 140, 0.1) !important;
 				}
 			`}
 			</style>
