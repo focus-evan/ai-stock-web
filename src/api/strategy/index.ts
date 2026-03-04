@@ -1,4 +1,4 @@
-import type { DragonHeadResponse } from "./types";
+import type { DragonHeadResponse, SentimentResponse } from "./types";
 import { request } from "#src/utils/request";
 
 export * from "./types";
@@ -14,4 +14,17 @@ export function fetchDragonHeadRecommendations(limit: number = 20) {
 			timeout: 60000, // 60秒超时（策略计算可能较慢）
 		})
 		.json<DragonHeadResponse>();
+}
+
+/**
+ * 获取情绪战法数据
+ * @param days - 返回历史天数，默认30
+ */
+export function fetchSentimentData(days: number = 30) {
+	return request
+		.get("strategy/sentiment", {
+			searchParams: { days },
+			timeout: 120000, // 120秒超时（首次计算较慢）
+		})
+		.json<SentimentResponse>();
 }
