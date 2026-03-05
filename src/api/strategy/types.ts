@@ -144,6 +144,35 @@ export interface SentimentLLMAnalysis {
 	next_day_outlook: string
 }
 
+/** 推荐个股明细 */
+export interface StockPickDetail {
+	rank: number
+	stock_code: string
+	stock_name: string
+	industry: string
+	price: number
+	change_pct: number
+	amount: number
+	turnover_rate: number
+	total_market_cap: number
+	float_market_cap: number
+	limit_up_days: number
+	pick_reason_tag: string
+	recommendation_level: string
+	llm_reason?: string | null
+	llm_risk_warning?: string | null
+	llm_operation?: string | null
+}
+
+/** 每日推荐股票 */
+export interface StockPicksData {
+	pick_strategy: string
+	emotion_phase?: string | null
+	stocks: StockPickDetail[]
+	pick_count: number
+	llm_enhanced: boolean
+}
+
 /** 情绪战法数据 */
 export interface SentimentData {
 	today: SentimentSnapshot
@@ -153,6 +182,8 @@ export interface SentimentData {
 	llm_analysis?: SentimentLLMAnalysis | null
 	/** 是否经过 LLM 增强 */
 	llm_enhanced?: boolean
+	/** 每日推荐20只股票 */
+	stock_picks?: StockPicksData | null
 	generated_at: string
 	trading_date: string
 }

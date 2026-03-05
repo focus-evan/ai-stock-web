@@ -1,4 +1,4 @@
-import type { SentimentData, SentimentSnapshot } from "#src/api/strategy";
+import type { SentimentData, SentimentSnapshot, StockPickDetail } from "#src/api/strategy";
 
 import { fetchSentimentData } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
@@ -7,6 +7,8 @@ import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
 	BulbOutlined,
+	CheckCircleOutlined,
+	CrownOutlined,
 	DashboardOutlined,
 	ExperimentOutlined,
 	EyeOutlined,
@@ -100,6 +102,28 @@ function getPhaseColor(phase: string): string {
 		case "高潮": return "#f5222d";
 		case "退潮": return "#fa8c16";
 		default: return "#8c8c8c";
+	}
+}
+
+/** 选股策略中文名 */
+function getStrategyName(strategy: string): string {
+	const map: Record<string, string> = {
+		ice_reversal: "超跌反弹",
+		recovery_momentum: "情绪修复",
+		warm_breakout: "突破放量",
+		climax_leader: "连板龙头",
+		retreat_defense: "抗跌防御",
+		normal_momentum: "动量选股",
+	};
+	return map[strategy] || strategy;
+}
+
+/** 推荐等级颜色 */
+function getLevelTagColor(level: string): string {
+	switch (level) {
+		case "强烈推荐": return "red";
+		case "推荐": return "orange";
+		default: return "blue";
 	}
 }
 
@@ -708,6 +732,187 @@ export default function SentimentPage() {
 									)}
 								</div>
 							</Card>
+
+							{/* ================== 每日推荐股票 ================== */}
+							{data.stock_picks && data.stock_picks.stocks && data.stock_picks.stocks.length > 0 && (
+								<Card
+									title={(
+										<Space>
+											<CrownOutlined style={{ color: "#faad14" }} />
+											<Text strong>今日情绪推荐</Text>
+											<Tag color="gold">
+												{getStrategyName(data.stock_picks.pick_strategy)}
+											</Tag>
+											<Tag color="purple">
+												{data.stock_picks.pick_count}
+												{" "}
+												只
+											</Tag>
+											{data.stock_picks.llm_enhanced && (
+												<Tag color="geekblue" icon={<CheckCircleOutlined />}>
+													GPT-5.2
+												</Tag>
+											)}
+										</Space>
+									)}
+									style={{ marginBottom: 16, borderRadius: 8 }}
+								>
+									<Table<StockPickDetail>
+										dataSource={data.stock_picks.stocks}
+										rowKey="stock_code"
+										size="small"
+										scroll={{ x: 1400 }}
+										pagination={false}
+										columns={[
+											{
+												title: "#",
+												dataIndex: "rank",
+												key: "rank",
+												width: 45,
+												fixed: "left",
+												align: "center",
+												render: (val: number) => {
+													if (val <= 3) {
+														const colors = ["#f5222d", "#fa8c16", "#faad14"];
+														return (
+															<span style={{ color: colors[val - 1], fontWeight: 700, fontSize: 16 }}>
+																{val}
+															</span>
+														);
+													}
+													return <Text type="secondary">{val}</Text>;
+												},
+											},
+											{
+												title: "代码",
+												dataIndex: "stock_code",
+												key: "stock_code",
+												width: 80,
+												fixed: "left",
+												render: (val: string) => <Text style={{ fontFamily: "monospace" }}>{val}</Text>,
+											},
+											{
+												title: "名称",
+												dataIndex: "stock_name",
+												key: "stock_name",
+												width: 80,
+												fixed: "left",
+												render: (val: string) => <Text strong>{val}</Text>,
+											},
+											{
+												title: "评级",
+												dataIndex: "recommendation_level",
+												key: "recommendation_level",
+												width: 80,
+												align: "center",
+												render: (val: string) => (
+													<Tag color={getLevelTagColor(val || "关注")}>
+														{val || "关注"}
+													</Tag>
+												),
+											},
+											{
+												title: "现价",
+												dataIndex: "price",
+												key: "price",
+												width: 70,
+												align: "right",
+												render: (val: number) => (val || 0).toFixed(2),
+											},
+											{
+												title: "涨幅",
+												dataIndex: "change_pct",
+												key: "change_pct",
+												width: 80,
+												align: "right",
+												sorter: (a, b) => (a.change_pct || 0) - (b.change_pct || 0),
+												render: (val: number) => (
+													<Text style={{
+														color: (val || 0) >= 0
+															? "#f5222d"
+															: "#52c41a",
+														fontWeight: 600,
+													}}
+													>
+														{(val || 0) >= 0
+															? "+"
+															: ""}
+														{(val || 0).toFixed(2)}
+														%
+													</Text>
+												),
+											},
+											{
+												title: "成交额",
+												dataIndex: "amount",
+												key: "amount",
+												width: 80,
+												align: "right",
+												render: (val: number) => {
+													const v = val || 0;
+													if (v >= 1e8)
+														return `${(v / 1e8).toFixed(1)}亿`;
+													if (v >= 1e4)
+														return `${(v / 1e4).toFixed(0)}万`;
+													return String(v);
+												},
+											},
+											{
+												title: "换手率",
+												dataIndex: "turnover_rate",
+												key: "turnover_rate",
+												width: 70,
+												align: "right",
+												render: (val: number) => `${(val || 0).toFixed(1)}%`,
+											},
+											{
+												title: "标签",
+												dataIndex: "pick_reason_tag",
+												key: "pick_reason_tag",
+												width: 80,
+												align: "center",
+												render: (val: string) => <Tag color="cyan">{val}</Tag>,
+											},
+											{
+												title: "推荐理由",
+												dataIndex: "llm_reason",
+												key: "llm_reason",
+												width: 180,
+												ellipsis: true,
+												render: (val: string) => (
+													<Tooltip title={val}>
+														<Text style={{ fontSize: 12 }}>{val || "-"}</Text>
+													</Tooltip>
+												),
+											},
+											{
+												title: "风险",
+												dataIndex: "llm_risk_warning",
+												key: "llm_risk_warning",
+												width: 140,
+												ellipsis: true,
+												render: (val: string) => (
+													<Tooltip title={val}>
+														<Text type="danger" style={{ fontSize: 12 }}>{val || "-"}</Text>
+													</Tooltip>
+												),
+											},
+											{
+												title: "操作",
+												dataIndex: "llm_operation",
+												key: "llm_operation",
+												width: 120,
+												ellipsis: true,
+												render: (val: string) => (
+													<Tooltip title={val}>
+														<Text style={{ fontSize: 12, color: "#52c41a" }}>{val || "-"}</Text>
+													</Tooltip>
+												),
+											},
+										]}
+									/>
+								</Card>
+							)}
 
 							{/* ================== 历史数据表格 ================== */}
 							<Card
