@@ -11,6 +11,8 @@ import {
 	DatabaseOutlined,
 	EyeOutlined,
 	FileTextOutlined,
+	FundOutlined,
+	HeartOutlined,
 	HistoryOutlined,
 	HomeOutlined,
 	LineChartOutlined,
@@ -78,4 +80,6 @@ export const menuIcons: Record<string, any> = {
 	ThunderboltOutlined,
 	CrownOutlined,
 	UnorderedListOutlined,
+	HeartOutlined,
+	FundOutlined,
 };
