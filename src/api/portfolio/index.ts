@@ -4,6 +4,8 @@ import type {
 	PortfolioDetailResponse,
 	PortfolioListResponse,
 	PortfolioResponse,
+	ReviewDetailResponse,
+	ReviewListResponse,
 	TradesResponse,
 } from "./types";
 import { request } from "#src/utils/request";
@@ -83,5 +85,45 @@ export function toggleAutoTrade(portfolioId: number, autoTrade: boolean) {
 			searchParams: { auto_trade: String(autoTrade) },
 			timeout: 10000,
 		})
+		.json<PortfolioResponse>();
+}
+
+/**
+ * 获取复盘列表
+ */
+export function fetchReviews(params?: {
+	portfolio_id?: number
+	strategy_type?: string
+	limit?: number
+}) {
+	return request
+		.get("portfolio/reviews/list", {
+			searchParams: params as Record<string, string>,
+			timeout: 15000,
+		})
+		.json<ReviewListResponse>();
+}
+
+/**
+ * 获取某日复盘详情
+ */
+export function fetchReviewDetail(portfolioId: number, tradingDate?: string) {
+	const searchParams: Record<string, string> = {};
+	if (tradingDate)
+		searchParams.trading_date = tradingDate;
+	return request
+		.get(`portfolio/${portfolioId}/review`, {
+			searchParams,
+			timeout: 15000,
+		})
+		.json<ReviewDetailResponse>();
+}
+
+/**
+ * 手动触发复盘
+ */
+export function triggerReview(portfolioId: number) {
+	return request
+		.post(`portfolio/${portfolioId}/review/trigger`, { timeout: 120000 })
 		.json<PortfolioResponse>();
 }

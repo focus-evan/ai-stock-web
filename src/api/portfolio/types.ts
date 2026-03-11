@@ -124,3 +124,46 @@ export interface PortfolioResponse {
 	daily_profit_pct?: number
 	decision_summary?: string
 }
+
+/** 复盘记录 */
+export interface ReviewItem {
+	id?: number
+	portfolio_id: number
+	strategy_type: "dragon_head" | "sentiment"
+	trading_date: string
+	trade_count: number
+	buy_count: number
+	sell_count: number
+	daily_profit: number
+	daily_profit_pct: number
+	overall_score: number
+	overall_comment: string
+	highlights: string[]
+	shortcomings: string[]
+	lessons: string[]
+	suggestions: string[]
+	position_analysis?: Array<{
+		stock_code: string
+		stock_name: string
+		analysis: string
+		action_suggestion: string
+	}> | null
+	risk_assessment?: string | null
+	generated_at?: string
+}
+
+/** 复盘列表响应 */
+export interface ReviewListResponse {
+	status: string
+	data: {
+		reviews: ReviewItem[]
+		total: number
+	}
+}
+
+/** 复盘详情响应 */
+export interface ReviewDetailResponse {
+	status: string
+	data?: ReviewItem
+	message?: string
+}

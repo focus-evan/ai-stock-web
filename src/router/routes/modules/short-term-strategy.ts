@@ -7,6 +7,7 @@ import { lazy } from "react";
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
+const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -40,6 +41,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "FundOutlined",
 					title: "模拟交易",
+				},
+			},
+			{
+				path: "/short-term-strategy/review",
+				Component: Review,
+				handle: {
+					icon: "BookOutlined",
+					title: "每日复盘",
 				},
 			},
 		],
