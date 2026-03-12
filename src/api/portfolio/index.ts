@@ -47,12 +47,16 @@ export function fetchPortfolioPerformance(portfolioId: number, days: number = 30
 }
 
 /**
- * 获取交易记录
+ * 获取交易记录（分页）
  */
-export function fetchPortfolioTrades(portfolioId: number, limit: number = 50) {
+export function fetchPortfolioTrades(
+	portfolioId: number,
+	page: number = 1,
+	pageSize: number = 20,
+) {
 	return request
 		.get(`portfolio/${portfolioId}/trades`, {
-			searchParams: { limit },
+			searchParams: { page, page_size: pageSize },
 			timeout: 15000,
 		})
 		.json<TradesResponse>();

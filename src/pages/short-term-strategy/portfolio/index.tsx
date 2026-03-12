@@ -11,6 +11,7 @@ import {
 	fetchPortfolioDetail,
 	fetchPortfolioList,
 	fetchPortfolioPerformance,
+	fetchPortfolioTrades,
 	toggleAutoTrade,
 	triggerRebalance,
 } from "#src/api/portfolio";
@@ -160,6 +161,12 @@ export default function PortfolioDashboard() {
 	const [triggering, setTriggering] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
+	// 交易记录分页状态
+	const [trades, setTrades] = useState<PortfolioTrade[]>([]);
+	const [tradesTotal, setTradesTotal] = useState(0);
+	const [tradesPage, setTradesPage] = useState(1);
+	const [tradesPageSize, setTradesPageSize] = useState(20);
+
 	// ==================== 数据加载 ====================
 
 	const loadPortfolios = useCallback(async () => {
@@ -201,6 +208,20 @@ export default function PortfolioDashboard() {
 		}
 	}, []);
 
+	const loadTrades = useCallback(async (id: number, page: number = 1, pageSize: number = 20) => {
+		try {
+			const res = await fetchPortfolioTrades(id, page, pageSize);
+			if (res.status === "success") {
+				setTrades(res.data.trades);
+				setTradesTotal(res.data.total);
+				setTradesPage(res.data.page);
+			}
+		}
+		catch (err: any) {
+			console.error("Load trades error:", err);
+		}
+	}, []);
+
 	useEffect(() => {
 		loadPortfolios();
 	}, [loadPortfolios]);
@@ -208,8 +229,10 @@ export default function PortfolioDashboard() {
 	useEffect(() => {
 		if (selectedId) {
 			loadDetail(selectedId);
+			setTradesPage(1);
+			loadTrades(selectedId, 1, tradesPageSize);
 		}
-	}, [selectedId, loadDetail]);
+	}, [selectedId, loadDetail, loadTrades, tradesPageSize]);
 
 	// ==================== 操作回调 ====================
 
@@ -457,7 +480,6 @@ export default function PortfolioDashboard() {
 
 	const portfolio = detail?.portfolio;
 	const positions = detail?.positions || [];
-	const trades = detail?.recent_trades || [];
 
 	// ==================== Error state ====================
 	if (error && portfolios.length === 0) {
@@ -741,9 +763,12 @@ export default function PortfolioDashboard() {
 									title={(
 										<Space>
 											<SwapOutlined style={{ color: "#fa8c16" }} />
-											<Text strong>最近交易</Text>
+											<Text strong>交易记录</Text>
 											<Tag>
-												{trades.length}
+												共
+												{" "}
+												{tradesTotal}
+												{" "}
 												笔
 											</Tag>
 										</Space>
@@ -756,7 +781,20 @@ export default function PortfolioDashboard() {
 										dataSource={trades}
 										rowKey={r => `${r.trade_date}-${r.stock_code}-${r.direction}-${r.created_at}`}
 										size="small"
-										pagination={{ pageSize: 10 }}
+										pagination={{
+											current: tradesPage,
+											pageSize: tradesPageSize,
+											total: tradesTotal,
+											showSizeChanger: true,
+											showTotal: total => `共 ${total} 条`,
+											pageSizeOptions: ["10", "20", "50"],
+											onChange: (p, ps) => {
+												setTradesPage(p);
+												setTradesPageSize(ps);
+												if (selectedId)
+													loadTrades(selectedId, p, ps);
+											},
+										}}
 										scroll={{ x: 1000 }}
 									/>
 								</Card>

@@ -91,7 +91,7 @@ export default function DragonHead() {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetchDragonHeadRecommendations(20);
+			const response = await fetchDragonHeadRecommendations(13);
 			if (response.status === "success" && response.data) {
 				setData(response.data);
 			}

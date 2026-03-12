@@ -7,7 +7,7 @@ export * from "./types";
  * 获取龙头战法推荐列表
  * @param limit - 返回推荐数量，默认20
  */
-export function fetchDragonHeadRecommendations(limit: number = 20) {
+export function fetchDragonHeadRecommendations(limit: number = 13) {
 	return request
 		.get("strategy/dragon-head", {
 			searchParams: { limit },

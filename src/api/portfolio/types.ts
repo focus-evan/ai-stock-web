@@ -94,12 +94,15 @@ export interface PerformanceResponse {
 	}
 }
 
-/** 交易记录响应 */
+/** 交易记录响应（分页） */
 export interface TradesResponse {
 	status: string
 	data: {
 		trades: PortfolioTrade[]
 		total: number
+		page: number
+		page_size: number
+		total_pages: number
 	}
 }
 
