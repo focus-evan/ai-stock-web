@@ -5,7 +5,7 @@
 /** 组合配置 */
 export interface PortfolioConfig {
 	id: number
-	strategy_type: "dragon_head" | "sentiment"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven"
 	name: string
 	initial_capital: number
 	available_cash: number
@@ -105,7 +105,7 @@ export interface TradesResponse {
 
 /** 创建组合请求 */
 export interface CreatePortfolioRequest {
-	strategy_type: "dragon_head" | "sentiment"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven"
 	name: string
 	initial_capital: number
 }
@@ -129,7 +129,7 @@ export interface PortfolioResponse {
 export interface ReviewItem {
 	id?: number
 	portfolio_id: number
-	strategy_type: "dragon_head" | "sentiment"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven"
 	trading_date: string
 	trade_count: number
 	buy_count: number

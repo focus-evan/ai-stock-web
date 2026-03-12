@@ -1,4 +1,4 @@
-import type { DragonHeadResponse, SentimentResponse } from "./types";
+import type { DragonHeadResponse, EventDrivenResponse, SentimentResponse } from "./types";
 import { request } from "#src/utils/request";
 
 export * from "./types";
@@ -27,4 +27,17 @@ export function fetchSentimentData(days: number = 30) {
 			timeout: 120000, // 120秒超时（首次计算较慢）
 		})
 		.json<SentimentResponse>();
+}
+
+/**
+ * 获取事件驱动战法推荐
+ * @param limit - 返回推荐数量，默认13
+ */
+export function fetchEventDrivenRecommendations(limit: number = 13) {
+	return request
+		.get("strategy/event-driven", {
+			searchParams: { limit },
+			timeout: 90000, // 90秒超时（含LLM分析）
+		})
+		.json<EventDrivenResponse>();
 }

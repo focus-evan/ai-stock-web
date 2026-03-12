@@ -77,7 +77,11 @@ function profitColor(val: number): string {
 
 /** 策略名称 */
 function strategyName(type: string): string {
-	return type === "dragon_head" ? "龙头战法" : "情绪战法";
+	if (type === "dragon_head")
+		return "龙头战法";
+	if (type === "event_driven")
+		return "事件驱动";
+	return "情绪战法";
 }
 
 /** Mini SVG 收益曲线 */
@@ -790,6 +794,7 @@ export default function PortfolioDashboard() {
 						<Radio.Group buttonStyle="solid">
 							<Radio.Button value="dragon_head">🐉 龙头战法</Radio.Button>
 							<Radio.Button value="sentiment">💓 情绪战法</Radio.Button>
+							<Radio.Button value="event_driven">📡 事件驱动</Radio.Button>
 						</Radio.Group>
 					</Form.Item>
 

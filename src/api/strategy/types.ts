@@ -194,3 +194,81 @@ export interface SentimentResponse {
 	data: SentimentData
 	message?: string
 }
+
+// ===================== 事件驱动战法 Types =====================
+
+/** 事件信息 */
+export interface EventInfo {
+	news_index: number
+	title: string
+	keywords: string[]
+	impact_level: number
+	impact_duration: string
+	logic_chain: string
+	sectors: string[]
+	freshness: string
+	summary: string
+}
+
+/** 事件驱动个股推荐 */
+export interface EventStockRecommendation {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	total_market_cap: number
+	turnover_rate: number
+	event_score: number
+	score_detail: {
+		logic: number
+		history: number
+		capital: number
+		scarcity: number
+	}
+	max_impact_level: number
+	event_reason: string
+	related_concepts: string[]
+	concept_count: number
+	reasons: string[]
+	recommendation_level: "强烈推荐" | "推荐" | "关注" | "回避"
+	risk_warning?: string
+	operation_suggestion?: string
+	logic_strength?: number
+}
+
+/** 事件概览 */
+export interface EventsOverview {
+	total_analyzed: number
+	high_impact_count: number
+	high_impact_events: EventInfo[]
+	overall_assessment: string
+}
+
+/** 市场事件评估 */
+export interface MarketAssessment {
+	event_type: string
+	heat_level: string
+	risk_level: string
+	description: string
+}
+
+/** 事件驱动完整数据 */
+export interface EventDrivenData {
+	recommendations: EventStockRecommendation[]
+	total: number
+	events: EventsOverview
+	market_assessment?: MarketAssessment
+	strategy_report: string
+	llm_enhanced?: boolean
+	generated_at: string
+	trading_date: string
+}
+
+/** 事件驱动接口响应 */
+export interface EventDrivenResponse {
+	status: "success" | "error"
+	data: EventDrivenData
+	message?: string
+}

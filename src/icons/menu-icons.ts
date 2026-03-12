@@ -21,6 +21,7 @@ import {
 	MenuOutlined,
 	MessageOutlined,
 	NodeExpandOutlined,
+	RadarChartOutlined,
 	RiseOutlined,
 	RobotOutlined,
 	SafetyOutlined,
@@ -84,4 +85,5 @@ export const menuIcons: Record<string, any> = {
 	HeartOutlined,
 	FundOutlined,
 	BookOutlined,
+	RadarChartOutlined,
 };
