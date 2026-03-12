@@ -1,6 +1,7 @@
 import {
 	AntDesignOutlined,
 	ApartmentOutlined,
+	BookOutlined,
 	CloudOutlined,
 	CommentOutlined,
 	ContainerOutlined,
@@ -82,4 +83,5 @@ export const menuIcons: Record<string, any> = {
 	UnorderedListOutlined,
 	HeartOutlined,
 	FundOutlined,
+	BookOutlined,
 };
