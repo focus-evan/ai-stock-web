@@ -131,3 +131,12 @@ export function triggerReview(portfolioId: number) {
 		.post(`portfolio/${portfolioId}/review/trigger`, { timeout: 120000 })
 		.json<PortfolioResponse>();
 }
+
+/**
+ * 手动触发所有策略推荐生成（首次使用或缓存为空时调用）
+ */
+export function triggerRecommendations() {
+	return request
+		.post("portfolio/trigger-recommendations", { timeout: 300000 })
+		.json<PortfolioResponse>();
+}

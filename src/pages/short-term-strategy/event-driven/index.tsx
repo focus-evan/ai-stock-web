@@ -376,12 +376,35 @@ export default function EventDriven() {
 
 	// Empty state
 	if (!data || data.recommendations.length === 0) {
+		const handleGenerate = async () => {
+			setLoading(true);
+			setError(null);
+			try {
+				const { triggerRecommendations } = await import("#src/api/portfolio");
+				await triggerRecommendations();
+				await fetchData();
+			}
+			catch (err: any) {
+				setError(err?.message || "生成推荐失败");
+			}
+			finally {
+				setLoading(false);
+			}
+		};
 		return (
 			<BasicContent>
-				<Empty description="暂无事件驱动推荐数据" style={{ marginTop: 80 }}>
-					<Button type="primary" onClick={fetchData} icon={<ReloadOutlined />}>
-						刷新数据
-					</Button>
+				<Empty
+					description={loading ? "正在生成推荐数据，请稍候（约1-3分钟）..." : "暂无事件驱动推荐数据"}
+					style={{ marginTop: 80 }}
+				>
+					<Space>
+						<Button onClick={fetchData} icon={<ReloadOutlined />}>
+							刷新缓存
+						</Button>
+						<Button type="primary" onClick={handleGenerate} loading={loading} icon={<ThunderboltOutlined />}>
+							生成推荐
+						</Button>
+					</Space>
 				</Empty>
 			</BasicContent>
 		);
