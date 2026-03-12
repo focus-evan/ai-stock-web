@@ -101,7 +101,7 @@ export default function Menu() {
 						total: responseData.result.total,
 					};
 				}}
-				headerTitle={`${t("common.menu.menu")} （${t("common.demoOnly")}）`}
+				headerTitle={t("common.menu.menu")}
 				toolBarRender={() => [
 
 					<Button

@@ -9,6 +9,12 @@
 	"user": {
 		"name": "用户名称",
 		"id": "用户标识",
+		"username": "用户名",
+		"nickname": "昵称",
+		"email": "邮箱",
+		"phone": "手机号",
+		"roleCodes": "角色",
+		"password": "密码",
 		"addUser": "新增用户",
 		"editUser": "编辑用户"
 	},

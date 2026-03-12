@@ -9,6 +9,12 @@
 	"user": {
 		"name": "User Name",
 		"id": "User Id",
+		"username": "Username",
+		"nickname": "Nickname",
+		"email": "Email",
+		"phone": "Phone",
+		"roleCodes": "Roles",
+		"password": "Password",
 		"addUser": "Add User",
 		"editUser": "Edit User"
 	},

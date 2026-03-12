@@ -110,7 +110,7 @@ export default function Role() {
 						total: responseData.result.total,
 					};
 				}}
-				headerTitle={`${t("common.menu.role")} （${t("common.demoOnly")}）`}
+				headerTitle={t("common.menu.role")}
 				toolBarRender={() => [
 					<Button
 						key="add-role"
