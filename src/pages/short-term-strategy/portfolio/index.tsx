@@ -1,5 +1,7 @@
 import type {
 	DailySummary,
+	FollowRecommendation,
+	FollowStock,
 	PortfolioConfig,
 	PortfolioPosition,
 	PortfolioTrade,
@@ -8,11 +10,13 @@ import type {
 import type { ColumnsType } from "antd/es/table";
 import {
 	createPortfolio,
+	fetchFollowList,
 	fetchPortfolioDetail,
 	fetchPortfolioList,
 	fetchPortfolioPerformance,
 	fetchPortfolioTrades,
 	toggleAutoTrade,
+	triggerFollowRecommendation,
 	triggerRebalance,
 } from "#src/api/portfolio";
 import { BasicContent } from "#src/components/basic-content";
@@ -22,6 +26,7 @@ import {
 	BankOutlined,
 	DollarOutlined,
 	ExperimentOutlined,
+	FireOutlined,
 	FundOutlined,
 	LineChartOutlined,
 	PauseCircleOutlined,
@@ -42,6 +47,7 @@ import {
 	InputNumber,
 	message,
 	Modal,
+	Progress,
 	Radio,
 	Result,
 	Row,
@@ -50,6 +56,7 @@ import {
 	Space,
 	Statistic,
 	Table,
+	Tabs,
 	Tag,
 	Tooltip,
 	Typography,
@@ -83,6 +90,206 @@ function strategyName(type: string): string {
 	if (type === "event_driven")
 		return "事件驱动";
 	return "情绪战法";
+}
+
+/** 时段名称 */
+function sessionLabel(type: string): string {
+	if (type === "morning")
+		return "上午";
+	if (type === "afternoon")
+		return "下午";
+	return "手动";
+}
+
+/** 风险等级颜色 */
+function riskColor(level: string): string {
+	if (level === "低")
+		return "#52c41a";
+	if (level === "高")
+		return "#f5222d";
+	return "#faad14";
+}
+
+function riskTagColor(level: string): string {
+	if (level === "低")
+		return "green";
+	if (level === "高")
+		return "red";
+	return "orange";
+}
+
+function confidenceColor(score: number): string {
+	if (score >= 70)
+		return "#52c41a";
+	if (score >= 40)
+		return "#faad14";
+	return "#f5222d";
+}
+
+/** 跟投建议卡片组件 */
+function FollowStockCard({ stock }: { stock: FollowStock }) {
+	return (
+		<Col xs={24} md={12}>
+			<Card
+				size="small"
+				style={{ borderLeft: `3px solid ${riskColor(stock.risk_level)}` }}
+				title={(
+					<Space>
+						<Text strong>{stock.stock_name}</Text>
+						<Text type="secondary">{stock.stock_code}</Text>
+						<Tag color={riskTagColor(stock.risk_level)}>
+							{stock.risk_level}
+							风险
+						</Tag>
+					</Space>
+				)}
+				extra={(
+					<Tag color="blue">
+						仓位
+						{" "}
+						{stock.position_pct}
+						%
+					</Tag>
+				)}
+			>
+				<Row gutter={8} style={{ marginBottom: 8 }}>
+					<Col span={8}>
+						<Statistic title="现价" value={stock.current_price} precision={2} valueStyle={{ fontSize: 14 }} />
+					</Col>
+					<Col span={8}>
+						<Statistic
+							title="目标价"
+							value={stock.target_price}
+							precision={2}
+							valueStyle={{ fontSize: 14, color: "#f5222d" }}
+							prefix={<ArrowUpOutlined />}
+						/>
+					</Col>
+					<Col span={8}>
+						<Statistic
+							title="止损价"
+							value={stock.stop_loss_price}
+							precision={2}
+							valueStyle={{ fontSize: 14, color: "#52c41a" }}
+							prefix={<ArrowDownOutlined />}
+						/>
+					</Col>
+				</Row>
+				<Row gutter={8} style={{ marginBottom: 8 }}>
+					<Col span={12}>
+						<Text type="secondary">预期收益: </Text>
+						<Text style={{ color: "#f5222d" }}>{stock.expected_return}</Text>
+					</Col>
+					<Col span={12}>
+						<Text type="secondary">持有周期: </Text>
+						<Text>{stock.holding_period}</Text>
+					</Col>
+				</Row>
+				<div style={{ background: "#fafafa", borderRadius: 4, padding: "8px 12px", marginTop: 4 }}>
+					<Text type="secondary" style={{ fontSize: 12 }}>跟投理由</Text>
+					<div style={{ fontSize: 13, marginTop: 4 }}>{stock.reason}</div>
+				</div>
+			</Card>
+		</Col>
+	);
+}
+
+/** 跟投建议整体区块 */
+function FollowSection({ followList, followLoading, onTrigger }: {
+	followList: FollowRecommendation[]
+	followLoading: boolean
+	onTrigger: () => void
+}) {
+	return (
+		<Card
+			title={(
+				<Space>
+					<FireOutlined style={{ color: "#f5222d" }} />
+					<Text strong>跟投建议</Text>
+					{followList.length > 0 && (
+						<Tag color="volcano">
+							最新
+							{" "}
+							{followList[0]?.trading_date}
+						</Tag>
+					)}
+				</Space>
+			)}
+			extra={(
+				<Button
+					size="small"
+					type="primary"
+					ghost
+					icon={<ReloadOutlined />}
+					loading={followLoading}
+					onClick={onTrigger}
+				>
+					手动生成
+				</Button>
+			)}
+			style={{ borderRadius: 8 }}
+		>
+			{followList.length === 0
+				? <Empty description="暂无跟投建议，请等待交易完成后自动生成" />
+				: (
+					<Tabs
+						defaultActiveKey="0"
+						items={followList.map((follow, idx) => ({
+							key: String(idx),
+							label: `${follow.trading_date} ${sessionLabel(follow.session_type)}`,
+							children: (
+								<div>
+									<Row gutter={16} style={{ marginBottom: 16 }}>
+										<Col span={16}>
+											<Alert
+												type="info"
+												showIcon
+												message="大盘行情"
+												description={follow.market_overview || "暂无行情概述"}
+											/>
+										</Col>
+										<Col span={8}>
+											<div style={{ textAlign: "center" }}>
+												<Text type="secondary">信心评分</Text>
+												<Progress
+													type="circle"
+													percent={follow.confidence_score}
+													size={80}
+													strokeColor={confidenceColor(follow.confidence_score)}
+												/>
+											</div>
+										</Col>
+									</Row>
+									<Row gutter={[12, 12]}>
+										{(follow.recommendations || []).map((stock: FollowStock, sIdx: number) => (
+											<FollowStockCard key={stock.stock_code || sIdx} stock={stock} />
+										))}
+									</Row>
+									{follow.risk_warning && (
+										<Alert
+											type="warning"
+											showIcon
+											message="风险提示"
+											description={follow.risk_warning}
+											style={{ marginTop: 12 }}
+										/>
+									)}
+									{follow.strategy_summary && (
+										<Alert
+											type="success"
+											showIcon
+											message="策略总结"
+											description={follow.strategy_summary}
+											style={{ marginTop: 8 }}
+										/>
+									)}
+								</div>
+							),
+						}))}
+					/>
+				)}
+		</Card>
+	);
 }
 
 /** Mini SVG 收益曲线 */
@@ -167,6 +374,10 @@ export default function PortfolioDashboard() {
 	const [tradesPage, setTradesPage] = useState(1);
 	const [tradesPageSize, setTradesPageSize] = useState(20);
 
+	// 跟投建议状态
+	const [followList, setFollowList] = useState<FollowRecommendation[]>([]);
+	const [followLoading, setFollowLoading] = useState(false);
+
 	// ==================== 数据加载 ====================
 
 	const loadPortfolios = useCallback(async () => {
@@ -222,6 +433,22 @@ export default function PortfolioDashboard() {
 		}
 	}, []);
 
+	const loadFollowList = useCallback(async (id: number) => {
+		setFollowLoading(true);
+		try {
+			const res = await fetchFollowList({ portfolio_id: id, limit: 10 });
+			if (res.status === "success") {
+				setFollowList(res.data.recommendations);
+			}
+		}
+		catch (err: any) {
+			console.error("Load follow list error:", err);
+		}
+		finally {
+			setFollowLoading(false);
+		}
+	}, []);
+
 	useEffect(() => {
 		loadPortfolios();
 	}, [loadPortfolios]);
@@ -231,8 +458,9 @@ export default function PortfolioDashboard() {
 			loadDetail(selectedId);
 			setTradesPage(1);
 			loadTrades(selectedId, 1, tradesPageSize);
+			loadFollowList(selectedId);
 		}
-	}, [selectedId, loadDetail, loadTrades, tradesPageSize]);
+	}, [selectedId, loadDetail, loadTrades, loadFollowList, tradesPageSize]);
 
 	// ==================== 操作回调 ====================
 
@@ -798,6 +1026,28 @@ export default function PortfolioDashboard() {
 										scroll={{ x: 1000 }}
 									/>
 								</Card>
+
+								{/* ==================== 跟投建议 ==================== */}
+								<FollowSection
+									followList={followList}
+									followLoading={followLoading}
+									onTrigger={async () => {
+										if (!selectedId)
+											return;
+										setFollowLoading(true);
+										try {
+											await triggerFollowRecommendation(selectedId);
+											message.success("跟投建议已生成");
+											await loadFollowList(selectedId);
+										}
+										catch (e: any) {
+											message.error(e?.message || "生成失败");
+										}
+										finally {
+											setFollowLoading(false);
+										}
+									}}
+								/>
 							</>
 						)
 						: (
