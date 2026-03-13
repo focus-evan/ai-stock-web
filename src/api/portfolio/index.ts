@@ -1,5 +1,7 @@
 import type {
 	CreatePortfolioRequest,
+	FollowDetailResponse,
+	FollowListResponse,
 	PerformanceResponse,
 	PortfolioDetailResponse,
 	PortfolioListResponse,
@@ -138,5 +140,39 @@ export function triggerReview(portfolioId: number) {
 export function triggerRecommendations() {
 	return request
 		.post("portfolio/trigger-recommendations", { timeout: 300000 })
+		.json<PortfolioResponse>();
+}
+
+/**
+ * 获取跟投建议列表
+ */
+export function fetchFollowList(params?: {
+	portfolio_id?: number
+	strategy_type?: string
+	limit?: number
+}) {
+	return request
+		.get("portfolio/follow/list", {
+			searchParams: params as Record<string, string>,
+			timeout: 15000,
+		})
+		.json<FollowListResponse>();
+}
+
+/**
+ * 获取某组合最新跟投建议
+ */
+export function fetchLatestFollow(portfolioId: number) {
+	return request
+		.get(`portfolio/${portfolioId}/follow/latest`, { timeout: 15000 })
+		.json<FollowDetailResponse>();
+}
+
+/**
+ * 手动触发跟投建议
+ */
+export function triggerFollowRecommendation(portfolioId: number) {
+	return request
+		.post(`portfolio/${portfolioId}/follow/trigger`, { timeout: 120000 })
 		.json<PortfolioResponse>();
 }

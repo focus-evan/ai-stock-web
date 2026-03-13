@@ -170,3 +170,49 @@ export interface ReviewDetailResponse {
 	data?: ReviewItem
 	message?: string
 }
+
+/** 跟投建议股票 */
+export interface FollowStock {
+	stock_code: string
+	stock_name: string
+	current_price: number
+	target_price: number
+	stop_loss_price: number
+	position_pct: number
+	reason: string
+	risk_level: "低" | "中" | "高"
+	expected_return: string
+	holding_period: string
+}
+
+/** 跟投建议记录 */
+export interface FollowRecommendation {
+	id?: number
+	portfolio_id: number
+	strategy_type: "dragon_head" | "sentiment" | "event_driven"
+	trading_date: string
+	session_type: string
+	recommendations: FollowStock[]
+	stock_count: number
+	market_overview?: string
+	strategy_summary?: string
+	risk_warning?: string
+	confidence_score: number
+	generated_at?: string
+}
+
+/** 跟投建议列表响应 */
+export interface FollowListResponse {
+	status: string
+	data: {
+		recommendations: FollowRecommendation[]
+		total: number
+	}
+}
+
+/** 跟投建议详情响应 */
+export interface FollowDetailResponse {
+	status: string
+	data?: FollowRecommendation
+	message?: string
+}
