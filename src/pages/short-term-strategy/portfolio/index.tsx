@@ -895,7 +895,7 @@ export default function PortfolioDashboard() {
 											</Text>
 											<Tag>{strategyName(portfolio.strategy_type)}</Tag>
 											<Text type="secondary" style={{ fontSize: 12 }}>
-												每个交易日 14:30 自动调仓
+												每个交易日自动交易（龙头/事件 09:10,12:40 | 情绪 11:10,14:10）
 											</Text>
 										</Space>
 									)}
@@ -1117,7 +1117,7 @@ export default function PortfolioDashboard() {
 						type="info"
 						showIcon
 						message="GPT-5.2 将根据最新策略推荐自动分配资金"
-						description="创建后，系统会获取策略推荐股票，由GPT-5.2智能分配资金比例，模拟建仓。每个交易日 14:30 自动调仓。"
+						description="创建后，系统会获取策略推荐股票，由GPT-5.2智能分配资金比例，模拟建仓。龙头/事件驱动 09:10 & 12:40 交易，情绪战法 11:10 & 14:10 交易。"
 						style={{ marginBottom: 16 }}
 					/>
 

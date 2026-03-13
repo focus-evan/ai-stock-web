@@ -40,7 +40,29 @@ const { Title, Text, Paragraph } = Typography;
 
 /** 策略名称 */
 function strategyLabel(type: string): string {
-	return type === "dragon_head" ? "龙头战法" : "情绪战法";
+	if (type === "dragon_head")
+		return "龙头战法";
+	if (type === "event_driven")
+		return "事件驱动";
+	return "情绪战法";
+}
+
+/** 策略标签颜色 */
+function strategyTagColor(type: string): string {
+	if (type === "dragon_head")
+		return "magenta";
+	if (type === "event_driven")
+		return "orange";
+	return "cyan";
+}
+
+/** 策略渐变背景 */
+function strategyGradient(type: string): string {
+	if (type === "dragon_head")
+		return "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)";
+	if (type === "event_driven")
+		return "linear-gradient(135deg, #f6d365 0%, #fda085 100%)";
+	return "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)";
 }
 
 /** 评分颜色 */
@@ -155,6 +177,7 @@ export default function PortfolioReview() {
 						style={{ width: 160 }}
 						options={[
 							{ value: "dragon_head", label: "🐉 龙头战法" },
+							{ value: "event_driven", label: "📡 事件驱动" },
 							{ value: "sentiment", label: "💡 情绪战法" },
 						]}
 					/>
@@ -237,9 +260,7 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 			style={{ borderRadius: 12, overflow: "hidden" }}
 			styles={{
 				header: {
-					background: review.strategy_type === "dragon_head"
-						? "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-						: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+					background: strategyGradient(review.strategy_type),
 					borderBottom: "none",
 					padding: "16px 24px",
 				},
@@ -247,7 +268,7 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 			title={(
 				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 					<Space>
-						<Tag color={review.strategy_type === "dragon_head" ? "magenta" : "cyan"}>
+						<Tag color={strategyTagColor(review.strategy_type)}>
 							{strategyLabel(review.strategy_type)}
 						</Tag>
 						<Text strong style={{ color: "#fff", fontSize: 16 }}>
