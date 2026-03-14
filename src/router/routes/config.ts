@@ -4,4 +4,4 @@
  * 如果设置为 false，则不会单独发送一个请求获取路由数据，而是从用户详情接口中获取动态路由数据
  * 如果设置为 true，则会单独发送一个请求获取路由数据
  */
-export const isSendRoutingRequest = true;
+export const isSendRoutingRequest = false;

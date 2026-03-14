@@ -105,10 +105,12 @@ export function AuthGuard({ children }: AuthGuardProps) {
 			}
 
 			/**
-			 * @zh 启用了前端路由
-			 * @en If frontend routing is enabled
+			 * @zh 仅在未启用后端路由时，才使用前端路由（避免覆盖后端菜单权限控制）
+			 * @en Only use frontend routes when backend access is NOT enabled (to avoid overriding backend menu permissions)
 			 */
-			routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
+			if (!enableBackendAccess) {
+				routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
+			}
 
 			const uniqueRoutes = removeDuplicateRoutes(routes);
 			setAccessStore(uniqueRoutes);
