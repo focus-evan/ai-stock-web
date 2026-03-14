@@ -8,7 +8,7 @@ import { useUserStore } from "#src/store/user";
 import { cn } from "#src/utils/cn";
 import { isWindowsOs } from "#src/utils/is-windows-os";
 
-import { LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useKeyPress } from "ahooks";
 import { Avatar, Dropdown } from "antd";
 import { useMemo } from "react";
@@ -19,6 +19,7 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const avatar = useUserStore(state => state.avatar);
+	const username = useUserStore(state => state.username);
 	const logout = useAuthStore(state => state.logout);
 
 	const onClick: MenuProps["onClick"] = async ({ key }) => {
@@ -55,6 +56,13 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 		onClick({ key: "logout" } as any);
 	});
 
+	// 头像颜色：根据用户名生成一个稳定色
+	const avatarColor = useMemo(() => {
+		const colors = ["#1890ff", "#722ed1", "#eb2f96", "#fa8c16", "#52c41a", "#13c2c2"];
+		const idx = (username || "").charCodeAt(0) % colors.length;
+		return colors[idx] || "#1890ff";
+	}, [username]);
+
 	return (
 		<Dropdown
 			menu={{ items, onClick }}
@@ -67,7 +75,16 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 				{...restProps}
 				className={cn(restProps.className, "rounded-full px-1")}
 			>
-				<Avatar src={avatar} />
+				{avatar
+					? <Avatar src={avatar} />
+					: (
+						<Avatar
+							style={{ backgroundColor: avatarColor }}
+							icon={!username ? <UserOutlined /> : undefined}
+						>
+							{username ? username.charAt(0).toUpperCase() : null}
+						</Avatar>
+					)}
 			</BasicButton>
 		</Dropdown>
 	);

@@ -97,6 +97,7 @@ export default function SchedulerPage() {
 
 	const tasks: SchedulerTask[] = schedulerData?.tasks || [];
 	const summary = schedulerData?.summary || { total: 0, done: 0, pending: 0, progress: 0 };
+	const schedulerUsers: string[] = schedulerData?.scheduler_users || [];
 
 	// 按策略分组
 	const strategies = ["dragon_head", "event_driven", "sentiment", "global"];
@@ -218,6 +219,22 @@ export default function SchedulerPage() {
 						</Col>
 					</Row>
 				</Card>
+
+				{/* 配置用户 */}
+				{schedulerUsers.length > 0 && (
+					<Card size="small">
+						<Space>
+							<Text strong>自动交易用户：</Text>
+							{schedulerUsers.map((u: string) => (
+								<Tag key={u} color="blue" style={{ fontSize: 13, padding: "2px 10px" }}>
+									👤
+									{" "}
+									{u}
+								</Tag>
+							))}
+						</Space>
+					</Card>
+				)}
 
 				{/* 按策略分组的任务面板 */}
 				<Row gutter={[16, 16]}>

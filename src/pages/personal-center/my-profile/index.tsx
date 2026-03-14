@@ -17,8 +17,6 @@ export default function Profile() {
 			if (currentUser.avatar) {
 				return currentUser.avatar;
 			}
-			const url = "https://avatar.vercel.sh/blur.svg?text=2";
-			return url;
 		}
 		return "";
 	};
