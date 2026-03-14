@@ -38,7 +38,7 @@ export function Detail({ title, open, onCloseChange, detailData, treeData, refre
 		// console.info(values);
 		/* 有 id 则为修改，否则为新增 */
 		if (detailData.id) {
-			await updateRoleItemMutation.mutateAsync(values);
+			await updateRoleItemMutation.mutateAsync({ ...values, id: detailData.id });
 			window.$message?.success(t("common.updateSuccess"));
 		}
 		else {
