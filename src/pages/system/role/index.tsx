@@ -20,8 +20,9 @@ import { getConstantColumns } from "./constants";
 export default function Role() {
 	const { t } = useTranslation();
 	const { hasAccessByCodes } = useAccess();
-	const { data: menuItems } = useQuery({
+	const { data: menuItems = [] } = useQuery({
 		queryKey: ["role-menu"],
+		staleTime: 0, // 始终重新请求，不使用全局 5 分钟缓存
 		queryFn: async () => {
 			try {
 				const responseData = await fetchRoleMenu();
@@ -43,7 +44,7 @@ export default function Role() {
 				return [];
 			}
 		},
-		initialData: [],
+		placeholderData: [],
 	});
 	const deleteRoleItemMutation = useMutation({
 		mutationFn: fetchDeleteRoleItem,
