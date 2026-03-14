@@ -92,7 +92,7 @@ export function settlePortfolio(portfolioId: number, tradingDate?: string) {
 	return request
 		.post(`portfolio/${portfolioId}/settle`, {
 			searchParams,
-			timeout: 60000,
+			timeout: 180000,
 		})
 		.json<PortfolioResponse>();
 }
