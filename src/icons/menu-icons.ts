@@ -16,6 +16,7 @@ import {
 	HeartOutlined,
 	HistoryOutlined,
 	HomeOutlined,
+	IdcardOutlined,
 	LineChartOutlined,
 	LockOutlined,
 	MenuOutlined,
@@ -86,4 +87,5 @@ export const menuIcons: Record<string, any> = {
 	FundOutlined,
 	BookOutlined,
 	RadarChartOutlined,
+	IdcardOutlined,
 };
