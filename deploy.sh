@@ -130,11 +130,11 @@ build_project() {
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))
 
-    if [ -d "dist" ]; then
-        local dist_size=$(du -sh dist | cut -f1)
-        log_success "构建完成！耗时 ${duration}s，产物大小: ${dist_size}"
+    if [ -d "build" ]; then
+        local build_size=$(du -sh build | cut -f1)
+        log_success "构建完成！耗时 ${duration}s，产物大小: ${build_size}"
     else
-        log_error "构建失败：dist 目录不存在"
+        log_error "构建失败：build 目录不存在"
         exit 1
     fi
     echo ""
@@ -147,8 +147,8 @@ deploy_to_nginx() {
     log_header "=========================================="
     echo ""
 
-    if [ ! -d "dist" ]; then
-        log_error "dist 目录不存在，请先执行构建"
+    if [ ! -d "build" ]; then
+        log_error "build 目录不存在，请先执行构建"
         exit 1
     fi
 
@@ -172,7 +172,7 @@ deploy_to_nginx() {
     log_info "部署构建产物到 ${NGINX_WEB_ROOT}..."
     mkdir -p "$NGINX_WEB_ROOT"
     rm -rf "${NGINX_WEB_ROOT:?}"/*
-    cp -r dist/* "$NGINX_WEB_ROOT/"
+    cp -r build/* "$NGINX_WEB_ROOT/"
     log_success "文件已复制"
 
     # 重新加载 nginx
@@ -233,7 +233,7 @@ main() {
             echo "命令说明:"
             echo "  full    - 完整流程：拉取代码 → 安装依赖 → 构建 → 部署 (默认)"
             echo "  build   - 仅拉取代码并构建"
-            echo "  deploy  - 仅部署已有的 dist 目录到 nginx"
+            echo "  deploy  - 仅部署已有的 build 目录到 nginx"
             echo ""
             exit 1
             ;;
