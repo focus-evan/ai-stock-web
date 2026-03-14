@@ -8,4 +8,4 @@ export const LANG_HEADER = "X-Lang";
 export const APP_NAME_HEADER = "X-App-Name";
 
 // 定义 HTTP 请求路径中用于刷新访问令牌的路径
-export const REFRESH_TOKEN_PATH = "refresh-token";
+export const REFRESH_TOKEN_PATH = "system/refresh-token";
