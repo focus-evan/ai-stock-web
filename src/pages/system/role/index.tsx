@@ -23,12 +23,25 @@ export default function Role() {
 	const { data: menuItems } = useQuery({
 		queryKey: ["role-menu"],
 		queryFn: async () => {
-			const responseData = await fetchRoleMenu();
-			return responseData?.result.map(item => ({
-				...item,
-				title: item.name,
-				key: item.id,
-			}));
+			try {
+				const responseData = await fetchRoleMenu();
+				console.warn("[role-menu] API response:", responseData);
+				if (responseData?.result && Array.isArray(responseData.result)) {
+					const items = responseData.result.map(item => ({
+						...item,
+						title: item.name,
+						key: item.id,
+					}));
+					console.warn("[role-menu] Loaded menus:", items.length);
+					return items;
+				}
+				console.warn("[role-menu] Unexpected response format:", responseData);
+				return [];
+			}
+			catch (error) {
+				console.error("[role-menu] Failed to fetch menus:", error);
+				return [];
+			}
 		},
 		initialData: [],
 	});

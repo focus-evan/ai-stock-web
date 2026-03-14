@@ -2,7 +2,7 @@ import type { TreeProps } from "antd";
 
 import type { BasicDataNode } from "antd/lib/tree";
 import { Checkbox, Input, Tree } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export interface TreeDataNodeWithId extends BasicDataNode {
@@ -90,12 +90,19 @@ export function FormTreeItem({ treeData, value, onChange }: FormTreeItemProps) {
 		setCheckedOptions(checkedValues);
 	};
 
+	const isInitialMount = useRef(true);
+
 	useEffect(() => {
 		if (checkedOptions.includes("expandAll")) {
 			setExpandedKeys(flattenTreeData.map(item => item.id));
 		}
 		else {
 			setExpandedKeys([]);
+		}
+		// 只在用户主动操作 checkbox 时才触发 onChange，避免初始化时清空已选菜单
+		if (isInitialMount.current) {
+			isInitialMount.current = false;
+			return;
 		}
 		if (checkedOptions.includes("checkAll")) {
 			onChange?.(flattenTreeData.map(item => item.id));

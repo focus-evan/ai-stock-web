@@ -28,7 +28,7 @@ export default defineConfig({
 		react(),
 		vitePluginFakeServer({
 			basename: "/api",
-			enableProd: true,
+			enableProd: false,
 			timeout: 1000,
 		}),
 		// https://github.com/pd4d10/vite-plugin-svgr#options
