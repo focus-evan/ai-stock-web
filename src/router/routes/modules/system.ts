@@ -5,7 +5,6 @@ import { system } from "#src/router/extra-info";
 import { lazy } from "react";
 
 const User = lazy(() => import("#src/pages/system/user"));
-const Dept = lazy(() => import("#src/pages/system/dept"));
 const Role = lazy(() => import("#src/pages/system/role"));
 const Menu = lazy(() => import("#src/pages/system/menu"));
 const DataSync = lazy(() => import("#src/pages/system/sync"));
@@ -54,20 +53,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "MenuOutlined",
 					title: "菜单管理",
-					permissions: [
-						"permission:button:add",
-						"permission:button:update",
-						"permission:button:delete",
-					],
-				},
-			},
-			{
-				path: "/system/dept",
-				Component: Dept,
-				handle: {
-					keepAlive: false,
-					icon: "ApartmentOutlined",
-					title: "部门管理",
 					permissions: [
 						"permission:button:add",
 						"permission:button:update",
