@@ -16,14 +16,14 @@ export interface DatabaseHealthResponse {
 
 export interface CacheStatsResponse {
 	total_items: number
-	total_keys: number // 添加 total_keys
+	total_keys: number
 	total_size_mb: number
-	total_size: number // 添加 total_size（MB）
+	total_size: number
 	hit_rate: number
-	hits: number // 添加 hits
-	misses: number // 添加 misses
+	hits: number
+	misses: number
 	by_type: Record<string, number>
-	cache_types?: Record<string, { // 添加 cache_types
+	cache_types?: Record<string, {
 		keys: number
 		size: number
 		hits?: number
@@ -62,9 +62,27 @@ export interface DeleteSessionResponse {
 
 // Monitor types
 export interface HealthCheckResponse {
-	status: "healthy" | "unhealthy"
-	database_status: "connected" | "disconnected"
-	api_status: "healthy" | "unhealthy"
+	status: "healthy" | "degraded" | "unhealthy"
+	checks: {
+		api: { status: string, uptime_seconds: number }
+		database: {
+			status: string
+			version?: string
+			uptime_seconds?: number
+			uptime_display?: string
+			active_connections?: number
+			pool_size?: number
+			pool_free?: number
+			pool_max?: number
+			error?: string
+		}
+		scheduler: { status: string, error?: string }
+		llm_api: { status: string, provider?: string }
+	}
+	checked_at: string
+	// legacy compat
+	database_status?: string
+	api_status?: string
 	database_info?: {
 		pool_size: number
 		max_connections: number
@@ -77,9 +95,20 @@ export interface HealthCheckResponse {
 export interface SystemMetrics {
 	cpu_usage: number
 	memory_usage: number
-	active_connections: number
-	requests_per_minute: number
-	avg_response_time: number
+	memory_total_gb: number
+	memory_used_gb: number
+	disk_usage: number
+	disk_total_gb: number
+	disk_used_gb: number
+	load_average: number[]
+	process_uptime_seconds: number
+	process_memory_mb: number
+	python_version: string
+	db_pool: { size: number, free: number, used: number, max: number }
+	// legacy compat
+	active_connections?: number
+	requests_per_minute?: number
+	avg_response_time?: number
 	api_metrics?: Record<string, {
 		count: number
 		avg_time: number
@@ -87,7 +116,55 @@ export interface SystemMetrics {
 	}>
 }
 
-// Sync types
+// Scheduler types
+export interface SchedulerTask {
+	strategy: string
+	name: string
+	phase: string
+	label: string
+	time: string
+	done: boolean
+}
+
+export interface SchedulerStatus {
+	running: boolean
+	is_trading_day: boolean
+	current_time: string
+	date: string
+	poll_interval_seconds: number
+	tasks: SchedulerTask[]
+	summary: {
+		total: number
+		done: number
+		pending: number
+		progress: number
+	}
+}
+
+// Recommendation cache types
+export interface RecommendationCacheStat {
+	strategy_type: string
+	total_records: number
+	latest_date: string
+	earliest_date: string
+	total_stocks: number
+}
+
+export interface RecommendationCacheRecent {
+	id: number
+	strategy_type: string
+	trading_date: string
+	session_type: string
+	stock_count: number
+	generated_at: string
+}
+
+export interface RecommendationCacheResponse {
+	stats: RecommendationCacheStat[]
+	recent: RecommendationCacheRecent[]
+}
+
+// Sync types (legacy compat)
 export interface SyncStatus {
 	stock_sync_status: "idle" | "running" | "completed" | "failed"
 	ipo_crawl_status: "idle" | "running" | "completed" | "failed"

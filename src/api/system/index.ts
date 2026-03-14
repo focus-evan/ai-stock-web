@@ -6,9 +6,10 @@ import type {
 	DeleteSessionResponse,
 	HealthCheckResponse,
 	HealthResponse,
+	RecommendationCacheResponse,
+	SchedulerStatus,
 	SessionListResponse,
 	SyncHistoryResponse,
-	SyncStatus,
 	SystemMetrics,
 	TriggerSyncResponse,
 } from "./types";
@@ -34,7 +35,6 @@ export function checkDatabaseHealth() {
  * 清除缓存
  */
 export function clearCache(params: ClearCacheParams | string = {}) {
-	// 如果传入的是字符串，转换为对象
 	const requestParams: ClearCacheParams = typeof params === "string"
 		? { cache_type: params as any }
 		: params;
@@ -68,10 +68,10 @@ export function deleteSession(session_id: string) {
 }
 
 /**
- * 获取健康检查（监控页面使用）
+ * 获取完整健康检查（监控页面使用）
  */
 export function getHealthCheck() {
-	return request.get("health/check").json<HealthCheckResponse>();
+	return request.get("system/health/full").json<HealthCheckResponse>();
 }
 
 /**
@@ -82,10 +82,17 @@ export function getSystemMetrics() {
 }
 
 /**
- * 获取同步状态
+ * 获取定时任务调度器状态
+ */
+export function getSchedulerStatus() {
+	return request.get("system/scheduler/status").json<SchedulerStatus>();
+}
+
+/**
+ * 获取同步状态（兼容旧接口）
  */
 export function getSyncStatus() {
-	return request.get("system/sync/status").json<SyncStatus>();
+	return request.get("system/sync/status").json<any>();
 }
 
 /**
@@ -111,4 +118,23 @@ export function triggerStockSync() {
  */
 export function triggerIPOCrawl() {
 	return request.post("system/sync/ipo").json<TriggerSyncResponse>();
+}
+
+/**
+ * 获取推荐缓存概览
+ */
+export function getRecommendationCache() {
+	return request.get("system/cache/recommendations").json<RecommendationCacheResponse>();
+}
+
+/**
+ * 清除推荐缓存
+ */
+export function clearRecommendationCache(strategyType?: string) {
+	const searchParams: Record<string, string> = {};
+	if (strategyType)
+		searchParams.strategy_type = strategyType;
+	return request
+		.delete("system/cache/recommendations/clear", { searchParams })
+		.json<any>();
 }
