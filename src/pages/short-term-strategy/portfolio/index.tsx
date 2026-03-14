@@ -5,6 +5,7 @@ import type {
 	PortfolioConfig,
 	PortfolioPosition,
 	PortfolioTrade,
+	StockPnlItem,
 } from "#src/api/portfolio";
 
 import type { ColumnsType } from "antd/es/table";
@@ -15,6 +16,7 @@ import {
 	fetchPortfolioList,
 	fetchPortfolioPerformance,
 	fetchPortfolioTrades,
+	fetchStockPnl,
 	settlePortfolio,
 	toggleAutoTrade,
 	triggerFollowRecommendation,
@@ -34,6 +36,7 @@ import {
 	PauseCircleOutlined,
 	PlayCircleOutlined,
 	PlusOutlined,
+	ProfileOutlined,
 	ReloadOutlined,
 	SwapOutlined,
 	ThunderboltOutlined,
@@ -377,6 +380,9 @@ export default function PortfolioDashboard() {
 	const [tradesPage, setTradesPage] = useState(1);
 	const [tradesPageSize, setTradesPageSize] = useState(20);
 
+	// 个股盈亏汇总状态
+	const [stockPnl, setStockPnl] = useState<StockPnlItem[]>([]);
+
 	// 跟投建议状态
 	const [followList, setFollowList] = useState<FollowRecommendation[]>([]);
 	const [followLoading, setFollowLoading] = useState(false);
@@ -436,6 +442,18 @@ export default function PortfolioDashboard() {
 		}
 	}, []);
 
+	const loadStockPnl = useCallback(async (id: number) => {
+		try {
+			const res = await fetchStockPnl(id);
+			if (res.status === "success") {
+				setStockPnl(res.data.stock_pnl);
+			}
+		}
+		catch (err: any) {
+			console.error("Load stock PnL error:", err);
+		}
+	}, []);
+
 	const loadFollowList = useCallback(async (id: number) => {
 		setFollowLoading(true);
 		try {
@@ -461,9 +479,10 @@ export default function PortfolioDashboard() {
 			loadDetail(selectedId);
 			setTradesPage(1);
 			loadTrades(selectedId, 1, tradesPageSize);
+			loadStockPnl(selectedId);
 			loadFollowList(selectedId);
 		}
-	}, [selectedId, loadDetail, loadTrades, loadFollowList, tradesPageSize]);
+	}, [selectedId, loadDetail, loadTrades, loadStockPnl, loadFollowList, tradesPageSize]);
 
 	// ==================== 操作回调 ====================
 
@@ -731,6 +750,125 @@ export default function PortfolioDashboard() {
 			width: 200,
 			ellipsis: true,
 			render: val => val ? <Tooltip title={val}><Text type="secondary" style={{ fontSize: 12 }}>{val}</Text></Tooltip> : "-",
+		},
+	];
+
+	// ==================== 个股盈亏列 ====================
+
+	const stockPnlColumns: ColumnsType<StockPnlItem> = [
+		{
+			title: "股票代码",
+			dataIndex: "stock_code",
+			key: "stock_code",
+			width: 100,
+			render: val => <Text style={{ fontFamily: "monospace" }}>{val}</Text>,
+		},
+		{
+			title: "股票名称",
+			dataIndex: "stock_name",
+			key: "stock_name",
+			width: 90,
+			render: (val, record) => (
+				<Space>
+					<Text strong>{val}</Text>
+					<Tag color={record.status === "holding" ? "blue" : "default"} style={{ fontSize: 10 }}>
+						{record.status === "holding" ? "持仓中" : "已清仓"}
+					</Tag>
+				</Space>
+			),
+		},
+		{
+			title: "买入/卖出",
+			key: "trade_count",
+			width: 90,
+			align: "center",
+			render: (_, record) => (
+				<Space size={4}>
+					<Tag color="red" style={{ margin: 0 }}>
+						买
+						{record.buy_count}
+					</Tag>
+					<Tag color="green" style={{ margin: 0 }}>
+						卖
+						{record.sell_count}
+					</Tag>
+				</Space>
+			),
+		},
+		{
+			title: "总买入",
+			dataIndex: "total_buy_amount",
+			key: "total_buy_amount",
+			width: 100,
+			align: "right",
+			render: val => formatMoney(val || 0),
+		},
+		{
+			title: "总卖出",
+			dataIndex: "total_sell_amount",
+			key: "total_sell_amount",
+			width: 100,
+			align: "right",
+			render: val => formatMoney(val || 0),
+		},
+		{
+			title: "已实现盈亏",
+			dataIndex: "realized_profit",
+			key: "realized_profit",
+			width: 110,
+			align: "right",
+			sorter: (a, b) => a.realized_profit - b.realized_profit,
+			render: (val: number) => (
+				<Text style={{ color: profitColor(val), fontWeight: 600 }}>
+					{val >= 0 ? "+" : ""}
+					{formatMoney(val)}
+				</Text>
+			),
+		},
+		{
+			title: "浮动盈亏",
+			dataIndex: "unrealized_profit",
+			key: "unrealized_profit",
+			width: 110,
+			align: "right",
+			render: (val: number, record) => {
+				if (record.status !== "holding")
+					return <Text type="secondary">-</Text>;
+				return (
+					<Tooltip title={`浮动盈亏率: ${record.unrealized_profit_pct?.toFixed(2)}%`}>
+						<Text style={{ color: profitColor(val), fontWeight: 600 }}>
+							{val >= 0 ? "+" : ""}
+							{formatMoney(val)}
+						</Text>
+					</Tooltip>
+				);
+			},
+		},
+		{
+			title: "总盈亏",
+			dataIndex: "total_pnl",
+			key: "total_pnl",
+			width: 110,
+			align: "right",
+			sorter: (a, b) => a.total_pnl - b.total_pnl,
+			render: (val: number) => (
+				<Text style={{ color: profitColor(val), fontWeight: 700, fontSize: 14 }}>
+					{val >= 0 ? "+" : ""}
+					{formatMoney(val)}
+				</Text>
+			),
+		},
+		{
+			title: "首次交易",
+			dataIndex: "first_trade_date",
+			key: "first_trade_date",
+			width: 100,
+		},
+		{
+			title: "最后交易",
+			dataIndex: "last_trade_date",
+			key: "last_trade_date",
+			width: 100,
 		},
 	];
 
@@ -1019,6 +1157,74 @@ export default function PortfolioDashboard() {
 											if (record.profit_pct <= -5)
 												return "portfolio-row-loss";
 											return "";
+										}}
+									/>
+								</Card>
+
+								{/* ==================== 个股盈亏 ==================== */}
+								<Card
+									title={(
+										<Space>
+											<ProfileOutlined style={{ color: "#13c2c2" }} />
+											<Text strong>个股盈亏</Text>
+											<Tag>
+												{stockPnl.length}
+												只
+											</Tag>
+											{stockPnl.filter(s => s.status === "holding").length > 0 && (
+												<Tag color="blue">
+													持仓
+													{" "}
+													{stockPnl.filter(s => s.status === "holding").length}
+													只
+												</Tag>
+											)}
+										</Space>
+									)}
+									styles={{ body: { padding: 0 } }}
+									style={{ marginBottom: 16, borderRadius: 8 }}
+								>
+									<Table<StockPnlItem>
+										columns={stockPnlColumns}
+										dataSource={stockPnl}
+										rowKey="stock_code"
+										size="small"
+										pagination={stockPnl.length > 20 ? { pageSize: 20, showTotal: t => `共 ${t} 只` } : false}
+										scroll={{ x: 1100 }}
+										summary={() => {
+											if (stockPnl.length === 0)
+												return null;
+											const totalRealized = stockPnl.reduce((s, r) => s + r.realized_profit, 0);
+											const totalUnrealized = stockPnl.reduce((s, r) => s + r.unrealized_profit, 0);
+											const totalPnl = stockPnl.reduce((s, r) => s + r.total_pnl, 0);
+											return (
+												<Table.Summary fixed>
+													<Table.Summary.Row>
+														<Table.Summary.Cell index={0} colSpan={5} align="right">
+															<Text strong>合计</Text>
+														</Table.Summary.Cell>
+														<Table.Summary.Cell index={5} align="right">
+															<Text style={{ color: profitColor(totalRealized), fontWeight: 700 }}>
+																{totalRealized >= 0 ? "+" : ""}
+																{formatMoney(totalRealized)}
+															</Text>
+														</Table.Summary.Cell>
+														<Table.Summary.Cell index={6} align="right">
+															<Text style={{ color: profitColor(totalUnrealized), fontWeight: 700 }}>
+																{totalUnrealized >= 0 ? "+" : ""}
+																{formatMoney(totalUnrealized)}
+															</Text>
+														</Table.Summary.Cell>
+														<Table.Summary.Cell index={7} align="right">
+															<Text style={{ color: profitColor(totalPnl), fontWeight: 700, fontSize: 15 }}>
+																{totalPnl >= 0 ? "+" : ""}
+																{formatMoney(totalPnl)}
+															</Text>
+														</Table.Summary.Cell>
+														<Table.Summary.Cell index={8} colSpan={2} />
+													</Table.Summary.Row>
+												</Table.Summary>
+											);
 										}}
 									/>
 								</Card>

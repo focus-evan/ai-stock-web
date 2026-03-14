@@ -8,6 +8,7 @@ import type {
 	PortfolioResponse,
 	ReviewDetailResponse,
 	ReviewListResponse,
+	StockPnlResponse,
 	TradesResponse,
 } from "./types";
 import { request } from "#src/utils/request";
@@ -62,6 +63,15 @@ export function fetchPortfolioTrades(
 			timeout: 15000,
 		})
 		.json<TradesResponse>();
+}
+
+/**
+ * 获取个股盈亏汇总
+ */
+export function fetchStockPnl(portfolioId: number) {
+	return request
+		.get(`portfolio/${portfolioId}/stock-pnl`, { timeout: 15000 })
+		.json<StockPnlResponse>();
 }
 
 /**

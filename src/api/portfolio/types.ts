@@ -53,6 +53,29 @@ export interface PortfolioTrade {
 	created_at?: string
 }
 
+/** 个股盈亏汇总 */
+export interface StockPnlItem {
+	stock_code: string
+	stock_name: string
+	total_buy_amount: number
+	total_sell_amount: number
+	total_buy_qty: number
+	total_sell_qty: number
+	buy_count: number
+	sell_count: number
+	realized_profit: number
+	unrealized_profit: number
+	unrealized_profit_pct: number
+	total_pnl: number
+	holding_qty: number | null
+	holding_avg_cost: number | null
+	holding_current_price: number | null
+	holding_market_value: number | null
+	first_trade_date: string
+	last_trade_date: string
+	status: "holding" | "closed"
+}
+
 /** 每日汇总 */
 export interface DailySummary {
 	trading_date: string
@@ -104,6 +127,15 @@ export interface TradesResponse {
 		page: number
 		page_size: number
 		total_pages: number
+	}
+}
+
+/** 个股盈亏汇总响应 */
+export interface StockPnlResponse {
+	status: string
+	data: {
+		stock_pnl: StockPnlItem[]
+		total: number
 	}
 }
 
