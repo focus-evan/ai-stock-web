@@ -83,6 +83,21 @@ export function triggerRebalance(portfolioId: number) {
 }
 
 /**
+ * 手动结算收益（仅更新价格+计算收益，不交易）
+ */
+export function settlePortfolio(portfolioId: number, tradingDate?: string) {
+	const searchParams: Record<string, string> = {};
+	if (tradingDate)
+		searchParams.trading_date = tradingDate;
+	return request
+		.post(`portfolio/${portfolioId}/settle`, {
+			searchParams,
+			timeout: 60000,
+		})
+		.json<PortfolioResponse>();
+}
+
+/**
  * 开启/暂停自动交易
  */
 export function toggleAutoTrade(portfolioId: number, autoTrade: boolean) {

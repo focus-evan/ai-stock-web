@@ -5,6 +5,7 @@
 /** 组合配置 */
 export interface PortfolioConfig {
 	id: number
+	user_id?: number | null
 	strategy_type: "dragon_head" | "sentiment" | "event_driven"
 	name: string
 	initial_capital: number

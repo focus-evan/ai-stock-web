@@ -15,6 +15,7 @@ import {
 	fetchPortfolioList,
 	fetchPortfolioPerformance,
 	fetchPortfolioTrades,
+	settlePortfolio,
 	toggleAutoTrade,
 	triggerFollowRecommendation,
 	triggerRebalance,
@@ -24,6 +25,7 @@ import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
 	BankOutlined,
+	CalculatorOutlined,
 	DollarOutlined,
 	ExperimentOutlined,
 	FireOutlined,
@@ -366,6 +368,7 @@ export default function PortfolioDashboard() {
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 	const [creating, setCreating] = useState(false);
 	const [triggering, setTriggering] = useState(false);
+	const [settling, setSettling] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	// 交易记录分页状态
@@ -511,6 +514,31 @@ export default function PortfolioDashboard() {
 		}
 		finally {
 			setTriggering(false);
+		}
+	};
+
+	const handleSettle = async () => {
+		if (!selectedId)
+			return;
+		setSettling(true);
+		try {
+			const res = await settlePortfolio(selectedId);
+			if (res.status === "success") {
+				message.success(
+					`结算完成！总资产: ${res.total_asset?.toLocaleString()}元，累计收益: ${res.total_profit_pct?.toFixed(2)}%`,
+				);
+				await loadDetail(selectedId);
+				await loadPortfolios();
+			}
+			else {
+				message.warning(res.message || "结算跳过");
+			}
+		}
+		catch (err: any) {
+			message.error(err?.message || "结算失败");
+		}
+		finally {
+			setSettling(false);
 		}
 	};
 
@@ -901,6 +929,15 @@ export default function PortfolioDashboard() {
 									)}
 									action={(
 										<Space>
+											<Button
+												size="small"
+												icon={<CalculatorOutlined />}
+												loading={settling}
+												onClick={handleSettle}
+												style={{ borderColor: "#13c2c2", color: "#13c2c2" }}
+											>
+												手动结算
+											</Button>
 											<Button
 												size="small"
 												icon={<ThunderboltOutlined />}
