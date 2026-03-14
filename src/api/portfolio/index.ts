@@ -16,6 +16,15 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
+ * 获取首页大屏数据
+ */
+export function fetchDashboard() {
+	return request
+		.get("portfolio/dashboard", { timeout: 30000 })
+		.json<any>();
+}
+
+/**
  * 列出所有模拟交易组合
  */
 export function fetchPortfolioList(strategyType?: string) {
