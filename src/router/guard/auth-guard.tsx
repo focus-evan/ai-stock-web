@@ -129,7 +129,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				 * @en Network request failed, redirect to 500 page
 				 */
 				if (hasError) {
-					const unAuthorized = results.some((result: any) => result.reason.response.status === 401);
+					const unAuthorized = results.some((result: any) => result.status === "rejected" && result.reason?.response?.status === 401);
 					if (!unAuthorized) {
 						return navigate(exception500Path);
 					}
