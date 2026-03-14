@@ -1,32 +1,46 @@
 import type { SchedulerTask } from "#src/api/system";
 
 import {
+	addSchedulerUser,
 	getSchedulerStatus,
+	getSchedulerUserConfig,
+	removeSchedulerUser,
+	updateSchedulerUser,
 } from "#src/api/system";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	CheckCircleOutlined,
 	ClockCircleOutlined,
 	DashboardOutlined,
+	DeleteOutlined,
 	MinusCircleOutlined,
+	PlusOutlined,
 	ReloadOutlined,
+	SettingOutlined,
 	ThunderboltOutlined,
+	UserOutlined,
 } from "@ant-design/icons";
 import { useRequest } from "ahooks";
 import {
 	Badge,
 	Button,
 	Card,
+	Checkbox,
 	Col,
+	message,
+	Popconfirm,
 	Progress,
 	Row,
+	Select,
 	Space,
 	Statistic,
+	Switch,
 	Table,
 	Tag,
 	Tooltip,
 	Typography,
 } from "antd";
+import { useState } from "react";
 
 const { Text } = Typography;
 
@@ -82,11 +96,22 @@ function phaseLabel(phase: string): string {
 	return phase;
 }
 
+/** 任务类型选项 */
+const TASK_TYPE_OPTIONS = [
+	{ label: "自动交易", value: "trade" },
+	{ label: "跟投建议", value: "follow" },
+	{ label: "每日复盘", value: "review" },
+];
+
 export default function SchedulerPage() {
+	const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+	const [selectedTaskTypes, setSelectedTaskTypes] = useState<string[]>(["trade", "follow", "review"]);
+
+	// 调度器状态
 	const {
 		data: schedulerData,
 		loading,
-		refresh,
+		refresh: refreshScheduler,
 	} = useRequest(
 		async () => {
 			const res = await getSchedulerStatus();
@@ -95,9 +120,78 @@ export default function SchedulerPage() {
 		{ pollingInterval: 10000 },
 	);
 
+	// 用户配置
+	const {
+		data: userConfigData,
+		loading: configLoading,
+		refresh: refreshConfig,
+	} = useRequest(
+		async () => {
+			const res = await getSchedulerUserConfig();
+			return (res as any)?.result || res;
+		},
+	);
+
+	// 添加用户
+	const { run: handleAddUser, loading: addLoading } = useRequest(
+		async () => {
+			if (!selectedUserId)
+				return;
+			return await addSchedulerUser(selectedUserId, selectedTaskTypes);
+		},
+		{
+			manual: true,
+			onSuccess: () => {
+				message.success("用户已添加");
+				setSelectedUserId(null);
+				setSelectedTaskTypes(["trade", "follow", "review"]);
+				refreshConfig();
+				refreshScheduler();
+			},
+			onError: () => message.error("添加失败"),
+		},
+	);
+
+	// 删除用户
+	const { run: handleRemoveUser } = useRequest(
+		async (userId: number) => {
+			return await removeSchedulerUser(userId);
+		},
+		{
+			manual: true,
+			onSuccess: () => {
+				message.success("用户已移除");
+				refreshConfig();
+				refreshScheduler();
+			},
+			onError: () => message.error("移除失败"),
+		},
+	);
+
+	// 更新用户启用状态
+	const { run: handleToggleUser } = useRequest(
+		async (userId: number, enabled: boolean) => {
+			return await updateSchedulerUser(userId, { enabled });
+		},
+		{
+			manual: true,
+			onSuccess: () => {
+				message.success("状态已更新");
+				refreshConfig();
+			},
+			onError: () => message.error("更新失败"),
+		},
+	);
+
 	const tasks: SchedulerTask[] = schedulerData?.tasks || [];
 	const summary = schedulerData?.summary || { total: 0, done: 0, pending: 0, progress: 0 };
-	const schedulerUsers: string[] = schedulerData?.scheduler_users || [];
+
+	const configs = userConfigData?.configs || [];
+	const availableUsers = userConfigData?.available_users || [];
+	// 已配置的用户 ID
+	const configuredUserIds = new Set(configs.map((c: any) => c.user_id));
+	// 可选的用户（排除已配置的）
+	const selectableUsers = availableUsers.filter((u: any) => !configuredUserIds.has(u.id));
 
 	// 按策略分组
 	const strategies = ["dragon_head", "event_driven", "sentiment", "global"];
@@ -108,7 +202,7 @@ export default function SchedulerPage() {
 		global: "⚙️ 全局任务",
 	};
 
-	const columns = [
+	const taskColumns = [
 		{
 			title: "任务",
 			dataIndex: "label",
@@ -149,15 +243,140 @@ export default function SchedulerPage() {
 		},
 	];
 
+	// 配置用户表格列
+	const userColumns = [
+		{
+			title: "用户",
+			dataIndex: "username",
+			key: "username",
+			render: (username: string) => (
+				<Space>
+					<UserOutlined />
+					<Text strong>{username}</Text>
+				</Space>
+			),
+		},
+		{
+			title: "任务类型",
+			dataIndex: "task_types",
+			key: "task_types",
+			render: (types: string[]) => (
+				<Space>
+					{types.includes("trade") && <Tag color="red">自动交易</Tag>}
+					{types.includes("follow") && <Tag color="green">跟投建议</Tag>}
+					{types.includes("review") && <Tag color="purple">每日复盘</Tag>}
+				</Space>
+			),
+		},
+		{
+			title: "状态",
+			dataIndex: "enabled",
+			key: "enabled",
+			width: 80,
+			render: (enabled: boolean, record: any) => (
+				<Switch
+					checked={enabled}
+					size="small"
+					onChange={checked => handleToggleUser(record.user_id, checked)}
+				/>
+			),
+		},
+		{
+			title: "操作",
+			key: "action",
+			width: 80,
+			render: (_: any, record: any) => (
+				<Popconfirm
+					title={`确认移除用户 ${record.username}？`}
+					description="移除后该用户将不再执行定时任务"
+					onConfirm={() => handleRemoveUser(record.user_id)}
+				>
+					<Button type="link" danger size="small" icon={<DeleteOutlined />}>
+						移除
+					</Button>
+				</Popconfirm>
+			),
+		},
+	];
+
 	return (
 		<BasicContent>
 			<Space direction="vertical" style={{ width: "100%" }} size="large">
-				{/* 头部概览 */}
+				{/* ==================== 用户配置管理 ==================== */}
+				<Card
+					title={(
+						<Space>
+							<SettingOutlined />
+							<span>定时任务用户配置</span>
+						</Space>
+					)}
+					extra={(
+						<Button
+							icon={<ReloadOutlined />}
+							onClick={refreshConfig}
+							loading={configLoading}
+							size="small"
+						>
+							刷新
+						</Button>
+					)}
+				>
+					{/* 添加用户 */}
+					<div
+						style={{
+							display: "flex",
+							gap: 12,
+							alignItems: "center",
+							marginBottom: 16,
+							padding: "12px 16px",
+							background: "#fafafa",
+							borderRadius: 8,
+						}}
+					>
+						<Select
+							style={{ width: 180 }}
+							placeholder="选择用户"
+							value={selectedUserId}
+							onChange={setSelectedUserId}
+							options={selectableUsers.map((u: any) => ({
+								label: u.nickname ? `${u.username} (${u.nickname})` : u.username,
+								value: u.id,
+							}))}
+							allowClear
+						/>
+						<Checkbox.Group
+							options={TASK_TYPE_OPTIONS}
+							value={selectedTaskTypes}
+							onChange={v => setSelectedTaskTypes(v as string[])}
+						/>
+						<Button
+							type="primary"
+							icon={<PlusOutlined />}
+							onClick={handleAddUser}
+							loading={addLoading}
+							disabled={!selectedUserId}
+						>
+							添加
+						</Button>
+					</div>
+
+					{/* 已配置用户列表 */}
+					<Table
+						columns={userColumns}
+						dataSource={configs}
+						rowKey="id"
+						pagination={false}
+						size="small"
+						locale={{ emptyText: "暂无配置用户，请添加" }}
+					/>
+				</Card>
+
+				{/* ==================== 头部概览 ==================== */}
 				<Card
 					title={(
 						<Space>
 							<DashboardOutlined />
-							<span>定时任务管理</span>
+							<span>任务执行状态</span>
 						</Space>
 					)}
 					extra={(
@@ -165,7 +384,7 @@ export default function SchedulerPage() {
 							{schedulerData?.running
 								? <Badge status="processing" text={<Text type="success">运行中</Text>} />
 								: <Badge status="error" text={<Text type="danger">已停止</Text>} />}
-							<Button icon={<ReloadOutlined />} onClick={refresh} loading={loading}>
+							<Button icon={<ReloadOutlined />} onClick={refreshScheduler} loading={loading}>
 								刷新
 							</Button>
 						</Space>
@@ -220,23 +439,7 @@ export default function SchedulerPage() {
 					</Row>
 				</Card>
 
-				{/* 配置用户 */}
-				{schedulerUsers.length > 0 && (
-					<Card size="small">
-						<Space>
-							<Text strong>自动交易用户：</Text>
-							{schedulerUsers.map((u: string) => (
-								<Tag key={u} color="blue" style={{ fontSize: 13, padding: "2px 10px" }}>
-									👤
-									{" "}
-									{u}
-								</Tag>
-							))}
-						</Space>
-					</Card>
-				)}
-
-				{/* 按策略分组的任务面板 */}
+				{/* ==================== 按策略分组的任务面板 ==================== */}
 				<Row gutter={[16, 16]}>
 					{strategies.map((strategy) => {
 						const stratTasks = tasks.filter(t => t.strategy === strategy);
@@ -276,7 +479,7 @@ export default function SchedulerPage() {
 									}}
 								>
 									<Table
-										columns={columns}
+										columns={taskColumns}
 										dataSource={stratTasks}
 										rowKey={r => `${r.strategy}-${r.phase}`}
 										pagination={false}
@@ -289,7 +492,7 @@ export default function SchedulerPage() {
 					})}
 				</Row>
 
-				{/* 时间轴概览 */}
+				{/* ==================== 时间轴概览 ==================== */}
 				<Card
 					size="small"
 					title={(

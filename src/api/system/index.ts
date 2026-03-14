@@ -138,3 +138,37 @@ export function clearRecommendationCache(strategyType?: string) {
 		.delete("system/cache/recommendations/clear", { searchParams })
 		.json<any>();
 }
+
+/**
+ * 获取定时任务用户配置
+ */
+export function getSchedulerUserConfig() {
+	return request.get("system/scheduler/users").json<any>();
+}
+
+/**
+ * 添加定时任务用户
+ */
+export function addSchedulerUser(userId: number, taskTypes?: string[]) {
+	return request
+		.post("system/scheduler/users", {
+			json: { user_id: userId, task_types: taskTypes || ["trade", "follow", "review"] },
+		})
+		.json<any>();
+}
+
+/**
+ * 移除定时任务用户
+ */
+export function removeSchedulerUser(userId: number) {
+	return request.delete(`system/scheduler/users/${userId}`).json<any>();
+}
+
+/**
+ * 更新定时任务用户配置
+ */
+export function updateSchedulerUser(userId: number, data: { task_types?: string[], enabled?: boolean }) {
+	return request
+		.put(`system/scheduler/users/${userId}`, { json: data })
+		.json<any>();
+}
