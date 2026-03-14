@@ -52,110 +52,116 @@ export function AuthGuard({ children }: AuthGuardProps) {
 	 */
 	useEffect(() => {
 		async function fetchUserInfoAndRoutes() {
+			try {
 			/**
 			 * @zh 登录跳转，防止闪烁
 			 * @en Login redirect, prevent flicker
 			 */
-			setupLoading();
+				setupLoading();
 
-			/**
-			 * @zh 初始化一个空数组来存放 Promise 对象
-			 * @en Initialize an empty array to hold Promise objects
-			 */
-			const promises = [];
-
-			/**
-			 * @zh 获取用户信息
-			 * @en Fetch user information
-			 */
-			promises.push(getUserInfo());
-
-			/**
-			 * @zh 启用了后端路由，且路由从单独接口中获取，则发起请求
-			 * @en If backend routing is enabled and the route is obtained from a separate interface, then initiate a request
-			 */
-			if (enableBackendAccess && isSendRoutingRequest) {
-				promises.push(fetchAsyncRoutes());
-			}
-
-			const results = await Promise.allSettled(promises);
-			const [userInfoResult, routeResult] = results;
-			const routes = [];
-			const latestRoles = [];
-
-			console.warn("[auth-guard] enableBackendAccess:", enableBackendAccess, "isSendRoutingRequest:", isSendRoutingRequest);
-			console.warn("[auth-guard] userInfoResult:", userInfoResult);
-
-			/**
-			 * @zh 从用户接口中获取角色信息
-			 * @en Fetch role information from the user interface
-			 */
-			if (userInfoResult.status === "fulfilled" && "roles" in userInfoResult.value) {
-				latestRoles.push(...userInfoResult.value?.roles ?? []);
-			}
-			/**
-			 * @zh 启用了后端路由且路由从用户接口中获取
-			 * @en If backend routing is enabled and the route is obtained from the user interface
-			 */
-			if (enableBackendAccess && !isSendRoutingRequest && userInfoResult.status === "fulfilled" && "menus" in userInfoResult.value) {
-				console.warn("[auth-guard] Loading menus from user-info:", userInfoResult.value?.menus?.length);
-				routes.push(...await generateRoutesFromBackend(userInfoResult.value?.menus ?? []));
-				console.warn("[auth-guard] Generated routes:", routes.length, routes);
-			}
-			/**
-			 * @zh 启用了后端路由且路由从单独接口中获取
-			 * @en If backend routing is enabled and the route is obtained from a separate interface
-			 */
-			if (enableBackendAccess && isSendRoutingRequest && routeResult.status === "fulfilled" && "result" in routeResult.value) {
-				routes.push(...await generateRoutesFromBackend(routeResult.value?.result ?? []));
-			}
-
-			/**
-			 * @zh 仅在未启用后端路由时，才使用前端路由（避免覆盖后端菜单权限控制）
-			 * @en Only use frontend routes when backend access is NOT enabled (to avoid overriding backend menu permissions)
-			 */
-			if (!enableBackendAccess) {
-				routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
-			}
-
-			console.warn("[auth-guard] Final routes count:", routes.length);
-			const uniqueRoutes = removeDuplicateRoutes(routes);
-			setAccessStore(uniqueRoutes);
-
-			const hasError = results.some(result => result.status === "rejected");
-			/**
-			 * @zh 网络请求失败，跳转到 500 页面
-			 * @en Network request failed, redirect to 500 page
-			 */
-			if (hasError) {
-				const unAuthorized = results.some((result: any) => result.reason.response.status === 401);
-				if (!unAuthorized) {
-					return navigate(exception500Path);
-				}
-			}
-
-			/**
-			 *
-			 * @zh 开启动态路由条件下需要替换当前路由？
-			 * 1. 浏览器导航进入动态路由地址，例如 /system/user
-			 * 2. 动态路由未添加到路由，所以地址栏中依然是 /system/user 但匹配到的路由是 fallback (path = "*") 路由
-			 * 3. 添加完动态路由后，使用 replace 替换当前路由，触发程序重新匹配到 /system/user 路由
-			 *
-			 * Refer：https://router.vuejs.org/guide/advanced/dynamic-routing#Adding-routes
-			 *
-			 * @en Under the condition of dynamic routing, do you need to replace the current route?
-			 * 1. Browser navigation into a dynamic routing address, such as /system/user
-			 * 2. The dynamic route is not added to the route, so the address bar is still /system/user but the matched route is the fallback (path = "*") route
-			 * 3. After adding the dynamic route, use replace to replace the current route and trigger the program to match /system/user again
-			 */
-			navigate(`${pathname}${search}`, {
-				replace: true,
 				/**
-				 * @zh 保证替换路由前不会显示 404 页面（登录页面，网速切换为 3G 会闪烁显示 404 页面）
-				 * @en Ensure that the 404 page will not be displayed before replacing the route
+				 * @zh 初始化一个空数组来存放 Promise 对象
+				 * @en Initialize an empty array to hold Promise objects
 				 */
-				flushSync: true,
-			});
+				const promises = [];
+
+				/**
+				 * @zh 获取用户信息
+				 * @en Fetch user information
+				 */
+				promises.push(getUserInfo());
+
+				/**
+				 * @zh 启用了后端路由，且路由从单独接口中获取，则发起请求
+				 * @en If backend routing is enabled and the route is obtained from a separate interface, then initiate a request
+				 */
+				if (enableBackendAccess && isSendRoutingRequest) {
+					promises.push(fetchAsyncRoutes());
+				}
+
+				const results = await Promise.allSettled(promises);
+				const [userInfoResult, routeResult] = results;
+				const routes = [];
+				const latestRoles = [];
+
+				console.warn("[auth-guard] enableBackendAccess:", enableBackendAccess, "isSendRoutingRequest:", isSendRoutingRequest);
+				console.warn("[auth-guard] userInfoResult:", userInfoResult);
+
+				/**
+				 * @zh 从用户接口中获取角色信息
+				 * @en Fetch role information from the user interface
+				 */
+				if (userInfoResult.status === "fulfilled" && "roles" in userInfoResult.value) {
+					latestRoles.push(...userInfoResult.value?.roles ?? []);
+				}
+				/**
+				 * @zh 启用了后端路由且路由从用户接口中获取
+				 * @en If backend routing is enabled and the route is obtained from the user interface
+				 */
+				if (enableBackendAccess && !isSendRoutingRequest && userInfoResult.status === "fulfilled" && "menus" in userInfoResult.value) {
+					console.warn("[auth-guard] Loading menus from user-info:", userInfoResult.value?.menus?.length);
+					routes.push(...await generateRoutesFromBackend(userInfoResult.value?.menus ?? []));
+					console.warn("[auth-guard] Generated routes:", routes.length, routes);
+				}
+				/**
+				 * @zh 启用了后端路由且路由从单独接口中获取
+				 * @en If backend routing is enabled and the route is obtained from a separate interface
+				 */
+				if (enableBackendAccess && isSendRoutingRequest && routeResult.status === "fulfilled" && "result" in routeResult.value) {
+					routes.push(...await generateRoutesFromBackend(routeResult.value?.result ?? []));
+				}
+
+				/**
+				 * @zh 仅在未启用后端路由时，才使用前端路由（避免覆盖后端菜单权限控制）
+				 * @en Only use frontend routes when backend access is NOT enabled (to avoid overriding backend menu permissions)
+				 */
+				if (!enableBackendAccess) {
+					routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
+				}
+
+				console.warn("[auth-guard] Final routes count:", routes.length);
+				const uniqueRoutes = removeDuplicateRoutes(routes);
+				setAccessStore(uniqueRoutes);
+
+				const hasError = results.some(result => result.status === "rejected");
+				/**
+				 * @zh 网络请求失败，跳转到 500 页面
+				 * @en Network request failed, redirect to 500 page
+				 */
+				if (hasError) {
+					const unAuthorized = results.some((result: any) => result.reason.response.status === 401);
+					if (!unAuthorized) {
+						return navigate(exception500Path);
+					}
+				}
+
+				/**
+				 *
+				 * @zh 开启动态路由条件下需要替换当前路由？
+				 * 1. 浏览器导航进入动态路由地址，例如 /system/user
+				 * 2. 动态路由未添加到路由，所以地址栏中依然是 /system/user 但匹配到的路由是 fallback (path = "*") 路由
+				 * 3. 添加完动态路由后，使用 replace 替换当前路由，触发程序重新匹配到 /system/user 路由
+				 *
+				 * Refer：https://router.vuejs.org/guide/advanced/dynamic-routing#Adding-routes
+				 *
+				 * @en Under the condition of dynamic routing, do you need to replace the current route?
+				 * 1. Browser navigation into a dynamic routing address, such as /system/user
+				 * 2. The dynamic route is not added to the route, so the address bar is still /system/user but the matched route is the fallback (path = "*") route
+				 * 3. After adding the dynamic route, use replace to replace the current route and trigger the program to match /system/user again
+				 */
+				navigate(`${pathname}${search}`, {
+					replace: true,
+					/**
+					 * @zh 保证替换路由前不会显示 404 页面（登录页面，网速切换为 3G 会闪烁显示 404 页面）
+					 * @en Ensure that the 404 page will not be displayed before replacing the route
+					 */
+					flushSync: true,
+				});
+			}
+			catch (error) {
+				console.error("[auth-guard] Failed to initialize routes:", error);
+				navigate(exception500Path);
+			}
 		}
 		/**
 		 * @zh 只有在以下条件下才执行获取用户信息和路由的逻辑
