@@ -82,6 +82,10 @@ export function AuthGuard({ children }: AuthGuardProps) {
 			const [userInfoResult, routeResult] = results;
 			const routes = [];
 			const latestRoles = [];
+
+			console.warn("[auth-guard] enableBackendAccess:", enableBackendAccess, "isSendRoutingRequest:", isSendRoutingRequest);
+			console.warn("[auth-guard] userInfoResult:", userInfoResult);
+
 			/**
 			 * @zh 从用户接口中获取角色信息
 			 * @en Fetch role information from the user interface
@@ -94,7 +98,9 @@ export function AuthGuard({ children }: AuthGuardProps) {
 			 * @en If backend routing is enabled and the route is obtained from the user interface
 			 */
 			if (enableBackendAccess && !isSendRoutingRequest && userInfoResult.status === "fulfilled" && "menus" in userInfoResult.value) {
+				console.warn("[auth-guard] Loading menus from user-info:", userInfoResult.value?.menus?.length);
 				routes.push(...await generateRoutesFromBackend(userInfoResult.value?.menus ?? []));
+				console.warn("[auth-guard] Generated routes:", routes.length, routes);
 			}
 			/**
 			 * @zh 启用了后端路由且路由从单独接口中获取
@@ -112,6 +118,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
 			}
 
+			console.warn("[auth-guard] Final routes count:", routes.length);
 			const uniqueRoutes = removeDuplicateRoutes(routes);
 			setAccessStore(uniqueRoutes);
 
