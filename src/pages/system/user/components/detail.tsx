@@ -26,8 +26,9 @@ export function Detail({ title, open, onCloseChange, detailData, refreshTable }:
 	const { t } = useTranslation();
 	const [form] = Form.useForm<UserItemType>();
 
-	const { data: roleOptions } = useQuery({
+	const { data: roleOptions = [] } = useQuery({
 		queryKey: ["role-options-for-user"],
+		staleTime: 0,
 		queryFn: async () => {
 			const res = await fetchRoleList({ pageSize: 100 });
 			return res.result.list.map((r: any) => ({
@@ -35,7 +36,7 @@ export function Detail({ title, open, onCloseChange, detailData, refreshTable }:
 				value: r.code,
 			}));
 		},
-		initialData: [],
+		placeholderData: [],
 	});
 
 	const addMutation = useMutation({
