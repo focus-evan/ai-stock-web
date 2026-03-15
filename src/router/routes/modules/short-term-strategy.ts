@@ -7,6 +7,10 @@ import { lazy } from "react";
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
+const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
+const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
+const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
+const MovingAverage = lazy(() => import("#src/pages/short-term-strategy/moving-average"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 
@@ -42,6 +46,38 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "RadarChartOutlined",
 					title: "事件驱动",
+				},
+			},
+			{
+				path: "/short-term-strategy/breakthrough",
+				Component: Breakthrough,
+				handle: {
+					icon: "RocketOutlined",
+					title: "突破战法",
+				},
+			},
+			{
+				path: "/short-term-strategy/volume-price",
+				Component: VolumePrice,
+				handle: {
+					icon: "BarChartOutlined",
+					title: "量价关系",
+				},
+			},
+			{
+				path: "/short-term-strategy/auction",
+				Component: Auction,
+				handle: {
+					icon: "FieldTimeOutlined",
+					title: "竞价/尾盘",
+				},
+			},
+			{
+				path: "/short-term-strategy/moving-average",
+				Component: MovingAverage,
+				handle: {
+					icon: "LineChartOutlined",
+					title: "均线战法",
 				},
 			},
 			{

@@ -272,3 +272,190 @@ export interface EventDrivenResponse {
 	data: EventDrivenData
 	message?: string
 }
+
+// ===================== 突破战法 =====================
+
+/** 突破战法推荐股票 */
+export interface BreakthroughStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	breakthrough_type: string
+	breakthrough_price: number
+	breakthrough_pct: number
+	volume_ratio: number
+	is_volume_confirmed: boolean
+	high_20d: number
+	high_60d: number
+	ma5: number
+	ma20: number
+	above_ma: boolean
+	breakthrough_score: number
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 突破战法完整数据 */
+export interface BreakthroughData {
+	recommendations: BreakthroughStock[]
+	total: number
+	breakthrough_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+	market_assessment?: string
+}
+
+/** 突破战法接口响应 */
+export interface BreakthroughResponse {
+	status: "success" | "error"
+	data: BreakthroughData
+	message?: string
+}
+
+// ===================== 量价关系 =====================
+
+/** 量价关系推荐股票 */
+export interface VolumePriceStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	signal_type: string
+	signal_score: number
+	vol_ratio_5: number
+	vol_ratio_20: number
+	price_trend_5d: number
+	vol_trend_5d: number
+	avg_vol_5: number
+	avg_vol_20: number
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 量价关系完整数据 */
+export interface VolumePriceData {
+	recommendations: VolumePriceStock[]
+	total: number
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+}
+
+/** 量价关系接口响应 */
+export interface VolumePriceResponse {
+	status: "success" | "error"
+	data: VolumePriceData
+	message?: string
+}
+
+// ===================== 竞价/尾盘战法 =====================
+
+/** 竞价/尾盘推荐股票 */
+export interface AuctionStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	signal_type: string
+	signal_score: number
+	open_pct: number
+	strength: number
+	near_high_pct?: number
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 竞价/尾盘完整数据 */
+export interface AuctionData {
+	recommendations: AuctionStock[]
+	total: number
+	strategy_mode: string
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+}
+
+/** 竞价/尾盘接口响应 */
+export interface AuctionResponse {
+	status: "success" | "error"
+	data: AuctionData
+	message?: string
+}
+
+// ===================== 均线战法 =====================
+
+/** 均线战法推荐股票 */
+export interface MovingAverageStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	signal_type: string
+	signal_score: number
+	ma5: number
+	ma10: number
+	ma20: number
+	ma60: number
+	is_bull_aligned: boolean
+	price_vs_ma20: number
+	vol_ratio: number
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 均线战法完整数据 */
+export interface MovingAverageData {
+	recommendations: MovingAverageStock[]
+	total: number
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+}
+
+/** 均线战法接口响应 */
+export interface MovingAverageResponse {
+	status: "success" | "error"
+	data: MovingAverageData
+	message?: string
+}
