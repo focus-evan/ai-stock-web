@@ -459,3 +459,80 @@ export interface MovingAverageResponse {
 	data: MovingAverageData
 	message?: string
 }
+
+// ===================== 个股综合分析 =====================
+
+/** 单个战法信号 */
+export interface StrategySignal {
+	strategy: string
+	signal: "看多" | "看空" | "中性" | "无数据"
+	detail: string
+}
+
+/** 价格点位 */
+export interface PricePoint {
+	price_low: number
+	price_high: number
+	description: string
+}
+
+/** 止损信息 */
+export interface StopLossInfo {
+	price: number
+	description: string
+}
+
+/** 个股综合分析结果 */
+export interface StockAnalysisData {
+	stock_code: string
+	stock_name: string
+	market_date: string
+	action: "买入" | "持有" | "卖出" | "观望"
+	confidence: number
+	score: number
+	strategy_analysis: StrategySignal[]
+	buy_point: PricePoint
+	sell_point: PricePoint
+	stop_loss: StopLossInfo
+	position_advice: string
+	risk_level: "低" | "中" | "高"
+	summary: string
+	strategies_hit: number
+	strategies_total: number
+	llm_enhanced: boolean
+	analyzed_at: string
+	/** 模糊匹配时的候选股票 */
+	fuzzy_match?: boolean
+	candidates?: { stock_code: string, stock_name: string }[]
+}
+
+/** 个股分析接口响应 */
+export interface StockAnalysisResponse {
+	status: "success" | "error"
+	data: StockAnalysisData
+	message?: string
+}
+
+/** 轻量级策略命中查询 */
+export interface StrategiesSummaryData {
+	stock_code: string
+	stock_name: string
+	strategies_hit: number
+	strategies_total: number
+	quick_action: string
+	strategy_details: {
+		strategy: string
+		in_recommendation: boolean
+		rank?: number
+		score?: number
+		recommendation_level?: string
+		signal_type?: string
+	}[]
+}
+
+/** 策略命中查询响应 */
+export interface StrategiesSummaryResponse {
+	status: "success" | "error"
+	data: StrategiesSummaryData
+	message?: string
+}

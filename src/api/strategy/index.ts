@@ -5,6 +5,8 @@ import type {
 	EventDrivenResponse,
 	MovingAverageResponse,
 	SentimentResponse,
+	StockAnalysisResponse,
+	StrategiesSummaryResponse,
 	VolumePriceResponse,
 } from "./types";
 import { request } from "#src/utils/request";
@@ -100,4 +102,30 @@ export function fetchMovingAverageRecommendations(limit: number = 13) {
 			timeout: 90000,
 		})
 		.json<MovingAverageResponse>();
+}
+
+/**
+ * 个股综合分析（LLM增强）
+ * @param stock - 股票代码或公司名称
+ */
+export function fetchStockAnalysis(stock: string) {
+	return request
+		.get("strategy/stock-analysis", {
+			searchParams: { stock },
+			timeout: 120000, // 120秒超时（含LLM分析）
+		})
+		.json<StockAnalysisResponse>();
+}
+
+/**
+ * 轻量级策略命中查询（不调用LLM）
+ * @param stock - 股票代码或公司名称
+ */
+export function fetchStrategiesSummary(stock: string) {
+	return request
+		.get("strategy/stock-analysis/strategies-summary", {
+			searchParams: { stock },
+			timeout: 30000,
+		})
+		.json<StrategiesSummaryResponse>();
 }

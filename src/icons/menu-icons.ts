@@ -29,6 +29,7 @@ import {
 	RobotOutlined,
 	RocketOutlined,
 	SafetyOutlined,
+	SearchOutlined,
 	SettingOutlined,
 	SisternodeOutlined,
 	StockOutlined,
@@ -94,4 +95,5 @@ export const menuIcons: Record<string, any> = {
 	RocketOutlined,
 	BarChartOutlined,
 	FieldTimeOutlined,
+	SearchOutlined,
 };

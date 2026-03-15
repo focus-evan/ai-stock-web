@@ -11,6 +11,7 @@ const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthro
 const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
 const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
 const MovingAverage = lazy(() => import("#src/pages/short-term-strategy/moving-average"));
+const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 
@@ -78,6 +79,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "LineChartOutlined",
 					title: "均线战法",
+				},
+			},
+			{
+				path: "/short-term-strategy/stock-analysis",
+				Component: StockAnalysis,
+				handle: {
+					icon: "SearchOutlined",
+					title: "个股分析",
 				},
 			},
 			{
