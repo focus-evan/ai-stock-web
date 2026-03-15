@@ -38,6 +38,10 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	dragon_head: { label: "龙头战法", icon: "🐉", color: "#eb2f96", gradient: "linear-gradient(135deg, #eb2f96 0%, #f759ab 100%)" },
 	sentiment: { label: "情绪战法", icon: "💡", color: "#1890ff", gradient: "linear-gradient(135deg, #1890ff 0%, #40a9ff 100%)" },
 	event_driven: { label: "事件驱动", icon: "📡", color: "#fa8c16", gradient: "linear-gradient(135deg, #fa8c16 0%, #ffc53d 100%)" },
+	breakthrough: { label: "突破战法", icon: "🚀", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #b37feb 100%)" },
+	volume_price: { label: "量价关系", icon: "📊", color: "#13c2c2", gradient: "linear-gradient(135deg, #13c2c2 0%, #36cfc9 100%)" },
+	auction: { label: "竞价/尾盘", icon: "⏰", color: "#52c41a", gradient: "linear-gradient(135deg, #52c41a 0%, #95de64 100%)" },
+	moving_average: { label: "均线战法", icon: "📈", color: "#f5222d", gradient: "linear-gradient(135deg, #f5222d 0%, #ff7875 100%)" },
 };
 
 function formatMoney(v: number): string {
@@ -463,11 +467,11 @@ export default function Home() {
 					style={{ borderRadius: 12 }}
 				>
 					<Row gutter={[16, 16]}>
-						{(["dragon_head", "sentiment", "event_driven"] as const).map((st) => {
+						{Object.keys(STRATEGY_CONFIG).map((st) => {
 							const cfg = STRATEGY_CONFIG[st];
 							const recs = recommendations[st] || [];
 							return (
-								<Col xs={24} md={8} key={st}>
+								<Col xs={24} sm={12} md={8} lg={6} key={st}>
 									<Card
 										size="small"
 										title={(
