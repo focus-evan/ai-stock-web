@@ -61,15 +61,34 @@ const StockAnalysisPage: React.FC = () => {
 
 		try {
 			const response = await fetchStockAnalysis(input);
-			if (response.status === "success") {
+			if (response.status === "success" && response.data) {
 				setData(response.data);
 			}
 			else {
-				setError(response.message || "分析失败");
+				setError(response.message || "分析失败，请稍后重试");
 			}
 		}
 		catch (e: any) {
-			setError(e?.message || "网络请求失败，请稍后重试");
+			// 尝试从 API 响应中提取错误信息
+			let errorMsg = "网络请求失败，请稍后重试";
+			try {
+				if (e?.response) {
+					const body = await e.response.json();
+					if (body?.message) {
+						errorMsg = body.message;
+					}
+					else if (body?.detail) {
+						errorMsg = body.detail;
+					}
+				}
+				else if (e?.message) {
+					errorMsg = e.message;
+				}
+			}
+			catch {
+				// 解析失败，使用默认消息
+			}
+			setError(errorMsg);
 		}
 		finally {
 			setLoading(false);
@@ -189,9 +208,9 @@ const StockAnalysisPage: React.FC = () => {
 			{/* Error */}
 			{error && !loading && (
 				<Alert
-					message="分析失败"
+					message="提示"
 					description={error}
-					type="error"
+					type="warning"
 					showIcon
 					action={<Button onClick={handleAnalyze} icon={<ReloadOutlined />}>重试</Button>}
 					style={{ marginBottom: 24, borderRadius: 8 }}
