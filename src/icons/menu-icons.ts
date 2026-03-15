@@ -1,6 +1,7 @@
 import {
 	AntDesignOutlined,
 	ApartmentOutlined,
+	BarChartOutlined,
 	BookOutlined,
 	CloudOutlined,
 	CommentOutlined,
@@ -11,6 +12,7 @@ import {
 	DashboardOutlined,
 	DatabaseOutlined,
 	EyeOutlined,
+	FieldTimeOutlined,
 	FileTextOutlined,
 	FundOutlined,
 	HeartOutlined,
@@ -25,6 +27,7 @@ import {
 	RadarChartOutlined,
 	RiseOutlined,
 	RobotOutlined,
+	RocketOutlined,
 	SafetyOutlined,
 	SettingOutlined,
 	SisternodeOutlined,
@@ -88,4 +91,7 @@ export const menuIcons: Record<string, any> = {
 	BookOutlined,
 	RadarChartOutlined,
 	IdcardOutlined,
+	RocketOutlined,
+	BarChartOutlined,
+	FieldTimeOutlined,
 };
