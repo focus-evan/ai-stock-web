@@ -44,11 +44,11 @@ export function fetchSentimentData(days: number = 30) {
  * 获取事件驱动战法推荐
  * @param limit - 返回推荐数量，默认13
  */
-export function fetchEventDrivenRecommendations(limit: number = 13) {
+export function fetchEventDrivenRecommendations(limit: number = 13, forceRefresh: boolean = false) {
 	return request
 		.get("strategy/event-driven", {
-			searchParams: { limit },
-			timeout: 90000, // 90秒超时（含LLM分析）
+			searchParams: { limit, force_refresh: forceRefresh },
+			timeout: forceRefresh ? 180000 : 90000,
 		})
 		.json<EventDrivenResponse>();
 }

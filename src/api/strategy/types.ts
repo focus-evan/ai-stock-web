@@ -254,12 +254,40 @@ export interface MarketAssessment {
 	description: string
 }
 
+/** 高质量新闻条目 */
+export interface NewsDigestItem {
+	title: string
+	content?: string
+	source: string
+	category: string
+	quality_score: number
+}
+
+/** 事件关联新闻 */
+export interface EventRelatedNews {
+	title: string
+	source: string
+	matched_keywords: string[]
+}
+
+/** 新闻摘要 */
+export interface NewsDigest {
+	total_captured: number
+	by_source: Record<string, number>
+	by_category: Record<string, number>
+	high_quality_news: NewsDigestItem[]
+	board_signals: string[]
+	hot_stocks: string[]
+	event_related_news: EventRelatedNews[]
+}
+
 /** 事件驱动完整数据 */
 export interface EventDrivenData {
 	recommendations: EventStockRecommendation[]
 	total: number
 	events: EventsOverview
 	market_assessment?: MarketAssessment
+	news_digest?: NewsDigest
 	strategy_report: string
 	llm_enhanced?: boolean
 	generated_at: string

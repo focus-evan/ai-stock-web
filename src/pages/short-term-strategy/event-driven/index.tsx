@@ -7,10 +7,13 @@ import {
 	AlertOutlined,
 	BulbOutlined,
 	ExperimentOutlined,
+	FileTextOutlined,
 	FireOutlined,
 	InfoCircleOutlined,
 	RadarChartOutlined,
 	ReloadOutlined,
+	RocketOutlined,
+	SearchOutlined,
 	StockOutlined,
 	StopOutlined,
 	ThunderboltOutlined,
@@ -23,7 +26,9 @@ import {
 	Button,
 	Card,
 	Col,
+	Collapse,
 	Empty,
+	List,
 	Progress,
 	Result,
 	Row,
@@ -96,6 +101,7 @@ function getHeatColor(heat: string): string {
 
 export default function EventDriven() {
 	const [loading, setLoading] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [data, setData] = useState<EventDrivenData | null>(null);
 
@@ -117,6 +123,28 @@ export default function EventDriven() {
 		}
 		finally {
 			setLoading(false);
+		}
+	}, []);
+
+	/** 强制重新生成（不使用缓存，重新聚合新闻 + LLM分析） */
+	const handleForceRefresh = useCallback(async () => {
+		setRefreshing(true);
+		setError(null);
+		try {
+			const response = await fetchEventDrivenRecommendations(13, true);
+			if (response.status === "success" && response.data) {
+				setData(response.data);
+			}
+			else {
+				setError(response.message || "重新生成推荐失败");
+			}
+		}
+		catch (err: any) {
+			console.error("Event-driven force refresh error:", err);
+			setError(err?.message || "重新生成失败，请检查后端服务");
+		}
+		finally {
+			setRefreshing(false);
 		}
 	}, []);
 
@@ -441,14 +469,24 @@ export default function EventDriven() {
 							{data.generated_at}
 						</Text>
 					</Space>
-					<Button
-						type="primary"
-						icon={<ReloadOutlined />}
-						onClick={fetchData}
-						loading={loading}
-					>
-						刷新推荐
-					</Button>
+					<Space>
+						<Button
+							icon={<ReloadOutlined />}
+							onClick={fetchData}
+							loading={loading}
+						>
+							刷新缓存
+						</Button>
+						<Button
+							type="primary"
+							icon={<ThunderboltOutlined />}
+							onClick={handleForceRefresh}
+							loading={refreshing}
+							danger
+						>
+							{refreshing ? "正在重新生成..." : "重新生成"}
+						</Button>
+					</Space>
 				</div>
 
 				{/* 市场事件评估 */}
@@ -629,6 +667,155 @@ export default function EventDriven() {
 						</Card>
 					</Col>
 				</Row>
+
+				{/* 新闻摘要 */}
+				{data.news_digest && (
+					<>
+						<Alert
+							style={{ marginBottom: 16 }}
+							type="info"
+							showIcon
+							icon={<FileTextOutlined />}
+							message={(
+								<Space wrap>
+									<Text strong>多维度新闻聚合</Text>
+									<Tag color="blue">
+										{data.news_digest.total_captured}
+										{" "}
+										条资讯
+									</Tag>
+									{Object.entries(data.news_digest.by_source).map(([src, cnt]) => (
+										<Tag key={src}>
+											{src}
+											{" "}
+											{cnt as number}
+											条
+										</Tag>
+									))}
+									{data.news_digest.high_quality_news.length > 0 && (
+										<Tag color="gold">
+											高质量
+											{data.news_digest.high_quality_news.length}
+											条
+										</Tag>
+									)}
+								</Space>
+							)}
+						/>
+
+						<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+							{data.news_digest.board_signals.length > 0 && (
+								<Col xs={24} md={12}>
+									<Card
+										size="small"
+										title={(
+											<Space>
+												<RocketOutlined style={{ color: "#eb2f96" }} />
+												<span>板块异动信号</span>
+												<Tag color="magenta">{data.news_digest.board_signals.length}</Tag>
+											</Space>
+										)}
+										styles={{ body: { padding: "12px 16px" } }}
+									>
+										<Space size={[4, 8]} wrap>
+											{data.news_digest.board_signals.map((sig, idx) => (
+												<Tag key={idx} color="magenta" style={{ fontSize: 12 }}>
+													{sig.replace("【板块异动】", "").replace("板块出现明显异动", "")}
+												</Tag>
+											))}
+										</Space>
+									</Card>
+								</Col>
+							)}
+
+							{data.news_digest.hot_stocks.length > 0 && (
+								<Col xs={24} md={12}>
+									<Card
+										size="small"
+										title={(
+											<Space>
+												<SearchOutlined style={{ color: "#fa541c" }} />
+												<span>市场热搜焦点</span>
+												<Tag color="volcano">{data.news_digest.hot_stocks.length}</Tag>
+											</Space>
+										)}
+										styles={{ body: { padding: "12px 16px" } }}
+									>
+										<Space direction="vertical" size={2} style={{ width: "100%" }}>
+											{data.news_digest.hot_stocks.slice(0, 8).map((item, idx) => (
+												<Text key={idx} style={{ fontSize: 12 }}>
+													{item}
+												</Text>
+											))}
+										</Space>
+									</Card>
+								</Col>
+							)}
+						</Row>
+
+						{data.news_digest.high_quality_news.length > 0 && (
+							<Collapse
+								ghost
+								style={{ marginBottom: 16 }}
+								items={[
+									{
+										key: "hq-news",
+										label: (
+											<Space>
+												<FileTextOutlined style={{ color: "#1890ff" }} />
+												<Text strong>高质量A股新闻</Text>
+												<Tag color="blue">
+													{data.news_digest!.high_quality_news.length}
+													条
+												</Tag>
+											</Space>
+										),
+										children: (
+											<List
+												size="small"
+												dataSource={data.news_digest!.high_quality_news}
+												renderItem={(item: any) => (
+													<List.Item>
+														<div style={{ width: "100%" }}>
+															<Space style={{ marginBottom: 4 }}>
+																<Tag
+																	color={
+																		item.source === "财联社"
+																			? "blue"
+																			: item.source === "同花顺"
+																				? "cyan"
+																				: item.source === "东方财富"
+																					? "green"
+																					: item.source === "百度热搜"
+																						? "orange"
+																						: item.source === "板块异动监控"
+																							? "magenta"
+																							: "default"
+																	}
+																>
+																	{item.source}
+																</Tag>
+																<Tag>{item.category}</Tag>
+																<Tag color="gold">
+																	评分
+																	{" "}
+																	{item.quality_score}
+																</Tag>
+															</Space>
+															<div>
+																<Text style={{ fontSize: 13 }}>{item.title}</Text>
+															</div>
+														</div>
+													</List.Item>
+												)}
+											/>
+										),
+									},
+								]}
+							/>
+						)}
+					</>
+				)}
 
 				{/* 推荐列表 */}
 				<Card
