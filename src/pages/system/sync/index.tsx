@@ -52,7 +52,19 @@ function strategyColor(s: string): string {
 		return "#fa8c16";
 	if (s === "sentiment")
 		return "#1890ff";
-	return "#722ed1";
+	if (s === "breakthrough")
+		return "#13c2c2";
+	if (s === "volume_price")
+		return "#2f54eb";
+	if (s === "auction")
+		return "#52c41a";
+	if (s === "moving_average")
+		return "#faad14";
+	if (s === "combined")
+		return "#722ed1";
+	if (s === "global")
+		return "#8c8c8c";
+	return "#595959";
 }
 
 /** 策略图标 */
@@ -63,7 +75,19 @@ function strategyIcon(s: string): string {
 		return "📡";
 	if (s === "sentiment")
 		return "💡";
-	return "⚙️";
+	if (s === "breakthrough")
+		return "🚀";
+	if (s === "volume_price")
+		return "📊";
+	if (s === "auction")
+		return "⏰";
+	if (s === "moving_average")
+		return "📈";
+	if (s === "combined")
+		return "🔗";
+	if (s === "global")
+		return "⚙️";
+	return "📋";
 }
 
 /** 阶段颜色 */
@@ -194,11 +218,26 @@ export default function SchedulerPage() {
 	const selectableUsers = availableUsers.filter((u: any) => !configuredUserIds.has(u.id));
 
 	// 按策略分组
-	const strategies = ["dragon_head", "event_driven", "sentiment", "global"];
+	const strategies = [
+		"dragon_head",
+		"event_driven",
+		"sentiment",
+		"breakthrough",
+		"volume_price",
+		"auction",
+		"moving_average",
+		"combined",
+		"global",
+	];
 	const strategyNames: Record<string, string> = {
 		dragon_head: "🐉 龙头战法",
 		event_driven: "📡 事件驱动",
 		sentiment: "💡 情绪战法",
+		breakthrough: "🚀 突破战法",
+		volume_price: "📊 量价关系",
+		auction: "⏰ 竞价/尾盘",
+		moving_average: "📈 均线战法",
+		combined: "🔗 综合战法",
 		global: "⚙️ 全局任务",
 	};
 
