@@ -1,6 +1,7 @@
 import type {
 	AuctionResponse,
 	BreakthroughResponse,
+	CombinedResponse,
 	DragonHeadResponse,
 	EventDrivenResponse,
 	MovingAverageResponse,
@@ -128,4 +129,18 @@ export function fetchStrategiesSummary(stock: string) {
 			timeout: 30000,
 		})
 		.json<StrategiesSummaryResponse>();
+}
+
+/**
+ * 获取综合战法推荐（多战法交集）
+ * @param limit - 返回推荐数量，默认5
+ * @param minIntersection - 最少覆盖几个战法，默认2
+ */
+export function fetchCombinedRecommendations(limit: number = 5, minIntersection: number = 2) {
+	return request
+		.get("strategy/combined", {
+			searchParams: { limit, min_intersection: minIntersection },
+			timeout: 15000, // 15秒超时（不调外部API，纯本地聚合）
+		})
+		.json<CombinedResponse>();
 }

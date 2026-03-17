@@ -22,6 +22,7 @@ import {
 	LineChartOutlined,
 	LockOutlined,
 	MenuOutlined,
+	MergeCellsOutlined,
 	MessageOutlined,
 	NodeExpandOutlined,
 	RadarChartOutlined,
@@ -96,4 +97,5 @@ export const menuIcons: Record<string, any> = {
 	BarChartOutlined,
 	FieldTimeOutlined,
 	SearchOutlined,
+	MergeCellsOutlined,
 };

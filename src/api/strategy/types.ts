@@ -536,3 +536,50 @@ export interface StrategiesSummaryResponse {
 	data: StrategiesSummaryData
 	message?: string
 }
+
+// ===================== 综合战法 =====================
+
+/** 综合战法 - 单个战法对某只股票的推荐详情 */
+export interface CombinedStrategyDetail {
+	rank?: number
+	score?: number
+	reason?: string
+	price?: number
+	change_pct?: number
+}
+
+/** 综合战法推荐股票 */
+export interface CombinedStock {
+	rank: number
+	code: string
+	name: string
+	overlap_count: number
+	strategies: string[]
+	strategy_names: string[]
+	strategy_names_text: string
+	strategy_details: Record<string, CombinedStrategyDetail>
+	combined_score: number
+	max_score: number
+	avg_score: number
+}
+
+/** 综合战法完整数据 */
+export interface CombinedData {
+	recommendations: CombinedStock[]
+	total: number
+	intersection_threshold?: number
+	strategy_contribution?: Record<string, number>
+	source_strategies?: Record<string, number>
+	strategy_report?: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date?: string
+	session_type?: string
+}
+
+/** 综合战法接口响应 */
+export interface CombinedResponse {
+	status: "success" | "error"
+	data: CombinedData
+	message?: string
+}
