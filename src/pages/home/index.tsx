@@ -469,7 +469,7 @@ export default function Home() {
 					<Row gutter={[16, 16]}>
 						{Object.keys(STRATEGY_CONFIG).map((st) => {
 							const cfg = STRATEGY_CONFIG[st];
-							const recs = recommendations[st] || [];
+							const recs = Array.isArray(recommendations[st]) ? recommendations[st] : [];
 							return (
 								<Col xs={24} sm={12} md={8} lg={6} key={st}>
 									<Card
