@@ -143,7 +143,7 @@ const CombinedPage: React.FC = () => {
 			width: 300,
 			render: (names: string[]) => (
 				<Space wrap size={[4, 4]}>
-					{names.map(name => (
+					{(names || []).map(name => (
 						<Tag
 							key={name}
 							color={strategyColors[name] || "#1890ff"}
@@ -204,9 +204,9 @@ const CombinedPage: React.FC = () => {
 			width: 350,
 			render: (_: any, record: CombinedStock) => (
 				<Space direction="vertical" size={2}>
-					{record.strategies.map((strategyKey, idx) => {
+					{(record.strategies || []).map((strategyKey, idx) => {
 						const detail = record.strategy_details[strategyKey];
-						const name = record.strategy_names[idx] || strategyKey;
+						const name = (record.strategy_names || [])[idx] || strategyKey;
 						const score = detail?.score ?? "-";
 						const rank = detail?.rank;
 						return (
@@ -468,7 +468,7 @@ const CombinedPage: React.FC = () => {
 										</Text>
 									</Space>
 									<Space wrap size={[4, 4]}>
-										{stock.strategy_names.map(name => (
+										{(stock.strategy_names || []).map(name => (
 											<Tag
 												key={name}
 												color={strategyColors[name] || "#1890ff"}

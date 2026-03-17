@@ -196,7 +196,7 @@ const BreakthroughPage: React.FC = () => {
 			width: 280,
 			render: (reasons: string[]) => (
 				<Space direction="vertical" size={2}>
-					{reasons.map(r => (
+					{(reasons || []).map(r => (
 						<Text key={r} style={{ fontSize: 12 }}>
 							•
 							{r}
