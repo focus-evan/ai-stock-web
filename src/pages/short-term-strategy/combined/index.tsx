@@ -1,6 +1,6 @@
 import type { CombinedData, CombinedStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
-import { fetchCombinedRecommendations } from "#src/api/strategy";
+import { fetchCombinedRecommendations, refreshCombinedRecommendations } from "#src/api/strategy";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -14,9 +14,11 @@ import {
 import {
 	Alert,
 	Badge,
+	Button,
 	Card,
 	Col,
 	Empty,
+	message,
 	Progress,
 	Row,
 	Skeleton,
@@ -55,6 +57,7 @@ const overlapColors: Record<number, string> = {
 const CombinedPage: React.FC = () => {
 	const [data, setData] = useState<CombinedData | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [refreshing, setRefreshing] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const fetchData = async () => {
@@ -74,6 +77,26 @@ const CombinedPage: React.FC = () => {
 		}
 		finally {
 			setLoading(false);
+		}
+	};
+
+	const handleRefresh = async () => {
+		setRefreshing(true);
+		try {
+			const response = await refreshCombinedRecommendations(13, 2);
+			if (response.status === "success") {
+				setData(response.data);
+				message.success(`刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`);
+			}
+			else {
+				message.error("刷新失败");
+			}
+		}
+		catch (e: any) {
+			message.error(e?.message || "刷新失败，请稍后重试");
+		}
+		finally {
+			setRefreshing(false);
 		}
 	};
 
@@ -466,6 +489,20 @@ const CombinedPage: React.FC = () => {
 									七种战法推荐交集 · 多重验证 · 强共识股
 								</Text>
 							</div>
+							<Button
+								type="primary"
+								ghost
+								icon={<ReloadOutlined spin={refreshing} />}
+								loading={refreshing}
+								onClick={handleRefresh}
+								style={{
+									borderColor: "rgba(255,255,255,0.5)",
+									color: "#fff",
+									marginLeft: 12,
+								}}
+							>
+								{refreshing ? "刷新中..." : "刷新推荐"}
+							</Button>
 						</Space>
 					</Col>
 					<Col span={12}>

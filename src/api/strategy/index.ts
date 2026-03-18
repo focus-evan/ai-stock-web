@@ -144,3 +144,17 @@ export function fetchCombinedRecommendations(limit: number = 5, minIntersection:
 		})
 		.json<CombinedResponse>();
 }
+
+/**
+ * 手动刷新综合战法推荐（绕过缓存，重新计算实时行情+LLM分析）
+ * @param limit - 返回推荐数量，默认13
+ * @param minIntersection - 最少覆盖几个战法，默认2
+ */
+export function refreshCombinedRecommendations(limit: number = 13, minIntersection: number = 2) {
+	return request
+		.post("strategy/combined/refresh", {
+			searchParams: { limit, min_intersection: minIntersection },
+			timeout: 120000, // 120秒超时（含实时行情获取+LLM分析）
+		})
+		.json<CombinedResponse>();
+}
