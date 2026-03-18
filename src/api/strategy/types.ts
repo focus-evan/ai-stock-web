@@ -589,6 +589,14 @@ export interface CombinedStock {
 	combined_score: number
 	max_score: number
 	avg_score: number
+	/** 当前参考价 */
+	current_price?: number
+	/** 次日建议买入价（低吸1~2%） */
+	suggested_buy_price?: number
+	/** 目标卖出价（目标5%收益） */
+	suggested_sell_price?: number
+	/** 止损价（下跌5%止损） */
+	stop_loss_price?: number
 }
 
 /** 综合战法完整数据 */

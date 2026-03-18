@@ -2,7 +2,10 @@ import type { CombinedData, CombinedStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchCombinedRecommendations } from "#src/api/strategy";
 import {
+	ArrowDownOutlined,
+	ArrowUpOutlined,
 	CheckCircleFilled,
+	DollarOutlined,
 	MergeCellsOutlined,
 	ReloadOutlined,
 	StarFilled,
@@ -253,6 +256,91 @@ const CombinedPage: React.FC = () => {
 				</Space>
 			),
 		},
+		{
+			title: "操作指导",
+			key: "operation_guide",
+			width: 200,
+			render: (_: any, record: CombinedStock) => {
+				const cp = record.current_price || 0;
+				const bp = record.suggested_buy_price || 0;
+				const sp = record.suggested_sell_price || 0;
+				const sl = record.stop_loss_price || 0;
+				if (!cp) {
+					return <Text type="secondary" style={{ fontSize: 12 }}>暂无价格数据</Text>;
+				}
+				return (
+					<Space direction="vertical" size={2} style={{ width: "100%" }}>
+						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+							<Text style={{ fontSize: 12, color: "#8c8c8c" }}>
+								<DollarOutlined />
+								{" "}
+								参考价
+							</Text>
+							<Text strong style={{ fontSize: 14, color: "#262626" }}>
+								¥
+								{cp.toFixed(2)}
+							</Text>
+						</div>
+						<div style={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							background: "#f6ffed",
+							padding: "2px 8px",
+							borderRadius: 4,
+							border: "1px solid #b7eb8f",
+						}}
+						>
+							<Text style={{ fontSize: 12, color: "#52c41a" }}>
+								<ArrowDownOutlined />
+								{" "}
+								买入价
+							</Text>
+							<Text strong style={{ fontSize: 13, color: "#389e0d" }}>
+								¥
+								{bp.toFixed(2)}
+							</Text>
+						</div>
+						<div style={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							background: "#fff1f0",
+							padding: "2px 8px",
+							borderRadius: 4,
+							border: "1px solid #ffa39e",
+						}}
+						>
+							<Text style={{ fontSize: 12, color: "#f5222d" }}>
+								<ArrowUpOutlined />
+								{" "}
+								目标价
+							</Text>
+							<Text strong style={{ fontSize: 13, color: "#cf1322" }}>
+								¥
+								{sp.toFixed(2)}
+							</Text>
+						</div>
+						<div style={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							background: "#fafafa",
+							padding: "2px 8px",
+							borderRadius: 4,
+							border: "1px dashed #d9d9d9",
+						}}
+						>
+							<Text style={{ fontSize: 11, color: "#8c8c8c" }}>⛔ 止损价</Text>
+							<Text style={{ fontSize: 12, color: "#8c8c8c" }}>
+								¥
+								{sl.toFixed(2)}
+							</Text>
+						</div>
+					</Space>
+				);
+			},
+		},
 	];
 
 	if (loading) {
@@ -479,6 +567,55 @@ const CombinedPage: React.FC = () => {
 											</Tag>
 										))}
 									</Space>
+									{/* 操作指导价格区 */}
+									{(stock.current_price ?? 0) > 0 && (
+										<div style={{
+											marginTop: 8,
+											padding: "8px 12px",
+											background: "rgba(255,255,255,0.85)",
+											borderRadius: 8,
+											border: "1px solid rgba(0,0,0,0.06)",
+										}}
+										>
+											<Text strong style={{ fontSize: 12, color: "#8c8c8c", display: "block", marginBottom: 4 }}>
+												<DollarOutlined />
+												{" "}
+												次日操作指导
+											</Text>
+											<Row gutter={8}>
+												<Col span={8}>
+													<div style={{ textAlign: "center" }}>
+														<Text style={{ fontSize: 11, color: "#52c41a" }}>买入 ↓</Text>
+														<div>
+															<Text strong style={{ fontSize: 14, color: "#389e0d" }}>
+																{(stock.suggested_buy_price || 0).toFixed(2)}
+															</Text>
+														</div>
+													</div>
+												</Col>
+												<Col span={8}>
+													<div style={{ textAlign: "center" }}>
+														<Text style={{ fontSize: 11, color: "#f5222d" }}>目标 ↑</Text>
+														<div>
+															<Text strong style={{ fontSize: 14, color: "#cf1322" }}>
+																{(stock.suggested_sell_price || 0).toFixed(2)}
+															</Text>
+														</div>
+													</div>
+												</Col>
+												<Col span={8}>
+													<div style={{ textAlign: "center" }}>
+														<Text style={{ fontSize: 11, color: "#8c8c8c" }}>止损 ⛔</Text>
+														<div>
+															<Text style={{ fontSize: 14, color: "#8c8c8c" }}>
+																{(stock.stop_loss_price || 0).toFixed(2)}
+															</Text>
+														</div>
+													</div>
+												</Col>
+											</Row>
+										</div>
+									)}
 								</Space>
 							</Card>
 						</Col>
@@ -515,7 +652,7 @@ const CombinedPage: React.FC = () => {
 					rowKey="code"
 					pagination={false}
 					size="small"
-					scroll={{ x: 1300 }}
+					scroll={{ x: 1500 }}
 					rowClassName={(record) => {
 						if (record.overlap_count >= 4)
 							return "row-highlight-red";
@@ -525,6 +662,34 @@ const CombinedPage: React.FC = () => {
 					}}
 				/>
 			</Card>
+
+			{/* 操作说明 */}
+			<Alert
+				style={{ marginTop: 16, borderRadius: 8 }}
+				type="info"
+				showIcon
+				icon={<DollarOutlined />}
+				message="操作指导说明"
+				description={(
+					<Space direction="vertical" size={4}>
+						<Text style={{ fontSize: 13 }}>
+							<Text strong style={{ color: "#389e0d" }}>建议买入价</Text>
+							：当前价 × 98%，次日开盘回调时低吸，不追高。
+						</Text>
+						<Text style={{ fontSize: 13 }}>
+							<Text strong style={{ color: "#cf1322" }}>目标卖出价</Text>
+							：当前价 × 105%，短线目标 5% 收益。到达后分批止盈。
+						</Text>
+						<Text style={{ fontSize: 13 }}>
+							<Text strong style={{ color: "#8c8c8c" }}>止损价</Text>
+							：当前价 × 95%，跌破止损线果断离场，控制风险。
+						</Text>
+						<Text type="secondary" style={{ fontSize: 12 }}>
+							⚠️ 以上价格为算法参考值，实际操作请结合盘面情况。遵循 T+1 规则，当天买入次日方可卖出。
+						</Text>
+					</Space>
+				)}
+			/>
 
 			<style>
 				{`
