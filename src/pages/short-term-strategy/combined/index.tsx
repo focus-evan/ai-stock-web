@@ -259,84 +259,139 @@ const CombinedPage: React.FC = () => {
 		{
 			title: "操作指导",
 			key: "operation_guide",
-			width: 200,
+			width: 280,
 			render: (_: any, record: CombinedStock) => {
 				const cp = record.current_price || 0;
 				const bp = record.suggested_buy_price || 0;
 				const sp = record.suggested_sell_price || 0;
 				const sl = record.stop_loss_price || 0;
+				const changePct = record.change_pct || 0;
+				const riskColor = record.risk_level === "低" ? "#52c41a" : record.risk_level === "高" ? "#f5222d" : "#faad14";
 				if (!cp) {
-					return <Text type="secondary" style={{ fontSize: 12 }}>暂无价格数据</Text>;
+					return <Text type="secondary" style={{ fontSize: 12 }}>加载中...</Text>;
 				}
 				return (
-					<Space direction="vertical" size={2} style={{ width: "100%" }}>
+					<Space direction="vertical" size={3} style={{ width: "100%" }}>
 						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-							<Text style={{ fontSize: 12, color: "#8c8c8c" }}>
-								<DollarOutlined />
-								{" "}
-								参考价
-							</Text>
-							<Text strong style={{ fontSize: 14, color: "#262626" }}>
-								¥
-								{cp.toFixed(2)}
-							</Text>
+							<Text style={{ fontSize: 12, color: "#8c8c8c" }}>现价</Text>
+							<Space size={4}>
+								<Text strong style={{ fontSize: 15, color: "#262626" }}>
+									¥
+									{cp.toFixed(2)}
+								</Text>
+								<Tag
+									color={changePct >= 0 ? "red" : "green"}
+									style={{ margin: 0, fontSize: 11, lineHeight: "18px" }}
+								>
+									{changePct >= 0 ? "+" : ""}
+									{changePct.toFixed(2)}
+									%
+								</Tag>
+							</Space>
 						</div>
-						<div style={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-							background: "#f6ffed",
-							padding: "2px 8px",
-							borderRadius: 4,
-							border: "1px solid #b7eb8f",
-						}}
-						>
-							<Text style={{ fontSize: 12, color: "#52c41a" }}>
-								<ArrowDownOutlined />
-								{" "}
-								买入价
-							</Text>
-							<Text strong style={{ fontSize: 13, color: "#389e0d" }}>
-								¥
-								{bp.toFixed(2)}
-							</Text>
-						</div>
-						<div style={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-							background: "#fff1f0",
-							padding: "2px 8px",
-							borderRadius: 4,
-							border: "1px solid #ffa39e",
-						}}
-						>
-							<Text style={{ fontSize: 12, color: "#f5222d" }}>
-								<ArrowUpOutlined />
-								{" "}
-								目标价
-							</Text>
-							<Text strong style={{ fontSize: 13, color: "#cf1322" }}>
-								¥
-								{sp.toFixed(2)}
-							</Text>
-						</div>
-						<div style={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-							background: "#fafafa",
-							padding: "2px 8px",
-							borderRadius: 4,
-							border: "1px dashed #d9d9d9",
-						}}
-						>
-							<Text style={{ fontSize: 11, color: "#8c8c8c" }}>⛔ 止损价</Text>
+						<Tooltip title={record.buy_reason || "多战法交叉验证"} placement="left">
+							<div style={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+								background: "#f6ffed",
+								padding: "3px 8px",
+								borderRadius: 4,
+								border: "1px solid #b7eb8f",
+								cursor: "pointer",
+							}}
+							>
+								<Space size={4}>
+									<ArrowDownOutlined style={{ color: "#52c41a", fontSize: 11 }} />
+									<Text style={{ fontSize: 12, color: "#52c41a" }}>买入</Text>
+								</Space>
+								<Text strong style={{ fontSize: 14, color: "#389e0d" }}>
+									¥
+									{bp.toFixed(2)}
+								</Text>
+							</div>
+						</Tooltip>
+						<Tooltip title={record.sell_reason || "短线目标价位"} placement="left">
+							<div style={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+								background: "#fff1f0",
+								padding: "3px 8px",
+								borderRadius: 4,
+								border: "1px solid #ffa39e",
+								cursor: "pointer",
+							}}
+							>
+								<Space size={4}>
+									<ArrowUpOutlined style={{ color: "#f5222d", fontSize: 11 }} />
+									<Text style={{ fontSize: 12, color: "#f5222d" }}>目标</Text>
+								</Space>
+								<Text strong style={{ fontSize: 14, color: "#cf1322" }}>
+									¥
+									{sp.toFixed(2)}
+								</Text>
+							</div>
+						</Tooltip>
+						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1px 8px" }}>
+							<Text style={{ fontSize: 11, color: "#8c8c8c" }}>⛔ 止损</Text>
 							<Text style={{ fontSize: 12, color: "#8c8c8c" }}>
 								¥
 								{sl.toFixed(2)}
 							</Text>
 						</div>
+						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+							<Tag color={riskColor} style={{ margin: 0, fontSize: 11 }}>
+								风险:
+								{record.risk_level || "中"}
+							</Tag>
+							{(record.confidence ?? 0) > 0 && (
+								<Text style={{ fontSize: 11, color: "#8c8c8c" }}>
+									信心:
+									{record.confidence}
+									/100
+								</Text>
+							)}
+						</div>
+					</Space>
+				);
+			},
+		},
+		{
+			title: "操作建议",
+			key: "operation_advice",
+			width: 220,
+			render: (_: any, record: CombinedStock) => {
+				if (!record.operation_advice && !record.buy_reason) {
+					return <Text type="secondary" style={{ fontSize: 12 }}>加载中...</Text>;
+				}
+				return (
+					<Space direction="vertical" size={2} style={{ width: "100%" }}>
+						{record.buy_reason && (
+							<div>
+								<Text style={{ fontSize: 11, color: "#389e0d", fontWeight: 600 }}>📈 买入理由</Text>
+								<div>
+									<Text style={{ fontSize: 12, lineHeight: "18px" }}>{record.buy_reason}</Text>
+								</div>
+							</div>
+						)}
+						{record.operation_advice && (
+							<div style={{
+								background: "#f0f5ff",
+								padding: "4px 8px",
+								borderRadius: 4,
+								border: "1px solid #adc6ff",
+								marginTop: 4,
+							}}
+							>
+								<Text style={{ fontSize: 11, color: "#2f54eb", fontWeight: 600 }}>📋 操作建议</Text>
+								<div>
+									<Text style={{ fontSize: 12, lineHeight: "18px" }}>
+										{record.operation_advice}
+									</Text>
+								</div>
+							</div>
+						)}
 					</Space>
 				);
 			},
@@ -582,6 +637,20 @@ const CombinedPage: React.FC = () => {
 												{" "}
 												次日操作指导
 											</Text>
+											<div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+												<Text strong style={{ fontSize: 15 }}>
+													¥
+													{(stock.current_price || 0).toFixed(2)}
+												</Text>
+												<Tag
+													color={(stock.change_pct ?? 0) >= 0 ? "red" : "green"}
+													style={{ margin: 0, fontSize: 11 }}
+												>
+													{(stock.change_pct ?? 0) >= 0 ? "+" : ""}
+													{(stock.change_pct ?? 0).toFixed(2)}
+													%
+												</Tag>
+											</div>
 											<Row gutter={8}>
 												<Col span={8}>
 													<div style={{ textAlign: "center" }}>
@@ -614,6 +683,21 @@ const CombinedPage: React.FC = () => {
 													</div>
 												</Col>
 											</Row>
+											{stock.operation_advice && (
+												<div style={{
+													marginTop: 6,
+													padding: "3px 6px",
+													background: "#f0f5ff",
+													borderRadius: 4,
+													fontSize: 11,
+													color: "#2f54eb",
+												}}
+												>
+													📋
+													{" "}
+													{stock.operation_advice}
+												</div>
+											)}
 										</div>
 									)}
 								</Space>
@@ -652,7 +736,7 @@ const CombinedPage: React.FC = () => {
 					rowKey="code"
 					pagination={false}
 					size="small"
-					scroll={{ x: 1500 }}
+					scroll={{ x: 2000 }}
 					rowClassName={(record) => {
 						if (record.overlap_count >= 4)
 							return "row-highlight-red";

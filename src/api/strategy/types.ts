@@ -591,12 +591,24 @@ export interface CombinedStock {
 	avg_score: number
 	/** 当前参考价 */
 	current_price?: number
-	/** 次日建议买入价（低吸1~2%） */
+	/** 今日涨跌幅 */
+	change_pct?: number
+	/** 次日建议买入价 */
 	suggested_buy_price?: number
-	/** 目标卖出价（目标5%收益） */
+	/** 目标卖出价 */
 	suggested_sell_price?: number
-	/** 止损价（下跌5%止损） */
+	/** 止损价 */
 	stop_loss_price?: number
+	/** 买入理由（LLM 生成） */
+	buy_reason?: string
+	/** 卖出理由（LLM 生成） */
+	sell_reason?: string
+	/** 次日操作建议（LLM 生成） */
+	operation_advice?: string
+	/** 风险等级：低/中/高 */
+	risk_level?: string
+	/** 信心分数 1-100 */
+	confidence?: number
 }
 
 /** 综合战法完整数据 */
