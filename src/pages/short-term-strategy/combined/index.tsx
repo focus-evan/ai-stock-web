@@ -80,23 +80,35 @@ const CombinedPage: React.FC = () => {
 		}
 	};
 
+	const [refreshSeconds, setRefreshSeconds] = useState(0);
+
 	const handleRefresh = async () => {
 		setRefreshing(true);
+		setRefreshSeconds(0);
+		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+
+		// 计时器
+		const timer = setInterval(() => {
+			setRefreshSeconds(prev => prev + 1);
+		}, 1000);
+
 		try {
 			const response = await refreshCombinedRecommendations(13, 2);
 			if (response.status === "success") {
 				setData(response.data);
-				message.success(`刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`);
+				message.success({ content: `刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`, key: "refresh" });
 			}
 			else {
-				message.error("刷新失败");
+				message.error({ content: "刷新失败", key: "refresh" });
 			}
 		}
 		catch (e: any) {
-			message.error(e?.message || "刷新失败，请稍后重试");
+			message.error({ content: e?.message || "刷新超时，请稍后重试", key: "refresh" });
 		}
 		finally {
+			clearInterval(timer);
 			setRefreshing(false);
+			setRefreshSeconds(0);
 		}
 	};
 
@@ -501,7 +513,7 @@ const CombinedPage: React.FC = () => {
 									marginLeft: 12,
 								}}
 							>
-								{refreshing ? "刷新中..." : "刷新推荐"}
+								{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
 							</Button>
 						</Space>
 					</Col>

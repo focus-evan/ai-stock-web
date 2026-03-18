@@ -154,7 +154,7 @@ export function refreshCombinedRecommendations(limit: number = 13, minIntersecti
 	return request
 		.post("strategy/combined/refresh", {
 			searchParams: { limit, min_intersection: minIntersection },
-			timeout: 120000, // 120秒超时（含实时行情获取+LLM分析）
+			timeout: 300000, // 300秒超时（3批LLM调用每批约40秒，总计约2-3分钟）
 		})
 		.json<CombinedResponse>();
 }
