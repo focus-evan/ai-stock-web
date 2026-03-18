@@ -140,7 +140,7 @@ export function fetchCombinedRecommendations(limit: number = 5, minIntersection:
 	return request
 		.get("strategy/combined", {
 			searchParams: { limit, min_intersection: minIntersection },
-			timeout: 120000, // 120秒超时（含实时行情获取 + LLM分析）
+			timeout: 30000, // 30秒超时（缓存命中秒回，未命中含LLM分析）
 		})
 		.json<CombinedResponse>();
 }
