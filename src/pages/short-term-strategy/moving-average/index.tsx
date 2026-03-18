@@ -317,7 +317,7 @@ const MovingAveragePage: React.FC = () => {
 								<Col>
 									<Statistic
 										title={<span style={{ color: "rgba(255,255,255,0.65)" }}>推荐时间</span>}
-										value={data.generated_at.split(" ")[1] || data.generated_at}
+										value={data.generated_at}
 										valueStyle={{ color: "#fff", fontSize: 14 }}
 									/>
 								</Col>
