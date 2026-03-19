@@ -28,6 +28,19 @@ export function fetchDragonHeadRecommendations(limit: number = 13) {
 }
 
 /**
+ * 手动刷新龙头战法推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshDragonHeadRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/dragon-head/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<DragonHeadResponse>();
+}
+
+/**
  * 获取情绪战法数据
  * @param days - 返回历史天数，默认30
  */
@@ -36,6 +49,19 @@ export function fetchSentimentData(days: number = 30) {
 		.get("strategy/sentiment", {
 			searchParams: { days },
 			timeout: 120000, // 120秒超时（首次计算较慢）
+		})
+		.json<SentimentResponse>();
+}
+
+/**
+ * 手动刷新情绪战法推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshSentimentRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/sentiment/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
 		})
 		.json<SentimentResponse>();
 }

@@ -1,6 +1,6 @@
 import type { SentimentData, SentimentSnapshot, StockPickDetail } from "#src/api/strategy";
 
-import { fetchSentimentData } from "#src/api/strategy";
+import { fetchSentimentData, refreshSentimentRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	AlertOutlined,
@@ -26,6 +26,7 @@ import {
 	Card,
 	Col,
 	Empty,
+	message,
 	Progress,
 	Result,
 	Row,
@@ -236,6 +237,8 @@ function MiniAreaChart({ data, dataKey, color, height = 80 }: {
 
 export default function SentimentPage() {
 	const [loading, setLoading] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
+	const [refreshSeconds, setRefreshSeconds] = useState(0);
 	const [error, setError] = useState<string | null>(null);
 	const [data, setData] = useState<SentimentData | null>(null);
 
@@ -257,6 +260,34 @@ export default function SentimentPage() {
 		}
 		finally {
 			setLoading(false);
+		}
+	}, []);
+
+	const handleRefresh = useCallback(async () => {
+		setRefreshing(true);
+		setRefreshSeconds(0);
+		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+		const timer = setInterval(() => {
+			setRefreshSeconds(prev => prev + 1);
+		}, 1000);
+		try {
+			const response = await refreshSentimentRecommendations(13);
+			if (response.status === "success" && response.data) {
+				setData(response.data);
+				const count = response.data?.stock_picks?.stocks?.length || 0;
+				message.success({ content: `刷新完成，共 ${count} 只推荐股`, key: "refresh" });
+			}
+			else {
+				message.error({ content: "刷新失败", key: "refresh" });
+			}
+		}
+		catch (e: any) {
+			message.error({ content: e?.message || "刷新超时，请稍后重试", key: "refresh" });
+		}
+		finally {
+			clearInterval(timer);
+			setRefreshing(false);
+			setRefreshSeconds(0);
 		}
 	}, []);
 
@@ -321,13 +352,13 @@ export default function SentimentPage() {
 						</Text>
 					)}
 					<Button
-						icon={<ReloadOutlined />}
-						onClick={fetchData}
-						loading={loading}
+						icon={<ReloadOutlined spin={refreshing} />}
+						onClick={handleRefresh}
+						loading={refreshing}
 						type="primary"
 						ghost
 					>
-						刷新
+						{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
 					</Button>
 				</Space>
 			</div>

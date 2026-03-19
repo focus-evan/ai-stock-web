@@ -1,7 +1,7 @@
 import type { DragonHeadData, StockRecommendation } from "#src/api/strategy";
 
 import type { ColumnsType } from "antd/es/table";
-import { fetchDragonHeadRecommendations } from "#src/api/strategy";
+import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	ClockCircleOutlined,
@@ -23,6 +23,7 @@ import {
 	Card,
 	Col,
 	Empty,
+	message,
 	Progress,
 	Result,
 	Row,
@@ -84,6 +85,8 @@ function getSentimentColor(phase: string): string {
 
 export default function DragonHead() {
 	const [loading, setLoading] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
+	const [refreshSeconds, setRefreshSeconds] = useState(0);
 	const [error, setError] = useState<string | null>(null);
 	const [data, setData] = useState<DragonHeadData | null>(null);
 
@@ -105,6 +108,33 @@ export default function DragonHead() {
 		}
 		finally {
 			setLoading(false);
+		}
+	}, []);
+
+	const handleRefresh = useCallback(async () => {
+		setRefreshing(true);
+		setRefreshSeconds(0);
+		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+		const timer = setInterval(() => {
+			setRefreshSeconds(prev => prev + 1);
+		}, 1000);
+		try {
+			const response = await refreshDragonHeadRecommendations(13);
+			if (response.status === "success" && response.data) {
+				setData(response.data);
+				message.success({ content: `刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`, key: "refresh" });
+			}
+			else {
+				message.error({ content: "刷新失败", key: "refresh" });
+			}
+		}
+		catch (e: any) {
+			message.error({ content: e?.message || "刷新超时，请稍后重试", key: "refresh" });
+		}
+		finally {
+			clearInterval(timer);
+			setRefreshing(false);
+			setRefreshSeconds(0);
 		}
 	}, []);
 
@@ -420,11 +450,11 @@ export default function DragonHead() {
 					</Space>
 					<Button
 						type="primary"
-						icon={<ReloadOutlined />}
-						onClick={fetchData}
-						loading={loading}
+						icon={<ReloadOutlined spin={refreshing} />}
+						onClick={handleRefresh}
+						loading={refreshing}
 					>
-						刷新推荐
+						{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
 					</Button>
 				</div>
 
