@@ -145,6 +145,27 @@ export function fetchStockAnalysis(stock: string) {
 }
 
 /**
+ * 个股分析历史列表
+ */
+export function fetchAnalysisHistory(params: { stock_code?: string, page?: number, page_size?: number } = {}) {
+	return request
+		.get("strategy/stock-analysis/history", {
+			searchParams: params as any,
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { items: any[], total: number, page: number, page_size: number } }>();
+}
+
+/**
+ * 个股分析历史详情
+ */
+export function fetchAnalysisDetail(id: number) {
+	return request
+		.get(`strategy/stock-analysis/history/${id}`, { timeout: 15000 })
+		.json<{ status: string, data: any }>();
+}
+
+/**
  * 轻量级策略命中查询（不调用LLM）
  * @param stock - 股票代码或公司名称
  */
