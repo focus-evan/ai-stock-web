@@ -138,14 +138,20 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 							<Text style={{ color: "#fff", fontSize: 20, fontWeight: 700, marginTop: 2 }}>{data.action}</Text>
 						</div>
 						<div style={{ marginTop: 8 }}>
-							<Text style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>
-								命中
-								{data.strategies_hit}
-								/
-								{data.strategies_total}
-								{" "}
-								策略
-							</Text>
+							{(data as any).market === "hk"
+								? (
+									<Tag color="#c41d7f" style={{ fontWeight: 600 }}>🇭🇰 港股</Tag>
+								)
+								: (
+									<Text style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>
+										命中
+										{data.strategies_hit}
+										/
+										{data.strategies_total}
+										{" "}
+										策略
+									</Text>
+								)}
 						</div>
 					</Col>
 					<Col xs={24} sm={16}>
@@ -155,6 +161,7 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 							(
 							{data.stock_code}
 							)
+							{(data as any).market === "hk" && <Tag color="magenta" style={{ marginLeft: 8, verticalAlign: "middle" }}>港股</Tag>}
 						</Title>
 						<Row gutter={24} style={{ marginTop: 12 }}>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>当前价</Text>} value={data.current_price || "-"} valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
@@ -402,25 +409,27 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 				</Col>
 			</Row>
 
-			{/* 七大战法 */}
-			<Card
-				title={(
-					<Space>
-						<FireOutlined style={{ color: "#f5222d" }} />
-						<Text strong>七大战法分析</Text>
-						<Tag color={data.strategies_hit >= 4 ? "red" : data.strategies_hit >= 2 ? "orange" : "default"}>
-							{data.strategies_hit}
-							/
-							{data.strategies_total}
-							{" "}
-							命中
-						</Tag>
-					</Space>
-				)}
-				style={{ marginBottom: 16, borderRadius: 8 }}
-			>
-				<Table<StrategySignal> dataSource={data.strategy_analysis} columns={strategyColumns} rowKey="strategy" size="small" pagination={false} />
-			</Card>
+			{/* 七大战法（港股隐藏） */}
+			{data.strategy_analysis && data.strategy_analysis.length > 0 && (
+				<Card
+					title={(
+						<Space>
+							<FireOutlined style={{ color: "#f5222d" }} />
+							<Text strong>七大战法分析</Text>
+							<Tag color={data.strategies_hit >= 4 ? "red" : data.strategies_hit >= 2 ? "orange" : "default"}>
+								{data.strategies_hit}
+								/
+								{data.strategies_total}
+								{" "}
+								命中
+							</Tag>
+						</Space>
+					)}
+					style={{ marginBottom: 16, borderRadius: 8 }}
+				>
+					<Table<StrategySignal> dataSource={data.strategy_analysis} columns={strategyColumns} rowKey="strategy" size="small" pagination={false} />
+				</Card>
+			)}
 
 			{/* 综合报告 */}
 			<Card
