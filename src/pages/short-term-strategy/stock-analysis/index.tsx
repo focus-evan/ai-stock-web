@@ -1,12 +1,13 @@
 import type { StockAnalysisData, StrategySignal } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
-import { fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
+import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
 	BulbOutlined,
 	CheckCircleOutlined,
 	DashboardOutlined,
+	DeleteOutlined,
 	ExclamationCircleOutlined,
 	EyeOutlined,
 	FireOutlined,
@@ -33,6 +34,7 @@ import {
 	message,
 	Modal,
 	Pagination,
+	Popconfirm,
 	Row,
 	Space,
 	Spin,
@@ -504,6 +506,17 @@ function HistoryTab() {
 		}
 	};
 
+	const handleDelete = async (id: number) => {
+		try {
+			await deleteAnalysisRecord(id);
+			message.success("删除成功");
+			loadHistory(page);
+		}
+		catch {
+			message.error("删除失败");
+		}
+	};
+
 	const actionColor = (a: string) => a === "买入" ? "red" : a === "持有" ? "blue" : a === "卖出" ? "green" : "orange";
 	const riskColor = (r: string) => r === "高" ? "red" : r === "低" ? "green" : "orange";
 
@@ -596,9 +609,16 @@ function HistoryTab() {
 		{
 			title: "操作",
 			key: "ops",
-			width: 80,
+			width: 130,
 			align: "center",
-			render: (_, r) => <Button size="small" type="link" icon={<EyeOutlined />} onClick={() => viewDetail(r.id)}>详情</Button>,
+			render: (_, r) => (
+				<Space size={0}>
+					<Button size="small" type="link" icon={<EyeOutlined />} onClick={() => viewDetail(r.id)}>详情</Button>
+					<Popconfirm title="确定删除该分析记录？" onConfirm={() => handleDelete(r.id)} okText="删除" cancelText="取消">
+						<Button size="small" type="link" danger icon={<DeleteOutlined />}>删除</Button>
+					</Popconfirm>
+				</Space>
+			),
 		},
 	];
 

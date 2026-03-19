@@ -166,6 +166,15 @@ export function fetchAnalysisDetail(id: number) {
 }
 
 /**
+ * 删除个股分析历史记录
+ */
+export function deleteAnalysisRecord(id: number) {
+	return request
+		.delete(`strategy/stock-analysis/history/${id}`, { timeout: 10000 })
+		.json<{ status: string, message: string }>();
+}
+
+/**
  * 轻量级策略命中查询（不调用LLM）
  * @param stock - 股票代码或公司名称
  */
