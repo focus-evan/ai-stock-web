@@ -283,11 +283,10 @@ const BreakthroughPage: React.FC = () => {
 							</Col>
 							{data.generated_at && (
 								<Col>
-									<Statistic
-										title={<span style={{ color: "rgba(255,255,255,0.65)" }}>更新时间</span>}
-										value={data.generated_at}
-										valueStyle={{ color: "#fff", fontSize: 14 }}
-									/>
+									<div>
+										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
+										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+									</div>
 								</Col>
 							)}
 						</Row>
