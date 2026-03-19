@@ -4,17 +4,28 @@ import { fetchStockAnalysis } from "#src/api/strategy";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
+	BulbOutlined,
 	CheckCircleOutlined,
+	DashboardOutlined,
 	ExclamationCircleOutlined,
+	EyeOutlined,
+	FireOutlined,
+	FundOutlined,
 	InfoCircleOutlined,
+	LineChartOutlined,
 	ReloadOutlined,
+	SafetyOutlined,
 	SearchOutlined,
+	ThunderboltOutlined,
+	TrophyOutlined,
+	WarningOutlined,
 } from "@ant-design/icons";
 import {
 	Alert,
 	Button,
 	Card,
 	Col,
+	Divider,
 	Empty,
 	Input,
 	Row,
@@ -29,7 +40,6 @@ import React, { useCallback, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
-/** 操作建议对应的颜色和图标 */
 const actionConfig: Record<string, { color: string, bg: string, icon: React.ReactNode }> = {
 	买入: { color: "#f5222d", bg: "linear-gradient(135deg, #ff4d4f 0%, #ff7a45 100%)", icon: <ArrowUpOutlined /> },
 	持有: { color: "#1890ff", bg: "linear-gradient(135deg, #1890ff 0%, #36cfc9 100%)", icon: <InfoCircleOutlined /> },
@@ -44,147 +54,141 @@ const signalConfig: Record<string, { color: string, tag: string }> = {
 	无数据: { color: "#8c8c8c", tag: "default" },
 };
 
+function directionTag(d?: string) {
+	if (d === "看涨") {
+		return (
+			<Tag color="red">
+				<ArrowUpOutlined />
+				{" "}
+				看涨
+			</Tag>
+		);
+	}
+	if (d === "看跌") {
+		return (
+			<Tag color="green">
+				<ArrowDownOutlined />
+				{" "}
+				看跌
+			</Tag>
+		);
+	}
+	return (
+		<Tag color="orange">
+			<DashboardOutlined />
+			{" "}
+			震荡
+		</Tag>
+	);
+}
+
+/* ====================== InfoCard ====================== */
+function InfoCard({ icon, title, children, bg }: {
+	icon: React.ReactNode
+	title: string
+	children: React.ReactNode
+	bg?: string
+}) {
+	return (
+		<Card
+			size="small"
+			style={{ borderRadius: 10, height: "100%", background: bg || undefined }}
+			bodyStyle={{ padding: "16px 20px" }}
+		>
+			<Space style={{ marginBottom: 10 }}>
+				{icon}
+				<Text strong style={{ fontSize: 14 }}>{title}</Text>
+			</Space>
+			<div>{children}</div>
+		</Card>
+	);
+}
+
+/* ====================== Page ====================== */
 const StockAnalysisPage: React.FC = () => {
 	const [stockInput, setStockInput] = useState("");
 	const [data, setData] = useState<StockAnalysisData | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [elapsed, setElapsed] = useState(0);
 
 	const handleAnalyze = useCallback(async () => {
 		const input = stockInput.trim();
 		if (!input)
 			return;
-
 		setLoading(true);
 		setError(null);
 		setData(null);
-
+		setElapsed(0);
+		const timer = setInterval(() => setElapsed(s => s + 1), 1000);
 		try {
 			const response = await fetchStockAnalysis(input);
-			if (response.status === "success" && response.data) {
+			if (response.status === "success" && response.data)
 				setData(response.data);
-			}
-			else {
-				setError(response.message || "分析失败，请稍后重试");
-			}
+			else setError(response.message || "分析失败");
 		}
 		catch (e: any) {
-			// 尝试从 API 响应中提取错误信息
-			let errorMsg = "网络请求失败，请稍后重试";
+			let msg = "网络请求失败";
 			try {
 				if (e?.response) {
 					const body = await e.response.json();
-					if (body?.message) {
-						errorMsg = body.message;
-					}
-					else if (body?.detail) {
-						errorMsg = body.detail;
-					}
+					msg = body?.message || body?.detail || msg;
 				}
 				else if (e?.message) {
-					errorMsg = e.message;
+					msg = e.message;
 				}
 			}
-			catch {
-				// 解析失败，使用默认消息
-			}
-			setError(errorMsg);
+			catch { /* ignore */ }
+			setError(msg);
 		}
 		finally {
+			clearInterval(timer);
 			setLoading(false);
 		}
 	}, [stockInput]);
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter")
-			handleAnalyze();
-	};
-
 	const strategyColumns: ColumnsType<StrategySignal> = [
-		{
-			title: "战法",
-			dataIndex: "strategy",
-			key: "strategy",
-			width: 100,
-			render: (name: string) => <Text strong>{name}</Text>,
-		},
+		{ title: "战法", dataIndex: "strategy", key: "strategy", width: 100, render: (n: string) => <Text strong>{n}</Text> },
 		{
 			title: "信号",
 			dataIndex: "signal",
 			key: "signal",
 			width: 80,
 			align: "center",
-			render: (signal: string) => {
-				const cfg = signalConfig[signal] || signalConfig["无数据"];
+			render: (s: string) => {
+				const cfg = signalConfig[s] || signalConfig["无数据"];
 				return (
 					<Tag color={cfg.tag} style={{ fontWeight: "bold" }}>
-						{signal === "看多" && <ArrowUpOutlined style={{ marginRight: 4 }} />}
-						{signal === "看空" && <ArrowDownOutlined style={{ marginRight: 4 }} />}
-						{signal}
+						{s === "看多" && <ArrowUpOutlined style={{ marginRight: 4 }} />}
+						{s === "看空" && <ArrowDownOutlined style={{ marginRight: 4 }} />}
+						{s}
 					</Tag>
 				);
 			},
 		},
-		{
-			title: "分析详情",
-			dataIndex: "detail",
-			key: "detail",
-			render: (detail: string) => <Text style={{ fontSize: 13 }}>{detail}</Text>,
-		},
+		{ title: "分析详情", dataIndex: "detail", key: "detail", render: (d: string) => <Text style={{ fontSize: 13 }}>{d}</Text> },
 	];
 
+	const act = data ? (actionConfig[data.action] || actionConfig["观望"]) : actionConfig["观望"];
+
 	return (
-		<div style={{ padding: 24 }}>
-			{/* Header */}
-			<Card
-				bordered={false}
-				style={{
-					marginBottom: 24,
-					background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-					borderRadius: 12,
-				}}
-			>
+		<div style={{ padding: 24, maxWidth: 1400, margin: "0 auto" }}>
+			{/* ========== Search Header ========== */}
+			<Card bordered={false} style={{ marginBottom: 24, background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", borderRadius: 12 }}>
 				<Row gutter={[24, 16]} align="middle">
 					<Col span={14}>
 						<Space align="center">
 							<SearchOutlined style={{ fontSize: 32, color: "#fff" }} />
 							<div>
-								<Title level={3} style={{ margin: 0, color: "#fff" }}>个股综合分析</Title>
-								<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-									输入股票代码或公司名称，七大短线战法综合研判
-								</Text>
+								<Title level={3} style={{ margin: 0, color: "#fff" }}>个股深度分析</Title>
+								<Text style={{ color: "rgba(255,255,255,0.85)" }}>输入股票代码或名称，AI 全方位研判（技术面+基本面+战法）</Text>
 							</div>
 						</Space>
 					</Col>
 					<Col span={10}>
 						<Space.Compact style={{ width: "100%" }}>
-							<Input
-								size="large"
-								placeholder="输入股票代码(如600519)或公司名称(如贵州茅台)"
-								value={stockInput}
-								onChange={e => setStockInput(e.target.value)}
-								onKeyDown={handleKeyDown}
-								allowClear
-								style={{
-									borderRadius: "8px 0 0 8px",
-									fontSize: 15,
-								}}
-							/>
-							<Button
-								type="primary"
-								size="large"
-								icon={<SearchOutlined />}
-								loading={loading}
-								onClick={handleAnalyze}
-								style={{
-									borderRadius: "0 8px 8px 0",
-									background: "#ff4d4f",
-									borderColor: "#ff4d4f",
-									fontWeight: "bold",
-								}}
-							>
-								分析
-							</Button>
+							<Input size="large" placeholder="如 600519 或 贵州茅台" value={stockInput} onChange={e => setStockInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleAnalyze()} allowClear style={{ borderRadius: "8px 0 0 8px", fontSize: 15 }} />
+							<Button type="primary" size="large" icon={<SearchOutlined />} loading={loading} onClick={handleAnalyze} style={{ borderRadius: "0 8px 8px 0", background: "#ff4d4f", borderColor: "#ff4d4f", fontWeight: "bold" }}>分析</Button>
 						</Space.Compact>
 					</Col>
 				</Row>
@@ -195,326 +199,361 @@ const StockAnalysisPage: React.FC = () => {
 				<Card bordered={false} style={{ borderRadius: 12, textAlign: "center", padding: 60 }}>
 					<Spin size="large" />
 					<div style={{ marginTop: 16 }}>
-						<Text type="secondary">正在分析中，AI 正在综合七大战法数据...</Text>
+						<Text type="secondary">AI 深度分析中（K线+基本面+战法+行业+财报）...</Text>
 					</div>
 					<div style={{ marginTop: 8 }}>
-						<Text type="secondary" style={{ fontSize: 12 }}>
-							首次分析可能需要 10-30 秒
+						<Text type="secondary">
+							{elapsed}
+							s
 						</Text>
 					</div>
 				</Card>
 			)}
 
 			{/* Error */}
-			{error && !loading && (
-				<Alert
-					message="提示"
-					description={error}
-					type="warning"
-					showIcon
-					action={<Button onClick={handleAnalyze} icon={<ReloadOutlined />}>重试</Button>}
-					style={{ marginBottom: 24, borderRadius: 8 }}
-				/>
-			)}
+			{error && !loading && <Alert type="error" message={error} showIcon style={{ marginBottom: 24, borderRadius: 8 }} action={<Button size="small" onClick={handleAnalyze} icon={<ReloadOutlined />}>重试</Button>} />}
 
 			{/* Empty */}
-			{!loading && !error && !data && (
-				<Card bordered={false} style={{ borderRadius: 12 }}>
-					<Empty
-						image={Empty.PRESENTED_IMAGE_SIMPLE}
-						description={(
-							<span>
-								请在上方输入股票代码或公司名称
-								<br />
-								<Text type="secondary" style={{ fontSize: 12 }}>
-									支持6位数字代码 或 中文公司名称
-								</Text>
-							</span>
-						)}
-					/>
-				</Card>
-			)}
+			{!loading && !error && !data && <Card bordered={false} style={{ borderRadius: 12 }}><Empty description="输入股票代码或名称开始分析" /></Card>}
 
-			{/* Results */}
+			{/* ========== Results ========== */}
 			{data && !loading && (
 				<>
-					{/* Action Card */}
-					<Card
-						bordered={false}
-						style={{
-							marginBottom: 24,
-							borderRadius: 12,
-							background: actionConfig[data.action]?.bg || actionConfig["观望"].bg,
-							overflow: "hidden",
-						}}
-					>
-						<Row gutter={[24, 16]} align="middle">
-							<Col xs={24} sm={8}>
-								<div style={{ textAlign: "center" }}>
-									<div style={{ fontSize: 48, color: "#fff", lineHeight: 1 }}>
-										{actionConfig[data.action]?.icon}
-									</div>
-									<Title level={2} style={{ margin: "8px 0 0", color: "#fff" }}>
-										{data.action}
-									</Title>
-									<Text style={{ color: "rgba(255,255,255,0.85)", fontSize: 16 }}>
-										{data.stock_name}
-										(
-										{data.stock_code}
-										)
+					{/* Row 1: Hero Card */}
+					<Card bordered={false} style={{ marginBottom: 16, borderRadius: 12, background: act.bg }} bodyStyle={{ padding: "24px 32px" }}>
+						<Row gutter={[32, 16]} align="middle">
+							<Col xs={24} sm={8} style={{ textAlign: "center" }}>
+								<div style={{ background: "rgba(255,255,255,0.2)", borderRadius: "50%", width: 100, height: 100, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto", flexDirection: "column" }}>
+									<span style={{ fontSize: 32, color: "#fff" }}>{act.icon}</span>
+									<Text style={{ color: "#fff", fontSize: 20, fontWeight: 700, marginTop: 2 }}>{data.action}</Text>
+								</div>
+								<div style={{ marginTop: 8 }}>
+									<Text style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>
+										命中
+										{data.strategies_hit}
+										/
+										{data.strategies_total}
+										{" "}
+										策略
 									</Text>
 								</div>
 							</Col>
 							<Col xs={24} sm={16}>
-								<Row gutter={[16, 12]}>
+								<Title level={3} style={{ color: "#fff", margin: 0 }}>
+									{data.stock_name}
+									{" "}
+									(
+									{data.stock_code}
+									)
+								</Title>
+								<Row gutter={24} style={{ marginTop: 12 }}>
 									<Col span={6}>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>综合评分</span>}
-											value={data.score}
-											suffix="/100"
-											valueStyle={{ color: "#fff", fontWeight: "bold", fontSize: 28 }}
-										/>
+										<Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>当前价</Text>} value={data.current_price || "-"} valueStyle={{ color: "#fff", fontSize: 22 }} />
 									</Col>
 									<Col span={6}>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>置信度</span>}
-											value={data.confidence}
-											suffix="%"
-											valueStyle={{ color: "#fff", fontWeight: "bold", fontSize: 28 }}
-										/>
+										<Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>涨跌幅</Text>} value={data.change_pct || 0} precision={2} suffix="%" valueStyle={{ color: "#fff", fontSize: 22 }} prefix={(data.change_pct || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} />
 									</Col>
 									<Col span={6}>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>命中策略</span>}
-											value={data.strategies_hit}
-											suffix={`/${data.strategies_total}`}
-											valueStyle={{ color: "#fff", fontWeight: "bold", fontSize: 28 }}
-										/>
+										<Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>评分</Text>} value={data.score} suffix="/100" valueStyle={{ color: "#fff", fontSize: 22 }} />
 									</Col>
 									<Col span={6}>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>风险等级</span>}
-											value={data.risk_level}
-											valueStyle={{
-												color: "#fff",
-												fontWeight: "bold",
-												fontSize: 28,
-											}}
-										/>
+										<Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>置信度</Text>} value={data.confidence} suffix="%" valueStyle={{ color: "#fff", fontSize: 22 }} />
 									</Col>
+								</Row>
+								<Row gutter={24} style={{ marginTop: 8 }}>
+									{data.pe_ttm != null && (
+										<Col span={6}>
+											<Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 12 }}>
+												PE(TTM):
+												<span style={{ color: "#fff", fontWeight: 600 }}>{data.pe_ttm}</span>
+											</Text>
+										</Col>
+									)}
+									{data.pb != null && (
+										<Col span={6}>
+											<Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 12 }}>
+												PB:
+												<span style={{ color: "#fff", fontWeight: 600 }}>{data.pb}</span>
+											</Text>
+										</Col>
+									)}
+									{data.total_market_cap && (
+										<Col span={6}>
+											<Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 12 }}>
+												总市值:
+												<span style={{ color: "#fff", fontWeight: 600 }}>{data.total_market_cap}</span>
+											</Text>
+										</Col>
+									)}
+									{data.industry && (
+										<Col span={6}>
+											<Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 12 }}>
+												行业:
+												<span style={{ color: "#fff", fontWeight: 600 }}>{data.industry}</span>
+											</Text>
+										</Col>
+									)}
 								</Row>
 							</Col>
 						</Row>
 					</Card>
 
-					{/* Price Points */}
-					<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-						{/* Buy Point */}
-						<Col xs={24} sm={8}>
-							<Card
-								bordered={false}
-								style={{ borderRadius: 12, height: "100%" }}
-								title={(
-									<Space>
-										<ArrowUpOutlined style={{ color: "#f5222d" }} />
-										<Text strong>买入价位</Text>
-									</Space>
-								)}
-							>
-								{data.buy_point?.price_low || data.buy_point?.price_high
+					{/* Row 2: 短期/长期展望 + 买卖价位 */}
+					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+						<Col xs={24} md={6}>
+							<InfoCard icon={<ThunderboltOutlined style={{ color: "#f5222d" }} />} title="短期展望(1-2周)">
+								{directionTag(data.short_term_outlook?.direction)}
+								{data.short_term_outlook?.target_price
 									? (
-										<>
-											<div style={{ textAlign: "center", margin: "12px 0" }}>
-												<Text style={{ fontSize: 24, fontWeight: "bold", color: "#f5222d" }}>
-													¥
-													{data.buy_point.price_low.toFixed(2)}
-													{" "}
-													~ ¥
-													{data.buy_point.price_high.toFixed(2)}
-												</Text>
-											</div>
-											<Paragraph type="secondary" style={{ textAlign: "center", marginBottom: 0 }}>
-												{data.buy_point.description}
-											</Paragraph>
-										</>
-									)
-									: (
-										<Text type="secondary">暂无数据</Text>
-									)}
-							</Card>
-						</Col>
-						{/* Sell Point */}
-						<Col xs={24} sm={8}>
-							<Card
-								bordered={false}
-								style={{ borderRadius: 12, height: "100%" }}
-								title={(
-									<Space>
-										<ArrowDownOutlined style={{ color: "#52c41a" }} />
-										<Text strong>卖出价位</Text>
-									</Space>
-								)}
-							>
-								{data.sell_point?.price_low || data.sell_point?.price_high
-									? (
-										<>
-											<div style={{ textAlign: "center", margin: "12px 0" }}>
-												<Text style={{ fontSize: 24, fontWeight: "bold", color: "#52c41a" }}>
-													¥
-													{data.sell_point.price_low.toFixed(2)}
-													{" "}
-													~ ¥
-													{data.sell_point.price_high.toFixed(2)}
-												</Text>
-											</div>
-											<Paragraph type="secondary" style={{ textAlign: "center", marginBottom: 0 }}>
-												{data.sell_point.description}
-											</Paragraph>
-										</>
-									)
-									: (
-										<Text type="secondary">暂无数据</Text>
-									)}
-							</Card>
-						</Col>
-						{/* Stop Loss + Position */}
-						<Col xs={24} sm={8}>
-							<Card
-								bordered={false}
-								style={{ borderRadius: 12, height: "100%" }}
-								title={(
-									<Space>
-										<ExclamationCircleOutlined style={{ color: "#faad14" }} />
-										<Text strong>风控建议</Text>
-									</Space>
-								)}
-							>
-								{data.stop_loss?.price
-									? (
-										<div style={{ marginBottom: 12 }}>
-											<Text type="secondary">止损价：</Text>
-											<Text style={{ fontSize: 20, fontWeight: "bold", color: "#faad14" }}>
-												¥
-												{data.stop_loss.price.toFixed(2)}
-											</Text>
-											<br />
-											<Text type="secondary" style={{ fontSize: 12 }}>
-												{data.stop_loss.description}
-											</Text>
+										<div style={{ margin: "8px 0" }}>
+											<Text type="secondary">目标价: </Text>
+											<Text strong style={{ fontSize: 18, color: "#f5222d" }}>{data.short_term_outlook.target_price}</Text>
 										</div>
 									)
 									: null}
-								{data.position_advice && (
-									<div>
-										<Text type="secondary">仓位建议：</Text>
-										<Tag color="blue" style={{ fontWeight: "bold" }}>{data.position_advice}</Tag>
-									</div>
-								)}
-								{!data.stop_loss?.price && !data.position_advice && (
-									<Text type="secondary">暂无数据</Text>
-								)}
-							</Card>
+								<Paragraph style={{ fontSize: 13, margin: 0 }}>{data.short_term_outlook?.detail || "暂无分析"}</Paragraph>
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={6}>
+							<InfoCard icon={<FundOutlined style={{ color: "#722ed1" }} />} title="长期展望(3-6月)">
+								{directionTag(data.long_term_outlook?.direction)}
+								{data.long_term_outlook?.target_price
+									? (
+										<div style={{ margin: "8px 0" }}>
+											<Text type="secondary">目标价: </Text>
+											<Text strong style={{ fontSize: 18, color: "#722ed1" }}>{data.long_term_outlook.target_price}</Text>
+										</div>
+									)
+									: null}
+								<Paragraph style={{ fontSize: 13, margin: 0 }}>{data.long_term_outlook?.detail || "暂无分析"}</Paragraph>
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={6}>
+							<InfoCard icon={<ArrowUpOutlined style={{ color: "#52c41a" }} />} title="买入价位">
+								{data.buy_point?.price_low || data.buy_point?.price_high
+									? (
+										<div>
+											<Text strong style={{ fontSize: 20, color: "#52c41a" }}>
+												{data.buy_point.price_low}
+												{" "}
+												-
+												{" "}
+												{data.buy_point.price_high}
+											</Text>
+										</div>
+									)
+									: <Text type="secondary">-</Text>}
+								<Paragraph style={{ fontSize: 13, margin: "4px 0 0" }}>{data.buy_point?.description || ""}</Paragraph>
+								<Divider style={{ margin: "8px 0" }} />
+								<Text type="secondary" style={{ fontSize: 12 }}>止损: </Text>
+								<Text style={{ color: "#f5222d", fontWeight: 600 }}>{data.stop_loss?.price || "-"}</Text>
+								<div><Text type="secondary" style={{ fontSize: 11 }}>{data.stop_loss?.description || ""}</Text></div>
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={6}>
+							<InfoCard icon={<ArrowDownOutlined style={{ color: "#f5222d" }} />} title="卖出价位">
+								{data.sell_point?.price_low || data.sell_point?.price_high
+									? (
+										<div>
+											<Text strong style={{ fontSize: 20, color: "#f5222d" }}>
+												{data.sell_point.price_low}
+												{" "}
+												-
+												{" "}
+												{data.sell_point.price_high}
+											</Text>
+										</div>
+									)
+									: <Text type="secondary">-</Text>}
+								<Paragraph style={{ fontSize: 13, margin: "4px 0 0" }}>{data.sell_point?.description || ""}</Paragraph>
+								<Divider style={{ margin: "8px 0" }} />
+								<Text type="secondary" style={{ fontSize: 12 }}>仓位建议: </Text>
+								<Text style={{ fontWeight: 600 }}>{data.position_advice || "-"}</Text>
+								<div>
+									<Tag color={data.risk_level === "高" ? "red" : data.risk_level === "低" ? "green" : "orange"}>
+										风险:
+										{data.risk_level}
+									</Tag>
+								</div>
+							</InfoCard>
 						</Col>
 					</Row>
 
-					{/* Strategy Analysis Table */}
-					{data.strategy_analysis && data.strategy_analysis.length > 0 && (
-						<Card
-							bordered={false}
-							style={{ marginBottom: 24, borderRadius: 12 }}
-							title={(
-								<Space>
-									<SearchOutlined style={{ color: "#722ed1" }} />
-									<Text strong>七大战法逐一分析</Text>
-									<Tag color="purple">
-										{data.strategies_hit}
-										/
-										{data.strategies_total}
-										{" "}
-										命中
-									</Tag>
-								</Space>
-							)}
-						>
-							<Table
-								columns={strategyColumns}
-								dataSource={data.strategy_analysis}
-								rowKey="strategy"
-								pagination={false}
-								size="small"
-								rowClassName={(record) => {
-									if (record.signal === "看多")
-										return "row-signal-bullish";
-									if (record.signal === "看空")
-										return "row-signal-bearish";
-									return "";
-								}}
-							/>
-						</Card>
-					)}
+					{/* Row 3: 风险利好 + K线 + 行业 */}
+					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<WarningOutlined style={{ color: "#f5222d" }} />} title="风险因素">
+								{(data.risk_factors && data.risk_factors.length > 0)
+									? data.risk_factors.map((f, i) => (
+										<div key={i} style={{ padding: "4px 0" }}>
+											<Text style={{ fontSize: 13 }}>
+												⚠️
+												{f}
+											</Text>
+										</div>
+									))
+									: <Text type="secondary">暂无风险提示</Text>}
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<BulbOutlined style={{ color: "#52c41a" }} />} title="利好因素">
+								{(data.positive_factors && data.positive_factors.length > 0)
+									? data.positive_factors.map((f, i) => (
+										<div key={i} style={{ padding: "4px 0" }}>
+											<Text style={{ fontSize: 13 }}>
+												✅
+												{f}
+											</Text>
+										</div>
+									))
+									: <Text type="secondary">暂无利好信息</Text>}
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<LineChartOutlined style={{ color: "#1890ff" }} />} title="K线技术分析">
+								{data.kline_analysis?.trend && (
+									<div style={{ marginBottom: 4 }}>
+										<Text type="secondary">趋势: </Text>
+										<Tag color={data.kline_analysis.trend === "上升" ? "red" : data.kline_analysis.trend === "下降" ? "green" : "orange"}>{data.kline_analysis.trend}</Tag>
+									</div>
+								)}
+								{data.kline_analysis?.pattern && (
+									<div style={{ marginBottom: 4 }}>
+										<Text type="secondary">形态: </Text>
+										<Tag color="blue">{data.kline_analysis.pattern}</Tag>
+									</div>
+								)}
+								<Paragraph style={{ fontSize: 13, margin: 0 }}>{data.kline_analysis?.detail || "暂无K线分析"}</Paragraph>
+							</InfoCard>
+						</Col>
+					</Row>
 
-					{/* Summary Report */}
-					{data.summary && (
-						<Card
-							bordered={false}
-							style={{ marginBottom: 24, borderRadius: 12, background: "#fafafa" }}
-							title="📊 综合分析报告"
-							extra={(
-								<Space>
-									{data.llm_enhanced
-										? <Tag color="green" icon={<CheckCircleOutlined />}>AI增强</Tag>
-										: <Tag color="orange">基础分析</Tag>}
-									<Text type="secondary" style={{ fontSize: 12 }}>{data.analyzed_at}</Text>
-								</Space>
-							)}
-						>
-							<Paragraph style={{ whiteSpace: "pre-wrap", fontSize: 14, lineHeight: 1.8 }}>
-								{data.summary}
-							</Paragraph>
-						</Card>
-					)}
+					{/* Row 4: 行业/基本面/财报 */}
+					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<TrophyOutlined style={{ color: "#faad14" }} />} title="行业/赛道分析">
+								{data.industry_analysis?.industry && (
+									<div>
+										<Text type="secondary">行业: </Text>
+										<Tag color="gold">{data.industry_analysis.industry}</Tag>
+									</div>
+								)}
+								{data.industry_analysis?.sector && (
+									<div style={{ marginTop: 4 }}>
+										<Text type="secondary">赛道: </Text>
+										<Tag color="purple">{data.industry_analysis.sector}</Tag>
+									</div>
+								)}
+								{data.industry_analysis?.industry_outlook && (
+									<div style={{ marginTop: 8 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>前景: </Text>
+										<Text style={{ fontSize: 13 }}>{data.industry_analysis.industry_outlook}</Text>
+									</div>
+								)}
+								{data.industry_analysis?.position && (
+									<div style={{ marginTop: 4 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>地位: </Text>
+										<Text style={{ fontSize: 13 }}>{data.industry_analysis.position}</Text>
+									</div>
+								)}
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<SafetyOutlined style={{ color: "#1890ff" }} />} title="基本面分析">
+								{data.fundamental_analysis?.moat && (
+									<div style={{ marginBottom: 6 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>🏰 护城河: </Text>
+										<Text style={{ fontSize: 13 }}>{data.fundamental_analysis.moat}</Text>
+									</div>
+								)}
+								{data.fundamental_analysis?.competitive_advantage && (
+									<div style={{ marginBottom: 6 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>⚡ 竞争优势: </Text>
+										<Text style={{ fontSize: 13 }}>{data.fundamental_analysis.competitive_advantage}</Text>
+									</div>
+								)}
+								<Paragraph style={{ fontSize: 13, margin: 0 }}>{data.fundamental_analysis?.detail || "暂无基本面分析"}</Paragraph>
+							</InfoCard>
+						</Col>
+						<Col xs={24} md={8}>
+							<InfoCard icon={<EyeOutlined style={{ color: "#52c41a" }} />} title="财报摘要">
+								{data.financial_summary?.revenue_trend && (
+									<div style={{ marginBottom: 4 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>营收: </Text>
+										<Text style={{ fontSize: 13 }}>{data.financial_summary.revenue_trend}</Text>
+									</div>
+								)}
+								{data.financial_summary?.profit_trend && (
+									<div style={{ marginBottom: 4 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>利润: </Text>
+										<Text style={{ fontSize: 13 }}>{data.financial_summary.profit_trend}</Text>
+									</div>
+								)}
+								{data.financial_summary?.growth && (
+									<div style={{ marginBottom: 4 }}>
+										<Text type="secondary" style={{ fontSize: 12 }}>成长性: </Text>
+										<Text style={{ fontSize: 13 }}>{data.financial_summary.growth}</Text>
+									</div>
+								)}
+								<Paragraph style={{ fontSize: 13, margin: 0 }}>{data.financial_summary?.detail || "暂无财报分析"}</Paragraph>
+							</InfoCard>
+						</Col>
+					</Row>
 
-					{/* Fuzzy Match Warning */}
-					{data.fuzzy_match && data.candidates && data.candidates.length > 1 && (
-						<Alert
-							type="info"
-							showIcon
-							message="模糊匹配提示"
-							description={(
-								<span>
-									当前分析的是模糊匹配的第一个结果。其它候选股票：
-									{data.candidates.slice(1, 5).map(c => (
-										<Tag key={c.stock_code} style={{ marginLeft: 4 }}>
-											{c.stock_name}
-											(
-											{c.stock_code}
-											)
-										</Tag>
-									))}
-								</span>
-							)}
-							style={{ marginBottom: 24, borderRadius: 8 }}
+					{/* Row 5: 七大战法 */}
+					<Card
+						title={(
+							<Space>
+								<FireOutlined style={{ color: "#f5222d" }} />
+								<Text strong>七大战法分析</Text>
+								<Tag color={data.strategies_hit >= 4 ? "red" : data.strategies_hit >= 2 ? "orange" : "default"}>
+									{data.strategies_hit}
+									/
+									{data.strategies_total}
+									{" "}
+									命中
+								</Tag>
+							</Space>
+						)}
+						style={{ marginBottom: 16, borderRadius: 8 }}
+					>
+						<Table<StrategySignal>
+							dataSource={data.strategy_analysis}
+							columns={strategyColumns}
+							rowKey="strategy"
+							size="small"
+							pagination={false}
 						/>
-					)}
+					</Card>
+
+					{/* Row 6: 综合分析报告 */}
+					<Card
+						title={(
+							<Space>
+								<DashboardOutlined style={{ color: "#722ed1" }} />
+								<Text strong>综合深度分析报告</Text>
+								{data.llm_enhanced && <Tag color="geekblue" icon={<CheckCircleOutlined />}>GPT-5.4</Tag>}
+							</Space>
+						)}
+						style={{ marginBottom: 16, borderRadius: 12, background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)", border: "1px solid rgba(255,255,255,0.08)" }}
+						bodyStyle={{ padding: "24px 32px" }}
+						bordered={false}
+					>
+						<Paragraph style={{ color: "rgba(255,255,255,0.85)", fontSize: 14, lineHeight: 2, whiteSpace: "pre-wrap", margin: 0 }}>
+							{data.summary || "暂无分析报告"}
+						</Paragraph>
+						<div style={{ marginTop: 12, textAlign: "right" }}>
+							<Text style={{ color: "rgba(255,255,255,0.45)", fontSize: 11 }}>
+								分析时间:
+								{data.analyzed_at}
+								{" "}
+								| 分析日期:
+								{data.market_date}
+							</Text>
+						</div>
+					</Card>
 				</>
 			)}
-
-			<style>
-				{`
-				.row-signal-bullish {
-					background-color: #fff1f0 !important;
-				}
-				.row-signal-bullish:hover > td {
-					background-color: #ffccc7 !important;
-				}
-				.row-signal-bearish {
-					background-color: #f6ffed !important;
-				}
-				.row-signal-bearish:hover > td {
-					background-color: #d9f7be !important;
-				}
-				`}
-			</style>
 		</div>
 	);
 };

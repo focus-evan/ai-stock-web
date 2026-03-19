@@ -519,6 +519,14 @@ export interface StockAnalysisData {
 	confidence: number
 	score: number
 	strategy_analysis: StrategySignal[]
+	kline_analysis?: { trend?: string, pattern?: string, detail?: string }
+	industry_analysis?: { industry?: string, sector?: string, industry_outlook?: string, position?: string }
+	fundamental_analysis?: { moat?: string, competitive_advantage?: string, detail?: string }
+	financial_summary?: { revenue_trend?: string, profit_trend?: string, growth?: string, detail?: string }
+	risk_factors?: string[]
+	positive_factors?: string[]
+	short_term_outlook?: { direction?: string, target_price?: number, detail?: string }
+	long_term_outlook?: { direction?: string, target_price?: number, detail?: string }
 	buy_point: PricePoint
 	sell_point: PricePoint
 	stop_loss: StopLossInfo
@@ -529,6 +537,14 @@ export interface StockAnalysisData {
 	strategies_total: number
 	llm_enhanced: boolean
 	analyzed_at: string
+	/** 实时行情数据 */
+	current_price?: number
+	change_pct?: number
+	pe_ttm?: number
+	pb?: number
+	total_market_cap?: string
+	industry?: string
+	market_data?: any
 	/** 模糊匹配时的候选股票 */
 	fuzzy_match?: boolean
 	candidates?: { stock_code: string, stock_name: string }[]
