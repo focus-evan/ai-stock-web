@@ -1,8 +1,8 @@
 import type { BreakthroughData, BreakthroughStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
-import { fetchBreakthroughRecommendations } from "#src/api/strategy";
+import { fetchBreakthroughRecommendations, refreshBreakthroughRecommendations } from "#src/api/strategy";
 import { ReloadOutlined, RiseOutlined, RocketOutlined, ThunderboltOutlined } from "@ant-design/icons";
-import { Alert, Badge, Card, Col, Empty, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -24,6 +24,8 @@ const levelBg: Record<string, string> = {
 const BreakthroughPage: React.FC = () => {
 	const [data, setData] = useState<BreakthroughData | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [refreshing, setRefreshing] = useState(false);
+	const [refreshSeconds, setRefreshSeconds] = useState(0);
 	const [error, setError] = useState<string | null>(null);
 
 	const fetchData = async () => {
@@ -43,6 +45,33 @@ const BreakthroughPage: React.FC = () => {
 		}
 		finally {
 			setLoading(false);
+		}
+	};
+
+	const handleRefresh = async () => {
+		setRefreshing(true);
+		setRefreshSeconds(0);
+		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+		const timer = setInterval(() => {
+			setRefreshSeconds(prev => prev + 1);
+		}, 1000);
+		try {
+			const response = await refreshBreakthroughRecommendations(13);
+			if (response.status === "success") {
+				setData(response.data);
+				message.success({ content: `刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`, key: "refresh" });
+			}
+			else {
+				message.error({ content: "刷新失败", key: "refresh" });
+			}
+		}
+		catch (e: any) {
+			message.error({ content: e?.message || "刷新超时，请稍后重试", key: "refresh" });
+		}
+		finally {
+			clearInterval(timer);
+			setRefreshing(false);
+			setRefreshSeconds(0);
 		}
 	};
 
@@ -262,6 +291,20 @@ const BreakthroughPage: React.FC = () => {
 									关注关键阻力位突破 + 放量确认信号
 								</Text>
 							</div>
+							<Button
+								type="primary"
+								ghost
+								icon={<ReloadOutlined spin={refreshing} />}
+								loading={refreshing}
+								onClick={handleRefresh}
+								style={{
+									borderColor: "rgba(255,255,255,0.5)",
+									color: "#fff",
+									marginLeft: 12,
+								}}
+							>
+								{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+							</Button>
 						</Space>
 					</Col>
 					<Col span={12}>

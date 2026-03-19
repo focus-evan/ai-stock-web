@@ -158,3 +158,42 @@ export function refreshCombinedRecommendations(limit: number = 13, minIntersecti
 		})
 		.json<CombinedResponse>();
 }
+
+/**
+ * 手动刷新突破战法推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshBreakthroughRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/breakthrough/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<BreakthroughResponse>();
+}
+
+/**
+ * 手动刷新量价关系推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshVolumePriceRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/volume-price/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<VolumePriceResponse>();
+}
+
+/**
+ * 手动刷新均线战法推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshMovingAverageRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/moving-average/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<MovingAverageResponse>();
+}
