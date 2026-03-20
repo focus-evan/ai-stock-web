@@ -53,9 +53,9 @@ function formatMoney(v: number): string {
 
 function profitColor(v: number): string {
 	if (v > 0)
-		return "#52c41a";
-	if (v < 0)
 		return "#ff4d4f";
+	if (v < 0)
+		return "#52c41a";
 	return "#8c8c8c";
 }
 
@@ -117,7 +117,7 @@ export default function Home() {
 					let html = `<div style="font-weight:600;margin-bottom:4px">${params[0]?.axisValueLabel || ""}</div>`;
 					for (const p of params) {
 						const val = Number(p.value?.[1] ?? 0).toFixed(2);
-						const clr = Number(val) >= 0 ? "#52c41a" : "#ff4d4f";
+						const clr = Number(val) >= 0 ? "#ff4d4f" : "#52c41a";
 						html += `<div>${p.marker} ${p.seriesName}: <span style="color:${clr};font-weight:600">${val}%</span></div>`;
 					}
 					return html;
@@ -296,8 +296,8 @@ export default function Home() {
 							style={{
 								borderRadius: 12,
 								background: (overview.total_profit || 0) >= 0
-									? "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
-									: "linear-gradient(135deg, #eb3349 0%, #f45c43 100%)",
+									? "linear-gradient(135deg, #eb3349 0%, #f45c43 100%)"
+									: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
 							}}
 							styles={{ body: { padding: "20px 24px" } }}
 						>
