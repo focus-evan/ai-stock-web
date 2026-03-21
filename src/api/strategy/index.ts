@@ -5,9 +5,11 @@ import type {
 	DragonHeadResponse,
 	EventDrivenResponse,
 	MovingAverageResponse,
+	NorthboundResponse,
 	SentimentResponse,
 	StockAnalysisResponse,
 	StrategiesSummaryResponse,
+	TrendMomentumResponse,
 	VolumePriceResponse,
 } from "./types";
 import { request } from "#src/utils/request";
@@ -252,4 +254,56 @@ export function refreshMovingAverageRecommendations(limit: number = 13) {
 			timeout: 300000,
 		})
 		.json<MovingAverageResponse>();
+}
+
+/**
+ * 获取北向资金推荐
+ * @param limit - 返回推荐数量，默认13
+ */
+export function fetchNorthboundRecommendations(limit: number = 13) {
+	return request
+		.get("strategy/northbound", {
+			searchParams: { limit },
+			timeout: 90000,
+		})
+		.json<NorthboundResponse>();
+}
+
+/**
+ * 手动刷新北向资金推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshNorthboundRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/northbound/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<NorthboundResponse>();
+}
+
+/**
+ * 获取趋势动量推荐
+ * @param limit - 返回推荐数量，默认13
+ */
+export function fetchTrendMomentumRecommendations(limit: number = 13) {
+	return request
+		.get("strategy/trend-momentum", {
+			searchParams: { limit },
+			timeout: 90000,
+		})
+		.json<TrendMomentumResponse>();
+}
+
+/**
+ * 手动刷新趋势动量推荐（绕过缓存，重新执行策略分析+LLM）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshTrendMomentumRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/trend-momentum/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<TrendMomentumResponse>();
 }

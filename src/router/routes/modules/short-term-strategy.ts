@@ -12,6 +12,8 @@ const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-pri
 const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
 const MovingAverage = lazy(() => import("#src/pages/short-term-strategy/moving-average"));
 const Combined = lazy(() => import("#src/pages/short-term-strategy/combined"));
+const Northbound = lazy(() => import("#src/pages/short-term-strategy/northbound"));
+const TrendMomentum = lazy(() => import("#src/pages/short-term-strategy/trend-momentum"));
 const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
@@ -80,6 +82,22 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "LineChartOutlined",
 					title: "均线战法",
+				},
+			},
+			{
+				path: "/short-term-strategy/northbound",
+				Component: Northbound,
+				handle: {
+					icon: "BankOutlined",
+					title: "北向资金",
+				},
+			},
+			{
+				path: "/short-term-strategy/trend-momentum",
+				Component: TrendMomentum,
+				handle: {
+					icon: "StockOutlined",
+					title: "趋势动量",
 				},
 			},
 			{

@@ -62,6 +62,10 @@ function strategyColor(s: string): string {
 		return "#faad14";
 	if (s === "combined")
 		return "#722ed1";
+	if (s === "northbound")
+		return "#9254de";
+	if (s === "trend_momentum")
+		return "#fa541c";
 	if (s === "global")
 		return "#8c8c8c";
 	return "#595959";
@@ -85,6 +89,10 @@ function strategyIcon(s: string): string {
 		return "📈";
 	if (s === "combined")
 		return "🔗";
+	if (s === "northbound")
+		return "🏦";
+	if (s === "trend_momentum")
+		return "📐";
 	if (s === "global")
 		return "⚙️";
 	return "📋";
@@ -226,6 +234,8 @@ export default function SchedulerPage() {
 		"volume_price",
 		"auction",
 		"moving_average",
+		"northbound",
+		"trend_momentum",
 		"combined",
 		"global",
 	];
@@ -237,6 +247,8 @@ export default function SchedulerPage() {
 		volume_price: "📊 量价关系",
 		auction: "⏰ 竞价/尾盘",
 		moving_average: "📈 均线战法",
+		northbound: "🏦 北向资金",
+		trend_momentum: "📐 趋势动量",
 		combined: "🔗 综合战法",
 		global: "⚙️ 全局任务",
 	};

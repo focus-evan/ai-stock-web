@@ -647,3 +647,135 @@ export interface CombinedResponse {
 	data: CombinedData
 	message?: string
 }
+
+// ===================== 北向资金 =====================
+
+/** 北向资金推荐股票 */
+export interface NorthboundStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	total_market_cap: number
+	float_market_cap: number
+	turnover_rate: number
+	in_northbound: boolean
+	hold_value: number
+	hold_ratio: number
+	increase: number
+	main_net_inflow: number
+	super_large_net: number
+	large_net: number
+	is_contrarian: boolean
+	consecutive_days: number
+	is_accelerating: boolean
+	ratio_change_5d: number
+	ratio_change_10d: number
+	hold_ratio_5d: number
+	hold_ratio_10d: number
+	northbound_score: number
+	score_detail: {
+		hold: number
+		increase: number
+		consecutive: number
+		trend: number
+		capital: number
+		market: number
+		contrarian: number
+	}
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 北向资金完整数据 */
+export interface NorthboundData {
+	recommendations: NorthboundStock[]
+	total: number
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+	session_type?: string
+}
+
+/** 北向资金接口响应 */
+export interface NorthboundResponse {
+	status: "success" | "error"
+	data: NorthboundData
+	message?: string
+}
+
+// ===================== 趋势动量 =====================
+
+/** 趋势动量推荐股票 */
+export interface TrendMomentumStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	signal_type: string
+	momentum_5d: number
+	momentum_20d: number
+	momentum_60d: number
+	momentum_deceleration: boolean
+	momentum_exhaustion: boolean
+	rsi_divergence: boolean
+	macd_bar_divergence: boolean
+	exhaustion_warnings: string[]
+	macd_golden: boolean
+	macd_bullish: boolean
+	macd_histogram: number
+	adx: number | null
+	is_20d_high: boolean
+	is_60d_high: boolean
+	ma5: number
+	ma10: number
+	ma20: number
+	ma60: number
+	is_bull_aligned: boolean
+	rsi_14: number | null
+	momentum_score: number
+	score_detail: {
+		momentum: number
+		macd: number
+		adx: number
+		new_high: number
+		ma_form: number
+		tech: number
+		exhaustion_penalty: number
+	}
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 趋势动量完整数据 */
+export interface TrendMomentumData {
+	recommendations: TrendMomentumStock[]
+	total: number
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+	session_type?: string
+}
+
+/** 趋势动量接口响应 */
+export interface TrendMomentumResponse {
+	status: "success" | "error"
+	data: TrendMomentumData
+	message?: string
+}
