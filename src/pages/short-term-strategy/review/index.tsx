@@ -41,41 +41,108 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
+/** 策略配置映射 */
+const STRATEGY_CONFIG: Record<string, {
+	label: string
+	emoji: string
+	tagColor: string
+	gradient: string
+	order: number
+}> = {
+	dragon_head: {
+		label: "龙头战法",
+		emoji: "🐉",
+		tagColor: "magenta",
+		gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+		order: 1,
+	},
+	event_driven: {
+		label: "事件驱动",
+		emoji: "📡",
+		tagColor: "orange",
+		gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+		order: 2,
+	},
+	sentiment: {
+		label: "情绪战法",
+		emoji: "💡",
+		tagColor: "cyan",
+		gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+		order: 3,
+	},
+	breakthrough: {
+		label: "突破战法",
+		emoji: "🚀",
+		tagColor: "volcano",
+		gradient: "linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)",
+		order: 4,
+	},
+	volume_price: {
+		label: "量价关系",
+		emoji: "📊",
+		tagColor: "geekblue",
+		gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+		order: 5,
+	},
+	auction: {
+		label: "竞价/尾盘",
+		emoji: "⏰",
+		tagColor: "purple",
+		gradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+		order: 6,
+	},
+	moving_average: {
+		label: "均线战法",
+		emoji: "📈",
+		tagColor: "green",
+		gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+		order: 7,
+	},
+	combined: {
+		label: "综合战法",
+		emoji: "🎯",
+		tagColor: "gold",
+		gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
+		order: 8,
+	},
+};
+
+const DEFAULT_STRATEGY = {
+	label: "未知战法",
+	emoji: "❓",
+	tagColor: "default" as string,
+	gradient: "linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%)",
+	order: 99,
+};
+
+function getStrategyConfig(type: string) {
+	return STRATEGY_CONFIG[type] || DEFAULT_STRATEGY;
+}
+
 /** 策略名称 */
 function strategyLabel(type: string): string {
-	if (type === "dragon_head")
-		return "龙头战法";
-	if (type === "event_driven")
-		return "事件驱动";
-	return "情绪战法";
+	return getStrategyConfig(type).label;
 }
 
 /** 策略标签颜色 */
 function strategyTagColor(type: string): string {
-	if (type === "dragon_head")
-		return "magenta";
-	if (type === "event_driven")
-		return "orange";
-	return "cyan";
+	return getStrategyConfig(type).tagColor;
 }
 
 /** 策略渐变背景 */
 function strategyGradient(type: string): string {
-	if (type === "dragon_head")
-		return "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)";
-	if (type === "event_driven")
-		return "linear-gradient(135deg, #f6d365 0%, #fda085 100%)";
-	return "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)";
+	return getStrategyConfig(type).gradient;
 }
 
 /** 策略 Emoji */
 function strategyEmoji(type: string): string {
-	if (type === "dragon_head")
-		return "🐉";
-	if (type === "event_driven")
-		return "📡";
-	return "💡";
+	return getStrategyConfig(type).emoji;
 }
+
+/** 策略排序顺序 */
+const STRATEGY_ORDER: Record<string, number> = Object.fromEntries(
+	Object.entries(STRATEGY_CONFIG).map(([key, cfg]) => [key, cfg.order]),
+);
 
 /** 评分颜色 */
 function scoreColor(score: number): string {
@@ -111,13 +178,6 @@ function profitColor(val: number): string {
 		return "#3f8600";
 	return "#8c8c8c";
 }
-
-/** 策略排序顺序 */
-const STRATEGY_ORDER: Record<string, number> = {
-	dragon_head: 1,
-	event_driven: 2,
-	sentiment: 3,
-};
 
 /** 每页显示条数 */
 const PAGE_SIZE = 10;
