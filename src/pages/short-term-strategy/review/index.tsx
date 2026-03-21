@@ -136,7 +136,7 @@ export default function PortfolioReview() {
 		setLoading(true);
 		try {
 			const [reviewsRes, portfoliosRes] = await Promise.all([
-				fetchReviews({ limit: 500 }),
+				fetchReviews({ limit: 100 }),
 				fetchPortfolioList(),
 			]);
 			if (reviewsRes?.data?.reviews) {
