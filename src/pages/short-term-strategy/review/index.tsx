@@ -8,9 +8,13 @@ import {
 import {
 	BookOutlined,
 	BulbOutlined,
+	CalendarOutlined,
 	CheckCircleOutlined,
 	CloseCircleOutlined,
+	DownOutlined,
+	HistoryOutlined,
 	ReloadOutlined,
+	RightOutlined,
 	StarFilled,
 	ThunderboltOutlined,
 	TrophyOutlined,
@@ -23,10 +27,9 @@ import {
 	Empty,
 	List,
 	message,
+	Pagination,
 	Progress,
 	Row,
-	Select,
-	Skeleton,
 	Space,
 	Statistic,
 	Tag,
@@ -34,7 +37,7 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -63,6 +66,15 @@ function strategyGradient(type: string): string {
 	if (type === "event_driven")
 		return "linear-gradient(135deg, #f6d365 0%, #fda085 100%)";
 	return "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)";
+}
+
+/** 策略 Emoji */
+function strategyEmoji(type: string): string {
+	if (type === "dragon_head")
+		return "🐉";
+	if (type === "event_driven")
+		return "📡";
+	return "💡";
 }
 
 /** 评分颜色 */
@@ -100,21 +112,31 @@ function profitColor(val: number): string {
 	return "#8c8c8c";
 }
 
+/** 策略排序顺序 */
+const STRATEGY_ORDER: Record<string, number> = {
+	dragon_head: 1,
+	event_driven: 2,
+	sentiment: 3,
+};
+
+/** 每页显示条数 */
+const PAGE_SIZE = 10;
+
 export default function PortfolioReview() {
 	const [loading, setLoading] = useState(true);
 	const [reviews, setReviews] = useState<ReviewItem[]>([]);
-	const [selectedStrategy, setSelectedStrategy] = useState<string | undefined>(undefined);
 	const [portfolios, setPortfolios] = useState<Array<{ id: number, strategy_type: string, name: string }>>([]);
 	const [triggerLoading, setTriggerLoading] = useState(false);
+	// 每个策略独立分页
+	const [pageMap, setPageMap] = useState<Record<string, number>>({});
+	// 展开的复盘卡片 key
+	const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
 
 	const loadData = useCallback(async () => {
 		setLoading(true);
 		try {
 			const [reviewsRes, portfoliosRes] = await Promise.all([
-				fetchReviews({
-					strategy_type: selectedStrategy,
-					limit: 30,
-				}),
+				fetchReviews({ limit: 500 }),
 				fetchPortfolioList(),
 			]);
 			if (reviewsRes?.data?.reviews) {
@@ -130,11 +152,49 @@ export default function PortfolioReview() {
 		finally {
 			setLoading(false);
 		}
-	}, [selectedStrategy]);
+	}, []);
 
 	useEffect(() => {
 		loadData();
 	}, [loadData]);
+
+	/** 按策略分组 */
+	const groupedReviews = useMemo(() => {
+		const groups: Record<string, ReviewItem[]> = {};
+		for (const review of reviews) {
+			const st = review.strategy_type;
+			if (!groups[st]) {
+				groups[st] = [];
+			}
+			groups[st].push(review);
+		}
+		// 按策略排序
+		const sorted = Object.entries(groups).sort(
+			([a], [b]) => (STRATEGY_ORDER[a] || 99) - (STRATEGY_ORDER[b] || 99),
+		);
+		return sorted;
+	}, [reviews]);
+
+	/** 策略统计信息 */
+	const strategyStats = useMemo(() => {
+		const stats: Record<string, {
+			count: number
+			avgScore: number
+			totalProfit: number
+			latestDate: string
+		}> = {};
+		for (const [type, items] of groupedReviews) {
+			const totalScore = items.reduce((acc, r) => acc + (r.overall_score || 0), 0);
+			const totalProfit = items.reduce((acc, r) => acc + (r.daily_profit || 0), 0);
+			stats[type] = {
+				count: items.length,
+				avgScore: items.length > 0 ? Math.round(totalScore / items.length) : 0,
+				totalProfit: Math.round(totalProfit * 100) / 100,
+				latestDate: items.length > 0 ? items[0].trading_date : "-",
+			};
+		}
+		return stats;
+	}, [groupedReviews]);
 
 	const handleTriggerReview = async (portfolioId: number) => {
 		setTriggerLoading(true);
@@ -149,6 +209,19 @@ export default function PortfolioReview() {
 		finally {
 			setTriggerLoading(false);
 		}
+	};
+
+	const toggleExpand = (key: string) => {
+		setExpandedKeys((prev) => {
+			const next = new Set(prev);
+			if (next.has(key)) {
+				next.delete(key);
+			}
+			else {
+				next.add(key);
+			}
+			return next;
+		});
 	};
 
 	return (
@@ -166,21 +239,9 @@ export default function PortfolioReview() {
 						<BookOutlined style={{ marginRight: 8, color: "#722ed1" }} />
 						每日复盘
 					</Title>
-					<Text type="secondary">GPT-5.2 智能分析交易优劣，每日 16:00 自动生成</Text>
+					<Text type="secondary">GPT-5.2 智能分析交易优劣 · 按战法归类查看所有历史复盘</Text>
 				</div>
 				<Space>
-					<Select
-						placeholder="筛选策略"
-						allowClear
-						value={selectedStrategy}
-						onChange={setSelectedStrategy}
-						style={{ width: 160 }}
-						options={[
-							{ value: "dragon_head", label: "🐉 龙头战法" },
-							{ value: "event_driven", label: "📡 事件驱动" },
-							{ value: "sentiment", label: "💡 情绪战法" },
-						]}
-					/>
 					<Tooltip title="刷新">
 						<Button icon={<ReloadOutlined />} onClick={loadData} loading={loading} />
 					</Tooltip>
@@ -226,84 +287,299 @@ export default function PortfolioReview() {
 				</Card>
 			)}
 
-			{/* 复盘列表 */}
+			{/* 按战法分组的复盘 */}
 			{loading
 				? (
 					<Card>
-						<Skeleton active paragraph={{ rows: 6 }} />
+						<div style={{ padding: 40, textAlign: "center" }}>
+							<ReloadOutlined spin style={{ fontSize: 24, color: "#722ed1" }} />
+							<div style={{ marginTop: 12, color: "#8c8c8c" }}>加载复盘数据中...</div>
+						</div>
 					</Card>
 				)
-				: reviews.length === 0
+				: groupedReviews.length === 0
 					? (
 						<Card>
 							<Empty description="暂无复盘数据，等待 16:00 自动生成或手动触发" />
 						</Card>
 					)
 					: (
-						<div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-							{reviews.map(review => (
-								<ReviewCard key={`${review.portfolio_id}-${review.trading_date}`} review={review} />
-							))}
+						<div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+							{groupedReviews.map(([strategyType, items]) => {
+								const stats = strategyStats[strategyType];
+								const currentPage = pageMap[strategyType] || 1;
+								const pagedItems = items.slice(
+									(currentPage - 1) * PAGE_SIZE,
+									currentPage * PAGE_SIZE,
+								);
+
+								return (
+									<StrategyGroup
+										key={strategyType}
+										strategyType={strategyType}
+										reviews={pagedItems}
+										stats={stats}
+										totalCount={items.length}
+										currentPage={currentPage}
+										onPageChange={(page) => {
+											setPageMap(prev => ({ ...prev, [strategyType]: page }));
+										}}
+										expandedKeys={expandedKeys}
+										onToggleExpand={toggleExpand}
+									/>
+								);
+							})}
 						</div>
 					)}
 		</div>
 	);
 }
 
-/** 单条复盘卡片 */
-function ReviewCard({ review }: { review: ReviewItem }) {
-	const score = review.overall_score || 0;
-
+/** 单个战法分组 */
+function StrategyGroup({
+	strategyType,
+	reviews,
+	stats,
+	totalCount,
+	currentPage,
+	onPageChange,
+	expandedKeys,
+	onToggleExpand,
+}: {
+	strategyType: string
+	reviews: ReviewItem[]
+	stats: { count: number, avgScore: number, totalProfit: number, latestDate: string }
+	totalCount: number
+	currentPage: number
+	onPageChange: (page: number) => void
+	expandedKeys: Set<string>
+	onToggleExpand: (key: string) => void
+}) {
 	return (
 		<Card
-			hoverable
-			style={{ borderRadius: 12, overflow: "hidden" }}
+			style={{
+				borderRadius: 16,
+				overflow: "hidden",
+				boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+			}}
 			styles={{
 				header: {
-					background: strategyGradient(review.strategy_type),
+					background: strategyGradient(strategyType),
 					borderBottom: "none",
-					padding: "16px 24px",
+					padding: "20px 24px",
+				},
+				body: {
+					padding: "16px 24px 20px",
 				},
 			}}
 			title={(
 				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-					<Space>
-						<Tag color={strategyTagColor(review.strategy_type)}>
-							{strategyLabel(review.strategy_type)}
-						</Tag>
-						<Text strong style={{ color: "#fff", fontSize: 16 }}>
-							{review.trading_date}
-						</Text>
+					<Space size="middle">
+						<span style={{ fontSize: 24 }}>{strategyEmoji(strategyType)}</span>
+						<div>
+							<Text strong style={{ color: "#fff", fontSize: 18 }}>
+								{strategyLabel(strategyType)}
+							</Text>
+							<div style={{ marginTop: 2 }}>
+								<Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 12 }}>
+									<HistoryOutlined style={{ marginRight: 4 }} />
+									共
+									{" "}
+									{stats.count}
+									{" "}
+									次复盘 · 最新
+									{" "}
+									{stats.latestDate}
+								</Text>
+							</div>
+						</div>
 					</Space>
-					<Space>
+					<Space size="large">
 						<div style={{
-							background: "rgba(255,255,255,0.2)",
-							borderRadius: 8,
-							padding: "4px 12px",
-							display: "flex",
-							alignItems: "center",
-							gap: 6,
+							background: "rgba(255,255,255,0.15)",
+							borderRadius: 10,
+							padding: "8px 16px",
+							textAlign: "center",
 						}}
 						>
-							<StarFilled style={{ color: "#ffd700" }} />
-							<Text strong style={{ color: "#fff", fontSize: 18 }}>
-								{score}
-							</Text>
-							<Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 12 }}>
-								/ 100
-							</Text>
+							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>平均评分</div>
+							<div style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
+								<StarFilled style={{ color: "#ffd700", marginRight: 4, fontSize: 14 }} />
+								{stats.avgScore}
+							</div>
+						</div>
+						<div style={{
+							background: "rgba(255,255,255,0.15)",
+							borderRadius: 10,
+							padding: "8px 16px",
+							textAlign: "center",
+						}}
+						>
+							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>累计收益</div>
+							<div style={{
+								color: stats.totalProfit >= 0 ? "#ffe58f" : "#ffccc7",
+								fontSize: 20,
+								fontWeight: 700,
+								lineHeight: 1.2,
+							}}
+							>
+								¥
+								{stats.totalProfit.toLocaleString()}
+							</div>
 						</div>
 					</Space>
 				</div>
 			)}
 		>
+			{/* 复盘时间线 */}
+			<div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+				{reviews.map((review) => {
+					const key = `${review.portfolio_id}-${review.trading_date}`;
+					const isExpanded = expandedKeys.has(key);
+					return (
+						<ReviewRow
+							key={key}
+							review={review}
+							isExpanded={isExpanded}
+							onToggle={() => onToggleExpand(key)}
+						/>
+					);
+				})}
+			</div>
+
+			{/* 分页 */}
+			{totalCount > PAGE_SIZE && (
+				<div style={{ textAlign: "center", marginTop: 16 }}>
+					<Pagination
+						current={currentPage}
+						total={totalCount}
+						pageSize={PAGE_SIZE}
+						onChange={onPageChange}
+						showSizeChanger={false}
+						showTotal={total => `共 ${total} 条复盘`}
+						size="small"
+					/>
+				</div>
+			)}
+		</Card>
+	);
+}
+
+/** 单条复盘行（可展开） */
+function ReviewRow({
+	review,
+	isExpanded,
+	onToggle,
+}: {
+	review: ReviewItem
+	isExpanded: boolean
+	onToggle: () => void
+}) {
+	const score = review.overall_score || 0;
+
+	return (
+		<div
+			style={{
+				border: "1px solid #f0f0f0",
+				borderRadius: 10,
+				overflow: "hidden",
+				transition: "box-shadow 0.2s",
+				boxShadow: isExpanded ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
+			}}
+		>
+			{/* 摘要行（可点击展开） */}
+			<div
+				onClick={onToggle}
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between",
+					padding: "12px 16px",
+					cursor: "pointer",
+					background: isExpanded ? "#fafafa" : "#fff",
+					transition: "background 0.2s",
+				}}
+			>
+				<Space size="middle">
+					{isExpanded
+						? <DownOutlined style={{ color: "#722ed1", fontSize: 12 }} />
+						: <RightOutlined style={{ color: "#bfbfbf", fontSize: 12 }} />}
+					<Space>
+						<CalendarOutlined style={{ color: "#8c8c8c" }} />
+						<Text strong>{review.trading_date}</Text>
+					</Space>
+					<Tag
+						color={score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
+						style={{ borderRadius: 12, minWidth: 70, textAlign: "center" }}
+					>
+						<StarFilled style={{ marginRight: 2 }} />
+						{' '}
+						{score}
+						分 ·
+						{' '}
+						{scoreLevel(score)}
+					</Tag>
+				</Space>
+				<Space size="large">
+					<Tooltip title={`买入 ${review.buy_count} 笔 / 卖出 ${review.sell_count} 笔`}>
+						<Text type="secondary" style={{ fontSize: 13 }}>
+							{review.trade_count}
+							{' '}
+							笔交易
+						</Text>
+					</Tooltip>
+					<Text
+						strong
+						style={{
+							color: profitColor(review.daily_profit),
+							fontSize: 14,
+							minWidth: 80,
+							textAlign: "right",
+						}}
+					>
+						{review.daily_profit >= 0 ? "+" : ""}
+						¥
+						{review.daily_profit.toFixed(2)}
+					</Text>
+					<Text
+						type="secondary"
+						style={{
+							fontSize: 12,
+							minWidth: 60,
+							textAlign: "right",
+							color: profitColor(review.daily_profit_pct),
+						}}
+					>
+						{review.daily_profit_pct >= 0 ? "+" : ""}
+						{review.daily_profit_pct.toFixed(2)}
+						%
+					</Text>
+				</Space>
+			</div>
+
+			{/* 展开详情 */}
+			{isExpanded && (
+				<div style={{ padding: "0 16px 16px", background: "#fafafa" }}>
+					<ReviewDetail review={review} />
+				</div>
+			)}
+		</div>
+	);
+}
+
+/** 复盘详情（展开后的内容） */
+function ReviewDetail({ review }: { review: ReviewItem }) {
+	const score = review.overall_score || 0;
+
+	return (
+		<div>
 			{/* 概况统计 */}
-			<Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
+			<Row gutter={[16, 16]} style={{ marginBottom: 16, marginTop: 8 }}>
 				<Col xs={6}>
 					<Statistic
 						title="综合评级"
 						value={scoreLevel(score)}
-						valueStyle={{ color: scoreColor(score), fontSize: 20, fontWeight: 700 }}
+						valueStyle={{ color: scoreColor(score), fontSize: 18, fontWeight: 700 }}
 						prefix={<TrophyOutlined />}
 					/>
 					<Progress
@@ -320,7 +596,7 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 						value={review.daily_profit}
 						precision={2}
 						prefix="¥"
-						valueStyle={{ color: profitColor(review.daily_profit), fontSize: 18 }}
+						valueStyle={{ color: profitColor(review.daily_profit), fontSize: 16 }}
 					/>
 					<Text type="secondary" style={{ fontSize: 12 }}>
 						(
@@ -330,20 +606,20 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 					</Text>
 				</Col>
 				<Col xs={4}>
-					<Statistic title="交易笔数" value={review.trade_count} valueStyle={{ fontSize: 18 }} />
+					<Statistic title="交易笔数" value={review.trade_count} valueStyle={{ fontSize: 16 }} />
 				</Col>
 				<Col xs={4}>
 					<Statistic
 						title="买入"
 						value={review.buy_count}
-						valueStyle={{ color: "#cf1322", fontSize: 18 }}
+						valueStyle={{ color: "#cf1322", fontSize: 16 }}
 					/>
 				</Col>
 				<Col xs={4}>
 					<Statistic
 						title="卖出"
 						value={review.sell_count}
-						valueStyle={{ color: "#3f8600", fontSize: 18 }}
+						valueStyle={{ color: "#3f8600", fontSize: 16 }}
 					/>
 				</Col>
 			</Row>
@@ -352,9 +628,9 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 			<Card
 				size="small"
 				style={{
-					background: "#fafafa",
+					background: "#fff",
 					borderRadius: 8,
-					marginBottom: 16,
+					marginBottom: 12,
 					borderLeft: `4px solid ${scoreColor(score)}`,
 				}}
 			>
@@ -363,7 +639,7 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 				</Paragraph>
 			</Card>
 
-			<Row gutter={[16, 16]}>
+			<Row gutter={[12, 12]}>
 				{/* 操作亮点 */}
 				<Col xs={24} md={12}>
 					<Card
@@ -374,17 +650,17 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 								<span>操作亮点</span>
 							</Space>
 						)}
-						style={{ borderRadius: 8, height: "100%" }}
-						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 40 } }}
+						style={{ borderRadius: 8, height: "100%", background: "#fff" }}
+						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 36, padding: "0 12px" } }}
 					>
 						<List
 							size="small"
 							dataSource={review.highlights || []}
 							renderItem={item => (
-								<List.Item style={{ padding: "6px 0", border: "none" }}>
+								<List.Item style={{ padding: "4px 0", border: "none" }}>
 									<Space>
 										<Tag color="success" style={{ borderRadius: 12 }}>✓</Tag>
-										<Text>{item}</Text>
+										<Text style={{ fontSize: 13 }}>{item}</Text>
 									</Space>
 								</List.Item>
 							)}
@@ -402,17 +678,17 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 								<span>操作不足</span>
 							</Space>
 						)}
-						style={{ borderRadius: 8, height: "100%" }}
-						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 40 } }}
+						style={{ borderRadius: 8, height: "100%", background: "#fff" }}
+						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 36, padding: "0 12px" } }}
 					>
 						<List
 							size="small"
 							dataSource={review.shortcomings || []}
 							renderItem={item => (
-								<List.Item style={{ padding: "6px 0", border: "none" }}>
+								<List.Item style={{ padding: "4px 0", border: "none" }}>
 									<Space>
 										<Tag color="error" style={{ borderRadius: 12 }}>✗</Tag>
-										<Text>{item}</Text>
+										<Text style={{ fontSize: 13 }}>{item}</Text>
 									</Space>
 								</List.Item>
 							)}
@@ -430,8 +706,8 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 								<span>经验教训</span>
 							</Space>
 						)}
-						style={{ borderRadius: 8, height: "100%" }}
-						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 40 } }}
+						style={{ borderRadius: 8, height: "100%", background: "#fff" }}
+						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 36, padding: "0 12px" } }}
 					>
 						<Timeline
 							items={(review.lessons || []).map(item => ({
@@ -452,8 +728,8 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 								<span>改进建议</span>
 							</Space>
 						)}
-						style={{ borderRadius: 8, height: "100%" }}
-						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 40 } }}
+						style={{ borderRadius: 8, height: "100%", background: "#fff" }}
+						styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 36, padding: "0 12px" } }}
 					>
 						<Timeline
 							items={(review.suggestions || []).map(item => ({
@@ -470,14 +746,14 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 				<Card
 					size="small"
 					title="持仓逐一分析"
-					style={{ borderRadius: 8, marginTop: 16 }}
-					styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 40 } }}
+					style={{ borderRadius: 8, marginTop: 12, background: "#fff" }}
+					styles={{ header: { borderBottom: "1px solid #f0f0f0", minHeight: 36, padding: "0 12px" } }}
 				>
 					{review.position_analysis.map(pa => (
 						<div
 							key={pa.stock_code}
 							style={{
-								padding: "10px 0",
+								padding: "8px 0",
 								borderBottom: "1px dashed #f0f0f0",
 							}}
 						>
@@ -519,6 +795,6 @@ function ReviewCard({ review }: { review: ReviewItem }) {
 					</Space>
 				</Card>
 			)}
-		</Card>
+		</div>
 	);
 }
