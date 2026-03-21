@@ -125,7 +125,7 @@ function strategyLabel(type: string): string {
 }
 
 /** 策略标签颜色 */
-function strategyTagColor(type: string): string {
+function _strategyTagColor(type: string): string {
 	return getStrategyConfig(type).tagColor;
 }
 
@@ -170,12 +170,12 @@ function scoreLevel(score: number): string {
 	return "需加强";
 }
 
-/** 盈亏颜色 */
+/** 盈亏颜色（优化对比度） */
 function profitColor(val: number): string {
 	if (val > 0)
-		return "#cf1322";
+		return "#ff4d4f";
 	if (val < 0)
-		return "#3f8600";
+		return "#52c41a";
 	return "#8c8c8c";
 }
 
@@ -190,7 +190,7 @@ export default function PortfolioReview() {
 	// 每个策略独立分页
 	const [pageMap, setPageMap] = useState<Record<string, number>>({});
 	// 展开的复盘卡片 key
-	const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set());
+	const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => new Set());
 
 	const loadData = useCallback(async () => {
 		setLoading(true);
@@ -477,12 +477,14 @@ function StrategyGroup({
 						>
 							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>累计收益</div>
 							<div style={{
-								color: stats.totalProfit >= 0 ? "#ffe58f" : "#ffccc7",
+								color: "#fff",
 								fontSize: 20,
 								fontWeight: 700,
 								lineHeight: 1.2,
+								textShadow: "0 1px 3px rgba(0,0,0,0.2)",
 							}}
 							>
+								{stats.totalProfit >= 0 ? "+" : ""}
 								¥
 								{stats.totalProfit.toLocaleString()}
 							</div>
@@ -573,10 +575,10 @@ function ReviewRow({
 						style={{ borderRadius: 12, minWidth: 70, textAlign: "center" }}
 					>
 						<StarFilled style={{ marginRight: 2 }} />
-						{' '}
+						{" "}
 						{score}
 						分 ·
-						{' '}
+						{" "}
 						{scoreLevel(score)}
 					</Tag>
 				</Space>
@@ -584,7 +586,7 @@ function ReviewRow({
 					<Tooltip title={`买入 ${review.buy_count} 笔 / 卖出 ${review.sell_count} 笔`}>
 						<Text type="secondary" style={{ fontSize: 13 }}>
 							{review.trade_count}
-							{' '}
+							{" "}
 							笔交易
 						</Text>
 					</Tooltip>
@@ -602,12 +604,12 @@ function ReviewRow({
 						{review.daily_profit.toFixed(2)}
 					</Text>
 					<Text
-						type="secondary"
 						style={{
 							fontSize: 12,
 							minWidth: 60,
 							textAlign: "right",
 							color: profitColor(review.daily_profit_pct),
+							fontWeight: 600,
 						}}
 					>
 						{review.daily_profit_pct >= 0 ? "+" : ""}
@@ -658,7 +660,7 @@ function ReviewDetail({ review }: { review: ReviewItem }) {
 						prefix="¥"
 						valueStyle={{ color: profitColor(review.daily_profit), fontSize: 16 }}
 					/>
-					<Text type="secondary" style={{ fontSize: 12 }}>
+					<Text style={{ fontSize: 12, color: profitColor(review.daily_profit_pct), fontWeight: 600 }}>
 						(
 						{review.daily_profit_pct >= 0 ? "+" : ""}
 						{review.daily_profit_pct.toFixed(2)}
@@ -672,14 +674,14 @@ function ReviewDetail({ review }: { review: ReviewItem }) {
 					<Statistic
 						title="买入"
 						value={review.buy_count}
-						valueStyle={{ color: "#cf1322", fontSize: 16 }}
+						valueStyle={{ color: "#ff4d4f", fontSize: 16 }}
 					/>
 				</Col>
 				<Col xs={4}>
 					<Statistic
 						title="卖出"
 						value={review.sell_count}
-						valueStyle={{ color: "#3f8600", fontSize: 16 }}
+						valueStyle={{ color: "#52c41a", fontSize: 16 }}
 					/>
 				</Col>
 			</Row>

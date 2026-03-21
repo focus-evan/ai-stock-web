@@ -42,6 +42,7 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	volume_price: { label: "量价关系", icon: "📊", color: "#13c2c2", gradient: "linear-gradient(135deg, #13c2c2 0%, #36cfc9 100%)" },
 	auction: { label: "竞价/尾盘", icon: "⏰", color: "#52c41a", gradient: "linear-gradient(135deg, #52c41a 0%, #95de64 100%)" },
 	moving_average: { label: "均线战法", icon: "📈", color: "#f5222d", gradient: "linear-gradient(135deg, #f5222d 0%, #ff7875 100%)" },
+	combined: { label: "综合战法", icon: "🎯", color: "#d4a017", gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)" },
 };
 
 function formatMoney(v: number): string {
