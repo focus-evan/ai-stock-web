@@ -382,7 +382,7 @@ export default function MoatValuePage() {
 								onClick={doRefresh}
 								type="primary"
 							>
-								刷新
+								刷新推荐
 							</Button>
 						</Row>
 						{/* 估值分布标签 */}
@@ -412,18 +412,56 @@ export default function MoatValuePage() {
 				/>
 			)}
 
+			{/* 无数据时显示醒目的刷新引导 */}
+			{!loading && recommendations.length === 0 && (
+				<Card style={{ textAlign: "center", padding: "60px 0", marginBottom: 16 }}>
+					<CrownOutlined style={{ fontSize: 64, color: "#d9d9d9", marginBottom: 16 }} />
+					<div style={{ fontSize: 18, color: "#8c8c8c", marginBottom: 8 }}>
+						暂无护城河价值推荐数据
+					</div>
+					<div style={{ fontSize: 14, color: "#bfbfbf", marginBottom: 24 }}>
+						点击下方按钮，系统将从 A股+港股 中筛选13只护城河优质标的
+					</div>
+					<Button
+						icon={<ReloadOutlined />}
+						loading={refreshing}
+						onClick={doRefresh}
+						size="large"
+						type="primary"
+					>
+						🏰 立即刷新推荐（约1-2分钟）
+					</Button>
+				</Card>
+			)}
+
 			{/* 推荐表格 */}
-			<Card bodyStyle={{ padding: 0 }} title="🏰 护城河优选">
-				<Table
-					columns={columns}
-					dataSource={recommendations}
-					loading={loading}
-					pagination={false}
-					rowKey="code"
-					scroll={{ x: 1400 }}
-					size="small"
-				/>
-			</Card>
+			{(recommendations.length > 0 || loading) && (
+				<Card
+					bodyStyle={{ padding: 0 }}
+					extra={(
+						<Button
+							icon={<ReloadOutlined />}
+							loading={refreshing}
+							onClick={doRefresh}
+							size="small"
+							type="link"
+						>
+							刷新推荐
+						</Button>
+					)}
+					title="🏰 护城河优选"
+				>
+					<Table
+						columns={columns}
+						dataSource={recommendations}
+						loading={loading}
+						pagination={false}
+						rowKey="code"
+						scroll={{ x: 1400 }}
+						size="small"
+					/>
+				</Card>
+			)}
 		</BasicContent>
 	);
 }
