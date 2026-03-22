@@ -779,3 +779,67 @@ export interface TrendMomentumResponse {
 	data: TrendMomentumData
 	message?: string
 }
+
+// ===================== 护城河价值 =====================
+
+/** 市场周期信息 */
+export interface MoatValueCycleInfo {
+	index_name: string
+	index_pe: number
+	index_pb: number
+	pe_percentile: number
+	pb_percentile: number
+	cycle_phase: string
+	dca_signal: string
+	dca_multiplier: number
+}
+
+/** 护城河价值推荐股票 */
+export interface MoatValueStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	total_market_cap: number
+	pe_ttm: number
+	pb: number
+	ps_ttm: number
+	dv_ttm: number
+	pe_percentile: number
+	pb_percentile: number
+	pe_pb_product: number
+	valuation_status: string
+	moat_score: number
+	score_detail: {
+		moat: number
+		valuation: number
+		cashflow: number
+		cycle: number
+		dca: number
+	}
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 护城河价值完整数据 */
+export interface MoatValueData {
+	recommendations: MoatValueStock[]
+	total: number
+	cycle_info: MoatValueCycleInfo
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+	session_type?: string
+}
+
+/** 护城河价值接口响应 */
+export interface MoatValueResponse {
+	status: "success" | "error"
+	data: MoatValueData
+	message?: string
+}

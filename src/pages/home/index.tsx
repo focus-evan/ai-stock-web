@@ -45,6 +45,7 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	northbound: { label: "北向资金", icon: "🏦", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)" },
 	trend_momentum: { label: "趋势动量", icon: "📐", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ffc53d 100%)" },
 	combined: { label: "综合战法", icon: "🎯", color: "#d4a017", gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)" },
+	moat_value: { label: "护城河优选", icon: "🏰", color: "#2f54eb", gradient: "linear-gradient(135deg, #2f54eb 0%, #597ef7 100%)" },
 };
 
 function formatMoney(v: number): string {

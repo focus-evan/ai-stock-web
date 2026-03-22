@@ -47,14 +47,25 @@ export async function generateRoutesFromBackend(backendRoutes: Array<AppRouteRec
 	 */
 	const loadRouteComponent = async (route: AppRouteRecordRaw, componentPath: string) => {
 		const modulePath = componentPath;
-		const moduleIndex = pageModulePaths.findIndex(path => path === modulePath);
+		let moduleIndex = pageModulePaths.findIndex(path => path === modulePath);
+
+		// 如果精确匹配失败，尝试不同的路径格式
+		if (moduleIndex === -1) {
+			// 尝试移除 /index.tsx 后缀匹配
+			const basePath = modulePath.replace(/\/index\.tsx$/, "");
+			moduleIndex = pageModulePaths.findIndex(path =>
+				path === `${basePath}/index.tsx`
+				|| path === `${basePath}.tsx`
+				|| path === basePath,
+			);
+		}
 
 		if (moduleIndex !== -1) {
 			const lazyComponent = pageModules[pageModulePaths[moduleIndex]];
 			route.Component = lazy(lazyComponent as any);
 		}
 		else {
-			console.warn(`[Frontend component not found]: ${componentPath}`);
+			console.warn(`[Frontend component not found]: ${componentPath}`, "Available paths sample:", pageModulePaths.slice(0, 5));
 			route.Component = ExceptionUnknownComponent;
 		}
 	};

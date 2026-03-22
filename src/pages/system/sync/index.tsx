@@ -66,6 +66,8 @@ function strategyColor(s: string): string {
 		return "#9254de";
 	if (s === "trend_momentum")
 		return "#fa541c";
+	if (s === "moat_value")
+		return "#2f54eb";
 	if (s === "global")
 		return "#8c8c8c";
 	return "#595959";
@@ -93,6 +95,8 @@ function strategyIcon(s: string): string {
 		return "🏦";
 	if (s === "trend_momentum")
 		return "📐";
+	if (s === "moat_value")
+		return "🏰";
 	if (s === "global")
 		return "⚙️";
 	return "📋";

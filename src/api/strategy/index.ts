@@ -4,6 +4,7 @@ import type {
 	CombinedResponse,
 	DragonHeadResponse,
 	EventDrivenResponse,
+	MoatValueResponse,
 	MovingAverageResponse,
 	NorthboundResponse,
 	SentimentResponse,
@@ -306,4 +307,32 @@ export function refreshTrendMomentumRecommendations(limit: number = 13) {
 			timeout: 300000,
 		})
 		.json<TrendMomentumResponse>();
+}
+
+// ===================== 护城河价值 =====================
+
+/**
+ * 获取护城河价值推荐列表
+ * @param limit - 返回推荐数量，默认13
+ */
+export function fetchMoatValueRecommendations(limit: number = 13) {
+	return request
+		.get("strategy/moat-value", {
+			searchParams: { limit },
+			timeout: 120000,
+		})
+		.json<MoatValueResponse>();
+}
+
+/**
+ * 手动刷新护城河价值推荐（绕过缓存）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshMoatValueRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/moat-value/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<MoatValueResponse>();
 }

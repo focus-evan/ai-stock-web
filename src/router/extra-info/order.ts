@@ -7,6 +7,7 @@
 export const home = 1;
 export const aiAssistant = 3;
 export const shortTermStrategy = 4;
+export const valueInvesting = 4.5;
 export const ipo = 5;
 export const stockData = 6;
 
