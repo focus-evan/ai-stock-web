@@ -2,6 +2,7 @@ import type { SentimentData, SentimentSnapshot, StockPickDetail } from "#src/api
 
 import { fetchSentimentData, refreshSentimentRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	AlertOutlined,
 	ArrowDownOutlined,
@@ -38,6 +39,7 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -186,6 +188,9 @@ function MiniBarChart({ data, dataKey, color, height = 80 }: {
 					</Tooltip>
 				);
 			})}
+
+			<RecommendationHistory strategyType="sentiment" />
+
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import type { EventDrivenData, EventStockRecommendation } from "#src/api/strateg
 import type { ColumnsType } from "antd/es/table";
 import { fetchEventDrivenRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	AlertOutlined,
 	BulbOutlined,
@@ -913,6 +914,8 @@ export default function EventDriven() {
 					</div>
 				</Card>
 			</div>
+
+			<RecommendationHistory strategyType="event_driven" />
 
 			{/* Custom styles */}
 			<style>

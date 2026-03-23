@@ -1,6 +1,7 @@
 import type { CombinedData, CombinedStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchCombinedRecommendations, refreshCombinedRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -29,6 +30,7 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
@@ -839,6 +841,9 @@ const CombinedPage: React.FC = () => {
 				}
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="combined" />
+
 		</div>
 	);
 };

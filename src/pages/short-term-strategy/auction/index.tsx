@@ -1,8 +1,10 @@
 import type { AuctionData, AuctionStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchAuctionRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import { ClockCircleOutlined, FieldTimeOutlined, ReloadOutlined, SunOutlined } from "@ant-design/icons";
 import { Alert, Badge, Card, Col, Empty, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -385,6 +387,9 @@ const AuctionPage: React.FC = () => {
 				.row-highlight-orange:hover > td { background-color: #ffe7ba !important; }
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="auction" />
+
 		</div>
 	);
 };

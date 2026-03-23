@@ -1,8 +1,10 @@
 import type { TrendMomentumData, TrendMomentumStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchTrendMomentumRecommendations, refreshTrendMomentumRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import { ArrowUpOutlined, ReloadOutlined, RiseOutlined, StockOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -472,6 +474,9 @@ const TrendMomentumPage: React.FC = () => {
 				}
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="trend_momentum" />
+
 		</div>
 	);
 };

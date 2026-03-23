@@ -1,8 +1,10 @@
 import type { MovingAverageData, MovingAverageStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchMovingAverageRecommendations, refreshMovingAverageRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import { CheckCircleOutlined, LineChartOutlined, ReloadOutlined, SwapOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -437,6 +439,9 @@ const MovingAveragePage: React.FC = () => {
 				.row-highlight-orange:hover > td { background-color: #ffe7ba !important; }
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="moving_average" />
+
 		</div>
 	);
 };

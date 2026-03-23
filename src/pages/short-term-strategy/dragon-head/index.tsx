@@ -3,6 +3,7 @@ import type { DragonHeadData, StockRecommendation } from "#src/api/strategy";
 import type { ColumnsType } from "antd/es/table";
 import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	ClockCircleOutlined,
 	CrownOutlined,
@@ -760,6 +761,8 @@ export default function DragonHead() {
 					</div>
 				</Card>
 			</div>
+
+			<RecommendationHistory strategyType="dragon_head" />
 
 			{/* Custom styles */}
 			<style>

@@ -1,8 +1,10 @@
 import type { VolumePriceData, VolumePriceStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchVolumePriceRecommendations, refreshVolumePriceRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import { BarChartOutlined, FireOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -420,6 +422,9 @@ const VolumePricePage: React.FC = () => {
 				.row-highlight-orange:hover > td { background-color: #ffe7ba !important; }
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="volume_price" />
+
 		</div>
 	);
 };

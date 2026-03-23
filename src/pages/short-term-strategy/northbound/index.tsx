@@ -1,8 +1,10 @@
 import type { NorthboundData, NorthboundStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchNorthboundRecommendations, refreshNorthboundRecommendations } from "#src/api/strategy";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import { BankOutlined, DollarOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -458,6 +460,9 @@ const NorthboundPage: React.FC = () => {
 				}
 			`}
 			</style>
+
+			<RecommendationHistory strategyType="northbound" />
+
 		</div>
 	);
 };

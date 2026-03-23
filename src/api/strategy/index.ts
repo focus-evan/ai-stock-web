@@ -336,3 +336,46 @@ export function refreshMoatValueRecommendations(limit: number = 13) {
 		})
 		.json<MoatValueResponse>();
 }
+
+// ===================== 推荐历史 =====================
+
+export interface RecommendationHistoryItem {
+	id: number
+	strategy_type: string
+	trading_date: string
+	session_type: string
+	stock_count: number
+	generated_at: string
+	recommendations?: any[]
+}
+
+export interface RecommendationHistoryResponse {
+	status: string
+	data: {
+		items: RecommendationHistoryItem[]
+		total: number
+	}
+}
+
+/**
+ * 获取策略推荐历史
+ * @param strategyType - 策略类型过滤（可选）
+ * @param limit - 返回条数，默认30
+ * @param includeDetail - 是否包含推荐明细，默认true
+ */
+export function fetchRecommendationHistory(
+	strategyType?: string,
+	limit: number = 30,
+	includeDetail: boolean = true,
+) {
+	const searchParams: Record<string, any> = { limit, include_detail: includeDetail };
+	if (strategyType) {
+		searchParams.strategy_type = strategyType;
+	}
+	return request
+		.get("strategy/recommendation-history", {
+			searchParams,
+			timeout: 15000,
+		})
+		.json<RecommendationHistoryResponse>();
+}
