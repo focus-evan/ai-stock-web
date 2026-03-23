@@ -278,17 +278,7 @@ const NorthboundPage: React.FC = () => {
 		);
 	}
 
-	if (!data || data.recommendations.length === 0) {
-		return (
-			<div style={{ padding: 24 }}>
-				<Card>
-					<Empty description="暂无北向资金信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-						<Text type="secondary">当前暂无符合条件的北向资金推荐股，请在交易时间段内查看</Text>
-					</Empty>
-				</Card>
-			</div>
-		);
-	}
+	const isEmpty = !data || data.recommendations.length === 0;
 
 	return (
 		<div style={{ padding: 24 }}>
@@ -331,7 +321,7 @@ const NorthboundPage: React.FC = () => {
 							<Col>
 								<Statistic
 									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
-									value={data.total}
+									value={data?.total ?? 0}
 									valueStyle={{ color: "#fff", fontWeight: "bold" }}
 									suffix="只"
 								/>
@@ -339,11 +329,11 @@ const NorthboundPage: React.FC = () => {
 							<Col>
 								<Statistic
 									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
-									value={data.llm_enhanced ? "已增强" : "基础"}
-									valueStyle={{ color: data.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
+									value={data?.llm_enhanced ? "已增强" : "基础"}
+									valueStyle={{ color: data?.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
 								/>
 							</Col>
-							{data.generated_at && (
+							{data?.generated_at && (
 								<Col>
 									<div>
 										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
@@ -356,87 +346,101 @@ const NorthboundPage: React.FC = () => {
 				</Row>
 			</Card>
 
-			{data.signal_summary && (
-				<Card
-					size="small"
-					bordered={false}
-					style={{ marginBottom: 16, borderRadius: 8 }}
-				>
-					<Space wrap>
-						<Text strong>资金信号分布：</Text>
-						<Tag color="purple">
-							🏦 北向持仓:
-							{data.signal_summary.northbound_total || 0}
-							只
-						</Tag>
-						<Tag color="red">
-							🔥 逆势加仓:
-							{data.signal_summary.contrarian_count || 0}
-							只
-						</Tag>
-						<Tag color="volcano">
-							📈 连续增持:
-							{(data.signal_summary as any).consecutive_count || 0}
-							只
-						</Tag>
-						<Tag color="magenta">
-							⚡ 增持加速:
-							{(data.signal_summary as any).accelerating_count || 0}
-							只
-						</Tag>
-					</Space>
-				</Card>
-			)}
+			{isEmpty
+				? (
+					<Card bordered={false} style={{ borderRadius: 12 }}>
+						<Empty description="暂无北向资金信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
+							<Text type="secondary">当前暂无符合条件的北向资金推荐股，点击上方「刷新推荐」手动触发分析</Text>
+						</Empty>
+					</Card>
+				)
+				: (
+					<>
 
-			<Card
-				bordered={false}
-				style={{ borderRadius: 12 }}
-				title={(
-					<Space>
-						<DollarOutlined style={{ color: "#722ed1" }} />
-						<Text strong>北向资金关注股</Text>
-						<Tag color="purple">
-							{data.recommendations.length}
-							只
-						</Tag>
-					</Space>
-				)}
-				extra={(
-					<a onClick={fetchData}>
-						<ReloadOutlined />
-						{" "}
-						刷新
-					</a>
-				)}
-			>
-				<Table
-					columns={columns}
-					dataSource={data.recommendations}
-					rowKey="code"
-					pagination={false}
-					size="small"
-					scroll={{ x: 1200 }}
-					rowClassName={(record) => {
-						if (record.recommendation_level === "强烈推荐")
-							return "row-highlight-red";
-						if (record.recommendation_level === "推荐")
-							return "row-highlight-orange";
-						return "";
-					}}
-				/>
-			</Card>
+						{data!.signal_summary && (
+							<Card
+								size="small"
+								bordered={false}
+								style={{ marginBottom: 16, borderRadius: 8 }}
+							>
+								<Space wrap>
+									<Text strong>资金信号分布：</Text>
+									<Tag color="purple">
+										🏦 北向持仓:
+										{data!.signal_summary.northbound_total || 0}
+										只
+									</Tag>
+									<Tag color="red">
+										🔥 逆势加仓:
+										{data!.signal_summary.contrarian_count || 0}
+										只
+									</Tag>
+									<Tag color="volcano">
+										📈 连续增持:
+										{(data!.signal_summary as any).consecutive_count || 0}
+										只
+									</Tag>
+									<Tag color="magenta">
+										⚡ 增持加速:
+										{(data!.signal_summary as any).accelerating_count || 0}
+										只
+									</Tag>
+								</Space>
+							</Card>
+						)}
 
-			{data.strategy_report && (
-				<Card
-					bordered={false}
-					style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
-					title="📊 策略分析报告"
-				>
-					<Paragraph style={{ whiteSpace: "pre-wrap" }}>
-						{data.strategy_report}
-					</Paragraph>
-				</Card>
-			)}
+						<Card
+							bordered={false}
+							style={{ borderRadius: 12 }}
+							title={(
+								<Space>
+									<DollarOutlined style={{ color: "#722ed1" }} />
+									<Text strong>北向资金关注股</Text>
+									<Tag color="purple">
+										{data!.recommendations.length}
+										只
+									</Tag>
+								</Space>
+							)}
+							extra={(
+								<a onClick={fetchData}>
+									<ReloadOutlined />
+									{" "}
+									刷新
+								</a>
+							)}
+						>
+							<Table
+								columns={columns}
+								dataSource={data!.recommendations}
+								rowKey="code"
+								pagination={false}
+								size="small"
+								scroll={{ x: 1200 }}
+								rowClassName={(record) => {
+									if (record.recommendation_level === "强烈推荐")
+										return "row-highlight-red";
+									if (record.recommendation_level === "推荐")
+										return "row-highlight-orange";
+									return "";
+								}}
+							/>
+						</Card>
+
+						{data!.strategy_report && (
+							<Card
+								bordered={false}
+								style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
+								title="📊 策略分析报告"
+							>
+								<Paragraph style={{ whiteSpace: "pre-wrap" }}>
+									{data!.strategy_report}
+								</Paragraph>
+							</Card>
+						)}
+
+					</>
+				)}
 
 			<style>
 				{`
