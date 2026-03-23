@@ -188,9 +188,6 @@ function MiniBarChart({ data, dataKey, color, height = 80 }: {
 					</Tooltip>
 				);
 			})}
-
-			<RecommendationHistory strategyType="sentiment" />
-
 		</div>
 	);
 }
@@ -1154,6 +1151,8 @@ export default function SentimentPage() {
 						</>
 					)
 					: null}
+
+			<RecommendationHistory strategyType="sentiment" />
 
 			<style>
 				{`
