@@ -105,6 +105,20 @@ const STRATEGY_CONFIG: Record<string, {
 		gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
 		order: 8,
 	},
+	trend_momentum: {
+		label: "趋势动量",
+		emoji: "🔥",
+		tagColor: "red",
+		gradient: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
+		order: 9,
+	},
+	northbound: {
+		label: "北向资金",
+		emoji: "🧭",
+		tagColor: "blue",
+		gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
+		order: 10,
+	},
 };
 
 const DEFAULT_STRATEGY = {
