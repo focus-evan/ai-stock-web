@@ -386,7 +386,7 @@ export interface FollowUpRequest {
 	stock_code: string
 	stock_name?: string
 	shares: number
-	buy_amount: number
+	buy_price: number // 买入时的个股股价（元/股）
 	buy_date?: string
 	original_advice?: string
 	original_buy_price?: number
@@ -413,8 +413,9 @@ export interface FollowUpAnalysis {
 }
 
 export interface FollowUpPnlInfo {
-	buy_price_avg: number
+	buy_price_per_share: number
 	current_price: number
+	change_pct: number
 	shares: number
 	buy_amount: number
 	current_value: number
@@ -425,6 +426,7 @@ export interface FollowUpPnlInfo {
 export interface FollowUpResponse {
 	status: string
 	data: {
+		record_id?: number
 		stock_code: string
 		stock_name: string
 		pnl_info: FollowUpPnlInfo
@@ -433,9 +435,37 @@ export interface FollowUpResponse {
 	}
 }
 
+export interface FollowUpHistoryRecord {
+	id: number
+	stock_code: string
+	stock_name: string
+	shares: number
+	buy_price: number
+	buy_amount: number
+	current_price: number
+	change_pct: number
+	pnl_amount: number
+	pnl_pct: number
+	core_decision: string
+	position_assessment: string
+	analysis_result: FollowUpAnalysis
+	original_buy_price?: number
+	original_target_price?: number
+	original_stop_loss?: number
+	analyzed_at: string
+}
+
+export interface FollowUpHistoryResponse {
+	status: string
+	data: {
+		records: FollowUpHistoryRecord[]
+		total: number
+	}
+}
+
 /**
  * 综合战法跟投分析
- * 输入买入股数和买入金额，获取基于当前行情的深度持仓分析和操作指南
+ * 输入买入股数和个股股价，获取基于当前行情的深度持仓分析和操作指南
  */
 export function fetchFollowUpAnalysis(payload: FollowUpRequest) {
 	return request
@@ -444,4 +474,19 @@ export function fetchFollowUpAnalysis(payload: FollowUpRequest) {
 			timeout: 120000,
 		})
 		.json<FollowUpResponse>();
+}
+
+/**
+ * 获取跟投分析历史记录
+ */
+export function fetchFollowUpHistory(stockCode?: string, limit = 30) {
+	const searchParams: Record<string, any> = { limit };
+	if (stockCode)
+		searchParams.stock_code = stockCode;
+	return request
+		.get("strategy/combined/follow-up-history", {
+			searchParams,
+			timeout: 15000,
+		})
+		.json<FollowUpHistoryResponse>();
 }
