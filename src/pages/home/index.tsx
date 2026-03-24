@@ -40,7 +40,7 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	event_driven: { label: "事件驱动", icon: "📡", color: "#fa8c16", gradient: "linear-gradient(135deg, #fa8c16 0%, #ffc53d 100%)" },
 	breakthrough: { label: "突破战法", icon: "🚀", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #b37feb 100%)" },
 	volume_price: { label: "量价关系", icon: "📊", color: "#13c2c2", gradient: "linear-gradient(135deg, #13c2c2 0%, #36cfc9 100%)" },
-	auction: { label: "竞价/尾盘", icon: "⏰", color: "#52c41a", gradient: "linear-gradient(135deg, #52c41a 0%, #95de64 100%)" },
+	overnight: { label: "隔夜施工法", icon: "🌙", color: "#0f3460", gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)" },
 	moving_average: { label: "均线战法", icon: "📈", color: "#f5222d", gradient: "linear-gradient(135deg, #f5222d 0%, #ff7875 100%)" },
 	northbound: { label: "北向资金", icon: "🏦", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)" },
 	trend_momentum: { label: "趋势动量", icon: "📐", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ffc53d 100%)" },

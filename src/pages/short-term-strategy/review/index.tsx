@@ -84,11 +84,11 @@ const STRATEGY_CONFIG: Record<string, {
 		gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
 		order: 5,
 	},
-	auction: {
-		label: "竞价/尾盘",
-		emoji: "⏰",
+	overnight: {
+		label: "隔夜施工法",
+		emoji: "🌙",
 		tagColor: "purple",
-		gradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+		gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)",
 		order: 6,
 	},
 	moving_average: {
