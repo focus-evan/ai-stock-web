@@ -110,6 +110,8 @@ function phaseColor(phase: string): string {
 		return "red";
 	if (phase.includes("follow"))
 		return "green";
+	if (phase === "盘前" || phase === "premarket")
+		return "cyan";
 	if (phase === "settle")
 		return "orange";
 	if (phase === "review")
@@ -125,6 +127,8 @@ function phaseLabel(phase: string): string {
 		return "交易";
 	if (phase.includes("follow"))
 		return "跟投";
+	if (phase === "盘前" || phase === "premarket")
+		return "盘前";
 	if (phase === "settle")
 		return "结算";
 	if (phase === "review")
