@@ -91,6 +91,13 @@ const STRATEGY_CONFIG: Record<string, {
 		gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)",
 		order: 6,
 	},
+	auction: {
+		label: "隔夜施工法",
+		emoji: "🌙",
+		tagColor: "purple",
+		gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)",
+		order: 6,
+	},
 	moving_average: {
 		label: "均线战法",
 		emoji: "📈",

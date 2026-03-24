@@ -89,12 +89,22 @@ function profitColor(val: number): string {
 }
 
 /** 策略名称 */
+const STRATEGY_NAMES: Record<string, string> = {
+	dragon_head: "龙头战法",
+	event_driven: "事件驱动",
+	sentiment: "情绪战法",
+	breakthrough: "突破战法",
+	volume_price: "量价关系",
+	overnight: "隔夜施工法",
+	auction: "隔夜施工法",
+	moving_average: "均线战法",
+	northbound: "北向资金",
+	trend_momentum: "趋势动量",
+	combined: "综合战法",
+	moat_value: "护城河优选",
+};
 function strategyName(type: string): string {
-	if (type === "dragon_head")
-		return "龙头战法";
-	if (type === "event_driven")
-		return "事件驱动";
-	return "情绪战法";
+	return STRATEGY_NAMES[type] || type;
 }
 
 /** 时段名称 */
