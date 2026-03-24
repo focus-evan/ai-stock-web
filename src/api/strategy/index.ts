@@ -121,6 +121,15 @@ export function fetchAuctionRecommendations(limit: number = 13) {
 		.json<AuctionResponse>();
 }
 
+export function refreshAuctionRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/auction/refresh", {
+			searchParams: { limit },
+			timeout: 180000,
+		})
+		.json<AuctionResponse>();
+}
+
 /**
  * 获取均线战法推荐
  * @param limit - 返回推荐数量，默认13
