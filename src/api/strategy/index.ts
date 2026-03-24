@@ -379,3 +379,69 @@ export function fetchRecommendationHistory(
 		})
 		.json<RecommendationHistoryResponse>();
 }
+
+// ===================== 跟投分析 =====================
+
+export interface FollowUpRequest {
+	stock_code: string
+	stock_name?: string
+	shares: number
+	buy_amount: number
+	buy_date?: string
+	original_advice?: string
+	original_buy_price?: number
+	original_target_price?: number
+	original_stop_loss?: number
+}
+
+export interface OperationPlanItem {
+	action: string
+	trigger_price: number
+	quantity_pct: string
+	timing: string
+	detail: string
+}
+
+export interface FollowUpAnalysis {
+	position_assessment: string
+	core_decision: string
+	decision_reason: string
+	operation_plan: OperationPlanItem[]
+	risk_points: string[]
+	opportunity_points: string[]
+	summary: string
+}
+
+export interface FollowUpPnlInfo {
+	buy_price_avg: number
+	current_price: number
+	shares: number
+	buy_amount: number
+	current_value: number
+	pnl_amount: number
+	pnl_pct: number
+}
+
+export interface FollowUpResponse {
+	status: string
+	data: {
+		stock_code: string
+		stock_name: string
+		pnl_info: FollowUpPnlInfo
+		market_info: Record<string, number>
+		analysis: FollowUpAnalysis
+	}
+}
+
+/**
+ * 综合战法跟投分析
+ * 输入买入股数和买入金额，获取基于当前行情的深度持仓分析和操作指南
+ */
+export function fetchFollowUpAnalysis(payload: FollowUpRequest) {
+	return request
+		.post("strategy/combined/follow-up-analysis", {
+			json: payload,
+			timeout: 120000,
+		})
+		.json<FollowUpResponse>();
+}
