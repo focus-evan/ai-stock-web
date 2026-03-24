@@ -7,6 +7,7 @@ import type {
 	MoatValueResponse,
 	MovingAverageResponse,
 	NorthboundResponse,
+	OvernightResponse,
 	SentimentResponse,
 	StockAnalysisResponse,
 	StrategiesSummaryResponse,
@@ -128,6 +129,28 @@ export function refreshAuctionRecommendations(limit: number = 13) {
 			timeout: 180000,
 		})
 		.json<AuctionResponse>();
+}
+
+/**
+ * 获取隔夜施工法推荐
+ * @param limit - 返回推荐数量，默认13
+ */
+export function fetchOvernightRecommendations(limit: number = 13) {
+	return request
+		.get("strategy/overnight", {
+			searchParams: { limit },
+			timeout: 90000,
+		})
+		.json<OvernightResponse>();
+}
+
+export function refreshOvernightRecommendations(limit: number = 13) {
+	return request
+		.post("strategy/overnight/refresh", {
+			searchParams: { limit },
+			timeout: 180000,
+		})
+		.json<OvernightResponse>();
 }
 
 /**

@@ -443,6 +443,54 @@ export interface AuctionResponse {
 
 // ===================== 均线战法 =====================
 
+// ===================== 隔夜施工法 =====================
+
+/** 隔夜施工法推荐股票 */
+export interface OvernightStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	volume: number
+	float_market_cap: number
+	total_market_cap: number
+	turnover_rate: number
+	volume_ratio: number
+	signal_type: string
+	signal_score: number
+	ma5: number
+	ma10: number
+	ma20: number
+	ma60: number
+	ma_bullish: boolean
+	has_limit_up: boolean
+	vol_staircase_score: number
+	reasons: string[]
+	recommendation_level: string
+	risk_warning?: string
+	operation_suggestion?: string
+}
+
+/** 隔夜施工法完整数据 */
+export interface OvernightData {
+	recommendations: OvernightStock[]
+	total: number
+	signal_summary: Record<string, number>
+	strategy_report: string
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+}
+
+/** 隔夜施工法接口响应 */
+export interface OvernightResponse {
+	status: "success" | "error"
+	data: OvernightData
+	message?: string
+}
+
 /** 均线战法推荐股票 */
 export interface MovingAverageStock {
 	rank: number

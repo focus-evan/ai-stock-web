@@ -9,7 +9,7 @@ const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"))
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
 const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
 const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
-const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
+const Overnight = lazy(() => import("#src/pages/short-term-strategy/overnight"));
 const MovingAverage = lazy(() => import("#src/pages/short-term-strategy/moving-average"));
 const Combined = lazy(() => import("#src/pages/short-term-strategy/combined"));
 const Northbound = lazy(() => import("#src/pages/short-term-strategy/northbound"));
@@ -69,11 +69,11 @@ const routes: AppRouteRecordRaw[] = [
 				},
 			},
 			{
-				path: "/short-term-strategy/auction",
-				Component: Auction,
+				path: "/short-term-strategy/overnight",
+				Component: Overnight,
 				handle: {
-					icon: "FieldTimeOutlined",
-					title: "竞价/尾盘",
+					icon: "MoonOutlined",
+					title: "隔夜施工法",
 				},
 			},
 			{

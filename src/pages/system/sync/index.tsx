@@ -56,7 +56,7 @@ function strategyColor(s: string): string {
 		return "#13c2c2";
 	if (s === "volume_price")
 		return "#2f54eb";
-	if (s === "auction")
+	if (s === "overnight")
 		return "#52c41a";
 	if (s === "moving_average")
 		return "#faad14";
@@ -85,8 +85,8 @@ function strategyIcon(s: string): string {
 		return "🚀";
 	if (s === "volume_price")
 		return "📊";
-	if (s === "auction")
-		return "⏰";
+	if (s === "overnight")
+		return "🌙";
 	if (s === "moving_average")
 		return "📈";
 	if (s === "combined")
@@ -240,7 +240,7 @@ export default function SchedulerPage() {
 		"sentiment",
 		"breakthrough",
 		"volume_price",
-		"auction",
+		"overnight",
 		"moving_average",
 		"northbound",
 		"trend_momentum",
@@ -253,7 +253,7 @@ export default function SchedulerPage() {
 		sentiment: "💡 情绪战法",
 		breakthrough: "🚀 突破战法",
 		volume_price: "📊 量价关系",
-		auction: "⏰ 竞价/尾盘",
+		overnight: "🌙 隔夜施工法",
 		moving_average: "📈 均线战法",
 		northbound: "🏦 北向资金",
 		trend_momentum: "📐 趋势动量",
