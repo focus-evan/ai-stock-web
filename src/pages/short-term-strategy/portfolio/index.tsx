@@ -1071,7 +1071,18 @@ export default function PortfolioDashboard() {
 											</Text>
 											<Tag>{strategyName(portfolio.strategy_type)}</Tag>
 											<Text type="secondary" style={{ fontSize: 12 }}>
-												每个交易日自动交易（龙头/事件 09:10,12:40 | 情绪 11:10,14:10）
+												{({
+													dragon_head: "推荐 10:00,13:05 | 交易 10:15",
+													sentiment: "推荐 10:30,13:10 | 交易 10:45",
+													event_driven: "推荐 09:40,13:00 | 交易 09:55",
+													breakthrough: "凌晨预生成 01:00 | 交易 10:20",
+													volume_price: "凌晨预生成 02:30 | 交易 10:50",
+													overnight: "盘前扫描 09:25 | 尾盘交易 14:50",
+													moving_average: "凌晨预生成 04:00 | 交易 11:15",
+													northbound: "推荐 10:15,13:30 | 交易 13:35",
+													trend_momentum: "凌晨预生成 05:30 | 交易 09:45",
+													combined: "上午聚合 09:00 | 下午聚合 14:36 | 交易 14:50",
+												} as Record<string, string>)[portfolio.strategy_type] || "每个交易日自动执行推荐与交易"}
 											</Text>
 										</Space>
 									)}
