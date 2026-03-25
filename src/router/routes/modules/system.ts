@@ -61,7 +61,7 @@ const routes: AppRouteRecordRaw[] = [
 				},
 			},
 			{
-				path: "/system/data-sync",
+				path: "/system/sync",
 				Component: DataSync,
 				handle: {
 					icon: "SyncOutlined",
