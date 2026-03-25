@@ -915,7 +915,7 @@ export default function PortfolioDashboard() {
 							style={{ width: 220 }}
 							options={portfolios.map(p => ({
 								value: p.id,
-								label: `${strategyName(p.strategy_type)} - ${p.name || `组合#${p.id}`}`,
+								label: `${strategyName(p.strategy_type)} - ${(p.strategy_type === "overnight" && p.name ? p.name.replace("竞价尾盘", "隔夜施工") : p.name) || `组合#${p.id}`}`,
 							}))}
 						/>
 					)}
