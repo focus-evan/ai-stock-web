@@ -327,6 +327,42 @@ const RecommendationHistory: React.FC<Props> = ({
 														? <Tag color={ls.tag} style={{ margin: 0, fontWeight: 600 }}>{level}</Tag>
 														: null}
 												</div>
+												{/* 命中战法标签（综合战法专用） */}
+												{strategyType === "combined" && stock.strategy_names && stock.strategy_names.length > 0 && (
+													<div style={{ display: "flex", flexWrap: "wrap", gap: 3, marginTop: 4 }}>
+														{stock.strategy_names.map((sn: string) => (
+															<Tag
+																key={sn}
+																style={{
+																	margin: 0,
+																	fontSize: 10,
+																	lineHeight: "16px",
+																	padding: "0 5px",
+																	borderRadius: 3,
+																}}
+																color="purple"
+															>
+																{sn}
+															</Tag>
+														))}
+														{stock.overlap_count && stock.overlap_count >= 2 && (
+															<Tag
+																style={{
+																	margin: 0,
+																	fontSize: 10,
+																	lineHeight: "16px",
+																	padding: "0 5px",
+																	borderRadius: 3,
+																	fontWeight: 600,
+																}}
+																color="volcano"
+															>
+																{stock.overlap_count}
+																战法共振
+															</Tag>
+														)}
+													</div>
+												)}
 												{/* 涨跌幅 */}
 												{changePct !== 0 && (
 													<Text style={{
