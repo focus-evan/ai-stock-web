@@ -2,6 +2,8 @@ import type { CombinedData, CombinedStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchCombinedRecommendations, refreshCombinedRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import WatchlistModal from "#src/components/WatchlistModal";
+import WatchlistPanel from "#src/components/WatchlistPanel";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -61,6 +63,8 @@ const CombinedPage: React.FC = () => {
 	const [loading, setLoading] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [watchlistTarget, setWatchlistTarget] = useState<CombinedStock | null>(null);
+	const [watchlistRefreshKey, setWatchlistRefreshKey] = useState(0);
 
 	const fetchData = async () => {
 		setLoading(true);
@@ -432,6 +436,23 @@ const CombinedPage: React.FC = () => {
 					</Space>
 				);
 			},
+		},
+		{
+			title: "自选",
+			key: "watchlist",
+			width: 80,
+			align: "center",
+			fixed: "right" as const,
+			render: (_: any, record: CombinedStock) => (
+				<Button
+					type="text"
+					icon={<StarFilled style={{ color: "#faad14" }} />}
+					onClick={() => setWatchlistTarget(record)}
+					style={{ fontSize: 12 }}
+				>
+					自选
+				</Button>
+			),
 		},
 	];
 
@@ -842,7 +863,24 @@ const CombinedPage: React.FC = () => {
 			`}
 			</style>
 
+			<WatchlistPanel key={watchlistRefreshKey} />
+
 			<RecommendationHistory strategyType="combined" />
+
+			{/* 加入自选弹窗 */}
+			<WatchlistModal
+				open={!!watchlistTarget}
+				onClose={() => setWatchlistTarget(null)}
+				onSuccess={() => setWatchlistRefreshKey(k => k + 1)}
+				stockCode={watchlistTarget?.code || ""}
+				stockName={watchlistTarget?.name || ""}
+				strategies={watchlistTarget?.strategies || []}
+				strategyNames={watchlistTarget?.strategy_names || []}
+				overlapCount={watchlistTarget?.overlap_count || 1}
+				suggestedBuyPrice={watchlistTarget?.suggested_buy_price}
+				sourceDate={data?.trading_date || ""}
+				sourceSession={data?.session_type || ""}
+			/>
 
 		</div>
 	);

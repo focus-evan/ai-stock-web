@@ -1,11 +1,13 @@
 import type { RecommendationHistoryItem } from "#src/api/strategy";
 import { fetchRecommendationHistory } from "#src/api/strategy";
+import WatchlistModal from "#src/components/WatchlistModal";
 import {
 	CalendarOutlined,
 	ClockCircleOutlined,
 	HistoryOutlined,
 	LeftOutlined,
 	RightOutlined,
+	StarOutlined,
 	StockOutlined,
 	ThunderboltOutlined,
 } from "@ant-design/icons";
@@ -74,6 +76,14 @@ const RecommendationHistory: React.FC<Props> = ({
 		targetPrice?: number
 		stopLoss?: number
 		advice?: string
+	} | null>(null);
+	const [watchlistStock, setWatchlistStock] = useState<{
+		code: string
+		name: string
+		strategies?: string[]
+		strategyNames?: string[]
+		overlapCount?: number
+		suggestedBuyPrice?: number
 	} | null>(null);
 	useEffect(() => {
 		(async () => {
@@ -447,10 +457,30 @@ const RecommendationHistory: React.FC<Props> = ({
 
 											{/* 跟投分析按钮（仅综合战法显示） */}
 											{strategyType === "combined" && (
-												<div style={{ padding: "0 10px 10px" }}>
+												<div style={{ padding: "0 10px 10px", display: "flex", gap: 6 }}>
 													<Button
 														size="small"
-														block
+														icon={<StarOutlined />}
+														style={{
+															borderColor: "#faad14",
+															color: "#faad14",
+															borderRadius: 6,
+															fontSize: 12,
+															flex: 1,
+														}}
+														onClick={() => setWatchlistStock({
+															code,
+															name,
+															strategies: stock.strategies || [],
+															strategyNames: stock.strategy_names || [],
+															overlapCount: stock.overlap_count || 1,
+															suggestedBuyPrice: stock.suggested_buy_price || stock.current_price,
+														})}
+													>
+														⭐ 自选
+													</Button>
+													<Button
+														size="small"
 														icon={<ThunderboltOutlined />}
 														style={{
 															background: "linear-gradient(90deg, #722ed1 0%, #9254de 100%)",
@@ -458,6 +488,7 @@ const RecommendationHistory: React.FC<Props> = ({
 															color: "#fff",
 															borderRadius: 6,
 															fontSize: 12,
+															flex: 1,
 														}}
 														onClick={() => setFollowUpStock({
 															code,
@@ -479,6 +510,18 @@ const RecommendationHistory: React.FC<Props> = ({
 						</Row>
 					)}
 			</Card>
+
+			{/* 自选盯盘 Modal */}
+			<WatchlistModal
+				open={!!watchlistStock}
+				onClose={() => setWatchlistStock(null)}
+				stockCode={watchlistStock?.code ?? ""}
+				stockName={watchlistStock?.name ?? ""}
+				strategies={watchlistStock?.strategies ?? []}
+				strategyNames={watchlistStock?.strategyNames ?? []}
+				overlapCount={watchlistStock?.overlapCount ?? 1}
+				suggestedBuyPrice={watchlistStock?.suggestedBuyPrice}
+			/>
 
 			{/* 跟投分析 Modal */}
 			<FollowUpModal

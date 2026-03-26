@@ -522,3 +522,122 @@ export function fetchFollowUpHistory(stockCode?: string, limit = 30) {
 		})
 		.json<FollowUpHistoryResponse>();
 }
+
+// ===================== 自选盯盘 =====================
+
+export interface WatchlistAddPayload {
+	stock_code: string
+	stock_name: string
+	buy_price: number
+	buy_shares: number
+	strategies: string[]
+	strategy_names: string[]
+	overlap_count?: number
+	source_date?: string
+	source_session?: string
+	note?: string
+}
+
+export interface WatchlistItem {
+	id: number
+	stock_code: string
+	stock_name: string
+	buy_price: number
+	buy_shares: number
+	buy_amount: number
+	strategies: string[]
+	strategy_names: string[]
+	overlap_count: number
+	status: number
+	current_price?: number
+	change_pct?: number
+	pnl_amount?: number
+	pnl_pct?: number
+	latest_guidance?: WatchlistGuidanceRecord
+	created_at: string
+}
+
+export interface StrategyAnalysis {
+	strategy: string
+	strategy_name: string
+	icon: string
+	analysis: string
+	action: string
+	key_metrics: Record<string, any>
+	risk_level: string
+	trigger_prices?: { stop_loss?: number, take_profit?: number, add_position?: number }
+}
+
+export interface WatchlistGuidanceRecord {
+	id: number
+	watchlist_id: number
+	stock_code: string
+	stock_name: string
+	current_price: number
+	change_pct: number
+	pnl_amount: number
+	pnl_pct: number
+	strategy_analyses: StrategyAnalysis[]
+	overall_decision: string
+	overall_summary: string
+	trading_session: string
+	guidance_time: string
+}
+
+/** 加入自选 */
+export function addToWatchlist(payload: WatchlistAddPayload) {
+	return request
+		.post("strategy/combined/watchlist", {
+			json: payload,
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { id: number }, message: string }>();
+}
+
+/** 获取自选列表 */
+export function fetchWatchlist(status = 1) {
+	return request
+		.get("strategy/combined/watchlist", {
+			searchParams: { status },
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { items: WatchlistItem[], total: number } }>();
+}
+
+/** 移除自选 */
+export function removeFromWatchlist(id: number) {
+	return request
+		.delete(`strategy/combined/watchlist/${id}`, { timeout: 10000 })
+		.json<{ status: string, message: string }>();
+}
+
+/** 标记清仓 */
+export function closeWatchlistItem(id: number) {
+	return request
+		.put(`strategy/combined/watchlist/${id}/close`, { timeout: 10000 })
+		.json<{ status: string, message: string }>();
+}
+
+/** 手动触发指导 */
+export function triggerWatchlistGuidance(id: number) {
+	return request
+		.post(`strategy/combined/watchlist/${id}/guidance`, { timeout: 120000 })
+		.json<{ status: string, data: WatchlistGuidanceRecord, message: string }>();
+}
+
+/** 获取指导历史 */
+export function fetchWatchlistGuidance(id: number, limit = 20) {
+	return request
+		.get(`strategy/combined/watchlist/${id}/guidance`, {
+			searchParams: { limit },
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { records: WatchlistGuidanceRecord[], total: number } }>();
+}
+
+/** 获取所有自选最新指导 */
+export function fetchLatestGuidance() {
+	return request
+		.get("strategy/combined/watchlist/guidance/latest", { timeout: 15000 })
+		.json<{ status: string, data: { records: WatchlistGuidanceRecord[], total: number } }>();
+}
