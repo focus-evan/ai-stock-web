@@ -24,6 +24,12 @@ export function useAccess() {
 	const hasAccessByCodes = (permission?: string | Array<string>) => {
 		if (!permission)
 			return false;
+
+		// admin 角色拥有所有按钮权限
+		if (userRoles?.includes("admin")) {
+			return true;
+		}
+
 		/** 从当前路由的 `handle` 字段里获取按钮级别的所有自定义 `code` 值 */
 		const metaAuth = currentRoute?.handle?.permissions;
 		if (!metaAuth) {
