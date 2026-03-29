@@ -8,12 +8,14 @@ import { useUserStore } from "#src/store/user";
 import { cn } from "#src/utils/cn";
 import { isWindowsOs } from "#src/utils/is-windows-os";
 
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { KeyOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useKeyPress } from "ahooks";
 import { Avatar, Dropdown } from "antd";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
+
+import { ChangePasswordModal } from "./change-password-modal";
 
 export function UserMenu({ ...restProps }: ButtonProps) {
 	const navigate = useNavigate();
@@ -21,6 +23,7 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 	const avatar = useUserStore(state => state.avatar);
 	const username = useUserStore(state => state.username);
 	const logout = useAuthStore(state => state.logout);
+	const [changePwdOpen, setChangePwdOpen] = useState(false);
 
 	const onClick: MenuProps["onClick"] = async ({ key }) => {
 		if (key === "logout") {
@@ -29,6 +32,9 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 		}
 		if (key === "personal-center") {
 			navigate("/personal-center/my-profile");
+		}
+		if (key === "change-password") {
+			setChangePwdOpen(true);
 		}
 	};
 
@@ -39,6 +45,14 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 			key: "personal-center",
 			icon: <RiAccountCircleLine />,
 			extra: `${altView}P`,
+		},
+		{
+			label: t("authority.changePassword"),
+			key: "change-password",
+			icon: <KeyOutlined />,
+		},
+		{
+			type: "divider",
 		},
 		{
 			label: t("authority.logout"),
@@ -64,28 +78,35 @@ export function UserMenu({ ...restProps }: ButtonProps) {
 	}, [username]);
 
 	return (
-		<Dropdown
-			menu={{ items, onClick }}
-			arrow={false}
-			placement="bottomRight"
-			trigger={["click"]}
-		>
-			<BasicButton
-				type="text"
-				{...restProps}
-				className={cn(restProps.className, "rounded-full px-1")}
+		<>
+			<Dropdown
+				menu={{ items, onClick }}
+				arrow={false}
+				placement="bottomRight"
+				trigger={["click"]}
 			>
-				{avatar
-					? <Avatar src={avatar} />
-					: (
-						<Avatar
-							style={{ backgroundColor: avatarColor }}
-							icon={!username ? <UserOutlined /> : undefined}
-						>
-							{username ? username.charAt(0).toUpperCase() : null}
-						</Avatar>
-					)}
-			</BasicButton>
-		</Dropdown>
+				<BasicButton
+					type="text"
+					{...restProps}
+					className={cn(restProps.className, "rounded-full px-1")}
+				>
+					{avatar
+						? <Avatar src={avatar} />
+						: (
+							<Avatar
+								style={{ backgroundColor: avatarColor }}
+								icon={!username ? <UserOutlined /> : undefined}
+							>
+								{username ? username.charAt(0).toUpperCase() : null}
+							</Avatar>
+						)}
+				</BasicButton>
+			</Dropdown>
+
+			<ChangePasswordModal
+				open={changePwdOpen}
+				onClose={() => setChangePwdOpen(false)}
+			/>
+		</>
 	);
 }

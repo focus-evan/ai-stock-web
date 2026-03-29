@@ -1,7 +1,9 @@
 import type { UserItemType } from "#src/api/system/user";
 import { fetchRoleList } from "#src/api/system/role";
 import { fetchAddUserItem, fetchUpdateUserItem } from "#src/api/system/user";
+import { fetchResetUserPassword } from "#src/api/user";
 
+import { KeyOutlined } from "@ant-design/icons";
 import {
 	DrawerForm,
 	ProFormRadio,
@@ -10,8 +12,9 @@ import {
 	ProFormTextArea,
 } from "@ant-design/pro-components";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Form } from "antd";
-import { useEffect } from "react";
+import { Button, Form, Input, Modal } from "antd";
+import { useEffect, useState } from "react";
+
 import { useTranslation } from "react-i18next";
 
 interface DetailProps {
@@ -25,6 +28,9 @@ interface DetailProps {
 export function Detail({ title, open, onCloseChange, detailData, refreshTable }: DetailProps) {
 	const { t } = useTranslation();
 	const [form] = Form.useForm<UserItemType>();
+	const [resetPwdOpen, setResetPwdOpen] = useState(false);
+	const [resetPwdForm] = Form.useForm();
+	const [resetPwdLoading, setResetPwdLoading] = useState(false);
 
 	const { data: roleOptions = [] } = useQuery({
 		queryKey: ["role-options-for-user"],
@@ -76,105 +82,192 @@ export function Detail({ title, open, onCloseChange, detailData, refreshTable }:
 
 	const isEdit = !!detailData.id;
 
+	const handleResetPassword = async () => {
+		try {
+			const values = await resetPwdForm.validateFields();
+			if (!detailData.id)
+				return;
+			setResetPwdLoading(true);
+			await fetchResetUserPassword(detailData.id, values.newPassword);
+			window.$message?.success(t("system.user.resetPasswordSuccess"));
+			setResetPwdOpen(false);
+			resetPwdForm.resetFields();
+		}
+		catch (error: any) {
+			if (error?.errorFields)
+				return; // form validation error
+			window.$message?.error(t("system.user.resetPasswordFailed"));
+		}
+		finally {
+			setResetPwdLoading(false);
+		}
+	};
+
 	return (
-		<DrawerForm<UserItemType>
-			title={title}
-			open={open}
-			onOpenChange={(visible) => {
-				if (visible === false) {
-					onCloseChange();
-				}
-			}}
-			resize={{
-				onResize() {},
-				maxWidth: window.innerWidth * 0.8,
-				minWidth: 500,
-			}}
-			labelCol={{ span: 6 }}
-			wrapperCol={{ span: 24 }}
-			layout="horizontal"
-			form={form}
-			autoFocusFirstInput
-			drawerProps={{
-				destroyOnHidden: true,
-			}}
-			onFinish={onFinish}
-			initialValues={{
-				status: 1,
-				roleCodes: [],
-			}}
-		>
-			<ProFormText
-				allowClear
-				rules={[{ required: true, message: t("form.required") }]}
-				width="md"
-				name="username"
-				label={t("system.user.username")}
-				disabled={isEdit}
-			/>
-
-			{!isEdit && (
-				<ProFormText.Password
+		<>
+			<DrawerForm<UserItemType>
+				title={title}
+				open={open}
+				onOpenChange={(visible) => {
+					if (visible === false) {
+						onCloseChange();
+					}
+				}}
+				resize={{
+					onResize() {},
+					maxWidth: window.innerWidth * 0.8,
+					minWidth: 500,
+				}}
+				labelCol={{ span: 6 }}
+				wrapperCol={{ span: 24 }}
+				layout="horizontal"
+				form={form}
+				autoFocusFirstInput
+				drawerProps={{
+					destroyOnHidden: true,
+				}}
+				onFinish={onFinish}
+				initialValues={{
+					status: 1,
+					roleCodes: [],
+				}}
+			>
+				<ProFormText
 					allowClear
-					rules={[{ required: !isEdit, message: t("form.required") }]}
+					rules={[{ required: true, message: t("form.required") }]}
 					width="md"
-					name="password"
-					label={t("system.user.password")}
-					placeholder="默认密码: 123456"
+					name="username"
+					label={t("system.user.username")}
+					disabled={isEdit}
 				/>
-			)}
 
-			<ProFormText
-				allowClear
-				width="md"
-				name="nickname"
-				label={t("system.user.nickname")}
-			/>
+				{!isEdit && (
+					<ProFormText.Password
+						allowClear
+						rules={[{ required: !isEdit, message: t("form.required") }]}
+						width="md"
+						name="password"
+						label={t("system.user.password")}
+						placeholder={t("system.user.defaultPasswordHint")}
+					/>
+				)}
 
-			<ProFormText
-				allowClear
-				width="md"
-				name="email"
-				label={t("system.user.email")}
-			/>
+				{isEdit && (
+					<Form.Item label={t("system.user.password")}>
+						<Button
+							icon={<KeyOutlined />}
+							onClick={() => {
+								resetPwdForm.resetFields();
+								setResetPwdOpen(true);
+							}}
+						>
+							{t("system.user.resetPassword")}
+						</Button>
+					</Form.Item>
+				)}
 
-			<ProFormText
-				allowClear
-				width="md"
-				name="phone"
-				label={t("system.user.phone")}
-			/>
+				<ProFormText
+					allowClear
+					width="md"
+					name="nickname"
+					label={t("system.user.nickname")}
+				/>
 
-			<ProFormSelect
-				mode="multiple"
-				width="md"
-				name="roleCodes"
-				label={t("system.user.roleCodes")}
-				options={roleOptions}
-			/>
+				<ProFormText
+					allowClear
+					width="md"
+					name="email"
+					label={t("system.user.email")}
+				/>
 
-			<ProFormRadio.Group
-				name="status"
-				label={t("common.status")}
-				radioType="button"
-				options={[
-					{
-						label: t("common.enabled"),
-						value: 1,
-					},
-					{
-						label: t("common.deactivated"),
-						value: 0,
-					},
-				]}
-			/>
+				<ProFormText
+					allowClear
+					width="md"
+					name="phone"
+					label={t("system.user.phone")}
+				/>
 
-			<ProFormTextArea
-				allowClear
-				width="md"
-				name="remark"
-				label={t("common.remark")}
-			/>
-		</DrawerForm>
+				<ProFormSelect
+					mode="multiple"
+					width="md"
+					name="roleCodes"
+					label={t("system.user.roleCodes")}
+					options={roleOptions}
+				/>
+
+				<ProFormRadio.Group
+					name="status"
+					label={t("common.status")}
+					radioType="button"
+					options={[
+						{
+							label: t("common.enabled"),
+							value: 1,
+						},
+						{
+							label: t("common.deactivated"),
+							value: 0,
+						},
+					]}
+				/>
+
+				<ProFormTextArea
+					allowClear
+					width="md"
+					name="remark"
+					label={t("common.remark")}
+				/>
+			</DrawerForm>
+
+			<Modal
+				title={t("system.user.resetPassword")}
+				open={resetPwdOpen}
+				onCancel={() => {
+					setResetPwdOpen(false);
+					resetPwdForm.resetFields();
+				}}
+				onOk={handleResetPassword}
+				confirmLoading={resetPwdLoading}
+				okText={t("common.confirm")}
+				cancelText={t("common.cancel")}
+				destroyOnClose
+			>
+				<div style={{ padding: "16px 0" }}>
+					<p style={{ marginBottom: 16, color: "#666" }}>
+						{t("system.user.resetPasswordDesc", { username: detailData.username })}
+					</p>
+					<Form form={resetPwdForm} layout="vertical">
+						<Form.Item
+							name="newPassword"
+							label={t("system.user.newPassword")}
+							rules={[
+								{ required: true, message: t("form.password.required") },
+								{ min: 6, message: t("system.user.passwordMinLength") },
+							]}
+						>
+							<Input.Password placeholder={t("system.user.newPasswordPlaceholder")} />
+						</Form.Item>
+						<Form.Item
+							name="confirmPassword"
+							label={t("authority.confirmPassword")}
+							dependencies={["newPassword"]}
+							rules={[
+								{ required: true, message: t("form.confirmPassword.required") },
+								({ getFieldValue }) => ({
+									validator(_, value) {
+										if (!value || getFieldValue("newPassword") === value) {
+											return Promise.resolve();
+										}
+										return Promise.reject(new Error(t("form.confirmPassword.invalid")));
+									},
+								}),
+							]}
+						>
+							<Input.Password placeholder={t("form.confirmPassword.required")} />
+						</Form.Item>
+					</Form>
+				</div>
+			</Modal>
+		</>
 	);
 }

@@ -16,7 +16,15 @@
 		"roleCodes": "Roles",
 		"password": "Password",
 		"addUser": "Add User",
-		"editUser": "Edit User"
+		"editUser": "Edit User",
+		"resetPassword": "Reset Password",
+		"resetPasswordSuccess": "Password reset successfully",
+		"resetPasswordFailed": "Failed to reset password",
+		"resetPasswordDesc": "Set a new password for user {{username}}",
+		"newPassword": "New Password",
+		"newPasswordPlaceholder": "Enter new password",
+		"passwordMinLength": "Password must be at least 6 characters",
+		"defaultPasswordHint": "Set user password"
 	},
 	"menu": {
 		"name": "Menu Name",

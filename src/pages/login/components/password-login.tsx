@@ -18,8 +18,8 @@ import { useNavigate, useSearchParams } from "react-router";
 import { FormModeContext } from "../form-mode-context";
 
 const FORM_INITIAL_VALUES: LoginInfo = {
-	username: "admin",
-	password: "123456789admin",
+	username: "",
+	password: "",
 };
 
 export function PasswordLogin() {

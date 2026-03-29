@@ -16,7 +16,15 @@
 		"roleCodes": "角色",
 		"password": "密码",
 		"addUser": "新增用户",
-		"editUser": "编辑用户"
+		"editUser": "编辑用户",
+		"resetPassword": "重置密码",
+		"resetPasswordSuccess": "密码重置成功",
+		"resetPasswordFailed": "密码重置失败",
+		"resetPasswordDesc": "为用户 {{username}} 设置新密码",
+		"newPassword": "新密码",
+		"newPasswordPlaceholder": "请输入新密码",
+		"passwordMinLength": "密码至少 6 个字符",
+		"defaultPasswordHint": "请设置用户密码"
 	},
 	"menu": {
 		"name": "菜单名称",

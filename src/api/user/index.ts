@@ -31,3 +31,17 @@ export interface RefreshTokenResult {
 export function fetchRefreshToken(data: { readonly refreshToken: string }) {
 	return request.post("system/refresh-token", { json: data }).json<ApiResponse<RefreshTokenResult>>();
 }
+
+export interface ChangePasswordData {
+	current_password: string
+	new_password: string
+	confirm_password: string
+}
+
+export function fetchChangePassword(data: ChangePasswordData) {
+	return request.post("system/change-password", { json: data }).json<ApiResponse<any>>();
+}
+
+export function fetchResetUserPassword(userId: number, newPassword: string) {
+	return request.post(`system/user-item/${userId}/reset-password`, { searchParams: { new_password: newPassword } }).json<ApiResponse<any>>();
+}
