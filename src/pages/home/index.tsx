@@ -360,6 +360,7 @@ export default function Home() {
 				<Row gutter={[16, 16]}>
 					{strategySummary.map((s: any) => {
 						const cfg = STRATEGY_CONFIG[s.strategy_type] || {};
+						const sPositions: any[] = s.positions || [];
 						return (
 							<Col xs={24} md={8} key={s.strategy_type}>
 								<Card
@@ -380,42 +381,132 @@ export default function Home() {
 										/>
 									</div>
 									<Row gutter={[8, 8]}>
-										<Col span={12}>
+										<Col span={8}>
 											<Statistic
 												title="总资产"
 												value={s.total_asset}
 												precision={0}
 												prefix="¥"
-												valueStyle={{ fontSize: 16, fontWeight: 600 }}
+												valueStyle={{ fontSize: 15, fontWeight: 600 }}
 											/>
 										</Col>
-										<Col span={12}>
+										<Col span={8}>
 											<Statistic
-												title="收益"
+												title="总收益"
 												value={s.total_profit}
 												precision={0}
 												prefix={s.total_profit >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-												valueStyle={{ fontSize: 16, fontWeight: 600, color: profitColor(s.total_profit) }}
+												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.total_profit) }}
 											/>
 										</Col>
-										<Col span={12}>
+										<Col span={8}>
 											<Statistic
-												title="收益率"
-												value={s.total_profit_pct}
-												precision={2}
-												suffix="%"
-												valueStyle={{ fontSize: 14, color: profitColor(s.total_profit_pct) }}
-											/>
-										</Col>
-										<Col span={12}>
-											<Statistic
-												title="持仓"
-												value={s.positions_count}
-												suffix="只"
-												valueStyle={{ fontSize: 14 }}
+												title="今日收益"
+												value={s.daily_profit || 0}
+												precision={0}
+												prefix={(s.daily_profit || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.daily_profit || 0) }}
 											/>
 										</Col>
 									</Row>
+									<div style={{ display: "flex", gap: 16, margin: "8px 0 12px", fontSize: 12, color: "#8c8c8c" }}>
+										<span>
+											收益率:
+											<Text style={{ color: profitColor(s.total_profit_pct), fontSize: 12, fontWeight: 600 }}>
+												{s.total_profit_pct >= 0 ? "+" : ""}
+												{Number(s.total_profit_pct || 0).toFixed(2)}
+												%
+											</Text>
+										</span>
+										<span>
+											持仓:
+											{s.positions_count}
+											只
+										</span>
+									</div>
+									{/* 持仓股票列表 */}
+									{sPositions.length > 0 && (
+										<div style={{
+											borderTop: "1px solid #f0f0f0",
+											paddingTop: 10,
+										}}
+										>
+											<Text type="secondary" style={{ fontSize: 11, marginBottom: 6, display: "block" }}>📋 当前持仓</Text>
+											{sPositions.map((pos: any) => (
+												<div
+													key={pos.stock_code}
+													style={{
+														display: "flex",
+														justifyContent: "space-between",
+														alignItems: "center",
+														padding: "6px 8px",
+														marginBottom: 4,
+														borderRadius: 6,
+														background: "#fafafa",
+														fontSize: 13,
+													}}
+												>
+													<div style={{ flex: "0 0 auto", minWidth: 80 }}>
+														<Text strong style={{ fontSize: 13 }}>{pos.stock_name}</Text>
+														<br />
+														<Text type="secondary" style={{ fontSize: 10 }}>{pos.stock_code}</Text>
+													</div>
+													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 60 }}>
+														<Text style={{ fontSize: 12 }}>
+															¥
+															{Number(pos.current_price || 0).toFixed(2)}
+														</Text>
+													</div>
+													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 75 }}>
+														<Tooltip title="今日收益（基于昨收）">
+															<div>
+																<Text style={{ color: profitColor(pos.daily_profit || 0), fontSize: 12, fontWeight: 600 }}>
+																	{(pos.daily_profit || 0) >= 0 ? "+" : ""}
+																	{formatMoney(pos.daily_profit || 0)}
+																</Text>
+																<br />
+																<Text style={{ color: profitColor(pos.daily_profit_pct || 0), fontSize: 10 }}>
+																	今日
+																	{" "}
+																	{(pos.daily_profit_pct || 0) >= 0 ? "+" : ""}
+																	{Number(pos.daily_profit_pct || 0).toFixed(2)}
+																	%
+																</Text>
+															</div>
+														</Tooltip>
+													</div>
+													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 75 }}>
+														<Tooltip title="整体收益（基于成本）">
+															<div>
+																<Text style={{ color: profitColor(pos.profit || 0), fontSize: 12, fontWeight: 600 }}>
+																	{(pos.profit || 0) >= 0 ? "+" : ""}
+																	{formatMoney(pos.profit || 0)}
+																</Text>
+																<br />
+																<Text style={{ color: profitColor(pos.profit_pct || 0), fontSize: 10 }}>
+																	总
+																	{" "}
+																	{(pos.profit_pct || 0) >= 0 ? "+" : ""}
+																	{Number(pos.profit_pct || 0).toFixed(2)}
+																	%
+																</Text>
+															</div>
+														</Tooltip>
+													</div>
+												</div>
+											))}
+										</div>
+									)}
+									{sPositions.length === 0 && (
+										<div style={{
+											borderTop: "1px solid #f0f0f0",
+											paddingTop: 10,
+											textAlign: "center",
+										}}
+										>
+											<Text type="secondary" style={{ fontSize: 12 }}>暂无持仓</Text>
+										</div>
+									)}
 								</Card>
 							</Col>
 						);
