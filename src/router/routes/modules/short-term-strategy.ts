@@ -5,6 +5,7 @@ import { shortTermStrategy } from "#src/router/extra-info";
 import { lazy } from "react";
 
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
+const Relay = lazy(() => import("#src/pages/short-term-strategy/relay"));
 const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
 const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
@@ -34,6 +35,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "CrownOutlined",
 					title: "龙头战法",
+				},
+			},
+			{
+				path: "/short-term-strategy/relay",
+				Component: Relay,
+				handle: {
+					icon: "LinkOutlined",
+					title: "连板接力",
 				},
 			},
 			{

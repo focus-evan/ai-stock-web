@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import type { RecommendationHistoryItem } from "#src/api/strategy";
 import { fetchRecommendationHistory } from "#src/api/strategy";
 import WatchlistModal from "#src/components/WatchlistModal";
@@ -300,15 +301,16 @@ const RecommendationHistory: React.FC<Props> = ({
 								const code = stock.code || stock.stock_code || "";
 								const name = stock.name || stock.stock_name || "未知";
 								const changePct: number = stock.change_pct ?? 0;
-								const bp = stock.suggested_buy_price || stock.buy_price_range || "";
+								const bp = stock.suggested_buy_price || stock.buy_price_range || stock.buy_price || "";
 								const sp = stock.suggested_sell_price || stock.target_price || "";
 								const sl = stock.stop_loss_price || "";
-								const advice = stock.operation_advice || stock.operation_suggestion || stock.llm_operation || "";
+								const advice = stock.operation_advice || stock.operation_suggestion || stock.llm_operation || stock.next_day_outlook || "";
 								const reason = stock.buy_reason || stock.llm_reason || (stock.reasons || []).join("；") || "";
 								const level: string = stock.recommendation_level || "";
 								const ls = LEVEL_STYLES[level] || defaultLevel;
 
 								return (
+
 									<Col key={`${code}-${si}`} xs={24} sm={12} lg={8}>
 										<div style={{
 											borderRadius: 10,

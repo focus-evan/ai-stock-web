@@ -8,6 +8,7 @@ import type {
 	MovingAverageResponse,
 	NorthboundResponse,
 	OvernightResponse,
+	RelayResponse,
 	SentimentResponse,
 	StockAnalysisResponse,
 	StrategiesSummaryResponse,
@@ -42,6 +43,32 @@ export function refreshDragonHeadRecommendations(limit: number = 13) {
 			timeout: 300000,
 		})
 		.json<DragonHeadResponse>();
+}
+
+/**
+ * 获取连板接力推荐列表
+ * @param limit - 返回推荐数量，默认10
+ */
+export function fetchRelayRecommendations(limit: number = 10) {
+	return request
+		.get("strategy/relay", {
+			searchParams: { limit },
+			timeout: 60000,
+		})
+		.json<RelayResponse>();
+}
+
+/**
+ * 手动刷新连板接力推荐
+ * @param limit - 返回推荐数量，默认10
+ */
+export function refreshRelayRecommendations(limit: number = 10) {
+	return request
+		.post("strategy/relay/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<RelayResponse>();
 }
 
 /**
