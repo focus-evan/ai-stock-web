@@ -553,6 +553,10 @@ export interface WatchlistItem {
 	change_pct?: number
 	pnl_amount?: number
 	pnl_pct?: number
+	stop_loss_price?: number
+	take_profit_price?: number
+	stop_loss_pct?: number
+	take_profit_pct?: number
 	latest_guidance?: WatchlistGuidanceRecord
 	created_at: string
 }

@@ -389,6 +389,55 @@ const WatchlistPanel: React.FC<Props> = () => {
 										)}
 									</div>
 
+									{/* 止损价/止盈价 */}
+									{(item.stop_loss_price || item.take_profit_price) && (
+										<div style={{
+											margin: "0 10px 8px",
+											padding: "6px 10px",
+											background: "linear-gradient(135deg, #f6ffed 0%, #fff7e6 100%)",
+											borderRadius: 6,
+											display: "flex",
+											justifyContent: "space-between",
+											alignItems: "center",
+										}}
+										>
+											{item.stop_loss_price != null && item.stop_loss_price > 0 && (
+												<div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+													<span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#cf1322" }} />
+													<Text style={{ fontSize: 11, color: "#8c8c8c" }}>止损</Text>
+													<Text style={{ fontSize: 13, fontWeight: 600, color: "#cf1322" }}>
+														¥
+														{item.stop_loss_price.toFixed(2)}
+													</Text>
+													{item.stop_loss_pct != null && (
+														<Text style={{ fontSize: 10, color: "#cf1322" }}>
+															(
+															{item.stop_loss_pct}
+															%)
+														</Text>
+													)}
+												</div>
+											)}
+											{item.take_profit_price != null && item.take_profit_price > 0 && (
+												<div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+													<span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#389e0d" }} />
+													<Text style={{ fontSize: 11, color: "#8c8c8c" }}>止盈</Text>
+													<Text style={{ fontSize: 13, fontWeight: 600, color: "#389e0d" }}>
+														¥
+														{item.take_profit_price.toFixed(2)}
+													</Text>
+													{item.take_profit_pct != null && (
+														<Text style={{ fontSize: 10, color: "#389e0d" }}>
+															(+
+															{item.take_profit_pct}
+															%)
+														</Text>
+													)}
+												</div>
+											)}
+										</div>
+									)}
+
 									{/* 最新指导预览 */}
 									{lg && (
 										<div style={{
