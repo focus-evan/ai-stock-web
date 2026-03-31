@@ -36,6 +36,7 @@ const { Text } = Typography;
 // ===================== 策略配置 =====================
 const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: string, gradient: string }> = {
 	dragon_head: { label: "龙头战法", icon: "🐉", color: "#eb2f96", gradient: "linear-gradient(135deg, #eb2f96 0%, #f759ab 100%)" },
+	relay: { label: "连板接力", icon: "🔗", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ff7a45 100%)" },
 	sentiment: { label: "情绪战法", icon: "💡", color: "#1890ff", gradient: "linear-gradient(135deg, #1890ff 0%, #40a9ff 100%)" },
 	event_driven: { label: "事件驱动", icon: "📡", color: "#fa8c16", gradient: "linear-gradient(135deg, #fa8c16 0%, #ffc53d 100%)" },
 	breakthrough: { label: "突破战法", icon: "🚀", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #b37feb 100%)" },
