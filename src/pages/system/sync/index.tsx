@@ -62,6 +62,8 @@ function strategyColor(s: string): string {
 		return "#faad14";
 	if (s === "combined")
 		return "#722ed1";
+	if (s === "relay")
+		return "#f5222d";
 	if (s === "northbound")
 		return "#9254de";
 	if (s === "trend_momentum")
@@ -91,6 +93,8 @@ function strategyIcon(s: string): string {
 		return "📈";
 	if (s === "combined")
 		return "🔗";
+	if (s === "relay")
+		return "🏆";
 	if (s === "northbound")
 		return "🏦";
 	if (s === "trend_momentum")
@@ -244,6 +248,7 @@ export default function SchedulerPage() {
 		"moving_average",
 		"northbound",
 		"trend_momentum",
+		"relay",
 		"combined",
 		"global",
 	];
@@ -257,6 +262,7 @@ export default function SchedulerPage() {
 		moving_average: "📈 均线战法",
 		northbound: "🏦 北向资金",
 		trend_momentum: "📐 趋势动量",
+		relay: "🏆 连板接力",
 		combined: "🔗 综合战法",
 		global: "⚙️ 全局任务",
 	};
