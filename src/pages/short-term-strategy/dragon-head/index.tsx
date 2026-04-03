@@ -383,7 +383,7 @@ export default function DragonHead() {
 	}
 
 	// Empty state
-	if (!data || data.recommendations.length === 0) {
+	if (!data) {
 		const handleGenerate = async () => {
 			setLoading(true);
 			setError(null);
