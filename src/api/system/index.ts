@@ -18,6 +18,13 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
+ * 获取当前分支信息
+ */
+export function getBranchInfo() {
+	return request.get("system/branch").json<{ code: number, data: { branch: string, database: string, scheduler_enabled: boolean, api_port: number } }>();
+}
+
+/**
  * 健康检查
  */
 export function checkHealth() {

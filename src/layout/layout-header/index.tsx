@@ -12,6 +12,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { theme as antdTheme, Button, ConfigProvider, theme } from "antd";
 
 import { headerHeight } from "../constants";
+import { BranchBadge } from "./components/branch-badge";
 import { FullscreenButton } from "./components/fullscreen-button";
 import { LanguageButton } from "./components/language-button";
 import { ThemeButton } from "./components/theme-button";
@@ -80,6 +81,7 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 				</div>
 
 				<div className="flex items-center">
+					<BranchBadge />
 					<GlobalSearch />
 					<Preferences {...buttonProps} />
 					<ThemeButton {...buttonProps} />
