@@ -262,11 +262,31 @@ const BreakthroughPage: React.FC = () => {
 	}
 
 	if (!data || data.recommendations.length === 0) {
+		const handleGenerate = async () => {
+			setLoading(true);
+			setError(null);
+			try {
+				const { triggerRecommendations } = await import("#src/api/portfolio");
+				await triggerRecommendations();
+				await fetchData();
+			}
+			catch (err: any) {
+				setError(err?.message || "生成推荐失败");
+			}
+			finally {
+				setLoading(false);
+			}
+		};
+
 		return (
 			<div style={{ padding: 24 }}>
 				<Card>
 					<Empty description="暂无突破信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
 						<Text type="secondary">当前市场暂无符合条件的突破信号股，请在交易时间段内查看</Text>
+						<Space style={{ marginTop: 16 }}>
+							<Button onClick={fetchData} icon={<ReloadOutlined />}>重试</Button>
+							<Button type="primary" loading={loading} onClick={handleGenerate}>立即生成推荐</Button>
+						</Space>
 					</Empty>
 				</Card>
 			</div>
