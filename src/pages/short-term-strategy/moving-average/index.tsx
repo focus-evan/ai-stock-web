@@ -2,7 +2,7 @@ import type { MovingAverageData, MovingAverageStock } from "#src/api/strategy/ty
 import type { ColumnsType } from "antd/es/table";
 import { fetchMovingAverageRecommendations, refreshMovingAverageRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
-import { CheckCircleOutlined, LineChartOutlined, ReloadOutlined, SwapOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, LineChartOutlined, ReloadOutlined, SwapOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
 
 import React, { useEffect, useState } from "react";
@@ -297,8 +297,16 @@ const MovingAveragePage: React.FC = () => {
 		return (
 			<div style={{ padding: 24 }}>
 				<Card>
-					<Empty description="暂无均线信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-						<Text type="secondary">当前暂无符合条件的均线信号股，请在交易时段查看</Text>
+					<Empty description="暂无均线信号" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ marginTop: 40 }}>
+						<Text type="secondary">当前暂无推荐数据，点击下方按钮立即生成</Text>
+						<div style={{ marginTop: 16 }}>
+							<Space>
+								<Button onClick={fetchData} icon={<ReloadOutlined />}>刷新缓存</Button>
+								<Button type="primary" icon={<ThunderboltOutlined />} loading={refreshing} onClick={handleRefresh}>
+									{refreshing ? `AI分析中 ${refreshSeconds}s...` : "生成推荐"}
+								</Button>
+							</Space>
+						</div>
 					</Empty>
 				</Card>
 			</div>

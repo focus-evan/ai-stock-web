@@ -12,6 +12,7 @@ import {
 	MergeCellsOutlined,
 	ReloadOutlined,
 	StarFilled,
+	ThunderboltOutlined,
 	TrophyOutlined,
 } from "@ant-design/icons";
 import {
@@ -483,10 +484,16 @@ const CombinedPage: React.FC = () => {
 		return (
 			<div style={{ padding: 24 }}>
 				<Card>
-					<Empty description="暂无综合推荐" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-						<Text type="secondary">
-							当前没有被 2 个及以上战法同时推荐的股票，请等待各战法推荐生成后查看
-						</Text>
+					<Empty description="暂无综合推荐" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ marginTop: 40 }}>
+						<Text type="secondary">当前暂无推荐数据，点击下方按钮立即生成</Text>
+						<div style={{ marginTop: 16 }}>
+							<Space>
+								<Button onClick={fetchData} icon={<ReloadOutlined />}>刷新缓存</Button>
+								<Button type="primary" icon={<ThunderboltOutlined />} loading={refreshing} onClick={handleRefresh}>
+									{refreshing ? `AI分析中 ${refreshSeconds}s...` : "生成推荐"}
+								</Button>
+							</Space>
+						</div>
 					</Empty>
 				</Card>
 			</div>

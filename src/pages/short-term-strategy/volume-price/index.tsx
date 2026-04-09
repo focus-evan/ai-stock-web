@@ -280,8 +280,16 @@ const VolumePricePage: React.FC = () => {
 		return (
 			<div style={{ padding: 24 }}>
 				<Card>
-					<Empty description="暂无量价信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-						<Text type="secondary">当前暂无量价异动信号，请在交易时段查看</Text>
+					<Empty description="暂无量价信号" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ marginTop: 40 }}>
+						<Text type="secondary">当前暂无推荐数据，点击下方按钮立即生成</Text>
+						<div style={{ marginTop: 16 }}>
+							<Space>
+								<Button onClick={fetchData} icon={<ReloadOutlined />}>刷新缓存</Button>
+								<Button type="primary" icon={<FireOutlined />} loading={refreshing} onClick={handleRefresh}>
+									{refreshing ? `AI分析中 ${refreshSeconds}s...` : "生成推荐"}
+								</Button>
+							</Space>
+						</div>
 					</Empty>
 				</Card>
 			</div>
