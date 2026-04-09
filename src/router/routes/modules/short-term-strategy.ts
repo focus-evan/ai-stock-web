@@ -41,7 +41,7 @@ const routes: AppRouteRecordRaw[] = [
 				path: "/short-term-strategy/auction",
 				Component: Auction,
 				handle: {
-					icon: "FundViewOutlined",
+					icon: "FieldTimeOutlined",
 					title: "竞价战法",
 				},
 			},
