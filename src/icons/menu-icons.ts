@@ -102,4 +102,6 @@ export const menuIcons: Record<string, any> = {
 	SearchOutlined,
 	MergeCellsOutlined,
 	BankOutlined,
+	FireOutlined,
+	LinkOutlined,
 };

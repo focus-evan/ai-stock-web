@@ -409,9 +409,14 @@ export default function EventDriven() {
 			setLoading(true);
 			setError(null);
 			try {
-				const { triggerRecommendations } = await import("#src/api/portfolio");
-				await triggerRecommendations();
-				await fetchData();
+				// 直接调用 force_refresh=true，只重新生成事件驱动推荐，避免触发全量策略
+				const response = await fetchEventDrivenRecommendations(13, true);
+				if (response.status === "success" && response.data) {
+					setData(response.data);
+				}
+				else {
+					setError(response.message || "生成推荐失败");
+				}
 			}
 			catch (err: any) {
 				setError(err?.message || "生成推荐失败");
