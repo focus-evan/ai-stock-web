@@ -1,6 +1,8 @@
 import type { StockAnalysisData, StrategySignal } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
+import WatchlistModal from "#src/components/WatchlistModal";
+import WatchlistPanel from "#src/components/WatchlistPanel";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -18,6 +20,7 @@ import {
 	ReloadOutlined,
 	SafetyOutlined,
 	SearchOutlined,
+	StarOutlined,
 	ThunderboltOutlined,
 	TrophyOutlined,
 	WarningOutlined,
@@ -110,6 +113,7 @@ function InfoCard({ icon, title, children }: {
 /* ====================== Analysis Result Display ====================== */
 function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 	const act = actionConfig[data.action] || actionConfig["观望"];
+	const [watchlistOpen, setWatchlistOpen] = useState(false);
 
 	const strategyColumns: ColumnsType<StrategySignal> = [
 		{ title: "战法", dataIndex: "strategy", key: "strategy", width: 100, render: (n: string) => <Text strong>{n}</Text> },
@@ -155,14 +159,30 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 						</div>
 					</Col>
 					<Col xs={24} sm={16}>
-						<Title level={3} style={{ color: "#fff", margin: 0 }}>
-							{data.stock_name}
-							{" "}
-							(
-							{data.stock_code}
-							)
-							{(data as any).market === "hk" && <Tag color="magenta" style={{ marginLeft: 8, verticalAlign: "middle" }}>港股</Tag>}
-						</Title>
+						<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+							<Title level={3} style={{ color: "#fff", margin: 0 }}>
+								{data.stock_name}
+								{" "}
+								(
+								{data.stock_code}
+								)
+								{(data as any).market === "hk" && <Tag color="magenta" style={{ marginLeft: 8, verticalAlign: "middle" }}>港股</Tag>}
+							</Title>
+							<Button
+								size="small"
+								icon={<StarOutlined />}
+								style={{
+									background: "rgba(255,255,255,0.2)",
+									border: "1px solid rgba(255,255,255,0.5)",
+									color: "#fff",
+									marginLeft: 12,
+									flexShrink: 0,
+								}}
+								onClick={() => setWatchlistOpen(true)}
+							>
+								加入自选盯盘
+							</Button>
+						</div>
 						<Row gutter={24} style={{ marginTop: 12 }}>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}><span title="分析执行时刻的价格快照，非实时报价">分析时价 ℹ️</span></Text>} value={data.current_price || "-"} valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>涨跌幅</Text>} value={data.change_pct || 0} precision={2} suffix="%" valueStyle={{ color: "#fff", fontSize: 22 }} prefix={(data.change_pct || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Col>
@@ -457,6 +477,19 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 					</Text>
 				</div>
 			</Card>
+
+			{/* 加入自选盯盘 Modal */}
+			<WatchlistModal
+				open={watchlistOpen}
+				onClose={() => setWatchlistOpen(false)}
+				onSuccess={() => setWatchlistOpen(false)}
+				stockCode={(data as any).stock_code || ""}
+				stockName={(data as any).stock_name || ""}
+				strategies={[]}
+				strategyNames={[]}
+				overlapCount={1}
+				suggestedBuyPrice={(data as any).current_price || undefined}
+			/>
 		</>
 	);
 }
@@ -800,6 +833,17 @@ const StockAnalysisPage: React.FC = () => {
 							</span>
 						),
 						children: <HistoryTab />,
+					},
+					{
+						key: "watchlist",
+						label: (
+							<span>
+								<StarOutlined />
+								{" "}
+								自选盯盘
+							</span>
+						),
+						children: <WatchlistPanel />,
 					},
 				]}
 			/>
