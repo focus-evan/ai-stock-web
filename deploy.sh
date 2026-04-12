@@ -3,18 +3,49 @@
 ###############################################################################
 # 生产环境构建部署脚本
 # 用途: 拉取最新代码，构建生产版本，部署到 nginx
+#
 # 使用方法:
-#   ./deploy.sh          - 完整构建部署
-#   ./deploy.sh build    - 仅构建不部署
-#   ./deploy.sh deploy   - 仅部署（使用已有构建产物）
+#   ./deploy.sh           - 部署 dev  分支前端（默认，PORT=3666）
+#   ./deploy.sh dev       - 部署 dev  分支前端（PORT=3666）
+#   ./deploy.sh main      - 部署 main 分支前端（PORT=3667）
+#   ./deploy.sh build     - 仅构建不部署
+#
+# ⚠️  重要：dev 和 main 前端使用完全隔离的 nginx 目录和端口，
+#     绝对不会互相覆盖！
 ###############################################################################
 
 set -e
 
-# ==================== 配置 ====================
-NGINX_WEB_ROOT="/usr/share/nginx/html"   # nginx 静态文件目录
-BACKUP_DIR="/data/backups/ai-stock-web"  # 备份目录
-PORT=80                                   # nginx 端口
+# ==================== 环境参数 ====================
+ENV=${1:-dev}       # dev | main，决定端口和部署目录
+
+case "$ENV" in
+    dev)
+        NGINX_WEB_ROOT="/var/www/html/ai-stock-web-dev"   # dev 前端静态文件目录
+        PORT=3666                                           # dev 前端端口
+        ;;
+    main)
+        NGINX_WEB_ROOT="/var/www/html/ai-stock-web-main"  # main 前端静态文件目录
+        PORT=3667                                           # main 前端端口
+        ;;
+    build)
+        # 仅构建模式，不实际部署
+        NGINX_WEB_ROOT=""
+        PORT=0
+        ;;
+    *)
+        echo "用法: $0 {dev|main|build}"
+        echo ""
+        echo "命令说明:"
+        echo "  dev    - 部署 dev  分支前端（PORT=3666，目录=ai-stock-web-dev）"
+        echo "  main   - 部署 main 分支前端（PORT=3667，目录=ai-stock-web-main）"
+        echo "  build  - 仅构建，不部署"
+        echo ""
+        exit 1
+        ;;
+esac
+
+BACKUP_DIR="/data/backups/ai-stock-web-${ENV}"
 
 # ==================== 颜色 ====================
 RED='\033[0;31m'
@@ -29,38 +60,6 @@ log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
 log_error()   { echo -e "${RED}[✗]${NC} $1"; }
 log_warning() { echo -e "${YELLOW}[!]${NC} $1"; }
 log_header()  { echo -e "${CYAN}$1${NC}"; }
-
-# ==================== 检测 nginx 配置 ====================
-detect_nginx_root() {
-    # 尝试从 nginx 配置中自动检测 root 目录
-    if command -v nginx &> /dev/null; then
-        # 查找包含 ai-stock 或 3666 或 默认的 server 配置
-        local detected_root=""
-
-        # 方法1: 检查 conf.d 目录
-        for conf_file in /etc/nginx/conf.d/*.conf /etc/nginx/sites-enabled/*; do
-            if [ -f "$conf_file" ]; then
-                local root_line=$(grep -E '^\s*root\s+' "$conf_file" 2>/dev/null | head -1)
-                if [ -n "$root_line" ]; then
-                    detected_root=$(echo "$root_line" | awk '{print $2}' | tr -d ';')
-                    break
-                fi
-            fi
-        done
-
-        # 方法2: 检查默认配置
-        if [ -z "$detected_root" ]; then
-            detected_root=$(nginx -T 2>/dev/null | grep -E '^\s*root\s+' | head -1 | awk '{print $2}' | tr -d ';')
-        fi
-
-        if [ -n "$detected_root" ] && [ "$detected_root" != "$NGINX_WEB_ROOT" ]; then
-            log_warning "检测到 nginx root 目录: $detected_root"
-            log_warning "脚本配置的目录: $NGINX_WEB_ROOT"
-            NGINX_WEB_ROOT="$detected_root"
-            log_info "使用检测到的目录: $NGINX_WEB_ROOT"
-        fi
-    fi
-}
 
 # ==================== 拉取代码 ====================
 pull_code() {
@@ -89,13 +88,11 @@ install_deps() {
     fi
     log_info "使用 $PKG_MANAGER"
 
-    # 检查 node_modules 是否存在
     if [ ! -d "node_modules" ]; then
         log_warning "依赖未安装，正在安装..."
         $PKG_MANAGER install
         log_success "依赖安装完成"
     else
-        # 检查 package.json 是否有变化
         if [ "$(git diff HEAD~1 --name-only 2>/dev/null | grep -c 'package.json\|pnpm-lock')" -gt 0 ]; then
             log_warning "依赖文件有变化，重新安装..."
             $PKG_MANAGER install
@@ -109,11 +106,10 @@ install_deps() {
 # ==================== 构建 ====================
 build_project() {
     log_header "=========================================="
-    log_header "  开始构建生产版本"
+    log_header "  开始构建生产版本（环境: ${ENV}）"
     log_header "=========================================="
     echo ""
 
-    # 检查环境变量文件
     if [ ! -f ".env.production" ]; then
         log_error "缺少 .env.production 文件"
         exit 1
@@ -121,7 +117,6 @@ build_project() {
     log_success ".env.production 存在"
     grep "VITE_API_BASE_URL" .env.production || log_warning "未找到 VITE_API_BASE_URL"
 
-    # 构建
     log_info "执行构建 ($PKG_MANAGER run build)..."
     local start_time=$(date +%s)
 
@@ -143,7 +138,7 @@ build_project() {
 # ==================== 部署 ====================
 deploy_to_nginx() {
     log_header "=========================================="
-    log_header "  部署到 nginx"
+    log_header "  部署到 nginx（环境: ${ENV}，端口: ${PORT}）"
     log_header "=========================================="
     echo ""
 
@@ -152,7 +147,10 @@ deploy_to_nginx() {
         exit 1
     fi
 
-    detect_nginx_root
+    # ⚠️ 安全确认：打印目标目录，绝对不自动探测
+    log_warning "目标部署目录: ${NGINX_WEB_ROOT}"
+    log_warning "（此目录只属于 ${ENV} 分支，不会影响另一个分支）"
+    echo ""
 
     # 创建备份
     if [ -d "$NGINX_WEB_ROOT" ] && [ "$(ls -A $NGINX_WEB_ROOT 2>/dev/null)" ]; then
@@ -175,69 +173,61 @@ deploy_to_nginx() {
     cp -r build/* "$NGINX_WEB_ROOT/"
     log_success "文件已复制"
 
-    # 重新加载 nginx
+    # 重载 nginx
     if command -v nginx &> /dev/null; then
-        log_info "重新加载 nginx..."
-        nginx -t 2>&1 && nginx -s reload
-        log_success "nginx 已重新加载"
+        if nginx -T 2>/dev/null | grep -q "listen ${PORT}"; then
+            log_info "重新加载 nginx..."
+            nginx -t 2>&1 && nginx -s reload
+            log_success "nginx 已重新加载"
+        else
+            log_warning "nginx 中未找到监听 ${PORT} 端口的 server block！"
+            log_warning "请在 /etc/nginx/conf.d/ 添加如下配置后手动 reload："
+            echo ""
+            echo "  # /etc/nginx/conf.d/ai-stock-web-${ENV}.conf"
+            echo "  server {"
+            echo "      listen ${PORT};"
+            echo "      root ${NGINX_WEB_ROOT};"
+            echo "      index index.html;"
+            echo "      location / { try_files \$uri \$uri/ /index.html; }"
+            echo "  }"
+            echo ""
+        fi
     else
-        log_warning "nginx 未安装，请手动部署"
+        log_warning "nginx 未安装，请手动配置"
     fi
 
     echo ""
     log_success "部署完成！"
     echo ""
+    echo "  环境:     ${ENV}"
+    echo "  端口:     ${PORT}"
+    echo "  目录:     ${NGINX_WEB_ROOT}"
     echo "  访问地址: http://$(hostname -I 2>/dev/null | awk '{print $1}'):${PORT}"
-    echo ""
-}
-
-# ==================== 完整流程 ====================
-full_deploy() {
-    echo ""
-    log_header "=========================================="
-    log_header "  价值投资-Agent 前端生产部署"
-    log_header "=========================================="
-    echo ""
-
-    pull_code
-    install_deps
-    build_project
-    deploy_to_nginx
-
-    log_header "=========================================="
-    log_header "  部署完成！"
-    log_header "=========================================="
     echo ""
 }
 
 # ==================== 主函数 ====================
 main() {
-    ACTION=${1:-full}
+    echo ""
+    log_header "=========================================="
+    log_header "  ai-stock 前端部署 [${ENV}]"
+    log_header "=========================================="
+    echo ""
 
-    case "$ACTION" in
-        full|"")
-            full_deploy
-            ;;
+    case "$ENV" in
         build)
             pull_code
             install_deps
             build_project
-            log_success "构建完成，使用 './deploy.sh deploy' 部署"
+            log_success "构建完成，使用 './deploy.sh dev' 或 './deploy.sh main' 部署"
             ;;
-        deploy)
+        dev|main)
+            pull_code
+            install_deps
+            build_project
             deploy_to_nginx
-            ;;
-        *)
-            echo "用法: $0 {full|build|deploy}"
-            echo ""
-            echo "命令说明:"
-            echo "  full    - 完整流程：拉取代码 → 安装依赖 → 构建 → 部署 (默认)"
-            echo "  build   - 仅拉取代码并构建"
-            echo "  deploy  - 仅部署已有的 build 目录到 nginx"
-            echo ""
-            exit 1
             ;;
     esac
 }
 
-main "$@"
+main
