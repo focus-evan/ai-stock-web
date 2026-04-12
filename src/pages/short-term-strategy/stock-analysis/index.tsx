@@ -726,6 +726,7 @@ const StockAnalysisPage: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [elapsed, setElapsed] = useState(0);
+	const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
 
 	const handleAnalyze = useCallback(async () => {
 		const input = stockInput.trim();
@@ -740,6 +741,7 @@ const StockAnalysisPage: React.FC = () => {
 			const response = await fetchStockAnalysis(input);
 			if (response.status === "success" && response.data) {
 				setData(response.data);
+				setHistoryRefreshKey(k => k + 1); // 触发历史列表刷新
 				message.success("分析完成");
 			}
 			else {
@@ -832,7 +834,7 @@ const StockAnalysisPage: React.FC = () => {
 								历史分析
 							</span>
 						),
-						children: <HistoryTab />,
+						children: <HistoryTab key={historyRefreshKey} />,
 					},
 					{
 						key: "watchlist",
