@@ -292,6 +292,8 @@ export interface EventDrivenData {
 	llm_enhanced?: boolean
 	generated_at: string
 	trading_date: string
+	/** Top 5 重要事件（按影响等级排序，供前端优先展示） */
+	top_events?: EventInfo[]
 }
 
 /** 事件驱动接口响应 */
@@ -889,5 +891,70 @@ export interface MoatValueData {
 export interface MoatValueResponse {
 	status: "success" | "error"
 	data: MoatValueData
+	message?: string
+}
+
+// ===================== 连板接力战法 =====================
+
+/** 连板接力推荐股票 */
+export interface RelayStock {
+	rank: number
+	code: string
+	name: string
+	price: number
+	change_pct: number
+	amount: number
+	float_market_cap: number
+	turnover_rate: number
+	limit_up_days: number
+	first_limit_time: string
+	seal_amount: number
+	industry: string
+	relay_score: number
+	score_detail: {
+		seal_time: number
+		seal_strength: number
+		sector_heat: number
+		board_height: number
+		turnover: number
+		market_cap: number
+	}
+	board_label: string
+	relay_type: string
+	recommendation_level: string
+	reasons: string[]
+
+	// LLM 增强字段
+	relay_probability?: string
+	relay_probability_pct?: number
+	entry_timing?: string
+	buy_price?: number
+	stop_loss_price?: number
+	target_price?: number
+	position_pct?: string
+	confidence?: number
+	buy_reason?: string
+	risk_warning?: string
+	next_day_outlook?: string
+}
+
+/** 连板接力完整数据 */
+export interface RelayData {
+	recommendations: RelayStock[]
+	total: number
+	strategy_explanation: string
+	market_emotion?: string
+	total_limit_up?: number
+	board_distribution?: Record<string, number>
+	llm_enhanced: boolean
+	generated_at: string
+	trading_date: string
+	session_type?: string
+}
+
+/** 连板接力接口响应 */
+export interface RelayResponse {
+	status: "success" | "error"
+	data: RelayData
 	message?: string
 }

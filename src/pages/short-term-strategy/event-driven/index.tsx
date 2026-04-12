@@ -674,6 +674,108 @@ export default function EventDriven() {
 					</Col>
 				</Row>
 
+				{/* ===== Top 5 重要事件（核心展示区，置于推荐列表上方）===== */}
+				{data.top_events && data.top_events.length > 0 && (
+					<Card
+						style={{ marginBottom: 16, border: "1px solid #722ed115", background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" }}
+						styles={{ body: { padding: "16px 20px" } }}
+						title={(
+							<Space>
+								<AlertOutlined style={{ fontSize: 18, color: "#ff4d4f" }} />
+								<Text strong style={{ fontSize: 15, color: "#fff" }}>
+									今日最重要事件
+								</Text>
+								<Tag color="#722ed1" style={{ fontWeight: 600 }}>
+									{data.top_events.length}
+									{" "}
+									个高影响事件
+								</Tag>
+							</Space>
+						)}
+					>
+						<Space direction="vertical" size={12} style={{ width: "100%" }}>
+							{data.top_events.map((event, idx) => {
+								const isTop = event.impact_level >= 4;
+								const borderColor = event.impact_level >= 5 ? "#ff4d4f" : event.impact_level >= 4 ? "#fa541c" : "#fa8c16";
+								return (
+									<div
+										key={idx}
+										style={{
+											background: "rgba(255,255,255,0.04)",
+											border: `1px solid ${borderColor}30`,
+											borderLeft: `3px solid ${borderColor}`,
+											borderRadius: 8,
+											padding: "10px 14px",
+										}}
+									>
+										<div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 6 }}>
+											<Badge
+												count={`${event.impact_level}级`}
+												style={{ backgroundColor: getImpactColor(event.impact_level), fontWeight: 700, flexShrink: 0 }}
+											/>
+											{event.freshness === "首次" && (
+												<Tag color="#f5222d" style={{ flexShrink: 0 }}>🔥 首次</Tag>
+											)}
+											{isTop && (
+												<Tag color="#722ed1" style={{ flexShrink: 0 }}>⚡ 重大</Tag>
+											)}
+											<Text strong style={{ color: "#fff", lineHeight: 1.4, flex: 1 }}>
+												{event.title}
+											</Text>
+										</div>
+										{event.logic_chain && (
+											<Text style={{ fontSize: 12, color: "#aaa", display: "block", marginBottom: 6 }}>
+												📊 传导逻辑：
+												{" "}
+												{event.logic_chain}
+											</Text>
+										)}
+										<Space size={4} wrap>
+											{event.sectors?.slice(0, 6).map((sector, si) => (
+												<Tag key={si} color="processing" style={{ fontSize: 11, marginBottom: 2 }}>
+													{sector}
+												</Tag>
+											))}
+											{event.keywords?.slice(0, 4).map((kw, ki) => (
+												<Tag key={ki} style={{ fontSize: 11, color: "#888", marginBottom: 2 }}>
+													{kw}
+												</Tag>
+											))}
+										</Space>
+										{/* 该事件关联推荐的股票 */}
+										{(() => {
+											const relatedStocks = data.recommendations.filter(r =>
+												r.related_concepts?.some(c =>
+													event.sectors?.some(s => c.includes(s) || s.includes(c))
+													|| event.keywords?.some(k => c.includes(k) || k.includes(c)),
+												),
+											);
+											return relatedStocks.length > 0
+												? (
+													<div style={{ marginTop: 6, paddingTop: 6, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+														<Text style={{ fontSize: 11, color: "#666", marginRight: 6 }}>关联推荐：</Text>
+														{relatedStocks.slice(0, 4).map((s, si) => (
+															<Tag
+																key={si}
+																color={s.recommendation_level === "强烈推荐" ? "red" : s.recommendation_level === "推荐" ? "orange" : "default"}
+																style={{ fontSize: 11 }}
+															>
+																{s.name}
+																{" "}
+																{s.code}
+															</Tag>
+														))}
+													</div>
+												)
+												: null;
+										})()}
+									</div>
+								);
+							})}
+						</Space>
+					</Card>
+				)}
+
 				{/* 新闻摘要 */}
 				{data.news_digest && (
 					<>
