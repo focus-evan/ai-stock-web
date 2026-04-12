@@ -164,7 +164,7 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 							{(data as any).market === "hk" && <Tag color="magenta" style={{ marginLeft: 8, verticalAlign: "middle" }}>港股</Tag>}
 						</Title>
 						<Row gutter={24} style={{ marginTop: 12 }}>
-							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>当前价</Text>} value={data.current_price || "-"} valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
+							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}><span title="分析执行时刻的价格快照，非实时报价">分析时价 ℹ️</span></Text>} value={data.current_price || "-"} valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>涨跌幅</Text>} value={data.change_pct || 0} precision={2} suffix="%" valueStyle={{ color: "#fff", fontSize: 22 }} prefix={(data.change_pct || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Col>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>评分</Text>} value={data.score} suffix="/100" valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
 							<Col span={6}><Statistic title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>置信度</Text>} value={data.confidence} suffix="%" valueStyle={{ color: "#fff", fontSize: 22 }} /></Col>
@@ -559,12 +559,18 @@ function HistoryTab() {
 			render: (s: number) => <Text strong style={{ color: s >= 70 ? "#f5222d" : s >= 40 ? "#faad14" : "#8c8c8c" }}>{s}</Text>,
 		},
 		{
-			title: "当前价",
+			title: "分析时价",
 			dataIndex: "current_price",
 			key: "price",
-			width: 80,
+			width: 90,
 			align: "right",
-			render: (v: any) => v ? <Text>{Number(v).toFixed(2)}</Text> : "-",
+			render: (v: any) => v
+				? (
+					<span title="分析执行时刻的价格快照，非实时报价">
+						<Text>{Number(v).toFixed(2)}</Text>
+					</span>
+				)
+				: "-",
 		},
 		{
 			title: "涨跌幅",
