@@ -292,6 +292,8 @@ export interface EventDrivenData {
 	llm_enhanced?: boolean
 	generated_at: string
 	trading_date: string
+	/** Top 5 重要事件（按影响等级排序，供前端优先展示） */
+	top_events?: EventInfo[]
 }
 
 /** 事件驱动接口响应 */
