@@ -18,6 +18,7 @@ const TrendMomentum = lazy(() => import("#src/pages/short-term-strategy/trend-mo
 const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
+const Relay = lazy(() => import("#src/pages/short-term-strategy/relay"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -35,6 +36,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "CrownOutlined",
 					title: "龙头战法",
+				},
+			},
+			{
+				path: "/short-term-strategy/relay",
+				Component: Relay,
+				handle: {
+					icon: "ThunderboltOutlined",
+					title: "连板接力",
 				},
 			},
 			{

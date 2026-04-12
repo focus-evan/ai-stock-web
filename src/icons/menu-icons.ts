@@ -105,6 +105,5 @@ export const menuIcons: Record<string, any> = {
 	MergeCellsOutlined,
 	BankOutlined,
 	FireOutlined,
-	FieldTimeOutlined,
 	LinkOutlined,
 };
