@@ -339,21 +339,6 @@ export default function Relay() {
 
 	// Empty state
 	if (!data || data.recommendations.length === 0) {
-		const handleGenerate = async () => {
-			setLoading(true);
-			setError(null);
-			try {
-				const { triggerRecommendations } = await import("#src/api/portfolio");
-				await triggerRecommendations();
-				await fetchData();
-			}
-			catch (err: any) {
-				setError(err?.message || "生成预判失败");
-			}
-			finally {
-				setLoading(false);
-			}
-		};
 		return (
 			<BasicContent>
 				<Empty
@@ -364,7 +349,7 @@ export default function Relay() {
 						<Button onClick={fetchData} icon={<ReloadOutlined />}>
 							刷新缓存
 						</Button>
-						<Button type="primary" onClick={handleGenerate} loading={loading} icon={<ThunderboltOutlined />}>
+						<Button type="primary" onClick={handleRefresh} loading={refreshing} icon={<ThunderboltOutlined />}>
 							生成预判
 						</Button>
 					</Space>
