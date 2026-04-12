@@ -503,6 +503,7 @@ function HistoryTab() {
 	const [detail, setDetail] = useState<StockAnalysisData | null>(null);
 	const [detailVisible, setDetailVisible] = useState(false);
 	const [detailLoading, setDetailLoading] = useState(false);
+	const [watchlistTarget, setWatchlistTarget] = useState<{ code: string, name: string, price?: number } | null>(null);
 
 	const loadHistory = useCallback(async (p: number) => {
 		setLoading(true);
@@ -657,11 +658,20 @@ function HistoryTab() {
 		{
 			title: "操作",
 			key: "ops",
-			width: 130,
+			width: 180,
 			align: "center",
 			render: (_, r) => (
 				<Space size={0}>
 					<Button size="small" type="link" icon={<EyeOutlined />} onClick={() => viewDetail(r.id)}>详情</Button>
+					<Button
+						size="small"
+						type="link"
+						icon={<StarOutlined />}
+						style={{ color: "#faad14" }}
+						onClick={() => setWatchlistTarget({ code: r.stock_code, name: r.stock_name, price: r.current_price })}
+					>
+						自选
+					</Button>
 					<Popconfirm title="确定删除该分析记录？" onConfirm={() => handleDelete(r.id)} okText="删除" cancelText="取消">
 						<Button size="small" type="link" danger icon={<DeleteOutlined />}>删除</Button>
 					</Popconfirm>
@@ -714,6 +724,17 @@ function HistoryTab() {
 			>
 				{detailLoading ? <div style={{ textAlign: "center", padding: 40 }}><Spin size="large" /></div> : detail ? <AnalysisResultView data={detail} /> : <Empty />}
 			</Modal>
+			<WatchlistModal
+				open={!!watchlistTarget}
+				onClose={() => setWatchlistTarget(null)}
+				onSuccess={() => setWatchlistTarget(null)}
+				stockCode={watchlistTarget?.code ?? ""}
+				stockName={watchlistTarget?.name ?? ""}
+				strategies={[]}
+				strategyNames={[]}
+				overlapCount={1}
+				suggestedBuyPrice={watchlistTarget?.price}
+			/>
 		</>
 	);
 }
