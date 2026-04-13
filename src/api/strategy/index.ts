@@ -1,3 +1,4 @@
+import type { DailyPicksResponse } from "./daily-picks-types";
 import type {
 	AuctionResponse,
 	BreakthroughResponse,
@@ -17,6 +18,7 @@ import type {
 } from "./types";
 import { request } from "#src/utils/request";
 
+export * from "./daily-picks-types";
 export * from "./types";
 
 /**
@@ -671,4 +673,33 @@ export function fetchLatestGuidance() {
 	return request
 		.get("strategy/combined/watchlist/guidance/latest", { timeout: 15000 })
 		.json<{ status: string, data: { records: WatchlistGuidanceRecord[], total: number } }>();
+}
+
+// ===================== 当日精选 =====================
+
+/**
+ * 获取当日精选推荐（汇聚所有战法强烈推荐）
+ * @param limit - 返回股票数量上限，默认10
+ * @param withDeepAnalysis - 是否进行LLM深度分析，默认true
+ */
+export function fetchDailyPicks(limit: number = 10, withDeepAnalysis: boolean = true) {
+	return request
+		.get("strategy/daily-picks", {
+			searchParams: { limit, with_deep_analysis: withDeepAnalysis },
+			timeout: 300000, // 深度分析耗时较长
+		})
+		.json<DailyPicksResponse>();
+}
+
+/**
+ * 强制刷新当日精选（重新聚合 + 重新深度分析）
+ * @param limit - 返回股票数量上限，默认10
+ */
+export function refreshDailyPicks(limit: number = 10) {
+	return request
+		.post("strategy/daily-picks/refresh", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<DailyPicksResponse>();
 }

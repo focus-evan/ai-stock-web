@@ -4,6 +4,7 @@ import ContainerLayout from "#src/layout/container-layout";
 import { shortTermStrategy } from "#src/router/extra-info";
 import { lazy } from "react";
 
+const DailyPicks = lazy(() => import("#src/pages/short-term-strategy/daily-picks"));
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
 const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"));
@@ -30,6 +31,14 @@ const routes: AppRouteRecordRaw[] = [
 			order: shortTermStrategy,
 		},
 		children: [
+			{
+				path: "/short-term-strategy/daily-picks",
+				Component: DailyPicks,
+				handle: {
+					icon: "FireOutlined",
+					title: "当日精选",
+				},
+			},
 			{
 				path: "/short-term-strategy/dragon-head",
 				Component: DragonHead,
