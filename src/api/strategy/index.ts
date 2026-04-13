@@ -1,4 +1,4 @@
-import type { DailyPicksResponse } from "./daily-picks-types";
+import type { DailyPicksDetailResponse, DailyPicksHistoryResponse, DailyPicksResponse } from "./daily-picks-types";
 import type {
 	AuctionResponse,
 	BreakthroughResponse,
@@ -702,4 +702,31 @@ export function refreshDailyPicks(limit: number = 10) {
 			timeout: 300000,
 		})
 		.json<DailyPicksResponse>();
+}
+
+/**
+ * 查询当日精选历史列表（每个交易日最新一条）
+ * @param days - 查询最近30天
+ * @param page - 页码
+ * @param pageSize - 每页条数
+ */
+export function fetchDailyPicksHistory(days: number = 30, page: number = 1, pageSize: number = 20) {
+	return request
+		.get("strategy/daily-picks/history", {
+			searchParams: { days, page, page_size: pageSize },
+			timeout: 15000,
+		})
+		.json<DailyPicksHistoryResponse>();
+}
+
+/**
+ * 查询历史精选详情（含完整 deep_analysis）
+ * @param recordId - 历史记录 ID
+ */
+export function fetchDailyPicksDetail(recordId: number) {
+	return request
+		.get(`strategy/daily-picks/history/${recordId}`, {
+			timeout: 15000,
+		})
+		.json<DailyPicksDetailResponse>();
 }

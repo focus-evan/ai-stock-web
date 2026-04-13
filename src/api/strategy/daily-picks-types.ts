@@ -108,3 +108,48 @@ export interface DailyPicksResponse {
 	data: DailyPicksData | null
 	message?: string
 }
+
+/** 历史精选列表项（摘要，不含 deep_analysis） */
+export interface DailyPicksHistoryItem {
+	id: number
+	trading_date: string
+	batch_no: string
+	pick_count: number
+	strategy_count: number
+	trigger_type: "manual" | "scheduled"
+	generated_at: string
+	stocks_summary: { code: string, name: string }[]
+	weekly_theme: string
+}
+
+export interface DailyPicksHistoryData {
+	list: DailyPicksHistoryItem[]
+	total: number
+	page: number
+	page_size: number
+}
+
+export interface DailyPicksHistoryResponse {
+	status: "success" | "error"
+	data: DailyPicksHistoryData | null
+	message?: string
+}
+
+export interface DailyPicksDetailData {
+	id: number
+	trading_date: string
+	batch_no: string
+	pick_count: number
+	strategy_count: number
+	trigger_type: "manual" | "scheduled"
+	generated_at: string
+	picks: DailyPickStock[]
+	weekly_logic: WeeklyLogic
+	strategy_summaries: Record<string, string>
+}
+
+export interface DailyPicksDetailResponse {
+	status: "success" | "error"
+	data: DailyPicksDetailData | null
+	message?: string
+}
