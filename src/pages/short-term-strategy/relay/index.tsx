@@ -219,6 +219,28 @@ export default function Relay() {
 			),
 		},
 		{
+			title: "推荐等级",
+			dataIndex: "recommendation_level",
+			key: "recommendation_level",
+			width: 90,
+			align: "center",
+			render: (val: string) => {
+				if (!val)
+					return <Tag color="default">关注</Tag>;
+				const colorMap: Record<string, string> = {
+					强烈推荐: "red",
+					推荐: "orange",
+					关注: "blue",
+					回避: "default",
+				};
+				return (
+					<Tag color={colorMap[val] || "default"} style={{ fontWeight: 600 }}>
+						{val}
+					</Tag>
+				);
+			},
+		},
+		{
 			title: "AI 连板概率",
 			key: "probability",
 			width: 100,
