@@ -479,29 +479,17 @@ const CombinedPage: React.FC = () => {
 		);
 	}
 
-	if (!data || data.recommendations.length === 0) {
-		return (
-			<div style={{ padding: 24 }}>
-				<Card>
-					<Empty description="暂无综合推荐" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-						<Text type="secondary">
-							当前没有被 2 个及以上战法同时推荐的股票，点击上方「刷新推荐」重新生成
-						</Text>
-					</Empty>
-				</Card>
-			</div>
-		);
-	}
-
+	const isEmpty = !data || data.recommendations.length === 0;
 	// 统计数据
-	const avgOverlap = data.recommendations.length > 0
-		? (data.recommendations.reduce((s, r) => s + r.overlap_count, 0) / data.recommendations.length).toFixed(1)
+	const recs = data?.recommendations ?? [];
+	const avgOverlap = recs.length > 0
+		? (recs.reduce((s, r) => s + r.overlap_count, 0) / recs.length).toFixed(1)
 		: "0";
-	const maxOverlap = data.recommendations.length > 0
-		? Math.max(...data.recommendations.map(r => r.overlap_count))
+	const maxOverlap = recs.length > 0
+		? Math.max(...recs.map(r => r.overlap_count))
 		: 0;
-	const contribution = data.strategy_contribution || {};
-	const sourceStrategies = data.source_strategies || {};
+	const contribution = data?.strategy_contribution ?? {};
+	const sourceStrategies = data?.source_strategies ?? {};
 
 	return (
 		<div style={{ padding: 24 }}>
@@ -545,7 +533,7 @@ const CombinedPage: React.FC = () => {
 							<Col>
 								<Statistic
 									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>交集股数</span>}
-									value={data.total}
+									value={data?.total ?? 0}
 									valueStyle={{ color: "#fff", fontWeight: "bold" }}
 									suffix="只"
 								/>
@@ -566,11 +554,11 @@ const CombinedPage: React.FC = () => {
 									suffix="个"
 								/>
 							</Col>
-							{data.generated_at && (
+							{data?.generated_at && (
 								<Col>
 									<div>
 										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>更新时间</span>
-										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data?.generated_at}</div>
 									</div>
 								</Col>
 							)}
@@ -579,275 +567,288 @@ const CombinedPage: React.FC = () => {
 				</Row>
 			</Card>
 
-			{/* 战法贡献度 */}
-			{Object.keys(contribution).length > 0 && (
-				<Card
-					bordered={false}
-					size="small"
-					style={{ marginBottom: 16, borderRadius: 8 }}
-					title={(
-						<Space>
-							<TrophyOutlined style={{ color: "#faad14" }} />
-							<Text strong>各战法贡献度</Text>
-							<Text type="secondary" style={{ fontSize: 12 }}>（贡献了多少只交集股票）</Text>
-						</Space>
-					)}
-				>
-					<Row gutter={[16, 12]}>
-						{Object.entries(contribution).map(([name, count]) => {
-							const total = data.total;
-							const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-							const sourceCount = sourceStrategies[name] ?? 0;
-							return (
-								<Col key={name} xs={12} sm={8} md={6}>
-									<Card
-										size="small"
-										bordered={false}
-										style={{
-											background: "#fafafa",
-											borderRadius: 8,
-											textAlign: "center",
-										}}
-									>
-										<Tag
-											color={strategyColors[name] || "#1890ff"}
-											style={{ fontWeight: 600, fontSize: 13, marginBottom: 8 }}
-										>
-											{name}
-										</Tag>
-										<div style={{ marginBottom: 4 }}>
-											<Text strong style={{ fontSize: 20 }}>{count}</Text>
-											<Text type="secondary">
-												{" "}
-												/
-												{sourceCount}
-												{" "}
-												只
-											</Text>
-										</div>
-										<Progress
-											percent={pct}
-											size="small"
-											strokeColor={strategyColors[name] || "#1890ff"}
-											showInfo={false}
-										/>
-									</Card>
-								</Col>
-							);
-						})}
-					</Row>
-				</Card>
-			)}
-
-			{/* 核心推荐卡片 - Top 3 */}
-			{data.recommendations.length >= 3 && (
-				<Row gutter={16} style={{ marginBottom: 16 }}>
-					{data.recommendations.slice(0, 3).map((stock, idx) => (
-						<Col key={stock.code} xs={24} sm={8}>
+			{/* 无推荐时的空状态 */}
+			{isEmpty
+				? (
+					<Card bordered={false} style={{ borderRadius: 12 }}>
+						<Empty description="暂无综合推荐" image={Empty.PRESENTED_IMAGE_SIMPLE}>
+							<Text type="secondary">
+								当前没有被 2 个及以上战法同时推荐的股票，点击上方「刷新推荐」重新生成
+							</Text>
+						</Empty>
+					</Card>
+				)
+				: (
+					<>
+						{/* 战法贡献度 */}
+						{Object.keys(contribution).length > 0 && (
 							<Card
 								bordered={false}
-								style={{
-									borderRadius: 12,
-									background: idx === 0
-										? "linear-gradient(135deg, #fff2e8, #fff7e6)"
-										: idx === 1
-											? "linear-gradient(135deg, #f0f5ff, #e6f7ff)"
-											: "linear-gradient(135deg, #f6ffed, #fcffe6)",
-									border: `1px solid ${idx === 0 ? "#ffd591" : idx === 1 ? "#91d5ff" : "#b7eb8f"}`,
-								}}
+								size="small"
+								style={{ marginBottom: 16, borderRadius: 8 }}
+								title={(
+									<Space>
+										<TrophyOutlined style={{ color: "#faad14" }} />
+										<Text strong>各战法贡献度</Text>
+										<Text type="secondary" style={{ fontSize: 12 }}>（贡献了多少只交集股票）</Text>
+									</Space>
+								)}
 							>
-								<Space direction="vertical" style={{ width: "100%" }}>
-									<Space>
-										<StarFilled style={{
-											color: idx === 0 ? "#faad14" : idx === 1 ? "#1890ff" : "#52c41a",
-											fontSize: 20,
-										}}
-										/>
-										<Text strong style={{ fontSize: 18 }}>{stock.name}</Text>
-										<Text type="secondary">{stock.code}</Text>
-									</Space>
-									<Space>
-										<Tag
-											color={overlapColors[stock.overlap_count] || "#1890ff"}
-											style={{ fontWeight: 600 }}
-										>
-											{stock.overlap_count}
-											{" "}
-											个战法推荐
-										</Tag>
-										<Text strong style={{ fontSize: 16, color: "#f5222d" }}>
-											综合评分:
-											{" "}
-											{stock.combined_score}
-										</Text>
-									</Space>
-									<Space wrap size={[4, 4]}>
-										{(stock.strategy_names || []).map(name => (
-											<Tag
-												key={name}
-												color={strategyColors[name] || "#1890ff"}
-												icon={<CheckCircleFilled />}
-												style={{ margin: 0 }}
-											>
-												{name}
-											</Tag>
-										))}
-									</Space>
-									{/* 操作指导价格区 */}
-									{(stock.current_price ?? 0) > 0 && (
-										<div style={{
-											marginTop: 8,
-											padding: "8px 12px",
-											background: "rgba(255,255,255,0.85)",
-											borderRadius: 8,
-											border: "1px solid rgba(0,0,0,0.06)",
-										}}
-										>
-											<Text strong style={{ fontSize: 12, color: "#8c8c8c", display: "block", marginBottom: 4 }}>
-												<DollarOutlined />
-												{" "}
-												次日操作指导
-											</Text>
-											<div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-												<Text strong style={{ fontSize: 15 }}>
-													¥
-													{(stock.current_price || 0).toFixed(2)}
-												</Text>
-												<Tag
-													color={(stock.change_pct ?? 0) >= 0 ? "red" : "green"}
-													style={{ margin: 0, fontSize: 11 }}
+								<Row gutter={[16, 12]}>
+									{Object.entries(contribution).map(([name, count]) => {
+										const total = data?.total ?? 0;
+										const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+										const sourceCount = sourceStrategies[name] ?? 0;
+										return (
+											<Col key={name} xs={12} sm={8} md={6}>
+												<Card
+													size="small"
+													bordered={false}
+													style={{
+														background: "#fafafa",
+														borderRadius: 8,
+														textAlign: "center",
+													}}
 												>
-													{(stock.change_pct ?? 0) >= 0 ? "+" : ""}
-													{(stock.change_pct ?? 0).toFixed(2)}
-													%
-												</Tag>
-											</div>
-											<Row gutter={8}>
-												<Col span={8}>
-													<div style={{ textAlign: "center" }}>
-														<Text style={{ fontSize: 11, color: "#52c41a" }}>买入 ↓</Text>
-														<div>
-															<Text strong style={{ fontSize: 14, color: "#389e0d" }}>
-																{(stock.suggested_buy_price || 0).toFixed(2)}
-															</Text>
-														</div>
+													<Tag
+														color={strategyColors[name] || "#1890ff"}
+														style={{ fontWeight: 600, fontSize: 13, marginBottom: 8 }}
+													>
+														{name}
+													</Tag>
+													<div style={{ marginBottom: 4 }}>
+														<Text strong style={{ fontSize: 20 }}>{count}</Text>
+														<Text type="secondary">
+															{" "}
+															/
+															{sourceCount}
+															{" "}
+															只
+														</Text>
 													</div>
-												</Col>
-												<Col span={8}>
-													<div style={{ textAlign: "center" }}>
-														<Text style={{ fontSize: 11, color: "#f5222d" }}>目标 ↑</Text>
-														<div>
-															<Text strong style={{ fontSize: 14, color: "#cf1322" }}>
-																{(stock.suggested_sell_price || 0).toFixed(2)}
-															</Text>
-														</div>
-													</div>
-												</Col>
-												<Col span={8}>
-													<div style={{ textAlign: "center" }}>
-														<Text style={{ fontSize: 11, color: "#8c8c8c" }}>止损 ⛔</Text>
-														<div>
-															<Text style={{ fontSize: 14, color: "#8c8c8c" }}>
-																{(stock.stop_loss_price || 0).toFixed(2)}
-															</Text>
-														</div>
-													</div>
-												</Col>
-											</Row>
-											{stock.operation_advice && (
-												<div style={{
-													marginTop: 6,
-													padding: "3px 6px",
-													background: "#f0f5ff",
-													borderRadius: 4,
-													fontSize: 11,
-													color: "#2f54eb",
-												}}
-												>
-													📋
-													{" "}
-													{stock.operation_advice}
-												</div>
-											)}
-										</div>
-									)}
-								</Space>
+													<Progress
+														percent={pct}
+														size="small"
+														strokeColor={strategyColors[name] || "#1890ff"}
+														showInfo={false}
+													/>
+												</Card>
+											</Col>
+										);
+									})}
+								</Row>
 							</Card>
-						</Col>
-					))}
-				</Row>
-			)}
+						)}
 
-			{/* 详细推荐表格 */}
-			<Card
-				bordered={false}
-				style={{ borderRadius: 12 }}
-				title={(
-					<Space>
-						<MergeCellsOutlined style={{ color: "#722ed1" }} />
-						<Text strong>多战法交集推荐股</Text>
-						<Tag color="purple">
-							{data.recommendations.length}
-							{" "}
-							只
-						</Tag>
-					</Space>
-				)}
-				extra={(
-					<a onClick={fetchData}>
-						<ReloadOutlined />
-						{" "}
-						刷新
-					</a>
-				)}
-			>
-				<Table
-					columns={columns}
-					dataSource={data.recommendations}
-					rowKey="code"
-					pagination={false}
-					size="small"
-					scroll={{ x: 2000 }}
-					rowClassName={(record) => {
-						if (record.overlap_count >= 4)
-							return "row-highlight-red";
-						if (record.overlap_count >= 3)
-							return "row-highlight-orange";
-						return "";
-					}}
-				/>
-			</Card>
+						{/* 核心推荐卡片 - Top 3 */}
+						{recs.length >= 3 && (
+							<Row gutter={16} style={{ marginBottom: 16 }}>
+								{recs.slice(0, 3).map((stock, idx) => (
+									<Col key={stock.code} xs={24} sm={8}>
+										<Card
+											bordered={false}
+											style={{
+												borderRadius: 12,
+												background: idx === 0
+													? "linear-gradient(135deg, #fff2e8, #fff7e6)"
+													: idx === 1
+														? "linear-gradient(135deg, #f0f5ff, #e6f7ff)"
+														: "linear-gradient(135deg, #f6ffed, #fcffe6)",
+												border: `1px solid ${idx === 0 ? "#ffd591" : idx === 1 ? "#91d5ff" : "#b7eb8f"}`,
+											}}
+										>
+											<Space direction="vertical" style={{ width: "100%" }}>
+												<Space>
+													<StarFilled style={{
+														color: idx === 0 ? "#faad14" : idx === 1 ? "#1890ff" : "#52c41a",
+														fontSize: 20,
+													}}
+													/>
+													<Text strong style={{ fontSize: 18 }}>{stock.name}</Text>
+													<Text type="secondary">{stock.code}</Text>
+												</Space>
+												<Space>
+													<Tag
+														color={overlapColors[stock.overlap_count] || "#1890ff"}
+														style={{ fontWeight: 600 }}
+													>
+														{stock.overlap_count}
+														{" "}
+														个战法推荐
+													</Tag>
+													<Text strong style={{ fontSize: 16, color: "#f5222d" }}>
+														综合评分:
+														{" "}
+														{stock.combined_score}
+													</Text>
+												</Space>
+												<Space wrap size={[4, 4]}>
+													{(stock.strategy_names || []).map(name => (
+														<Tag
+															key={name}
+															color={strategyColors[name] || "#1890ff"}
+															icon={<CheckCircleFilled />}
+															style={{ margin: 0 }}
+														>
+															{name}
+														</Tag>
+													))}
+												</Space>
+												{/* 操作指导价格区 */}
+												{(stock.current_price ?? 0) > 0 && (
+													<div style={{
+														marginTop: 8,
+														padding: "8px 12px",
+														background: "rgba(255,255,255,0.85)",
+														borderRadius: 8,
+														border: "1px solid rgba(0,0,0,0.06)",
+													}}
+													>
+														<Text strong style={{ fontSize: 12, color: "#8c8c8c", display: "block", marginBottom: 4 }}>
+															<DollarOutlined />
+															{" "}
+															次日操作指导
+														</Text>
+														<div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+															<Text strong style={{ fontSize: 15 }}>
+																¥
+																{(stock.current_price || 0).toFixed(2)}
+															</Text>
+															<Tag
+																color={(stock.change_pct ?? 0) >= 0 ? "red" : "green"}
+																style={{ margin: 0, fontSize: 11 }}
+															>
+																{(stock.change_pct ?? 0) >= 0 ? "+" : ""}
+																{(stock.change_pct ?? 0).toFixed(2)}
+																%
+															</Tag>
+														</div>
+														<Row gutter={8}>
+															<Col span={8}>
+																<div style={{ textAlign: "center" }}>
+																	<Text style={{ fontSize: 11, color: "#52c41a" }}>买入 ↓</Text>
+																	<div>
+																		<Text strong style={{ fontSize: 14, color: "#389e0d" }}>
+																			{(stock.suggested_buy_price || 0).toFixed(2)}
+																		</Text>
+																	</div>
+																</div>
+															</Col>
+															<Col span={8}>
+																<div style={{ textAlign: "center" }}>
+																	<Text style={{ fontSize: 11, color: "#f5222d" }}>目标 ↑</Text>
+																	<div>
+																		<Text strong style={{ fontSize: 14, color: "#cf1322" }}>
+																			{(stock.suggested_sell_price || 0).toFixed(2)}
+																		</Text>
+																	</div>
+																</div>
+															</Col>
+															<Col span={8}>
+																<div style={{ textAlign: "center" }}>
+																	<Text style={{ fontSize: 11, color: "#8c8c8c" }}>止损 ⛔</Text>
+																	<div>
+																		<Text style={{ fontSize: 14, color: "#8c8c8c" }}>
+																			{(stock.stop_loss_price || 0).toFixed(2)}
+																		</Text>
+																	</div>
+																</div>
+															</Col>
+														</Row>
+														{stock.operation_advice && (
+															<div style={{
+																marginTop: 6,
+																padding: "3px 6px",
+																background: "#f0f5ff",
+																borderRadius: 4,
+																fontSize: 11,
+																color: "#2f54eb",
+															}}
+															>
+																📋
+																{" "}
+																{stock.operation_advice}
+															</div>
+														)}
+													</div>
+												)}
+											</Space>
+										</Card>
+									</Col>
+								))}
+							</Row>
+						)}
 
-			{/* 操作说明 */}
-			<Alert
-				style={{ marginTop: 16, borderRadius: 8 }}
-				type="info"
-				showIcon
-				icon={<DollarOutlined />}
-				message="操作指导说明"
-				description={(
-					<Space direction="vertical" size={4}>
-						<Text style={{ fontSize: 13 }}>
-							<Text strong style={{ color: "#389e0d" }}>建议买入价</Text>
-							：当前价 × 98%，次日开盘回调时低吸，不追高。
-						</Text>
-						<Text style={{ fontSize: 13 }}>
-							<Text strong style={{ color: "#cf1322" }}>目标卖出价</Text>
-							：当前价 × 105%，短线目标 5% 收益。到达后分批止盈。
-						</Text>
-						<Text style={{ fontSize: 13 }}>
-							<Text strong style={{ color: "#8c8c8c" }}>止损价</Text>
-							：当前价 × 95%，跌破止损线果断离场，控制风险。
-						</Text>
-						<Text type="secondary" style={{ fontSize: 12 }}>
-							⚠️ 以上价格为算法参考值，实际操作请结合盘面情况。遵循 T+1 规则，当天买入次日方可卖出。
-						</Text>
-					</Space>
-				)}
-			/>
+						{/* 详细推荐表格 */}
+						<Card
+							bordered={false}
+							style={{ borderRadius: 12 }}
+							title={(
+								<Space>
+									<MergeCellsOutlined style={{ color: "#722ed1" }} />
+									<Text strong>多战法交集推荐股</Text>
+									<Tag color="purple">
+										{data.recommendations.length}
+										{" "}
+										只
+									</Tag>
+								</Space>
+							)}
+							extra={(
+								<a onClick={fetchData}>
+									<ReloadOutlined />
+									{" "}
+									刷新
+								</a>
+							)}
+						>
+							<Table
+								columns={columns}
+								dataSource={recs}
+								rowKey="code"
+								pagination={false}
+								size="small"
+								scroll={{ x: 2000 }}
+								rowClassName={(record) => {
+									if (record.overlap_count >= 4)
+										return "row-highlight-red";
+									if (record.overlap_count >= 3)
+										return "row-highlight-orange";
+									return "";
+								}}
+							/>
+						</Card>
 
-			<style>
-				{`
+						{/* 操作说明 */}
+						<Alert
+							style={{ marginTop: 16, borderRadius: 8 }}
+							type="info"
+							showIcon
+							icon={<DollarOutlined />}
+							message="操作指导说明"
+							description={(
+								<Space direction="vertical" size={4}>
+									<Text style={{ fontSize: 13 }}>
+										<Text strong style={{ color: "#389e0d" }}>建议买入价</Text>
+										：当前价 × 98%，次日开盘回调时低吸，不追高。
+									</Text>
+									<Text style={{ fontSize: 13 }}>
+										<Text strong style={{ color: "#cf1322" }}>目标卖出价</Text>
+										：当前价 × 105%，短线目标 5% 收益。到达后分批止盈。
+									</Text>
+									<Text style={{ fontSize: 13 }}>
+										<Text strong style={{ color: "#8c8c8c" }}>止损价</Text>
+										：当前价 × 95%，跌破止损线果断离场，控制风险。
+									</Text>
+									<Text type="secondary" style={{ fontSize: 12 }}>
+										⚠️ 以上价格为算法参考值，实际操作请结合盘面情况。遵循 T+1 规则，当天买入次日方可卖出。
+									</Text>
+								</Space>
+							)}
+						/>
+
+						<style>
+							{`
 				.row-highlight-red {
 					background-color: #fff1f0 !important;
 				}
@@ -861,7 +862,10 @@ const CombinedPage: React.FC = () => {
 					background-color: #ffe7ba !important;
 				}
 			`}
-			</style>
+						</style>
+
+					</>
+				)}
 
 			<WatchlistPanel key={watchlistRefreshKey} />
 
