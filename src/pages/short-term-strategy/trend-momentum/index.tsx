@@ -307,21 +307,6 @@ const TrendMomentumPage: React.FC = () => {
 	}
 
 	const isEmpty = !data || data.recommendations.length === 0;
-	const handleGenerate = async () => {
-		setLoading(true);
-		setError(null);
-		try {
-			const { triggerRecommendations } = await import("#src/api/portfolio");
-			await triggerRecommendations();
-			await fetchData();
-		}
-		catch (err: any) {
-			setError(err?.message || "生成推荐失败");
-		}
-		finally {
-			setLoading(false);
-		}
-	};
 
 	return (
 		<div style={{ padding: 24 }}>
@@ -394,10 +379,6 @@ const TrendMomentumPage: React.FC = () => {
 					<Card bordered={false} style={{ borderRadius: 12 }}>
 						<Empty description="暂无趋势动量信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
 							<Text type="secondary">当前暂无符合条件的趋势动量信号股，点击上方「刷新推荐」手动触发分析</Text>
-							<Space style={{ marginTop: 16 }}>
-								<Button onClick={fetchData} icon={<ReloadOutlined />}>重试</Button>
-								<Button type="primary" loading={loading} onClick={handleGenerate}>立即生成推荐</Button>
-							</Space>
 						</Empty>
 					</Card>
 				)
