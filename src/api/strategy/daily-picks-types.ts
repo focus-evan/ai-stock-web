@@ -74,6 +74,12 @@ export interface DailyPickStock {
 	stop_loss_price?: number
 	risk_warning?: string
 	operation_suggestion?: string
+	/** 市盈率 TTM（来自理杏仁） */
+	pe_ttm?: number
+	/** 市净率（来自理杏仁） */
+	pb?: number
+	/** 总市值（格式化后的字符串，如 "123.45亿"） */
+	total_market_cap?: string
 	/** 深度分析结果（LLM 生成） */
 	deep_analysis?: StockDeepAnalysis
 }

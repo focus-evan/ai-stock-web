@@ -269,6 +269,33 @@ const PickCard: React.FC<{ stock: DailyPickStock, isPodium?: boolean, podiumIdx?
 				</div>
 			</div>
 
+			{/* 估值指标 PE / PB / 市值 */}
+			{(stock.pe_ttm || stock.total_market_cap) && (
+				<div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap" }}>
+					{stock.pe_ttm != null && (
+						<Tag style={{ margin: 0, fontSize: 11, background: "#f0f5ff", borderColor: "#adc6ff", color: "#2f54eb" }}>
+							PE
+							{" "}
+							{stock.pe_ttm.toFixed(1)}
+						</Tag>
+					)}
+					{stock.pb != null && (
+						<Tag style={{ margin: 0, fontSize: 11, background: "#f6ffed", borderColor: "#b7eb8f", color: "#389e0d" }}>
+							PB
+							{" "}
+							{stock.pb.toFixed(2)}
+						</Tag>
+					)}
+					{stock.total_market_cap && (
+						<Tag style={{ margin: 0, fontSize: 11, background: "#fff7e6", borderColor: "#ffd591", color: "#d46b08" }}>
+							市值
+							{" "}
+							{stock.total_market_cap}
+						</Tag>
+					)}
+				</div>
+			)}
+
 			<div style={{ marginBottom: 8 }}>
 				<Space wrap size={[4, 4]}>
 					{stock.strong_recommend_from.map(name => (

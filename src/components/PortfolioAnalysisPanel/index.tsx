@@ -49,12 +49,6 @@ const MOAT_ICONS: Record<string, string> = {
 	成本优势: "💰",
 };
 
-const DEBT_COLORS: Record<string, string> = {
-	健康: "#52c41a",
-	偏高: "#faad14",
-	危险: "#f5222d",
-};
-
 const CASH_COLORS: Record<string, string> = {
 	充裕: "#52c41a",
 	一般: "#faad14",
@@ -104,7 +98,8 @@ const MiniSparkline: React.FC<{ prices: PortfolioStockAnalysis["prices_7d"] }> =
 /* ========== Stock Card ========== */
 const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
 	const growthColor = GROWTH_COLORS[stock.growth_type] || "#8c8c8c";
-	const debtColor = DEBT_COLORS[stock.financial_analysis?.debt_ratio_assessment] || "#8c8c8c";
+	// PE 颜色：<15绿 15-30蓝 >30橙
+	const peColor = stock.pe_ttm == null ? "#8c8c8c" : stock.pe_ttm < 15 ? "#52c41a" : stock.pe_ttm < 30 ? "#1890ff" : "#fa8c16";
 	const cashColor = CASH_COLORS[stock.financial_analysis?.cash_flow_quality] || "#8c8c8c";
 
 	return (
@@ -211,10 +206,18 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 							<div><Text style={{ fontSize: 11 }}>{stock.financial_analysis?.profit_trend || "-"}</Text></div>
 						</div>
 						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>负债率</Text>
+							<Text type="secondary" style={{ fontSize: 10 }}>PE(TTM)</Text>
 							<div>
-								<Text style={{ fontSize: 11, color: debtColor, fontWeight: 600 }}>
-									{stock.financial_analysis?.debt_ratio_assessment || "-"}
+								<Text style={{ fontSize: 11, color: peColor, fontWeight: 600 }}>
+									{stock.pe_ttm != null ? stock.pe_ttm.toFixed(1) : "-"}
+								</Text>
+							</div>
+						</div>
+						<div>
+							<Text type="secondary" style={{ fontSize: 10 }}>市值</Text>
+							<div>
+								<Text style={{ fontSize: 11, color: "#d46b08", fontWeight: 600 }}>
+									{stock.total_market_cap || "-"}
 								</Text>
 							</div>
 						</div>

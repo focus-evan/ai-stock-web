@@ -683,12 +683,18 @@ export interface PortfolioStockAnalysis {
 	current_price: number
 	buy_price: number
 	pnl_pct: number
+	/** 市盈率 TTM（来自理杏仁） */
+	pe_ttm?: number
+	/** 市净率（来自理杏仁） */
+	pb?: number
+	/** 总市值（格式化后的字符串，如 "123.45亿"） */
+	total_market_cap?: string
 	sector: string
 	main_business: string
 	financial_analysis: {
 		revenue_trend: string
 		profit_trend: string
-		debt_ratio_assessment: string
+		debt_ratio_assessment?: string
 		cash_flow_quality: string
 	}
 	growth_type: string
