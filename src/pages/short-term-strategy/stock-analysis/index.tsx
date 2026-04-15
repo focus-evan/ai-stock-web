@@ -743,7 +743,16 @@ function HistoryTab() {
 
 /* ====================== Main Page ====================== */
 const StockAnalysisPage: React.FC = () => {
-	const [activeTab, setActiveTab] = useState("analyze");
+	const validTabs = ["analyze", "history", "watchlist", "portfolio"];
+	const getInitialTab = () => {
+		const hash = window.location.hash.replace("#", "");
+		return validTabs.includes(hash) ? hash : "analyze";
+	};
+	const [activeTab, setActiveTab] = useState(getInitialTab);
+	const handleTabChange = useCallback((key: string) => {
+		setActiveTab(key);
+		window.location.hash = key;
+	}, []);
 	const [stockInput, setStockInput] = useState("");
 	const [data, setData] = useState<StockAnalysisData | null>(null);
 	const [loading, setLoading] = useState(false);
@@ -817,7 +826,7 @@ const StockAnalysisPage: React.FC = () => {
 			{/* Tabs */}
 			<Tabs
 				activeKey={activeTab}
-				onChange={setActiveTab}
+				onChange={handleTabChange}
 				items={[
 					{
 						key: "analyze",
