@@ -10,6 +10,7 @@ export const shortTermStrategy = 4;
 export const mobileStrategy = 4.3;
 export const valueInvesting = 4.5;
 export const ipo = 5;
+export const shadowStock = 5.5;
 export const stockData = 6;
 
 export const exception = 90;
