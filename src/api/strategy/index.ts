@@ -675,6 +675,69 @@ export function fetchLatestGuidance() {
 		.json<{ status: string, data: { records: WatchlistGuidanceRecord[], total: number } }>();
 }
 
+// ===================== 整体持仓分析 =====================
+
+export interface PortfolioStockAnalysis {
+	stock_code: string
+	stock_name: string
+	current_price: number
+	buy_price: number
+	pnl_pct: number
+	sector: string
+	main_business: string
+	financial_analysis: {
+		revenue_trend: string
+		profit_trend: string
+		debt_ratio_assessment: string
+		cash_flow_quality: string
+	}
+	growth_type: string
+	growth_evidence: string
+	moat: string
+	moat_detail: string
+	price_analysis: string
+	operation_guidance: string
+	risk_factors: string[]
+	highlight: string
+	prices_7d: Array<{
+		date: string
+		open?: number
+		close?: number
+		high?: number
+		low?: number
+		volume?: number
+	}>
+}
+
+export interface PortfolioAnalysisData {
+	stocks: PortfolioStockAnalysis[]
+	total: number
+	overall_summary: string
+	generated_at?: string
+}
+
+/** 获取整体持仓分析 */
+export function fetchPortfolioAnalysis(date?: string) {
+	const searchParams: Record<string, any> = {};
+	if (date)
+		searchParams.date = date;
+	return request
+		.get("strategy/combined/watchlist/portfolio-analysis", {
+			searchParams,
+			timeout: 15000,
+		})
+		.json<{ status: string, data: PortfolioAnalysisData, generated_at?: string }>();
+}
+
+/** 触发生成整体持仓分析 */
+export function triggerPortfolioAnalysis() {
+	return request
+		.post("strategy/combined/watchlist/portfolio-analysis", {
+			timeout: 300000,
+		})
+		.json<{ status: string, data: PortfolioAnalysisData, message?: string }>();
+}
+
 // ===================== 当日精选 =====================
 
 /**

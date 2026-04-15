@@ -1,6 +1,7 @@
 import type { StockAnalysisData, StrategySignal } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
+import PortfolioAnalysisPanel from "#src/components/PortfolioAnalysisPanel";
 import WatchlistModal from "#src/components/WatchlistModal";
 import WatchlistPanel from "#src/components/WatchlistPanel";
 import {
@@ -14,6 +15,7 @@ import {
 	EyeOutlined,
 	FireOutlined,
 	FundOutlined,
+	FundProjectionScreenOutlined,
 	HistoryOutlined,
 	InfoCircleOutlined,
 	LineChartOutlined,
@@ -867,6 +869,17 @@ const StockAnalysisPage: React.FC = () => {
 							</span>
 						),
 						children: <WatchlistPanel />,
+					},
+					{
+						key: "portfolio",
+						label: (
+							<span>
+								<FundProjectionScreenOutlined />
+								{" "}
+								整体持仓分析
+							</span>
+						),
+						children: <PortfolioAnalysisPanel />,
 					},
 				]}
 			/>
