@@ -16,11 +16,14 @@ import { request } from "#src/utils/request";
 export * from "./types";
 
 /**
- * 获取影子股仪表盘数据
+ * 获取影子股仪表盘数据（可通过 batch_id 查看历史报告）
  */
-export function fetchShadowStockDashboard() {
+export function fetchShadowStockDashboard(params?: { batch_id?: string }) {
 	return request
-		.get("shadow-stock/dashboard", { ignoreLoading: false })
+		.get("shadow-stock/dashboard", {
+			searchParams: params as any,
+			ignoreLoading: false,
+		})
 		.json<ShadowStockDashboardResponse>();
 }
 

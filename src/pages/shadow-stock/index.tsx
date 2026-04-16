@@ -2,11 +2,13 @@ import type {
 	ShadowStockDashboardResponse,
 	ShadowStockHolding,
 	ShadowStockIPOTarget,
+	ShadowStockReport,
 	ShadowStockTrack,
 } from "#src/api/shadow-stock";
 
 import {
 	fetchShadowStockDashboard,
+	fetchShadowStockReportHistory,
 	refreshShadowStockReport,
 } from "#src/api/shadow-stock";
 import { BasicContent } from "#src/components/basic-content";
@@ -16,6 +18,7 @@ import {
 	ClockCircleOutlined,
 	ExclamationCircleOutlined,
 	FireOutlined,
+	HistoryOutlined,
 	InfoCircleOutlined,
 	ReloadOutlined,
 	RiseOutlined,
@@ -35,6 +38,7 @@ import {
 	Progress,
 	Result,
 	Row,
+	Select,
 	Space,
 	Spin,
 	Steps,
@@ -135,13 +139,18 @@ export default function ShadowStockPage() {
 	const [refreshing, setRefreshing] = useState(false);
 	const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
 	const [selectedTarget, setSelectedTarget] = useState<ShadowStockIPOTarget | null>(null);
+	const [reportHistory, setReportHistory] = useState<ShadowStockReport[]>([]);
+	const [selectedBatchId, setSelectedBatchId] = useState<string | undefined>(undefined);
 
-	const loadData = useCallback(async () => {
+	const loadData = useCallback(async (batchId?: string) => {
 		setLoading(true);
 		try {
-			const resp = await fetchShadowStockDashboard();
+			const resp = await fetchShadowStockDashboard(
+				batchId ? { batch_id: batchId } : undefined,
+			);
 			setDashboard(resp);
-			if (resp.top_ipo_targets?.length && !selectedTarget)
+			setSelectedTarget(null);
+			if (resp.top_ipo_targets?.length)
 				setSelectedTarget(resp.top_ipo_targets[0]);
 		}
 		catch {
@@ -152,9 +161,22 @@ export default function ShadowStockPage() {
 		}
 	}, []);
 
+	const loadHistory = useCallback(async () => {
+		try {
+			const resp = await fetchShadowStockReportHistory({ page: 1, page_size: 50 });
+			if (resp.data?.length) {
+				setReportHistory(resp.data.filter(r => r.status === "completed"));
+			}
+		}
+		catch {
+			// silently handle
+		}
+	}, []);
+
 	useEffect(() => {
 		loadData();
-	}, [loadData]);
+		loadHistory();
+	}, [loadData, loadHistory]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);
@@ -243,9 +265,28 @@ export default function ShadowStockPage() {
 								</Space>
 							)}
 						</div>
-						<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh}>
-							{refreshing ? "刷新中..." : "刷新报告"}
-						</Button>
+						<Space>
+							{reportHistory.length > 1 && (
+								<Select
+									value={selectedBatchId || dashboard?.batch_id}
+									style={{ width: 220 }}
+									placeholder="选择历史报告"
+									suffixIcon={<HistoryOutlined />}
+									onChange={(val) => {
+										setSelectedBatchId(val);
+										setSelectedTrackId(null);
+										loadData(val);
+									}}
+									options={reportHistory.map((r, idx) => ({
+										value: r.batch_id,
+										label: `${r.created_at ? new Date(r.created_at).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "未知"} (${r.track_count}赛道/${r.target_count}标的)${idx === 0 ? " 最新" : ""}`,
+									}))}
+								/>
+							)}
+							<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh}>
+								{refreshing ? "刷新中..." : "刷新报告"}
+							</Button>
+						</Space>
 					</div>
 
 					{/* 赛道卡片区 */}
