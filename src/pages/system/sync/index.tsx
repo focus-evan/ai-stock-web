@@ -72,6 +72,12 @@ function strategyColor(s: string): string {
 		return "#2f54eb";
 	if (s === "global")
 		return "#8c8c8c";
+	if (s === "daily_picks")
+		return "#eb2f96";
+	if (s === "watchlist")
+		return "#13c2c2";
+	if (s === "moat_value")
+		return "#2f54eb";
 	return "#595959";
 }
 
@@ -103,6 +109,12 @@ function strategyIcon(s: string): string {
 		return "🏰";
 	if (s === "global")
 		return "⚙️";
+	if (s === "daily_picks")
+		return "🎯";
+	if (s === "watchlist")
+		return "👀";
+	if (s === "moat_value")
+		return "🏰";
 	return "📋";
 }
 
@@ -250,6 +262,9 @@ export default function SchedulerPage() {
 		"trend_momentum",
 		"relay",
 		"combined",
+		"moat_value",
+		"daily_picks",
+		"watchlist",
 		"global",
 	];
 	const strategyNames: Record<string, string> = {
@@ -264,6 +279,9 @@ export default function SchedulerPage() {
 		trend_momentum: "📐 趋势动量",
 		relay: "🏆 连板接力",
 		combined: "🔗 综合战法",
+		moat_value: "🏰 护城河",
+		daily_picks: "🎯 当日精选",
+		watchlist: "👀 盯盘指导",
 		global: "⚙️ 全局任务",
 	};
 
