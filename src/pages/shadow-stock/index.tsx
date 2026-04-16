@@ -49,10 +49,15 @@ const { Title, Text, Paragraph } = Typography;
 
 const IPO_STATUS_MAP: Record<string, { step: number, color: string }> = {
 	辅导中: { step: 0, color: "#1677ff" },
+	辅导备案: { step: 0, color: "#1677ff" },
 	已受理: { step: 1, color: "#faad14" },
-	已过会: { step: 2, color: "#52c41a" },
-	即将上市: { step: 3, color: "#722ed1" },
-	已上市: { step: 4, color: "#13c2c2" },
+	问询中: { step: 2, color: "#fa8c16" },
+	问询: { step: 2, color: "#fa8c16" },
+	已过会: { step: 3, color: "#52c41a" },
+	上市委审议: { step: 3, color: "#52c41a" },
+	已注册: { step: 4, color: "#722ed1" },
+	即将上市: { step: 4, color: "#722ed1" },
+	已上市: { step: 5, color: "#13c2c2" },
 };
 
 const CONFIDENCE_COLORS: Record<string, string> = {
@@ -619,7 +624,9 @@ function IPOTargetCard({ target, isSelected, onClick }: IPOTargetCardProps) {
 				items={[
 					{ title: "辅导" },
 					{ title: "受理" },
+					{ title: "问询" },
 					{ title: "过会" },
+					{ title: "注册" },
 					{ title: "上市" },
 				]}
 			/>
