@@ -145,7 +145,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						</div>
 					</div>
 				</div>
-				<div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+				<div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
 					<Tag style={{
 						margin: 0,
 						background: "rgba(255,255,255,0.2)",
@@ -168,6 +168,29 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 					>
 						{stock.growth_type || "未知"}
 					</Tag>
+					{stock.action_verdict && (
+						<Tag style={{
+							margin: 0,
+							fontSize: 12,
+							fontWeight: 800,
+							padding: "2px 12px",
+							lineHeight: "20px",
+							borderRadius: 4,
+							background: stock.action_verdict === "买入"
+								? "#ff4d4f"
+								: stock.action_verdict === "卖出"
+									? "#52c41a"
+									: stock.action_verdict === "继续持有"
+										? "#1890ff"
+										: "#faad14",
+							border: "none",
+							color: "#fff",
+						}}
+						>
+							{stock.action_verdict === "买入" ? "🔥 " : stock.action_verdict === "卖出" ? "⚠️ " : stock.action_verdict === "继续持有" ? "💎 " : "👀 "}
+							{stock.action_verdict}
+						</Tag>
+					)}
 				</div>
 			</div>
 
@@ -309,6 +332,11 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 				>
 					{stock.operation_guidance || "暂无指导"}
 				</Paragraph>
+				{stock.verdict_reason && (
+					<div style={{ marginTop: 6, padding: "6px 10px", background: "rgba(255,255,255,0.06)", borderRadius: 6, borderLeft: "3px solid #a78bfa" }}>
+						<Text style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: "16px" }}>{stock.verdict_reason}</Text>
+					</div>
+				)}
 			</div>
 		</Card>
 	);

@@ -34,6 +34,10 @@ export interface StockDeepAnalysis {
 	catalysts: string[]
 	/** 综合深度评价 */
 	deep_summary: string
+	/** 操作结论：买入/观望/卖出 */
+	action_verdict?: string
+	/** 操作结论依据（基本面+技术面证据） */
+	verdict_reason?: string
 	/** 是否 LLM 增强 */
 	llm_enhanced: boolean
 }

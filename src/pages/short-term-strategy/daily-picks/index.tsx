@@ -84,12 +84,37 @@ const podiumConfig = [
 	{ gradient: "linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%)", border: "#95de64", icon: <StarFilled style={{ color: "#52c41a", fontSize: 20 }} />, label: "🥉 第三推荐" },
 ];
 
+/** 操作建议配色 */
+const verdictColors: Record<string, { bg: string, border: string, color: string, icon: string }> = {
+	买入: { bg: "linear-gradient(135deg, #fff1f0, #ffccc7)", border: "#ff4d4f", color: "#cf1322", icon: "🔥" },
+	卖出: { bg: "linear-gradient(135deg, #f6ffed, #d9f7be)", border: "#52c41a", color: "#389e0d", icon: "⚠️" },
+	观望: { bg: "linear-gradient(135deg, #fff7e6, #ffe7ba)", border: "#faad14", color: "#d48806", icon: "👀" },
+	继续持有: { bg: "linear-gradient(135deg, #e6f7ff, #bae7ff)", border: "#1890ff", color: "#096dd9", icon: "💎" },
+};
+
 /** 深度分析卡片 */
 const DeepAnalysisCard: React.FC<{ deep: StockDeepAnalysis }> = ({ deep }) => {
 	const growthColor = growthColors[deep.growth_label] || "#8c8c8c";
+	const vc = verdictColors[deep.action_verdict || ""] || null;
 
 	return (
 		<div style={{ marginTop: 12 }}>
+			{/* 操作建议 — 最醒目 */}
+			{deep.action_verdict && vc && (
+				<div style={{ background: vc.bg, border: `2px solid ${vc.border}`, borderRadius: 10, padding: "12px 16px", marginBottom: 10 }}>
+					<div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+						<span style={{ fontSize: 22 }}>{vc.icon}</span>
+						<Tag style={{ margin: 0, fontSize: 16, fontWeight: 800, padding: "4px 16px", lineHeight: "24px", borderRadius: 6, background: vc.border, border: "none", color: "#fff" }}>
+							{deep.action_verdict}
+						</Tag>
+						<Text style={{ fontSize: 13, fontWeight: 600, color: vc.color }}>操作建议</Text>
+					</div>
+					{deep.verdict_reason && (
+						<div style={{ fontSize: 12, lineHeight: "20px", color: vc.color }}>{deep.verdict_reason}</div>
+					)}
+				</div>
+			)}
+
 			{/* 赛道信息 */}
 			<div style={{ background: "linear-gradient(135deg, #f0f5ff, #e6f7ff)", borderRadius: 8, padding: "10px 14px", marginBottom: 8, border: "1px solid #91d5ff" }}>
 				<Space size={4} style={{ marginBottom: 4 }}>

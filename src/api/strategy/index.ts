@@ -703,6 +703,10 @@ export interface PortfolioStockAnalysis {
 	moat_detail: string
 	price_analysis: string
 	operation_guidance: string
+	/** 操作结论：买入/观望/卖出/继续持有 */
+	action_verdict?: string
+	/** 操作结论依据（基本面+技术面证据） */
+	verdict_reason?: string
 	risk_factors: string[]
 	highlight: string
 	prices_7d: Array<{
