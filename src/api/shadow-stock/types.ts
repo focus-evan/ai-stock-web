@@ -130,3 +130,46 @@ export interface ShadowStockReportHistoryResponse {
 	page_size: number
 	data: ShadowStockReport[]
 }
+
+// ======================== 历史聚合 ========================
+
+export interface AggShadowStock {
+	holder_name: string
+	holder_stock_code: string
+	holding_ratio: number
+	holding_type: string
+	holder_market_cap: number
+	gain_ratio: number
+	holder_main_business: string
+	risk_level: string
+}
+
+export interface AggCompany {
+	company_name: string
+	ipo_status: string
+	target_market: string
+	expected_valuation: number
+	importance_score: number
+	latest_progress: string
+	data_source: string
+	appear_count: number
+	shadow_stocks: AggShadowStock[]
+}
+
+export interface AggTrack {
+	track_name: string
+	track_description: string
+	heat_score: number
+	policy_support: string
+	company_count: number
+	companies: AggCompany[]
+}
+
+export interface ShadowStockAggregateResponse {
+	status: string
+	tracks: AggTrack[]
+	total_tracks: number
+	total_companies: number
+	total_reports: number
+	message?: string
+}

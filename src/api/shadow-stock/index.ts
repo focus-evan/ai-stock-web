@@ -1,7 +1,5 @@
-/**
- * 影子股套利策略 — API 客户端
- */
 import type {
+	ShadowStockAggregateResponse,
 	ShadowStockDashboardResponse,
 	ShadowStockHoldingsDetailResponse,
 	ShadowStockIPOTarget,
@@ -82,4 +80,13 @@ export function fetchShadowStockReportHistory(params?: {
 			ignoreLoading: true,
 		})
 		.json<ShadowStockReportHistoryResponse>();
+}
+
+/**
+ * 历史聚合数据：跨所有批次按赛道+公司去重
+ */
+export function fetchShadowStockAggregate() {
+	return request
+		.get("shadow-stock/aggregate", { timeout: 30000 })
+		.json<ShadowStockAggregateResponse>();
 }
