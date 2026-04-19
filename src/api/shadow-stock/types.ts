@@ -173,3 +173,66 @@ export interface ShadowStockAggregateResponse {
 	total_reports: number
 	message?: string
 }
+
+// ======================== 影子股每日推荐 ========================
+
+export interface ShadowStockRecommendation {
+	id: number
+	rank: number
+	holder_name: string
+	holder_stock_code: string
+	ipo_target_name: string
+	track_name: string
+	recommend_type: "小马拉大车" | "产业链协同" | "综合"
+	total_score: number
+	recommend_level: "S" | "A" | "B" | "C"
+	// 评分明细
+	elasticity_score: number
+	safety_score: number
+	ipo_progress_score: number
+	track_heat_score: number
+	confidence_score: number
+	// 关键数据
+	holding_ratio: number
+	holding_type: string
+	holder_market_cap: number
+	expected_valuation: number
+	adjusted_gain_ratio: number
+	// 推荐理由
+	recommend_reason: string
+	risk_summary: string
+	investment_logic: string
+	// 元数据
+	ipo_status: string
+	holder_business_status: string
+	risk_level: "low" | "medium" | "high"
+	risk_factors: string[]
+	batch_id: string
+	created_at?: string
+}
+
+export interface ShadowStockRecommendResponse {
+	status: string
+	recommend_date: string | null
+	total: number
+	type_distribution: Record<string, number>
+	level_distribution: Record<string, number>
+	recommendations: ShadowStockRecommendation[]
+	message?: string
+}
+
+export interface ShadowStockRecommendHistoryItem {
+	recommend_date: string
+	count: number
+	max_score: number
+	min_score: number
+	created_at?: string
+}
+
+export interface ShadowStockRecommendHistoryResponse {
+	status: string
+	total: number
+	page: number
+	page_size: number
+	data: ShadowStockRecommendHistoryItem[]
+}

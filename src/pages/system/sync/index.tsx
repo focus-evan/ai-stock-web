@@ -1,6 +1,6 @@
 import type { SchedulerTask } from "#src/api/system";
 
-import { cleanupListedIPO, refreshShadowStockReport } from "#src/api/shadow-stock";
+import { cleanupListedIPO, generateShadowStockRecommendations, refreshShadowStockReport } from "#src/api/shadow-stock";
 import {
 	addSchedulerUser,
 	getSchedulerStatus,
@@ -332,7 +332,7 @@ export default function SchedulerPage() {
 			width: 80,
 			align: "center" as const,
 			render: (_: any, record: SchedulerTask) => {
-				if (record.phase === "shadow_cleanup" || record.phase === "shadow_refresh") {
+				if (record.phase === "shadow_cleanup" || record.phase === "shadow_refresh" || record.phase === "shadow_recommend") {
 					return (
 						<Tooltip title="手动触发">
 							<Button
@@ -353,6 +353,17 @@ export default function SchedulerPage() {
 												message.info(result.message || "无需清理");
 											}
 										}
+										else if (record.phase === "shadow_recommend") {
+											message.loading({ content: "正在生成影子股推荐...", key: "recommend", duration: 0 });
+											const result = await generateShadowStockRecommendations();
+											message.destroy("recommend");
+											if (result.status === "completed") {
+												message.success(`生成 ${result.count} 条推荐`);
+											}
+											else {
+												message.warning(result.message || result.error || "生成失败");
+											}
+										}
 										else {
 											message.loading({ content: "正在刷新影子股报告...", key: "refresh", duration: 0 });
 											await refreshShadowStockReport();
@@ -364,6 +375,7 @@ export default function SchedulerPage() {
 									catch {
 										message.destroy("cleanup");
 										message.destroy("refresh");
+										message.destroy("recommend");
 										message.error("触发失败");
 									}
 								}}

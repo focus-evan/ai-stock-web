@@ -4,6 +4,8 @@ import type {
 	ShadowStockHoldingsDetailResponse,
 	ShadowStockIPOTarget,
 	ShadowStockListResponse,
+	ShadowStockRecommendHistoryResponse,
+	ShadowStockRecommendResponse,
 	ShadowStockRefreshResponse,
 	ShadowStockReportHistoryResponse,
 	ShadowStockTrack,
@@ -98,4 +100,43 @@ export function cleanupListedIPO() {
 	return request
 		.post("shadow-stock/cleanup-listed", { timeout: 60000 })
 		.json<{ status: string, deleted_targets?: number, deleted_holdings?: number, deleted_names?: string[], message?: string }>();
+}
+
+/**
+ * 获取影子股每日推荐（Top 10）
+ */
+export function fetchShadowStockRecommendations(params?: {
+	date?: string
+	limit?: number
+}) {
+	return request
+		.get("shadow-stock/recommend", {
+			searchParams: params as any,
+			ignoreLoading: false,
+		})
+		.json<ShadowStockRecommendResponse>();
+}
+
+/**
+ * 获取影子股推荐历史（按日期分组）
+ */
+export function fetchShadowStockRecommendHistory(params?: {
+	page?: number
+	page_size?: number
+}) {
+	return request
+		.get("shadow-stock/recommend/history", {
+			searchParams: params as any,
+			ignoreLoading: true,
+		})
+		.json<ShadowStockRecommendHistoryResponse>();
+}
+
+/**
+ * 手动触发生成影子股每日推荐
+ */
+export function generateShadowStockRecommendations() {
+	return request
+		.post("shadow-stock/recommend/generate", { timeout: 120000 })
+		.json<{ status: string, count?: number, message?: string, error?: string }>();
 }

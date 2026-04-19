@@ -6,6 +6,7 @@ import { lazy } from "react";
 
 const ShadowStock = lazy(() => import("#src/pages/shadow-stock"));
 const ShadowStockAggregate = lazy(() => import("#src/pages/shadow-stock/aggregate"));
+const ShadowStockRecommend = lazy(() => import("#src/pages/shadow-stock/recommend"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -23,6 +24,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "FundOutlined",
 					title: "影子股仪表盘",
+				},
+			},
+			{
+				path: "/shadow-stock/recommend",
+				Component: ShadowStockRecommend,
+				handle: {
+					icon: "StarOutlined",
+					title: "每日推荐",
 				},
 			},
 			{
