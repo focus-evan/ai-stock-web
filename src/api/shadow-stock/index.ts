@@ -90,3 +90,12 @@ export function fetchShadowStockAggregate() {
 		.get("shadow-stock/aggregate", { timeout: 30000 })
 		.json<ShadowStockAggregateResponse>();
 }
+
+/**
+ * 手动触发：清理已上市的 IPO 标的
+ */
+export function cleanupListedIPO() {
+	return request
+		.post("shadow-stock/cleanup-listed", { timeout: 60000 })
+		.json<{ status: string, deleted_targets?: number, deleted_holdings?: number, deleted_names?: string[], message?: string }>();
+}

@@ -1,5 +1,6 @@
 import type { SchedulerTask } from "#src/api/system";
 
+import { cleanupListedIPO, refreshShadowStockReport } from "#src/api/shadow-stock";
 import {
 	addSchedulerUser,
 	getSchedulerStatus,
@@ -14,6 +15,7 @@ import {
 	DashboardOutlined,
 	DeleteOutlined,
 	MinusCircleOutlined,
+	PlayCircleOutlined,
 	PlusOutlined,
 	ReloadOutlined,
 	SettingOutlined,
@@ -323,6 +325,54 @@ export default function SchedulerPage() {
 							<MinusCircleOutlined style={{ color: "#d9d9d9", fontSize: 18 }} />
 						</Tooltip>
 					),
+		},
+		{
+			title: "操作",
+			key: "action",
+			width: 80,
+			align: "center" as const,
+			render: (_: any, record: SchedulerTask) => {
+				if (record.phase === "shadow_cleanup" || record.phase === "shadow_refresh") {
+					return (
+						<Tooltip title="手动触发">
+							<Button
+								type="link"
+								size="small"
+								icon={<PlayCircleOutlined />}
+								disabled={record.done}
+								onClick={async () => {
+									try {
+										if (record.phase === "shadow_cleanup") {
+											message.loading({ content: "正在清理已上市IPO标的...", key: "cleanup", duration: 0 });
+											const result = await cleanupListedIPO();
+											message.destroy("cleanup");
+											if (result.deleted_targets && result.deleted_targets > 0) {
+												message.success(`已清理 ${result.deleted_targets} 个已上市标的`);
+											}
+											else {
+												message.info(result.message || "无需清理");
+											}
+										}
+										else {
+											message.loading({ content: "正在刷新影子股报告...", key: "refresh", duration: 0 });
+											await refreshShadowStockReport();
+											message.destroy("refresh");
+											message.success("影子股报告刷新已启动");
+										}
+										refreshScheduler();
+									}
+									catch {
+										message.destroy("cleanup");
+										message.destroy("refresh");
+										message.error("触发失败");
+									}
+								}}
+							/>
+						</Tooltip>
+					);
+				}
+				return null;
+			},
 		},
 	];
 
