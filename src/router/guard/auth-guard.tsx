@@ -91,14 +91,14 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				 * @zh 从用户接口中获取角色信息
 				 * @en Fetch role information from the user interface
 				 */
-				if (userInfoResult.status === "fulfilled" && "roles" in userInfoResult.value) {
+				if (userInfoResult.status === "fulfilled" && userInfoResult.value && typeof userInfoResult.value === "object" && "roles" in userInfoResult.value) {
 					latestRoles.push(...userInfoResult.value?.roles ?? []);
 				}
 				/**
 				 * @zh 启用了后端路由且路由从用户接口中获取
 				 * @en If backend routing is enabled and the route is obtained from the user interface
 				 */
-				if (enableBackendAccess && !isSendRoutingRequest && userInfoResult.status === "fulfilled" && "menus" in userInfoResult.value) {
+				if (enableBackendAccess && !isSendRoutingRequest && userInfoResult.status === "fulfilled" && userInfoResult.value && typeof userInfoResult.value === "object" && "menus" in userInfoResult.value) {
 					console.warn("[auth-guard] Loading menus from user-info:", userInfoResult.value?.menus?.length);
 					routes.push(...await generateRoutesFromBackend(userInfoResult.value?.menus ?? []));
 					console.warn("[auth-guard] Generated routes:", routes.length, routes);
@@ -107,7 +107,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				 * @zh 启用了后端路由且路由从单独接口中获取
 				 * @en If backend routing is enabled and the route is obtained from a separate interface
 				 */
-				if (enableBackendAccess && isSendRoutingRequest && routeResult.status === "fulfilled" && "result" in routeResult.value) {
+				if (enableBackendAccess && isSendRoutingRequest && routeResult.status === "fulfilled" && routeResult.value && typeof routeResult.value === "object" && "result" in routeResult.value) {
 					routes.push(...await generateRoutesFromBackend(routeResult.value?.result ?? []));
 				}
 
