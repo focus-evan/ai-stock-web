@@ -87,8 +87,9 @@ const podiumConfig = [
 /** 操作建议配色 */
 const verdictColors: Record<string, { bg: string, border: string, color: string, icon: string }> = {
 	买入: { bg: "linear-gradient(135deg, #fff1f0, #ffccc7)", border: "#ff4d4f", color: "#cf1322", icon: "🔥" },
+	谨慎买入: { bg: "linear-gradient(135deg, #fff7e6, #ffe7ba)", border: "#fa8c16", color: "#d46b08", icon: "⚠️🔥" },
 	卖出: { bg: "linear-gradient(135deg, #f6ffed, #d9f7be)", border: "#52c41a", color: "#389e0d", icon: "⚠️" },
-	观望: { bg: "linear-gradient(135deg, #fff7e6, #ffe7ba)", border: "#faad14", color: "#d48806", icon: "👀" },
+	观望: { bg: "linear-gradient(135deg, #f0f5ff, #d6e4ff)", border: "#597ef7", color: "#2f54eb", icon: "👀" },
 	继续持有: { bg: "linear-gradient(135deg, #e6f7ff, #bae7ff)", border: "#1890ff", color: "#096dd9", icon: "💎" },
 };
 
@@ -188,13 +189,19 @@ const DeepAnalysisCard: React.FC<{ deep: StockDeepAnalysis }> = ({ deep }) => {
 				)}
 			</div>
 
-			{/* 近期涨跌原因 */}
+			{/* 近期涨跌原因 + 短线催化剂 */}
 			<div style={{ background: "#fff", borderRadius: 8, padding: "10px 14px", marginBottom: 8, border: "1px solid #f0f0f0" }}>
 				<Space size={4} style={{ marginBottom: 4 }}>
 					<RiseOutlined style={{ color: "#722ed1" }} />
 					<Text strong style={{ color: "#722ed1", fontSize: 13 }}>近期涨跌原因</Text>
 				</Space>
 				<div><Text style={{ fontSize: 12, lineHeight: "20px" }}>{deep.recent_move_reason}</Text></div>
+				{deep.short_term_catalysts && (
+					<div style={{ marginTop: 6, padding: "6px 10px", background: "linear-gradient(135deg, #fff1f0, #fff7e6)", borderRadius: 6, border: "1px solid #ffd591" }}>
+						<Text style={{ fontSize: 11, color: "#fa541c", fontWeight: 600 }}>🚀 短线催化剂</Text>
+						<div><Text style={{ fontSize: 12, lineHeight: "20px", color: "#d4380d" }}>{deep.short_term_catalysts}</Text></div>
+					</div>
+				)}
 			</div>
 
 			{/* 风险 & 催化剂 */}
@@ -231,6 +238,50 @@ const DeepAnalysisCard: React.FC<{ deep: StockDeepAnalysis }> = ({ deep }) => {
 						</Col>
 					)}
 				</Row>
+			)}
+
+			{/* 买入策略面板 */}
+			{(deep.buy_timing || deep.position_advice || deep.stop_loss_price || deep.target_price) && (
+				<div style={{ background: "linear-gradient(135deg, #fff1f0, #ffe6e2)", borderRadius: 8, padding: "10px 14px", marginTop: 8, marginBottom: 8, border: "2px solid #ffccc7" }}>
+					<Space size={4} style={{ marginBottom: 6 }}>
+						<FireFilled style={{ color: "#f5222d" }} />
+						<Text strong style={{ color: "#cf1322", fontSize: 13 }}>操作策略</Text>
+					</Space>
+					{deep.buy_timing && (
+						<div style={{ marginBottom: 4 }}>
+							<Text style={{ fontSize: 12 }}>
+								<Text strong style={{ color: "#cf1322" }}>📅 买入时机：</Text>
+								{deep.buy_timing}
+							</Text>
+						</div>
+					)}
+					{deep.position_advice && (
+						<div style={{ marginBottom: 4 }}>
+							<Text style={{ fontSize: 12 }}>
+								<Text strong style={{ color: "#d46b08" }}>📊 建议仓位：</Text>
+								{deep.position_advice}
+							</Text>
+						</div>
+					)}
+					<Row gutter={8}>
+						{deep.target_price && (
+							<Col span={12}>
+								<div style={{ textAlign: "center", background: "rgba(255,255,255,0.7)", borderRadius: 6, padding: "4px 8px" }}>
+									<Text style={{ fontSize: 11, color: "#f5222d" }}>🎯 目标价</Text>
+									<div><Text strong style={{ fontSize: 15, color: "#cf1322" }}>{deep.target_price}</Text></div>
+								</div>
+							</Col>
+						)}
+						{deep.stop_loss_price && (
+							<Col span={12}>
+								<div style={{ textAlign: "center", background: "rgba(255,255,255,0.7)", borderRadius: 6, padding: "4px 8px" }}>
+									<Text style={{ fontSize: 11, color: "#8c8c8c" }}>⛔ 止损价</Text>
+									<div><Text strong style={{ fontSize: 15, color: "#8c8c8c" }}>{deep.stop_loss_price}</Text></div>
+								</div>
+							</Col>
+						)}
+					</Row>
+				</div>
 			)}
 
 			{/* 深度评价 */}

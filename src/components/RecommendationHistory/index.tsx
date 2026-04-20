@@ -334,6 +334,13 @@ const RecommendationHistory: React.FC<Props> = ({
 													<div>
 														<Text strong style={{ fontSize: 15, color: "#262626" }}>{name}</Text>
 														<Text type="secondary" style={{ fontSize: 11, marginLeft: 6 }}>{code}</Text>
+														{stock.in_main_theme
+															? (
+																<Tooltip title={stock.related_themes ? (Array.isArray(stock.related_themes) ? stock.related_themes.join("、") : String(stock.related_themes)) : "属于当日主线题材"}>
+																	<Tag color="volcano" style={{ margin: "0 0 0 6px", fontSize: 10, lineHeight: "16px", padding: "0 5px" }}>🔥主线</Tag>
+																</Tooltip>
+															)
+															: null}
 													</div>
 													{level
 														? <Tag color={ls.tag} style={{ margin: 0, fontWeight: 600 }}>{level}</Tag>

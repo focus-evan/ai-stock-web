@@ -28,16 +28,26 @@ export interface StockDeepAnalysis {
 	growth_label: "高成长" | "稳定" | "低增长" | "转型期" | "待分析"
 	/** 近期涨跌幅原因 */
 	recent_move_reason: string
+	/** 短线催化剂（题材概念、资金流入、板块轮动） */
+	short_term_catalysts?: string
 	/** 核心风险 */
 	key_risks: string[]
 	/** 近期催化剂 */
 	catalysts: string[]
 	/** 综合深度评价 */
 	deep_summary: string
-	/** 操作结论：买入/观望/卖出 */
+	/** 操作结论：买入/谨慎买入/观望/卖出 */
 	action_verdict?: string
-	/** 操作结论依据（基本面+技术面证据） */
+	/** 操作结论依据（基本面+技术面+催化剂证据） */
 	verdict_reason?: string
+	/** 次日操作策略（具体买入时机+价位） */
+	buy_timing?: string
+	/** 建议仓位 */
+	position_advice?: string
+	/** 建议止损价位 */
+	stop_loss_price?: string
+	/** 短线目标价位 */
+	target_price?: string
 	/** 是否 LLM 增强 */
 	llm_enhanced: boolean
 }
