@@ -37,6 +37,7 @@ import {
 	SearchOutlined,
 	SettingOutlined,
 	SisternodeOutlined,
+	StarOutlined,
 	StockOutlined,
 	SubnodeOutlined,
 	SyncOutlined,
@@ -106,4 +107,5 @@ export const menuIcons: Record<string, any> = {
 	BankOutlined,
 	FireOutlined,
 	LinkOutlined,
+	StarOutlined,
 };
