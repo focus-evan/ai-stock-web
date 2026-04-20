@@ -79,7 +79,7 @@ export default function Home() {
 	const positions: any[] = dashData?.positions || [];
 	const recentTrades: any[] = dashData?.recent_trades || [];
 	const performance: Record<string, any[]> = dashData?.performance || {};
-	const recommendations: Record<string, any[]> = dashData?.recommendations || {};
+	const recommendations: Record<string, any> = dashData?.recommendations || {};
 
 	// ============= 收益曲线 ECharts =============
 	const perfOption: EChartsOption = (() => {
@@ -410,7 +410,7 @@ export default function Home() {
 											/>
 										</Col>
 									</Row>
-									<div style={{ display: "flex", gap: 16, margin: "8px 0 12px", fontSize: 12, color: "#8c8c8c" }}>
+									<div style={{ display: "flex", gap: 16, margin: "8px 0 4px", fontSize: 12, color: "#8c8c8c" }}>
 										<span>
 											收益率:
 											<Text style={{ color: profitColor(s.total_profit_pct), fontSize: 12, fontWeight: 600 }}>
@@ -425,6 +425,34 @@ export default function Home() {
 											只
 										</span>
 									</div>
+									{/* 最后交易时间 + 推荐更新时间 */}
+									{(() => {
+										const recInfo = recommendations[s.strategy_type];
+										const lastTradeDate = s.last_trade_date;
+										const recDate = recInfo?.trading_date || recInfo?.generated_at;
+										if (!lastTradeDate && !recDate)
+											return null;
+										return (
+											<div style={{ display: "flex", gap: 12, marginBottom: 10, fontSize: 11, color: "#bfbfbf", flexWrap: "wrap" }}>
+												{lastTradeDate && (
+													<Tooltip title="最后一次模拟交易日期">
+														<span>
+															🔄 交易:
+															{String(lastTradeDate).slice(0, 10)}
+														</span>
+													</Tooltip>
+												)}
+												{recDate && (
+													<Tooltip title="推荐数据生成时间">
+														<span>
+															📡 推荐:
+															{String(recDate).slice(0, 10)}
+														</span>
+													</Tooltip>
+												)}
+											</div>
+										);
+									})()}
 									{/* 持仓股票列表 */}
 									{sPositions.length > 0 && (
 										<div style={{
@@ -566,7 +594,10 @@ export default function Home() {
 					<Row gutter={[16, 16]}>
 						{Object.keys(STRATEGY_CONFIG).map((st) => {
 							const cfg = STRATEGY_CONFIG[st];
-							const recs = Array.isArray(recommendations[st]) ? recommendations[st] : [];
+							const recData = recommendations[st];
+							// Backend returns {stocks: [...], generated_at, trading_date} or legacy array
+							const recs = Array.isArray(recData) ? recData : (Array.isArray(recData?.stocks) ? recData.stocks : []);
+							const recGenAt = recData?.generated_at;
 							return (
 								<Col xs={24} sm={12} md={8} lg={6} key={st}>
 									<Card
@@ -576,6 +607,7 @@ export default function Home() {
 												<span>{cfg.icon}</span>
 												<Text strong>{cfg.label}</Text>
 												<Tag color={cfg.color}>Top 5</Tag>
+												{recGenAt && <Text type="secondary" style={{ fontSize: 10 }}>{String(recGenAt).slice(5, 16)}</Text>}
 											</Space>
 										)}
 										style={{ borderRadius: 10, borderLeft: `3px solid ${cfg.color}` }}
