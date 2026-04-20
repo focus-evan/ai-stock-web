@@ -47,7 +47,7 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -220,6 +220,17 @@ export default function ShadowStockPage() {
 		return selectedTarget?.holdings || [];
 	}, [selectedTarget]);
 
+	const detailRef = useRef<HTMLDivElement>(null);
+
+	// 移动端点击IPO标的后，自动滚动到详情面板
+	useEffect(() => {
+		if (selectedTarget && detailRef.current && window.innerWidth < 992) {
+			setTimeout(() => {
+				detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+			}, 100);
+		}
+	}, [selectedTarget]);
+
 	if (!loading && (!dashboard || dashboard.status === "no_data")) {
 		return (
 			<BasicContent className="h-full" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -354,6 +365,7 @@ export default function ShadowStockPage() {
 						</Col>
 
 						<Col xs={24} lg={14} xl={15}>
+							<div ref={detailRef} />
 							{selectedTarget && (
 								<Card
 									title={(
