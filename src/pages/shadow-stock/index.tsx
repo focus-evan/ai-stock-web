@@ -242,19 +242,19 @@ export default function ShadowStockPage() {
 			<Spin spinning={loading} tip="加载中...">
 				<div style={{ padding: "0 4px" }}>
 					{/* 顶部信息栏 */}
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-						<div>
-							<Title level={4} style={{ margin: 0, marginBottom: 4 }}>
+					<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 8, marginBottom: 16 }}>
+						<div style={{ minWidth: 0 }}>
+							<Title level={4} style={{ margin: 0, marginBottom: 4, fontSize: 18 }}>
 								<RocketOutlined style={{ marginRight: 8, color: "#667eea" }} />
 								影子股套利策略
 							</Title>
 							{dashboard?.report && (
-								<Space size={16}>
-									<Text type="secondary">
+								<Space size={8} wrap>
+									<Text type="secondary" style={{ fontSize: 12 }}>
 										<ClockCircleOutlined style={{ marginRight: 4 }} />
 										{`更新于 ${dashboard.report.created_at ? new Date(dashboard.report.created_at).toLocaleString("zh-CN") : "未知"}`}
 									</Text>
-									<Text type="secondary">
+									<Text type="secondary" style={{ fontSize: 12 }}>
 										{`耗时 ${dashboard.report.duration_seconds}s`}
 									</Text>
 									{dashboard.needs_refresh && (
@@ -265,11 +265,11 @@ export default function ShadowStockPage() {
 								</Space>
 							)}
 						</div>
-						<Space>
+						<Space wrap>
 							{reportHistory.length > 1 && (
 								<Select
 									value={selectedBatchId || dashboard?.batch_id}
-									style={{ width: 220 }}
+									style={{ width: "min(220px, 50vw)" }}
 									placeholder="选择历史报告"
 									suffixIcon={<HistoryOutlined />}
 									onChange={(val) => {
@@ -283,7 +283,7 @@ export default function ShadowStockPage() {
 									}))}
 								/>
 							)}
-							<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh}>
+							<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh} size="middle">
 								{refreshing ? "刷新中..." : "刷新报告"}
 							</Button>
 						</Space>
@@ -291,12 +291,13 @@ export default function ShadowStockPage() {
 
 					{/* 赛道卡片区 */}
 					<div style={{ marginBottom: 20 }}>
-						<div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 4 }}>
+						<div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 8, WebkitOverflowScrolling: "touch" }}>
 							<Card
 								hoverable
 								onClick={() => setSelectedTrackId(null)}
 								style={{
-									minWidth: 140,
+									minWidth: 120,
+									flex: "0 0 auto",
 									cursor: "pointer",
 									border: selectedTrackId === null ? "2px solid #667eea" : "1px solid #f0f0f0",
 									borderRadius: 12,
@@ -326,7 +327,7 @@ export default function ShadowStockPage() {
 					</div>
 
 					{/* 主内容区 */}
-					<Row gutter={16}>
+					<Row gutter={[16, 16]}>
 						<Col xs={24} lg={10} xl={9}>
 							<Card
 								title={(
@@ -335,8 +336,8 @@ export default function ShadowStockPage() {
 										<span>{`IPO 进展 (${filteredTargets.length})`}</span>
 									</Space>
 								)}
-								bodyStyle={{ padding: 0, maxHeight: "calc(100vh - 340px)", overflowY: "auto" }}
-								style={{ borderRadius: 12 }}
+								bodyStyle={{ padding: 0, maxHeight: "min(50vh, calc(100vh - 340px))", overflowY: "auto" }}
+								style={{ borderRadius: 12, marginBottom: 0 }}
 							>
 								{filteredTargets.length === 0 && (
 									<Empty description="暂无数据" style={{ padding: 40 }} />
@@ -365,9 +366,9 @@ export default function ShadowStockPage() {
 										</Space>
 									)}
 									style={{ borderRadius: 12 }}
-									bodyStyle={{ maxHeight: "calc(100vh - 340px)", overflowY: "auto" }}
+									bodyStyle={{ maxHeight: "min(70vh, calc(100vh - 340px))", overflowY: "auto" }}
 								>
-									<Descriptions size="small" column={{ xs: 1, sm: 2, md: 3 }} bordered style={{ marginBottom: 16 }}>
+									<Descriptions size="small" column={{ xs: 1, sm: 2, md: 3 }} bordered style={{ marginBottom: 16, overflowX: "auto" }}>
 										<Descriptions.Item label="目标市场">{selectedTarget.target_market || "-"}</Descriptions.Item>
 										<Descriptions.Item label="预期市值">
 											<Text strong style={{ color: "#1677ff", fontSize: 16 }}>
@@ -550,7 +551,8 @@ function TrackCard({ track, index, isSelected, targetCount, onClick }: TrackCard
 			hoverable
 			onClick={onClick}
 			style={{
-				minWidth: 180,
+				minWidth: 150,
+				flex: "0 0 auto",
 				cursor: "pointer",
 				border: isSelected ? "2px solid #667eea" : "1px solid #f0f0f0",
 				borderRadius: 12,
@@ -658,19 +660,21 @@ function IPOTargetCard({ target, isSelected, onClick }: IPOTargetCardProps) {
 				</div>
 			</div>
 
-			<Steps
-				size="small"
-				current={statusInfo.step}
-				style={{ marginTop: 8 }}
-				items={[
-					{ title: "辅导" },
-					{ title: "受理" },
-					{ title: "问询" },
-					{ title: "过会" },
-					{ title: "注册" },
-					{ title: "上市" },
-				]}
-			/>
+			<div style={{ overflowX: "auto", marginTop: 8, paddingBottom: 2 }}>
+				<Steps
+					size="small"
+					current={statusInfo.step}
+					style={{ minWidth: 360 }}
+					items={[
+						{ title: "辅导" },
+						{ title: "受理" },
+						{ title: "问询" },
+						{ title: "过会" },
+						{ title: "注册" },
+						{ title: "上市" },
+					]}
+				/>
+			</div>
 
 			{target.ipo_status_detail && (
 				<Paragraph type="secondary" style={{ fontSize: 12, marginTop: 6, marginBottom: 0 }} ellipsis={{ rows: 2 }}>
