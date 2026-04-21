@@ -632,7 +632,7 @@ export function fetchWatchlist(status = 1) {
 	return request
 		.get("strategy/combined/watchlist", {
 			searchParams: { status },
-			timeout: 15000,
+			timeout: 30000,
 		})
 		.json<{ status: string, data: { items: WatchlistItem[], total: number } }>();
 }
