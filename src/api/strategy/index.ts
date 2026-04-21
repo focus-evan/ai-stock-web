@@ -803,3 +803,14 @@ export function fetchDailyPicksDetail(recordId: number) {
 		})
 		.json<DailyPicksDetailResponse>();
 }
+
+// ===================== 盘前情绪扫描 =====================
+
+/** 手动触发盘前情绪扫描 */
+export function triggerSentimentScan() {
+	return request
+		.post("strategy/combined/sentiment-scan", {
+			timeout: 120000,
+		})
+		.json<{ status: string, data: any }>();
+}

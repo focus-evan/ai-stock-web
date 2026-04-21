@@ -1,6 +1,7 @@
 import type { SchedulerTask } from "#src/api/system";
 
 import { cleanupListedIPO, generateShadowStockRecommendations, refreshShadowStockReport } from "#src/api/shadow-stock";
+import { triggerPortfolioAnalysis, triggerSentimentScan } from "#src/api/strategy";
 import {
 	addSchedulerUser,
 	getSchedulerStatus,
@@ -78,6 +79,10 @@ function strategyColor(s: string): string {
 		return "#eb2f96";
 	if (s === "watchlist")
 		return "#13c2c2";
+	if (s === "sentiment_scan")
+		return "#ff4d4f";
+	if (s === "portfolio_analysis")
+		return "#1677ff";
 	if (s === "moat_value")
 		return "#2f54eb";
 	return "#595959";
@@ -115,6 +120,10 @@ function strategyIcon(s: string): string {
 		return "🎯";
 	if (s === "watchlist")
 		return "👀";
+	if (s === "sentiment_scan")
+		return "📡";
+	if (s === "portfolio_analysis")
+		return "📊";
 	if (s === "moat_value")
 		return "🏰";
 	return "📋";
@@ -134,6 +143,8 @@ function phaseColor(phase: string): string {
 		return "orange";
 	if (phase === "review")
 		return "purple";
+	if (phase === "analysis")
+		return "gold";
 	return "default";
 }
 
@@ -151,6 +162,8 @@ function phaseLabel(phase: string): string {
 		return "结算";
 	if (phase === "review")
 		return "复盘";
+	if (phase === "analysis")
+		return "分析";
 	return phase;
 }
 
@@ -265,6 +278,8 @@ export default function SchedulerPage() {
 		"relay",
 		"combined",
 		"moat_value",
+		"sentiment_scan",
+		"portfolio_analysis",
 		"daily_picks",
 		"watchlist",
 		"global",
@@ -282,6 +297,8 @@ export default function SchedulerPage() {
 		relay: "🏆 连板接力",
 		combined: "🔗 综合战法",
 		moat_value: "🏰 护城河",
+		sentiment_scan: "📡 盘前情绪扫描",
+		portfolio_analysis: "📊 持仓整体分析",
 		daily_picks: "🎯 当日精选",
 		watchlist: "👀 盯盘指导",
 		global: "⚙️ 全局任务",
@@ -332,6 +349,7 @@ export default function SchedulerPage() {
 			width: 80,
 			align: "center" as const,
 			render: (_: any, record: SchedulerTask) => {
+				// 影子股任务手动触发
 				if (record.phase === "shadow_cleanup" || record.phase === "shadow_refresh" || record.phase === "shadow_recommend") {
 					return (
 						<Tooltip title="手动触发">
@@ -377,6 +395,70 @@ export default function SchedulerPage() {
 										message.destroy("refresh");
 										message.destroy("recommend");
 										message.error("触发失败");
+									}
+								}}
+							/>
+						</Tooltip>
+					);
+				}
+				// 盘前情绪扫描手动触发
+				if (record.strategy === "sentiment_scan") {
+					return (
+						<Tooltip title="手动触发情绪扫描">
+							<Button
+								type="link"
+								size="small"
+								icon={<PlayCircleOutlined />}
+								disabled={record.done}
+								onClick={async () => {
+									try {
+										message.loading({ content: "正在执行盘前情绪扫描...", key: "sentiment", duration: 0 });
+										const result = await triggerSentimentScan();
+										message.destroy("sentiment");
+										if (result.status === "success") {
+											const risk = result.data?.risk_level || "";
+											const advice = result.data?.trading_advice || "";
+											message.success(`情绪扫描完成 | 风险: ${risk} | ${advice}`);
+										}
+										else {
+											message.warning("扫描完成但结果异常");
+										}
+										refreshScheduler();
+									}
+									catch {
+										message.destroy("sentiment");
+										message.error("情绪扫描触发失败");
+									}
+								}}
+							/>
+						</Tooltip>
+					);
+				}
+				// 持仓整体分析手动触发
+				if (record.strategy === "portfolio_analysis") {
+					return (
+						<Tooltip title="手动触发持仓分析">
+							<Button
+								type="link"
+								size="small"
+								icon={<PlayCircleOutlined />}
+								disabled={record.done}
+								onClick={async () => {
+									try {
+										message.loading({ content: "正在生成持仓整体分析...", key: "portfolio_analysis", duration: 0 });
+										const result = await triggerPortfolioAnalysis();
+										message.destroy("portfolio_analysis");
+										if (result.status === "success" || result.status === "completed") {
+											message.success("持仓整体分析生成完成");
+										}
+										else {
+											message.warning(result.message || "分析完成但结果异常");
+										}
+										refreshScheduler();
+									}
+									catch {
+										message.destroy("portfolio_analysis");
+										message.error("持仓分析触发失败");
 									}
 								}}
 							/>
