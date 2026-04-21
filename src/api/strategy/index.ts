@@ -736,7 +736,7 @@ export function fetchPortfolioAnalysis(date?: string) {
 			searchParams,
 			timeout: 15000,
 		})
-		.json<{ status: string, data: PortfolioAnalysisData, generated_at?: string }>();
+		.json<{ status: string, data: PortfolioAnalysisData, generated_at?: string, sentiment_trigger?: { triggered_by_sentiment: boolean, trigger_reason: string, triggered_at: string, risk_level: string, advice: string } }>();
 }
 
 /** 触发生成整体持仓分析 */

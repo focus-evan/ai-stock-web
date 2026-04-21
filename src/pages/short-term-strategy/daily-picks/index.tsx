@@ -860,6 +860,64 @@ const DailyPicksPage: React.FC = () => {
 					{!loading && !error && data && data.picks && data.picks.length > 0 && (
 						<>
 							<TodayBanner data={data} fromCache={fromCache} refreshing={refreshing} refreshSeconds={refreshSeconds} onRefresh={handleRefresh} />
+							{/* 盘前情绪预警横幅 */}
+							{(data as any).sentiment && (
+								<Alert
+									style={{ marginBottom: 16, borderRadius: 10 }}
+									type={
+										(data as any).sentiment.risk_level === "high" || (data as any).sentiment.risk_level === "extreme"
+											? "error"
+											: (data as any).sentiment.risk_level === "medium_high" ? "warning" : "info"
+									}
+									showIcon
+									icon={<WarningOutlined />}
+									message={(
+										<Space wrap>
+											<Text strong>
+												{(data as any).sentiment.triggered_by_sentiment ? "🛡️ 盘前预警触发刷新" : "📡 盘前情绪提示"}
+											</Text>
+											{(data as any).sentiment.risk_level && (
+												<Tag color={(data as any).sentiment.risk_level === "high" || (data as any).sentiment.risk_level === "extreme" ? "red" : (data as any).sentiment.risk_level === "medium_high" ? "orange" : "blue"}>
+													风险:
+													{" "}
+													{(data as any).sentiment.risk_level}
+												</Tag>
+											)}
+											{(data as any).sentiment.bombs_count > 0 && (
+												<Tag color="volcano">
+													💣 暴雷
+													{(data as any).sentiment.bombs_count}
+													{" "}
+													家
+												</Tag>
+											)}
+											{(data as any).sentiment.global_tone && (
+												<Tag color="geekblue">
+													外围:
+													{(data as any).sentiment.global_tone}
+												</Tag>
+											)}
+										</Space>
+									)}
+									description={(
+										<>
+											{(data as any).sentiment.warning && <div style={{ marginBottom: 4 }}>{(data as any).sentiment.warning}</div>}
+											{(data as any).sentiment.advice && (
+												<div style={{ color: "#595959" }}>
+													💡
+													{(data as any).sentiment.advice}
+												</div>
+											)}
+											{(data as any).sentiment.trigger_reason && (
+												<div style={{ marginTop: 4, fontSize: 12, color: "#8c8c8c" }}>
+													触发原因:
+													{(data as any).sentiment.trigger_reason}
+												</div>
+											)}
+										</>
+									)}
+								/>
+							)}
 							<WeeklyLogicCard data={data} />
 							{data.picks.slice(0, 3).length > 0 && (
 								<>

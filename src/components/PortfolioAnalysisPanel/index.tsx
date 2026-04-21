@@ -14,6 +14,7 @@ import {
 	WarningOutlined,
 } from "@ant-design/icons";
 import {
+	Alert,
 	Button,
 	Card,
 	Col,
@@ -348,6 +349,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 	const [loading, setLoading] = useState(true);
 	const [generating, setGenerating] = useState(false);
 	const [generatedAt, setGeneratedAt] = useState<string | null>(null);
+	const [sentimentTrigger, setSentimentTrigger] = useState<any>(null);
 
 	const loadData = useCallback(async () => {
 		setLoading(true);
@@ -356,6 +358,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 			if (resp.status === "success" && resp.data) {
 				setData(resp.data);
 				setGeneratedAt(resp.data.generated_at || resp.generated_at || null);
+				setSentimentTrigger((resp as any).sentiment_trigger || null);
 			}
 		}
 		catch (e) {
@@ -531,6 +534,48 @@ const PortfolioAnalysisPanel: React.FC = () => {
 					</div>
 				)}
 			</Card>
+
+			{/* 盘前情绪预警触发标记 */}
+			{sentimentTrigger && sentimentTrigger.triggered_by_sentiment && (
+				<Alert
+					style={{ marginTop: 16, borderRadius: 10 }}
+					type={sentimentTrigger.risk_level === "high" || sentimentTrigger.risk_level === "extreme" ? "error" : "warning"}
+					showIcon
+					icon={<WarningOutlined />}
+					message={(
+						<Space wrap>
+							<Text strong>🛡️ 盘前预警触发刷新</Text>
+							<Tag color={sentimentTrigger.risk_level === "high" || sentimentTrigger.risk_level === "extreme" ? "red" : "orange"}>
+								风险:
+								{" "}
+								{sentimentTrigger.risk_level}
+							</Tag>
+						</Space>
+					)}
+					description={(
+						<>
+							{sentimentTrigger.advice && (
+								<div>
+									💡
+									{sentimentTrigger.advice}
+								</div>
+							)}
+							{sentimentTrigger.trigger_reason && (
+								<div style={{ marginTop: 4, fontSize: 12, color: "#8c8c8c" }}>
+									触发原因:
+									{sentimentTrigger.trigger_reason}
+								</div>
+							)}
+							{sentimentTrigger.triggered_at && (
+								<div style={{ marginTop: 2, fontSize: 11, color: "#bfbfbf" }}>
+									触发时间:
+									{sentimentTrigger.triggered_at}
+								</div>
+							)}
+						</>
+					)}
+				/>
+			)}
 
 			{/* Generating State */}
 			{generating && (
