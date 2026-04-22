@@ -124,15 +124,25 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				setAccessStore(uniqueRoutes);
 
 				const hasError = results.some(result => result.status === "rejected");
+
+				// ── token 过期 / 用户信息为空 → 清 token 跳登录 ──
+				const userInfoEmpty = userInfoResult.status === "fulfilled" && !userInfoResult.value;
+				const unAuthorized = results.some((result: any) => result.status === "rejected" && result.reason?.response?.status === 401);
+
+				if (userInfoEmpty || unAuthorized) {
+					console.warn("[auth-guard] Token expired or user info empty, redirecting to login");
+					// 清除过期 token + 用户信息 + 权限信息
+					useAuthStore.getState().reset();
+					hideLoading();
+					return navigate(loginPath, { replace: true });
+				}
+
 				/**
 				 * @zh 网络请求失败，跳转到 500 页面
 				 * @en Network request failed, redirect to 500 page
 				 */
 				if (hasError) {
-					const unAuthorized = results.some((result: any) => result.status === "rejected" && result.reason?.response?.status === 401);
-					if (!unAuthorized) {
-						return navigate(exception500Path);
-					}
+					return navigate(exception500Path);
 				}
 
 				/**
