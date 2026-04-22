@@ -390,6 +390,45 @@ const PickCard: React.FC<{ stock: DailyPickStock, isPodium?: boolean, podiumIdx?
 				</Space>
 			</div>
 
+			{/* T+1 竞价校验结果 */}
+			{(stock as any).auction_verification && (() => {
+				const av = (stock as any).auction_verification;
+				const isInvalid = av.status === "invalid";
+				const isGapUp = av.status === "gap_up_risk";
+				const avColor = isInvalid ? "#ff4d4f" : isGapUp ? "#fa8c16" : "#52c41a";
+				const avBg = isInvalid ? "#fff1f0" : isGapUp ? "#fff7e6" : "#f6ffed";
+				const avBorder = isInvalid ? "#ffa39e" : isGapUp ? "#ffd591" : "#b7eb8f";
+				const avIcon = isInvalid ? "❌" : isGapUp ? "⚠️" : "✅";
+				return (
+					<div style={{
+						background: avBg,
+						border: `1px solid ${avBorder}`,
+						borderRadius: 8,
+						padding: "6px 12px",
+						marginBottom: 8,
+						display: "flex",
+						alignItems: "center",
+						gap: 8,
+					}}
+					>
+						<span style={{ fontSize: 16 }}>{avIcon}</span>
+						<div>
+							<Text strong style={{ fontSize: 12, color: avColor }}>
+								T+1竞价校验：开盘价 ¥
+								{av.open_price?.toFixed(2)}
+								{" "}
+								(
+								{av.gap_pct >= 0 ? "+" : ""}
+								{av.gap_pct?.toFixed(1)}
+								%)
+							</Text>
+							<div>
+								<Text style={{ fontSize: 11, color: "#8c8c8c" }}>{av.reason}</Text>
+							</div>
+						</div>
+					</div>
+				);
+			})()}
 			{(stock.suggested_buy_price || stock.operation_suggestion) && (
 				<div style={{ background: "rgba(255,255,255,0.85)", borderRadius: 8, padding: "8px 12px", border: "1px solid rgba(0,0,0,0.06)", marginBottom: 8 }}>
 					{stock.suggested_buy_price && stock.suggested_buy_price > 0 && (
