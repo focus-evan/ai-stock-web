@@ -146,6 +146,53 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						</div>
 					</div>
 				</div>
+
+				{/* 持仓信息条 */}
+				<div style={{
+					display: "grid",
+					gridTemplateColumns: "1fr 1fr 1fr 1fr",
+					gap: 4,
+					marginTop: 10,
+					background: "rgba(0,0,0,0.15)",
+					borderRadius: 6,
+					padding: "8px 10px",
+				}}
+				>
+					<div style={{ textAlign: "center" }}>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>成本价</div>
+						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
+							{stock.buy_price > 0 ? `¥${stock.buy_price.toFixed(2)}` : "-"}
+						</div>
+					</div>
+					<div style={{ textAlign: "center" }}>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>持有</div>
+						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
+							{stock.buy_shares > 0 ? `${stock.buy_shares}股` : "-"}
+						</div>
+					</div>
+					<div style={{ textAlign: "center" }}>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>市值</div>
+						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
+							{stock.current_price > 0 && stock.buy_shares > 0
+								? `¥${(stock.current_price * stock.buy_shares).toFixed(0)}`
+								: "-"}
+						</div>
+					</div>
+					<div style={{ textAlign: "center" }}>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>盈亏</div>
+						<div style={{
+							fontSize: 13,
+							fontWeight: 700,
+							color: (stock.pnl_amount || 0) >= 0 ? "#ffa39e" : "#b7eb8f",
+						}}
+						>
+							{stock.pnl_amount != null
+								? `${stock.pnl_amount >= 0 ? "+" : ""}¥${stock.pnl_amount.toFixed(0)}`
+								: "-"}
+						</div>
+					</div>
+				</div>
+
 				<div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
 					<Tag style={{
 						margin: 0,
@@ -411,6 +458,12 @@ const PortfolioAnalysisPanel: React.FC = () => {
 	const avgPnl = stocks.length > 0
 		? stocks.reduce((sum, s) => sum + (s.pnl_pct || 0), 0) / stocks.length
 		: 0;
+	// 计算总市值
+	const totalValue = stocks.reduce((sum, s) => sum + (s.current_price || 0) * (s.buy_shares || 0), 0);
+	// 计算总盈亏金额
+	const totalPnl = stocks.reduce((sum, s) => sum + (s.pnl_amount || 0), 0);
+	// 计算总成本
+	const totalCost = stocks.reduce((sum, s) => sum + (s.buy_price || 0) * (s.buy_shares || 0), 0);
 
 	return (
 		<>
@@ -472,18 +525,49 @@ const PortfolioAnalysisPanel: React.FC = () => {
 
 				{/* 总览 */}
 				{hasData && (
-					<Row gutter={24}>
-						<Col span={6}>
+					<Row gutter={16}>
+						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
 								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>持仓数量</Text>
-								<div style={{ color: "#fff", fontSize: 24, fontWeight: 700 }}>{stocks.length}</div>
+								<div style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>{stocks.length}</div>
 							</div>
 						</Col>
-						<Col span={6}>
+						<Col span={4}>
+							<div style={{ textAlign: "center" }}>
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总成本</Text>
+								<div style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>
+									{totalCost > 0 ? `¥${(totalCost / 10000).toFixed(1)}万` : "-"}
+								</div>
+							</div>
+						</Col>
+						<Col span={4}>
+							<div style={{ textAlign: "center" }}>
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总市值</Text>
+								<div style={{ color: "#e0d4ff", fontSize: 22, fontWeight: 700 }}>
+									{totalValue > 0 ? `¥${(totalValue / 10000).toFixed(1)}万` : "-"}
+								</div>
+							</div>
+						</Col>
+						<Col span={4}>
+							<div style={{ textAlign: "center" }}>
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总盈亏</Text>
+								<div style={{
+									fontSize: 22,
+									fontWeight: 700,
+									color: totalPnl >= 0 ? "#ff7875" : "#95de64",
+								}}
+								>
+									{totalPnl >= 0 ? "+" : ""}
+									¥
+									{Math.abs(totalPnl).toFixed(0)}
+								</div>
+							</div>
+						</Col>
+						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
 								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>平均盈亏</Text>
 								<div style={{
-									fontSize: 24,
+									fontSize: 22,
 									fontWeight: 700,
 									color: avgPnl >= 0 ? "#ff7875" : "#95de64",
 								}}
@@ -493,19 +577,13 @@ const PortfolioAnalysisPanel: React.FC = () => {
 								</div>
 							</div>
 						</Col>
-						<Col span={6}>
+						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>盈利个股</Text>
-								<div style={{ color: "#ff7875", fontSize: 24, fontWeight: 700 }}>
-									{stocks.filter(s => (s.pnl_pct || 0) > 0).length}
-								</div>
-							</div>
-						</Col>
-						<Col span={6}>
-							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>亏损个股</Text>
-								<div style={{ color: "#95de64", fontSize: 24, fontWeight: 700 }}>
-									{stocks.filter(s => (s.pnl_pct || 0) < 0).length}
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>盈/亏</Text>
+								<div style={{ fontSize: 22, fontWeight: 700 }}>
+									<span style={{ color: "#ff7875" }}>{stocks.filter(s => (s.pnl_pct || 0) > 0).length}</span>
+									<span style={{ color: "rgba(255,255,255,0.3)", margin: "0 4px" }}>/</span>
+									<span style={{ color: "#95de64" }}>{stocks.filter(s => (s.pnl_pct || 0) < 0).length}</span>
 								</div>
 							</div>
 						</Col>
@@ -563,12 +641,14 @@ const PortfolioAnalysisPanel: React.FC = () => {
 							{sentimentTrigger.trigger_reason && (
 								<div style={{ marginTop: 4, fontSize: 12, color: "#8c8c8c" }}>
 									触发原因:
+									{" "}
 									{sentimentTrigger.trigger_reason}
 								</div>
 							)}
 							{sentimentTrigger.triggered_at && (
 								<div style={{ marginTop: 2, fontSize: 11, color: "#bfbfbf" }}>
 									触发时间:
+									{" "}
 									{sentimentTrigger.triggered_at}
 								</div>
 							)}

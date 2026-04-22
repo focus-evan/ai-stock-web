@@ -682,7 +682,11 @@ export interface PortfolioStockAnalysis {
 	stock_name: string
 	current_price: number
 	buy_price: number
+	/** 持有数量（股） */
+	buy_shares: number
 	pnl_pct: number
+	/** 盈亏金额（元） */
+	pnl_amount: number
 	/** 市盈率 TTM（来自理杏仁） */
 	pe_ttm?: number
 	/** 市净率（来自理杏仁） */
