@@ -27,6 +27,7 @@ import {
 	Button,
 	Card,
 	Col,
+	Collapse,
 	Empty,
 	message,
 	Progress,
@@ -38,12 +39,11 @@ import {
 	Steps,
 	Tabs,
 	Tag,
-	Timeline,
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useState } from "react";
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 /** 操作动作颜色 */
 function getActionColor(action: string): string {
@@ -426,35 +426,98 @@ function FollowPanel({
 				</Card>
 			)}
 
-			{/* 历史跟投指导 */}
+			{/* 历史跟投指导 — 可展开查看股票清单 */}
 			{history.length > 1 && (
-				<Card title={(
-					<Space>
-						<ClockCircleOutlined style={{ color: "#1890ff" }} />
-						<span>历史跟投指导</span>
-					</Space>
-				)}
+				<Card
+					title={(
+						<Space>
+							<ClockCircleOutlined style={{ color: "#1890ff" }} />
+							<span>历史跟投指导</span>
+							<Tag color="blue">
+								{history.length}
+								条
+							</Tag>
+						</Space>
+					)}
 				>
-					<Timeline
-						items={history.map((item, idx) => ({
-							color: idx === 0 ? "blue" : "gray",
+					<Collapse
+						accordion
+						ghost
+						items={history.slice(1).map(item => ({
+							key: item.id,
+							label: (
+								<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+									<Text strong>{item.trading_date}</Text>
+									<Tag color={item.session_type === "morning" ? "blue" : item.session_type === "afternoon" ? "orange" : "default"}>
+										{item.session_type === "morning" ? "上午" : item.session_type === "afternoon" ? "下午" : item.session_type}
+									</Tag>
+									<Badge count={item.stock_count} style={{ backgroundColor: "#1890ff" }} overflowCount={99} />
+									<Text type="secondary" style={{ fontSize: 12 }}>
+										置信度:
+										{item.confidence_score}
+										%
+									</Text>
+								</div>
+							),
 							children: (
-								<div key={item.id}>
-									<Space>
-										<Text strong>{item.trading_date}</Text>
-										<Tag>{item.session_type}</Tag>
-										<Badge count={item.stock_count} style={{ backgroundColor: "#1890ff" }} overflowCount={99} />
-										<Text type="secondary" style={{ fontSize: 12 }}>
-											置信度:
-											{item.confidence_score}
-											%
-										</Text>
-									</Space>
+								<div>
 									{item.strategy_summary && (
-										<Paragraph ellipsis={{ rows: 2, expandable: "collapsible" }} style={{ marginTop: 4, marginBottom: 0, fontSize: 13 }}>
-											{item.strategy_summary}
-										</Paragraph>
+										<Alert type="info" showIcon={false} message={item.strategy_summary} style={{ marginBottom: 12, fontSize: 13 }} />
 									)}
+									{item.recommendations && item.recommendations.length > 0
+										? (
+											<Row gutter={[12, 12]}>
+												{item.recommendations.map((raw: DragonHeadFollowStock, i: number) => {
+													const s = normalizeStock(raw);
+													return (
+														<Col xs={24} sm={12} lg={8} key={s.code || i}>
+															<Card
+																size="small"
+																style={{ borderLeft: `3px solid ${getActionColor(s.action)}` }}
+																styles={{ body: { padding: "8px 12px" } }}
+															>
+																<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+																	<Space size={4}>
+																		<Text strong style={{ fontSize: 13 }}>{s.name}</Text>
+																		<Text type="secondary" style={{ fontSize: 11 }}>{s.code}</Text>
+																	</Space>
+																	<Tag color={getActionColor(s.action)} icon={getActionIcon(s.action)} style={{ fontSize: 11, marginRight: 0 }}>{s.action}</Tag>
+																</div>
+																<div style={{ marginTop: 4, display: "flex", gap: 12, fontSize: 12 }}>
+																	{s.current_price != null && (
+																		<Text style={{ color: "#f5222d", fontWeight: 600 }}>
+																			¥
+																			{s.current_price.toFixed(2)}
+																		</Text>
+																	)}
+																	{s.target_price != null && s.target_price > 0 && (
+																		<Text type="secondary">
+																			目标¥
+																			{s.target_price.toFixed(2)}
+																		</Text>
+																	)}
+																	{s.stop_loss != null && s.stop_loss > 0 && (
+																		<Text type="secondary">
+																			止损¥
+																			{s.stop_loss.toFixed(2)}
+																		</Text>
+																	)}
+																</div>
+																{s.reason && (
+																	<Text style={{ fontSize: 11, color: "#8c8c8c", display: "block", marginTop: 2 }}>
+																		💡
+																		{s.reason}
+																	</Text>
+																)}
+															</Card>
+														</Col>
+													);
+												})}
+											</Row>
+										)
+										: (
+											<Text type="secondary" style={{ fontSize: 12 }}>无个股操作记录</Text>
+										)}
 								</div>
 							),
 						}))}
