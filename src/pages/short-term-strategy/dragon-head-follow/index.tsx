@@ -78,6 +78,16 @@ function getConfidenceColor(score: number): string {
 	return "#f5222d";
 }
 
+/** 标准化股票字段名（兼容 dragon_head 和 relay 两种数据格式） */
+function normalizeStock(stock: DragonHeadFollowStock) {
+	return {
+		...stock,
+		name: stock.name || stock.stock_name || "",
+		code: stock.code || stock.stock_code || "",
+		stop_loss: stock.stop_loss ?? stock.stop_loss_price ?? undefined,
+	};
+}
+
 /** ================== 通用跟投面板组件 ================== */
 function FollowPanel({
 	strategyLabel,
@@ -304,111 +314,114 @@ function FollowPanel({
 					style={{ marginBottom: 16 }}
 				>
 					<Row gutter={[16, 16]}>
-						{latest.recommendations.map((stock: DragonHeadFollowStock, idx: number) => (
-							<Col xs={24} sm={12} lg={8} xl={6} key={stock.code || idx}>
-								<Card
-									size="small"
-									hoverable
-									style={{ borderLeft: `4px solid ${getActionColor(stock.action)}`, height: "100%" }}
-									styles={{ body: { padding: "12px 16px" } }}
-								>
-									<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-										<Space>
-											<Text strong style={{ fontSize: 15 }}>{stock.name}</Text>
-											<Text type="secondary" style={{ fontSize: 12 }}>{stock.code}</Text>
-										</Space>
-										<Tag color={getActionColor(stock.action)} icon={getActionIcon(stock.action)} style={{ fontWeight: 700, fontSize: 13 }}>
-											{stock.action}
-										</Tag>
-									</div>
-
-									{stock.current_price != null && (
-										<div style={{ marginBottom: 6 }}>
-											<Text style={{ color: "#f5222d", fontWeight: 600, fontSize: 16 }}>
-												¥
-												{stock.current_price.toFixed(2)}
-											</Text>
-											{stock.change_pct != null && (
-												<Text style={{ marginLeft: 8, color: stock.change_pct >= 0 ? "#f5222d" : "#52c41a", fontWeight: 600 }}>
-													{stock.change_pct >= 0 ? "+" : ""}
-													{stock.change_pct.toFixed(2)}
-													%
-												</Text>
-											)}
-										</div>
-									)}
-
-									<Row gutter={8} style={{ marginBottom: 6 }}>
-										{stock.target_price != null && stock.target_price > 0 && (
-											<Col span={12}>
-												<Text type="secondary" style={{ fontSize: 11 }}>目标价</Text>
-												<div>
-													<Text style={{ color: "#f5222d", fontWeight: 600 }}>
-														¥
-														{stock.target_price.toFixed(2)}
-													</Text>
-												</div>
-											</Col>
-										)}
-										{stock.stop_loss != null && stock.stop_loss > 0 && (
-											<Col span={12}>
-												<Text type="secondary" style={{ fontSize: 11 }}>止损价</Text>
-												<div>
-													<Text style={{ color: "#52c41a", fontWeight: 600 }}>
-														¥
-														{stock.stop_loss.toFixed(2)}
-													</Text>
-												</div>
-											</Col>
-										)}
-									</Row>
-
-									{stock.position_pct != null && (
-										<div style={{ marginBottom: 6 }}>
-											<Text type="secondary" style={{ fontSize: 11 }}>建议仓位</Text>
-											<Progress percent={stock.position_pct} size="small" strokeColor={getActionColor(stock.action)} format={pct => `${pct}%`} />
-										</div>
-									)}
-
-									{stock.confidence != null && (
-										<div style={{ marginBottom: 6 }}>
+						{latest.recommendations.map((raw: DragonHeadFollowStock, idx: number) => {
+							const stock = normalizeStock(raw);
+							return (
+								<Col xs={24} sm={12} lg={8} xl={6} key={stock.code || idx}>
+									<Card
+										size="small"
+										hoverable
+										style={{ borderLeft: `4px solid ${getActionColor(stock.action)}`, height: "100%" }}
+										styles={{ body: { padding: "12px 16px" } }}
+									>
+										<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
 											<Space>
-												<Text type="secondary" style={{ fontSize: 11 }}>置信度</Text>
-												<Tag color={getConfidenceColor(stock.confidence)} style={{ fontSize: 11 }}>
-													{stock.confidence}
-													%
-												</Tag>
+												<Text strong style={{ fontSize: 15 }}>{stock.name}</Text>
+												<Text type="secondary" style={{ fontSize: 12 }}>{stock.code}</Text>
 											</Space>
+											<Tag color={getActionColor(stock.action)} icon={getActionIcon(stock.action)} style={{ fontWeight: 700, fontSize: 13 }}>
+												{stock.action}
+											</Tag>
 										</div>
-									)}
 
-									{stock.reason && (
-										<div style={{ marginBottom: 4 }}>
-											<Text style={{ fontSize: 12, color: "#595959" }}>
-												💡
+										{stock.current_price != null && (
+											<div style={{ marginBottom: 6 }}>
+												<Text style={{ color: "#f5222d", fontWeight: 600, fontSize: 16 }}>
+													¥
+													{stock.current_price.toFixed(2)}
+												</Text>
+												{stock.change_pct != null && (
+													<Text style={{ marginLeft: 8, color: stock.change_pct >= 0 ? "#f5222d" : "#52c41a", fontWeight: 600 }}>
+														{stock.change_pct >= 0 ? "+" : ""}
+														{stock.change_pct.toFixed(2)}
+														%
+													</Text>
+												)}
+											</div>
+										)}
+
+										<Row gutter={8} style={{ marginBottom: 6 }}>
+											{stock.target_price != null && stock.target_price > 0 && (
+												<Col span={12}>
+													<Text type="secondary" style={{ fontSize: 11 }}>目标价</Text>
+													<div>
+														<Text style={{ color: "#f5222d", fontWeight: 600 }}>
+															¥
+															{stock.target_price.toFixed(2)}
+														</Text>
+													</div>
+												</Col>
+											)}
+											{stock.stop_loss != null && stock.stop_loss > 0 && (
+												<Col span={12}>
+													<Text type="secondary" style={{ fontSize: 11 }}>止损价</Text>
+													<div>
+														<Text style={{ color: "#52c41a", fontWeight: 600 }}>
+															¥
+															{stock.stop_loss.toFixed(2)}
+														</Text>
+													</div>
+												</Col>
+											)}
+										</Row>
+
+										{stock.position_pct != null && (
+											<div style={{ marginBottom: 6 }}>
+												<Text type="secondary" style={{ fontSize: 11 }}>建议仓位</Text>
+												<Progress percent={stock.position_pct} size="small" strokeColor={getActionColor(stock.action)} format={pct => `${pct}%`} />
+											</div>
+										)}
+
+										{stock.confidence != null && (
+											<div style={{ marginBottom: 6 }}>
+												<Space>
+													<Text type="secondary" style={{ fontSize: 11 }}>置信度</Text>
+													<Tag color={getConfidenceColor(stock.confidence)} style={{ fontSize: 11 }}>
+														{stock.confidence}
+														%
+													</Tag>
+												</Space>
+											</div>
+										)}
+
+										{stock.reason && (
+											<div style={{ marginBottom: 4 }}>
+												<Text style={{ fontSize: 12, color: "#595959" }}>
+													💡
+													{" "}
+													{stock.reason}
+												</Text>
+											</div>
+										)}
+
+										{/* 连板接力特有字段: action_detail */}
+										{(stock as any).action_detail && (
+											<div style={{ marginBottom: 4 }}>
+												<Text style={{ fontSize: 12, color: "#595959" }}>{(stock as any).action_detail}</Text>
+											</div>
+										)}
+
+										{stock.risk_warning && (
+											<Text type="warning" style={{ fontSize: 11 }}>
+												⚠️
 												{" "}
-												{stock.reason}
+												{stock.risk_warning}
 											</Text>
-										</div>
-									)}
-
-									{/* 连板接力特有字段: action_detail */}
-									{(stock as any).action_detail && (
-										<div style={{ marginBottom: 4 }}>
-											<Text style={{ fontSize: 12, color: "#595959" }}>{(stock as any).action_detail}</Text>
-										</div>
-									)}
-
-									{stock.risk_warning && (
-										<Text type="warning" style={{ fontSize: 11 }}>
-											⚠️
-											{" "}
-											{stock.risk_warning}
-										</Text>
-									)}
-								</Card>
-							</Col>
-						))}
+										)}
+									</Card>
+								</Col>
+							);
+						})}
 					</Row>
 				</Card>
 			)}

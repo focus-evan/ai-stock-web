@@ -50,17 +50,24 @@ export function refreshDragonHeadRecommendations(limit: number = 13) {
 // ===================== 龙头战法跟投指导 =====================
 
 export interface DragonHeadFollowStock {
-	code: string
-	name: string
+	code?: string
+	name?: string
+	stock_code?: string // relay follow uses this
+	stock_name?: string // relay follow uses this
 	action: string
+	action_detail?: string // relay follow 操作详情
 	target_price?: number
 	stop_loss?: number
+	stop_loss_price?: number // relay follow uses this
 	current_price?: number
 	change_pct?: number
 	confidence?: number
 	position_pct?: number
 	reason?: string
 	risk_warning?: string
+	risk_level?: string
+	holding_period?: string
+	expected_return?: string
 }
 
 export interface DragonHeadFollowItem {
