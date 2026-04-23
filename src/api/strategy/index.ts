@@ -47,6 +47,69 @@ export function refreshDragonHeadRecommendations(limit: number = 13) {
 		.json<DragonHeadResponse>();
 }
 
+// ===================== 龙头战法跟投指导 =====================
+
+export interface DragonHeadFollowStock {
+	code: string
+	name: string
+	action: string
+	target_price?: number
+	stop_loss?: number
+	current_price?: number
+	change_pct?: number
+	confidence?: number
+	position_pct?: number
+	reason?: string
+	risk_warning?: string
+}
+
+export interface DragonHeadFollowItem {
+	id: number
+	portfolio_id: number
+	trading_date: string
+	session_type: string
+	stock_count: number
+	market_overview: string
+	strategy_summary: string
+	risk_warning: string
+	confidence_score: number
+	generated_at: string
+	recommendations: DragonHeadFollowStock[]
+}
+
+export interface DragonHeadFollowResponse {
+	status: string
+	data: {
+		latest: DragonHeadFollowItem | null
+		history: DragonHeadFollowItem[]
+		total: number
+	}
+}
+
+/**
+ * 获取龙头战法跟投指导
+ * @param limit - 返回记录数，默认10
+ */
+export function fetchDragonHeadFollow(limit: number = 10) {
+	return request
+		.get("strategy/dragon-head/follow", {
+			searchParams: { limit },
+			timeout: 30000,
+		})
+		.json<DragonHeadFollowResponse>();
+}
+
+/**
+ * 手动触发龙头战法跟投指导生成
+ */
+export function triggerDragonHeadFollow() {
+	return request
+		.post("strategy/dragon-head/follow/trigger", {
+			timeout: 300000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
 /**
  * 获取连板接力推荐列表
  * @param limit - 返回推荐数量，默认10
