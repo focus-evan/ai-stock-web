@@ -136,6 +136,25 @@ export function refreshRelayRecommendations(limit: number = 10) {
 		.json<RelayResponse>();
 }
 
+// ===================== 连板接力跟投指导 =====================
+
+export function fetchRelayFollow(limit: number = 10) {
+	return request
+		.get("strategy/relay/follow", {
+			searchParams: { limit },
+			timeout: 30000,
+		})
+		.json<DragonHeadFollowResponse>();
+}
+
+export function triggerRelayFollow() {
+	return request
+		.post("strategy/relay/follow/trigger", {
+			timeout: 300000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
 /**
  * 获取情绪战法数据
  * @param days - 返回历史天数，默认30
