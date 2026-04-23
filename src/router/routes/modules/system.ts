@@ -7,7 +7,6 @@ import { lazy } from "react";
 const User = lazy(() => import("#src/pages/system/user"));
 const Role = lazy(() => import("#src/pages/system/role"));
 const Menu = lazy(() => import("#src/pages/system/menu"));
-const DataSync = lazy(() => import("#src/pages/system/sync"));
 const Cache = lazy(() => import("#src/pages/system/cache"));
 const Monitor = lazy(() => import("#src/pages/system/monitor"));
 
@@ -58,14 +57,6 @@ const routes: AppRouteRecordRaw[] = [
 						"permission:button:update",
 						"permission:button:delete",
 					],
-				},
-			},
-			{
-				path: "/system/sync",
-				Component: DataSync,
-				handle: {
-					icon: "SyncOutlined",
-					title: "数据同步",
 				},
 			},
 			{

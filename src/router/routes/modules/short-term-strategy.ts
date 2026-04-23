@@ -21,6 +21,7 @@ const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-an
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 const Relay = lazy(() => import("#src/pages/short-term-strategy/relay"));
+const DataSync = lazy(() => import("#src/pages/system/sync"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -166,6 +167,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "BookOutlined",
 					title: "每日复盘",
+				},
+			},
+			{
+				path: "/short-term-strategy/sync",
+				Component: DataSync,
+				handle: {
+					icon: "SyncOutlined",
+					title: "数据同步",
 				},
 			},
 		],
