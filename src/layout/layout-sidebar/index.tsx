@@ -1,4 +1,3 @@
-import { Scrollbar } from "#src/components/scrollbar";
 import { usePreferences } from "#src/hooks/use-preferences";
 
 import { theme as antdTheme, ConfigProvider } from "antd";
@@ -40,10 +39,8 @@ export default function LayoutSidebar({ children, computedSidebarWidth }: Layout
 				className="fixed top-0 bottom-0 left-0 overflow-x-hidden overflow-y-auto transition-all border-r border-r-colorBorderSecondary"
 			>
 				<Logo sidebarCollapsed={sidebarCollapsed} />
-				<div className="overflow-hidden" style={{ height: `calc(100% - ${headerHeight}px - ${siderTriggerHeight}px)` }}>
-					<Scrollbar>
-						{children}
-					</Scrollbar>
+				<div className="overflow-y-auto overflow-x-hidden" style={{ height: `calc(100% - ${headerHeight}px - ${siderTriggerHeight}px)`, scrollbarWidth: "thin", scrollbarGutter: "stable" }}>
+					{children}
 				</div>
 				<SiderTrigger />
 			</aside>
