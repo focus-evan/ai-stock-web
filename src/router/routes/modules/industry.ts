@@ -1,8 +1,7 @@
 import type { AppRouteRecordRaw } from "#src/router/types";
 import ContainerLayout from "#src/layout/container-layout";
 import { industry } from "#src/router/extra-info";
-import { AppstoreOutlined } from "@ant-design/icons";
-import { createElement, lazy } from "react";
+import { lazy } from "react";
 
 const IndustryAnalysis = lazy(() => import("#src/pages/industry"));
 
@@ -13,7 +12,7 @@ const routes: AppRouteRecordRaw[] = [
 		handle: {
 			order: industry,
 			title: "产业分析",
-			icon: createElement(AppstoreOutlined),
+			icon: "AppstoreOutlined",
 		},
 		children: [
 			{
@@ -21,7 +20,7 @@ const routes: AppRouteRecordRaw[] = [
 				Component: IndustryAnalysis,
 				handle: {
 					title: "产业分析",
-					icon: createElement(AppstoreOutlined),
+					icon: "AppstoreOutlined",
 				},
 			},
 		],

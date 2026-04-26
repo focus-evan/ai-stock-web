@@ -2,8 +2,7 @@ import type { AppRouteRecordRaw } from "#src/router/types";
 import ContainerLayout from "#src/layout/container-layout";
 import { about } from "#src/router/extra-info";
 
-import { CopyrightOutlined } from "@ant-design/icons";
-import { createElement, lazy } from "react";
+import { lazy } from "react";
 
 const About = lazy(() => import("#src/pages/about"));
 
@@ -14,7 +13,7 @@ const routes: AppRouteRecordRaw[] = [
 		handle: {
 			order: about,
 			title: "关于",
-			icon: createElement(CopyrightOutlined),
+			icon: "CopyrightOutlined",
 		},
 		children: [
 			{
@@ -27,7 +26,7 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					// roles: ["common"],
 					title: "关于",
-					icon: createElement(CopyrightOutlined),
+					icon: "CopyrightOutlined",
 				},
 			},
 		],
