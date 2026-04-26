@@ -1,6 +1,7 @@
 import {
 	AntDesignOutlined,
 	ApartmentOutlined,
+	ApiOutlined,
 	AppstoreOutlined,
 	BankOutlined,
 	BarChartOutlined,
@@ -70,6 +71,7 @@ export const menuIcons: Record<string, any> = {
 	SubnodeOutlined,
 	OutsidePageIcon,
 	AntDesignOutlined,
+	ApiOutlined,
 	AppstoreOutlined,
 	ContainerOutlined,
 	ExternalIcon,
