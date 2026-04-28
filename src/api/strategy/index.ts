@@ -897,13 +897,126 @@ export function fetchDailyPicksDetail(recordId: number) {
 		.json<DailyPicksDetailResponse>();
 }
 
-// ===================== 盘前情绪扫描 =====================
+// ===================== 盘前扫描 =====================
 
-/** 手动触发盘前情绪扫描 */
+/** 手动盘前扫描 */
 export function triggerSentimentScan() {
 	return request
 		.post("strategy/combined/sentiment-scan", {
 			timeout: 120000,
 		})
 		.json<{ status: string, data: any }>();
+}
+
+// ===================== 推荐追踪·算法自优化 =====================
+
+export interface PerformanceTrackItem {
+	id: number
+	strategy_type: string
+	trading_date: string
+	session_type: string
+	recommendation_level: string
+	stock_code: string
+	stock_name: string
+	entry_price: number
+	stop_loss_price: number
+	target_price: number
+	day1_return_pct: number | null
+	day3_return_pct: number | null
+	day5_return_pct: number | null
+	mfe_pct: number | null
+	mae_pct: number | null
+	hit_take_profit: number | null
+	hit_stop_loss: number | null
+	algo_score: number | null
+	eval_status: "pending" | "partial" | "complete"
+	notes: string | null
+	evaluated_at: string | null
+	created_at: string
+}
+
+export interface PerformanceTrackResponse {
+	status: string
+	data: {
+		items: PerformanceTrackItem[]
+		total: number
+		limit: number
+		offset: number
+	}
+}
+
+export interface StrategyPerformanceSummary {
+	strategy_type: string
+	strategy_label: string
+	total_recs: number
+	evaluated_count: number
+	avg_day1_pct: number | null
+	avg_day3_pct: number | null
+	avg_day5_pct: number | null
+	avg_mfe_pct: number | null
+	avg_mae_pct: number | null
+	day1_win_rate: number | null
+	day3_win_rate: number | null
+	take_profit_rate: number | null
+	stop_loss_rate: number | null
+	best_return_pct: number | null
+	worst_return_pct: number | null
+	level_distribution: { level: string, count: number, avg_day3_pct: number | null }[]
+}
+
+export interface PerformanceSummaryResponse {
+	status: string
+	data: {
+		summaries: StrategyPerformanceSummary[]
+		days: number
+		since: string
+		generated_at: string
+	}
+}
+
+/** 查询推荐追踪列表 */
+export function fetchPerformanceTracker(params: {
+	strategy_type?: string
+	recommendation_level?: string
+	eval_status?: string
+	days?: number
+	limit?: number
+	offset?: number
+} = {}) {
+	return request
+		.get("strategy/performance-tracker", {
+			searchParams: params as any,
+			timeout: 20000,
+		})
+		.json<PerformanceTrackResponse>();
+}
+
+/** 获取算法效果汇总统计 */
+export function fetchPerformanceSummary(days = 30) {
+	return request
+		.get("strategy/performance-tracker/summary", {
+			searchParams: { days },
+			timeout: 20000,
+		})
+		.json<PerformanceSummaryResponse>();
+}
+
+/** 手动触发推荐评估 */
+export function triggerPerformanceEvaluation(lookback_days = 5) {
+	return request
+		.post("strategy/performance-tracker/trigger", {
+			searchParams: { lookback_days },
+			timeout: 30000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
+/** 获取算法优化洞察报告 */
+export function fetchOptimizationInsights(days = 30) {
+	return request
+		.get("strategy/performance-tracker/insights", {
+			searchParams: { days },
+			timeout: 60000,
+		})
+		.json<{ status: string, data: { insights: string, data_summary: string, days: number, generated_at: string } }>();
 }

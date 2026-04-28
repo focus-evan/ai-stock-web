@@ -22,6 +22,7 @@ const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"))
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 const Relay = lazy(() => import("#src/pages/short-term-strategy/relay"));
 const DataSync = lazy(() => import("#src/pages/system/sync"));
+const PerformanceTracker = lazy(() => import("#src/pages/short-term-strategy/performance-tracker"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -55,6 +56,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "TeamOutlined",
 					title: "实盘跟投",
+				},
+			},
+			{
+				path: "/short-term-strategy/performance-tracker",
+				Component: PerformanceTracker,
+				handle: {
+					icon: "AreaChartOutlined",
+					title: "推荐追踪",
 				},
 			},
 			{
