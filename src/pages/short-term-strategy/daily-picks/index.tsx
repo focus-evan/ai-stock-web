@@ -781,6 +781,8 @@ const TodayBanner: React.FC<{
 							<div>
 								<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>更新时间</span>
 								<div style={{ color: "#fff", fontSize: 13, fontWeight: "bold", marginTop: 4 }}>
+									{data.generated_at.slice(0, 10)}
+									{" "}
 									{data.generated_at.slice(11, 16)}
 									{fromCache && (
 										<Tag style={{ marginLeft: 6, fontSize: 10, lineHeight: "16px", padding: "0 4px", background: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.85)" }}>
