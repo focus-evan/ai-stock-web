@@ -897,6 +897,98 @@ export function fetchDailyPicksDetail(recordId: number) {
 		.json<DailyPicksDetailResponse>();
 }
 
+// ===================== 精选跟进 =====================
+
+export interface PicksFollowItem {
+	id: number
+	stock_code: string
+	stock_name: string
+	pick_date: string
+	pick_price: number
+	pick_reasons: string[]
+	strategy_names: string[]
+	pick_rank: number
+	status: string
+	closed_date?: string
+	closed_reason?: string
+	latest_price?: number
+	latest_change_pct?: number
+	latest_return_pct?: number
+	latest_snapshot_date?: string
+	created_at: string
+}
+
+export interface PicksFollowSnapshot {
+	id: number
+	follow_id: number
+	snapshot_date: string
+	close_price: number
+	change_pct: number
+	total_return_pct: number
+	volume: number
+}
+
+/** 获取精选跟进列表 */
+export function fetchPicksFollow(status: string = "tracking") {
+	return request
+		.get("strategy/daily-picks-follow", {
+			searchParams: { status },
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { items: PicksFollowItem[], total: number } }>();
+}
+
+/** 从当日精选自动添加跟进 */
+export function triggerAutoFollow(tradingDate?: string) {
+	return request
+		.post("strategy/daily-picks-follow/auto-add", {
+			json: { trading_date: tradingDate },
+			timeout: 30000,
+		})
+		.json<{ status: string, data: { added: number, message: string } }>();
+}
+
+/** 获取跟进股票详情+快照 */
+export function fetchPicksFollowHistory(followId: number) {
+	return request
+		.get(`strategy/daily-picks-follow/${followId}/history`, {
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { follow: PicksFollowItem, snapshots: PicksFollowSnapshot[] } }>();
+}
+
+/** 结束跟进 */
+export function closePicksFollow(followId: number, reason?: string) {
+	return request
+		.put(`strategy/daily-picks-follow/${followId}/close`, {
+			json: { reason: reason || "" },
+			timeout: 10000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
+/** 手动触发快照更新 */
+export function triggerPicksSnapshot() {
+	return request
+		.post("strategy/daily-picks-follow/snapshot", {
+			timeout: 30000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
+/** 获取周复盘报告 */
+export function fetchWeeklyReview(weekStart?: string) {
+	const searchParams: Record<string, string> = {};
+	if (weekStart)
+		searchParams.week_start = weekStart;
+	return request
+		.get("strategy/daily-picks-follow/weekly-review", {
+			searchParams,
+			timeout: 60000,
+		})
+		.json<{ status: string, data: { summary: any, review: string, generated_at: string } }>();
+}
+
 // ===================== 盘前扫描 =====================
 
 /** 手动盘前扫描 */
