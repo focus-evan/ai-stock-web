@@ -2,9 +2,10 @@ import type { NorthboundData, NorthboundStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchNorthboundRecommendations, refreshNorthboundRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
-import { BankOutlined, DollarOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 
+import { BankOutlined, DollarOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
@@ -298,173 +299,175 @@ const NorthboundPage: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: 24 }}>
-			<Card
-				bordered={false}
-				style={{
-					marginBottom: 24,
-					background: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)",
-					borderRadius: 12,
-				}}
-			>
-				<Row gutter={[24, 16]} align="middle">
-					<Col span={12}>
-						<Space align="center">
-							<BankOutlined style={{ fontSize: 32, color: "#fff" }} />
-							<div>
-								<Title level={3} style={{ margin: 0, color: "#fff" }}>北向资金</Title>
-								<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-									跟踪沪深港通"聪明钱"流向信号
-								</Text>
-							</div>
-							<Button
-								type="primary"
-								ghost
-								icon={<ReloadOutlined spin={refreshing} />}
-								loading={refreshing}
-								onClick={handleRefresh}
-								style={{
-									borderColor: "rgba(255,255,255,0.5)",
-									color: "#fff",
-									marginLeft: 12,
-								}}
-							>
-								{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
-							</Button>
-						</Space>
-					</Col>
-					<Col span={12}>
-						<Row gutter={16} justify="end">
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
-									value={data?.total ?? 0}
-									valueStyle={{ color: "#fff", fontWeight: "bold" }}
-									suffix="只"
-								/>
-							</Col>
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
-									value={data?.llm_enhanced ? "已增强" : "基础"}
-									valueStyle={{ color: data?.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
-								/>
-							</Col>
-							{data?.generated_at && (
-								<Col>
+		<Tabs defaultActiveKey="main" style={{ width: "100%" }}>
+			<Tabs.TabPane tab="北向资金" key="main">
+				<div style={{ padding: 24 }}>
+					<Card
+						bordered={false}
+						style={{
+							marginBottom: 24,
+							background: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)",
+							borderRadius: 12,
+						}}
+					>
+						<Row gutter={[24, 16]} align="middle">
+							<Col span={12}>
+								<Space align="center">
+									<BankOutlined style={{ fontSize: 32, color: "#fff" }} />
 									<div>
-										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
-										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+										<Title level={3} style={{ margin: 0, color: "#fff" }}>北向资金</Title>
+										<Text style={{ color: "rgba(255,255,255,0.85)" }}>
+											跟踪沪深港通"聪明钱"流向信号
+										</Text>
 									</div>
-								</Col>
-							)}
+									<Button
+										type="primary"
+										ghost
+										icon={<ReloadOutlined spin={refreshing} />}
+										loading={refreshing}
+										onClick={handleRefresh}
+										style={{
+											borderColor: "rgba(255,255,255,0.5)",
+											color: "#fff",
+											marginLeft: 12,
+										}}
+									>
+										{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+									</Button>
+								</Space>
+							</Col>
+							<Col span={12}>
+								<Row gutter={16} justify="end">
+									<Col>
+										<Statistic
+											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
+											value={data?.total ?? 0}
+											valueStyle={{ color: "#fff", fontWeight: "bold" }}
+											suffix="只"
+										/>
+									</Col>
+									<Col>
+										<Statistic
+											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
+											value={data?.llm_enhanced ? "已增强" : "基础"}
+											valueStyle={{ color: data?.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
+										/>
+									</Col>
+									{data?.generated_at && (
+										<Col>
+											<div>
+												<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
+												<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+											</div>
+										</Col>
+									)}
+								</Row>
+							</Col>
 						</Row>
-					</Col>
-				</Row>
-			</Card>
-
-			{isEmpty
-				? (
-					<Card bordered={false} style={{ borderRadius: 12 }}>
-						<Empty description="暂无北向资金信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-							<Text type="secondary">当前暂无符合条件的北向资金推荐股，点击上方「刷新推荐」手动触发分析</Text>
-							<Space style={{ marginTop: 16 }}>
-								<Button onClick={fetchData} icon={<ReloadOutlined />}>重试</Button>
-								<Button type="primary" loading={loading} onClick={handleGenerate}>立即生成推荐</Button>
-							</Space>
-						</Empty>
 					</Card>
-				)
-				: (
-					<>
 
-						{data!.signal_summary && (
-							<Card
-								size="small"
-								bordered={false}
-								style={{ marginBottom: 16, borderRadius: 8 }}
-							>
-								<Space wrap>
-									<Text strong>资金信号分布：</Text>
-									<Tag color="purple">
-										🏦 北向持仓:
-										{data!.signal_summary.northbound_total || 0}
-										只
-									</Tag>
-									<Tag color="red">
-										🔥 逆势加仓:
-										{data!.signal_summary.contrarian_count || 0}
-										只
-									</Tag>
-									<Tag color="volcano">
-										📈 连续增持:
-										{(data!.signal_summary as any).consecutive_count || 0}
-										只
-									</Tag>
-									<Tag color="magenta">
-										⚡ 增持加速:
-										{(data!.signal_summary as any).accelerating_count || 0}
-										只
-									</Tag>
-								</Space>
+					{isEmpty
+						? (
+							<Card bordered={false} style={{ borderRadius: 12 }}>
+								<Empty description="暂无北向资金信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
+									<Text type="secondary">当前暂无符合条件的北向资金推荐股，点击上方「刷新推荐」手动触发分析</Text>
+									<Space style={{ marginTop: 16 }}>
+										<Button onClick={fetchData} icon={<ReloadOutlined />}>重试</Button>
+										<Button type="primary" loading={loading} onClick={handleGenerate}>立即生成推荐</Button>
+									</Space>
+								</Empty>
 							</Card>
+						)
+						: (
+							<>
+
+								{data!.signal_summary && (
+									<Card
+										size="small"
+										bordered={false}
+										style={{ marginBottom: 16, borderRadius: 8 }}
+									>
+										<Space wrap>
+											<Text strong>资金信号分布：</Text>
+											<Tag color="purple">
+												🏦 北向持仓:
+												{data!.signal_summary.northbound_total || 0}
+												只
+											</Tag>
+											<Tag color="red">
+												🔥 逆势加仓:
+												{data!.signal_summary.contrarian_count || 0}
+												只
+											</Tag>
+											<Tag color="volcano">
+												📈 连续增持:
+												{(data!.signal_summary as any).consecutive_count || 0}
+												只
+											</Tag>
+											<Tag color="magenta">
+												⚡ 增持加速:
+												{(data!.signal_summary as any).accelerating_count || 0}
+												只
+											</Tag>
+										</Space>
+									</Card>
+								)}
+
+								<Card
+									bordered={false}
+									style={{ borderRadius: 12 }}
+									title={(
+										<Space>
+											<DollarOutlined style={{ color: "#722ed1" }} />
+											<Text strong>北向资金关注股</Text>
+											<Tag color="purple">
+												{data!.recommendations.length}
+												只
+											</Tag>
+										</Space>
+									)}
+									extra={(
+										<a onClick={fetchData}>
+											<ReloadOutlined />
+											{" "}
+											刷新
+										</a>
+									)}
+								>
+									<Table
+										columns={columns}
+										dataSource={data!.recommendations}
+										rowKey="code"
+										pagination={false}
+										size="small"
+										scroll={{ x: 1200 }}
+										rowClassName={(record) => {
+											if (record.recommendation_level === "强烈推荐")
+												return "row-highlight-red";
+											if (record.recommendation_level === "推荐")
+												return "row-highlight-orange";
+											return "";
+										}}
+									/>
+								</Card>
+
+								{data!.strategy_report && (
+									<Card
+										bordered={false}
+										style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
+										title="📊 策略分析报告"
+									>
+										<Paragraph style={{ whiteSpace: "pre-wrap" }}>
+											{data!.strategy_report}
+										</Paragraph>
+									</Card>
+								)}
+
+							</>
 						)}
 
-						<Card
-							bordered={false}
-							style={{ borderRadius: 12 }}
-							title={(
-								<Space>
-									<DollarOutlined style={{ color: "#722ed1" }} />
-									<Text strong>北向资金关注股</Text>
-									<Tag color="purple">
-										{data!.recommendations.length}
-										只
-									</Tag>
-								</Space>
-							)}
-							extra={(
-								<a onClick={fetchData}>
-									<ReloadOutlined />
-									{" "}
-									刷新
-								</a>
-							)}
-						>
-							<Table
-								columns={columns}
-								dataSource={data!.recommendations}
-								rowKey="code"
-								pagination={false}
-								size="small"
-								scroll={{ x: 1200 }}
-								rowClassName={(record) => {
-									if (record.recommendation_level === "强烈推荐")
-										return "row-highlight-red";
-									if (record.recommendation_level === "推荐")
-										return "row-highlight-orange";
-									return "";
-								}}
-							/>
-						</Card>
-
-						{data!.strategy_report && (
-							<Card
-								bordered={false}
-								style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
-								title="📊 策略分析报告"
-							>
-								<Paragraph style={{ whiteSpace: "pre-wrap" }}>
-									{data!.strategy_report}
-								</Paragraph>
-							</Card>
-						)}
-
-					</>
-				)}
-
-			<style>
-				{`
+					<style>
+						{`
 				.row-highlight-red {
 					background-color: #fff1f0 !important;
 				}
@@ -478,11 +481,17 @@ const NorthboundPage: React.FC = () => {
 					background-color: #ffe7ba !important;
 				}
 			`}
-			</style>
+					</style>
 
-			<RecommendationHistory strategyType="northbound" />
+					<RecommendationHistory strategyType="northbound" />
 
-		</div>
+				</div>
+
+			</Tabs.TabPane>
+			<Tabs.TabPane tab="推荐跟进" key="follow">
+				<StrategyFollowTab strategyType="northbound" isOvernight={false} />
+			</Tabs.TabPane>
+		</Tabs>
 	);
 };
 

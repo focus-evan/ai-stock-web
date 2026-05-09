@@ -32,6 +32,7 @@ import {
 	Space,
 	Statistic,
 	Table,
+	Tabs,
 	Tag,
 	Tooltip,
 	Typography,
@@ -353,14 +354,21 @@ export default function DragonHead() {
 	// Loading skeleton
 	if (loading && !data) {
 		return (
-			<BasicContent>
-				<div style={{ padding: 24 }}>
-					<Skeleton active paragraph={{ rows: 2 }} />
-					<div style={{ marginTop: 24 }}>
-						<Skeleton active paragraph={{ rows: 8 }} />
-					</div>
-				</div>
-			</BasicContent>
+			<Tabs defaultActiveKey="main" style={{ width: "100%" }}>
+				<Tabs.TabPane tab="龙头推荐" key="main">
+					<BasicContent>
+						<div style={{ padding: 24 }}>
+							<Skeleton active paragraph={{ rows: 2 }} />
+							<div style={{ marginTop: 24 }}>
+								<Skeleton active paragraph={{ rows: 8 }} />
+							</div>
+						</div>
+					</BasicContent>
+				</Tabs.TabPane>
+				<Tabs.TabPane tab="推荐跟进" key="follow">
+					<StrategyFollowTab strategyType="dragon_head" isOvernight={false} />
+				</Tabs.TabPane>
+			</Tabs>
 		);
 	}
 

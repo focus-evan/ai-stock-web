@@ -1112,3 +1112,87 @@ export function fetchOptimizationInsights(days = 30) {
 		})
 		.json<{ status: string, data: { insights: string, data_summary: string, days: number, generated_at: string } }>();
 }
+
+// ===================== 战法推荐跟进 =====================
+
+export type StrategyFollowType = "dragon_head" | "relay" | "northbound" | "overnight";
+
+export interface StrategyFollowItem {
+	id: number
+	strategy_type: StrategyFollowType
+	stock_code: string
+	stock_name: string
+	pick_date: string
+	pick_price: number
+	recommendation_level: string
+	reasons: string[]
+	pick_rank: number
+	status: string
+	closed_date?: string
+	closed_reason?: string
+	next_day_return_pct?: number
+	latest_price?: number
+	latest_change_pct?: number
+	latest_return_pct?: number
+	latest_snapshot_date?: string
+	created_at: string
+}
+
+export interface StrategyFollowSnapshot {
+	id: number
+	follow_id: number
+	snapshot_date: string
+	close_price: number
+	change_pct: number
+	total_return_pct: number
+	volume: number
+}
+
+/** \u83b7\u53d6\u6218\u6cd5\u8ddf\u8fdb\u5217\u8868 */
+export function fetchStrategyFollow(strategyType: StrategyFollowType, status: string = "tracking") {
+	return request
+		.get("strategy/follow", {
+			searchParams: { strategy_type: strategyType, status },
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { items: StrategyFollowItem[], total: number } }>();
+}
+
+/** \u4ece\u6700\u65b0\u63a8\u8350\u81ea\u52a8\u6dfb\u52a0\u8ddf\u8fdb */
+export function triggerStrategyAutoFollow(strategyType: StrategyFollowType, tradingDate?: string) {
+	return request
+		.post("strategy/follow/auto-add", {
+			json: { strategy_type: strategyType, trading_date: tradingDate },
+			timeout: 30000,
+		})
+		.json<{ status: string, data: { added: number, message: string } }>();
+}
+
+/** \u83b7\u53d6\u8ddf\u8fdb\u80a1\u7968\u8be6\u60c5+\u5feb\u7167 */
+export function fetchStrategyFollowHistory(followId: number) {
+	return request
+		.get(`strategy/follow/${followId}/history`, {
+			timeout: 15000,
+		})
+		.json<{ status: string, data: { follow: StrategyFollowItem, snapshots: StrategyFollowSnapshot[] } }>();
+}
+
+/** \u7ed3\u675f\u8ddf\u8fdb */
+export function closeStrategyFollow(followId: number, reason?: string) {
+	return request
+		.put(`strategy/follow/${followId}/close`, {
+			json: { reason: reason || "" },
+			timeout: 10000,
+		})
+		.json<{ status: string, message: string }>();
+}
+
+/** \u624b\u52a8\u89e6\u53d1\u5feb\u7167\u66f4\u65b0 */
+export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType) {
+	return request
+		.post("strategy/follow/snapshot", {
+			searchParams: strategyType ? { strategy_type: strategyType } : {},
+			timeout: 30000,
+		})
+		.json<{ status: string, message: string }>();
+}
