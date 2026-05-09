@@ -15,9 +15,12 @@ import {
 	CheckCircleOutlined,
 	CloseCircleOutlined,
 	EyeOutlined,
+	FireFilled,
 	PlusOutlined,
 	ReloadOutlined,
+	StarFilled,
 	SyncOutlined,
+	ThunderboltFilled,
 } from "@ant-design/icons";
 import {
 	Button,
@@ -303,11 +306,39 @@ export default function DailyPicksFollow() {
 													</div>
 												)}
 
-												<div style={{ marginTop: 8 }}>
-													{(item.strategy_names || []).slice(0, 3).map(s => (
-														<Tag key={s} style={{ fontSize: 11, marginBottom: 2 }}>{s}</Tag>
-													))}
+												{/* 推荐强度 */}
+												<div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 6 }}>
+													<span style={{ fontSize: 11, color: "#8c8c8c", flexShrink: 0 }}>推荐强度</span>
+													<span style={{ display: "flex", gap: 2 }}>
+														{[1, 2, 3, 4, 5].map(i => (
+															<StarFilled key={i} style={{ fontSize: 11, color: i <= (item.strategy_names || []).length ? "#faad14" : "#f0f0f0" }} />
+														))}
+													</span>
+													<span style={{ marginLeft: 2, display: "flex", gap: 3, flexWrap: "wrap" as const }}>
+														{(item.strategy_names || []).slice(0, 3).map(s => (
+															<Tag key={s} icon={<ThunderboltFilled style={{ fontSize: 9 }} />} style={{ fontSize: 10, padding: "0 4px", lineHeight: "16px", margin: 0 }}>{s}</Tag>
+														))}
+													</span>
 												</div>
+
+												{/* 推荐理由 */}
+												{(item.pick_reasons || []).length > 0 && (
+													<div style={{ marginTop: 8, padding: "6px 8px", background: "linear-gradient(135deg, #fffbe6, #fff7e6)", borderRadius: 6, border: "1px solid #ffe58f" }}>
+														<div style={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
+															<FireFilled style={{ fontSize: 11, color: "#fa8c16", marginTop: 2, flexShrink: 0 }} />
+															<Text style={{ fontSize: 11, color: "#874d00", lineHeight: "18px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>
+																{item.pick_reasons[0]}
+															</Text>
+														</div>
+														{item.pick_reasons.length > 1 && (
+															<Text style={{ fontSize: 10, color: "#ad6800", marginTop: 2, display: "block" }}>
+																+
+																{item.pick_reasons.length - 1}
+																条理由，点击查看详情
+															</Text>
+														)}
+													</div>
+												)}
 
 												{item.status === "closed" && (
 													<Tag color="default" icon={<CheckCircleOutlined />} style={{ marginTop: 4 }}>
