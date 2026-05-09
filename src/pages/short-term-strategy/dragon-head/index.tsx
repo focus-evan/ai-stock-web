@@ -355,21 +355,14 @@ export default function DragonHead() {
 	// Loading skeleton
 	if (loading && !data) {
 		return (
-			<Tabs defaultActiveKey="main" style={{ width: "100%" }}>
-				<Tabs.TabPane tab="龙头推荐" key="main">
-					<BasicContent>
-						<div style={{ padding: 24 }}>
-							<Skeleton active paragraph={{ rows: 2 }} />
-							<div style={{ marginTop: 24 }}>
-								<Skeleton active paragraph={{ rows: 8 }} />
-							</div>
-						</div>
-					</BasicContent>
-				</Tabs.TabPane>
-				<Tabs.TabPane tab="推荐跟进" key="follow">
-					<StrategyFollowTab strategyType="dragon_head" isOvernight={false} />
-				</Tabs.TabPane>
-			</Tabs>
+			<BasicContent>
+				<div style={{ padding: 24 }}>
+					<Skeleton active paragraph={{ rows: 2 }} />
+					<div style={{ marginTop: 24 }}>
+						<Skeleton active paragraph={{ rows: 8 }} />
+					</div>
+				</div>
+			</BasicContent>
 		);
 	}
 
@@ -428,354 +421,361 @@ export default function DragonHead() {
 	}
 
 	return (
-		<BasicContent>
-			<div style={{ padding: "0 0 24px 0" }}>
-				{/* Header */}
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-						marginBottom: 16,
-					}}
-				>
-					<Space align="center">
-						<CrownOutlined style={{ fontSize: 24, color: "#f5222d" }} />
-						<Title level={4} style={{ margin: 0 }}>
-							龙头战法推荐
-						</Title>
-						{data.llm_enhanced && (
-							<Tag color="purple" icon={<ExperimentOutlined />}>
-								GPT-5.2 增强
-							</Tag>
-						)}
-						<Tag color="processing">
-							{data.trading_date}
-						</Tag>
-						<Text type="secondary" style={{ fontSize: 12 }}>
-							生成于
-							{" "}
-							{data.generated_at}
-						</Text>
-					</Space>
-					<Button
-						type="primary"
-						icon={<ReloadOutlined spin={refreshing} />}
-						onClick={handleRefresh}
-						loading={refreshing}
-					>
-						{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
-					</Button>
-				</div>
-
-				{/* GPT-5.2 市场情绪研判 */}
-				{data.market_sentiment && (
-					<Alert
-						style={{ marginBottom: 16 }}
-						type={
-							data.market_sentiment.risk_level === "高"
-								? "error"
-								: data.market_sentiment.risk_level === "中"
-									? "warning"
-									: "success"
-						}
-						showIcon
-						icon={<ExperimentOutlined />}
-						message={(
-							<Space>
-								<Text strong>GPT-5.2 市场情绪研判</Text>
-								<Tag
-									color={getSentimentColor(data.market_sentiment.phase)}
-									style={{ fontWeight: 700 }}
+		<Tabs
+			defaultActiveKey="main"
+			items={[
+				{
+					key: "main",
+					label: "龙头推荐",
+					children: (
+						<BasicContent>
+							<div style={{ padding: "0 0 24px 0" }}>
+								{/* Header */}
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "space-between",
+										alignItems: "center",
+										marginBottom: 16,
+									}}
 								>
-									{data.market_sentiment.phase}
-									期
-								</Tag>
-								<Tag
-									color={
-										data.market_sentiment.risk_level === "高"
-											? "red"
-											: data.market_sentiment.risk_level === "中"
-												? "orange"
-												: "green"
-									}
-								>
-									<WarningOutlined />
-									{" "}
-									风险
-									{data.market_sentiment.risk_level}
-								</Tag>
-							</Space>
-						)}
-						description={data.market_sentiment.description}
-					/>
-				)}
+									<Space align="center">
+										<CrownOutlined style={{ fontSize: 24, color: "#f5222d" }} />
+										<Title level={4} style={{ margin: 0 }}>
+											龙头战法推荐
+										</Title>
+										{data.llm_enhanced && (
+											<Tag color="purple" icon={<ExperimentOutlined />}>
+												GPT-5.2 增强
+											</Tag>
+										)}
+										<Tag color="processing">
+											{data.trading_date}
+										</Tag>
+										<Text type="secondary" style={{ fontSize: 12 }}>
+											生成于
+											{" "}
+											{data.generated_at}
+										</Text>
+									</Space>
+									<Button
+										type="primary"
+										icon={<ReloadOutlined spin={refreshing} />}
+										onClick={handleRefresh}
+										loading={refreshing}
+									>
+										{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+									</Button>
+								</div>
 
-				{/* 统计卡片 */}
-				<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-					{/* 今日主线题材 */}
-					<Col xs={24} md={12} xl={8}>
-						<Card
-							size="small"
-							title={(
-								<Space>
-									<FireOutlined style={{ color: "#f5222d" }} />
-									<span>今日主线题材</span>
-								</Space>
-							)}
-							styles={{ body: { padding: "12px 16px" } }}
-						>
-							{data.main_themes.length > 0
-								? (
-									<Space direction="vertical" size={8} style={{ width: "100%" }}>
-										<Space wrap>
-											{data.main_themes.map((theme, idx) => {
-												const analysis = data.theme_analysis?.find(t => t.name === theme.name);
-												return (
-													<Tooltip
-														key={idx}
-														title={analysis
-															? `驱动力: ${analysis.catalyst}\n持续性: ${analysis.sustainability}`
-															: undefined}
-													>
-														<Tag
-															color={idx === 0 ? "red" : idx === 1 ? "orange" : "gold"}
-															style={{ fontSize: 14, padding: "4px 12px" }}
-														>
-															<RiseOutlined />
+								{/* GPT-5.2 市场情绪研判 */}
+								{data.market_sentiment && (
+									<Alert
+										style={{ marginBottom: 16 }}
+										type={
+											data.market_sentiment.risk_level === "高"
+												? "error"
+												: data.market_sentiment.risk_level === "中"
+													? "warning"
+													: "success"
+										}
+										showIcon
+										icon={<ExperimentOutlined />}
+										message={(
+											<Space>
+												<Text strong>GPT-5.2 市场情绪研判</Text>
+												<Tag
+													color={getSentimentColor(data.market_sentiment.phase)}
+													style={{ fontWeight: 700 }}
+												>
+													{data.market_sentiment.phase}
+													期
+												</Tag>
+												<Tag
+													color={
+														data.market_sentiment.risk_level === "高"
+															? "red"
+															: data.market_sentiment.risk_level === "中"
+																? "orange"
+																: "green"
+													}
+												>
+													<WarningOutlined />
+													{" "}
+													风险
+													{data.market_sentiment.risk_level}
+												</Tag>
+											</Space>
+										)}
+										description={data.market_sentiment.description}
+									/>
+								)}
+
+								{/* 统计卡片 */}
+								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+									{/* 今日主线题材 */}
+									<Col xs={24} md={12} xl={8}>
+										<Card
+											size="small"
+											title={(
+												<Space>
+													<FireOutlined style={{ color: "#f5222d" }} />
+													<span>今日主线题材</span>
+												</Space>
+											)}
+											styles={{ body: { padding: "12px 16px" } }}
+										>
+											{data.main_themes.length > 0
+												? (
+													<Space direction="vertical" size={8} style={{ width: "100%" }}>
+														<Space wrap>
+															{data.main_themes.map((theme, idx) => {
+																const analysis = data.theme_analysis?.find(t => t.name === theme.name);
+																return (
+																	<Tooltip
+																		key={idx}
+																		title={analysis
+																			? `驱动力: ${analysis.catalyst}\n持续性: ${analysis.sustainability}`
+																			: undefined}
+																	>
+																		<Tag
+																			color={idx === 0 ? "red" : idx === 1 ? "orange" : "gold"}
+																			style={{ fontSize: 14, padding: "4px 12px" }}
+																		>
+																			<RiseOutlined />
+																			{" "}
+																			{theme.name}
+																			{theme.details.change_pct
+																				? (
+																					<span style={{ marginLeft: 4 }}>
+																						{theme.details.change_pct > 0 ? "+" : ""}
+																						{theme.details.change_pct.toFixed(2)}
+																						%
+																					</span>
+																				)
+																				: null}
+																			{analysis && (
+																				<span style={{ marginLeft: 6 }}>
+																					[
+																					{analysis.logic_hardness}
+																					]
+																				</span>
+																			)}
+																		</Tag>
+																	</Tooltip>
+																);
+															})}
+														</Space>
+													</Space>
+												)
+												: (
+													<Text type="secondary">暂未识别明确主线</Text>
+												)}
+										</Card>
+									</Col>
+
+									{/* 新闻共振 */}
+									<Col xs={24} md={12} xl={8}>
+										<Card
+											size="small"
+											title={(
+												<Space>
+													<ThunderboltOutlined style={{ color: "#fa8c16" }} />
+													<span>新闻情绪共振</span>
+												</Space>
+											)}
+											styles={{ body: { padding: "12px 16px" } }}
+										>
+											<Space direction="vertical" style={{ width: "100%" }}>
+												<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+													<Progress
+														type="circle"
+														percent={Math.round(data.news_resonance.resonance_score)}
+														size={48}
+														strokeColor={
+															data.news_resonance.resonance_score >= 70
+																? "#52c41a"
+																: data.news_resonance.resonance_score >= 40
+																	? "#faad14"
+																	: "#f5222d"
+														}
+													/>
+													<div>
+														<Text style={{ display: "block" }}>
+															分析
 															{" "}
-															{theme.name}
-															{theme.details.change_pct
-																? (
-																	<span style={{ marginLeft: 4 }}>
-																		{theme.details.change_pct > 0 ? "+" : ""}
-																		{theme.details.change_pct.toFixed(2)}
-																		%
-																	</span>
-																)
-																: null}
-															{analysis && (
-																<span style={{ marginLeft: 6 }}>
-																	[
-																	{analysis.logic_hardness}
-																	]
-																</span>
+															{data.news_resonance.news_count}
+															{" "}
+															条快讯
+														</Text>
+														{data.news_resonance.matching_themes.length > 0
+															? (
+																<Text type="success" style={{ fontSize: 12 }}>
+																	{data.news_resonance.matching_themes.join("、")}
+																	{" "}
+																	共振验证通过
+																</Text>
+															)
+															: (
+																<Text type="secondary" style={{ fontSize: 12 }}>
+																	未形成明显共振
+																</Text>
 															)}
-														</Tag>
-													</Tooltip>
+													</div>
+												</div>
+											</Space>
+										</Card>
+									</Col>
+
+									{/* 统计概览 */}
+									<Col xs={24} md={24} xl={8}>
+										<Card
+											size="small"
+											title={(
+												<Space>
+													<InfoCircleOutlined style={{ color: "#1890ff" }} />
+													<span>推荐概览</span>
+												</Space>
+											)}
+											styles={{ body: { padding: "12px 16px" } }}
+										>
+											<Row gutter={16}>
+												<Col span={8}>
+													<Statistic
+														title="推荐总数"
+														value={data.total}
+														valueStyle={{ fontSize: 20, color: "#1890ff" }}
+													/>
+												</Col>
+												<Col span={8}>
+													<Statistic
+														title="强烈推荐"
+														value={data.recommendations.filter(r => r.recommendation_level === "强烈推荐").length}
+														valueStyle={{ fontSize: 20, color: "#f5222d" }}
+													/>
+												</Col>
+												<Col span={8}>
+													<Statistic
+														title="最高连板"
+														value={Math.max(...data.recommendations.map(r => r.limit_up_days), 0)}
+														suffix="天"
+														valueStyle={{ fontSize: 20, color: "#fa541c" }}
+													/>
+												</Col>
+											</Row>
+										</Card>
+									</Col>
+								</Row>
+
+								{/* 推荐列表 */}
+								<Card
+									title={(
+										<Space>
+											<TrophyOutlined style={{ color: "#faad14" }} />
+											<span>推荐个股列表</span>
+											<Tag>
+												{data.recommendations.length}
+												只
+											</Tag>
+										</Space>
+									)}
+									styles={{ body: { padding: 0 } }}
+								>
+									<Table<StockRecommendation>
+										columns={columns}
+										dataSource={data.recommendations}
+										rowKey="code"
+										size="middle"
+										pagination={false}
+										scroll={{ x: 1500 }}
+										loading={loading}
+										rowClassName={(record) => {
+											if (record.recommendation_level === "强烈推荐")
+												return "dragon-head-row-strong";
+											if (record.recommendation_level === "推荐")
+												return "dragon-head-row-recommend";
+											if (record.recommendation_level === "回避")
+												return "dragon-head-row-avoid";
+											return "";
+										}}
+									/>
+								</Card>
+
+								{/* 策略说明 */}
+								<Card
+									title={(
+										<Space>
+											{data.llm_enhanced
+												? <ExperimentOutlined style={{ color: "#722ed1" }} />
+												: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
+											<span>{data.llm_enhanced ? "GPT-5.2 策略深度分析报告" : "策略推荐逻辑说明"}</span>
+										</Space>
+									)}
+									style={{ marginTop: 16 }}
+								>
+									<div
+										style={{
+											whiteSpace: "pre-wrap",
+											lineHeight: 1.8,
+											fontSize: 14,
+										}}
+									>
+										{data.strategy_explanation
+											.split("\n")
+											.map((line, idx) => {
+												if (line.startsWith("## ")) {
+													return (
+														<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
+															{line.replace("## ", "")}
+														</Title>
+													);
+												}
+												if (line.startsWith("### ")) {
+													return (
+														<Title key={idx} level={5} style={{ margin: "12px 0 6px" }}>
+															{line.replace("### ", "")}
+														</Title>
+													);
+												}
+												if (line.startsWith("⚠️")) {
+													return (
+														<Paragraph key={idx} type="warning" style={{ fontWeight: 600 }}>
+															{line}
+														</Paragraph>
+													);
+												}
+												if (line.startsWith("- ✅")) {
+													return (
+														<Paragraph key={idx} type="success">
+															{line.replace("- ", "")}
+														</Paragraph>
+													);
+												}
+												if (line.trim().match(/^\d+\./)) {
+													return (
+														<Paragraph key={idx} style={{ marginLeft: 16, marginBottom: 4 }}>
+															{line.replace(/\*\*(.*?)\*\*/g, "$1")}
+														</Paragraph>
+													);
+												}
+												if (line.trim() === "") {
+													return <br key={idx} />;
+												}
+												return (
+													<Paragraph key={idx} style={{ marginBottom: 4 }}>
+														{line.replace(/\*\*(.*?)\*\*/g, "$1")}
+													</Paragraph>
 												);
 											})}
-										</Space>
-									</Space>
-								)
-								: (
-									<Text type="secondary">暂未识别明确主线</Text>
-								)}
-						</Card>
-					</Col>
-
-					{/* 新闻共振 */}
-					<Col xs={24} md={12} xl={8}>
-						<Card
-							size="small"
-							title={(
-								<Space>
-									<ThunderboltOutlined style={{ color: "#fa8c16" }} />
-									<span>新闻情绪共振</span>
-								</Space>
-							)}
-							styles={{ body: { padding: "12px 16px" } }}
-						>
-							<Space direction="vertical" style={{ width: "100%" }}>
-								<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-									<Progress
-										type="circle"
-										percent={Math.round(data.news_resonance.resonance_score)}
-										size={48}
-										strokeColor={
-											data.news_resonance.resonance_score >= 70
-												? "#52c41a"
-												: data.news_resonance.resonance_score >= 40
-													? "#faad14"
-													: "#f5222d"
-										}
-									/>
-									<div>
-										<Text style={{ display: "block" }}>
-											分析
-											{" "}
-											{data.news_resonance.news_count}
-											{" "}
-											条快讯
-										</Text>
-										{data.news_resonance.matching_themes.length > 0
-											? (
-												<Text type="success" style={{ fontSize: 12 }}>
-													{data.news_resonance.matching_themes.join("、")}
-													{" "}
-													共振验证通过
-												</Text>
-											)
-											: (
-												<Text type="secondary" style={{ fontSize: 12 }}>
-													未形成明显共振
-												</Text>
-											)}
 									</div>
-								</div>
-							</Space>
-						</Card>
-					</Col>
+								</Card>
+							</div>
 
-					{/* 统计概览 */}
-					<Col xs={24} md={24} xl={8}>
-						<Card
-							size="small"
-							title={(
-								<Space>
-									<InfoCircleOutlined style={{ color: "#1890ff" }} />
-									<span>推荐概览</span>
-								</Space>
-							)}
-							styles={{ body: { padding: "12px 16px" } }}
-						>
-							<Row gutter={16}>
-								<Col span={8}>
-									<Statistic
-										title="推荐总数"
-										value={data.total}
-										valueStyle={{ fontSize: 20, color: "#1890ff" }}
-									/>
-								</Col>
-								<Col span={8}>
-									<Statistic
-										title="强烈推荐"
-										value={data.recommendations.filter(r => r.recommendation_level === "强烈推荐").length}
-										valueStyle={{ fontSize: 20, color: "#f5222d" }}
-									/>
-								</Col>
-								<Col span={8}>
-									<Statistic
-										title="最高连板"
-										value={Math.max(...data.recommendations.map(r => r.limit_up_days), 0)}
-										suffix="天"
-										valueStyle={{ fontSize: 20, color: "#fa541c" }}
-									/>
-								</Col>
-							</Row>
-						</Card>
-					</Col>
-				</Row>
+							<RecommendationHistory strategyType="dragon_head" />
 
-				{/* 推荐列表 */}
-				<Card
-					title={(
-						<Space>
-							<TrophyOutlined style={{ color: "#faad14" }} />
-							<span>推荐个股列表</span>
-							<Tag>
-								{data.recommendations.length}
-								只
-							</Tag>
-						</Space>
-					)}
-					styles={{ body: { padding: 0 } }}
-				>
-					<Table<StockRecommendation>
-						columns={columns}
-						dataSource={data.recommendations}
-						rowKey="code"
-						size="middle"
-						pagination={false}
-						scroll={{ x: 1500 }}
-						loading={loading}
-						rowClassName={(record) => {
-							if (record.recommendation_level === "强烈推荐")
-								return "dragon-head-row-strong";
-							if (record.recommendation_level === "推荐")
-								return "dragon-head-row-recommend";
-							if (record.recommendation_level === "回避")
-								return "dragon-head-row-avoid";
-							return "";
-						}}
-					/>
-				</Card>
-
-				{/* 策略说明 */}
-				<Card
-					title={(
-						<Space>
-							{data.llm_enhanced
-								? <ExperimentOutlined style={{ color: "#722ed1" }} />
-								: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
-							<span>{data.llm_enhanced ? "GPT-5.2 策略深度分析报告" : "策略推荐逻辑说明"}</span>
-						</Space>
-					)}
-					style={{ marginTop: 16 }}
-				>
-					<div
-						style={{
-							whiteSpace: "pre-wrap",
-							lineHeight: 1.8,
-							fontSize: 14,
-						}}
-					>
-						{data.strategy_explanation
-							.split("\n")
-							.map((line, idx) => {
-								if (line.startsWith("## ")) {
-									return (
-										<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
-											{line.replace("## ", "")}
-										</Title>
-									);
-								}
-								if (line.startsWith("### ")) {
-									return (
-										<Title key={idx} level={5} style={{ margin: "12px 0 6px" }}>
-											{line.replace("### ", "")}
-										</Title>
-									);
-								}
-								if (line.startsWith("⚠️")) {
-									return (
-										<Paragraph key={idx} type="warning" style={{ fontWeight: 600 }}>
-											{line}
-										</Paragraph>
-									);
-								}
-								if (line.startsWith("- ✅")) {
-									return (
-										<Paragraph key={idx} type="success">
-											{line.replace("- ", "")}
-										</Paragraph>
-									);
-								}
-								if (line.trim().match(/^\d+\./)) {
-									return (
-										<Paragraph key={idx} style={{ marginLeft: 16, marginBottom: 4 }}>
-											{line.replace(/\*\*(.*?)\*\*/g, "$1")}
-										</Paragraph>
-									);
-								}
-								if (line.trim() === "") {
-									return <br key={idx} />;
-								}
-								return (
-									<Paragraph key={idx} style={{ marginBottom: 4 }}>
-										{line.replace(/\*\*(.*?)\*\*/g, "$1")}
-									</Paragraph>
-								);
-							})}
-					</div>
-				</Card>
-			</div>
-
-			<RecommendationHistory strategyType="dragon_head" />
-
-			{/* Custom styles */}
-			<style>
-				{`
+							{/* Custom styles */}
+							<style>
+								{`
 				.dragon-head-row-strong {
 					background-color: rgba(245, 34, 45, 0.04) !important;
 				}
@@ -796,7 +796,16 @@ export default function DragonHead() {
 					background-color: rgba(140, 140, 140, 0.1) !important;
 				}
 			`}
-			</style>
-		</BasicContent>
+							</style>
+						</BasicContent>
+					),
+				},
+				{
+					key: "follow",
+					label: "推荐跟进",
+					children: <StrategyFollowTab strategyType="dragon_head" isOvernight={false} />,
+				},
+			]}
+		/>
 	);
 }

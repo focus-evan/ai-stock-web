@@ -332,21 +332,14 @@ export default function Relay() {
 	// Loading skeleton
 	if (loading && !data) {
 		return (
-			<Tabs defaultActiveKey="main" style={{ width: "100%" }}>
-				<Tabs.TabPane tab="连板接力" key="main">
-					<BasicContent>
-						<div style={{ padding: 24 }}>
-							<Skeleton active paragraph={{ rows: 2 }} />
-							<div style={{ marginTop: 24 }}>
-								<Skeleton active paragraph={{ rows: 8 }} />
-							</div>
-						</div>
-					</BasicContent>
-				</Tabs.TabPane>
-				<Tabs.TabPane tab="推荐跟进" key="follow">
-					<StrategyFollowTab strategyType="relay" isOvernight={false} />
-				</Tabs.TabPane>
-			</Tabs>
+			<BasicContent>
+				<div style={{ padding: 24 }}>
+					<Skeleton active paragraph={{ rows: 2 }} />
+					<div style={{ marginTop: 24 }}>
+						<Skeleton active paragraph={{ rows: 8 }} />
+					</div>
+				</div>
+			</BasicContent>
 		);
 	}
 
@@ -390,214 +383,221 @@ export default function Relay() {
 	}
 
 	return (
-		<BasicContent>
-			<div style={{ padding: "0 0 24px 0" }}>
-				{/* Header */}
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-						marginBottom: 16,
-					}}
-				>
-					<Space align="center">
-						<LinkOutlined style={{ fontSize: 24, color: "#fa541c" }} />
-						<Title level={4} style={{ margin: 0 }}>
-							连板接力预判
-						</Title>
-						{data.llm_enhanced && (
-							<Tag color="purple" icon={<ExperimentOutlined />}>
-								AI 深度评估
-							</Tag>
-						)}
-						<Tag color="processing">
-							{data.trading_date}
-						</Tag>
-						<Text type="secondary" style={{ fontSize: 12 }}>
-							生成于
-							{" "}
-							{data.generated_at}
-						</Text>
-					</Space>
-					<Button
-						type="primary"
-						icon={<ReloadOutlined spin={refreshing} />}
-						onClick={handleRefresh}
-						loading={refreshing}
-					>
-						{refreshing ? `AI评估中 ${refreshSeconds}s...` : "刷新预判"}
-					</Button>
-				</div>
-
-				{/* 统计概览 */}
-				<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-					<Col xs={24} md={12} xl={8}>
-						<Card
-							size="small"
-							title={(
-								<Space>
-									<InfoCircleOutlined style={{ color: "#1890ff" }} />
-									<span>
-										市场概览 (
-										{data.trading_date}
-										)
-									</span>
-								</Space>
-							)}
-							styles={{ body: { padding: "12px 16px" } }}
-						>
-							<Row gutter={16}>
-								<Col span={12}>
-									<Statistic
-										title="今日涨停数"
-										value={data.total_limit_up || "-"}
-										suffix="只"
-										valueStyle={{ fontSize: 24, color: "#f5222d" }}
-									/>
-								</Col>
-								<Col span={12}>
-									<Statistic
-										title="市场情绪"
-										value={data.market_emotion || "未知"}
-										valueStyle={{ fontSize: 24, color: data.market_emotion === "极度亢奋" ? "#f5222d" : data.market_emotion === "活跃" ? "#fa541c" : "#faad14" }}
-									/>
-								</Col>
-							</Row>
-						</Card>
-					</Col>
-
-					<Col xs={24} md={12} xl={16}>
-						<Card
-							size="small"
-							title={(
-								<Space>
-									<FireOutlined style={{ color: "#fa8c16" }} />
-									<span>连板高度分布</span>
-								</Space>
-							)}
-							styles={{ body: { padding: "12px 16px" } }}
-						>
-							<Space size={16} wrap>
-								{data.board_distribution
-									? (
-										Object.entries(data.board_distribution)
-											.sort((a, b) => Number(b[0]) - Number(a[0]))
-											.map(([height, count]) => (
-												<Statistic
-													key={height}
-													title={`${height}板`}
-													value={count}
-													suffix="只"
-													valueStyle={{
-														fontSize: 20,
-														color: Number(height) >= 4 ? "#f5222d" : Number(height) >= 2 ? "#fa541c" : "#595959",
-													}}
-												/>
-											))
-									)
-									: <Text type="secondary">暂无数据</Text>}
-							</Space>
-						</Card>
-					</Col>
-				</Row>
-
-				{/* 推荐列表 */}
-				<Card
-					title={(
-						<Space>
-							<TrophyOutlined style={{ color: "#faad14" }} />
-							<span>次日候选名单</span>
-							<Tag>
-								{data.total}
-								{" "}
-								只潜力股
-							</Tag>
-						</Space>
-					)}
-					styles={{ body: { padding: 0 } }}
-				>
-					<Table<RelayStock>
-						columns={columns}
-						dataSource={data.recommendations}
-						rowKey="code"
-						size="middle"
-						pagination={false}
-						scroll={{ x: 1300 }}
-						loading={loading}
-						rowClassName={(record) => {
-							if (record.relay_probability === "高" || record.recommendation_level === "强烈推荐")
-								return "relay-row-high";
-							if (record.relay_probability === "中" || record.recommendation_level === "推荐")
-								return "relay-row-med";
-							return "";
-						}}
-					/>
-				</Card>
-
-				{/* 策略说明 */}
-				<Card
-					title={(
-						<Space>
-							{data.llm_enhanced
-								? <ExperimentOutlined style={{ color: "#722ed1" }} />
-								: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
-							<span>{data.llm_enhanced ? "AI 接力研判报告" : "连板接力操作说明"}</span>
-						</Space>
-					)}
-					style={{ marginTop: 16 }}
-				>
-					<div
-						style={{
-							whiteSpace: "pre-wrap",
-							lineHeight: 1.8,
-							fontSize: 14,
-						}}
-					>
-						{data.strategy_explanation
-							.split("\n")
-							.map((line, idx) => {
-								if (line.startsWith("## ")) {
-									return (
-										<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
-											{line.replace("## ", "")}
+		<Tabs
+			defaultActiveKey="main"
+			items={[
+				{
+					key: "main",
+					label: "连板接力",
+					children: (
+						<BasicContent>
+							<div style={{ padding: "0 0 24px 0" }}>
+								{/* Header */}
+								<div
+									style={{
+										display: "flex",
+										justifyContent: "space-between",
+										alignItems: "center",
+										marginBottom: 16,
+									}}
+								>
+									<Space align="center">
+										<LinkOutlined style={{ fontSize: 24, color: "#fa541c" }} />
+										<Title level={4} style={{ margin: 0 }}>
+											连板接力预判
 										</Title>
-									);
-								}
-								if (line.startsWith("### ")) {
-									return (
-										<Title key={idx} level={5} style={{ margin: "12px 0 6px" }}>
-											{line.replace("### ", "")}
-										</Title>
-									);
-								}
-								if (line.startsWith("- ")) {
-									return (
-										<Paragraph key={idx} style={{ marginLeft: 16, marginBottom: 4 }}>
-											•
+										{data.llm_enhanced && (
+											<Tag color="purple" icon={<ExperimentOutlined />}>
+												AI 深度评估
+											</Tag>
+										)}
+										<Tag color="processing">
+											{data.trading_date}
+										</Tag>
+										<Text type="secondary" style={{ fontSize: 12 }}>
+											生成于
 											{" "}
-											{line.replace("- ", "").replace(/\*\*(.*?)\*\*/g, "$1")}
-										</Paragraph>
-									);
-								}
-								if (line.trim() === "") {
-									return <br key={idx} />;
-								}
-								return (
-									<Paragraph key={idx} style={{ marginBottom: 4 }}>
-										{line.replace(/\*\*(.*?)\*\*/g, "$1")}
-									</Paragraph>
-								);
-							})}
-					</div>
-				</Card>
-			</div>
+											{data.generated_at}
+										</Text>
+									</Space>
+									<Button
+										type="primary"
+										icon={<ReloadOutlined spin={refreshing} />}
+										onClick={handleRefresh}
+										loading={refreshing}
+									>
+										{refreshing ? `AI评估中 ${refreshSeconds}s...` : "刷新预判"}
+									</Button>
+								</div>
 
-			<RecommendationHistory strategyType="relay" />
+								{/* 统计概览 */}
+								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+									<Col xs={24} md={12} xl={8}>
+										<Card
+											size="small"
+											title={(
+												<Space>
+													<InfoCircleOutlined style={{ color: "#1890ff" }} />
+													<span>
+														市场概览 (
+														{data.trading_date}
+														)
+													</span>
+												</Space>
+											)}
+											styles={{ body: { padding: "12px 16px" } }}
+										>
+											<Row gutter={16}>
+												<Col span={12}>
+													<Statistic
+														title="今日涨停数"
+														value={data.total_limit_up || "-"}
+														suffix="只"
+														valueStyle={{ fontSize: 24, color: "#f5222d" }}
+													/>
+												</Col>
+												<Col span={12}>
+													<Statistic
+														title="市场情绪"
+														value={data.market_emotion || "未知"}
+														valueStyle={{ fontSize: 24, color: data.market_emotion === "极度亢奋" ? "#f5222d" : data.market_emotion === "活跃" ? "#fa541c" : "#faad14" }}
+													/>
+												</Col>
+											</Row>
+										</Card>
+									</Col>
 
-			{/* Custom styles */}
-			<style>
-				{`
+									<Col xs={24} md={12} xl={16}>
+										<Card
+											size="small"
+											title={(
+												<Space>
+													<FireOutlined style={{ color: "#fa8c16" }} />
+													<span>连板高度分布</span>
+												</Space>
+											)}
+											styles={{ body: { padding: "12px 16px" } }}
+										>
+											<Space size={16} wrap>
+												{data.board_distribution
+													? (
+														Object.entries(data.board_distribution)
+															.sort((a, b) => Number(b[0]) - Number(a[0]))
+															.map(([height, count]) => (
+																<Statistic
+																	key={height}
+																	title={`${height}板`}
+																	value={count}
+																	suffix="只"
+																	valueStyle={{
+																		fontSize: 20,
+																		color: Number(height) >= 4 ? "#f5222d" : Number(height) >= 2 ? "#fa541c" : "#595959",
+																	}}
+																/>
+															))
+													)
+													: <Text type="secondary">暂无数据</Text>}
+											</Space>
+										</Card>
+									</Col>
+								</Row>
+
+								{/* 推荐列表 */}
+								<Card
+									title={(
+										<Space>
+											<TrophyOutlined style={{ color: "#faad14" }} />
+											<span>次日候选名单</span>
+											<Tag>
+												{data.total}
+												{" "}
+												只潜力股
+											</Tag>
+										</Space>
+									)}
+									styles={{ body: { padding: 0 } }}
+								>
+									<Table<RelayStock>
+										columns={columns}
+										dataSource={data.recommendations}
+										rowKey="code"
+										size="middle"
+										pagination={false}
+										scroll={{ x: 1300 }}
+										loading={loading}
+										rowClassName={(record) => {
+											if (record.relay_probability === "高" || record.recommendation_level === "强烈推荐")
+												return "relay-row-high";
+											if (record.relay_probability === "中" || record.recommendation_level === "推荐")
+												return "relay-row-med";
+											return "";
+										}}
+									/>
+								</Card>
+
+								{/* 策略说明 */}
+								<Card
+									title={(
+										<Space>
+											{data.llm_enhanced
+												? <ExperimentOutlined style={{ color: "#722ed1" }} />
+												: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
+											<span>{data.llm_enhanced ? "AI 接力研判报告" : "连板接力操作说明"}</span>
+										</Space>
+									)}
+									style={{ marginTop: 16 }}
+								>
+									<div
+										style={{
+											whiteSpace: "pre-wrap",
+											lineHeight: 1.8,
+											fontSize: 14,
+										}}
+									>
+										{data.strategy_explanation
+											.split("\n")
+											.map((line, idx) => {
+												if (line.startsWith("## ")) {
+													return (
+														<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
+															{line.replace("## ", "")}
+														</Title>
+													);
+												}
+												if (line.startsWith("### ")) {
+													return (
+														<Title key={idx} level={5} style={{ margin: "12px 0 6px" }}>
+															{line.replace("### ", "")}
+														</Title>
+													);
+												}
+												if (line.startsWith("- ")) {
+													return (
+														<Paragraph key={idx} style={{ marginLeft: 16, marginBottom: 4 }}>
+															•
+															{" "}
+															{line.replace("- ", "").replace(/\*\*(.*?)\*\*/g, "$1")}
+														</Paragraph>
+													);
+												}
+												if (line.trim() === "") {
+													return <br key={idx} />;
+												}
+												return (
+													<Paragraph key={idx} style={{ marginBottom: 4 }}>
+														{line.replace(/\*\*(.*?)\*\*/g, "$1")}
+													</Paragraph>
+												);
+											})}
+									</div>
+								</Card>
+							</div>
+
+							<RecommendationHistory strategyType="relay" />
+
+							{/* Custom styles */}
+							<style>
+								{`
 				.relay-row-high {
 					background-color: rgba(245, 34, 45, 0.04) !important;
 				}
@@ -611,7 +611,16 @@ export default function Relay() {
 					background-color: rgba(250, 140, 22, 0.08) !important;
 				}
 			`}
-			</style>
-		</BasicContent>
+							</style>
+						</BasicContent>
+					),
+				},
+				{
+					key: "follow",
+					label: "推荐跟进",
+					children: <StrategyFollowTab strategyType="relay" isOvernight={false} />,
+				},
+			]}
+		/>
 	);
 }

@@ -400,173 +400,181 @@ const OvernightPage: React.FC = () => {
 	}
 
 	return (
-		<Tabs defaultActiveKey="main" style={{ width: "100%" }}>
-			<Tabs.TabPane tab="隔夜推荐" key="main">
-				<div style={{ padding: 24 }}>
-					<Card
-						bordered={false}
-						style={{
-							marginBottom: 24,
-							background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-							borderRadius: 12,
-						}}
-					>
-						<Row gutter={[24, 16]} align="middle">
-							<Col span={12}>
-								<Space align="center">
-									<MoonOutlined style={{ fontSize: 32, color: "#ffd93d" }} />
-									<div>
-										<Title level={3} style={{ margin: 0, color: "#fff" }}>
-											🌙 隔夜施工法
-										</Title>
-										<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-											14:30七步筛选强势股 → 尾盘买入 → 次日集合竞价/开盘卖出
-										</Text>
-									</div>
-									<Button
-										type="primary"
-										ghost
-										icon={<ReloadOutlined spin={refreshing} />}
-										loading={refreshing}
-										onClick={handleRefresh}
-										style={{
-											borderColor: "rgba(255,255,255,0.5)",
-											color: "#fff",
-											marginLeft: 12,
-										}}
-									>
-										{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
-									</Button>
-								</Space>
-							</Col>
-							<Col span={12}>
-								<Row gutter={16} justify="end">
-									<Col>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>候选股</span>}
-											value={data.total}
-											valueStyle={{ color: "#ffd93d", fontWeight: "bold" }}
-											suffix="只"
-										/>
-									</Col>
-									<Col>
-										<Statistic
-											title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
-											value={data.llm_enhanced ? "已增强" : "基础"}
-											valueStyle={{ color: data.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
-										/>
-									</Col>
-									{data.generated_at && (
-										<Col>
+		<Tabs
+			defaultActiveKey="main"
+			items={[
+				{
+					key: "main",
+					label: "隔夜推荐",
+					children: (
+						<div style={{ padding: 24 }}>
+							<Card
+								bordered={false}
+								style={{
+									marginBottom: 24,
+									background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+									borderRadius: 12,
+								}}
+							>
+								<Row gutter={[24, 16]} align="middle">
+									<Col span={12}>
+										<Space align="center">
+											<MoonOutlined style={{ fontSize: 32, color: "#ffd93d" }} />
 											<div>
-												<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>筛选时间</span>
-												<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+												<Title level={3} style={{ margin: 0, color: "#fff" }}>
+													🌙 隔夜施工法
+												</Title>
+												<Text style={{ color: "rgba(255,255,255,0.85)" }}>
+													14:30七步筛选强势股 → 尾盘买入 → 次日集合竞价/开盘卖出
+												</Text>
 											</div>
-										</Col>
-									)}
+											<Button
+												type="primary"
+												ghost
+												icon={<ReloadOutlined spin={refreshing} />}
+												loading={refreshing}
+												onClick={handleRefresh}
+												style={{
+													borderColor: "rgba(255,255,255,0.5)",
+													color: "#fff",
+													marginLeft: 12,
+												}}
+											>
+												{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+											</Button>
+										</Space>
+									</Col>
+									<Col span={12}>
+										<Row gutter={16} justify="end">
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>候选股</span>}
+													value={data.total}
+													valueStyle={{ color: "#ffd93d", fontWeight: "bold" }}
+													suffix="只"
+												/>
+											</Col>
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
+													value={data.llm_enhanced ? "已增强" : "基础"}
+													valueStyle={{ color: data.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
+												/>
+											</Col>
+											{data.generated_at && (
+												<Col>
+													<div>
+														<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>筛选时间</span>
+														<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+													</div>
+												</Col>
+											)}
+										</Row>
+									</Col>
 								</Row>
-							</Col>
-						</Row>
-					</Card>
+							</Card>
 
-					<Alert
-						message="隔夜施工法交易规则"
-						description="涨幅3-5% + 量比>1 + 换手率5-10% + 市值50-200亿 + 均线多头 + 量能台阶放大 → 尾盘14:55买入 → 次日集合竞价/开盘5分钟卖出。止损-2%，绝不隔第二夜！"
-						type="info"
-						showIcon
-						style={{ marginBottom: 16, borderRadius: 8 }}
-						closable
-					/>
+							<Alert
+								message="隔夜施工法交易规则"
+								description="涨幅3-5% + 量比>1 + 换手率5-10% + 市值50-200亿 + 均线多头 + 量能台阶放大 → 尾盘14:55买入 → 次日集合竞价/开盘5分钟卖出。止损-2%，绝不隔第二夜！"
+								type="info"
+								showIcon
+								style={{ marginBottom: 16, borderRadius: 8 }}
+								closable
+							/>
 
-					{data.signal_summary && Object.keys(data.signal_summary).length > 0 && (
-						<Card size="small" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
-							<Space wrap>
-								<Text strong>信号分布：</Text>
-								{Object.entries(data.signal_summary).map(([type, count]) => (
-									<Tag
-										key={type}
-										color={
-											type.includes("涨停")
-												? "red"
-												: type.includes("多头")
-													? "green"
-													: type.includes("台阶")
-														? "blue"
-														: "purple"
-										}
-									>
-										{type}
-										:
-										{count}
-										只
-									</Tag>
-								))}
-							</Space>
-						</Card>
-					)}
+							{data.signal_summary && Object.keys(data.signal_summary).length > 0 && (
+								<Card size="small" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
+									<Space wrap>
+										<Text strong>信号分布：</Text>
+										{Object.entries(data.signal_summary).map(([type, count]) => (
+											<Tag
+												key={type}
+												color={
+													type.includes("涨停")
+														? "red"
+														: type.includes("多头")
+															? "green"
+															: type.includes("台阶")
+																? "blue"
+																: "purple"
+												}
+											>
+												{type}
+												:
+												{count}
+												只
+											</Tag>
+										))}
+									</Space>
+								</Card>
+							)}
 
-					<Card
-						bordered={false}
-						style={{ borderRadius: 12 }}
-						title={(
-							<Space>
-								<MoonOutlined style={{ color: "#0f3460" }} />
-								<Text strong>隔夜施工候选股</Text>
-								<Tag color="blue">
-									{data.recommendations.length}
-									只
-								</Tag>
-							</Space>
-						)}
-						extra={(
-							<a onClick={fetchData}>
-								<ReloadOutlined />
-								{" "}
-								刷新
-							</a>
-						)}
-					>
-						<Table
-							columns={columns}
-							dataSource={data.recommendations}
-							rowKey="code"
-							pagination={false}
-							size="small"
-							scroll={{ x: 1200 }}
-							rowClassName={(record) => {
-								if (record.recommendation_level === "强烈推荐")
-									return "row-highlight-red";
-								if (record.recommendation_level === "推荐")
-									return "row-highlight-orange";
-								return "";
-							}}
-						/>
-					</Card>
+							<Card
+								bordered={false}
+								style={{ borderRadius: 12 }}
+								title={(
+									<Space>
+										<MoonOutlined style={{ color: "#0f3460" }} />
+										<Text strong>隔夜施工候选股</Text>
+										<Tag color="blue">
+											{data.recommendations.length}
+											只
+										</Tag>
+									</Space>
+								)}
+								extra={(
+									<a onClick={fetchData}>
+										<ReloadOutlined />
+										{" "}
+										刷新
+									</a>
+								)}
+							>
+								<Table
+									columns={columns}
+									dataSource={data.recommendations}
+									rowKey="code"
+									pagination={false}
+									size="small"
+									scroll={{ x: 1200 }}
+									rowClassName={(record) => {
+										if (record.recommendation_level === "强烈推荐")
+											return "row-highlight-red";
+										if (record.recommendation_level === "推荐")
+											return "row-highlight-orange";
+										return "";
+									}}
+								/>
+							</Card>
 
-					{data.strategy_report && (
-						<Card bordered={false} style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }} title="📊 隔夜施工法分析报告">
-							<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.strategy_report}</Paragraph>
-						</Card>
-					)}
+							{data.strategy_report && (
+								<Card bordered={false} style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }} title="📊 隔夜施工法分析报告">
+									<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.strategy_report}</Paragraph>
+								</Card>
+							)}
 
-					<style>
-						{`
+							<style>
+								{`
 				.row-highlight-red { background-color: #fff1f0 !important; }
 				.row-highlight-red:hover > td { background-color: #ffccc7 !important; }
 				.row-highlight-orange { background-color: #fff7e6 !important; }
 				.row-highlight-orange:hover > td { background-color: #ffe7ba !important; }
 			`}
-					</style>
+							</style>
 
-					<RecommendationHistory strategyType="overnight" />
+							<RecommendationHistory strategyType="overnight" />
 
-				</div>
-
-			</Tabs.TabPane>
-			<Tabs.TabPane tab="次日收益" key="follow">
-				<StrategyFollowTab strategyType="overnight" isOvernight={true} />
-			</Tabs.TabPane>
-		</Tabs>
+						</div>
+					),
+				},
+				{
+					key: "follow",
+					label: "次日收益",
+					children: <StrategyFollowTab strategyType="overnight" isOvernight={true} />,
+				},
+			]}
+		/>
 	);
 };
 
