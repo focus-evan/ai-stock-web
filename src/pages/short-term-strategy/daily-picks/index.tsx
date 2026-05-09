@@ -12,11 +12,13 @@ import {
 	fetchDailyPicksHistory,
 	refreshDailyPicks,
 } from "#src/api/strategy";
+import DailyPicksFollow from "#src/pages/short-term-strategy/daily-picks-follow";
 import {
 	AlertOutlined,
 	BulbOutlined,
 	CalendarOutlined,
 	ClockCircleOutlined,
+	EyeOutlined,
 	FireFilled,
 	FireOutlined,
 	FundOutlined,
@@ -1008,6 +1010,16 @@ const DailyPicksPage: React.FC = () => {
 				</Space>
 			),
 			children: <HistoryTab />,
+		},
+		{
+			key: "follow",
+			label: (
+				<Space>
+					<EyeOutlined style={{ color: "#1890ff" }} />
+					精选跟进
+				</Space>
+			),
+			children: <DailyPicksFollow />,
 		},
 	];
 
