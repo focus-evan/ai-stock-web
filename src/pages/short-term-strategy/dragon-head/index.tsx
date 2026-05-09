@@ -4,6 +4,7 @@ import type { ColumnsType } from "antd/es/table";
 import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import {
 	ClockCircleOutlined,
 	CrownOutlined,
