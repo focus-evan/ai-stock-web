@@ -2,8 +2,9 @@ import type { TrendMomentumData, TrendMomentumStock } from "#src/api/strategy/ty
 import type { ColumnsType } from "antd/es/table";
 import { fetchTrendMomentumRecommendations, refreshTrendMomentumRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { ArrowUpOutlined, ReloadOutlined, RiseOutlined, StockOutlined } from "@ant-design/icons";
-import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 
 import React, { useEffect, useState } from "react";
 
@@ -309,157 +310,164 @@ const TrendMomentumPage: React.FC = () => {
 	const isEmpty = !data || data.recommendations.length === 0;
 
 	return (
-		<div style={{ padding: 24 }}>
-			<Card
-				bordered={false}
-				style={{
-					marginBottom: 24,
-					background: "linear-gradient(135deg, #fa541c 0%, #ff7a45 50%, #ffc53d 100%)",
-					borderRadius: 12,
-				}}
-			>
-				<Row gutter={[24, 16]} align="middle">
-					<Col span={12}>
-						<Space align="center">
-							<StockOutlined style={{ fontSize: 32, color: "#fff" }} />
-							<div>
-								<Title level={3} style={{ margin: 0, color: "#fff" }}>趋势动量</Title>
-								<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-									捕捉中期趋势确立+动量加速的个股
-								</Text>
-							</div>
-							<Button
-								type="primary"
-								ghost
-								icon={<ReloadOutlined spin={refreshing} />}
-								loading={refreshing}
-								onClick={handleRefresh}
+		<Tabs
+			defaultActiveKey="main"
+			items={[
+				{
+					key: "main",
+					label: "趋势动量",
+					children: (
+						<div style={{ padding: 24 }}>
+							<Card
+								bordered={false}
 								style={{
-									borderColor: "rgba(255,255,255,0.5)",
-									color: "#fff",
-									marginLeft: 12,
+									marginBottom: 24,
+									background: "linear-gradient(135deg, #fa541c 0%, #ff7a45 50%, #ffc53d 100%)",
+									borderRadius: 12,
 								}}
 							>
-								{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
-							</Button>
-						</Space>
-					</Col>
-					<Col span={12}>
-						<Row gutter={16} justify="end">
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
-									value={data?.total ?? 0}
-									valueStyle={{ color: "#fff", fontWeight: "bold" }}
-									suffix="只"
-								/>
-							</Col>
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
-									value={data?.llm_enhanced ? "已增强" : "基础"}
-									valueStyle={{ color: data?.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
-								/>
-							</Col>
-							{data?.generated_at && (
-								<Col>
-									<div>
-										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
-										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
-									</div>
-								</Col>
-							)}
-						</Row>
-					</Col>
-				</Row>
-			</Card>
-
-			{isEmpty
-				? (
-					<Card bordered={false} style={{ borderRadius: 12 }}>
-						<Empty description="暂无趋势动量信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-							<Text type="secondary">当前暂无符合条件的趋势动量信号股，点击上方「刷新推荐」手动触发分析</Text>
-						</Empty>
-					</Card>
-				)
-				: (
-					<>
-
-						{data!.signal_summary && Object.keys(data!.signal_summary).length > 0 && (
-							<Card
-								size="small"
-								bordered={false}
-								style={{ marginBottom: 16, borderRadius: 8 }}
-							>
-								<Space wrap>
-									<Text strong>信号类型分布：</Text>
-									{Object.entries(data!.signal_summary).map(([type, count]) => (
-										<Tag key={type} color={signalColors[type] || "default"}>
-											{type}
-											:
-											{count}
-											只
-										</Tag>
-									))}
-								</Space>
+								<Row gutter={[24, 16]} align="middle">
+									<Col span={12}>
+										<Space align="center">
+											<StockOutlined style={{ fontSize: 32, color: "#fff" }} />
+											<div>
+												<Title level={3} style={{ margin: 0, color: "#fff" }}>趋势动量</Title>
+												<Text style={{ color: "rgba(255,255,255,0.85)" }}>
+													捕捉中期趋势确立+动量加速的个股
+												</Text>
+											</div>
+											<Button
+												type="primary"
+												ghost
+												icon={<ReloadOutlined spin={refreshing} />}
+												loading={refreshing}
+												onClick={handleRefresh}
+												style={{
+													borderColor: "rgba(255,255,255,0.5)",
+													color: "#fff",
+													marginLeft: 12,
+												}}
+											>
+												{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+											</Button>
+										</Space>
+									</Col>
+									<Col span={12}>
+										<Row gutter={16} justify="end">
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
+													value={data?.total ?? 0}
+													valueStyle={{ color: "#fff", fontWeight: "bold" }}
+													suffix="只"
+												/>
+											</Col>
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
+													value={data?.llm_enhanced ? "已增强" : "基础"}
+													valueStyle={{ color: data?.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
+												/>
+											</Col>
+											{data?.generated_at && (
+												<Col>
+													<div>
+														<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
+														<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+													</div>
+												</Col>
+											)}
+										</Row>
+									</Col>
+								</Row>
 							</Card>
-						)}
 
-						<Card
-							bordered={false}
-							style={{ borderRadius: 12 }}
-							title={(
-								<Space>
-									<ArrowUpOutlined style={{ color: "#fa541c" }} />
-									<Text strong>趋势动量信号股</Text>
-									<Tag color="orange">
-										{data!.recommendations.length}
-										只
-									</Tag>
-								</Space>
-							)}
-							extra={(
-								<a onClick={fetchData}>
-									<ReloadOutlined />
-									{" "}
-									刷新
-								</a>
-							)}
-						>
-							<Table
-								columns={columns}
-								dataSource={data!.recommendations}
-								rowKey="code"
-								pagination={false}
-								size="small"
-								scroll={{ x: 1300 }}
-								rowClassName={(record) => {
-									if (record.recommendation_level === "强烈推荐")
-										return "row-highlight-red";
-									if (record.recommendation_level === "推荐")
-										return "row-highlight-orange";
-									return "";
-								}}
-							/>
-						</Card>
+							{isEmpty
+								? (
+									<Card bordered={false} style={{ borderRadius: 12 }}>
+										<Empty description="暂无趋势动量信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
+											<Text type="secondary">当前暂无符合条件的趋势动量信号股，点击上方「刷新推荐」手动触发分析</Text>
+										</Empty>
+									</Card>
+								)
+								: (
+									<>
 
-						{data!.strategy_report && (
-							<Card
-								bordered={false}
-								style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
-								title="📊 策略分析报告"
-							>
-								<Paragraph style={{ whiteSpace: "pre-wrap" }}>
-									{data!.strategy_report}
-								</Paragraph>
-							</Card>
-						)}
+										{data!.signal_summary && Object.keys(data!.signal_summary).length > 0 && (
+											<Card
+												size="small"
+												bordered={false}
+												style={{ marginBottom: 16, borderRadius: 8 }}
+											>
+												<Space wrap>
+													<Text strong>信号类型分布：</Text>
+													{Object.entries(data!.signal_summary).map(([type, count]) => (
+														<Tag key={type} color={signalColors[type] || "default"}>
+															{type}
+															:
+															{count}
+															只
+														</Tag>
+													))}
+												</Space>
+											</Card>
+										)}
 
-					</>
-				)}
+										<Card
+											bordered={false}
+											style={{ borderRadius: 12 }}
+											title={(
+												<Space>
+													<ArrowUpOutlined style={{ color: "#fa541c" }} />
+													<Text strong>趋势动量信号股</Text>
+													<Tag color="orange">
+														{data!.recommendations.length}
+														只
+													</Tag>
+												</Space>
+											)}
+											extra={(
+												<a onClick={fetchData}>
+													<ReloadOutlined />
+													{" "}
+													刷新
+												</a>
+											)}
+										>
+											<Table
+												columns={columns}
+												dataSource={data!.recommendations}
+												rowKey="code"
+												pagination={false}
+												size="small"
+												scroll={{ x: 1300 }}
+												rowClassName={(record) => {
+													if (record.recommendation_level === "强烈推荐")
+														return "row-highlight-red";
+													if (record.recommendation_level === "推荐")
+														return "row-highlight-orange";
+													return "";
+												}}
+											/>
+										</Card>
 
-			<style>
-				{`
+										{data!.strategy_report && (
+											<Card
+												bordered={false}
+												style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }}
+												title="📊 策略分析报告"
+											>
+												<Paragraph style={{ whiteSpace: "pre-wrap" }}>
+													{data!.strategy_report}
+												</Paragraph>
+											</Card>
+										)}
+
+									</>
+								)}
+
+							<style>
+								{`
 				.row-highlight-red {
 					background-color: #fff1f0 !important;
 				}
@@ -473,11 +481,20 @@ const TrendMomentumPage: React.FC = () => {
 					background-color: #ffe7ba !important;
 				}
 			`}
-			</style>
+							</style>
 
-			<RecommendationHistory strategyType="trend_momentum" />
+							<RecommendationHistory strategyType="trend_momentum" />
 
-		</div>
+						</div>
+					),
+				},
+				{
+					key: "follow",
+					label: "推荐跟进",
+					children: <StrategyFollowTab strategyType="trend_momentum" isOvernight={false} />,
+				},
+			]}
+		/>
 	);
 };
 

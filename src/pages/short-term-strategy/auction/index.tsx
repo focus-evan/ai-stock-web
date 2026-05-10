@@ -2,8 +2,9 @@ import type { AuctionData, AuctionStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchAuctionRecommendations, refreshAuctionRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { ClockCircleOutlined, FieldTimeOutlined, ReloadOutlined, SunOutlined } from "@ant-design/icons";
-import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
+import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 
 import React, { useEffect, useState } from "react";
 
@@ -293,154 +294,170 @@ const AuctionPage: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: 24 }}>
-			<Card
-				bordered={false}
-				style={{
-					marginBottom: 24,
-					background: gradientMap[data.strategy_mode] || gradientMap["综合分析"],
-					borderRadius: 12,
-				}}
-			>
-				<Row gutter={[24, 16]} align="middle">
-					<Col span={12}>
-						<Space align="center">
-							<FieldTimeOutlined style={{ fontSize: 32, color: "#fff" }} />
-							<div>
-								<Title level={3} style={{ margin: 0, color: "#fff" }}>竞价/尾盘战法</Title>
-								<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-									{data.strategy_mode === "集合竞价"
-										? "捕捉竞价高开信号，识别资金抢筹意图"
-										: data.strategy_mode === "尾盘战法"
-											? "尾盘选股，博弈次日溢价空间"
-											: "综合分析竞价与尾盘信号"}
-								</Text>
-							</div>
-							<Button
-								type="primary"
-								ghost
-								icon={<ReloadOutlined spin={refreshing} />}
-								loading={refreshing}
-								onClick={handleRefresh}
+		<Tabs
+			defaultActiveKey="main"
+			items={[
+				{
+					key: "main",
+					label: "竞价战法",
+					children: (
+						<div style={{ padding: 24 }}>
+							<Card
+								bordered={false}
 								style={{
-									borderColor: "rgba(255,255,255,0.5)",
-									color: "#fff",
-									marginLeft: 12,
+									marginBottom: 24,
+									background: gradientMap[data.strategy_mode] || gradientMap["综合分析"],
+									borderRadius: 12,
 								}}
 							>
-								{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
-							</Button>
-						</Space>
-					</Col>
-					<Col span={12}>
-						<Row gutter={16} justify="end">
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
-									value={data.total}
-									valueStyle={{ color: "#fff", fontWeight: "bold" }}
-									suffix="只"
-								/>
-							</Col>
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>模式</span>}
-									value={data.strategy_mode}
-									valueStyle={{ color: "#fff", fontWeight: "bold", fontSize: 14 }}
-								/>
-							</Col>
-							<Col>
-								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
-									value={data.llm_enhanced ? "已增强" : "基础"}
-									valueStyle={{ color: data.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
-								/>
-							</Col>
-							{data.generated_at && (
-								<Col>
-									<div>
-										<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
-										<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
-									</div>
-								</Col>
+								<Row gutter={[24, 16]} align="middle">
+									<Col span={12}>
+										<Space align="center">
+											<FieldTimeOutlined style={{ fontSize: 32, color: "#fff" }} />
+											<div>
+												<Title level={3} style={{ margin: 0, color: "#fff" }}>竞价/尾盘战法</Title>
+												<Text style={{ color: "rgba(255,255,255,0.85)" }}>
+													{data.strategy_mode === "集合竞价"
+														? "捕捉竞价高开信号，识别资金抢筹意图"
+														: data.strategy_mode === "尾盘战法"
+															? "尾盘选股，博弈次日溢价空间"
+															: "综合分析竞价与尾盘信号"}
+												</Text>
+											</div>
+											<Button
+												type="primary"
+												ghost
+												icon={<ReloadOutlined spin={refreshing} />}
+												loading={refreshing}
+												onClick={handleRefresh}
+												style={{
+													borderColor: "rgba(255,255,255,0.5)",
+													color: "#fff",
+													marginLeft: 12,
+												}}
+											>
+												{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+											</Button>
+										</Space>
+									</Col>
+									<Col span={12}>
+										<Row gutter={16} justify="end">
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>信号总数</span>}
+													value={data.total}
+													valueStyle={{ color: "#fff", fontWeight: "bold" }}
+													suffix="只"
+												/>
+											</Col>
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>模式</span>}
+													value={data.strategy_mode}
+													valueStyle={{ color: "#fff", fontWeight: "bold", fontSize: 14 }}
+												/>
+											</Col>
+											<Col>
+												<Statistic
+													title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>}
+													value={data.llm_enhanced ? "已增强" : "基础"}
+													valueStyle={{ color: data.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }}
+												/>
+											</Col>
+											{data.generated_at && (
+												<Col>
+													<div>
+														<span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>推荐时间</span>
+														<div style={{ color: "#fff", fontSize: 14, fontWeight: "bold", marginTop: 4 }}>{data.generated_at}</div>
+													</div>
+												</Col>
+											)}
+										</Row>
+									</Col>
+								</Row>
+							</Card>
+
+							{data.signal_summary && Object.keys(data.signal_summary).length > 0 && (
+								<Card size="small" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
+									<Space wrap>
+										<Text strong>信号分布：</Text>
+										{Object.entries(data.signal_summary).map(([type, count]) => (
+											<Tag key={type} color={type.includes("竞价") ? "gold" : "purple"}>
+												{type}
+												:
+												{count}
+												只
+											</Tag>
+										))}
+									</Space>
+								</Card>
 							)}
-						</Row>
-					</Col>
-				</Row>
-			</Card>
 
-			{data.signal_summary && Object.keys(data.signal_summary).length > 0 && (
-				<Card size="small" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
-					<Space wrap>
-						<Text strong>信号分布：</Text>
-						{Object.entries(data.signal_summary).map(([type, count]) => (
-							<Tag key={type} color={type.includes("竞价") ? "gold" : "purple"}>
-								{type}
-								:
-								{count}
-								只
-							</Tag>
-						))}
-					</Space>
-				</Card>
-			)}
+							<Card
+								bordered={false}
+								style={{ borderRadius: 12 }}
+								title={(
+									<Space>
+										<FieldTimeOutlined style={{ color: "#722ed1" }} />
+										<Text strong>信号股</Text>
+										<Tag color="purple">
+											{data.recommendations.length}
+											只
+										</Tag>
+									</Space>
+								)}
+								extra={(
+									<a onClick={fetchData}>
+										<ReloadOutlined />
+										{" "}
+										刷新
+									</a>
+								)}
+							>
+								<Table
+									columns={columns}
+									dataSource={data.recommendations}
+									rowKey="code"
+									pagination={false}
+									size="small"
+									scroll={{ x: 1300 }}
+									rowClassName={(record) => {
+										if (record.recommendation_level === "强烈推荐")
+											return "row-highlight-red";
+										if (record.recommendation_level === "推荐")
+											return "row-highlight-orange";
+										return "";
+									}}
+								/>
+							</Card>
 
-			<Card
-				bordered={false}
-				style={{ borderRadius: 12 }}
-				title={(
-					<Space>
-						<FieldTimeOutlined style={{ color: "#722ed1" }} />
-						<Text strong>信号股</Text>
-						<Tag color="purple">
-							{data.recommendations.length}
-							只
-						</Tag>
-					</Space>
-				)}
-				extra={(
-					<a onClick={fetchData}>
-						<ReloadOutlined />
-						{" "}
-						刷新
-					</a>
-				)}
-			>
-				<Table
-					columns={columns}
-					dataSource={data.recommendations}
-					rowKey="code"
-					pagination={false}
-					size="small"
-					scroll={{ x: 1300 }}
-					rowClassName={(record) => {
-						if (record.recommendation_level === "强烈推荐")
-							return "row-highlight-red";
-						if (record.recommendation_level === "推荐")
-							return "row-highlight-orange";
-						return "";
-					}}
-				/>
-			</Card>
+							{data.strategy_report && (
+								<Card bordered={false} style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }} title="📊 策略分析报告">
+									<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.strategy_report}</Paragraph>
+								</Card>
+							)}
 
-			{data.strategy_report && (
-				<Card bordered={false} style={{ marginTop: 16, borderRadius: 12, background: "#fafafa" }} title="📊 策略分析报告">
-					<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.strategy_report}</Paragraph>
-				</Card>
-			)}
-
-			<style>
-				{`
+							<style>
+								{`
 				.row-highlight-red { background-color: #fff1f0 !important; }
 				.row-highlight-red:hover > td { background-color: #ffccc7 !important; }
 				.row-highlight-orange { background-color: #fff7e6 !important; }
 				.row-highlight-orange:hover > td { background-color: #ffe7ba !important; }
 			`}
-			</style>
+							</style>
 
-			<RecommendationHistory strategyType="auction" />
+							<RecommendationHistory strategyType="auction" />
 
-		</div>
+						</div>
+					),
+				},
+				{
+					key: "follow",
+					label: "推荐跟进",
+					children: <StrategyFollowTab strategyType="auction" isOvernight={false} />,
+				},
+			]}
+		/>
 	);
 };
 

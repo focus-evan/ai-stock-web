@@ -1115,7 +1115,7 @@ export function fetchOptimizationInsights(days = 30) {
 
 // ===================== 战法推荐跟进 =====================
 
-export type StrategyFollowType = "dragon_head" | "relay" | "northbound" | "overnight";
+export type StrategyFollowType = "dragon_head" | "relay" | "northbound" | "overnight" | "sentiment" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "auction";
 
 export interface StrategyFollowItem {
 	id: number
