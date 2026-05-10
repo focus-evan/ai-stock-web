@@ -2,6 +2,7 @@ import type { VolumePriceData, VolumePriceStock } from "#src/api/strategy/types"
 import type { ColumnsType } from "antd/es/table";
 import { fetchVolumePriceRecommendations, refreshVolumePriceRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { BarChartOutlined, FireOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 

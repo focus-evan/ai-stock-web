@@ -2,6 +2,7 @@ import type { BreakthroughData, BreakthroughStock } from "#src/api/strategy/type
 import type { ColumnsType } from "antd/es/table";
 import { fetchBreakthroughRecommendations, refreshBreakthroughRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { ReloadOutlined, RiseOutlined, RocketOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 

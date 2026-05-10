@@ -2,6 +2,7 @@ import type { MovingAverageData, MovingAverageStock } from "#src/api/strategy/ty
 import type { ColumnsType } from "antd/es/table";
 import { fetchMovingAverageRecommendations, refreshMovingAverageRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { CheckCircleOutlined, LineChartOutlined, ReloadOutlined, SwapOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 
