@@ -2,7 +2,7 @@
  * 龙头战法 API Types
  */
 
-/** 个股推荐信息 */
+/** 个股推荐信息（兼容旧历史卡片） */
 export interface StockRecommendation {
 	rank: number
 	code: string
@@ -20,13 +20,101 @@ export interface StockRecommendation {
 	related_themes: string[]
 	reasons: string[]
 	recommendation_level: "强烈推荐" | "推荐" | "关注" | "回避"
-	/** GPT-5.2 生成的风险提示 */
 	risk_warning?: string
-	/** GPT-5.2 生成的操作建议 */
 	operation_suggestion?: string
+	buy_price_range?: string
+	stop_loss_price?: number
+	target_price?: number
+	position_advice?: string
+	candidate_pool?: "core" | "watch" | "avoid"
+	ladder_role?: string
+	theme_name?: string | null
+	core_score?: number
+	signal_score?: number
 }
 
-/** 主线题材信息 */
+export interface DragonDataQuality {
+	source?: string
+	degraded: boolean
+	fallback_level?: string
+	is_realtime?: boolean
+	data_timestamp?: string
+}
+
+export interface DragonMarketRegime {
+	phase: string
+	risk_level: "低" | "中" | "高" | string
+	action_bias: string
+	limit_up_count: number
+	limit_down_count: number
+	max_limit_up_days: number
+	sentiment_score: number
+	description: string
+}
+
+export interface DragonSignalPlan {
+	buy_price_range?: string | number
+	target_price?: number
+	stop_loss_price?: number
+	position_advice?: string
+	[key: string]: any
+}
+
+export interface DragonEntrySignal {
+	code: string
+	name: string
+	candidate_pool?: string
+	signal_type: string
+	signal_strength: number
+	entry_window: string
+	invalid_condition: string
+	risk_level: string
+	holding_horizon: string
+	entry_plan: DragonSignalPlan
+}
+
+export interface DragonThemeLadderItem {
+	id?: number
+	theme_id?: number
+	stock_code: string
+	stock_name: string
+	ladder_role: string
+	ladder_rank?: number
+	limit_up_days: number
+	price?: number
+	change_pct?: number
+	first_limit_time?: string
+	seal_amount?: number
+	turnover_rate?: number
+	break_board_count?: number
+	theme_score?: number
+}
+
+export interface DragonThemeV2 {
+	name: string
+	role: string
+	limit_up_count: number
+	leader_count: number
+	max_limit_up_days: number
+	concentration_score: number
+	catalyst_score: number
+	sustainability_score: number
+	change_pct: number
+	up_count: number
+	down_count: number
+	summary: string
+	ladder: DragonThemeLadderItem[]
+}
+
+export interface DragonAiSummary {
+	llm_model?: string | null
+	market_summary?: string
+	theme_commentary?: string
+	risk_summary?: string
+	strategy_report?: string
+}
+
+/** 兼容旧版主线题材信息 */
 export interface ThemeInfo {
 	name: string
 	details: {
@@ -38,28 +126,22 @@ export interface ThemeInfo {
 	}
 }
 
-/** GPT-5.2 题材深度分析 */
+/** 兼容旧版题材深度分析 */
 export interface ThemeAnalysis {
 	name: string
-	/** 逻辑硬度：强/中/弱 */
 	logic_hardness: "强" | "中" | "弱"
-	/** 驱动力说明 */
 	catalyst: string
-	/** 持续性判断 */
 	sustainability: string
 }
 
-/** GPT-5.2 市场情绪判断 */
+/** 兼容旧版市场情绪判断 */
 export interface MarketSentiment {
-	/** 情绪周期阶段 */
-	phase: "启动" | "发酵" | "高潮" | "退潮"
-	/** 情绪描述 */
+	phase: string
 	description: string
-	/** 风险等级 */
-	risk_level: "低" | "中" | "高"
+	risk_level: "低" | "中" | "高" | string
 }
 
-/** 新闻情绪共振信息 */
+/** 兼容旧版新闻情绪共振信息 */
 export interface NewsResonance {
 	news_keywords: { keyword: string, count: number }[]
 	matching_themes: string[]
@@ -67,21 +149,29 @@ export interface NewsResonance {
 	news_count: number
 }
 
-/** 龙头战法数据 */
+/** 龙头战法数据（v2 为主，兼容 legacy） */
 export interface DragonHeadData {
+	schema_version?: "v2" | "legacy" | string
 	recommendations: StockRecommendation[]
 	total: number
-	main_themes: ThemeInfo[]
-	news_resonance: NewsResonance
-	strategy_explanation: string
 	generated_at: string
 	trading_date: string
-	/** 是否经过 GPT-5.2 增强 */
 	llm_enhanced?: boolean
-	/** GPT-5.2 市场情绪判断 */
+	data_quality?: DragonDataQuality
+	market_regime?: DragonMarketRegime
+	main_themes: Array<ThemeInfo | DragonThemeV2>
+	theme_ladders?: DragonThemeV2[]
+	core_leaders?: StockRecommendation[]
+	watch_candidates?: StockRecommendation[]
+	avoid_candidates?: StockRecommendation[]
+	entry_signals?: DragonEntrySignal[]
+	risk_summary?: Record<string, any>
+	ai_summary?: DragonAiSummary
+	legacy_history_meta?: Record<string, any>
+	strategy_explanation: string
 	market_sentiment?: MarketSentiment
-	/** GPT-5.2 题材深度分析 */
 	theme_analysis?: ThemeAnalysis[]
+	news_resonance?: NewsResonance
 }
 
 /** 龙头战法接口响应 */

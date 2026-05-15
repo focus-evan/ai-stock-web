@@ -1,4 +1,10 @@
-import type { DragonHeadData, StockRecommendation } from "#src/api/strategy";
+import type {
+	DragonEntrySignal,
+	DragonHeadData,
+	DragonThemeLadderItem,
+	DragonThemeV2,
+	StockRecommendation,
+} from "#src/api/strategy";
 
 import type { ColumnsType } from "antd/es/table";
 import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
@@ -6,17 +12,14 @@ import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import {
-	ClockCircleOutlined,
+	AlertOutlined,
 	CrownOutlined,
 	ExperimentOutlined,
 	FireOutlined,
-	InfoCircleOutlined,
 	ReloadOutlined,
 	RiseOutlined,
+	SafetyOutlined,
 	StockOutlined,
-	StopOutlined,
-	ThunderboltOutlined,
-	TrophyOutlined,
 	WarningOutlined,
 } from "@ant-design/icons";
 import {
@@ -24,9 +27,10 @@ import {
 	Button,
 	Card,
 	Col,
+	Descriptions,
 	Empty,
+	List,
 	message,
-	Progress,
 	Result,
 	Row,
 	Skeleton,
@@ -35,55 +39,69 @@ import {
 	Table,
 	Tabs,
 	Tag,
-	Tooltip,
 	Typography,
 } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
-/** 格式化金额 */
-function formatAmount(val: number): string {
-	if (!val)
-		return "-";
-	if (val >= 1e12)
-		return `${(val / 1e12).toFixed(2)}万亿`;
-	if (val >= 1e8)
-		return `${(val / 1e8).toFixed(2)}亿`;
-	if (val >= 1e4)
-		return `${(val / 1e4).toFixed(2)}万`;
-	return val.toFixed(2);
-}
-
-/** 推荐等级标签颜色 */
-function getLevelColor(level: string): string {
+function getRiskColor(level?: string): string {
 	switch (level) {
-		case "强烈推荐": return "red";
-		case "推荐": return "orange";
-		case "回避": return "default";
-		default: return "blue";
+		case "低": return "green";
+		case "中": return "orange";
+		case "高": return "red";
+		default: return "default";
 	}
 }
 
-/** 推荐等级图标 */
-function getLevelIcon(level: string) {
-	switch (level) {
-		case "强烈推荐": return <FireOutlined />;
-		case "推荐": return <TrophyOutlined />;
-		case "回避": return <StopOutlined />;
-		default: return <StockOutlined />;
+function getPoolColor(pool?: string): string {
+	switch (pool) {
+		case "core": return "red";
+		case "watch": return "blue";
+		case "avoid": return "default";
+		default: return "default";
 	}
 }
 
-/** 情绪周期颜色 */
-function getSentimentColor(phase: string): string {
-	switch (phase) {
-		case "启动": return "#52c41a";
-		case "发酵": return "#1890ff";
-		case "高潮": return "#fa541c";
-		case "退潮": return "#8c8c8c";
-		default: return "#1890ff";
+function getPoolLabel(pool?: string): string {
+	switch (pool) {
+		case "core": return "核心";
+		case "watch": return "观察";
+		case "avoid": return "回避";
+		default: return "未分类";
 	}
+}
+
+function isThemeV2(theme: DragonHeadData["main_themes"][number]): theme is DragonThemeV2 {
+	return typeof (theme as DragonThemeV2).role === "string" && Array.isArray((theme as DragonThemeV2).ladder);
+}
+
+function normalizeSignals(data: DragonHeadData): DragonEntrySignal[] {
+	return data.entry_signals || [];
+}
+
+function normalizeThemeLadders(data: DragonHeadData): DragonThemeV2[] {
+	if (data.theme_ladders?.length)
+		return data.theme_ladders;
+	return (data.main_themes || []).filter(isThemeV2);
+}
+
+function normalizeCoreLeaders(data: DragonHeadData): StockRecommendation[] {
+	if (data.core_leaders?.length)
+		return data.core_leaders;
+	return (data.recommendations || []).filter(item => item.candidate_pool === "core" || item.recommendation_level === "强烈推荐");
+}
+
+function normalizeWatchCandidates(data: DragonHeadData): StockRecommendation[] {
+	if (data.watch_candidates?.length)
+		return data.watch_candidates;
+	return (data.recommendations || []).filter(item => item.candidate_pool === "watch" || item.recommendation_level === "推荐" || item.recommendation_level === "关注");
+}
+
+function normalizeAvoidCandidates(data: DragonHeadData): StockRecommendation[] {
+	if (data.avoid_candidates?.length)
+		return data.avoid_candidates;
+	return (data.recommendations || []).filter(item => item.candidate_pool === "avoid" || item.recommendation_level === "回避");
 }
 
 export default function DragonHead() {
@@ -98,12 +116,10 @@ export default function DragonHead() {
 		setError(null);
 		try {
 			const response = await fetchDragonHeadRecommendations(13);
-			if (response.status === "success" && response.data) {
+			if (response.status === "success" && response.data)
 				setData(response.data);
-			}
-			else {
+			else
 				setError(response.message || "获取推荐数据失败");
-			}
 		}
 		catch (err: any) {
 			console.error("Dragon head fetch error:", err);
@@ -117,7 +133,7 @@ export default function DragonHead() {
 	const handleRefresh = useCallback(async () => {
 		setRefreshing(true);
 		setRefreshSeconds(0);
-		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+		message.loading({ content: "正在刷新龙头战法，需要1-3分钟...", key: "refresh", duration: 0 });
 		const timer = setInterval(() => {
 			setRefreshSeconds(prev => prev + 1);
 		}, 1000);
@@ -125,7 +141,7 @@ export default function DragonHead() {
 			const response = await refreshDragonHeadRecommendations(13);
 			if (response.status === "success" && response.data) {
 				setData(response.data);
-				message.success({ content: `刷新完成，共 ${response.data?.recommendations?.length || 0} 只推荐股`, key: "refresh" });
+				message.success({ content: "刷新完成", key: "refresh" });
 			}
 			else {
 				message.error({ content: "刷新失败", key: "refresh" });
@@ -145,277 +161,100 @@ export default function DragonHead() {
 		fetchData();
 	}, [fetchData]);
 
-	/** 表格列定义 */
-	const columns: ColumnsType<StockRecommendation> = [
+	const coreLeaders = useMemo(() => data ? normalizeCoreLeaders(data) : [], [data]);
+	const watchCandidates = useMemo(() => data ? normalizeWatchCandidates(data) : [], [data]);
+	const avoidCandidates = useMemo(() => data ? normalizeAvoidCandidates(data) : [], [data]);
+	const themeLadders = useMemo(() => data ? normalizeThemeLadders(data) : [], [data]);
+	const entrySignals = useMemo(() => data ? normalizeSignals(data) : [], [data]);
+
+	const coreColumns: ColumnsType<StockRecommendation> = [
 		{
-			title: "排名",
-			dataIndex: "rank",
-			key: "rank",
-			width: 60,
-			align: "center",
-			render: (rank: number) => {
-				if (rank <= 3) {
-					return (
-						<Tag
-							color={rank === 1 ? "#f5222d" : rank === 2 ? "#fa8c16" : "#faad14"}
-							style={{
-								borderRadius: "50%",
-								width: 28,
-								height: 28,
-								display: "inline-flex",
-								alignItems: "center",
-								justifyContent: "center",
-								fontWeight: 700,
-								fontSize: 14,
-							}}
-						>
-							{rank}
-						</Tag>
-					);
-				}
-				return <Text type="secondary">{rank}</Text>;
-			},
-		},
-		{
-			title: "股票代码",
-			dataIndex: "code",
-			key: "code",
-			width: 100,
-			render: (code: string) => (
-				<Text strong copyable={{ text: code }}>
-					{code}
-				</Text>
-			),
-		},
-		{
-			title: "股票名称",
-			dataIndex: "name",
-			key: "name",
-			width: 100,
-			render: (name: string, record: StockRecommendation) => (
-				<Space>
-					<Text strong>{name}</Text>
-					{record.in_main_theme && (
-						<Tag color="volcano" icon={<FireOutlined />}>
-							主线
-						</Tag>
-					)}
+			title: "股票",
+			key: "stock",
+			render: (_, record) => (
+				<Space direction="vertical" size={0}>
+					<Text strong>{record.name}</Text>
+					<Text type="secondary">{record.code}</Text>
 				</Space>
 			),
 		},
 		{
-			title: "最新价",
-			dataIndex: "price",
-			key: "price",
-			width: 80,
-			align: "right",
-			render: (price: number) => (
-				<Text style={{ color: "#f5222d", fontWeight: 600 }}>
-					{price ? price.toFixed(2) : "-"}
-				</Text>
+			title: "题材/梯队",
+			key: "theme",
+			render: (_, record) => (
+				<Space wrap>
+					{record.theme_name ? <Tag color="volcano">{record.theme_name}</Tag> : null}
+					{record.ladder_role ? <Tag color="purple">{record.ladder_role}</Tag> : null}
+					<Tag color={getPoolColor(record.candidate_pool)}>{getPoolLabel(record.candidate_pool)}</Tag>
+				</Space>
 			),
 		},
 		{
-			title: "涨跌幅",
-			dataIndex: "change_pct",
-			key: "change_pct",
-			width: 90,
-			align: "right",
-			sorter: (a, b) => a.change_pct - b.change_pct,
-			render: (val: number) => (
-				<Text style={{ color: val >= 0 ? "#f5222d" : "#52c41a", fontWeight: 600 }}>
-					{val >= 0 ? "+" : ""}
-					{val.toFixed(2)}
-					%
-				</Text>
-			),
-		},
-		{
-			title: "连板天数",
-			dataIndex: "limit_up_days",
-			key: "limit_up_days",
-			width: 90,
-			align: "center",
-			sorter: (a, b) => a.limit_up_days - b.limit_up_days,
-			defaultSortOrder: "descend",
-			render: (days: number) => {
-				const color = days >= 4 ? "#f5222d" : days >= 3 ? "#fa541c" : days >= 2 ? "#fa8c16" : "#1890ff";
-				return (
-					<Tag color={color} style={{ fontWeight: 700, fontSize: 14 }}>
-						{days}
+			title: "连板/封板",
+			key: "board",
+			render: (_, record) => (
+				<Space direction="vertical" size={0}>
+					<Text>
+						{record.limit_up_days || 0}
+						{" "}
 						连板
-					</Tag>
-				);
-			},
-		},
-		{
-			title: "封板时间",
-			dataIndex: "first_limit_time",
-			key: "first_limit_time",
-			width: 90,
-			align: "center",
-			render: (time: string) => {
-				if (!time)
-					return <Text type="secondary">-</Text>;
-				const isEarly = time < "10:00";
-				return (
-					<Tooltip title={isEarly ? "早盘封板，资金抢筹" : "封板时间"}>
-						<Tag icon={<ClockCircleOutlined />} color={isEarly ? "green" : "default"}>
-							{time}
-						</Tag>
-					</Tooltip>
-				);
-			},
-		},
-		{
-			title: "成交额",
-			dataIndex: "amount",
-			key: "amount",
-			width: 100,
-			align: "right",
-			sorter: (a, b) => a.amount - b.amount,
-			render: (val: number) => <Text>{formatAmount(val)}</Text>,
-		},
-		{
-			title: "流通市值",
-			dataIndex: "float_market_cap",
-			key: "float_market_cap",
-			width: 100,
-			align: "right",
-			render: (val: number) => <Text>{formatAmount(val)}</Text>,
-		},
-		{
-			title: "换手率",
-			dataIndex: "turnover_rate",
-			key: "turnover_rate",
-			width: 80,
-			align: "right",
-			render: (val: number) => (
-				<Text type={val > 15 ? "warning" : undefined}>
-					{val ? `${val.toFixed(2)}%` : "-"}
-				</Text>
+					</Text>
+					<Text type="secondary">{record.first_limit_time || "-"}</Text>
+				</Space>
 			),
 		},
 		{
-			title: "推荐等级",
-			dataIndex: "recommendation_level",
-			key: "recommendation_level",
-			width: 110,
-			align: "center",
-			filters: [
-				{ text: "强烈推荐", value: "强烈推荐" },
-				{ text: "推荐", value: "推荐" },
-				{ text: "关注", value: "关注" },
-				{ text: "回避", value: "回避" },
-			],
-			onFilter: (value, record) => record.recommendation_level === value,
-			render: (level: string) => (
-				<Tag
-					color={getLevelColor(level)}
-					icon={getLevelIcon(level)}
-					style={{ fontWeight: 600 }}
-				>
-					{level}
-				</Tag>
+			title: "价格/换手",
+			key: "price",
+			render: (_, record) => (
+				<Space direction="vertical" size={0}>
+					<Text>{record.price ? `¥${record.price.toFixed(2)}` : "-"}</Text>
+					<Text type="secondary">
+						换手
+						{record.turnover_rate ? `${record.turnover_rate.toFixed(2)}%` : "-"}
+					</Text>
+				</Space>
 			),
 		},
 		{
-			title: data?.llm_enhanced ? "GPT推荐理由" : "推荐理由",
+			title: "理由",
 			dataIndex: "reasons",
 			key: "reasons",
-			width: 280,
-			render: (_: string[], record: StockRecommendation) => (
-				<Space direction="vertical" size={2}>
-					{record.reasons?.map((reason, idx) => (
-						<Text key={idx} style={{ fontSize: 12 }}>
+			render: (reasons: string[]) => (
+				<Space direction="vertical" size={0}>
+					{(reasons || []).slice(0, 3).map(reason => (
+						<Text key={reason} style={{ fontSize: 12 }}>
 							•
-							{" "}
 							{reason}
 						</Text>
 					))}
-					{record.operation_suggestion && (
-						<Tag color="blue" style={{ fontSize: 11, marginTop: 2 }}>
-							💡
-							{" "}
-							{record.operation_suggestion}
-						</Tag>
-					)}
-					{record.risk_warning && (
-						<Text type="warning" style={{ fontSize: 11 }}>
-							⚠️
-							{" "}
-							{record.risk_warning}
-						</Text>
-					)}
 				</Space>
 			),
 		},
 	];
 
-	// Loading skeleton
 	if (loading && !data) {
 		return (
 			<BasicContent>
 				<div style={{ padding: 24 }}>
-					<Skeleton active paragraph={{ rows: 2 }} />
-					<div style={{ marginTop: 24 }}>
-						<Skeleton active paragraph={{ rows: 8 }} />
-					</div>
+					<Skeleton active paragraph={{ rows: 10 }} />
 				</div>
 			</BasicContent>
 		);
 	}
 
-	// Error state
 	if (error && !data) {
 		return (
 			<BasicContent>
-				<Result
-					status="error"
-					title="数据获取失败"
-					subTitle={error}
-					extra={(
-						<Button type="primary" icon={<ReloadOutlined />} onClick={fetchData}>
-							重新加载
-						</Button>
-					)}
-				/>
+				<Result status="error" title="数据获取失败" subTitle={error} extra={<Button type="primary" icon={<ReloadOutlined />} onClick={fetchData}>重新加载</Button>} />
 			</BasicContent>
 		);
 	}
 
-	// Empty state
 	if (!data) {
-		const handleGenerate = async () => {
-			setLoading(true);
-			setError(null);
-			try {
-				const { triggerRecommendations } = await import("#src/api/portfolio");
-				await triggerRecommendations();
-				await fetchData();
-			}
-			catch (err: any) {
-				setError(err?.message || "生成推荐失败");
-			}
-			finally {
-				setLoading(false);
-			}
-		};
 		return (
 			<BasicContent>
-				<Empty
-					description={loading ? "正在生成推荐数据，请稍候（约1-3分钟）..." : "暂无龙头战法推荐数据"}
-					style={{ marginTop: 80 }}
-				>
-					<Space>
-						<Button onClick={fetchData} icon={<ReloadOutlined />}>
-							刷新缓存
-						</Button>
-						<Button type="primary" onClick={handleGenerate} loading={loading} icon={<ThunderboltOutlined />}>
-							生成推荐
-						</Button>
-					</Space>
-				</Empty>
+				<Empty description="暂无龙头战法推荐数据" style={{ marginTop: 80 }} />
 			</BasicContent>
 		);
 	}
@@ -426,377 +265,278 @@ export default function DragonHead() {
 			items={[
 				{
 					key: "main",
-					label: "龙头推荐",
+					label: "龙头战法V2",
 					children: (
 						<BasicContent>
-							<div style={{ padding: "0 0 24px 0" }}>
-								{/* Header */}
-								<div
-									style={{
-										display: "flex",
-										justifyContent: "space-between",
-										alignItems: "center",
-										marginBottom: 16,
-									}}
-								>
+							<div style={{ paddingBottom: 24 }}>
+								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 									<Space align="center">
 										<CrownOutlined style={{ fontSize: 24, color: "#f5222d" }} />
-										<Title level={4} style={{ margin: 0 }}>
-											龙头战法推荐
-										</Title>
-										{data.llm_enhanced && (
-											<Tag color="purple" icon={<ExperimentOutlined />}>
-												GPT-5.2 增强
-											</Tag>
-										)}
-										<Tag color="processing">
-											{data.trading_date}
-										</Tag>
-										<Text type="secondary" style={{ fontSize: 12 }}>
-											生成于
-											{" "}
-											{data.generated_at}
-										</Text>
+										<Title level={4} style={{ margin: 0 }}>龙头战法 V2</Title>
+										<Tag color="processing">{data.trading_date}</Tag>
+										<Tag color={data.schema_version === "v2" ? "purple" : "default"}>{data.schema_version || "legacy"}</Tag>
+										{data.llm_enhanced ? <Tag color="purple" icon={<ExperimentOutlined />}>AI增强</Tag> : null}
 									</Space>
-									<Button
-										type="primary"
-										icon={<ReloadOutlined spin={refreshing} />}
-										onClick={handleRefresh}
-										loading={refreshing}
-									>
-										{refreshing ? `AI分析中 ${refreshSeconds}s...` : "刷新推荐"}
+									<Button type="primary" icon={<ReloadOutlined spin={refreshing} />} onClick={handleRefresh} loading={refreshing}>
+										{refreshing ? `刷新中 ${refreshSeconds}s` : "刷新推荐"}
 									</Button>
 								</div>
 
-								{/* GPT-5.2 市场情绪研判 */}
-								{data.market_sentiment && (
+								{data.data_quality?.degraded && (
 									<Alert
 										style={{ marginBottom: 16 }}
-										type={
-											data.market_sentiment.risk_level === "高"
-												? "error"
-												: data.market_sentiment.risk_level === "中"
-													? "warning"
-													: "success"
-										}
+										type="warning"
 										showIcon
-										icon={<ExperimentOutlined />}
-										message={(
-											<Space>
-												<Text strong>GPT-5.2 市场情绪研判</Text>
-												<Tag
-													color={getSentimentColor(data.market_sentiment.phase)}
-													style={{ fontWeight: 700 }}
-												>
-													{data.market_sentiment.phase}
-													期
-												</Tag>
-												<Tag
-													color={
-														data.market_sentiment.risk_level === "高"
-															? "red"
-															: data.market_sentiment.risk_level === "中"
-																? "orange"
-																: "green"
-													}
-												>
-													<WarningOutlined />
-													{" "}
-													风险
-													{data.market_sentiment.risk_level}
-												</Tag>
-											</Space>
-										)}
-										description={data.market_sentiment.description}
+										icon={<WarningOutlined />}
+										message="当前结果使用了降级数据，请勿将其视为完全实时的龙头接力信号"
+										description={`数据来源: ${data.data_quality?.source || "unknown"}，fallback: ${data.data_quality?.fallback_level || "none"}`}
 									/>
 								)}
 
-								{/* 统计卡片 */}
 								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-									{/* 今日主线题材 */}
-									<Col xs={24} md={12} xl={8}>
-										<Card
-											size="small"
-											title={(
-												<Space>
-													<FireOutlined style={{ color: "#f5222d" }} />
-													<span>今日主线题材</span>
-												</Space>
-											)}
-											styles={{ body: { padding: "12px 16px" } }}
-										>
-											{data.main_themes.length > 0
-												? (
-													<Space direction="vertical" size={8} style={{ width: "100%" }}>
-														<Space wrap>
-															{data.main_themes.map((theme, idx) => {
-																const analysis = data.theme_analysis?.find(t => t.name === theme.name);
-																return (
-																	<Tooltip
-																		key={idx}
-																		title={analysis
-																			? `驱动力: ${analysis.catalyst}\n持续性: ${analysis.sustainability}`
-																			: undefined}
-																	>
-																		<Tag
-																			color={idx === 0 ? "red" : idx === 1 ? "orange" : "gold"}
-																			style={{ fontSize: 14, padding: "4px 12px" }}
-																		>
-																			<RiseOutlined />
-																			{" "}
-																			{theme.name}
-																			{theme.details.change_pct
-																				? (
-																					<span style={{ marginLeft: 4 }}>
-																						{theme.details.change_pct > 0 ? "+" : ""}
-																						{theme.details.change_pct.toFixed(2)}
-																						%
-																					</span>
-																				)
-																				: null}
-																			{analysis && (
-																				<span style={{ marginLeft: 6 }}>
-																					[
-																					{analysis.logic_hardness}
-																					]
-																				</span>
-																			)}
-																		</Tag>
-																	</Tooltip>
-																);
-															})}
-														</Space>
-													</Space>
-												)
-												: (
-													<Text type="secondary">暂未识别明确主线</Text>
-												)}
-										</Card>
-									</Col>
-
-									{/* 新闻共振 */}
-									<Col xs={24} md={12} xl={8}>
-										<Card
-											size="small"
-											title={(
-												<Space>
-													<ThunderboltOutlined style={{ color: "#fa8c16" }} />
-													<span>新闻情绪共振</span>
-												</Space>
-											)}
-											styles={{ body: { padding: "12px 16px" } }}
-										>
-											<Space direction="vertical" style={{ width: "100%" }}>
-												<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-													<Progress
-														type="circle"
-														percent={Math.round(data.news_resonance.resonance_score)}
-														size={48}
-														strokeColor={
-															data.news_resonance.resonance_score >= 70
-																? "#52c41a"
-																: data.news_resonance.resonance_score >= 40
-																	? "#faad14"
-																	: "#f5222d"
-														}
-													/>
-													<div>
-														<Text style={{ display: "block" }}>
-															分析
-															{" "}
-															{data.news_resonance.news_count}
-															{" "}
-															条快讯
-														</Text>
-														{data.news_resonance.matching_themes.length > 0
-															? (
-																<Text type="success" style={{ fontSize: 12 }}>
-																	{data.news_resonance.matching_themes.join("、")}
-																	{" "}
-																	共振验证通过
-																</Text>
-															)
-															: (
-																<Text type="secondary" style={{ fontSize: 12 }}>
-																	未形成明显共振
-																</Text>
-															)}
-													</div>
-												</div>
+									<Col xs={24} lg={8}>
+										<Card title={(
+											<Space>
+												<SafetyOutlined />
+												<span>市场阶段</span>
 											</Space>
+										)}
+										>
+											<Descriptions column={1} size="small">
+												<Descriptions.Item label="阶段">{data.market_regime?.phase || data.market_sentiment?.phase || "-"}</Descriptions.Item>
+												<Descriptions.Item label="风险">
+													<Tag color={getRiskColor(data.market_regime?.risk_level || data.market_sentiment?.risk_level)}>
+														{data.market_regime?.risk_level || data.market_sentiment?.risk_level || "-"}
+													</Tag>
+												</Descriptions.Item>
+												<Descriptions.Item label="动作偏好">{data.market_regime?.action_bias || "观察"}</Descriptions.Item>
+												<Descriptions.Item label="最高连板">
+													{data.market_regime?.max_limit_up_days || 0}
+													{" "}
+													板
+												</Descriptions.Item>
+											</Descriptions>
+											{data.market_regime?.description ? <Paragraph style={{ marginTop: 12, marginBottom: 0 }}>{data.market_regime.description}</Paragraph> : null}
 										</Card>
 									</Col>
-
-									{/* 统计概览 */}
-									<Col xs={24} md={24} xl={8}>
-										<Card
-											size="small"
-											title={(
-												<Space>
-													<InfoCircleOutlined style={{ color: "#1890ff" }} />
-													<span>推荐概览</span>
-												</Space>
-											)}
-											styles={{ body: { padding: "12px 16px" } }}
+									<Col xs={24} lg={8}>
+										<Card title={(
+											<Space>
+												<FireOutlined />
+												<span>核心统计</span>
+											</Space>
+										)}
 										>
-											<Row gutter={16}>
-												<Col span={8}>
-													<Statistic
-														title="推荐总数"
-														value={data.total}
-														valueStyle={{ fontSize: 20, color: "#1890ff" }}
-													/>
-												</Col>
-												<Col span={8}>
-													<Statistic
-														title="强烈推荐"
-														value={data.recommendations.filter(r => r.recommendation_level === "强烈推荐").length}
-														valueStyle={{ fontSize: 20, color: "#f5222d" }}
-													/>
-												</Col>
-												<Col span={8}>
-													<Statistic
-														title="最高连板"
-														value={Math.max(...data.recommendations.map(r => r.limit_up_days), 0)}
-														suffix="天"
-														valueStyle={{ fontSize: 20, color: "#fa541c" }}
-													/>
-												</Col>
+											<Row gutter={12}>
+												<Col span={8}><Statistic title="核心" value={coreLeaders.length} valueStyle={{ color: "#f5222d", fontSize: 20 }} /></Col>
+												<Col span={8}><Statistic title="观察" value={watchCandidates.length} valueStyle={{ color: "#1890ff", fontSize: 20 }} /></Col>
+												<Col span={8}><Statistic title="回避" value={avoidCandidates.length} valueStyle={{ color: "#8c8c8c", fontSize: 20 }} /></Col>
 											</Row>
+										</Card>
+									</Col>
+									<Col xs={24} lg={8}>
+										<Card title={(
+											<Space>
+												<ExperimentOutlined />
+												<span>AI摘要</span>
+											</Space>
+										)}
+										>
+											<Paragraph style={{ whiteSpace: "pre-wrap", marginBottom: 8 }}>
+												{data.ai_summary?.market_summary || data.ai_summary?.strategy_report || data.strategy_explanation || "暂无 AI 摘要"}
+											</Paragraph>
+											<Text type="secondary">{data.generated_at}</Text>
 										</Card>
 									</Col>
 								</Row>
 
-								{/* 推荐列表 */}
 								<Card
 									title={(
 										<Space>
-											<TrophyOutlined style={{ color: "#faad14" }} />
-											<span>推荐个股列表</span>
-											<Tag>
-												{data.recommendations.length}
-												只
-											</Tag>
+											<RiseOutlined />
+											<span>主线题材与梯队</span>
 										</Space>
 									)}
-									styles={{ body: { padding: 0 } }}
+									style={{ marginBottom: 16 }}
+								>
+									{themeLadders.length === 0
+										? <Empty description="暂无题材梯队数据" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+										: (
+											<Row gutter={[16, 16]}>
+												{themeLadders.map(theme => (
+													<Col xs={24} xl={12} key={theme.name}>
+														<Card
+															size="small"
+															title={(
+																<Space>
+																	<Tag color={theme.role === "main" ? "red" : theme.role === "secondary" ? "orange" : "default"}>{theme.role}</Tag>
+																	<span>{theme.name}</span>
+																</Space>
+															)}
+														>
+															<Space wrap style={{ marginBottom: 8 }}>
+																<Tag>
+																	涨停
+																	{theme.limit_up_count}
+																</Tag>
+																<Tag>
+																	核心
+																	{theme.leader_count}
+																</Tag>
+																<Tag>
+																	最高
+																	{theme.max_limit_up_days}
+																	{" "}
+																	板
+																</Tag>
+															</Space>
+															<Paragraph>{theme.summary}</Paragraph>
+															<List
+																size="small"
+																dataSource={theme.ladder || []}
+																renderItem={(item: DragonThemeLadderItem) => (
+																	<List.Item>
+																		<Space wrap>
+																			<Text strong>{item.stock_name}</Text>
+																			<Text type="secondary">{item.stock_code}</Text>
+																			<Tag color="purple">{item.ladder_role}</Tag>
+																			<Tag>
+																				{item.limit_up_days}
+																				{" "}
+																				板
+																			</Tag>
+																		</Space>
+																	</List.Item>
+																)}
+															/>
+														</Card>
+													</Col>
+												))}
+											</Row>
+										)}
+								</Card>
+
+								<Card
+									title={(
+										<Space>
+											<CrownOutlined />
+											<span>核心龙头与结构化买点</span>
+										</Space>
+									)}
+									style={{ marginBottom: 16 }}
 								>
 									<Table<StockRecommendation>
-										columns={columns}
-										dataSource={data.recommendations}
+										columns={coreColumns}
+										dataSource={coreLeaders}
 										rowKey="code"
-										size="middle"
 										pagination={false}
-										scroll={{ x: 1500 }}
-										loading={loading}
-										rowClassName={(record) => {
-											if (record.recommendation_level === "强烈推荐")
-												return "dragon-head-row-strong";
-											if (record.recommendation_level === "推荐")
-												return "dragon-head-row-recommend";
-											if (record.recommendation_level === "回避")
-												return "dragon-head-row-avoid";
-											return "";
-										}}
+										size="middle"
 									/>
-								</Card>
-
-								{/* 策略说明 */}
-								<Card
-									title={(
-										<Space>
-											{data.llm_enhanced
-												? <ExperimentOutlined style={{ color: "#722ed1" }} />
-												: <InfoCircleOutlined style={{ color: "#1890ff" }} />}
-											<span>{data.llm_enhanced ? "GPT-5.2 策略深度分析报告" : "策略推荐逻辑说明"}</span>
-										</Space>
+									{entrySignals.length > 0 && (
+										<List
+											header={<Text strong>买点信号</Text>}
+											style={{ marginTop: 16 }}
+											dataSource={entrySignals}
+											renderItem={signal => (
+												<List.Item>
+													<Space direction="vertical" size={2} style={{ width: "100%" }}>
+														<Space wrap>
+															<Text strong>{signal.name}</Text>
+															<Text type="secondary">{signal.code}</Text>
+															<Tag color={getPoolColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
+															<Tag color="purple">{signal.signal_type}</Tag>
+															<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
+														</Space>
+														<Text>
+															买点窗口：
+															{signal.entry_window}
+														</Text>
+														<Text type="secondary">
+															失效条件：
+															{signal.invalid_condition}
+														</Text>
+														<Text type="secondary">
+															持仓周期：
+															{signal.holding_horizon}
+														</Text>
+													</Space>
+												</List.Item>
+											)}
+										/>
 									)}
-									style={{ marginTop: 16 }}
-								>
-									<div
-										style={{
-											whiteSpace: "pre-wrap",
-											lineHeight: 1.8,
-											fontSize: 14,
-										}}
-									>
-										{data.strategy_explanation
-											.split("\n")
-											.map((line, idx) => {
-												if (line.startsWith("## ")) {
-													return (
-														<Title key={idx} level={4} style={{ margin: "16px 0 8px" }}>
-															{line.replace("## ", "")}
-														</Title>
-													);
-												}
-												if (line.startsWith("### ")) {
-													return (
-														<Title key={idx} level={5} style={{ margin: "12px 0 6px" }}>
-															{line.replace("### ", "")}
-														</Title>
-													);
-												}
-												if (line.startsWith("⚠️")) {
-													return (
-														<Paragraph key={idx} type="warning" style={{ fontWeight: 600 }}>
-															{line}
-														</Paragraph>
-													);
-												}
-												if (line.startsWith("- ✅")) {
-													return (
-														<Paragraph key={idx} type="success">
-															{line.replace("- ", "")}
-														</Paragraph>
-													);
-												}
-												if (line.trim().match(/^\d+\./)) {
-													return (
-														<Paragraph key={idx} style={{ marginLeft: 16, marginBottom: 4 }}>
-															{line.replace(/\*\*(.*?)\*\*/g, "$1")}
-														</Paragraph>
-													);
-												}
-												if (line.trim() === "") {
-													return <br key={idx} />;
-												}
-												return (
-													<Paragraph key={idx} style={{ marginBottom: 4 }}>
-														{line.replace(/\*\*(.*?)\*\*/g, "$1")}
-													</Paragraph>
-												);
-											})}
-									</div>
 								</Card>
+
+								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+									<Col xs={24} lg={12}>
+										<Card title={(
+											<Space>
+												<StockOutlined />
+												<span>观察池</span>
+											</Space>
+										)}
+										>
+											<List
+												dataSource={watchCandidates}
+												locale={{ emptyText: "暂无观察池" }}
+												renderItem={item => (
+													<List.Item>
+														<Space wrap>
+															<Text strong>{item.name}</Text>
+															<Text type="secondary">{item.code}</Text>
+															<Tag color="blue">{item.theme_name || "无题材"}</Tag>
+															<Tag>
+																{item.limit_up_days}
+																{" "}
+																板
+															</Tag>
+														</Space>
+													</List.Item>
+												)}
+											/>
+										</Card>
+									</Col>
+									<Col xs={24} lg={12}>
+										<Card title={(
+											<Space>
+												<AlertOutlined />
+												<span>回避池</span>
+											</Space>
+										)}
+										>
+											<List
+												dataSource={avoidCandidates}
+												locale={{ emptyText: "暂无回避池" }}
+												renderItem={item => (
+													<List.Item>
+														<Space direction="vertical" size={0}>
+															<Space wrap>
+																<Text strong>{item.name}</Text>
+																<Text type="secondary">{item.code}</Text>
+																<Tag color="default">{item.theme_name || "无题材"}</Tag>
+															</Space>
+															<Text type="warning">{item.risk_warning || item.operation_suggestion || "高位/后排/非核心，建议回避"}</Text>
+														</Space>
+													</List.Item>
+												)}
+											/>
+										</Card>
+									</Col>
+								</Row>
+
+								<Card title={(
+									<Space>
+										<ExperimentOutlined />
+										<span>AI解读 / 历史回看</span>
+									</Space>
+								)}
+								>
+									<Paragraph style={{ whiteSpace: "pre-wrap" }}>
+										{data.ai_summary?.strategy_report || data.strategy_explanation || "暂无 AI 解读"}
+									</Paragraph>
+								</Card>
+
+								<RecommendationHistory strategyType="dragon_head" />
 							</div>
-
-							<RecommendationHistory strategyType="dragon_head" />
-
-							{/* Custom styles */}
-							<style>
-								{`
-				.dragon-head-row-strong {
-					background-color: rgba(245, 34, 45, 0.04) !important;
-				}
-				.dragon-head-row-strong:hover > td {
-					background-color: rgba(245, 34, 45, 0.08) !important;
-				}
-				.dragon-head-row-recommend {
-					background-color: rgba(250, 140, 22, 0.04) !important;
-				}
-				.dragon-head-row-recommend:hover > td {
-					background-color: rgba(250, 140, 22, 0.08) !important;
-				}
-				.dragon-head-row-avoid {
-					background-color: rgba(140, 140, 140, 0.06) !important;
-					opacity: 0.7;
-				}
-				.dragon-head-row-avoid:hover > td {
-					background-color: rgba(140, 140, 140, 0.1) !important;
-				}
-			`}
-							</style>
 						</BasicContent>
 					),
 				},
