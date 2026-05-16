@@ -9,8 +9,6 @@ import type {
 	MovingAverageResponse,
 	NorthboundResponse,
 	OvernightResponse,
-	RelayResponse,
-	SentimentResponse,
 	StockAnalysisResponse,
 	StrategiesSummaryResponse,
 	TrendMomentumResponse,
@@ -118,74 +116,78 @@ export function triggerDragonHeadFollow() {
 }
 
 /**
- * 获取连板接力推荐列表
+ * 获取连板接力推荐列表（已合并到情绪接力）
  * @param limit - 返回推荐数量，默认10
  */
 export function fetchRelayRecommendations(limit: number = 10) {
-	return request
-		.get("strategy/relay", {
-			searchParams: { limit },
-			timeout: 60000,
-		})
-		.json<RelayResponse>();
+	return fetchEmotionRelayRecommendations(limit);
 }
 
 /**
- * 手动刷新连板接力推荐
+ * 手动刷新连板接力推荐（已合并到情绪接力）
  * @param limit - 返回推荐数量，默认10
  */
 export function refreshRelayRecommendations(limit: number = 10) {
-	return request
-		.post("strategy/relay/refresh", {
-			searchParams: { limit },
-			timeout: 300000,
-		})
-		.json<RelayResponse>();
+	return refreshEmotionRelayRecommendations(limit);
 }
 
 // ===================== 连板接力跟投指导 =====================
 
-export function fetchRelayFollow(limit: number = 10) {
-	return request
-		.get("strategy/relay/follow", {
-			searchParams: { limit },
-			timeout: 30000,
-		})
-		.json<DragonHeadFollowResponse>();
+export function fetchRelayFollow(_limit: number = 10) {
+	return fetchStrategyFollow("emotion_relay", "tracking").then((res: any) => ({
+		status: res.status,
+		data: {
+			latest: res.data?.items?.[0] || null,
+			history: res.data?.items || [],
+			total: res.data?.total || 0,
+		},
+	}));
 }
 
 export function triggerRelayFollow() {
-	return request
-		.post("strategy/relay/follow/trigger", {
-			timeout: 300000,
-		})
-		.json<{ status: string, message: string }>();
+	return triggerStrategyFollowSnapshot("emotion_relay").then((res: any) => ({ status: res.status, message: res.message }));
 }
 
 /**
- * 获取情绪战法数据
- * @param days - 返回历史天数，默认30
+ * 获取情绪接力推荐列表
+ * @param limit - 返回推荐数量，默认15
  */
-export function fetchSentimentData(days: number = 30) {
+export function fetchEmotionRelayRecommendations(limit: number = 15) {
 	return request
-		.get("strategy/sentiment", {
-			searchParams: { days },
-			timeout: 120000, // 120秒超时（首次计算较慢）
+		.get("strategy/emotion-relay", {
+			searchParams: { limit },
+			timeout: 120000,
 		})
-		.json<SentimentResponse>();
+		.json<any>();
 }
 
 /**
- * 手动刷新情绪战法推荐（绕过缓存，重新执行策略分析+LLM）
- * @param limit - 返回推荐数量，默认13
+ * 手动刷新情绪接力推荐
+ * @param limit - 返回推荐数量，默认15
  */
-export function refreshSentimentRecommendations(limit: number = 13) {
+export function refreshEmotionRelayRecommendations(limit: number = 15) {
 	return request
-		.post("strategy/sentiment/refresh", {
+		.post("strategy/emotion-relay/refresh", {
 			searchParams: { limit },
 			timeout: 300000,
 		})
-		.json<SentimentResponse>();
+		.json<any>();
+}
+
+/**
+ * 获取情绪战法数据（已并入情绪接力）
+ * @param days - 返回历史天数，默认30
+ */
+export function fetchSentimentData(_days: number = 30) {
+	return fetchEmotionRelayRecommendations(13);
+}
+
+/**
+ * 手动刷新情绪战法推荐（已并入情绪接力）
+ * @param limit - 返回推荐数量，默认13
+ */
+export function refreshSentimentRecommendations(limit: number = 13) {
+	return refreshEmotionRelayRecommendations(limit);
 }
 
 /**
@@ -1115,7 +1117,7 @@ export function fetchOptimizationInsights(days = 30) {
 
 // ===================== 战法推荐跟进 =====================
 
-export type StrategyFollowType = "dragon_head" | "relay" | "northbound" | "overnight" | "sentiment" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "auction";
+export type StrategyFollowType = "dragon_head" | "emotion_relay" | "relay" | "northbound" | "overnight" | "sentiment" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "auction";
 
 export interface StrategyFollowItem {
 	id: number

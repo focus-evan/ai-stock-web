@@ -8,8 +8,8 @@ const DailyPicks = lazy(() => import("#src/pages/short-term-strategy/daily-picks
 const DailyPicksFollow = lazy(() => import("#src/pages/short-term-strategy/daily-picks-follow"));
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const DragonHeadFollow = lazy(() => import("#src/pages/short-term-strategy/dragon-head-follow"));
+const EmotionRelay = lazy(() => import("#src/pages/short-term-strategy/emotion-relay"));
 const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
-const Sentiment = lazy(() => import("#src/pages/short-term-strategy/sentiment"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
 const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
 const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
@@ -21,7 +21,6 @@ const TrendMomentum = lazy(() => import("#src/pages/short-term-strategy/trend-mo
 const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
-const Relay = lazy(() => import("#src/pages/short-term-strategy/relay"));
 const DataSync = lazy(() => import("#src/pages/system/sync"));
 const PerformanceTracker = lazy(() => import("#src/pages/short-term-strategy/performance-tracker"));
 
@@ -76,11 +75,27 @@ const routes: AppRouteRecordRaw[] = [
 				},
 			},
 			{
-				path: "/short-term-strategy/relay",
-				Component: Relay,
+				path: "/short-term-strategy/emotion-relay",
+				Component: EmotionRelay,
 				handle: {
 					icon: "ThunderboltOutlined",
-					title: "连板接力",
+					title: "情绪接力",
+				},
+			},
+			{
+				path: "/short-term-strategy/relay",
+				Component: EmotionRelay,
+				handle: {
+					icon: "ThunderboltOutlined",
+					title: "情绪接力",
+				},
+			},
+			{
+				path: "/short-term-strategy/sentiment",
+				Component: EmotionRelay,
+				handle: {
+					icon: "HeartOutlined",
+					title: "情绪接力",
 				},
 			},
 			{
@@ -89,14 +104,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "FieldTimeOutlined",
 					title: "竞价战法",
-				},
-			},
-			{
-				path: "/short-term-strategy/sentiment",
-				Component: Sentiment,
-				handle: {
-					icon: "HeartOutlined",
-					title: "情绪战法",
 				},
 			},
 			{
