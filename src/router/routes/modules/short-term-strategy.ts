@@ -83,22 +83,6 @@ const routes: AppRouteRecordRaw[] = [
 				},
 			},
 			{
-				path: "/short-term-strategy/relay",
-				Component: EmotionRelay,
-				handle: {
-					icon: "ThunderboltOutlined",
-					title: "情绪接力",
-				},
-			},
-			{
-				path: "/short-term-strategy/sentiment",
-				Component: EmotionRelay,
-				handle: {
-					icon: "HeartOutlined",
-					title: "情绪接力",
-				},
-			},
-			{
 				path: "/short-term-strategy/auction",
 				Component: Auction,
 				handle: {
