@@ -1,12 +1,9 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function SentimentRedirect() {
-	const navigate = useNavigate();
-
 	useEffect(() => {
-		navigate("/short-term-strategy/emotion-relay", { replace: true });
-	}, [navigate]);
+		window.location.replace("/short-term-strategy/emotion-relay");
+	}, []);
 
 	return null;
 }
