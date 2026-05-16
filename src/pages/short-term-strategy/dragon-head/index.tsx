@@ -45,6 +45,17 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
+function asNumber(value: unknown, fallback = 0): number {
+	if (typeof value === "number" && Number.isFinite(value))
+		return value;
+	if (typeof value === "string") {
+		const n = Number(value);
+		if (Number.isFinite(n))
+			return n;
+	}
+	return fallback;
+}
+
 function getRiskColor(level?: string): string {
 	switch (level) {
 		case "低": return "green";
@@ -206,15 +217,19 @@ export default function DragonHead() {
 		{
 			title: "价格/换手",
 			key: "price",
-			render: (_, record) => (
-				<Space direction="vertical" size={0}>
-					<Text>{record.price ? `¥${record.price.toFixed(2)}` : "-"}</Text>
-					<Text type="secondary">
-						换手
-						{record.turnover_rate ? `${record.turnover_rate.toFixed(2)}%` : "-"}
-					</Text>
-				</Space>
-			),
+			render: (_, record) => {
+				const price = asNumber(record.price, Number.NaN);
+				const turnoverRate = asNumber(record.turnover_rate, Number.NaN);
+				return (
+					<Space direction="vertical" size={0}>
+						<Text>{Number.isFinite(price) ? `¥${price.toFixed(2)}` : "-"}</Text>
+						<Text type="secondary">
+							换手
+							{Number.isFinite(turnoverRate) ? `${turnoverRate.toFixed(2)}%` : "-"}
+						</Text>
+					</Space>
+				);
+			},
 		},
 		{
 			title: "理由",
