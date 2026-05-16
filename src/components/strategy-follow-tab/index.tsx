@@ -1,6 +1,12 @@
-import type { StrategyFollowItem, StrategyFollowSnapshot, StrategyFollowType } from "#src/api/strategy";
+import type {
+	DragonHeadLevelPerformanceSummary,
+	StrategyFollowItem,
+	StrategyFollowSnapshot,
+	StrategyFollowType,
+} from "#src/api/strategy";
 import {
 	closeStrategyFollow,
+	fetchDragonHeadPerformanceSummary,
 	fetchStrategyFollow,
 	fetchStrategyFollowHistory,
 	triggerStrategyAutoFollow,
@@ -17,6 +23,7 @@ import {
 	SyncOutlined,
 } from "@ant-design/icons";
 import {
+	Alert,
 	Button,
 	Card,
 	Col,
@@ -32,7 +39,7 @@ import {
 	Timeline,
 	Typography,
 } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Text, Title } = Typography;
 
@@ -42,6 +49,27 @@ interface Props {
 	isOvernight?: boolean
 }
 
+function SummaryCard({
+	title,
+	summary,
+	color,
+}: {
+	title: string
+	summary: DragonHeadLevelPerformanceSummary
+	color: string
+}) {
+	return (
+		<Card size="small" title={<span style={{ color }}>{title}</span>}>
+			<Row gutter={[8, 8]}>
+				<Col span={12}><Statistic title="样本" value={summary.count} /></Col>
+				<Col span={12}><Statistic title="T+3均值" value={summary.avg_day3_pct ?? 0} suffix="%" precision={2} /></Col>
+				<Col span={12}><Statistic title="T+1胜率" value={summary.day1_win_rate ?? 0} suffix="%" precision={1} /></Col>
+				<Col span={12}><Statistic title="T+3胜率" value={summary.day3_win_rate ?? 0} suffix="%" precision={1} /></Col>
+			</Row>
+		</Card>
+	);
+}
+
 export default function StrategyFollowTab({ strategyType, title, isOvernight = false }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [items, setItems] = useState<StrategyFollowItem[]>([]);
@@ -49,6 +77,16 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailItem, setDetailItem] = useState<StrategyFollowItem | null>(null);
 	const [snapshots, setSnapshots] = useState<StrategyFollowSnapshot[]>([]);
+	const [dragonSummary, setDragonSummary] = useState<null | {
+		strong_recommend_summary: DragonHeadLevelPerformanceSummary
+		recommend_summary: DragonHeadLevelPerformanceSummary
+		comparison: {
+			strong_minus_recommend_day3: number | null
+			strong_minus_recommend_day3_win_rate: number | null
+			optimization_hint: string
+		}
+		generated_at: string
+	}>(null);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
@@ -57,9 +95,15 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			if (res.status === "success" && res.data) {
 				setItems(res.data.items || []);
 			}
+			if (strategyType === "dragon_head") {
+				const perf = await fetchDragonHeadPerformanceSummary(30);
+				if (perf.status === "success" && perf.data) {
+					setDragonSummary(perf.data);
+				}
+			}
 		}
 		catch {
-			message.error("\u83B7\u53D6\u8DDF\u8FDB\u5217\u8868\u5931\u8D25");
+			message.error("获取跟进列表失败");
 		}
 		finally {
 			setLoading(false);
@@ -74,37 +118,37 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		try {
 			const res = await triggerStrategyAutoFollow(strategyType);
 			if (res.status === "success") {
-				message.success(res.data?.message || "\u6DFB\u52A0\u6210\u529F");
+				message.success(res.data?.message || "添加成功");
 				fetchData();
 			}
 		}
 		catch {
-			message.error("\u6DFB\u52A0\u5931\u8D25");
+			message.error("添加失败");
 		}
 	};
 
 	const handleSnapshot = async () => {
 		try {
 			await triggerStrategyFollowSnapshot(strategyType);
-			message.success("\u5FEB\u7167\u66F4\u65B0\u4EFB\u52A1\u5DF2\u542F\u52A8");
+			message.success("快照更新任务已启动");
 		}
 		catch {
-			message.error("\u5FEB\u7167\u66F4\u65B0\u5931\u8D25");
+			message.error("快照更新失败");
 		}
 	};
 
 	const handleClose = (id: number) => {
 		Modal.confirm({
-			title: "\u786E\u8BA4\u7ED3\u675F\u8DDF\u8FDB",
-			content: "\u7ED3\u675F\u540E\u5C06\u4E0D\u518D\u8DDF\u8E2A\u8BE5\u80A1\u7968",
+			title: "确认结束跟进",
+			content: "结束后将不再跟踪该股票",
 			onOk: async () => {
 				try {
 					await closeStrategyFollow(id);
-					message.success("\u5DF2\u7ED3\u675F\u8DDF\u8FDB");
+					message.success("已结束跟进");
 					fetchData();
 				}
 				catch {
-					message.error("\u64CD\u4F5C\u5931\u8D25");
+					message.error("操作失败");
 				}
 			},
 		});
@@ -120,7 +164,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			}
 		}
 		catch {
-			message.error("\u83B7\u53D6\u8BE6\u60C5\u5931\u8D25");
+			message.error("获取详情失败");
 		}
 	};
 
@@ -128,8 +172,14 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const avgReturn = items.length > 0
 		? items.reduce((s, i) => s + (isOvernight ? (i.next_day_return_pct ?? 0) : (i.latest_return_pct ?? 0)), 0) / items.length
 		: 0;
+	const latestSnapshotDate = useMemo(() => {
+		const dates = items.map(i => i.latest_snapshot_date).filter(Boolean) as string[];
+		if (dates.length === 0)
+			return null;
+		return dates.sort().at(-1) || null;
+	}, [items]);
 
-	const displayTitle = title || (isOvernight ? "\u6B21\u65E5\u6536\u76CA" : "\u63A8\u8350\u8DDF\u8FDB");
+	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 
 	return (
 		<Spin spinning={loading}>
@@ -137,64 +187,54 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 				<Space align="center">
 					<Title level={4} style={{ margin: 0 }}>{displayTitle}</Title>
 					<Tag color={status === "tracking" ? "processing" : "default"}>
-						{status === "tracking" ? "\u8DDF\u8FDB\u4E2D" : "\u5DF2\u7ED3\u675F"}
+						{status === "tracking" ? "跟进中" : "已结束"}
 					</Tag>
+					{!isOvernight && latestSnapshotDate && (
+						<Tag color="green">
+							已更新到收盘：
+							{latestSnapshotDate}
+						</Tag>
+					)}
 				</Space>
 				<Space>
-					<Button size="small" onClick={() => setStatus(status === "tracking" ? "closed" : "tracking")}>
-						{status === "tracking" ? "\u67E5\u770B\u5DF2\u7ED3\u675F" : "\u67E5\u770B\u8DDF\u8FDB\u4E2D"}
-					</Button>
+					<Button size="small" onClick={() => setStatus(status === "tracking" ? "closed" : "tracking")}>{status === "tracking" ? "查看已结束" : "查看跟进中"}</Button>
 					{!isOvernight && (
-						<Button size="small" icon={<SyncOutlined />} onClick={handleSnapshot}>
-							{"\u66F4\u65B0\u5FEB\u7167"}
-						</Button>
+						<Button size="small" icon={<SyncOutlined />} onClick={handleSnapshot}>更新快照</Button>
 					)}
-					<Button size="small" type="primary" icon={<PlusOutlined />} onClick={handleAutoAdd}>
-						{"\u4ECE\u63A8\u8350\u6DFB\u52A0"}
-					</Button>
-					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData}>
-						{"\u5237\u65B0"}
-					</Button>
+					<Button size="small" type="primary" icon={<PlusOutlined />} onClick={handleAutoAdd}>从推荐添加</Button>
+					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData}>刷新</Button>
 				</Space>
 			</div>
 
+			{strategyType === "dragon_head" && dragonSummary && (
+				<>
+					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+						<Col xs={24} lg={12}>
+							<SummaryCard title="强烈推荐表现" summary={dragonSummary.strong_recommend_summary} color="#cf1322" />
+						</Col>
+						<Col xs={24} lg={12}>
+							<SummaryCard title="推荐表现" summary={dragonSummary.recommend_summary} color="#1677ff" />
+						</Col>
+					</Row>
+					<Alert
+						style={{ marginBottom: 16 }}
+						message="龙头战法推荐等级效果摘要"
+						description={dragonSummary.comparison.optimization_hint}
+						type="info"
+						showIcon
+					/>
+				</>
+			)}
+
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-				<Col span={6}>
-					<Card size="small">
-						<Statistic title={"\u8DDF\u8FDB\u6570\u91CF"} value={items.length} />
-					</Card>
-				</Col>
-				<Col span={6}>
-					<Card size="small">
-						<Statistic title={"\u76C8\u5229\u6570\u91CF"} value={wins} valueStyle={{ color: "#3f8600" }} />
-					</Card>
-				</Col>
-				<Col span={6}>
-					<Card size="small">
-						<Statistic
-							title={"\u80DC\u7387"}
-							value={items.length > 0 ? ((wins / items.length) * 100).toFixed(1) : 0}
-							suffix="%"
-						/>
-					</Card>
-				</Col>
-				<Col span={6}>
-					<Card size="small">
-						<Statistic
-							title={isOvernight ? "\u5E73\u5747\u6B21\u65E5\u6536\u76CA" : "\u5E73\u5747\u6536\u76CA"}
-							value={avgReturn.toFixed(2)}
-							suffix="%"
-							valueStyle={{ color: avgReturn >= 0 ? "#3f8600" : "#cf1322" }}
-							prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-						/>
-					</Card>
-				</Col>
+				<Col span={6}><Card size="small"><Statistic title="跟进数量" value={items.length} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#3f8600" }} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="胜率" value={items.length > 0 ? ((wins / items.length) * 100).toFixed(1) : 0} suffix="%" /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={isOvernight ? "平均次日收益" : "平均收益"} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#3f8600" : "#cf1322" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
 			</Row>
 
 			{items.length === 0
-				? (
-					<Empty description={"\u6682\u65E0\u8DDF\u8FDB\u6570\u636E"} />
-				)
+				? <Empty description="暂无跟进数据" />
 				: (
 					<Row gutter={[12, 12]}>
 						{items.map((item) => {
@@ -202,72 +242,57 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							const isUp = returnVal > 0;
 							return (
 								<Col key={item.id} xs={24} sm={12} md={8} lg={6}>
-									<Card
-										size="small"
-										hoverable
-										onClick={() => handleDetail(item)}
-										style={{ borderLeft: `3px solid ${isUp ? "#52c41a" : returnVal < 0 ? "#ff4d4f" : "#d9d9d9"}` }}
-									>
+									<Card size="small" hoverable onClick={() => handleDetail(item)} style={{ borderLeft: `3px solid ${isUp ? "#52c41a" : returnVal < 0 ? "#ff4d4f" : "#d9d9d9"}` }}>
 										<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 											<div>
 												<Text strong>{item.stock_name}</Text>
 												<Text type="secondary" style={{ marginLeft: 6, fontSize: 12 }}>{item.stock_code}</Text>
 											</div>
-											<Tag color={item.recommendation_level === "\u5F3A\u70C8\u63A8\u8350" ? "red" : "blue"}>
-												{item.recommendation_level}
-											</Tag>
+											<Tag color={item.recommendation_level === "强烈推荐" ? "red" : "blue"}>{item.recommendation_level}</Tag>
 										</div>
-
 										<div style={{ marginTop: 8, display: "flex", justifyContent: "space-between" }}>
-											<Text type="secondary" style={{ fontSize: 12 }}>
-												{isOvernight ? "\u6B21\u65E5\u6536\u76CA" : "\u7D2F\u8BA1\u6536\u76CA"}
-											</Text>
+											<Text type="secondary" style={{ fontSize: 12 }}>{isOvernight ? "次日收益" : "累计收益"}</Text>
 											<Text strong style={{ color: isUp ? "#52c41a" : returnVal < 0 ? "#ff4d4f" : undefined }}>
 												{returnVal > 0 ? "+" : ""}
 												{returnVal.toFixed(2)}
 												%
 											</Text>
 										</div>
-
 										<div style={{ marginTop: 4, display: "flex", justifyContent: "space-between" }}>
-											<Text type="secondary" style={{ fontSize: 12 }}>{"\u52A0\u5165\u4EF7"}</Text>
+											<Text type="secondary" style={{ fontSize: 12 }}>加入价</Text>
 											<Text style={{ fontSize: 12 }}>{item.pick_price.toFixed(2)}</Text>
 										</div>
-
 										{!isOvernight && item.latest_price && (
 											<div style={{ display: "flex", justifyContent: "space-between" }}>
-												<Text type="secondary" style={{ fontSize: 12 }}>{"\u6700\u65B0\u4EF7"}</Text>
+												<Text type="secondary" style={{ fontSize: 12 }}>最新/收盘价</Text>
 												<Text style={{ fontSize: 12 }}>{item.latest_price.toFixed(2)}</Text>
 											</div>
 										)}
-
+										{item.latest_snapshot_date && (
+											<Text type="secondary" style={{ fontSize: 11, display: "block", marginTop: 4 }}>
+												快照日期：
+												{item.latest_snapshot_date}
+											</Text>
+										)}
 										<div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 4 }}>
 											<span style={{ display: "flex", gap: 1 }}>
-												{[1, 2, 3, 4, 5].map(i => (
-													<StarFilled key={i} style={{ fontSize: 10, color: i <= (item.recommendation_level === "\u5F3A\u70C8\u63A8\u8350" ? 5 : 3) ? "#faad14" : "#f0f0f0" }} />
-												))}
+												{[1, 2, 3, 4, 5].map(i => <StarFilled key={i} style={{ fontSize: 10, color: i <= (item.recommendation_level === "强烈推荐" ? 5 : 3) ? "#faad14" : "#f0f0f0" }} />)}
 											</span>
 										</div>
-
 										{(item.reasons || []).length > 0 && (
 											<div style={{ marginTop: 6, padding: "4px 6px", background: "linear-gradient(135deg, #fffbe6, #fff7e6)", borderRadius: 4, border: "1px solid #ffe58f" }}>
 												<div style={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
 													<FireFilled style={{ fontSize: 10, color: "#fa8c16", marginTop: 2, flexShrink: 0 }} />
-													<Text style={{ fontSize: 10, color: "#874d00", lineHeight: "16px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>
-														{item.reasons[0]}
-													</Text>
+													<Text style={{ fontSize: 10, color: "#874d00", lineHeight: "16px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>{item.reasons[0]}</Text>
 												</div>
 											</div>
 										)}
-
 										{item.status === "closed" && (
 											<Tag color="default" icon={<CheckCircleOutlined />} style={{ marginTop: 4 }}>
-												{"\u5DF2\u7ED3\u675F"}
-												{" "}
+												已结束
 												{item.closed_date}
 											</Tag>
 										)}
-
 										{item.status === "tracking" && !isOvernight && (
 											<div style={{ marginTop: 6, textAlign: "right" }}>
 												<Button
@@ -278,7 +303,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 														handleClose(item.id);
 													}}
 												>
-													{"\u7ED3\u675F\u8DDF\u8FDB"}
+													结束跟进
 												</Button>
 											</div>
 										)}
@@ -299,24 +324,24 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					<div>
 						<Row gutter={[16, 8]} style={{ marginBottom: 16 }}>
 							<Col span={12}>
-								<Text type="secondary">{"\u63A8\u8350\u7B49\u7EA7"}</Text>
+								<Text type="secondary">推荐等级</Text>
 								<br />
-								<Tag color={detailItem.recommendation_level === "\u5F3A\u70C8\u63A8\u8350" ? "red" : "blue"}>
+								<Tag color={detailItem.recommendation_level === "强烈推荐" ? "red" : "blue"}>
 									{detailItem.recommendation_level}
 								</Tag>
 							</Col>
 							<Col span={12}>
-								<Text type="secondary">{"\u52A0\u5165\u65E5\u671F"}</Text>
+								<Text type="secondary">加入日期</Text>
 								<br />
 								<Text>{detailItem.pick_date}</Text>
 							</Col>
 							<Col span={12}>
-								<Text type="secondary">{"\u52A0\u5165\u4EF7\u683C"}</Text>
+								<Text type="secondary">加入价格</Text>
 								<br />
 								<Text>{detailItem.pick_price.toFixed(2)}</Text>
 							</Col>
 							<Col span={12}>
-								<Text type="secondary">{"\u7D2F\u8BA1\u6536\u76CA"}</Text>
+								<Text type="secondary">累计收益</Text>
 								<br />
 								<Text style={{ color: (detailItem.latest_return_pct ?? 0) >= 0 ? "#3f8600" : "#cf1322" }}>
 									{(detailItem.latest_return_pct ?? 0) > 0 ? "+" : ""}
@@ -325,35 +350,30 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								</Text>
 							</Col>
 						</Row>
-
 						{detailItem.reasons.length > 0 && (
 							<div style={{ marginBottom: 16 }}>
-								<Text type="secondary">{"\u63A8\u8350\u7406\u7531"}</Text>
-								{detailItem.reasons.map((r, i) => (
-									<div key={i} style={{ marginTop: 4, padding: "4px 8px", background: "#fffbe6", borderRadius: 4 }}>
+								<Text type="secondary">推荐理由</Text>
+								{detailItem.reasons.map(reason => (
+									<div key={reason} style={{ marginTop: 4, padding: "4px 8px", background: "#fffbe6", borderRadius: 4 }}>
 										<FireFilled style={{ color: "#fa8c16", marginRight: 4, fontSize: 11 }} />
-										<Text style={{ fontSize: 12 }}>{r}</Text>
+										<Text style={{ fontSize: 12 }}>{reason}</Text>
 									</div>
 								))}
 							</div>
 						)}
-
-						<Text type="secondary">{"\u4EF7\u683C\u8D70\u52BF"}</Text>
+						<Text type="secondary">价格走势</Text>
 						{snapshots.length > 0
 							? (
 								<Timeline style={{ marginTop: 12 }}>
-									{snapshots.map(s => (
-										<Timeline.Item
-											key={s.id}
-											color={s.total_return_pct >= 0 ? "green" : "red"}
-										>
+									{snapshots.map(snapshot => (
+										<Timeline.Item key={snapshot.id} color={snapshot.total_return_pct >= 0 ? "green" : "red"}>
 											<div style={{ display: "flex", justifyContent: "space-between" }}>
-												<Text>{s.snapshot_date}</Text>
+												<Text>{snapshot.snapshot_date}</Text>
 												<Space>
-													<Text>{s.close_price.toFixed(2)}</Text>
-													<Text style={{ color: s.total_return_pct >= 0 ? "#3f8600" : "#cf1322" }}>
-														{s.total_return_pct > 0 ? "+" : ""}
-														{s.total_return_pct.toFixed(2)}
+													<Text>{snapshot.close_price.toFixed(2)}</Text>
+													<Text style={{ color: snapshot.total_return_pct >= 0 ? "#3f8600" : "#cf1322" }}>
+														{snapshot.total_return_pct > 0 ? "+" : ""}
+														{snapshot.total_return_pct.toFixed(2)}
 														%
 													</Text>
 												</Space>
@@ -363,7 +383,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								</Timeline>
 							)
 							: (
-								<Empty description={"\u6682\u65E0\u5FEB\u7167\u6570\u636E"} style={{ marginTop: 12 }} />
+								<Empty description="暂无快照数据" style={{ marginTop: 12 }} />
 							)}
 					</div>
 				)}
