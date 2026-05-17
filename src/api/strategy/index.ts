@@ -3,12 +3,16 @@ import type {
 	AuctionResponse,
 	BreakthroughResponse,
 	CombinedResponse,
+	DragonEntrySignal,
 	DragonHeadResponse,
+	DragonMarketRegime,
+	DragonThemeV2,
 	EventDrivenResponse,
 	MoatValueResponse,
 	MovingAverageResponse,
 	NorthboundResponse,
 	OvernightResponse,
+	RelayStock,
 	StockAnalysisResponse,
 	StrategiesSummaryResponse,
 	TrendMomentumResponse,
@@ -68,6 +72,18 @@ export interface DragonHeadFollowStock {
 	expected_return?: string
 }
 
+export interface DragonHeadFollowRelayContext {
+	market_regime?: DragonMarketRegime & {
+		position_advice?: string
+		operation_advice?: string
+	}
+	main_themes?: DragonThemeV2[]
+	core_candidates?: RelayStock[]
+	watch_candidates?: RelayStock[]
+	avoid_candidates?: RelayStock[]
+	entry_signals?: DragonEntrySignal[]
+}
+
 export interface DragonHeadFollowItem {
 	id: number
 	portfolio_id: number
@@ -80,6 +96,7 @@ export interface DragonHeadFollowItem {
 	confidence_score: number
 	generated_at: string
 	recommendations: DragonHeadFollowStock[]
+	relay_context?: DragonHeadFollowRelayContext
 }
 
 export interface DragonHeadFollowResponse {
@@ -115,37 +132,198 @@ export function triggerDragonHeadFollow() {
 		.json<{ status: string, message: string }>();
 }
 
-/**
- * 获取连板接力推荐列表（已合并到情绪接力）
- * @param limit - 返回推荐数量，默认10
- */
-export function fetchRelayRecommendations(limit: number = 10) {
-	return fetchEmotionRelayRecommendations(limit);
+function mapEmotionRelayAction(stock: any): DragonHeadFollowStock["action"] {
+	switch (stock?.candidate_pool) {
+		case "core": return "买入";
+		case "avoid": return "回避";
+		case "watch": return "观望";
+		default:
+			switch (stock?.recommendation_level) {
+				case "强烈推荐":
+				case "推荐":
+					return "买入";
+				case "回避":
+					return "回避";
+				default:
+					return "观望";
+			}
+	}
 }
 
-/**
- * 手动刷新连板接力推荐（已合并到情绪接力）
- * @param limit - 返回推荐数量，默认10
- */
-export function refreshRelayRecommendations(limit: number = 10) {
-	return refreshEmotionRelayRecommendations(limit);
+function mapEmotionRelayConfidence(stock: any): number {
+	const score = Number(stock?.relay_score ?? stock?.signal_score ?? stock?.core_score ?? 0);
+	if (Number.isFinite(score) && score > 0)
+		return Math.max(0, Math.min(100, Math.round(score)));
+	switch (stock?.candidate_pool) {
+		case "core": return 80;
+		case "watch": return 60;
+		case "avoid": return 30;
+		default: return 50;
+	}
 }
 
-// ===================== 连板接力跟投指导 =====================
+function mapEmotionRelayPosition(stock: any): number {
+	if (stock?.candidate_pool === "core")
+		return 50;
+	if (stock?.candidate_pool === "watch")
+		return 20;
+	return 0;
+}
 
-export function fetchRelayFollow(_limit: number = 10) {
-	return fetchStrategyFollow("emotion_relay", "tracking").then((res: any) => ({
-		status: res.status,
-		data: {
-			latest: res.data?.items?.[0] || null,
-			history: res.data?.items || [],
-			total: res.data?.total || 0,
+function normalizeRelaySignal(code: string, stockName: string, payload: any): DragonEntrySignal | null {
+	const signal = payload?.entry_signals?.find((item: any) => item?.code === code || item?.stock_code === code);
+	if (!signal)
+		return null;
+	return {
+		code,
+		name: signal?.name || signal?.stock_name || stockName,
+		candidate_pool: signal?.candidate_pool,
+		signal_type: signal?.signal_type || signal?.entry_timing || "观察",
+		signal_strength: Number(signal?.signal_strength ?? signal?.confidence ?? signal?.relay_score ?? 0) || 0,
+		entry_window: signal?.entry_window || signal?.entry_timing || signal?.timing_window || "盘中确认",
+		invalid_condition: signal?.invalid_condition || signal?.risk_warning || "信号失效后不再跟进",
+		risk_level: signal?.risk_level || payload?.market_regime?.risk_level || "中",
+		holding_horizon: signal?.holding_horizon || signal?.holding_period || "T+1~T+3",
+		entry_plan: {
+			buy_price_range: signal?.buy_price_range || signal?.buy_price,
+			target_price: signal?.target_price,
+			stop_loss_price: signal?.stop_loss_price,
+			position_advice: signal?.position_advice,
 		},
+	};
+}
+
+function mapEmotionRelayThemes(payload: any): DragonThemeV2[] {
+	const themes = Array.isArray(payload?.main_themes) ? payload.main_themes : [];
+	return themes.map((theme: any) => ({
+		name: theme?.name || "未命名题材",
+		role: theme?.role || "观察",
+		limit_up_count: Number(theme?.limit_up_count ?? theme?.stats?.limit_up_count ?? 0) || 0,
+		leader_count: Number(theme?.leader_count ?? theme?.stats?.leader_count ?? 0) || 0,
+		max_limit_up_days: Number(theme?.max_limit_up_days ?? theme?.stats?.max_limit_up_days ?? 0) || 0,
+		concentration_score: Number(theme?.concentration_score ?? 0) || 0,
+		catalyst_score: Number(theme?.catalyst_score ?? 0) || 0,
+		sustainability_score: Number(theme?.sustainability_score ?? 0) || 0,
+		change_pct: Number(theme?.change_pct ?? theme?.stats?.change_pct ?? 0) || 0,
+		up_count: Number(theme?.up_count ?? theme?.stats?.up_count ?? 0) || 0,
+		down_count: Number(theme?.down_count ?? theme?.stats?.down_count ?? 0) || 0,
+		summary: theme?.summary || theme?.description || "暂无题材摘要",
+		ladder: Array.isArray(theme?.ladder)
+			? theme.ladder.map((item: any, index: number) => ({
+				id: item?.id,
+				theme_id: item?.theme_id,
+				stock_code: item?.stock_code || item?.code || `ladder-${index}`,
+				stock_name: item?.stock_name || item?.name || "-",
+				ladder_role: item?.ladder_role || item?.role || "观察",
+				ladder_rank: item?.ladder_rank,
+				limit_up_days: Number(item?.limit_up_days ?? 0) || 0,
+				price: item?.price,
+				change_pct: item?.change_pct,
+				first_limit_time: item?.first_limit_time,
+				seal_amount: item?.seal_amount,
+				turnover_rate: item?.turnover_rate,
+				break_board_count: item?.break_board_count,
+				theme_score: item?.theme_score,
+			}))
+			: [],
 	}));
 }
 
-export function triggerRelayFollow() {
-	return triggerStrategyFollowSnapshot("emotion_relay").then((res: any) => ({ status: res.status, message: res.message }));
+function buildEmotionRelayFollowItem(payload: any, limit: number): DragonHeadFollowItem {
+	const merged = [
+		...(payload?.core_candidates || []),
+		...(payload?.watch_candidates || []),
+		...(payload?.avoid_candidates || []),
+		...(payload?.recommendations || []),
+	];
+	const seen = new Set<string>();
+	const recommendations: DragonHeadFollowStock[] = [];
+
+	for (const stock of merged) {
+		const code = stock?.code || stock?.stock_code || "";
+		if (!code || seen.has(code))
+			continue;
+		seen.add(code);
+		const signal = normalizeRelaySignal(code, stock?.name || stock?.stock_name || "", payload);
+		recommendations.push({
+			code,
+			name: stock?.name || stock?.stock_name || "",
+			action: mapEmotionRelayAction(stock),
+			target_price: stock?.target_price,
+			stop_loss: stock?.stop_loss_price,
+			current_price: stock?.price,
+			change_pct: stock?.change_pct,
+			confidence: mapEmotionRelayConfidence(stock),
+			position_pct: mapEmotionRelayPosition(stock),
+			reason: Array.isArray(stock?.reasons) && stock.reasons.length > 0
+				? stock.reasons[0]
+				: stock?.operation_suggestion || stock?.theory_tag || stock?.recommendation_level || "情绪接力候选",
+			risk_warning: stock?.risk_warning,
+			risk_level: payload?.market_regime?.risk_level,
+			holding_period: signal?.holding_horizon,
+			action_detail: [stock?.entry_timing, signal?.entry_window, stock?.next_day_outlook].filter(Boolean).join("｜") || undefined,
+		});
+		if (recommendations.length >= limit)
+			break;
+	}
+
+	const phase = payload?.market_regime?.phase || "观察";
+	const riskLevel = payload?.market_regime?.risk_level || "中";
+	const overviewParts = [
+		phase ? `情绪阶段：${phase}` : "",
+		payload?.market_regime?.action_bias ? `策略倾向：${payload.market_regime.action_bias}` : "",
+		payload?.market_regime?.description || "",
+	].filter(Boolean);
+
+	return {
+		id: 0,
+		portfolio_id: 0,
+		trading_date: payload?.trading_date || "",
+		session_type: "recommendation_pool",
+		stock_count: recommendations.length,
+		market_overview: overviewParts.join(" | "),
+		strategy_summary: payload?.strategy_report || payload?.strategy_explanation || "情绪接力推荐池",
+		risk_warning: `风险等级：${riskLevel}${payload?.market_regime?.operation_advice ? ` | ${payload.market_regime.operation_advice}` : ""}`,
+		confidence_score: recommendations.length > 0
+			? Math.round(recommendations.reduce((sum, stock) => sum + (stock.confidence || 0), 0) / recommendations.length)
+			: 0,
+		generated_at: payload?.generated_at || "",
+		recommendations,
+		relay_context: {
+			market_regime: payload?.market_regime,
+			main_themes: mapEmotionRelayThemes(payload),
+			core_candidates: payload?.core_candidates || [],
+			watch_candidates: payload?.watch_candidates || [],
+			avoid_candidates: payload?.avoid_candidates || [],
+			entry_signals: recommendations
+				.map(stock => normalizeRelaySignal(stock.code || stock.stock_code || "", stock.name || stock.stock_name || "", payload))
+				.filter(Boolean) as DragonEntrySignal[],
+		},
+	};
+}
+
+/**
+ * 获取情绪接力推荐池（用于实盘跟投页展示）
+ * @param limit - 返回记录数，默认10
+ */
+export function fetchEmotionRelayFollow(limit: number = 10) {
+	return fetchEmotionRelayRecommendations(limit).then((res: any): DragonHeadFollowResponse => {
+		const latest = res?.status === "success" && res?.data
+			? buildEmotionRelayFollowItem(res.data, limit)
+			: null;
+		return {
+			status: res?.status || "error",
+			data: {
+				latest,
+				history: latest ? [latest] : [],
+				total: latest ? 1 : 0,
+			},
+		};
+	});
+}
+
+export function triggerEmotionRelayFollow() {
+	return refreshEmotionRelayRecommendations(10).then((res: any) => ({ status: res.status, message: res.message || "情绪接力推荐池已刷新" }));
 }
 
 /**
@@ -176,7 +354,7 @@ export function refreshEmotionRelayRecommendations(limit: number = 15) {
 
 /**
  * 获取情绪战法数据（已并入情绪接力）
- * @param days - 返回历史天数，默认30
+ * @param _days - 返回历史天数，默认30
  */
 export function fetchSentimentData(_days: number = 30) {
 	return fetchEmotionRelayRecommendations(13);

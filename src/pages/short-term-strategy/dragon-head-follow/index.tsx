@@ -1,12 +1,13 @@
-import type { DragonHeadFollowItem, DragonHeadFollowStock } from "#src/api/strategy";
+import type { DragonEntrySignal, DragonHeadFollowItem, DragonHeadFollowStock, DragonThemeV2 } from "#src/api/strategy";
 
 import {
 	fetchDragonHeadFollow,
-	fetchRelayFollow,
+	fetchEmotionRelayFollow,
 	triggerDragonHeadFollow,
-	triggerRelayFollow,
+	triggerEmotionRelayFollow,
 } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	AlertOutlined,
 	CheckCircleOutlined,
@@ -28,7 +29,9 @@ import {
 	Card,
 	Col,
 	Collapse,
+	Descriptions,
 	Empty,
+	List,
 	message,
 	Progress,
 	Result,
@@ -41,7 +44,7 @@ import {
 	Tag,
 	Typography,
 } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text } = Typography;
 
@@ -78,6 +81,33 @@ function getConfidenceColor(score: number): string {
 	return "#f5222d";
 }
 
+function getRiskColor(level?: string): string {
+	switch (level) {
+		case "低": return "green";
+		case "中": return "orange";
+		case "高": return "red";
+		default: return "default";
+	}
+}
+
+function getPoolTagColor(pool?: string): string {
+	switch (pool) {
+		case "core": return "red";
+		case "watch": return "blue";
+		case "avoid": return "default";
+		default: return "default";
+	}
+}
+
+function getPoolLabel(pool?: string): string {
+	switch (pool) {
+		case "core": return "核心";
+		case "watch": return "观察";
+		case "avoid": return "回避";
+		default: return "未分类";
+	}
+}
+
 /** 标准化股票字段名（兼容 dragon_head 和 relay 两种数据格式） */
 function normalizeStock(stock: DragonHeadFollowStock) {
 	return {
@@ -88,6 +118,204 @@ function normalizeStock(stock: DragonHeadFollowStock) {
 	};
 }
 
+function RelayThemeCard({ theme }: { theme: DragonThemeV2 }) {
+	return (
+		<Card
+			size="small"
+			title={(
+				<Space>
+					<Tag color={theme.role === "主线" || theme.role === "main" ? "red" : theme.role === "次主线" || theme.role === "secondary" ? "orange" : "default"}>{theme.role}</Tag>
+					<span>{theme.name}</span>
+				</Space>
+			)}
+		>
+			<Space wrap style={{ marginBottom: 8 }}>
+				<Tag>
+					涨停
+					{theme.limit_up_count}
+				</Tag>
+				<Tag>
+					核心
+					{theme.leader_count}
+				</Tag>
+				<Tag>
+					最高
+					{theme.max_limit_up_days}
+					板
+				</Tag>
+			</Space>
+			<div style={{ marginBottom: 8, color: "#595959", lineHeight: 1.7 }}>{theme.summary}</div>
+			{theme.ladder.length > 0
+				? (
+					<Space wrap>
+						{theme.ladder.map(item => (
+							<Tag key={`${theme.name}-${item.stock_code}-${item.ladder_role}`} color="purple">
+								{item.stock_name}
+								-
+								{item.ladder_role}
+							</Tag>
+						))}
+					</Space>
+				)
+				: <Text type="secondary">暂无梯队数据</Text>}
+		</Card>
+	);
+}
+
+function RelayCandidateList({ title, items, color }: { title: string, items: any[], color: string }) {
+	return (
+		<Card size="small" title={title} styles={{ header: { borderLeft: `4px solid ${color}` } }}>
+			{items.length > 0
+				? (
+					<List
+						size="small"
+						dataSource={items}
+						renderItem={(item: any, index) => (
+							<List.Item key={`${item.code || item.stock_code || index}`}>
+								<Space direction="vertical" size={2} style={{ width: "100%" }}>
+									<Space wrap>
+										<Text strong>{item.name || item.stock_name}</Text>
+										<Text type="secondary">{item.code || item.stock_code}</Text>
+										<Tag color={getPoolTagColor(item.candidate_pool)}>{getPoolLabel(item.candidate_pool)}</Tag>
+										{item.recommendation_level ? <Tag color="gold">{item.recommendation_level}</Tag> : null}
+									</Space>
+									<Text style={{ fontSize: 12, color: "#595959" }}>{item.buy_reason || item.operation_suggestion || item.reasons?.[0] || "暂无说明"}</Text>
+								</Space>
+							</List.Item>
+						)}
+					/>
+				)
+				: <Empty description={`暂无${title}`} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+		</Card>
+	);
+}
+
+function RelayExtraSections({ latest }: { latest: DragonHeadFollowItem }) {
+	const relayContext = latest.relay_context;
+	const marketRegime = relayContext?.market_regime;
+	const themeLadders = relayContext?.main_themes || [];
+	const coreCandidates = relayContext?.core_candidates || [];
+	const watchCandidates = relayContext?.watch_candidates || [];
+	const avoidCandidates = relayContext?.avoid_candidates || [];
+	const entrySignals = Array.from(new Map((relayContext?.entry_signals || []).map(signal => [`${signal.code}-${signal.signal_type}`, signal])).values());
+
+	if (!relayContext)
+		return null;
+
+	return (
+		<>
+			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+				<Col xs={24} lg={12}>
+					<Card
+						size="small"
+						title={(
+							<Space>
+								<SafetyOutlined style={{ color: "#722ed1" }} />
+								<span>执行纪律</span>
+							</Space>
+						)}
+					>
+						<Descriptions column={1} size="small">
+							<Descriptions.Item label="情绪阶段">{marketRegime?.phase || "-"}</Descriptions.Item>
+							<Descriptions.Item label="风险等级"><Tag color={getRiskColor(marketRegime?.risk_level)}>{marketRegime?.risk_level || "-"}</Tag></Descriptions.Item>
+							<Descriptions.Item label="动作偏好">{marketRegime?.action_bias || "观察"}</Descriptions.Item>
+							<Descriptions.Item label="仓位建议">{marketRegime?.position_advice || "20%-40%"}</Descriptions.Item>
+						</Descriptions>
+						{marketRegime?.description ? <div style={{ marginTop: 12, color: "#595959", lineHeight: 1.7 }}>{marketRegime.description}</div> : null}
+					</Card>
+				</Col>
+				<Col xs={24} lg={12}>
+					<Card
+						size="small"
+						title={(
+							<Space>
+								<CrownOutlined style={{ color: "#fa8c16" }} />
+								<span>候选分层</span>
+							</Space>
+						)}
+					>
+						<Row gutter={12}>
+							<Col span={8}><Statistic title="核心" value={coreCandidates.length} valueStyle={{ color: "#f5222d", fontSize: 20 }} /></Col>
+							<Col span={8}><Statistic title="观察" value={watchCandidates.length} valueStyle={{ color: "#1677ff", fontSize: 20 }} /></Col>
+							<Col span={8}><Statistic title="回避" value={avoidCandidates.length} valueStyle={{ color: "#8c8c8c", fontSize: 20 }} /></Col>
+						</Row>
+					</Card>
+				</Col>
+			</Row>
+
+			{themeLadders.length > 0 && (
+				<Card
+					size="small"
+					title={(
+						<Space>
+							<TeamOutlined style={{ color: "#1677ff" }} />
+							<span>主线梯队</span>
+						</Space>
+					)}
+					style={{ marginBottom: 16 }}
+				>
+					<Row gutter={[16, 16]}>
+						{themeLadders.map(theme => (
+							<Col xs={24} xl={12} key={theme.name}>
+								<RelayThemeCard theme={theme} />
+							</Col>
+						))}
+					</Row>
+				</Card>
+			)}
+
+			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+				<Col xs={24} xl={8}><RelayCandidateList title="核心池" items={coreCandidates} color="#f5222d" /></Col>
+				<Col xs={24} xl={8}><RelayCandidateList title="观察池" items={watchCandidates} color="#1677ff" /></Col>
+				<Col xs={24} xl={8}><RelayCandidateList title="回避池" items={avoidCandidates} color="#8c8c8c" /></Col>
+			</Row>
+
+			{entrySignals.length > 0 && (
+				<Card
+					size="small"
+					title={(
+						<Space>
+							<CheckCircleOutlined style={{ color: "#52c41a" }} />
+							<span>入场信号</span>
+						</Space>
+					)}
+					style={{ marginBottom: 16 }}
+				>
+					<List
+						size="small"
+						dataSource={entrySignals}
+						renderItem={(signal: DragonEntrySignal) => (
+							<List.Item key={`${signal.code}-${signal.signal_type}`}>
+								<Space direction="vertical" size={2} style={{ width: "100%" }}>
+									<Space wrap>
+										<Text strong>{signal.name}</Text>
+										<Text type="secondary">{signal.code}</Text>
+										<Tag color={getPoolTagColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
+										<Tag color="purple">{signal.signal_type}</Tag>
+										<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
+									</Space>
+									<Text>
+										入场窗口：
+										{signal.entry_window}
+									</Text>
+									<Text type="secondary">
+										持仓周期：
+										{signal.holding_horizon}
+									</Text>
+									<Text type="secondary">
+										失效条件：
+										{signal.invalid_condition}
+									</Text>
+								</Space>
+							</List.Item>
+						)}
+					/>
+				</Card>
+			)}
+		</>
+	);
+}
+
 /** ================== 通用跟投面板组件 ================== */
 function FollowPanel({
 	strategyLabel,
@@ -95,18 +323,26 @@ function FollowPanel({
 	fetchFn,
 	triggerFn,
 	pipelineSteps,
+	renderExtraSections,
+	renderBottomContent,
 }: {
 	strategyLabel: string
 	strategyIcon: React.ReactNode
 	fetchFn: (limit: number) => Promise<{ status: string, data: { latest: DragonHeadFollowItem | null, history: DragonHeadFollowItem[], total: number } }>
 	triggerFn: () => Promise<{ status: string, message: string }>
 	pipelineSteps: { title: string, description: string, status: "finish" | "process" | "wait" }[]
+	renderExtraSections?: (latest: DragonHeadFollowItem) => React.ReactNode
+	renderBottomContent?: React.ReactNode
 }) {
 	const [loading, setLoading] = useState(false);
 	const [triggering, setTriggering] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [latest, setLatest] = useState<DragonHeadFollowItem | null>(null);
 	const [history, setHistory] = useState<DragonHeadFollowItem[]>([]);
+
+	const panelTitle = strategyLabel === "情绪接力" ? "推荐池" : "跟投指导";
+	const actionNoun = strategyLabel === "情绪接力" ? "推荐池" : "跟投指导";
+	const extraSections = useMemo(() => latest && renderExtraSections ? renderExtraSections(latest) : null, [latest, renderExtraSections]);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
@@ -118,7 +354,7 @@ function FollowPanel({
 				setHistory(response.data.history);
 			}
 			else {
-				setError("获取跟投指导数据失败");
+				setError(`获取${strategyLabel}推荐数据失败`);
 			}
 		}
 		catch (err: any) {
@@ -127,28 +363,28 @@ function FollowPanel({
 		finally {
 			setLoading(false);
 		}
-	}, [fetchFn]);
+	}, [fetchFn, strategyLabel]);
 
 	const handleTrigger = useCallback(async () => {
 		setTriggering(true);
-		message.loading({ content: `正在生成${strategyLabel}跟投指导...`, key: "trigger", duration: 0 });
+		message.loading({ content: `正在刷新${strategyLabel}${actionNoun}...`, key: "trigger", duration: 0 });
 		try {
 			const response = await triggerFn();
 			if (response.status === "success") {
-				message.success({ content: response.message || "跟投指导已生成", key: "trigger" });
+				message.success({ content: response.message || `${strategyLabel}${actionNoun}已刷新`, key: "trigger" });
 				await fetchData();
 			}
 			else {
-				message.error({ content: "生成失败", key: "trigger" });
+				message.error({ content: `${actionNoun}刷新失败`, key: "trigger" });
 			}
 		}
 		catch (e: any) {
-			message.error({ content: e?.message || "生成失败，请稍后重试", key: "trigger" });
+			message.error({ content: e?.message || `${actionNoun}刷新失败，请稍后重试`, key: "trigger" });
 		}
 		finally {
 			setTriggering(false);
 		}
-	}, [fetchData, triggerFn, strategyLabel]);
+	}, [actionNoun, fetchData, triggerFn, strategyLabel]);
 
 	useEffect(() => {
 		fetchData();
@@ -183,13 +419,14 @@ function FollowPanel({
 	if (!latest) {
 		return (
 			<Empty
-				description={`暂无${strategyLabel}跟投指导数据，点击下方按钮生成`}
+				description={`暂无${strategyLabel}${actionNoun}数据，点击下方按钮刷新`}
 				style={{ marginTop: 60 }}
 			>
 				<Space>
 					<Button onClick={fetchData} icon={<ReloadOutlined />}>刷新</Button>
 					<Button type="primary" onClick={handleTrigger} loading={triggering} icon={<ThunderboltOutlined />}>
-						生成跟投指导
+						刷新
+						{actionNoun}
 					</Button>
 				</Space>
 			</Empty>
@@ -210,7 +447,7 @@ function FollowPanel({
 					<Title level={5} style={{ margin: 0 }}>
 						{strategyLabel}
 						{" "}
-						跟投指导
+						{panelTitle}
 					</Title>
 					<Tag color="processing">{latest.trading_date}</Tag>
 					<Text type="secondary" style={{ fontSize: 12 }}>
@@ -222,7 +459,7 @@ function FollowPanel({
 				<Space>
 					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData} loading={loading}>刷新</Button>
 					<Button size="small" type="primary" icon={<ThunderboltOutlined />} onClick={handleTrigger} loading={triggering}>
-						{triggering ? "生成中..." : "重新生成"}
+						{triggering ? `刷新${actionNoun}中...` : `刷新${actionNoun}`}
 					</Button>
 				</Space>
 			</div>
@@ -249,7 +486,7 @@ function FollowPanel({
 						title={(
 							<Space>
 								<CrownOutlined style={{ color: "#faad14" }} />
-								<span>操作概览</span>
+								<span>{strategyLabel === "情绪接力" ? "推荐概览" : "操作概览"}</span>
 							</Space>
 						)}
 					>
@@ -291,6 +528,8 @@ function FollowPanel({
 					<div style={{ whiteSpace: "pre-wrap", lineHeight: 1.8 }}>{latest.strategy_summary}</div>
 				</Card>
 			)}
+
+			{extraSections}
 
 			{/* 风险提示 */}
 			{latest.risk_warning && (
@@ -404,7 +643,7 @@ function FollowPanel({
 											</div>
 										)}
 
-										{/* 连板接力特有字段: action_detail */}
+										{/* 通用扩展字段：如推荐池说明 */}
 										{(stock as any).action_detail && (
 											<div style={{ marginBottom: 4 }}>
 												<Text style={{ fontSize: 12, color: "#595959" }}>{(stock as any).action_detail}</Text>
@@ -426,7 +665,6 @@ function FollowPanel({
 				</Card>
 			)}
 
-			{/* 历史跟投指导 — 可展开查看股票清单 */}
 			{history.length > 1 && (
 				<Card
 					title={(
@@ -525,6 +763,8 @@ function FollowPanel({
 				</Card>
 			)}
 
+			{renderBottomContent}
+
 			{/* 流程说明 */}
 			<Card
 				title={(
@@ -552,11 +792,11 @@ export default function DragonHeadFollow() {
 		{ title: "15:30 盘后复盘", description: "次日预判（非实盘）", status: "wait" as const },
 	];
 
-	const relaySteps = [
-		{ title: "15:02 收盘推荐", description: "当日涨停股6维度评分+LLM", status: "finish" as const },
-		{ title: "09:27 竞价校验", description: "次日集合竞价量比验证", status: "finish" as const },
-		{ title: "09:28 ★跟投指令", description: "买入/跳过/观望 操作信号", status: "process" as const },
-		{ title: "09:35 交易执行", description: "模拟盘自动执行", status: "finish" as const },
+	const emotionRelaySteps = [
+		{ title: "情绪择时", description: "结合情绪周期判断试错、主做或空仓", status: "finish" as const },
+		{ title: "主线梯队", description: "融合接力候选与主线板块梯队", status: "finish" as const },
+		{ title: "候选分层", description: "输出核心、观察、回避三类推荐池", status: "process" as const },
+		{ title: "盘后刷新", description: "手动刷新后同步最新情绪接力推荐", status: "wait" as const },
 	];
 
 	return (
@@ -568,7 +808,7 @@ export default function DragonHeadFollow() {
 					<Title level={4} style={{ margin: 0 }}>实盘跟投指导</Title>
 				</div>
 
-				{/* Tabs: 龙头战法 + 连板接力 */}
+				{/* Tabs: 龙头战法 + 情绪接力 */}
 				<Tabs
 					defaultActiveKey="dragon_head"
 					type="card"
@@ -596,16 +836,18 @@ export default function DragonHeadFollow() {
 							label: (
 								<Space>
 									<ThunderboltOutlined style={{ color: "#fa8c16" }} />
-									连板接力
+									情绪接力
 								</Space>
 							),
 							children: (
 								<FollowPanel
-									strategyLabel="连板接力"
+									strategyLabel="情绪接力"
 									strategyIcon={<ThunderboltOutlined style={{ fontSize: 20, color: "#fa8c16" }} />}
-									fetchFn={fetchRelayFollow}
-									triggerFn={triggerRelayFollow}
-									pipelineSteps={relaySteps}
+									fetchFn={fetchEmotionRelayFollow}
+									triggerFn={triggerEmotionRelayFollow}
+									pipelineSteps={emotionRelaySteps}
+									renderExtraSections={latest => <RelayExtraSections latest={latest} />}
+									renderBottomContent={<RecommendationHistory strategyType="emotion_relay" title="历史跟投指令" />}
 								/>
 							),
 						},
