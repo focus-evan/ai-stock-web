@@ -162,7 +162,7 @@ function RelayThemeCard({ theme }: { theme: DragonThemeV2 }) {
 	);
 }
 
-function RelayCandidateList({ title, items, color }: { title: string, items: any[], color: string }) {
+function RelayCandidateList({ title, items, color }: { title: string, items: DragonHeadFollowStock[], color: string }) {
 	return (
 		<Card size="small" title={title} styles={{ header: { borderLeft: `4px solid ${color}` } }}>
 			{items.length > 0
@@ -170,23 +170,138 @@ function RelayCandidateList({ title, items, color }: { title: string, items: any
 					<List
 						size="small"
 						dataSource={items}
-						renderItem={(item: any, index) => (
-							<List.Item key={`${item.code || item.stock_code || index}`}>
-								<Space direction="vertical" size={2} style={{ width: "100%" }}>
-									<Space wrap>
-										<Text strong>{item.name || item.stock_name}</Text>
-										<Text type="secondary">{item.code || item.stock_code}</Text>
-										<Tag color={getPoolTagColor(item.candidate_pool)}>{getPoolLabel(item.candidate_pool)}</Tag>
-										{item.recommendation_level ? <Tag color="gold">{item.recommendation_level}</Tag> : null}
+						renderItem={(raw: DragonHeadFollowStock, index) => {
+							const item = normalizeStock(raw);
+							return (
+								<List.Item key={`${item.code || index}-${title}`}>
+									<Space direction="vertical" size={2} style={{ width: "100%" }}>
+										<Space wrap>
+											<Text strong>{item.name || item.stock_name}</Text>
+											<Text type="secondary">{item.code || item.stock_code}</Text>
+											<Tag color={getPoolTagColor(item.candidate_pool)}>{getPoolLabel(item.candidate_pool)}</Tag>
+											{item.signal_type ? <Tag color="purple">{item.signal_type}</Tag> : null}
+											{(item as any).recommendation_level ? <Tag color="gold">{(item as any).recommendation_level}</Tag> : null}
+										</Space>
+										<Text style={{ fontSize: 12, color: "#595959" }}>{item.action_detail || item.reason || "暂无说明"}</Text>
+										{item.invalid_condition
+											? (
+												<Text type="secondary" style={{ fontSize: 11 }}>
+													失效：
+													{item.invalid_condition}
+												</Text>
+											)
+											: null}
 									</Space>
-									<Text style={{ fontSize: 12, color: "#595959" }}>{item.buy_reason || item.operation_suggestion || item.reasons?.[0] || "暂无说明"}</Text>
-								</Space>
-							</List.Item>
-						)}
+								</List.Item>
+							);
+						}}
 					/>
 				)
 				: <Empty description={`暂无${title}`} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
 		</Card>
+	);
+}
+
+function DragonHeadExtraSections({ latest }: { latest: DragonHeadFollowItem }) {
+	const dragonRiskLevel = latest.recommendations.find(stock => stock.risk_level)?.risk_level;
+	const themeTags = Array.from(new Set(latest.recommendations.flatMap(stock => stock.related_themes || []).filter(Boolean))).slice(0, 8);
+	const industries = Array.from(new Set(latest.recommendations.map(stock => stock.industry).filter(Boolean))).slice(0, 6);
+	const actionableStocks = latest.recommendations.filter(stock => ["买入", "加仓", "待验证"].includes(stock.action)).slice(0, 5);
+
+	if (!dragonRiskLevel && themeTags.length === 0 && industries.length === 0 && actionableStocks.length === 0)
+		return null;
+
+	return (
+		<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+			<Col xs={24} lg={12}>
+				<Card
+					size="small"
+					title={(
+						<Space>
+							<SafetyOutlined style={{ color: "#722ed1" }} />
+							<span>市场背景</span>
+						</Space>
+					)}
+				>
+					<Descriptions column={1} size="small">
+						<Descriptions.Item label="风险等级">
+							<Tag color={getRiskColor(dragonRiskLevel)}>{dragonRiskLevel || "待确认"}</Tag>
+						</Descriptions.Item>
+						<Descriptions.Item label="动作偏好">主做龙头确认，分歧看承接</Descriptions.Item>
+						<Descriptions.Item label="题材聚焦">{industries.length > 0 ? industries.join(" / ") : "待确认"}</Descriptions.Item>
+					</Descriptions>
+					{themeTags.length > 0 && (
+						<Space wrap style={{ marginTop: 12 }}>
+							{themeTags.map(theme => <Tag key={theme} color="volcano">{theme}</Tag>)}
+						</Space>
+					)}
+				</Card>
+			</Col>
+			<Col xs={24} lg={12}>
+				<Card
+					size="small"
+					title={(
+						<Space>
+							<CheckCircleOutlined style={{ color: "#52c41a" }} />
+							<span>关注焦点</span>
+						</Space>
+					)}
+				>
+					{actionableStocks.length > 0
+						? (
+							<List
+								size="small"
+								dataSource={actionableStocks}
+								renderItem={(raw: DragonHeadFollowStock) => {
+									const stock = normalizeStock(raw);
+									return (
+										<List.Item key={`${stock.code}-${stock.action}`}>
+											<Space direction="vertical" size={2} style={{ width: "100%" }}>
+												<Space wrap>
+													<Text strong>{stock.name}</Text>
+													<Text type="secondary">{stock.code}</Text>
+													<Tag color={getActionColor(stock.action)}>{stock.action}</Tag>
+													{stock.related_themes && stock.related_themes.length > 0
+														? stock.related_themes.slice(0, 3).map(theme => (
+															<Tag key={`${stock.code}-${theme}`} color="volcano">{theme}</Tag>
+														))
+														: null}
+												</Space>
+												<Text style={{ fontSize: 12, color: "#595959" }}>{stock.action_detail || stock.reason || "等待竞价确认"}</Text>
+												{stock.holding_period
+													? (
+														<Text type="secondary" style={{ fontSize: 11 }}>
+															周期：
+															{stock.holding_period}
+														</Text>
+													)
+													: null}
+												{stock.position_advice
+													? (
+														<Text type="secondary" style={{ fontSize: 11 }}>
+															仓位：
+															{stock.position_advice}
+														</Text>
+													)
+													: null}
+												{stock.invalid_condition
+													? (
+														<Text type="secondary" style={{ fontSize: 11 }}>
+															失效：
+															{stock.invalid_condition}
+														</Text>
+													)
+													: null}
+											</Space>
+										</List.Item>
+									);
+								}}
+							/>
+						)
+						: <Empty description="暂无重点关注个股" image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+				</Card>
+			</Col>
+		</Row>
 	);
 }
 
@@ -828,6 +943,7 @@ export default function DragonHeadFollow() {
 									fetchFn={fetchDragonHeadFollow}
 									triggerFn={triggerDragonHeadFollow}
 									pipelineSteps={dragonHeadSteps}
+									renderExtraSections={latest => <DragonHeadExtraSections latest={latest} />}
 								/>
 							),
 						},

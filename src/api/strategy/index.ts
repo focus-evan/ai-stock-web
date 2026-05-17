@@ -65,10 +65,17 @@ export interface DragonHeadFollowStock {
 	change_pct?: number
 	confidence?: number
 	position_pct?: number
+	position_advice?: string
 	reason?: string
 	risk_warning?: string
 	risk_level?: string
 	holding_period?: string
+	entry_window?: string
+	invalid_condition?: string
+	signal_type?: string
+	candidate_pool?: string
+	related_themes?: string[]
+	industry?: string
 	expected_return?: string
 }
 
@@ -255,13 +262,24 @@ function buildEmotionRelayFollowItem(payload: any, limit: number): DragonHeadFol
 			change_pct: stock?.change_pct,
 			confidence: mapEmotionRelayConfidence(stock),
 			position_pct: mapEmotionRelayPosition(stock),
+			position_advice: signal?.entry_plan?.position_advice,
 			reason: Array.isArray(stock?.reasons) && stock.reasons.length > 0
 				? stock.reasons[0]
-				: stock?.operation_suggestion || stock?.theory_tag || stock?.recommendation_level || "情绪接力候选",
+				: stock?.buy_reason || stock?.operation_suggestion || stock?.theory_tag || stock?.recommendation_level || "情绪接力候选",
 			risk_warning: stock?.risk_warning,
 			risk_level: payload?.market_regime?.risk_level,
 			holding_period: signal?.holding_horizon,
-			action_detail: [stock?.entry_timing, signal?.entry_window, stock?.next_day_outlook].filter(Boolean).join("｜") || undefined,
+			entry_window: signal?.entry_window,
+			invalid_condition: signal?.invalid_condition,
+			signal_type: signal?.signal_type,
+			candidate_pool: stock?.candidate_pool,
+			related_themes: stock?.related_themes,
+			industry: stock?.industry,
+			action_detail: [
+				signal?.signal_type ? `信号：${signal.signal_type}` : "",
+				signal?.entry_window ? `窗口：${signal.entry_window}` : stock?.entry_timing ? `时机：${stock.entry_timing}` : "",
+				signal?.holding_horizon ? `周期：${signal.holding_horizon}` : "",
+			].filter(Boolean).join("｜") || undefined,
 		});
 		if (recommendations.length >= limit)
 			break;
