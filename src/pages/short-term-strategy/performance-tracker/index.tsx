@@ -54,8 +54,7 @@ const { Title, Text } = Typography;
 
 const STRATEGY_LABELS: Record<string, string> = {
 	dragon_head: "龙头战法",
-	relay: "连板接力",
-	sentiment: "情绪战法",
+	emotion_relay: "情绪接力",
 	event_driven: "事件驱动",
 	breakthrough: "突破战法",
 	volume_price: "量价关系",
@@ -69,8 +68,7 @@ const STRATEGY_LABELS: Record<string, string> = {
 
 const STRATEGY_COLORS: Record<string, string> = {
 	dragon_head: "#f5222d",
-	relay: "#fa8c16",
-	sentiment: "#eb2f96",
+	emotion_relay: "#7c3aed",
 	event_driven: "#722ed1",
 	breakthrough: "#1890ff",
 	volume_price: "#52c41a",

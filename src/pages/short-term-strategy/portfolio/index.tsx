@@ -91,8 +91,8 @@ function profitColor(val: number): string {
 /** 策略名称 */
 const STRATEGY_NAMES: Record<string, string> = {
 	dragon_head: "龙头战法",
+	emotion_relay: "情绪接力",
 	event_driven: "事件驱动",
-	sentiment: "情绪战法",
 	breakthrough: "突破战法",
 	volume_price: "量价关系",
 	overnight: "隔夜施工法",
@@ -1073,7 +1073,7 @@ export default function PortfolioDashboard() {
 											<Text type="secondary" style={{ fontSize: 12 }}>
 												{({
 													dragon_head: "推荐 10:00,13:05 | 交易 10:15",
-													sentiment: "推荐 10:30,13:10 | 交易 10:45",
+													emotion_relay: "推荐 09:40 | 交易 09:55",
 													event_driven: "推荐 09:40,13:00 | 交易 09:55",
 													breakthrough: "凌晨预生成 01:00 | 交易 10:20",
 													volume_price: "凌晨预生成 02:30 | 交易 10:50",
@@ -1345,7 +1345,7 @@ export default function PortfolioDashboard() {
 					>
 						<Radio.Group buttonStyle="solid">
 							<Radio.Button value="dragon_head">🐉 龙头战法</Radio.Button>
-							<Radio.Button value="sentiment">💓 情绪战法</Radio.Button>
+							<Radio.Button value="emotion_relay">⚡ 情绪接力</Radio.Button>
 							<Radio.Button value="event_driven">📡 事件驱动</Radio.Button>
 						</Radio.Group>
 					</Form.Item>
@@ -1380,8 +1380,8 @@ export default function PortfolioDashboard() {
 					<Alert
 						type="info"
 						showIcon
-						message="GPT-5.2 将根据最新策略推荐自动分配资金"
-						description="创建后，系统会获取策略推荐股票，由GPT-5.2智能分配资金比例，模拟建仓。龙头/事件驱动 09:10 & 12:40 交易，情绪战法 11:10 & 14:10 交易。"
+						message="AI 将根据最新策略推荐自动分配资金"
+						description="创建后，系统会获取策略推荐股票，由AI智能分配资金比例并模拟建仓。龙头战法 10:15 交易，情绪接力 09:55 交易，事件驱动 09:55 交易。"
 						style={{ marginBottom: 16 }}
 					/>
 
