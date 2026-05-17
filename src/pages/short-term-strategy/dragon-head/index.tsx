@@ -103,8 +103,21 @@ function isThemeV2(theme: DragonHeadData["main_themes"][number]): theme is Drago
 	return typeof (theme as DragonThemeV2).role === "string" && Array.isArray((theme as DragonThemeV2).ladder);
 }
 
+function signalPriority(signal: DragonEntrySignal): number {
+	const poolScore = signal.candidate_pool === "core" ? 3 : signal.candidate_pool === "watch" ? 2 : 1;
+	return poolScore * 1000 + Number(signal.signal_strength || 0);
+}
+
 function normalizeSignals(data: DragonHeadData): DragonEntrySignal[] {
-	return data.entry_signals || [];
+	const signals = data.entry_signals || [];
+	const deduped = new Map<string, DragonEntrySignal>();
+	for (const signal of signals) {
+		const key = signal.code || `${signal.name}-${signal.signal_type}-${signal.entry_window}`;
+		const existing = deduped.get(key);
+		if (!existing || signalPriority(signal) > signalPriority(existing))
+			deduped.set(key, signal);
+	}
+	return Array.from(deduped.values()).sort((a, b) => signalPriority(b) - signalPriority(a));
 }
 
 function normalizeThemeLadders(data: DragonHeadData): DragonThemeV2[] {
@@ -202,6 +215,10 @@ function SignalList({ entrySignals }: { entrySignals: DragonEntrySignal[] }) {
 								<Tag color={getPoolColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
 								<Tag color="purple">{signal.signal_type}</Tag>
 								<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
+								<Tag>
+									{Math.round(signal.signal_strength || 0)}
+									分
+								</Tag>
 							</Space>
 							<Text>
 								结论：
@@ -211,6 +228,22 @@ function SignalList({ entrySignals }: { entrySignals: DragonEntrySignal[] }) {
 								买点窗口：
 								{signal.entry_window}
 							</Text>
+							{signal.entry_plan?.position_advice
+								? (
+									<Text type="secondary">
+										仓位建议：
+										{signal.entry_plan.position_advice}
+									</Text>
+								)
+								: null}
+							{signal.entry_plan?.buy_price_range
+								? (
+									<Text type="secondary">
+										参考买点：
+										{String(signal.entry_plan.buy_price_range)}
+									</Text>
+								)
+								: null}
 							<Text type="secondary">
 								失效条件：
 								{signal.invalid_condition}
