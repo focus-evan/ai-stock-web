@@ -267,15 +267,14 @@ export default function SchedulerPage() {
 	// 按策略分组
 	const strategies = [
 		"dragon_head",
+		"emotion_relay",
 		"event_driven",
-		"sentiment",
 		"breakthrough",
 		"volume_price",
 		"overnight",
 		"moving_average",
 		"northbound",
 		"trend_momentum",
-		"relay",
 		"combined",
 		"moat_value",
 		"sentiment_scan",
@@ -286,8 +285,9 @@ export default function SchedulerPage() {
 	];
 	const strategyNames: Record<string, string> = {
 		dragon_head: "🐉 龙头战法",
+		emotion_relay: "⚡ 情绪接力",
 		event_driven: "📡 事件驱动",
-		sentiment: "💡 情绪战法",
+		emotion_relay: "⚡ 情绪接力",
 		breakthrough: "🚀 突破战法",
 		volume_price: "📊 量价关系",
 		overnight: "🌙 隔夜施工法",
