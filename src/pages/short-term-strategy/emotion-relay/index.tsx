@@ -65,13 +65,27 @@ function getRiskColor(level?: string): string {
 	}
 }
 
+function getBoardColor(record: any): string {
+	const displayBoardTag = String(record?.display_board_tag || "");
+	const limitUpDays = Number(record?.limit_up_days || 0);
+	if (displayBoardTag.includes("高位") || displayBoardTag.includes("退潮") || displayBoardTag.includes("空仓"))
+		return "red";
+	if (displayBoardTag.includes("转强") || displayBoardTag.includes("主线"))
+		return "purple";
+	if (limitUpDays >= 3)
+		return "red";
+	if (limitUpDays >= 1)
+		return "orange";
+	return "gold";
+}
+
 function renderBoardTag(record: any) {
 	const limitUpDays = Number(record?.limit_up_days || 0);
 	const relayScore = typeof record?.relay_score === "number"
 		? record.relay_score
 		: (record?.relay_score ? Number(record.relay_score) : null);
 	const displayBoardTag = record?.display_board_tag;
-	const boardColor = limitUpDays >= 3 ? "red" : limitUpDays >= 1 ? "orange" : "gold";
+	const boardColor = getBoardColor(record);
 	const boardLabel = displayBoardTag || (limitUpDays > 0 ? `${limitUpDays} 连板` : "情绪观察");
 	const scoreText = relayScore != null && Number.isFinite(relayScore)
 		? relayScore.toFixed(1)
@@ -145,6 +159,8 @@ export default function EmotionRelayPage() {
 	const watchCandidates = useMemo(() => data?.watch_candidates || [], [data]);
 	const avoidCandidates = useMemo(() => data?.avoid_candidates || [], [data]);
 	const hasCoreCandidates = coreCandidates.length > 0;
+	const watchTitle = `观察池（${watchCandidates.length}）`;
+	const avoidTitle = `回避池（${avoidCandidates.length}）`;
 
 	const columns: ColumnsType<any> = [
 		{ title: "股票", key: "stock", render: (_, record) => (
@@ -163,6 +179,10 @@ export default function EmotionRelayPage() {
 		) },
 		{ title: "逻辑", key: "logic", render: (_, record) => (
 			<Space direction="vertical" size={0}>
+				<Space wrap>
+					{record.theory_tag ? <Tag color="blue">{record.theory_tag}</Tag> : null}
+					{record.candidate_pool === "avoid" && record.display_board_tag ? <Tag color="red">{record.display_board_tag}</Tag> : null}
+				</Space>
 				<Text>{record.buy_reason || record.reasons?.[0] || "-"}</Text>
 				{record.risk_warning ? <Text type="warning" style={{ fontSize: 12 }}>{record.risk_warning}</Text> : null}
 			</Space>
@@ -305,12 +325,12 @@ export default function EmotionRelayPage() {
 
 							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
 								<Col xs={24} lg={12}>
-									<Card title="观察池">
+									<Card title={watchTitle}>
 										<Table dataSource={watchCandidates} rowKey="code" size="small" pagination={false} columns={columns.slice(0, 4)} />
 									</Card>
 								</Col>
 								<Col xs={24} lg={12}>
-									<Card title="回避池">
+									<Card title={avoidTitle}>
 										<Table dataSource={avoidCandidates} rowKey={(record: any, idx?: number) => record.code || `avoid-${idx}`} size="small" pagination={false} columns={columns.slice(0, 4)} />
 									</Card>
 								</Col>
