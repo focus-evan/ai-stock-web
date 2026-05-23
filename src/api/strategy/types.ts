@@ -70,6 +70,13 @@ export interface DragonEntrySignal {
 	invalid_condition: string
 	risk_level: string
 	holding_horizon: string
+	action_verdict?: string
+	action?: "买入" | "观望" | "跳过" | "持有" | "卖出" | string
+	can_chase_limit_up?: boolean
+	auction_scenario?: string
+	execution_priority?: number
+	entry_style?: string
+	reason_short?: string
 	entry_plan: DragonSignalPlan
 }
 

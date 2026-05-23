@@ -287,7 +287,6 @@ export default function SchedulerPage() {
 		dragon_head: "🐉 龙头战法",
 		emotion_relay: "⚡ 情绪接力",
 		event_driven: "📡 事件驱动",
-		emotion_relay: "⚡ 情绪接力",
 		breakthrough: "🚀 突破战法",
 		volume_price: "📊 量价关系",
 		overnight: "🌙 隔夜施工法",

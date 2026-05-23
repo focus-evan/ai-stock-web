@@ -1,4 +1,4 @@
-import type { DragonEntrySignal, DragonHeadFollowItem, DragonHeadFollowStock, DragonThemeV2 } from "#src/api/strategy";
+import type { DragonEntrySignal, DragonHeadFollowItem, DragonHeadFollowStock, DragonThemeV2, RelayStock } from "#src/api/strategy";
 
 import {
 	fetchDragonHeadFollow,
@@ -6,7 +6,6 @@ import {
 	triggerDragonHeadFollow,
 	triggerEmotionRelayFollow,
 } from "#src/api/strategy";
-import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	AlertOutlined,
@@ -108,13 +107,53 @@ function getPoolLabel(pool?: string): string {
 	}
 }
 
+type DisplayStock = DragonHeadFollowStock & Partial<RelayStock> & {
+	name: string
+	code: string
+	stop_loss?: number
+	current_price?: number
+	action: string
+	reason?: string
+	action_detail?: string
+	invalid_condition?: string
+	related_themes?: string[]
+	holding_period?: string
+	position_advice?: string
+	candidate_pool?: string
+	signal_type?: string
+	target_price?: number
+	position_pct?: number
+	confidence?: number
+	risk_warning?: string
+	change_pct?: number
+};
+
 /** 标准化股票字段名（兼容 dragon_head 和 relay 两种数据格式） */
-function normalizeStock(stock: DragonHeadFollowStock) {
+function normalizeStock(stock: DragonHeadFollowStock | RelayStock): DisplayStock {
+	const rawPosition = (stock as any).position_pct;
+	const normalizedPosition = typeof rawPosition === "string"
+		? Number(String(rawPosition).replace("%", "")) || undefined
+		: rawPosition;
 	return {
-		...stock,
-		name: stock.name || stock.stock_name || "",
-		code: stock.code || stock.stock_code || "",
-		stop_loss: stock.stop_loss ?? stock.stop_loss_price ?? undefined,
+		...(stock as any),
+		name: stock.name || (stock as DragonHeadFollowStock).stock_name || "",
+		code: stock.code || (stock as DragonHeadFollowStock).stock_code || "",
+		stop_loss: (stock as DragonHeadFollowStock).stop_loss ?? stock.stop_loss_price ?? undefined,
+		current_price: (stock as DragonHeadFollowStock).current_price ?? (stock as any).price,
+		action: (stock as DragonHeadFollowStock).action || "观望",
+		reason: (stock as DragonHeadFollowStock).reason || (stock as RelayStock).buy_reason || (stock as any).reasons?.[0],
+		action_detail: (stock as DragonHeadFollowStock).action_detail,
+		invalid_condition: (stock as DragonHeadFollowStock).invalid_condition,
+		related_themes: (stock as DragonHeadFollowStock).related_themes,
+		holding_period: (stock as DragonHeadFollowStock).holding_period,
+		position_advice: (stock as DragonHeadFollowStock).position_advice,
+		candidate_pool: (stock as DragonHeadFollowStock).candidate_pool,
+		signal_type: (stock as DragonHeadFollowStock).signal_type,
+		target_price: (stock as DragonHeadFollowStock).target_price ?? stock.target_price,
+		position_pct: normalizedPosition,
+		confidence: (stock as DragonHeadFollowStock).confidence ?? (stock as RelayStock).confidence,
+		risk_warning: (stock as DragonHeadFollowStock).risk_warning ?? (stock as RelayStock).risk_warning,
+		change_pct: (stock as DragonHeadFollowStock).change_pct ?? stock.change_pct,
 	};
 }
 
@@ -162,7 +201,7 @@ function RelayThemeCard({ theme }: { theme: DragonThemeV2 }) {
 	);
 }
 
-function RelayCandidateList({ title, items, color }: { title: string, items: DragonHeadFollowStock[], color: string }) {
+function RelayCandidateList({ title, items, color }: { title: string, items: Array<DragonHeadFollowStock | RelayStock>, color: string }) {
 	return (
 		<Card size="small" title={title} styles={{ header: { borderLeft: `4px solid ${color}` } }}>
 			{items.length > 0
@@ -170,7 +209,7 @@ function RelayCandidateList({ title, items, color }: { title: string, items: Dra
 					<List
 						size="small"
 						dataSource={items}
-						renderItem={(raw: DragonHeadFollowStock, index) => {
+						renderItem={(raw: DragonHeadFollowStock | RelayStock, index) => {
 							const item = normalizeStock(raw);
 							return (
 								<List.Item key={`${item.code || index}-${title}`}>
@@ -432,7 +471,7 @@ function RelayExtraSections({ latest }: { latest: DragonHeadFollowItem }) {
 }
 
 /** ================== 通用跟投面板组件 ================== */
-function FollowPanel({
+export function FollowPanel({
 	strategyLabel,
 	strategyIcon,
 	fetchFn,
@@ -555,7 +594,6 @@ function FollowPanel({
 
 	return (
 		<div>
-			{/* Header */}
 			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 				<Space align="center">
 					{strategyIcon}
@@ -579,7 +617,6 @@ function FollowPanel({
 				</Space>
 			</div>
 
-			{/* 置信度 & 概览 */}
 			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
 				<Col xs={24} md={6}>
 					<Card size="small" styles={{ body: { textAlign: "center", padding: "16px" } }}>
@@ -623,12 +660,10 @@ function FollowPanel({
 				</Col>
 			</Row>
 
-			{/* 市场概览 */}
 			{latest.market_overview && (
 				<Alert style={{ marginBottom: 16 }} type="info" showIcon icon={<AlertOutlined />} message={<Text strong>市场概览</Text>} description={latest.market_overview} />
 			)}
 
-			{/* 策略总结 */}
 			{latest.strategy_summary && (
 				<Card
 					size="small"
@@ -646,12 +681,10 @@ function FollowPanel({
 
 			{extraSections}
 
-			{/* 风险提示 */}
 			{latest.risk_warning && (
 				<Alert style={{ marginBottom: 16 }} type="warning" showIcon message={<Text strong>风险提示</Text>} description={latest.risk_warning} />
 			)}
 
-			{/* 个股操作指令卡片 */}
 			{latest.recommendations && latest.recommendations.length > 0 && (
 				<Card
 					title={(
@@ -758,7 +791,6 @@ function FollowPanel({
 											</div>
 										)}
 
-										{/* 通用扩展字段：如推荐池说明 */}
 										{(stock as any).action_detail && (
 											<div style={{ marginBottom: 4 }}>
 												<Text style={{ fontSize: 12, color: "#595959" }}>{(stock as any).action_detail}</Text>
@@ -880,7 +912,6 @@ function FollowPanel({
 
 			{renderBottomContent}
 
-			{/* 流程说明 */}
 			<Card
 				title={(
 					<Space>
@@ -897,79 +928,78 @@ function FollowPanel({
 	);
 }
 
-/** ================== 主页面 ================== */
-export default function DragonHeadFollow() {
-	const dragonHeadSteps = [
-		{ title: "08:30 盘前候选池", description: "昨日涨停数据生成观察池", status: "finish" as const },
-		{ title: "09:35 竞价确认", description: "开盘5分钟后确认主线龙头", status: "finish" as const },
-		{ title: "09:36 ★跟投指导", description: "竞价确认后立即生成操作指令", status: "process" as const },
-		{ title: "14:30 调仓(T+1)", description: "仅卖昨日持仓", status: "finish" as const },
-		{ title: "15:30 盘后复盘", description: "次日预判（非实盘）", status: "wait" as const },
-	];
+export const dragonHeadSteps = [
+	{ title: "08:30 盘前候选池", description: "昨日涨停数据生成观察池", status: "finish" as const },
+	{ title: "09:35 竞价确认", description: "开盘5分钟后确认主线龙头", status: "finish" as const },
+	{ title: "09:36 ★跟投指导", description: "竞价确认后立即生成操作指令", status: "process" as const },
+	{ title: "14:30 调仓(T+1)", description: "仅卖昨日持仓", status: "finish" as const },
+	{ title: "15:30 盘后复盘", description: "次日预判（非实盘）", status: "wait" as const },
+];
 
-	const emotionRelaySteps = [
-		{ title: "情绪择时", description: "结合情绪周期判断试错、主做或空仓", status: "finish" as const },
-		{ title: "主线梯队", description: "融合接力候选与主线板块梯队", status: "finish" as const },
-		{ title: "候选分层", description: "输出核心、观察、回避三类推荐池", status: "process" as const },
-		{ title: "盘后刷新", description: "手动刷新后同步最新情绪接力推荐", status: "wait" as const },
-	];
+const emotionRelaySteps = [
+	{ title: "情绪择时", description: "结合情绪周期判断试错、主做或空仓", status: "finish" as const },
+	{ title: "主线梯队", description: "融合接力候选与主线板块梯队", status: "finish" as const },
+	{ title: "候选分层", description: "输出核心、观察、回避三类推荐池", status: "process" as const },
+	{ title: "盘后刷新", description: "手动刷新后同步最新情绪接力推荐", status: "wait" as const },
+];
 
+export function DragonHeadFollowExecutionTab() {
 	return (
-		<BasicContent>
-			<div style={{ padding: "0 0 24px 0" }}>
-				{/* 页面标题 */}
-				<div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
-					<TeamOutlined style={{ fontSize: 24, color: "#1890ff", marginRight: 8 }} />
-					<Title level={4} style={{ margin: 0 }}>实盘跟投指导</Title>
-				</div>
+		<FollowPanel
+			strategyLabel="龙头战法"
+			strategyIcon={<CrownOutlined style={{ fontSize: 20, color: "#f5222d" }} />}
+			fetchFn={fetchDragonHeadFollow}
+			triggerFn={triggerDragonHeadFollow}
+			pipelineSteps={dragonHeadSteps}
+			renderExtraSections={latest => <DragonHeadExtraSections latest={latest} />}
+		/>
+	);
+}
 
-				{/* Tabs: 龙头战法 + 情绪接力 */}
-				<Tabs
-					defaultActiveKey="dragon_head"
-					type="card"
-					items={[
-						{
-							key: "dragon_head",
-							label: (
-								<Space>
-									<CrownOutlined style={{ color: "#f5222d" }} />
-									龙头战法
-								</Space>
-							),
-							children: (
-								<FollowPanel
-									strategyLabel="龙头战法"
-									strategyIcon={<CrownOutlined style={{ fontSize: 20, color: "#f5222d" }} />}
-									fetchFn={fetchDragonHeadFollow}
-									triggerFn={triggerDragonHeadFollow}
-									pipelineSteps={dragonHeadSteps}
-									renderExtraSections={latest => <DragonHeadExtraSections latest={latest} />}
-								/>
-							),
-						},
-						{
-							key: "relay",
-							label: (
-								<Space>
-									<ThunderboltOutlined style={{ color: "#fa8c16" }} />
-									情绪接力
-								</Space>
-							),
-							children: (
-								<FollowPanel
-									strategyLabel="情绪接力"
-									strategyIcon={<ThunderboltOutlined style={{ fontSize: 20, color: "#fa8c16" }} />}
-									fetchFn={fetchEmotionRelayFollow}
-									triggerFn={triggerEmotionRelayFollow}
-									pipelineSteps={emotionRelaySteps}
-									renderExtraSections={latest => <RelayExtraSections latest={latest} />}
-									renderBottomContent={<RecommendationHistory strategyType="emotion_relay" title="历史跟投指令" />}
-								/>
-							),
-						},
-					]}
-				/>
+export default function DragonHeadFollow() {
+	return (
+		<div style={{ paddingBottom: 24 }}>
+			<div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
+				<TeamOutlined style={{ fontSize: 24, color: "#1890ff", marginRight: 8 }} />
+				<Title level={4} style={{ margin: 0 }}>实盘跟投指导</Title>
 			</div>
+
+			<Tabs
+				defaultActiveKey="dragon_head"
+				type="card"
+				items={[
+					{
+						key: "dragon_head",
+						label: (
+							<Space>
+								<CrownOutlined style={{ color: "#f5222d" }} />
+								龙头战法
+							</Space>
+						),
+						children: <DragonHeadFollowExecutionTab />,
+					},
+					{
+						key: "relay",
+						label: (
+							<Space>
+								<ThunderboltOutlined style={{ color: "#fa8c16" }} />
+								情绪接力
+							</Space>
+						),
+						children: (
+							<FollowPanel
+								strategyLabel="情绪接力"
+								strategyIcon={<ThunderboltOutlined style={{ fontSize: 20, color: "#fa8c16" }} />}
+								fetchFn={fetchEmotionRelayFollow}
+								triggerFn={triggerEmotionRelayFollow}
+								pipelineSteps={emotionRelaySteps}
+								renderExtraSections={latest => <RelayExtraSections latest={latest} />}
+								renderBottomContent={<RecommendationHistory strategyType="emotion_relay" title="历史跟投指令" />}
+							/>
+						),
+					},
+				]}
+			/>
 
 			<style>
 				{`
@@ -980,6 +1010,6 @@ export default function DragonHeadFollow() {
 				}
 				`}
 			</style>
-		</BasicContent>
+		</div>
 	);
 }

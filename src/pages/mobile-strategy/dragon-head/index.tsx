@@ -1,4 +1,4 @@
-import type { DragonHeadData, StockRecommendation } from "#src/api/strategy";
+import type { DragonHeadData, DragonThemeV2, StockRecommendation, ThemeInfo } from "#src/api/strategy";
 import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
 import {
 	MobileAlertBanner,
@@ -102,24 +102,28 @@ export default function MobileDragonHead() {
 							<>
 								<SectionTitle>🔥 今日主线题材</SectionTitle>
 								<div style={{ margin: "0 16px 12px", display: "flex", flexWrap: "wrap", gap: 8 }}>
-									{data.main_themes.map((t, i) => (
-										<Tag
-											key={i}
-											color={i === 0 ? "red" : i === 1 ? "orange" : "gold"}
-											style={{ fontSize: 13, padding: "4px 12px" }}
-										>
-											{t.name}
-											{t.details?.change_pct
-												? (
-													<span style={{ marginLeft: 4 }}>
-														{t.details.change_pct > 0 ? "+" : ""}
-														{t.details.change_pct.toFixed(2)}
-														%
-													</span>
-												)
-												: null}
-										</Tag>
-									))}
+									{data.main_themes.map((t, i) => {
+										const theme = t as ThemeInfo | DragonThemeV2;
+										const changePct = "details" in theme ? theme.details?.change_pct : theme.change_pct;
+										return (
+											<Tag
+												key={i}
+												color={i === 0 ? "red" : i === 1 ? "orange" : "gold"}
+												style={{ fontSize: 13, padding: "4px 12px" }}
+											>
+												{theme.name}
+												{typeof changePct === "number"
+													? (
+														<span style={{ marginLeft: 4 }}>
+															{changePct > 0 ? "+" : ""}
+															{changePct.toFixed(2)}
+															%
+														</span>
+													)
+													: null}
+											</Tag>
+										);
+									})}
 								</div>
 							</>
 						)}

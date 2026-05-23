@@ -10,6 +10,7 @@ import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from
 import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
+import { DragonHeadFollowExecutionTab } from "#src/pages/short-term-strategy/dragon-head-follow";
 import {
 	AlertOutlined,
 	CrownOutlined,
@@ -83,9 +84,21 @@ function getPoolLabel(pool?: string): string {
 }
 
 function getSignalAction(signal: DragonEntrySignal): { label: string, color: string } {
+	const verdict = String(signal?.action_verdict || "");
 	const pool = signal?.candidate_pool;
 	const risk = String(signal?.risk_level || "");
 	const type = String(signal?.signal_type || "");
+
+	if (verdict === "可排板")
+		return { label: "可排板", color: "red" };
+	if (verdict === "竞价确认买入")
+		return { label: "竞价确认买入", color: "orange" };
+	if (verdict === "仅分歧回封")
+		return { label: "仅分歧回封", color: "blue" };
+	if (verdict === "放弃")
+		return { label: "放弃", color: "default" };
+	if (verdict === "观察")
+		return { label: "观察", color: "blue" };
 
 	if (pool === "core") {
 		if (risk === "高")
@@ -99,11 +112,25 @@ function getSignalAction(signal: DragonEntrySignal): { label: string, color: str
 	return { label: "观望", color: "blue" };
 }
 
+function getSignalActionText(signal: DragonEntrySignal): string {
+	if (signal.action)
+		return signal.action;
+	const verdict = signal.action_verdict || "";
+	if (verdict === "放弃")
+		return "跳过";
+	if (verdict === "观察")
+		return "观望";
+	return "买入";
+}
+
 function isThemeV2(theme: DragonHeadData["main_themes"][number]): theme is DragonThemeV2 {
 	return typeof (theme as DragonThemeV2).role === "string" && Array.isArray((theme as DragonThemeV2).ladder);
 }
 
 function signalPriority(signal: DragonEntrySignal): number {
+	const explicitPriority = Number(signal.execution_priority || 0);
+	if (explicitPriority > 0)
+		return explicitPriority * 100 + Number(signal.signal_strength || 0);
 	const poolScore = signal.candidate_pool === "core" ? 3 : signal.candidate_pool === "watch" ? 2 : 1;
 	return poolScore * 1000 + Number(signal.signal_strength || 0);
 }
@@ -200,59 +227,82 @@ function SignalList({ entrySignals }: { entrySignals: DragonEntrySignal[] }) {
 
 	return (
 		<List
-			header={<Text strong>买点信号</Text>}
+			header={<Text strong>次日执行信号</Text>}
 			style={{ marginTop: 16 }}
+			grid={{ gutter: 16, xs: 1, md: 2, xl: 3 }}
 			dataSource={entrySignals}
 			renderItem={(signal) => {
 				const action = getSignalAction(signal);
+				const actionText = getSignalActionText(signal);
+				const canChaseText = signal.can_chase_limit_up ? "允许直接挂涨停价" : "不可直接挂涨停价";
 				return (
 					<List.Item>
-						<Space direction="vertical" size={2} style={{ width: "100%" }}>
-							<Space wrap>
-								<Text strong>{signal.name}</Text>
-								<Text type="secondary">{signal.code}</Text>
-								<Tag color={action.color}>{action.label}</Tag>
-								<Tag color={getPoolColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
-								<Tag color="purple">{signal.signal_type}</Tag>
-								<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
-								<Tag>
-									{Math.round(signal.signal_strength || 0)}
-									分
-								</Tag>
+						<Card size="small" style={{ height: "100%", borderLeft: `4px solid ${action.color === "red" ? "#f5222d" : action.color === "orange" ? "#fa8c16" : action.color === "blue" ? "#1677ff" : "#8c8c8c"}` }}>
+							<Space direction="vertical" size={6} style={{ width: "100%" }}>
+								<Space wrap>
+									<Text strong>{signal.name}</Text>
+									<Text type="secondary">{signal.code}</Text>
+									<Tag color={action.color}>{action.label}</Tag>
+									<Tag color={getPoolColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
+									{signal.entry_style ? <Tag color="purple">{signal.entry_style}</Tag> : null}
+									<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
+								</Space>
+								<Text>
+									最终动作：
+									<Text strong style={{ marginLeft: 4 }}>{actionText}</Text>
+								</Text>
+								{signal.reason_short ? <Text style={{ color: "#595959" }}>{signal.reason_short}</Text> : null}
+								<Text>
+									执行窗口：
+									{signal.entry_window}
+								</Text>
+								<Text type={signal.can_chase_limit_up ? undefined : "warning"}>{canChaseText}</Text>
+								{signal.auction_scenario
+									? (
+										<Text type="secondary">
+											竞价条件：
+											{signal.auction_scenario}
+										</Text>
+									)
+									: null}
+								{signal.entry_plan?.position_advice
+									? (
+										<Text type="secondary">
+											仓位建议：
+											{signal.entry_plan.position_advice}
+										</Text>
+									)
+									: null}
+								{signal.entry_plan?.buy_price_range
+									? (
+										<Text type="secondary">
+											参考买点：
+											{String(signal.entry_plan.buy_price_range)}
+										</Text>
+									)
+									: null}
+								{signal.entry_plan?.target_price
+									? (
+										<Text type="secondary">
+											目标价：¥
+											{Number(signal.entry_plan.target_price).toFixed(2)}
+										</Text>
+									)
+									: null}
+								{signal.entry_plan?.stop_loss_price
+									? (
+										<Text type="secondary">
+											止损价：¥
+											{Number(signal.entry_plan.stop_loss_price).toFixed(2)}
+										</Text>
+									)
+									: null}
+								<Text type="secondary">
+									失效条件：
+									{signal.invalid_condition}
+								</Text>
 							</Space>
-							<Text>
-								结论：
-								<Text strong style={{ marginLeft: 4 }}>{action.label}</Text>
-							</Text>
-							<Text>
-								买点窗口：
-								{signal.entry_window}
-							</Text>
-							{signal.entry_plan?.position_advice
-								? (
-									<Text type="secondary">
-										仓位建议：
-										{signal.entry_plan.position_advice}
-									</Text>
-								)
-								: null}
-							{signal.entry_plan?.buy_price_range
-								? (
-									<Text type="secondary">
-										参考买点：
-										{String(signal.entry_plan.buy_price_range)}
-									</Text>
-								)
-								: null}
-							<Text type="secondary">
-								失效条件：
-								{signal.invalid_condition}
-							</Text>
-							<Text type="secondary">
-								持仓周期：
-								{signal.holding_horizon}
-							</Text>
-						</Space>
+						</Card>
 					</List.Item>
 				);
 			}}
@@ -411,7 +461,7 @@ export default function DragonHead() {
 			items={[
 				{
 					key: "main",
-					label: "龙头战法V2",
+					label: "策略研判",
 					children: (
 						<BasicContent>
 							<div style={{ paddingBottom: 24 }}>
@@ -500,8 +550,15 @@ export default function DragonHead() {
 									)}
 									style={{ marginBottom: 16 }}
 								>
-									<Table<StockRecommendation> columns={coreColumns} dataSource={coreLeaders} rowKey="code" pagination={false} size="middle" />
+									<Alert
+										type="info"
+										showIcon
+										style={{ marginBottom: 16 }}
+										message="先看这里：次日直接执行结论"
+										description="这些信号是给次日实盘用的：优先区分是否可排板、是否只能竞价确认、是否只能等分歧回封，避免把昨日强势误读成次日无脑追涨。"
+									/>
 									<SignalList entrySignals={entrySignals} />
+									<Table<StockRecommendation> columns={coreColumns} dataSource={coreLeaders} rowKey="code" pagination={false} size="middle" />
 								</Card>
 
 								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
@@ -575,7 +632,22 @@ export default function DragonHead() {
 						</BasicContent>
 					),
 				},
-				{ key: "follow", label: "推荐跟进", children: <StrategyFollowTab strategyType="dragon_head" isOvernight={false} /> },
+				{
+					key: "execution",
+					label: "实盘跟投指导",
+					children: (
+						<BasicContent>
+							<div style={{ paddingBottom: 24 }}>
+								<DragonHeadFollowExecutionTab />
+							</div>
+						</BasicContent>
+					),
+				},
+				{
+					key: "follow",
+					label: "推荐跟踪",
+					children: <StrategyFollowTab strategyType="dragon_head" isOvernight={false} />,
+				},
 			]}
 		/>
 	);

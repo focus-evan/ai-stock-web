@@ -6,7 +6,7 @@
 export interface PortfolioConfig {
 	id: number
 	user_id?: number | null
-	strategy_type: "dragon_head" | "sentiment" | "event_driven"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven" | "emotion_relay" | "breakthrough" | "volume_price" | "overnight" | "auction" | "moving_average" | "northbound" | "trend_momentum" | "combined" | "moat_value"
 	name: string
 	initial_capital: number
 	available_cash: number
@@ -141,7 +141,7 @@ export interface StockPnlResponse {
 
 /** 创建组合请求 */
 export interface CreatePortfolioRequest {
-	strategy_type: "dragon_head" | "sentiment" | "event_driven"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven" | "emotion_relay" | "breakthrough" | "volume_price" | "overnight" | "auction" | "moving_average" | "northbound" | "trend_momentum" | "combined" | "moat_value"
 	name: string
 	initial_capital: number
 }
@@ -165,7 +165,7 @@ export interface PortfolioResponse {
 export interface ReviewItem {
 	id?: number
 	portfolio_id: number
-	strategy_type: "dragon_head" | "sentiment" | "event_driven"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven" | "emotion_relay" | "breakthrough" | "volume_price" | "overnight" | "auction" | "moving_average" | "northbound" | "trend_momentum" | "combined" | "moat_value"
 	trading_date: string
 	trade_count: number
 	buy_count: number
@@ -222,7 +222,7 @@ export interface FollowStock {
 export interface FollowRecommendation {
 	id?: number
 	portfolio_id: number
-	strategy_type: "dragon_head" | "sentiment" | "event_driven"
+	strategy_type: "dragon_head" | "sentiment" | "event_driven" | "emotion_relay" | "breakthrough" | "volume_price" | "overnight" | "auction" | "moving_average" | "northbound" | "trend_momentum" | "combined" | "moat_value"
 	trading_date: string
 	session_type: string
 	recommendations: FollowStock[]

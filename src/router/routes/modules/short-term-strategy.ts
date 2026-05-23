@@ -7,7 +7,6 @@ import { lazy } from "react";
 const DailyPicks = lazy(() => import("#src/pages/short-term-strategy/daily-picks"));
 const DailyPicksFollow = lazy(() => import("#src/pages/short-term-strategy/daily-picks-follow"));
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
-const DragonHeadFollow = lazy(() => import("#src/pages/short-term-strategy/dragon-head-follow"));
 const EmotionRelay = lazy(() => import("#src/pages/short-term-strategy/emotion-relay"));
 const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
@@ -56,14 +55,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "CrownOutlined",
 					title: "龙头战法",
-				},
-			},
-			{
-				path: "/short-term-strategy/dragon-head-follow",
-				Component: DragonHeadFollow,
-				handle: {
-					icon: "TeamOutlined",
-					title: "实盘跟投",
 				},
 			},
 			{
@@ -150,7 +141,7 @@ const routes: AppRouteRecordRaw[] = [
 				path: "/short-term-strategy/combined",
 				Component: Combined,
 				handle: {
-					icon: "MergeCellsOutlined",
+					icon: "MergeOutlined",
 					title: "综合战法",
 				},
 			},
@@ -166,23 +157,23 @@ const routes: AppRouteRecordRaw[] = [
 				path: "/short-term-strategy/portfolio",
 				Component: Portfolio,
 				handle: {
-					icon: "FundOutlined",
-					title: "模拟交易",
+					icon: "PieChartOutlined",
+					title: "策略组合",
 				},
 			},
 			{
 				path: "/short-term-strategy/review",
 				Component: Review,
 				handle: {
-					icon: "BookOutlined",
-					title: "每日复盘",
+					icon: "HistoryOutlined",
+					title: "复盘中心",
 				},
 			},
 			{
-				path: "/short-term-strategy/sync",
+				path: "/short-term-strategy/data-sync",
 				Component: DataSync,
 				handle: {
-					icon: "SyncOutlined",
+					icon: "CloudSyncOutlined",
 					title: "数据同步",
 				},
 			},
