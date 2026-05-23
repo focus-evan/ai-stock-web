@@ -228,9 +228,9 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
 				<Col span={6}><Card size="small"><Statistic title="跟进数量" value={items.length} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#3f8600" }} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
 				<Col span={6}><Card size="small"><Statistic title="胜率" value={items.length > 0 ? ((wins / items.length) * 100).toFixed(1) : 0} suffix="%" /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title={isOvernight ? "平均次日收益" : "平均收益"} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#3f8600" : "#cf1322" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={isOvernight ? "平均次日收益" : "平均收益"} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#cf1322" : "#389e0d" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
 			</Row>
 
 			{items.length === 0
@@ -242,7 +242,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							const isUp = returnVal > 0;
 							return (
 								<Col key={item.id} xs={24} sm={12} md={8} lg={6}>
-									<Card size="small" hoverable onClick={() => handleDetail(item)} style={{ borderLeft: `3px solid ${isUp ? "#52c41a" : returnVal < 0 ? "#ff4d4f" : "#d9d9d9"}` }}>
+									<Card size="small" hoverable onClick={() => handleDetail(item)} style={{ borderLeft: `3px solid ${isUp ? "#cf1322" : returnVal < 0 ? "#389e0d" : "#d9d9d9"}` }}>
 										<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 											<div>
 												<Text strong>{item.stock_name}</Text>
@@ -252,7 +252,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 										</div>
 										<div style={{ marginTop: 8, display: "flex", justifyContent: "space-between" }}>
 											<Text type="secondary" style={{ fontSize: 12 }}>{isOvernight ? "次日收益" : "累计收益"}</Text>
-											<Text strong style={{ color: isUp ? "#52c41a" : returnVal < 0 ? "#ff4d4f" : undefined }}>
+											<Text strong style={{ color: isUp ? "#cf1322" : returnVal < 0 ? "#389e0d" : undefined }}>
 												{returnVal > 0 ? "+" : ""}
 												{returnVal.toFixed(2)}
 												%
@@ -343,7 +343,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							<Col span={12}>
 								<Text type="secondary">累计收益</Text>
 								<br />
-								<Text style={{ color: (detailItem.latest_return_pct ?? 0) >= 0 ? "#3f8600" : "#cf1322" }}>
+								<Text style={{ color: (detailItem.latest_return_pct ?? 0) >= 0 ? "#cf1322" : "#389e0d" }}>
 									{(detailItem.latest_return_pct ?? 0) > 0 ? "+" : ""}
 									{(detailItem.latest_return_pct ?? 0).toFixed(2)}
 									%
@@ -366,12 +366,12 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							? (
 								<Timeline style={{ marginTop: 12 }}>
 									{snapshots.map(snapshot => (
-										<Timeline.Item key={snapshot.id} color={snapshot.total_return_pct >= 0 ? "green" : "red"}>
+										<Timeline.Item key={snapshot.id} color={snapshot.total_return_pct >= 0 ? "red" : "green"}>
 											<div style={{ display: "flex", justifyContent: "space-between" }}>
 												<Text>{snapshot.snapshot_date}</Text>
 												<Space>
 													<Text>{snapshot.close_price.toFixed(2)}</Text>
-													<Text style={{ color: snapshot.total_return_pct >= 0 ? "#3f8600" : "#cf1322" }}>
+													<Text style={{ color: snapshot.total_return_pct >= 0 ? "#cf1322" : "#389e0d" }}>
 														{snapshot.total_return_pct > 0 ? "+" : ""}
 														{snapshot.total_return_pct.toFixed(2)}
 														%
