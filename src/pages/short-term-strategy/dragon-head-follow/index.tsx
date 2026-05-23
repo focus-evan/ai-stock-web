@@ -39,7 +39,6 @@ import {
 	Space,
 	Statistic,
 	Steps,
-	Tabs,
 	Tag,
 	Typography,
 } from "antd";
@@ -971,49 +970,5 @@ export function EmotionRelayFollowExecutionTab() {
 }
 
 export default function DragonHeadFollow() {
-	return (
-		<div style={{ paddingBottom: 24 }}>
-			<div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
-				<TeamOutlined style={{ fontSize: 24, color: "#1890ff", marginRight: 8 }} />
-				<Title level={4} style={{ margin: 0 }}>实盘跟投指导</Title>
-			</div>
-
-			<Tabs
-				defaultActiveKey="dragon_head"
-				type="card"
-				items={[
-					{
-						key: "dragon_head",
-						label: (
-							<Space>
-								<CrownOutlined style={{ color: "#f5222d" }} />
-								龙头战法
-							</Space>
-						),
-						children: <DragonHeadFollowExecutionTab />,
-					},
-					{
-						key: "relay",
-						label: (
-							<Space>
-								<ThunderboltOutlined style={{ color: "#fa8c16" }} />
-								情绪接力
-							</Space>
-						),
-						children: <EmotionRelayFollowExecutionTab />,
-					},
-				]}
-			/>
-
-			<style>
-				{`
-				.ant-card-hoverable:hover {
-					box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
-					transform: translateY(-2px);
-					transition: all 0.3s;
-				}
-				`}
-			</style>
-		</div>
-	);
+	return <DragonHeadFollowExecutionTab />;
 }
