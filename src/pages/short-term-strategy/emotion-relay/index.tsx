@@ -65,6 +65,25 @@ function getRiskColor(level?: string): string {
 	}
 }
 
+function renderBoardTag(record: any) {
+	const limitUpDays = Number(record?.limit_up_days || 0);
+	const relayScore = typeof record?.relay_score === "number"
+		? record.relay_score
+		: (record?.relay_score ? Number(record.relay_score) : null);
+	const displayBoardTag = record?.display_board_tag;
+	const boardColor = limitUpDays >= 3 ? "red" : limitUpDays >= 1 ? "orange" : "gold";
+	const boardLabel = displayBoardTag || (limitUpDays > 0 ? `${limitUpDays} 连板` : "情绪观察");
+	const scoreText = relayScore != null && Number.isFinite(relayScore)
+		? relayScore.toFixed(1)
+		: record?.theory_tag || "观察为主";
+	return (
+		<Space direction="vertical" size={0}>
+			<Tag color={boardColor}>{boardLabel}</Tag>
+			<Text>{scoreText}</Text>
+		</Space>
+	);
+}
+
 export default function EmotionRelayPage() {
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
@@ -125,6 +144,7 @@ export default function EmotionRelayPage() {
 	const coreCandidates = useMemo(() => data?.core_candidates || [], [data]);
 	const watchCandidates = useMemo(() => data?.watch_candidates || [], [data]);
 	const avoidCandidates = useMemo(() => data?.avoid_candidates || [], [data]);
+	const hasCoreCandidates = coreCandidates.length > 0;
 
 	const columns: ColumnsType<any> = [
 		{ title: "股票", key: "stock", render: (_, record) => (
@@ -133,17 +153,8 @@ export default function EmotionRelayPage() {
 				<Text type="secondary">{record.code}</Text>
 			</Space>
 		) },
-		{ title: "板块", dataIndex: "industry", key: "industry", render: (val: string) => <Tag color="cyan">{val || "未知"}</Tag> },
-		{ title: "连板/评分", key: "board", render: (_, record) => (
-			<Space direction="vertical" size={0}>
-				<Tag color={record.limit_up_days >= 3 ? "red" : "orange"}>
-					{record.limit_up_days || 0}
-					{" "}
-					连板
-				</Tag>
-				<Text>{record.relay_score || 0}</Text>
-			</Space>
-		) },
+		{ title: "板块", dataIndex: "industry", key: "industry", render: (val: string) => (val ? <Tag color="cyan">{val}</Tag> : <Text type="secondary">未归类</Text>) },
+		{ title: "连板/评分", key: "board", render: (_, record) => renderBoardTag(record) },
 		{ title: "价格", key: "price", render: (_, record) => (
 			<Space direction="vertical" size={0}>
 				<Text>{record.price ? `¥${record.price.toFixed(2)}` : "-"}</Text>
@@ -287,7 +298,9 @@ export default function EmotionRelayPage() {
 								)}
 								style={{ marginBottom: 16 }}
 							>
-								<Table dataSource={coreCandidates} rowKey="code" size="small" pagination={false} columns={columns} />
+								{hasCoreCandidates
+									? <Table dataSource={coreCandidates} rowKey="code" size="small" pagination={false} columns={columns} />
+									: <Empty description="当前暂无满足条件的核心接力候选，说明市场更偏观察或试错阶段。" />}
 							</Card>
 
 							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
