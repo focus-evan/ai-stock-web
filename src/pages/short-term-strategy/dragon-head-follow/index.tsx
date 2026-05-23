@@ -956,6 +956,20 @@ export function DragonHeadFollowExecutionTab() {
 	);
 }
 
+export function EmotionRelayFollowExecutionTab() {
+	return (
+		<FollowPanel
+			strategyLabel="情绪接力"
+			strategyIcon={<ThunderboltOutlined style={{ fontSize: 20, color: "#fa8c16" }} />}
+			fetchFn={fetchEmotionRelayFollow}
+			triggerFn={triggerEmotionRelayFollow}
+			pipelineSteps={emotionRelaySteps}
+			renderExtraSections={latest => <RelayExtraSections latest={latest} />}
+			renderBottomContent={<RecommendationHistory strategyType="emotion_relay" title="历史跟投指令" />}
+		/>
+	);
+}
+
 export default function DragonHeadFollow() {
 	return (
 		<div style={{ paddingBottom: 24 }}>
@@ -986,17 +1000,7 @@ export default function DragonHeadFollow() {
 								情绪接力
 							</Space>
 						),
-						children: (
-							<FollowPanel
-								strategyLabel="情绪接力"
-								strategyIcon={<ThunderboltOutlined style={{ fontSize: 20, color: "#fa8c16" }} />}
-								fetchFn={fetchEmotionRelayFollow}
-								triggerFn={triggerEmotionRelayFollow}
-								pipelineSteps={emotionRelaySteps}
-								renderExtraSections={latest => <RelayExtraSections latest={latest} />}
-								renderBottomContent={<RecommendationHistory strategyType="emotion_relay" title="历史跟投指令" />}
-							/>
-						),
+						children: <EmotionRelayFollowExecutionTab />,
 					},
 				]}
 			/>

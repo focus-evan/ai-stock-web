@@ -3,6 +3,7 @@ import { fetchEmotionRelayRecommendations, refreshEmotionRelayRecommendations } 
 import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
+import { EmotionRelayFollowExecutionTab } from "#src/pages/short-term-strategy/dragon-head-follow";
 import {
 	ExperimentOutlined,
 	FireOutlined,
@@ -173,7 +174,7 @@ export default function EmotionRelayPage() {
 			items={[
 				{
 					key: "main",
-					label: "情绪接力",
+					label: "策略研判",
 					children: (
 						<BasicContent>
 							<div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -317,6 +318,11 @@ export default function EmotionRelayPage() {
 							<RecommendationHistory strategyType="emotion_relay" />
 						</BasicContent>
 					),
+				},
+				{
+					key: "follow_execution",
+					label: "实盘跟投指导",
+					children: <EmotionRelayFollowExecutionTab />,
 				},
 				{
 					key: "follow",
