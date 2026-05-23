@@ -180,6 +180,13 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	}, [items]);
 
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
+	const isDragonHead = strategyType === "dragon_head";
+	const dragonSummaryMessage = isDragonHead
+		? "当前面板已按可执行核心买点收缩，只统计可执行龙头信号的跟进与表现。"
+		: null;
+	const autoAddButtonLabel = isDragonHead ? "从可执行信号添加" : "从推荐添加";
+	const countTitle = isDragonHead ? "可执行跟进数" : "跟进数量";
+	const avgReturnTitle = isOvernight ? "平均次日收益" : isDragonHead ? "平均执行收益" : "平均收益";
 
 	return (
 		<Spin spinning={loading}>
@@ -201,7 +208,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					{!isOvernight && (
 						<Button size="small" icon={<SyncOutlined />} onClick={handleSnapshot}>更新快照</Button>
 					)}
-					<Button size="small" type="primary" icon={<PlusOutlined />} onClick={handleAutoAdd}>从推荐添加</Button>
+					<Button size="small" type="primary" icon={<PlusOutlined />} onClick={handleAutoAdd}>{autoAddButtonLabel}</Button>
 					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData}>刷新</Button>
 				</Space>
 			</div>
@@ -210,16 +217,21 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 				<>
 					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
 						<Col xs={24} lg={12}>
-							<SummaryCard title="强烈推荐表现" summary={dragonSummary.strong_recommend_summary} color="#cf1322" />
+							<SummaryCard title="强烈推荐可执行表现" summary={dragonSummary.strong_recommend_summary} color="#cf1322" />
 						</Col>
 						<Col xs={24} lg={12}>
-							<SummaryCard title="推荐表现" summary={dragonSummary.recommend_summary} color="#1677ff" />
+							<SummaryCard title="推荐可执行表现" summary={dragonSummary.recommend_summary} color="#1677ff" />
 						</Col>
 					</Row>
 					<Alert
 						style={{ marginBottom: 16 }}
-						message="龙头战法推荐等级效果摘要"
-						description={dragonSummary.comparison.optimization_hint}
+						message="龙头战法可执行信号效果摘要"
+						description={(
+							<Space direction="vertical" size={4} style={{ width: "100%" }}>
+								<Text>{dragonSummary.comparison.optimization_hint}</Text>
+								{dragonSummaryMessage ? <Text type="secondary">{dragonSummaryMessage}</Text> : null}
+							</Space>
+						)}
 						type="info"
 						showIcon
 					/>
@@ -227,14 +239,14 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			)}
 
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-				<Col span={6}><Card size="small"><Statistic title="跟进数量" value={items.length} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={countTitle} value={items.length} /></Card></Col>
 				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
 				<Col span={6}><Card size="small"><Statistic title="胜率" value={items.length > 0 ? ((wins / items.length) * 100).toFixed(1) : 0} suffix="%" /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title={isOvernight ? "平均次日收益" : "平均收益"} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#cf1322" : "#389e0d" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={avgReturnTitle} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#cf1322" : "#389e0d" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
 			</Row>
 
 			{items.length === 0
-				? <Empty description="暂无跟进数据" />
+				? <Empty description={isDragonHead ? "暂无可执行信号跟进数据" : "暂无跟进数据"} />
 				: (
 					<Row gutter={[12, 12]}>
 						{items.map((item) => {
