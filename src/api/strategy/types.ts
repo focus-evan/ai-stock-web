@@ -651,9 +651,98 @@ export interface MovingAverageResponse {
 // ===================== 个股综合分析 =====================
 
 /** 单个战法信号 */
+export interface VetoCheckItem {
+	category: string
+	triggered: boolean
+	detail: string
+}
+
+export interface VetoChecks {
+	veto_triggered: boolean
+	items: VetoCheckItem[]
+	summary?: string
+}
+
+export interface CatalystCheckItem {
+	category: string
+	checked: boolean
+	status: string
+	detail?: string
+	source?: string
+	date?: string
+	credibility?: "S" | "A" | "B" | "C" | string
+}
+
+export interface DimensionScoreItem {
+	dimension: string
+	weight: number
+	current_score: number
+	trend_score: number
+	confidence: number
+	weighted_score: number
+	rationale: string
+}
+
+export interface QuadrantClassification {
+	quadrant?: string
+	rating?: string
+	summary?: string
+}
+
+export interface AntiCorrelationCheck {
+	triggered?: boolean
+	same_story_dimensions?: string[]
+	discount_factor?: number
+	adjusted_score?: number
+	detail?: string
+}
+
+export interface ConceptAuthenticityCheck {
+	question: string
+	passed: boolean
+	detail: string
+}
+
+export interface ConceptAuthenticity {
+	is_concept_stock?: boolean
+	checks?: ConceptAuthenticityCheck[]
+	verdict?: string
+}
+
+export interface PsychologyCheck {
+	risks?: string[]
+	discipline_answers?: string[]
+	summary?: string
+}
+
+export interface PositionPlan {
+	position_pct?: string
+	cash_reserve_rule?: string
+	execution?: string
+}
+
+export interface RebalanceSop {
+	priority?: string
+	sell_plan?: string
+	buy_plan?: string
+	trigger?: string
+}
+
+export interface ReviewTemplate {
+	daily?: string[]
+	weekly?: string[]
+	quarterly?: string[]
+}
+
+export interface MistakeCaseNote {
+	case: string
+	lesson: string
+	patch: string
+}
+
 export interface StrategySignal {
 	strategy: string
-	signal: "看多" | "看空" | "中性" | "无数据"
+	signal: "买入" | "持有" | "卖出" | "观望" | "看多" | "看空" | "中性" | "无数据" | string
 	detail: string
 }
 
@@ -675,14 +764,27 @@ export interface StockAnalysisData {
 	stock_code: string
 	stock_name: string
 	market_date: string
-	action: "买入" | "持有" | "卖出" | "观望"
+	framework_version?: string
+	action: "买入" | "持有" | "卖出" | "观望" | string
 	confidence: number
 	score: number
+	veto_checks?: VetoChecks
+	catalyst_checks?: CatalystCheckItem[]
+	dimension_scores?: DimensionScoreItem[]
+	quadrant_classification?: QuadrantClassification
+	anti_correlation_check?: AntiCorrelationCheck
+	counter_evidence?: string[]
+	concept_authenticity?: ConceptAuthenticity
+	psychology_check?: PsychologyCheck
+	position_plan?: PositionPlan
+	rebalance_sop?: RebalanceSop
+	review_template?: ReviewTemplate
+	mistake_case_notes?: MistakeCaseNote[]
 	strategy_analysis: StrategySignal[]
 	kline_analysis?: { trend?: string, pattern?: string, detail?: string }
 	industry_analysis?: { industry?: string, sector?: string, industry_outlook?: string, position?: string }
 	fundamental_analysis?: { moat?: string, competitive_advantage?: string, detail?: string }
-	financial_summary?: { revenue_trend?: string, profit_trend?: string, growth?: string, detail?: string }
+	financial_summary?: { revenue_trend?: string, profit_trend?: string, growth?: string, detail?: string, case_type?: string }
 	risk_factors?: string[]
 	positive_factors?: string[]
 	short_term_outlook?: { direction?: string, target_price?: number, detail?: string }
@@ -691,13 +793,12 @@ export interface StockAnalysisData {
 	sell_point: PricePoint
 	stop_loss: StopLossInfo
 	position_advice: string
-	risk_level: "低" | "中" | "高"
+	risk_level: "低" | "中" | "高" | string
 	summary: string
 	strategies_hit: number
 	strategies_total: number
 	llm_enhanced: boolean
 	analyzed_at: string
-	/** 实时行情数据 */
 	current_price?: number
 	change_pct?: number
 	pe_ttm?: number
@@ -705,7 +806,6 @@ export interface StockAnalysisData {
 	total_market_cap?: string
 	industry?: string
 	market_data?: any
-	/** 模糊匹配时的候选股票 */
 	fuzzy_match?: boolean
 	candidates?: { stock_code: string, stock_name: string }[]
 }
@@ -717,7 +817,7 @@ export interface StockAnalysisResponse {
 	message?: string
 }
 
-/** 轻量级策略命中查询 */
+/** 个股策略命中汇总 */
 export interface StrategiesSummaryData {
 	stock_code: string
 	stock_name: string
@@ -734,14 +834,12 @@ export interface StrategiesSummaryData {
 	}[]
 }
 
-/** 策略命中查询响应 */
+/** 个股策略命中汇总响应 */
 export interface StrategiesSummaryResponse {
 	status: "success" | "error"
 	data: StrategiesSummaryData
 	message?: string
 }
-
-// ===================== 综合战法 =====================
 
 /** 综合战法 - 单个战法对某只股票的推荐详情 */
 export interface CombinedStrategyDetail {

@@ -112,6 +112,29 @@ function InfoCard({ icon, title, children }: {
 	);
 }
 
+function FrameworkTag({ version }: { version?: string }) {
+	if (!version)
+		return null;
+	return (
+		<Tag color="geekblue">
+			框架
+			{version}
+		</Tag>
+	);
+}
+
+function renderCredibilityTag(credibility?: string) {
+	if (!credibility)
+		return <Tag>未标注</Tag>;
+	const color = credibility === "S" ? "red" : credibility === "A" ? "orange" : credibility === "B" ? "blue" : "default";
+	return (
+		<Tag color={color}>
+			{credibility}
+			级
+		</Tag>
+	);
+}
+
 /* ====================== Analysis Result Display ====================== */
 function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 	const act = actionConfig[data.action] || actionConfig["观望"];
@@ -135,6 +158,158 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 
 	return (
 		<>
+			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<SafetyOutlined style={{ color: "#f5222d" }} />} title="一票否决检查">
+						{data.veto_checks?.items?.length
+							? (
+								<Space direction="vertical" size={6} style={{ width: "100%" }}>
+									<Tag color={data.veto_checks.veto_triggered ? "red" : "green"}>{data.veto_checks.veto_triggered ? "已触发一票否决" : "未触发一票否决"}</Tag>
+									{data.veto_checks.items.map((item, idx) => (
+										<div key={`${item.category}-${idx}`}>
+											<Text strong>{item.category}</Text>
+											<Text style={{ marginLeft: 8 }}>{item.detail}</Text>
+										</div>
+									))}
+									{data.veto_checks.summary ? <Paragraph style={{ margin: 0 }}>{data.veto_checks.summary}</Paragraph> : null}
+								</Space>
+							)
+							: <Text type="secondary">暂无一票否决检查</Text>}
+					</InfoCard>
+				</Col>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<ThunderboltOutlined style={{ color: "#fa8c16" }} />} title="催化剂检索结果">
+						{data.catalyst_checks?.length
+							? (
+								<Space direction="vertical" size={6} style={{ width: "100%" }}>
+									{data.catalyst_checks.map((item, idx) => (
+										<div key={`${item.category}-${idx}`}>
+											<Space wrap>
+												<Text strong>{item.category}</Text>
+												<Tag color={item.checked ? "blue" : "default"}>{item.status || (item.checked ? "已检索" : "未检索")}</Tag>
+												{renderCredibilityTag(item.credibility)}
+											</Space>
+											<div><Text type="secondary" style={{ fontSize: 12 }}>{item.detail || item.source || "暂无说明"}</Text></div>
+										</div>
+									))}
+								</Space>
+							)
+							: <Text type="secondary">暂无催化剂检索结果</Text>}
+					</InfoCard>
+				</Col>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<DashboardOutlined style={{ color: "#722ed1" }} />} title="六维评分总览">
+						{data.dimension_scores?.length
+							? (
+								<Space direction="vertical" size={6} style={{ width: "100%" }}>
+									{data.dimension_scores.map((item, idx) => (
+										<div key={`${item.dimension}-${idx}`}>
+											<Space wrap>
+												<Text strong>{item.dimension}</Text>
+												<Tag color="geekblue">
+													权重
+													{(item.weight * 100).toFixed(0)}
+													%
+												</Tag>
+												<Tag color="purple">
+													当前
+													{item.current_score}
+												</Tag>
+												<Tag color="orange">
+													趋势
+													{item.trend_score}
+												</Tag>
+												<Tag color="green">
+													置信度
+													{(item.confidence * 100).toFixed(0)}
+													%
+												</Tag>
+											</Space>
+											<div><Text type="secondary" style={{ fontSize: 12 }}>{item.rationale}</Text></div>
+										</div>
+									))}
+								</Space>
+							)
+							: <Text type="secondary">暂无六维评分结果</Text>}
+					</InfoCard>
+				</Col>
+			</Row>
+
+			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<BulbOutlined style={{ color: "#13c2c2" }} />} title="概念股真伪甄别">
+						{data.concept_authenticity?.checks?.length
+							? (
+								<>
+									{data.concept_authenticity.verdict ? <Tag color="purple">{data.concept_authenticity.verdict}</Tag> : null}
+									{data.concept_authenticity.checks.map((item, idx) => (
+										<div key={`${item.question}-${idx}`} style={{ marginTop: 6 }}>
+											<Text strong>{item.question}</Text>
+											<Text style={{ marginLeft: 8 }}>{item.detail}</Text>
+										</div>
+									))}
+								</>
+							)
+							: <Text type="secondary">暂无概念股真伪甄别结果</Text>}
+					</InfoCard>
+				</Col>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<ExclamationCircleOutlined style={{ color: "#fa541c" }} />} title="反证与反相关性">
+						{data.anti_correlation_check?.detail ? <Paragraph style={{ marginBottom: 8 }}>{data.anti_correlation_check.detail}</Paragraph> : null}
+						{typeof data.anti_correlation_check?.triggered === "boolean" ? <Tag color={data.anti_correlation_check.triggered ? "orange" : "green"}>{data.anti_correlation_check.triggered ? "已触发反相关折扣" : "未触发反相关折扣"}</Tag> : null}
+						{data.counter_evidence?.length
+							? data.counter_evidence.map((item, idx) => (
+								<div key={`${item}-${idx}`} style={{ marginTop: 6 }}>
+									<Text style={{ fontSize: 13 }}>
+										•
+										{item}
+									</Text>
+								</div>
+							))
+							: <Text type="secondary">暂无反证清单</Text>}
+					</InfoCard>
+				</Col>
+				<Col xs={24} md={8}>
+					<InfoCard icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />} title="心理纪律与调仓SOP">
+						{data.psychology_check?.summary ? <Paragraph style={{ marginBottom: 8 }}>{data.psychology_check.summary}</Paragraph> : null}
+						{data.psychology_check?.risks?.length
+							? data.psychology_check.risks.map((item, idx) => (
+								<div key={`${item}-${idx}`}>
+									<Text style={{ fontSize: 13 }}>
+										⚠️
+										{item}
+									</Text>
+								</div>
+							))
+							: null}
+						{data.position_plan?.position_pct
+							? (
+								<div style={{ marginTop: 8 }}>
+									<Text strong>仓位建议：</Text>
+									<Text>{data.position_plan.position_pct}</Text>
+								</div>
+							)
+							: null}
+						{data.position_plan?.execution
+							? (
+								<div>
+									<Text strong>执行建议：</Text>
+									<Text>{data.position_plan.execution}</Text>
+								</div>
+							)
+							: null}
+						{data.rebalance_sop?.priority
+							? (
+								<div>
+									<Text strong>调仓优先级：</Text>
+									<Text>{data.rebalance_sop.priority}</Text>
+								</div>
+							)
+							: null}
+					</InfoCard>
+				</Col>
+			</Row>
+
 			{/* Hero Card */}
 			<Card bordered={false} style={{ marginBottom: 16, borderRadius: 12, background: act.bg }} bodyStyle={{ padding: "24px 32px" }}>
 				<Row gutter={[32, 16]} align="middle">
@@ -169,6 +344,9 @@ function AnalysisResultView({ data }: { data: StockAnalysisData }) {
 								{data.stock_code}
 								)
 								{(data as any).market === "hk" && <Tag color="magenta" style={{ marginLeft: 8, verticalAlign: "middle" }}>港股</Tag>}
+								{data.framework_version ? <FrameworkTag version={data.framework_version} /> : null}
+								{data.quadrant_classification?.quadrant ? <Tag color="purple">{data.quadrant_classification.quadrant}</Tag> : null}
+								{data.quadrant_classification?.rating ? <Tag color="gold">{data.quadrant_classification.rating}</Tag> : null}
 							</Title>
 							<Button
 								size="small"
