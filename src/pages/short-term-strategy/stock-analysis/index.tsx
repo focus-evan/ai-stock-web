@@ -960,6 +960,11 @@ const StockAnalysisPage: React.FC = () => {
 			const response = await fetchStockAnalysis(input);
 			if (response.status === "success" && response.data) {
 				setData(response.data);
+				setActiveTab("analyze");
+				try {
+					sessionStorage.setItem(STOCK_TAB_KEY, "analyze");
+				}
+				catch {}
 				setHistoryRefreshKey(k => k + 1); // 触发历史列表刷新
 				message.success("分析完成");
 			}
