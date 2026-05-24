@@ -534,6 +534,8 @@ export default function EventDriven() {
 		);
 	}
 
+	const isLegacyEventCache = data.recommendations.length > 0 && data.events.total_analyzed === 0;
+
 	return (
 		<Tabs
 			defaultActiveKey="main"
@@ -607,6 +609,17 @@ export default function EventDriven() {
 									)}
 									description="本页优先寻找热门叙事刚点火后的正宗滞后、跨市场接力和低位补涨；连续大涨、极端换手、全网明牌标的会被拥挤度惩罚降权。"
 								/>
+
+								{isLegacyEventCache && (
+									<Alert
+										style={{ marginBottom: 16 }}
+										type="warning"
+										showIcon
+										icon={<WarningOutlined />}
+										message="当前命中的是旧版推荐缓存"
+										description="下方个股推荐仍可用，但旧缓存没有保存新闻事件、Top事件和新闻摘要，所以事件雷达与高影响事件会显示为空。点击右上角【重新生成】后会写入完整 V1.1 事件元数据。"
+									/>
+								)}
 
 								{/* 市场事件评估 */}
 								{data.market_assessment && (
