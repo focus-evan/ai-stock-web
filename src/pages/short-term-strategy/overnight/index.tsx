@@ -33,6 +33,19 @@ function executionTagColor(level?: string) {
 	}
 }
 
+function executionCardPalette(verdict: string) {
+	switch (verdict) {
+		case "竞价优先兑现":
+			return { border: "#f5222d", tag: "red", badgeBg: "#fff1f0", badgeText: "#cf1322" };
+		case "开盘冲高择机卖":
+			return { border: "#fa8c16", tag: "orange", badgeBg: "#fff7e6", badgeText: "#d46b08" };
+		case "低开不及预期直接走":
+			return { border: "#722ed1", tag: "purple", badgeBg: "#f9f0ff", badgeText: "#531dab" };
+		default:
+			return { border: "#8c8c8c", tag: "default", badgeBg: "#fafafa", badgeText: "#595959" };
+	}
+}
+
 const OvernightPage: React.FC = () => {
 	const [data, setData] = useState<OvernightData | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -607,16 +620,27 @@ const OvernightPage: React.FC = () => {
 												: verdict === "低开不及预期直接走"
 													? "若竞价或开盘弱于预期，直接防守离场。"
 													: "信号不足，仅观察不执行。";
+										const palette = executionCardPalette(verdict);
 										return (
 											<Col xs={24} sm={12} lg={8} xl={6} key={item.code}>
-												<Card size="small" hoverable style={{ height: "100%", borderLeft: `4px solid ${verdict === "竞价优先兑现" ? "#f5222d" : verdict === "开盘冲高择机卖" ? "#fa8c16" : verdict === "低开不及预期直接走" ? "#722ed1" : "#8c8c8c"}` }}>
-													<Space direction="vertical" size={6} style={{ width: "100%" }}>
-														<Space wrap>
-															<Text strong>{item.name}</Text>
-															<Text type="secondary">{item.code}</Text>
-															<Tag color={executionTagColor(level)}>{level}</Tag>
-															<Tag color={verdict === "竞价优先兑现" ? "red" : verdict === "开盘冲高择机卖" ? "orange" : verdict === "低开不及预期直接走" ? "purple" : "default"}>{verdict}</Tag>
-														</Space>
+												<Card size="small" hoverable style={{ height: "100%", borderLeft: `4px solid ${palette.border}` }}>
+													<Space direction="vertical" size={8} style={{ width: "100%" }}>
+														<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+															<div>
+																<Text strong>{item.name}</Text>
+																<Text type="secondary" style={{ marginLeft: 6 }}>{item.code}</Text>
+															</div>
+															<Space wrap>
+																<Tag color={executionTagColor(level)}>{level}</Tag>
+															</Space>
+														</div>
+														<div style={{ padding: "10px 12px", borderRadius: 10, background: palette.badgeBg, border: `1px solid ${palette.border}` }}>
+															<Text strong style={{ color: palette.badgeText, display: "block", fontSize: 15 }}>
+																次日动作：
+																{verdict}
+															</Text>
+															<Text style={{ color: palette.badgeText, fontSize: 12 }}>{sellHint}</Text>
+														</div>
 														<Text>{item.reason_short || item.signal_type}</Text>
 														<Text type="secondary">
 															尾盘买入：
@@ -634,7 +658,6 @@ const OvernightPage: React.FC = () => {
 															风险提示：
 															{item.overnight_risk || executionRules.overnight_risk}
 														</Text>
-														<Text style={{ color: "#595959" }}>{sellHint}</Text>
 													</Space>
 												</Card>
 											</Col>
