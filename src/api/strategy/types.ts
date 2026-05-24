@@ -572,6 +572,7 @@ export interface OvernightStock {
 	sell_window?: string
 	exit_rule?: string
 	overnight_risk?: string
+	execution_verdict?: string
 	reason_short?: string
 	risk_warning?: string
 	operation_suggestion?: string
@@ -591,6 +592,7 @@ export interface OvernightData {
 		sell_window?: string
 		exit_rule?: string
 		overnight_risk?: string
+		execution_verdict_hint?: string
 	}
 }
 

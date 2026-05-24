@@ -266,6 +266,7 @@ const OvernightPage: React.FC = () => {
 		sell_window: data?.execution_rules?.sell_window || "次日集合竞价 / 开盘5分钟卖出",
 		exit_rule: data?.execution_rules?.exit_rule || "绝不隔第二夜，竞价不及预期直接走",
 		overnight_risk: data?.execution_rules?.overnight_risk || "低开、竞价走弱、隔夜情绪反转",
+		execution_verdict_hint: data?.execution_rules?.execution_verdict_hint || "按推荐级别与强弱决定竞价优先兑现、开盘冲高卖或低开直接走",
 	}), [data]);
 
 	const renderStrategyContent = (payload: OvernightData | null) => {
@@ -580,7 +581,7 @@ const OvernightPage: React.FC = () => {
 							type="warning"
 							showIcon
 							message="隔夜施工法不是隔日持有策略"
-							description={`尾盘买点：${executionRules.execution_window}；次日卖点：${executionRules.sell_window}；退出铁律：${executionRules.exit_rule}；主要风险：${executionRules.overnight_risk}`}
+							description={`尾盘买点：${executionRules.execution_window}；次日卖点：${executionRules.sell_window}；退出铁律：${executionRules.exit_rule}；主要风险：${executionRules.overnight_risk}；执行分层：${executionRules.execution_verdict_hint}`}
 						/>
 					</Card>
 
@@ -598,17 +599,23 @@ const OvernightPage: React.FC = () => {
 								<Row gutter={[16, 16]}>
 									{list.slice(0, 8).map((item) => {
 										const level = item.recommendation_level || "关注";
-										const sellHint = level === "强烈推荐"
+										const verdict = item.execution_verdict || (level === "强烈推荐" ? "竞价优先兑现" : level === "推荐" ? "开盘冲高择机卖" : "低开不及预期直接走");
+										const sellHint = verdict === "竞价优先兑现"
 											? "次日竞价优先兑现，不强留。"
-											: "开盘冲高择机卖出，不恋战。";
+											: verdict === "开盘冲高择机卖"
+												? "若竞价一般，等开盘冲高择机卖出。"
+												: verdict === "低开不及预期直接走"
+													? "若竞价或开盘弱于预期，直接防守离场。"
+													: "信号不足，仅观察不执行。";
 										return (
 											<Col xs={24} sm={12} lg={8} xl={6} key={item.code}>
-												<Card size="small" hoverable style={{ height: "100%", borderLeft: `4px solid ${level === "强烈推荐" ? "#f5222d" : level === "推荐" ? "#fa8c16" : "#1677ff"}` }}>
+												<Card size="small" hoverable style={{ height: "100%", borderLeft: `4px solid ${verdict === "竞价优先兑现" ? "#f5222d" : verdict === "开盘冲高择机卖" ? "#fa8c16" : verdict === "低开不及预期直接走" ? "#722ed1" : "#8c8c8c"}` }}>
 													<Space direction="vertical" size={6} style={{ width: "100%" }}>
 														<Space wrap>
 															<Text strong>{item.name}</Text>
 															<Text type="secondary">{item.code}</Text>
 															<Tag color={executionTagColor(level)}>{level}</Tag>
+															<Tag color={verdict === "竞价优先兑现" ? "red" : verdict === "开盘冲高择机卖" ? "orange" : verdict === "低开不及预期直接走" ? "purple" : "default"}>{verdict}</Tag>
 														</Space>
 														<Text>{item.reason_short || item.signal_type}</Text>
 														<Text type="secondary">
