@@ -191,6 +191,12 @@ function normalizeRelaySignal(code: string, stockName: string, payload: any): Dr
 		invalid_condition: signal?.invalid_condition || signal?.risk_warning || "信号失效后不再跟进",
 		risk_level: signal?.risk_level || payload?.market_regime?.risk_level || "中",
 		holding_horizon: signal?.holding_horizon || signal?.holding_period || "T+1~T+3",
+		action_verdict: signal?.action_verdict,
+		action: signal?.action,
+		can_chase_limit_up: signal?.can_chase_limit_up,
+		auction_scenario: signal?.auction_scenario,
+		entry_style: signal?.entry_style,
+		reason_short: signal?.reason_short,
 		entry_plan: {
 			buy_price_range: signal?.buy_price_range || signal?.buy_price,
 			target_price: signal?.target_price,
@@ -276,9 +282,10 @@ function buildEmotionRelayFollowItem(payload: any, limit: number): DragonHeadFol
 			related_themes: stock?.related_themes,
 			industry: stock?.industry,
 			action_detail: [
-				signal?.signal_type ? `信号：${signal.signal_type}` : "",
+				signal?.action_verdict ? `执行：${signal.action_verdict}` : `动作：${mapEmotionRelayAction(stock)}`,
+				signal?.entry_style ? `方式：${signal.entry_style}` : "",
 				signal?.entry_window ? `窗口：${signal.entry_window}` : stock?.entry_timing ? `时机：${stock.entry_timing}` : "",
-				signal?.holding_horizon ? `周期：${signal.holding_horizon}` : "",
+				signal?.auction_scenario ? `场景：${signal.auction_scenario}` : "",
 			].filter(Boolean).join("｜") || undefined,
 		});
 		if (recommendations.length >= limit)

@@ -445,16 +445,35 @@ function RelayExtraSections({ latest }: { latest: DragonHeadFollowItem }) {
 										<Text type="secondary">{signal.code}</Text>
 										<Tag color={getPoolTagColor(signal.candidate_pool)}>{getPoolLabel(signal.candidate_pool)}</Tag>
 										<Tag color="purple">{signal.signal_type}</Tag>
+										{signal.action_verdict ? <Tag color="gold">{signal.action_verdict}</Tag> : null}
+										{signal.entry_style ? <Tag color="cyan">{signal.entry_style}</Tag> : null}
+										{signal.action ? <Tag color={signal.action === "买入" ? "red" : signal.action === "观望" ? "blue" : "default"}>{signal.action}</Tag> : null}
 										<Tag color={getRiskColor(signal.risk_level)}>{signal.risk_level}</Tag>
 									</Space>
+									{signal.reason_short ? <Text>{signal.reason_short}</Text> : null}
 									<Text>
 										入场窗口：
 										{signal.entry_window}
 									</Text>
+									{signal.auction_scenario
+										? (
+											<Text type="secondary">
+												竞价场景：
+												{signal.auction_scenario}
+											</Text>
+										)
+										: null}
 									<Text type="secondary">
 										持仓周期：
 										{signal.holding_horizon}
 									</Text>
+									{typeof signal.can_chase_limit_up === "boolean"
+										? (
+											<Text type={signal.can_chase_limit_up ? undefined : "secondary"}>
+												{signal.can_chase_limit_up ? "允许强势追板" : "禁止直接追板"}
+											</Text>
+										)
+										: null}
 									<Text type="secondary">
 										失效条件：
 										{signal.invalid_condition}
