@@ -320,7 +320,7 @@ export default function EmotionRelayPage() {
 							>
 								{hasCoreCandidates
 									? <Table dataSource={coreCandidates} rowKey="code" size="small" pagination={false} columns={columns} />
-									: <Empty description="当前暂无满足条件的核心接力候选，说明市场更偏观察或试错阶段。" />}
+									: <Empty description={watchCandidates.length > 0 ? "当前未出现满足强核心标准的标的，建议先在观察池中等待转强确认。" : "当前暂无满足条件的核心接力候选，说明市场更偏观察或试错阶段。"} />}
 							</Card>
 
 							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
