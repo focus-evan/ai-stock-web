@@ -354,12 +354,18 @@ export default function EmotionRelayPage() {
 				},
 				{
 					key: "follow_execution",
-					label: "实盘跟投指导",
-					children: <EmotionRelayFollowExecutionTab />,
+					label: "次日执行 / 实盘跟投指导",
+					children: (
+						<BasicContent>
+							<div style={{ paddingBottom: 24 }}>
+								<EmotionRelayFollowExecutionTab />
+							</div>
+						</BasicContent>
+					),
 				},
 				{
 					key: "follow",
-					label: "推荐跟进",
+					label: "推荐跟踪",
 					children: <StrategyFollowTab strategyType={"emotion_relay" as any} isOvernight={false} />,
 				},
 			]}
