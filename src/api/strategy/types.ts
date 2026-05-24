@@ -318,11 +318,35 @@ export interface EventStockRecommendation {
 	total_market_cap: number
 	turnover_rate: number
 	event_score: number
+	enos_score?: number
+	fid_score?: number
+	pls_score?: number
+	crowding_penalty?: number
+	v11_role?: string
+	launch_flag?: boolean
+	time_window?: string
+	v11_signal?: string
+	price_in_penalty?: number
+	price_in_warning?: string
+	volume_ratio_5d?: number
+	cum_gain_3d?: number
+	cum_gain_5d?: number
+	amplitude?: number
 	score_detail: {
-		logic: number
-		history: number
-		capital: number
-		scarcity: number
+		logic?: number
+		history?: number
+		capital?: number
+		scarcity?: number
+		freshness?: number
+		fid?: number
+		pls?: number
+		enos?: number
+		mapping?: number
+		underpriced?: number
+		spread?: number
+		trade_structure?: number
+		time_window?: number
+		crowding_penalty?: number
 	}
 	max_impact_level: number
 	event_reason: string
@@ -333,6 +357,7 @@ export interface EventStockRecommendation {
 	risk_warning?: string
 	operation_suggestion?: string
 	logic_strength?: number
+	event_sustainability?: string
 }
 
 /** 事件概览 */

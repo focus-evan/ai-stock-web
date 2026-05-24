@@ -102,6 +102,30 @@ function getHeatColor(heat: string): string {
 	}
 }
 
+/** V1.1 角色颜色 */
+function getRoleColor(role?: string): string {
+	switch (role) {
+		case "首爆龙头": return "red";
+		case "正宗滞后": return "green";
+		case "跨市场接力": return "purple";
+		case "低位补涨": return "cyan";
+		case "明牌高潮": return "volcano";
+		default: return "blue";
+	}
+}
+
+/** 明牌拥挤度颜色 */
+function getPenaltyColor(penalty?: number): string {
+	const val = penalty || 0;
+	if (val >= 38)
+		return "red";
+	if (val >= 26)
+		return "orange";
+	if (val >= 14)
+		return "gold";
+	return "green";
+}
+
 export default function EventDriven() {
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
@@ -241,20 +265,21 @@ export default function EventDriven() {
 			),
 		},
 		{
-			title: "综合评分",
+			title: "ENOS评分",
 			dataIndex: "event_score",
 			key: "event_score",
-			width: 100,
+			width: 108,
 			align: "center",
 			sorter: (a, b) => a.event_score - b.event_score,
 			defaultSortOrder: "descend",
 			render: (score: number, record: EventStockRecommendation) => {
-				const color = score >= 60 ? "#f5222d" : score >= 40 ? "#fa8c16" : "#1890ff";
+				const color = score >= 75 ? "red" : score >= 60 ? "orange" : score >= 40 ? "blue" : "default";
+				const detail = record.score_detail;
 				return (
 					<Tooltip
 						title={
-							record.score_detail
-								? `逻辑:${record.score_detail.logic} 历史:${record.score_detail.history} 资金:${record.score_detail.capital} 稀缺:${record.score_detail.scarcity}`
+							detail
+								? `FID:${detail.fid ?? record.fid_score ?? 0} PLS:${detail.pls ?? record.pls_score ?? 0} 正宗:${detail.mapping ?? detail.logic ?? 0} 未定价:${detail.underpriced ?? 0} 传播:${detail.spread ?? 0} 拥挤惩罚:${detail.crowding_penalty ?? record.crowding_penalty ?? 0}`
 								: undefined
 						}
 					>
@@ -264,6 +289,64 @@ export default function EventDriven() {
 					</Tooltip>
 				);
 			},
+		},
+		{
+			title: "V1.1角色",
+			dataIndex: "v11_role",
+			key: "v11_role",
+			width: 132,
+			align: "center",
+			filters: [
+				{ text: "首爆龙头", value: "首爆龙头" },
+				{ text: "正宗滞后", value: "正宗滞后" },
+				{ text: "跨市场接力", value: "跨市场接力" },
+				{ text: "低位补涨", value: "低位补涨" },
+				{ text: "明牌高潮", value: "明牌高潮" },
+			],
+			onFilter: (value, record) => record.v11_role === value,
+			render: (role: string | undefined, record: EventStockRecommendation) => (
+				<Space direction="vertical" size={2}>
+					<Tag color={getRoleColor(role)} icon={record.launch_flag ? <ThunderboltOutlined /> : undefined}>
+						{role || "扩散观察"}
+					</Tag>
+					<Text type="secondary" style={{ fontSize: 11 }}>
+						{record.time_window || "窗口待定"}
+					</Text>
+				</Space>
+			),
+		},
+		{
+			title: "FID/PLS",
+			key: "fid_pls",
+			width: 120,
+			align: "center",
+			render: (_: unknown, record: EventStockRecommendation) => (
+				<Space direction="vertical" size={2}>
+					<Tag color="red" style={{ fontSize: 11 }}>
+						FID
+						{" "}
+						{(record.fid_score || 0).toFixed(1)}
+					</Tag>
+					<Tag color="green" style={{ fontSize: 11 }}>
+						PLS
+						{" "}
+						{(record.pls_score || 0).toFixed(1)}
+					</Tag>
+				</Space>
+			),
+		},
+		{
+			title: "明牌惩罚",
+			dataIndex: "crowding_penalty",
+			key: "crowding_penalty",
+			width: 100,
+			align: "center",
+			sorter: (a, b) => (a.crowding_penalty || 0) - (b.crowding_penalty || 0),
+			render: (penalty: number | undefined) => (
+				<Tag color={getPenaltyColor(penalty)} style={{ fontWeight: 600 }}>
+					{(penalty || 0).toFixed(1)}
+				</Tag>
+			),
 		},
 		{
 			title: "影响等级",
@@ -337,6 +420,11 @@ export default function EventDriven() {
 							<ThunderboltOutlined style={{ color: "#fa8c16", marginRight: 4 }} />
 							{record.event_reason}
 						</Text>
+					)}
+					{record.v11_signal && (
+						<Tag color={getRoleColor(record.v11_role)} style={{ fontSize: 11, marginTop: 2 }}>
+							{record.v11_signal}
+						</Tag>
 					)}
 					{record.reasons?.map((reason, idx) => (
 						<Text key={idx} style={{ fontSize: 12 }}>
@@ -468,7 +556,7 @@ export default function EventDriven() {
 									<Space align="center">
 										<RadarChartOutlined style={{ fontSize: 24, color: "#722ed1" }} />
 										<Title level={4} style={{ margin: 0 }}>
-											事件驱动推荐
+											事件驱动推荐 V1.1
 										</Title>
 										{data.llm_enhanced && (
 											<Tag color="purple" icon={<ExperimentOutlined />}>
@@ -503,6 +591,22 @@ export default function EventDriven() {
 										</Button>
 									</Space>
 								</div>
+
+								<Alert
+									style={{ marginBottom: 16 }}
+									type="info"
+									showIcon
+									icon={<RadarChartOutlined />}
+									message={(
+										<Space wrap>
+											<Text strong>题材雷达 V1.1 点火扩散模型已启用</Text>
+											<Tag color="red">FID 首爆</Tag>
+											<Tag color="green">PLS 正宗滞后</Tag>
+											<Tag color="blue">ENOS 早期机会</Tag>
+										</Space>
+									)}
+									description="本页优先寻找热门叙事刚点火后的正宗滞后、跨市场接力和低位补涨；连续大涨、极端换手、全网明牌标的会被拥挤度惩罚降权。"
+								/>
 
 								{/* 市场事件评估 */}
 								{data.market_assessment && (
@@ -560,7 +664,7 @@ export default function EventDriven() {
 											title={(
 												<Space>
 													<ThunderboltOutlined style={{ color: "#722ed1" }} />
-													<span>事件雷达</span>
+													<span>V1.1 事件雷达</span>
 												</Space>
 											)}
 											styles={{ body: { padding: "12px 16px" } }}
@@ -673,7 +777,7 @@ export default function EventDriven() {
 												</Col>
 												<Col span={8}>
 													<Statistic
-														title="最高评分"
+														title="最高ENOS"
 														value={Math.max(...data.recommendations.map(r => r.event_score), 0).toFixed(1)}
 														valueStyle={{ fontSize: 20, color: "#fa541c" }}
 													/>
@@ -939,7 +1043,7 @@ export default function EventDriven() {
 									title={(
 										<Space>
 											<TrophyOutlined style={{ color: "#faad14" }} />
-											<span>事件驱动推荐个股</span>
+											<span>V1.1 点火扩散候选</span>
 											<Tag>
 												{data.recommendations.length}
 												只
@@ -954,7 +1058,7 @@ export default function EventDriven() {
 										rowKey="code"
 										size="middle"
 										pagination={false}
-										scroll={{ x: 1500 }}
+										scroll={{ x: 1820 }}
 										loading={loading}
 										rowClassName={(record) => {
 											if (record.recommendation_level === "强烈推荐")
