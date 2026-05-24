@@ -568,11 +568,16 @@ export interface OvernightStock {
 	vol_staircase_score: number
 	reasons: string[]
 	recommendation_level: string
+	execution_window?: string
+	sell_window?: string
+	exit_rule?: string
+	overnight_risk?: string
+	reason_short?: string
 	risk_warning?: string
 	operation_suggestion?: string
 }
 
-/** 隔夜施工法完整数据 */
+/** 隔夜施工法数据 */
 export interface OvernightData {
 	recommendations: OvernightStock[]
 	total: number
@@ -581,6 +586,12 @@ export interface OvernightData {
 	llm_enhanced: boolean
 	generated_at: string
 	trading_date: string
+	execution_rules?: {
+		execution_window?: string
+		sell_window?: string
+		exit_rule?: string
+		overnight_risk?: string
+	}
 }
 
 /** 隔夜施工法接口响应 */
