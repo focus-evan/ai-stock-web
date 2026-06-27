@@ -96,12 +96,10 @@ const STRATEGY_NAMES: Record<string, string> = {
 	breakthrough: "突破战法",
 	volume_price: "量价关系",
 	overnight: "隔夜施工法",
-	auction: "隔夜施工法",
 	moving_average: "均线战法",
 	northbound: "北向资金",
 	trend_momentum: "趋势动量",
 	combined: "综合战法",
-	moat_value: "护城河优选",
 };
 function strategyName(type: string): string {
 	return STRATEGY_NAMES[type] || type;

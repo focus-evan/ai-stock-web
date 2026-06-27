@@ -1,7 +1,5 @@
 import type { SchedulerTask } from "#src/api/system";
 
-import { cleanupListedIPO, generateShadowStockRecommendations, refreshShadowStockReport } from "#src/api/shadow-stock";
-import { triggerPortfolioAnalysis, triggerSentimentScan } from "#src/api/strategy";
 import {
 	addSchedulerUser,
 	getSchedulerStatus,
@@ -16,7 +14,6 @@ import {
 	DashboardOutlined,
 	DeleteOutlined,
 	MinusCircleOutlined,
-	PlayCircleOutlined,
 	PlusOutlined,
 	ReloadOutlined,
 	SettingOutlined,
@@ -53,8 +50,6 @@ function strategyColor(s: string): string {
 		return "#eb2f96";
 	if (s === "event_driven")
 		return "#fa8c16";
-	if (s === "sentiment")
-		return "#1890ff";
 	if (s === "breakthrough")
 		return "#13c2c2";
 	if (s === "volume_price")
@@ -65,26 +60,12 @@ function strategyColor(s: string): string {
 		return "#faad14";
 	if (s === "combined")
 		return "#722ed1";
-	if (s === "relay")
-		return "#f5222d";
 	if (s === "northbound")
 		return "#9254de";
 	if (s === "trend_momentum")
 		return "#fa541c";
-	if (s === "moat_value")
-		return "#2f54eb";
 	if (s === "global")
 		return "#8c8c8c";
-	if (s === "daily_picks")
-		return "#eb2f96";
-	if (s === "watchlist")
-		return "#13c2c2";
-	if (s === "sentiment_scan")
-		return "#ff4d4f";
-	if (s === "portfolio_analysis")
-		return "#1677ff";
-	if (s === "moat_value")
-		return "#2f54eb";
 	return "#595959";
 }
 
@@ -94,8 +75,6 @@ function strategyIcon(s: string): string {
 		return "🐉";
 	if (s === "event_driven")
 		return "📡";
-	if (s === "sentiment")
-		return "💡";
 	if (s === "breakthrough")
 		return "🚀";
 	if (s === "volume_price")
@@ -106,26 +85,12 @@ function strategyIcon(s: string): string {
 		return "📈";
 	if (s === "combined")
 		return "🔗";
-	if (s === "relay")
-		return "🏆";
 	if (s === "northbound")
 		return "🏦";
 	if (s === "trend_momentum")
 		return "📐";
-	if (s === "moat_value")
-		return "🏰";
 	if (s === "global")
 		return "⚙️";
-	if (s === "daily_picks")
-		return "🎯";
-	if (s === "watchlist")
-		return "👀";
-	if (s === "sentiment_scan")
-		return "📡";
-	if (s === "portfolio_analysis")
-		return "📊";
-	if (s === "moat_value")
-		return "🏰";
 	return "📋";
 }
 
@@ -276,11 +241,6 @@ export default function SchedulerPage() {
 		"northbound",
 		"trend_momentum",
 		"combined",
-		"moat_value",
-		"sentiment_scan",
-		"portfolio_analysis",
-		"daily_picks",
-		"watchlist",
 		"global",
 	];
 	const strategyNames: Record<string, string> = {
@@ -293,13 +253,7 @@ export default function SchedulerPage() {
 		moving_average: "📈 均线战法",
 		northbound: "🏦 北向资金",
 		trend_momentum: "📐 趋势动量",
-		relay: "🏆 连板接力",
 		combined: "🔗 综合战法",
-		moat_value: "🏰 护城河",
-		sentiment_scan: "📡 盘前情绪扫描",
-		portfolio_analysis: "📊 持仓整体分析",
-		daily_picks: "🎯 当日精选",
-		watchlist: "👀 盯盘指导",
 		global: "⚙️ 全局任务",
 	};
 
@@ -341,131 +295,6 @@ export default function SchedulerPage() {
 							<MinusCircleOutlined style={{ color: "#d9d9d9", fontSize: 18 }} />
 						</Tooltip>
 					),
-		},
-		{
-			title: "操作",
-			key: "action",
-			width: 80,
-			align: "center" as const,
-			render: (_: any, record: SchedulerTask) => {
-				// 影子股任务手动触发
-				if (record.phase === "shadow_cleanup" || record.phase === "shadow_refresh" || record.phase === "shadow_recommend") {
-					return (
-						<Tooltip title="手动触发">
-							<Button
-								type="link"
-								size="small"
-								icon={<PlayCircleOutlined />}
-								disabled={record.done}
-								onClick={async () => {
-									try {
-										if (record.phase === "shadow_cleanup") {
-											message.loading({ content: "正在清理已上市IPO标的...", key: "cleanup", duration: 0 });
-											const result = await cleanupListedIPO();
-											message.destroy("cleanup");
-											if (result.deleted_targets && result.deleted_targets > 0) {
-												message.success(`已清理 ${result.deleted_targets} 个已上市标的`);
-											}
-											else {
-												message.info(result.message || "无需清理");
-											}
-										}
-										else if (record.phase === "shadow_recommend") {
-											message.loading({ content: "正在生成影子股推荐...", key: "recommend", duration: 0 });
-											const result = await generateShadowStockRecommendations();
-											message.destroy("recommend");
-											if (result.status === "completed") {
-												message.success(`生成 ${result.count} 条推荐`);
-											}
-											else {
-												message.warning(result.message || result.error || "生成失败");
-											}
-										}
-										else {
-											message.loading({ content: "正在刷新影子股报告...", key: "refresh", duration: 0 });
-											await refreshShadowStockReport();
-											message.destroy("refresh");
-											message.success("影子股报告刷新已启动");
-										}
-										refreshScheduler();
-									}
-									catch {
-										message.destroy("cleanup");
-										message.destroy("refresh");
-										message.destroy("recommend");
-										message.error("触发失败");
-									}
-								}}
-							/>
-						</Tooltip>
-					);
-				}
-				// 盘前情绪扫描手动触发
-				if (record.strategy === "sentiment_scan") {
-					return (
-						<Tooltip title="手动触发情绪扫描">
-							<Button
-								type="link"
-								size="small"
-								icon={<PlayCircleOutlined />}
-								disabled={record.done}
-								onClick={async () => {
-									try {
-										message.loading({ content: "正在执行盘前情绪扫描...", key: "sentiment", duration: 0 });
-										const result = await triggerSentimentScan();
-										message.destroy("sentiment");
-										if (result.status === "success") {
-											const risk = result.data?.risk_level || "";
-											const advice = result.data?.trading_advice || "";
-											message.success(`情绪扫描完成 | 风险: ${risk} | ${advice}`);
-										}
-										else {
-											message.warning("扫描完成但结果异常");
-										}
-										refreshScheduler();
-									}
-									catch {
-										message.destroy("sentiment");
-										message.error("情绪扫描触发失败");
-									}
-								}}
-							/>
-						</Tooltip>
-					);
-				}
-				// 持仓整体分析手动触发
-				if (record.strategy === "portfolio_analysis") {
-					return (
-						<Tooltip title="手动触发持仓分析">
-							<Button
-								type="link"
-								size="small"
-								icon={<PlayCircleOutlined />}
-								disabled={record.done}
-								onClick={async () => {
-									try {
-										message.loading({ content: "正在生成持仓整体分析...", key: "portfolio_analysis", duration: 0 });
-										const result = await triggerPortfolioAnalysis();
-										message.destroy("portfolio_analysis");
-										if (result.status === "success" || result.status === "completed") {
-											message.success("持仓整体分析生成完成");
-										}
-										else {
-											message.warning(result.message || "分析完成但结果异常");
-										}
-										refreshScheduler();
-									}
-									catch {
-										message.destroy("portfolio_analysis");
-										message.error("持仓分析触发失败");
-									}
-								}}
-							/>
-						</Tooltip>
-					);
-				}
-				return null;
-			},
 		},
 	];
 

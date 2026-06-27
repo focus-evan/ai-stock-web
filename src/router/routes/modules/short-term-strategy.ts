@@ -4,11 +4,8 @@ import ContainerLayout from "#src/layout/container-layout";
 import { shortTermStrategy } from "#src/router/extra-info";
 import { lazy } from "react";
 
-const DailyPicks = lazy(() => import("#src/pages/short-term-strategy/daily-picks"));
-const DailyPicksFollow = lazy(() => import("#src/pages/short-term-strategy/daily-picks-follow"));
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const EmotionRelay = lazy(() => import("#src/pages/short-term-strategy/emotion-relay"));
-const Auction = lazy(() => import("#src/pages/short-term-strategy/auction"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
 const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
 const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
@@ -20,8 +17,6 @@ const TrendMomentum = lazy(() => import("#src/pages/short-term-strategy/trend-mo
 const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
-const DataSync = lazy(() => import("#src/pages/system/sync"));
-const PerformanceTracker = lazy(() => import("#src/pages/short-term-strategy/performance-tracker"));
 
 const routes: AppRouteRecordRaw[] = [
 	{
@@ -34,22 +29,6 @@ const routes: AppRouteRecordRaw[] = [
 		},
 		children: [
 			{
-				path: "/short-term-strategy/daily-picks",
-				Component: DailyPicks,
-				handle: {
-					icon: "FireOutlined",
-					title: "当日精选",
-				},
-			},
-			{
-				path: "/short-term-strategy/daily-picks-follow",
-				Component: DailyPicksFollow,
-				handle: {
-					icon: "EyeOutlined",
-					title: "精选跟进",
-				},
-			},
-			{
 				path: "/short-term-strategy/dragon-head",
 				Component: DragonHead,
 				handle: {
@@ -58,27 +37,11 @@ const routes: AppRouteRecordRaw[] = [
 				},
 			},
 			{
-				path: "/short-term-strategy/performance-tracker",
-				Component: PerformanceTracker,
-				handle: {
-					icon: "AreaChartOutlined",
-					title: "推荐追踪",
-				},
-			},
-			{
 				path: "/short-term-strategy/emotion-relay",
 				Component: EmotionRelay,
 				handle: {
 					icon: "ThunderboltOutlined",
 					title: "情绪接力",
-				},
-			},
-			{
-				path: "/short-term-strategy/auction",
-				Component: Auction,
-				handle: {
-					icon: "FieldTimeOutlined",
-					title: "竞价战法",
 				},
 			},
 			{
@@ -167,14 +130,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "HistoryOutlined",
 					title: "复盘中心",
-				},
-			},
-			{
-				path: "/short-term-strategy/data-sync",
-				Component: DataSync,
-				handle: {
-					icon: "CloudSyncOutlined",
-					title: "数据同步",
 				},
 			},
 		],

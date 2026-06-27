@@ -63,13 +63,6 @@ const STRATEGY_CONFIG: Record<string, {
 		gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
 		order: 2,
 	},
-	sentiment: {
-		label: "情绪战法",
-		emoji: "💡",
-		tagColor: "cyan",
-		gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-		order: 3,
-	},
 	breakthrough: {
 		label: "突破战法",
 		emoji: "🚀",
@@ -85,13 +78,6 @@ const STRATEGY_CONFIG: Record<string, {
 		order: 5,
 	},
 	overnight: {
-		label: "隔夜施工法",
-		emoji: "🌙",
-		tagColor: "purple",
-		gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)",
-		order: 6,
-	},
-	auction: {
 		label: "隔夜施工法",
 		emoji: "🌙",
 		tagColor: "purple",

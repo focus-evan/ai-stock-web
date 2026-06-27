@@ -40,7 +40,7 @@ function strategyTag(type: string) {
 	const map: Record<string, { label: string, color: string }> = {
 		dragon_head: { label: "🐉 龙头战法", color: "magenta" },
 		event_driven: { label: "📡 事件驱动", color: "orange" },
-		sentiment: { label: "💡 情绪战法", color: "blue" },
+		emotion_relay: { label: "⚡ 情绪接力", color: "blue" },
 	};
 	const item = map[type] || { label: type, color: "default" };
 	return <Tag color={item.color}>{item.label}</Tag>;

@@ -1,6 +1,4 @@
-import type { DailyPicksDetailResponse, DailyPicksHistoryResponse, DailyPicksResponse } from "./daily-picks-types";
 import type {
-	AuctionResponse,
 	BreakthroughResponse,
 	CombinedResponse,
 	DragonEntrySignal,
@@ -8,7 +6,6 @@ import type {
 	DragonMarketRegime,
 	DragonThemeV2,
 	EventDrivenResponse,
-	MoatValueResponse,
 	MovingAverageResponse,
 	NorthboundResponse,
 	OvernightResponse,
@@ -20,7 +17,6 @@ import type {
 } from "./types";
 import { request } from "#src/utils/request";
 
-export * from "./daily-picks-types";
 export * from "./types";
 
 /**
@@ -436,24 +432,6 @@ export function fetchVolumePriceRecommendations(limit: number = 13) {
  * 获取竞价/尾盘战法推荐
  * @param limit - 返回推荐数量，默认13
  */
-export function fetchAuctionRecommendations(limit: number = 13) {
-	return request
-		.get("strategy/auction", {
-			searchParams: { limit },
-			timeout: 90000,
-		})
-		.json<AuctionResponse>();
-}
-
-export function refreshAuctionRecommendations(limit: number = 13) {
-	return request
-		.post("strategy/auction/refresh", {
-			searchParams: { limit },
-			timeout: 180000,
-		})
-		.json<AuctionResponse>();
-}
-
 /**
  * 获取隔夜施工法推荐
  * @param limit - 返回推荐数量，默认13
@@ -670,28 +648,10 @@ export function refreshTrendMomentumRecommendations(limit: number = 13) {
  * 获取护城河价值推荐列表
  * @param limit - 返回推荐数量，默认13
  */
-export function fetchMoatValueRecommendations(limit: number = 13) {
-	return request
-		.get("strategy/moat-value", {
-			searchParams: { limit },
-			timeout: 120000,
-		})
-		.json<MoatValueResponse>();
-}
-
 /**
  * 手动刷新护城河价值推荐（绕过缓存）
  * @param limit - 返回推荐数量，默认13
  */
-export function refreshMoatValueRecommendations(limit: number = 13) {
-	return request
-		.post("strategy/moat-value/refresh", {
-			searchParams: { limit },
-			timeout: 300000,
-		})
-		.json<MoatValueResponse>();
-}
-
 // ===================== 推荐历史 =====================
 
 export interface RecommendationHistoryItem {
@@ -1046,281 +1006,7 @@ export function triggerPortfolioAnalysis() {
 		.json<{ status: string, data: PortfolioAnalysisData, message?: string }>();
 }
 
-// ===================== 当日精选 =====================
-
-/**
- * 获取当日精选推荐（汇聚所有战法强烈推荐）
- * @param limit - 返回股票数量上限，默认10
- * @param withDeepAnalysis - 是否进行LLM深度分析，默认true
- */
-export function fetchDailyPicks(limit: number = 10, withDeepAnalysis: boolean = true) {
-	return request
-		.get("strategy/daily-picks", {
-			searchParams: { limit, with_deep_analysis: withDeepAnalysis },
-			timeout: 300000, // 深度分析耗时较长
-		})
-		.json<DailyPicksResponse>();
-}
-
-/**
- * 强制刷新当日精选（重新聚合 + 重新深度分析）
- * @param limit - 返回股票数量上限，默认10
- */
-export function refreshDailyPicks(limit: number = 10) {
-	return request
-		.post("strategy/daily-picks/refresh", {
-			searchParams: { limit },
-			timeout: 300000,
-		})
-		.json<DailyPicksResponse>();
-}
-
-/**
- * 查询当日精选历史列表（每个交易日最新一条）
- * @param days - 查询最近30天
- * @param page - 页码
- * @param pageSize - 每页条数
- */
-export function fetchDailyPicksHistory(days: number = 30, page: number = 1, pageSize: number = 20) {
-	return request
-		.get("strategy/daily-picks/history", {
-			searchParams: { days, page, page_size: pageSize },
-			timeout: 15000,
-		})
-		.json<DailyPicksHistoryResponse>();
-}
-
-/**
- * 查询历史精选详情（含完整 deep_analysis）
- * @param recordId - 历史记录 ID
- */
-export function fetchDailyPicksDetail(recordId: number) {
-	return request
-		.get(`strategy/daily-picks/history/${recordId}`, {
-			timeout: 15000,
-		})
-		.json<DailyPicksDetailResponse>();
-}
-
-// ===================== 精选跟进 =====================
-
-export interface PicksFollowItem {
-	id: number
-	stock_code: string
-	stock_name: string
-	pick_date: string
-	pick_price: number
-	pick_reasons: string[]
-	strategy_names: string[]
-	pick_rank: number
-	status: string
-	closed_date?: string
-	closed_reason?: string
-	latest_price?: number
-	latest_change_pct?: number
-	latest_return_pct?: number
-	latest_snapshot_date?: string
-	created_at: string
-}
-
-export interface PicksFollowSnapshot {
-	id: number
-	follow_id: number
-	snapshot_date: string
-	close_price: number
-	change_pct: number
-	total_return_pct: number
-	volume: number
-}
-
-/** 获取精选跟进列表 */
-export function fetchPicksFollow(status: string = "tracking") {
-	return request
-		.get("strategy/daily-picks-follow", {
-			searchParams: { status },
-			timeout: 15000,
-		})
-		.json<{ status: string, data: { items: PicksFollowItem[], total: number } }>();
-}
-
-/** 从当日精选自动添加跟进 */
-export function triggerAutoFollow(tradingDate?: string) {
-	return request
-		.post("strategy/daily-picks-follow/auto-add", {
-			json: { trading_date: tradingDate },
-			timeout: 30000,
-		})
-		.json<{ status: string, data: { added: number, message: string } }>();
-}
-
-/** 获取跟进股票详情+快照 */
-export function fetchPicksFollowHistory(followId: number) {
-	return request
-		.get(`strategy/daily-picks-follow/${followId}/history`, {
-			timeout: 15000,
-		})
-		.json<{ status: string, data: { follow: PicksFollowItem, snapshots: PicksFollowSnapshot[] } }>();
-}
-
-/** 结束跟进 */
-export function closePicksFollow(followId: number, reason?: string) {
-	return request
-		.put(`strategy/daily-picks-follow/${followId}/close`, {
-			json: { reason: reason || "" },
-			timeout: 10000,
-		})
-		.json<{ status: string, message: string }>();
-}
-
-/** 手动触发快照更新 */
-export function triggerPicksSnapshot() {
-	return request
-		.post("strategy/daily-picks-follow/snapshot", {
-			timeout: 30000,
-		})
-		.json<{ status: string, message: string }>();
-}
-
-/** 获取周复盘报告 */
-export function fetchWeeklyReview(weekStart?: string) {
-	const searchParams: Record<string, string> = {};
-	if (weekStart)
-		searchParams.week_start = weekStart;
-	return request
-		.get("strategy/daily-picks-follow/weekly-review", {
-			searchParams,
-			timeout: 60000,
-		})
-		.json<{ status: string, data: { summary: any, review: string, generated_at: string } }>();
-}
-
-// ===================== 盘前扫描 =====================
-
-/** 手动盘前扫描 */
-export function triggerSentimentScan() {
-	return request
-		.post("strategy/combined/sentiment-scan", {
-			timeout: 120000,
-		})
-		.json<{ status: string, data: any }>();
-}
-
-// ===================== 推荐追踪·算法自优化 =====================
-
-export interface PerformanceTrackItem {
-	id: number
-	strategy_type: string
-	trading_date: string
-	session_type: string
-	recommendation_level: string
-	stock_code: string
-	stock_name: string
-	entry_price: number
-	stop_loss_price: number
-	target_price: number
-	day1_return_pct: number | null
-	day3_return_pct: number | null
-	day5_return_pct: number | null
-	mfe_pct: number | null
-	mae_pct: number | null
-	hit_take_profit: number | null
-	hit_stop_loss: number | null
-	algo_score: number | null
-	eval_status: "pending" | "partial" | "complete"
-	notes: string | null
-	evaluated_at: string | null
-	created_at: string
-}
-
-export interface PerformanceTrackResponse {
-	status: string
-	data: {
-		items: PerformanceTrackItem[]
-		total: number
-		limit: number
-		offset: number
-	}
-}
-
-export interface StrategyPerformanceSummary {
-	strategy_type: string
-	strategy_label: string
-	total_recs: number
-	evaluated_count: number
-	avg_day1_pct: number | null
-	avg_day3_pct: number | null
-	avg_day5_pct: number | null
-	avg_mfe_pct: number | null
-	avg_mae_pct: number | null
-	day1_win_rate: number | null
-	day3_win_rate: number | null
-	take_profit_rate: number | null
-	stop_loss_rate: number | null
-	best_return_pct: number | null
-	worst_return_pct: number | null
-	level_distribution: { level: string, count: number, avg_day3_pct: number | null }[]
-}
-
-export interface PerformanceSummaryResponse {
-	status: string
-	data: {
-		summaries: StrategyPerformanceSummary[]
-		days: number
-		since: string
-		generated_at: string
-	}
-}
-
-/** 查询推荐追踪列表 */
-export function fetchPerformanceTracker(params: {
-	strategy_type?: string
-	recommendation_level?: string
-	eval_status?: string
-	days?: number
-	limit?: number
-	offset?: number
-} = {}) {
-	return request
-		.get("strategy/performance-tracker", {
-			searchParams: params as any,
-			timeout: 20000,
-		})
-		.json<PerformanceTrackResponse>();
-}
-
-/** 获取算法效果汇总统计 */
-export function fetchPerformanceSummary(days = 30) {
-	return request
-		.get("strategy/performance-tracker/summary", {
-			searchParams: { days },
-			timeout: 20000,
-		})
-		.json<PerformanceSummaryResponse>();
-}
-
-/** 手动触发推荐评估 */
-export function triggerPerformanceEvaluation(lookback_days = 5) {
-	return request
-		.post("strategy/performance-tracker/trigger", {
-			searchParams: { lookback_days },
-			timeout: 30000,
-		})
-		.json<{ status: string, message: string }>();
-}
-
-/** 获取算法优化洞察报告 */
-export function fetchOptimizationInsights(days = 30) {
-	return request
-		.get("strategy/performance-tracker/insights", {
-			searchParams: { days },
-			timeout: 60000,
-		})
-		.json<{ status: string, data: { insights: string, data_summary: string, days: number, generated_at: string } }>();
-}
-
-// ===================== 战法推荐跟进 =====================
-
-export type StrategyFollowType = "dragon_head" | "emotion_relay" | "relay" | "northbound" | "overnight" | "sentiment" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "auction";
+export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined";
 
 export interface StrategyFollowItem {
 	id: number

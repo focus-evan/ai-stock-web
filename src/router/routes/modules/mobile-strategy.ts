@@ -5,7 +5,6 @@ import { mobileStrategy } from "#src/router/extra-info";
 import { lazy } from "react";
 
 const MobileDragonHead = lazy(() => import("#src/pages/mobile-strategy/dragon-head"));
-const MobileSentiment = lazy(() => import("#src/pages/mobile-strategy/sentiment"));
 const MobileEventDriven = lazy(() => import("#src/pages/mobile-strategy/event-driven"));
 const MobileBreakthrough = lazy(() => import("#src/pages/mobile-strategy/breakthrough"));
 const MobileVolumePrice = lazy(() => import("#src/pages/mobile-strategy/volume-price"));
@@ -31,14 +30,6 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "CrownOutlined",
 					title: "龙头战法",
-				},
-			},
-			{
-				path: "/mobile-strategy/sentiment",
-				Component: MobileSentiment,
-				handle: {
-					icon: "HeartOutlined",
-					title: "情绪战法",
 				},
 			},
 			{

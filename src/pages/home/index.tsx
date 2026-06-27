@@ -34,6 +34,21 @@ import ReactECharts from "echarts-for-react";
 const { Text } = Typography;
 
 // ===================== 策略配置 =====================
+const HOME_STRATEGIES = [
+	"dragon_head",
+	"emotion_relay",
+	"event_driven",
+	"breakthrough",
+	"volume_price",
+	"overnight",
+	"moving_average",
+	"northbound",
+	"trend_momentum",
+	"combined",
+] as const;
+
+const HOME_STRATEGY_SET = new Set<string>(HOME_STRATEGIES);
+
 const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: string, gradient: string }> = {
 	dragon_head: { label: "龙头战法", icon: "🐉", color: "#eb2f96", gradient: "linear-gradient(135deg, #eb2f96 0%, #f759ab 100%)" },
 	emotion_relay: { label: "情绪接力", icon: "⚡", color: "#7c3aed", gradient: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)" },
@@ -41,12 +56,10 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	breakthrough: { label: "突破战法", icon: "🚀", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #b37feb 100%)" },
 	volume_price: { label: "量价关系", icon: "📊", color: "#13c2c2", gradient: "linear-gradient(135deg, #13c2c2 0%, #36cfc9 100%)" },
 	overnight: { label: "隔夜施工法", icon: "🌙", color: "#0f3460", gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)" },
-	auction: { label: "竞价尾盘", icon: "⏰", color: "#531dab", gradient: "linear-gradient(135deg, #531dab 0%, #9254de 100%)" },
 	moving_average: { label: "均线战法", icon: "📈", color: "#f5222d", gradient: "linear-gradient(135deg, #f5222d 0%, #ff7875 100%)" },
 	northbound: { label: "北向资金", icon: "🏦", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)" },
 	trend_momentum: { label: "趋势动量", icon: "📐", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ffc53d 100%)" },
 	combined: { label: "综合战法", icon: "🎯", color: "#d4a017", gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)" },
-	moat_value: { label: "护城河优选", icon: "🏰", color: "#2f54eb", gradient: "linear-gradient(135deg, #2f54eb 0%, #597ef7 100%)" },
 };
 
 function formatMoney(v: number): string {
@@ -74,10 +87,16 @@ export default function Home() {
 	);
 
 	const overview = dashData?.overview || {};
-	const strategySummary: any[] = dashData?.strategy_summary || [];
-	const positions: any[] = dashData?.positions || [];
-	const recentTrades: any[] = dashData?.recent_trades || [];
-	const performance: Record<string, any[]> = dashData?.performance || {};
+	const strategySummary: any[] = (dashData?.strategy_summary || [])
+		.filter((s: any) => HOME_STRATEGY_SET.has(s.strategy_type));
+	const positions: any[] = (dashData?.positions || [])
+		.filter((p: any) => HOME_STRATEGY_SET.has(p.strategy_type));
+	const recentTrades: any[] = (dashData?.recent_trades || [])
+		.filter((t: any) => HOME_STRATEGY_SET.has(t.strategy_type));
+	const performance: Record<string, any[]> = Object.fromEntries(
+		Object.entries(dashData?.performance || {})
+			.filter(([strategy]) => HOME_STRATEGY_SET.has(strategy)),
+	) as Record<string, any[]>;
 	const recommendations: Record<string, any> = dashData?.recommendations || {};
 
 	// ============= 收益曲线 ECharts =============
@@ -89,6 +108,8 @@ export default function Home() {
 			if (!Array.isArray(data) || data.length === 0)
 				continue;
 			const cfg = STRATEGY_CONFIG[st];
+			if (!cfg)
+				continue;
 			const dates = data.map((d: any) => d.trading_date || d.date || "");
 			const values = data.map((d: any) => d.total_profit_pct ?? d.profit_pct ?? 0);
 			for (const dd of dates)
@@ -591,7 +612,7 @@ export default function Home() {
 					style={{ borderRadius: 12 }}
 				>
 					<Row gutter={[16, 16]}>
-						{Object.keys(STRATEGY_CONFIG).map((st) => {
+						{HOME_STRATEGIES.map((st) => {
 							const cfg = STRATEGY_CONFIG[st];
 							const recData = recommendations[st];
 							// Backend returns {stocks: [...], generated_at, trading_date} or legacy array
