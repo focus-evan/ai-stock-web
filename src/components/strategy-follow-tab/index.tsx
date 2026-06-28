@@ -1,12 +1,10 @@
 import type {
-	DragonHeadLevelPerformanceSummary,
 	StrategyFollowItem,
 	StrategyFollowSnapshot,
 	StrategyFollowType,
 } from "#src/api/strategy";
 import {
 	closeStrategyFollow,
-	fetchDragonHeadPerformanceSummary,
 	fetchStrategyFollow,
 	fetchStrategyFollowHistory,
 	triggerStrategyAutoFollow,
@@ -23,7 +21,6 @@ import {
 	SyncOutlined,
 } from "@ant-design/icons";
 import {
-	Alert,
 	Button,
 	Card,
 	Col,
@@ -49,27 +46,6 @@ interface Props {
 	isOvernight?: boolean
 }
 
-function SummaryCard({
-	title,
-	summary,
-	color,
-}: {
-	title: string
-	summary: DragonHeadLevelPerformanceSummary
-	color: string
-}) {
-	return (
-		<Card size="small" title={<span style={{ color }}>{title}</span>}>
-			<Row gutter={[8, 8]}>
-				<Col span={12}><Statistic title="样本" value={summary.count} /></Col>
-				<Col span={12}><Statistic title="T+3均值" value={summary.avg_day3_pct ?? 0} suffix="%" precision={2} /></Col>
-				<Col span={12}><Statistic title="T+1胜率" value={summary.day1_win_rate ?? 0} suffix="%" precision={1} /></Col>
-				<Col span={12}><Statistic title="T+3胜率" value={summary.day3_win_rate ?? 0} suffix="%" precision={1} /></Col>
-			</Row>
-		</Card>
-	);
-}
-
 export default function StrategyFollowTab({ strategyType, title, isOvernight = false }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [items, setItems] = useState<StrategyFollowItem[]>([]);
@@ -77,16 +53,6 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailItem, setDetailItem] = useState<StrategyFollowItem | null>(null);
 	const [snapshots, setSnapshots] = useState<StrategyFollowSnapshot[]>([]);
-	const [dragonSummary, setDragonSummary] = useState<null | {
-		strong_recommend_summary: DragonHeadLevelPerformanceSummary
-		recommend_summary: DragonHeadLevelPerformanceSummary
-		comparison: {
-			strong_minus_recommend_day3: number | null
-			strong_minus_recommend_day3_win_rate: number | null
-			optimization_hint: string
-		}
-		generated_at: string
-	}>(null);
 
 	const fetchData = useCallback(async () => {
 		setLoading(true);
@@ -94,12 +60,6 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			const res = await fetchStrategyFollow(strategyType, status);
 			if (res.status === "success" && res.data) {
 				setItems(res.data.items || []);
-			}
-			if (strategyType === "dragon_head") {
-				const perf = await fetchDragonHeadPerformanceSummary(30);
-				if (perf.status === "success" && perf.data) {
-					setDragonSummary(perf.data);
-				}
 			}
 		}
 		catch {
@@ -181,9 +141,6 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 	const isDragonHead = strategyType === "dragon_head";
-	const dragonSummaryMessage = isDragonHead
-		? "当前面板已按可执行核心买点收缩，只统计可执行龙头信号的跟进与表现。"
-		: null;
 	const autoAddButtonLabel = isDragonHead ? "从可执行信号添加" : "从推荐添加";
 	const countTitle = isDragonHead ? "可执行跟进数" : "跟进数量";
 	const avgReturnTitle = isOvernight ? "平均次日收益" : isDragonHead ? "平均执行收益" : "平均收益";
@@ -212,31 +169,6 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData}>刷新</Button>
 				</Space>
 			</div>
-
-			{strategyType === "dragon_head" && dragonSummary && (
-				<>
-					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-						<Col xs={24} lg={12}>
-							<SummaryCard title="强烈推荐可执行表现" summary={dragonSummary.strong_recommend_summary} color="#cf1322" />
-						</Col>
-						<Col xs={24} lg={12}>
-							<SummaryCard title="推荐可执行表现" summary={dragonSummary.recommend_summary} color="#1677ff" />
-						</Col>
-					</Row>
-					<Alert
-						style={{ marginBottom: 16 }}
-						message="龙头战法可执行信号效果摘要"
-						description={(
-							<Space direction="vertical" size={4} style={{ width: "100%" }}>
-								<Text>{dragonSummary.comparison.optimization_hint}</Text>
-								{dragonSummaryMessage ? <Text type="secondary">{dragonSummaryMessage}</Text> : null}
-							</Space>
-						)}
-						type="info"
-						showIcon
-					/>
-				</>
-			)}
 
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
 				<Col span={6}><Card size="small"><Statistic title={countTitle} value={items.length} /></Card></Col>

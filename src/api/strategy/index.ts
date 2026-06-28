@@ -1078,44 +1078,6 @@ export function closeStrategyFollow(followId: number, reason?: string) {
 		.json<{ status: string, message: string }>();
 }
 
-export interface DragonHeadLevelPerformanceSummary {
-	recommendation_level: string
-	count: number
-	avg_day1_pct: number | null
-	avg_day3_pct: number | null
-	avg_day5_pct: number | null
-	day1_win_rate: number | null
-	day3_win_rate: number | null
-	take_profit_rate: number | null
-	stop_loss_rate: number | null
-}
-
-export interface DragonHeadPerformanceSummaryResponse {
-	status: string
-	data: {
-		days: number
-		since: string
-		strong_recommend_summary: DragonHeadLevelPerformanceSummary
-		recommend_summary: DragonHeadLevelPerformanceSummary
-		comparison: {
-			strong_minus_recommend_day3: number | null
-			strong_minus_recommend_day3_win_rate: number | null
-			optimization_hint: string
-		}
-		generated_at: string
-	}
-}
-
-/** \u83b7\u53d6\u9f99\u5934\u6218\u6cd5\u63a8\u8350\u7b49\u7ea7\u6548\u679c\u6458\u8981 */
-export function fetchDragonHeadPerformanceSummary(days = 30) {
-	return request
-		.get("strategy/performance-tracker/dragon-head-summary", {
-			searchParams: { days },
-			timeout: 20000,
-		})
-		.json<DragonHeadPerformanceSummaryResponse>();
-}
-
 /** \u624b\u52a8\u89e6\u53d1\u5feb\u7167\u66f4\u65b0 */
 export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType) {
 	return request

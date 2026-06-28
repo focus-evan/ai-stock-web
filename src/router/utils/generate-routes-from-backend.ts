@@ -17,6 +17,40 @@ const pageModules = import.meta.glob([
 	"!/src/pages/exception/**/*.tsx",
 ]);
 
+const retiredBackendRoutePaths = new Set([
+	"/short-term-strategy/daily-picks",
+	"/short-term-strategy/daily-picks-follow",
+	"/short-term-strategy/relay",
+	"/short-term-strategy/sentiment",
+	"/short-term-strategy/auction",
+	"/short-term-strategy/performance-tracker",
+	"/short-term-strategy/data-sync",
+	"/system/sync",
+	"/system/data-sync",
+	"/value-investing",
+	"/value-investing/moat-value",
+]);
+
+function filterRetiredBackendRoutes(routes: Array<AppRouteRecordRaw>): Array<AppRouteRecordRaw> {
+	return routes.reduce<Array<AppRouteRecordRaw>>((acc, route) => {
+		if (route.path && retiredBackendRoutePaths.has(route.path)) {
+			return acc;
+		}
+		if (route.index === true) {
+			acc.push({ ...route });
+			return acc;
+		}
+		const children = route.children?.length
+			? filterRetiredBackendRoutes(route.children)
+			: undefined;
+		acc.push({
+			...route,
+			...(children ? { children } : route.children ? { children: [] } : {}),
+		});
+		return acc;
+	}, []);
+}
+
 /**
  * @zh 根据路由获取组件路径
  * @en Get component path based on route
@@ -135,7 +169,7 @@ export async function generateRoutesFromBackend(backendRoutes: Array<AppRouteRec
 	};
 
 	// 处理路由配置
-	const normalizedRoutes = backendRoutes.map(normalizeRouteStructure);
+	const normalizedRoutes = filterRetiredBackendRoutes(backendRoutes).map(normalizeRouteStructure);
 	const transformedRoutes = await Promise.all(
 		normalizedRoutes.map(route => transformRoute(route)),
 	);

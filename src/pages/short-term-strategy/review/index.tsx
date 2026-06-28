@@ -56,12 +56,19 @@ const STRATEGY_CONFIG: Record<string, {
 		gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
 		order: 1,
 	},
+	emotion_relay: {
+		label: "情绪接力",
+		emoji: "⚡",
+		tagColor: "purple",
+		gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+		order: 2,
+	},
 	event_driven: {
 		label: "事件驱动",
 		emoji: "📡",
 		tagColor: "orange",
 		gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
-		order: 2,
+		order: 3,
 	},
 	breakthrough: {
 		label: "突破战法",
@@ -325,12 +332,12 @@ export default function PortfolioReview() {
 						border: "none",
 					}}
 				>
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-						<Text style={{ color: "#fff", fontSize: 14 }}>
+					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+						<Text style={{ color: "#fff", fontSize: 14, whiteSpace: "nowrap" }}>
 							<ThunderboltOutlined style={{ marginRight: 6 }} />
 							手动触发复盘分析
 						</Text>
-						<Space>
+						<Space wrap>
 							{portfolios.map(p => (
 								<Button
 									key={p.id}
