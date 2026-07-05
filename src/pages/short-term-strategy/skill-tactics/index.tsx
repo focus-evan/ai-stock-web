@@ -205,7 +205,7 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 						message={report.top_verdict || report.mode}
 						description={(
 							<Space direction="vertical" size={6}>
-								<Text>{report.source?.note || "候选池复用情绪接力底座，再按当前战法改写动作、仓位和触发条件。"}</Text>
+								<Text>{report.source?.note || "候选池来自原始行情事实，再按四个本地 skill 规则分别评分和映射动作。"}</Text>
 								<Space wrap>
 									{(report.mainlines || []).map(item => <Tag key={item} color="processing">{item}</Tag>)}
 								</Space>

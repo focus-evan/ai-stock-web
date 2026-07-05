@@ -14,6 +14,7 @@ import {
 	CrownOutlined,
 	DashboardOutlined,
 	DatabaseOutlined,
+	ExperimentOutlined,
 	EyeOutlined,
 	FieldTimeOutlined,
 	FileTextOutlined,
@@ -118,4 +119,5 @@ export const menuIcons: Record<string, any> = {
 	IssuesCloseOutlined,
 	StopOutlined,
 	MinusSquareOutlined,
+	ExperimentOutlined,
 };
