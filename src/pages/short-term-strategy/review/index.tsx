@@ -78,7 +78,7 @@ const STRATEGY_CONFIG: Record<string, {
 		order: 4,
 	},
 	a_share_leader_tactics: {
-		label: "A股龙头战法",
+		label: "陈小群龙头战法",
 		emoji: "龙",
 		tagColor: "volcano",
 		gradient: "linear-gradient(135deg, #ff7a45 0%, #cf1322 100%)",

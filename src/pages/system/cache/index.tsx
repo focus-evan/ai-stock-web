@@ -43,7 +43,7 @@ function strategyTag(type: string) {
 		emotion_relay: { label: "⚡ 情绪接力", color: "blue" },
 		yangjia_emotion_cycle: { label: "养家情绪", color: "red" },
 		kobe92_cycle_speculation: { label: "92科比", color: "geekblue" },
-		a_share_leader_tactics: { label: "龙头合力", color: "volcano" },
+		a_share_leader_tactics: { label: "陈小群龙头", color: "volcano" },
 		beijing_chaogu_first_board: { label: "北京首板", color: "orange" },
 	};
 	const item = map[type] || { label: type, color: "default" };

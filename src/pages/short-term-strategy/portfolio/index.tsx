@@ -102,7 +102,7 @@ const STRATEGY_NAMES: Record<string, string> = {
 	combined: "综合战法",
 	yangjia_emotion_cycle: "炒股养家情绪周期",
 	kobe92_cycle_speculation: "92科比周期投机",
-	a_share_leader_tactics: "A股龙头战法",
+	a_share_leader_tactics: "陈小群龙头战法",
 	beijing_chaogu_first_board: "北京炒家首板",
 };
 function strategyName(type: string): string {
@@ -1354,7 +1354,7 @@ export default function PortfolioDashboard() {
 							<Radio.Button value="emotion_relay">⚡ 情绪接力</Radio.Button>
 							<Radio.Button value="yangjia_emotion_cycle">养家情绪</Radio.Button>
 							<Radio.Button value="kobe92_cycle_speculation">92科比</Radio.Button>
-							<Radio.Button value="a_share_leader_tactics">龙头合力</Radio.Button>
+							<Radio.Button value="a_share_leader_tactics">陈小群龙头</Radio.Button>
 							<Radio.Button value="beijing_chaogu_first_board">北京首板</Radio.Button>
 							<Radio.Button value="event_driven">📡 事件驱动</Radio.Button>
 						</Radio.Group>

@@ -45,6 +45,10 @@ const HOME_STRATEGIES = [
 	"northbound",
 	"trend_momentum",
 	"combined",
+	"yangjia_emotion_cycle",
+	"kobe92_cycle_speculation",
+	"a_share_leader_tactics",
+	"beijing_chaogu_first_board",
 ] as const;
 
 const HOME_STRATEGY_SET = new Set<string>(HOME_STRATEGIES);
@@ -60,6 +64,10 @@ const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: stri
 	northbound: { label: "北向资金", icon: "🏦", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)" },
 	trend_momentum: { label: "趋势动量", icon: "📐", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ffc53d 100%)" },
 	combined: { label: "综合战法", icon: "🎯", color: "#d4a017", gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)" },
+	yangjia_emotion_cycle: { label: "炒股养家情绪周期", icon: "养", color: "#ff4d4f", gradient: "linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%)" },
+	kobe92_cycle_speculation: { label: "92科比周期投机", icon: "92", color: "#597ef7", gradient: "linear-gradient(135deg, #597ef7 0%, #9254de 100%)" },
+	a_share_leader_tactics: { label: "陈小群龙头战法", icon: "陈", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #cf1322 100%)" },
+	beijing_chaogu_first_board: { label: "北京炒家首板", icon: "首", color: "#faad14", gradient: "linear-gradient(135deg, #faad14 0%, #fa8c16 100%)" },
 };
 
 function formatMoney(v: number): string {

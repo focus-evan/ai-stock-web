@@ -737,6 +737,9 @@ export interface SkillTacticsYieldSummary {
 export interface SkillTacticsReport {
 	strategy_type: SkillTacticsStrategyType
 	framework: string
+	strict_logic_version?: string
+	current_logic_version?: string
+	cache_status?: "hit" | "stale_logic_version" | "missing_cache" | string
 	strategy_name: string
 	short_name: string
 	skill: string
@@ -760,6 +763,7 @@ export interface SkillTacticsReport {
 		base_strategy?: string
 		base_generated_at?: string
 		note?: string
+		cache_warning?: string
 	}
 	strategy_report?: string[]
 	total?: number

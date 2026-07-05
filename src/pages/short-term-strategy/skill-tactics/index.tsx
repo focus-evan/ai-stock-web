@@ -67,7 +67,7 @@ const TACTICS: TacticConfig[] = [
 	},
 	{
 		type: "a_share_leader_tactics",
-		label: "A股龙头战法",
+		label: "陈小群龙头战法",
 		color: "volcano",
 		description: "筛选市场辨识度、题材正宗度、资金合力同时成立的龙头样本。",
 	},
@@ -194,17 +194,22 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 			? report.candidates.reduce((sum, item) => sum + (item.score || 0), 0) / report.candidates.length
 			: 0
 	);
+	const isCacheWarning = report.cache_status === "stale_logic_version" || report.cache_status === "missing_cache";
+	const missingCacheWarning = report.cache_status === "missing_cache" ? "MySQL 暂无本战法缓存，页面不会实时生成，请等待定时任务或点击刷新。" : "";
+	const cacheWarning = report.source?.cache_warning || missingCacheWarning;
+	const alertType = isCacheWarning ? "warning" : "info";
 
 	return (
 		<Space direction="vertical" size={16} style={{ width: "100%" }}>
 			<Row gutter={[16, 16]}>
 				<Col xs={24} lg={16}>
 					<Alert
-						type="info"
+						type={alertType}
 						showIcon
 						message={report.top_verdict || report.mode}
 						description={(
 							<Space direction="vertical" size={6}>
+								{cacheWarning ? <Text type="warning">{cacheWarning}</Text> : null}
 								<Text>{report.source?.note || "候选池来自原始行情事实，再按四个本地 skill 规则分别评分和映射动作。"}</Text>
 								<Space wrap>
 									{(report.mainlines || []).map(item => <Tag key={item} color="processing">{item}</Tag>)}
@@ -437,7 +442,7 @@ export default function SkillTacticsPage() {
 					<ThunderboltOutlined style={{ color: "#1677ff", fontSize: 24 }} />
 					<div>
 						<Title level={4} style={{ margin: 0 }}>短线四法跟踪</Title>
-						<Text type="secondary">以情绪接力候选池为底座，按四个 skill 的交易、复盘、推荐口径分别映射。</Text>
+						<Text type="secondary">读取 MySQL 中最近一次任务结果；只有定时任务或刷新按钮会重新生成并写入缓存。</Text>
 					</div>
 				</Space>
 				<Space>

@@ -285,7 +285,7 @@ export default function SchedulerPage() {
 		emotion_relay: "⚡ 情绪接力",
 		yangjia_emotion_cycle: "养家情绪",
 		kobe92_cycle_speculation: "92科比",
-		a_share_leader_tactics: "龙头合力",
+		a_share_leader_tactics: "陈小群龙头",
 		beijing_chaogu_first_board: "北京首板",
 		event_driven: "📡 事件驱动",
 		breakthrough: "🚀 突破战法",
