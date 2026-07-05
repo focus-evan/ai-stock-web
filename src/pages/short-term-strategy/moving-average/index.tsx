@@ -299,10 +299,13 @@ const MovingAveragePage: React.FC = () => {
 			setLoading(true);
 			setError(null);
 			try {
-				const { triggerRecommendations } = await import("#src/api/portfolio");
-
-				await triggerRecommendations();
-				await fetchData();
+				const response = await refreshMovingAverageRecommendations(13);
+				if (response.status === "success") {
+					setData(response.data);
+				}
+				else {
+					setError(response.message || "生成推荐失败");
+				}
 			}
 			catch (err: any) {
 				setError(err?.message || "生成推荐失败");
