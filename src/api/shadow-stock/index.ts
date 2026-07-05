@@ -8,6 +8,7 @@ import type {
 	ShadowStockRecommendResponse,
 	ShadowStockRefreshResponse,
 	ShadowStockReportHistoryResponse,
+	ShadowStockReportStatusResponse,
 	ShadowStockTrack,
 } from "./types";
 
@@ -67,6 +68,18 @@ export function refreshShadowStockReport() {
 	return request
 		.post("shadow-stock/refresh", { timeout: 10000 })
 		.json<ShadowStockRefreshResponse>();
+}
+
+/**
+ * 获取指定刷新批次的状态
+ */
+export function fetchShadowStockReportStatus(batchId: string) {
+	return request
+		.get("shadow-stock/report/status", {
+			searchParams: { batch_id: batchId },
+			ignoreLoading: true,
+		})
+		.json<ShadowStockReportStatusResponse>();
 }
 
 /**

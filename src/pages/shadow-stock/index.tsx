@@ -9,6 +9,7 @@ import type {
 import {
 	fetchShadowStockDashboard,
 	fetchShadowStockReportHistory,
+	fetchShadowStockReportStatus,
 	refreshShadowStockReport,
 } from "#src/api/shadow-stock";
 import { BasicContent } from "#src/components/basic-content";
@@ -183,24 +184,49 @@ export default function ShadowStockPage() {
 		try {
 			const resp = await refreshShadowStockReport();
 			message.info(resp.message || "刷新已启动");
+			const batchId = resp.batch_id;
+			if (!batchId) {
+				message.warning("刷新已启动，但后端未返回批次号，请稍后手动刷新页面");
+				setRefreshing(false);
+				return;
+			}
+
+			let timeout: ReturnType<typeof setTimeout> | undefined;
 			const poll = setInterval(async () => {
 				try {
-					const d = await fetchShadowStockDashboard();
-					if (d.status === "ok" && d.batch_id !== dashboard?.batch_id) {
-						setDashboard(d);
+					const status = await fetchShadowStockReportStatus(batchId);
+					if (status.status === "completed") {
+						const d = await fetchShadowStockDashboard({ batch_id: batchId });
+						if (d.status === "ok") {
+							setDashboard(d);
+							setSelectedBatchId(batchId);
+							setSelectedTrackId(null);
+							setSelectedTarget(d.top_ipo_targets?.[0] || null);
+						}
+						await loadHistory();
 						setRefreshing(false);
 						clearInterval(poll);
+						if (timeout)
+							clearTimeout(timeout);
 						message.success("影子股报告刷新完成");
+					}
+					else if (status.status === "failed") {
+						setRefreshing(false);
+						clearInterval(poll);
+						if (timeout)
+							clearTimeout(timeout);
+						message.error(status.error || "影子股报告刷新失败");
 					}
 				}
 				catch {
 					/* ignore */
 				}
 			}, 10000);
-			setTimeout(() => {
+			timeout = setTimeout(() => {
 				clearInterval(poll);
 				setRefreshing(false);
-			}, 360000);
+				message.warning("影子股报告仍在后台生成，请稍后从历史批次中查看");
+			}, 900000);
 		}
 		catch {
 			message.error("刷新启动失败");

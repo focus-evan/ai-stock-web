@@ -116,6 +116,18 @@ export interface ShadowStockRefreshResponse {
 	error?: string
 }
 
+export interface ShadowStockReportStatusResponse {
+	status: "not_found" | "running" | "completed" | "failed"
+	message?: string
+	batch_id: string
+	report?: ShadowStockReport
+	track_count?: number
+	target_count?: number
+	holding_count?: number
+	duration_seconds?: number
+	error?: string
+}
+
 export interface ShadowStockHoldingsDetailResponse {
 	status: string
 	ipo_target_id: number

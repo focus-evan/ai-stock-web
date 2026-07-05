@@ -100,6 +100,10 @@ const STRATEGY_NAMES: Record<string, string> = {
 	northbound: "北向资金",
 	trend_momentum: "趋势动量",
 	combined: "综合战法",
+	yangjia_emotion_cycle: "炒股养家情绪周期",
+	kobe92_cycle_speculation: "92科比周期投机",
+	a_share_leader_tactics: "A股龙头战法",
+	beijing_chaogu_first_board: "北京炒家首板",
 };
 function strategyName(type: string): string {
 	return STRATEGY_NAMES[type] || type;
@@ -1080,6 +1084,10 @@ export default function PortfolioDashboard() {
 													northbound: "推荐 10:15,13:30 | 交易 13:35",
 													trend_momentum: "凌晨预生成 05:30 | 交易 09:45",
 													combined: "上午聚合 09:00 | 下午聚合 14:36 | 交易 14:50",
+													yangjia_emotion_cycle: "短线四法刷新后 | 手动跟进",
+													kobe92_cycle_speculation: "短线四法刷新后 | 手动跟进",
+													a_share_leader_tactics: "短线四法刷新后 | 手动跟进",
+													beijing_chaogu_first_board: "短线四法刷新后 | 手动跟进",
 												} as Record<string, string>)[portfolio.strategy_type] || "每个交易日自动执行推荐与交易"}
 											</Text>
 										</Space>
@@ -1344,6 +1352,10 @@ export default function PortfolioDashboard() {
 						<Radio.Group buttonStyle="solid">
 							<Radio.Button value="dragon_head">🐉 龙头战法</Radio.Button>
 							<Radio.Button value="emotion_relay">⚡ 情绪接力</Radio.Button>
+							<Radio.Button value="yangjia_emotion_cycle">养家情绪</Radio.Button>
+							<Radio.Button value="kobe92_cycle_speculation">92科比</Radio.Button>
+							<Radio.Button value="a_share_leader_tactics">龙头合力</Radio.Button>
+							<Radio.Button value="beijing_chaogu_first_board">北京首板</Radio.Button>
 							<Radio.Button value="event_driven">📡 事件驱动</Radio.Button>
 						</Radio.Group>
 					</Form.Item>

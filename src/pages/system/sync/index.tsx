@@ -48,6 +48,16 @@ const { Text } = Typography;
 function strategyColor(s: string): string {
 	if (s === "dragon_head")
 		return "#eb2f96";
+	if (s === "emotion_relay")
+		return "#1677ff";
+	if (s === "yangjia_emotion_cycle")
+		return "#f5222d";
+	if (s === "kobe92_cycle_speculation")
+		return "#597ef7";
+	if (s === "a_share_leader_tactics")
+		return "#fa541c";
+	if (s === "beijing_chaogu_first_board")
+		return "#fa8c16";
 	if (s === "event_driven")
 		return "#fa8c16";
 	if (s === "breakthrough")
@@ -73,6 +83,16 @@ function strategyColor(s: string): string {
 function strategyIcon(s: string): string {
 	if (s === "dragon_head")
 		return "🐉";
+	if (s === "emotion_relay")
+		return "⚡";
+	if (s === "yangjia_emotion_cycle")
+		return "养";
+	if (s === "kobe92_cycle_speculation")
+		return "92";
+	if (s === "a_share_leader_tactics")
+		return "龙";
+	if (s === "beijing_chaogu_first_board")
+		return "首";
 	if (s === "event_driven")
 		return "📡";
 	if (s === "breakthrough")
@@ -233,6 +253,10 @@ export default function SchedulerPage() {
 	const strategies = [
 		"dragon_head",
 		"emotion_relay",
+		"yangjia_emotion_cycle",
+		"kobe92_cycle_speculation",
+		"a_share_leader_tactics",
+		"beijing_chaogu_first_board",
 		"event_driven",
 		"breakthrough",
 		"volume_price",
@@ -246,6 +270,10 @@ export default function SchedulerPage() {
 	const strategyNames: Record<string, string> = {
 		dragon_head: "🐉 龙头战法",
 		emotion_relay: "⚡ 情绪接力",
+		yangjia_emotion_cycle: "养家情绪",
+		kobe92_cycle_speculation: "92科比",
+		a_share_leader_tactics: "龙头合力",
+		beijing_chaogu_first_board: "北京首板",
 		event_driven: "📡 事件驱动",
 		breakthrough: "🚀 突破战法",
 		volume_price: "📊 量价关系",

@@ -448,17 +448,26 @@ export default function Home() {
 									{/* 最后交易时间 + 推荐更新时间 */}
 									{(() => {
 										const recInfo = recommendations[s.strategy_type];
-										const lastTradeDate = s.last_trade_date;
+										const lastRunDate = s.last_run_date || s.last_trade_date;
+										const lastActualTradeDate = s.last_actual_trade_date;
 										const recDate = recInfo?.trading_date || recInfo?.generated_at;
-										if (!lastTradeDate && !recDate)
+										if (!lastRunDate && !lastActualTradeDate && !recDate)
 											return null;
 										return (
 											<div style={{ display: "flex", gap: 12, marginBottom: 10, fontSize: 11, color: "#bfbfbf", flexWrap: "wrap" }}>
-												{lastTradeDate && (
-													<Tooltip title="最后一次模拟交易日期">
+												{lastRunDate && (
+													<Tooltip title="最近一次策略执行/收益结算日期">
 														<span>
-															🔄 交易:
-															{String(lastTradeDate).slice(0, 10)}
+															🔄 跟踪:
+															{String(lastRunDate).slice(0, 10)}
+														</span>
+													</Tooltip>
+												)}
+												{lastActualTradeDate && String(lastActualTradeDate).slice(0, 10) !== String(lastRunDate || "").slice(0, 10) && (
+													<Tooltip title="最近一次真实买卖成交日期">
+														<span>
+															💱 成交:
+															{String(lastActualTradeDate).slice(0, 10)}
 														</span>
 													</Tooltip>
 												)}

@@ -697,6 +697,123 @@ export function fetchRecommendationHistory(
 
 // ===================== 跟投分析 =====================
 
+// ===================== 短线四法 Skill 战法 =====================
+
+export type SkillTacticsStrategyType =
+  | "yangjia_emotion_cycle"
+  | "kobe92_cycle_speculation"
+  | "a_share_leader_tactics"
+  | "beijing_chaogu_first_board";
+
+export interface SkillTacticsCandidate {
+	rank: number
+	code: string
+	name: string
+	role?: string
+	theme?: string
+	score: number
+	decision?: string
+	native_action?: string
+	buy_method?: string
+	price_trigger?: string
+	position?: string
+	invalid_condition?: string
+	reason?: string
+	recommendation_level?: string
+	current_price?: number
+	change_pct?: number
+}
+
+export interface SkillTacticsYieldSummary {
+	tracked_count: number
+	positive_count: number
+	negative_count: number
+	avg_score: number
+	direct_buy_count: number
+	watch_count: number
+	empty_seat_count: number
+}
+
+export interface SkillTacticsReport {
+	strategy_type: SkillTacticsStrategyType
+	framework: string
+	strategy_name: string
+	short_name: string
+	skill: string
+	checkpoint: string
+	timestamp: string
+	trading_date?: string
+	generated_at?: string
+	market_phase?: string
+	mode?: string
+	risk_gate?: string
+	mainlines?: string[]
+	top_verdict?: string
+	direct_buy_count: number
+	next_checkpoint?: string
+	candidates: SkillTacticsCandidate[]
+	recommendations?: any[]
+	prior_follow_up?: any[]
+	yield_summary?: SkillTacticsYieldSummary
+	yield_tracking?: any[]
+	source?: {
+		base_strategy?: string
+		base_generated_at?: string
+		note?: string
+	}
+	strategy_report?: string[]
+	total?: number
+}
+
+export interface SkillTacticsDashboardResponse {
+	status: string
+	generated_at: string
+	frameworks: SkillTacticsReport[]
+	total: number
+}
+
+export interface SkillTacticsFrameworkResponse {
+	status: string
+	data: SkillTacticsReport
+	message?: string
+}
+
+export function fetchSkillTacticsDashboard(limit: number = 5) {
+	return request
+		.get("strategy/skill-tactics", {
+			searchParams: { limit },
+			timeout: 30000,
+		})
+		.json<SkillTacticsDashboardResponse>();
+}
+
+export function fetchSkillTacticsFramework(strategyType: SkillTacticsStrategyType, limit: number = 5) {
+	return request
+		.get(`strategy/skill-tactics/${strategyType}`, {
+			searchParams: { limit },
+			timeout: 30000,
+		})
+		.json<SkillTacticsFrameworkResponse>();
+}
+
+export function refreshSkillTacticsFramework(strategyType: SkillTacticsStrategyType, limit: number = 5) {
+	return request
+		.post(`strategy/skill-tactics/${strategyType}/refresh`, {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<SkillTacticsFrameworkResponse>();
+}
+
+export function refreshAllSkillTactics(limit: number = 5) {
+	return request
+		.post("strategy/skill-tactics/refresh-all", {
+			searchParams: { limit },
+			timeout: 300000,
+		})
+		.json<SkillTacticsDashboardResponse & { message?: string }>();
+}
+
 export interface FollowUpRequest {
 	stock_code: string
 	stock_name?: string
@@ -1006,7 +1123,7 @@ export function triggerPortfolioAnalysis() {
 		.json<{ status: string, data: PortfolioAnalysisData, message?: string }>();
 }
 
-export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined";
+export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined" | SkillTacticsStrategyType;
 
 export interface StrategyFollowItem {
 	id: number

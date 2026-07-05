@@ -6,6 +6,7 @@ import { lazy } from "react";
 
 const DragonHead = lazy(() => import("#src/pages/short-term-strategy/dragon-head"));
 const EmotionRelay = lazy(() => import("#src/pages/short-term-strategy/emotion-relay"));
+const SkillTactics = lazy(() => import("#src/pages/short-term-strategy/skill-tactics"));
 const EventDriven = lazy(() => import("#src/pages/short-term-strategy/event-driven"));
 const Breakthrough = lazy(() => import("#src/pages/short-term-strategy/breakthrough"));
 const VolumePrice = lazy(() => import("#src/pages/short-term-strategy/volume-price"));
@@ -42,6 +43,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "ThunderboltOutlined",
 					title: "情绪接力",
+				},
+			},
+			{
+				path: "/short-term-strategy/skill-tactics",
+				Component: SkillTactics,
+				handle: {
+					icon: "ExperimentOutlined",
+					title: "短线四法",
 				},
 			},
 			{
