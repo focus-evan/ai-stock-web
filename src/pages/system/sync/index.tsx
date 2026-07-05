@@ -116,6 +116,8 @@ function strategyIcon(s: string): string {
 
 /** 阶段颜色 */
 function phaseColor(phase: string): string {
+	if (phase.startsWith("skill_"))
+		return "magenta";
 	if (phase.includes("recommend"))
 		return "blue";
 	if (phase.includes("trade"))
@@ -135,6 +137,16 @@ function phaseColor(phase: string): string {
 
 /** 阶段标签 */
 function phaseLabel(phase: string): string {
+	if (phase === "skill_premarket")
+		return "盘前";
+	if (phase === "skill_confirm")
+		return "确认";
+	if (phase === "skill_first_board")
+		return "首板";
+	if (phase === "skill_seal_check")
+		return "回封";
+	if (phase === "skill_review")
+		return "复盘";
 	if (phase.includes("recommend"))
 		return "推荐";
 	if (phase.includes("trade"))
@@ -157,11 +169,12 @@ const TASK_TYPE_OPTIONS = [
 	{ label: "自动交易", value: "trade" },
 	{ label: "跟投建议", value: "follow" },
 	{ label: "每日复盘", value: "review" },
+	{ label: "短线四法", value: "skill_tactics" },
 ];
 
 export default function SchedulerPage() {
 	const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-	const [selectedTaskTypes, setSelectedTaskTypes] = useState<string[]>(["trade", "follow", "review"]);
+	const [selectedTaskTypes, setSelectedTaskTypes] = useState<string[]>(["trade", "follow", "review", "skill_tactics"]);
 
 	// 调度器状态
 	const {
