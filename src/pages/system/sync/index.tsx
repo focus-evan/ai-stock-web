@@ -13,6 +13,7 @@ import {
 	ClockCircleOutlined,
 	DashboardOutlined,
 	DeleteOutlined,
+	ExclamationCircleOutlined,
 	MinusCircleOutlined,
 	PlusOutlined,
 	ReloadOutlined,
@@ -43,6 +44,35 @@ import {
 import { useState } from "react";
 
 const { Text } = Typography;
+
+function taskStatusView(task: SchedulerTask) {
+	if (task.done || task.status === "done") {
+		return {
+			color: "success",
+			icon: <CheckCircleOutlined style={{ color: "#52c41a", fontSize: 18 }} />,
+			text: task.status_label || "已完成",
+		};
+	}
+	if (task.status === "running") {
+		return {
+			color: "processing",
+			icon: <ClockCircleOutlined style={{ color: "#1677ff", fontSize: 18 }} />,
+			text: task.status_label || "窗口中",
+		};
+	}
+	if (task.status === "missed") {
+		return {
+			color: "error",
+			icon: <ExclamationCircleOutlined style={{ color: "#ff4d4f", fontSize: 18 }} />,
+			text: task.status_label || "已过窗口未完成",
+		};
+	}
+	return {
+		color: "default",
+		icon: <MinusCircleOutlined style={{ color: "#d9d9d9", fontSize: 18 }} />,
+		text: task.status_label || "待执行",
+	};
+}
 
 /** 策略颜色 */
 function strategyColor(s: string): string {
@@ -324,18 +354,10 @@ export default function SchedulerPage() {
 			key: "done",
 			width: 100,
 			align: "center" as const,
-			render: (done: boolean) =>
-				done
-					? (
-						<Tooltip title="已完成">
-							<CheckCircleOutlined style={{ color: "#52c41a", fontSize: 18 }} />
-						</Tooltip>
-					)
-					: (
-						<Tooltip title="待执行">
-							<MinusCircleOutlined style={{ color: "#d9d9d9", fontSize: 18 }} />
-						</Tooltip>
-					),
+			render: (_done: boolean, record: SchedulerTask) => {
+				const view = taskStatusView(record);
+				return <Tooltip title={view.text}>{view.icon}</Tooltip>;
+			},
 		},
 	];
 
@@ -521,6 +543,14 @@ export default function SchedulerPage() {
 								prefix={<ClockCircleOutlined />}
 								valueStyle={{ color: "#faad14" }}
 							/>
+							{summary.missed
+								? (
+									<Text type="danger" style={{ fontSize: 12 }}>
+										已错过
+										{summary.missed}
+									</Text>
+								)
+								: null}
 						</Col>
 						<Col xs={24} sm={6}>
 							<Statistic
@@ -544,6 +574,9 @@ export default function SchedulerPage() {
 						const doneCount = stratTasks.filter(t => t.done).length;
 						const totalCount = stratTasks.length;
 						const pct = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+						const strategyProgressColor = pct === 100
+							? "success"
+							: stratTasks.some(t => t.status === "missed") ? "error" : "processing";
 
 						return (
 							<Col xs={24} lg={12} key={strategy}>
@@ -554,7 +587,7 @@ export default function SchedulerPage() {
 											<span style={{ fontSize: 16 }}>
 												{strategyNames[strategy] || strategy}
 											</span>
-											<Tag color={pct === 100 ? "success" : "processing"}>
+											<Tag color={strategyProgressColor}>
 												{doneCount}
 												/
 												{totalCount}
@@ -605,7 +638,7 @@ export default function SchedulerPage() {
 								title={`${task.name} - ${task.label} (${task.time})`}
 							>
 								<Tag
-									color={task.done ? "success" : "default"}
+									color={taskStatusView(task).color}
 									style={{
 										padding: "4px 10px",
 										fontSize: 12,
@@ -617,9 +650,7 @@ export default function SchedulerPage() {
 										<span>{strategyIcon(task.strategy)}</span>
 										<span>{task.label}</span>
 										<span style={{ color: "#8c8c8c" }}>{task.time.split("-")[0]}</span>
-										{task.done
-											? <CheckCircleOutlined style={{ color: "#52c41a" }} />
-											: <MinusCircleOutlined style={{ color: "#d9d9d9" }} />}
+										{taskStatusView(task).icon}
 									</Space>
 								</Tag>
 							</Tooltip>

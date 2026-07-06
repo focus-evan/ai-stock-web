@@ -464,11 +464,18 @@ export default function SkillTacticsPage() {
 				onChange={key => setActiveType(key as SkillTacticsStrategyType)}
 				items={TACTICS.map((tactic) => {
 					const report = findReport(reports, tactic.type);
+					const buyCount = report?.direct_buy_count || report?.yield_summary?.recommended_buy_count || 0;
+					const watchCount = report?.yield_summary?.watch_count || 0;
 					return {
 						key: tactic.type,
 						label: (
 							<Space>
-								<Tag color={tactic.color}>{report?.direct_buy_count || 0}</Tag>
+								<Tag color={tactic.color}>
+									买
+									{buyCount}
+									/观
+									{watchCount}
+								</Tag>
 								<span>{tactic.label}</span>
 							</Space>
 						),

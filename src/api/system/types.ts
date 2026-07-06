@@ -124,6 +124,8 @@ export interface SchedulerTask {
 	label: string
 	time: string
 	done: boolean
+	status?: "done" | "running" | "missed" | "pending" | string
+	status_label?: string
 }
 
 export interface SchedulerStatus {
@@ -137,6 +139,8 @@ export interface SchedulerStatus {
 		total: number
 		done: number
 		pending: number
+		missed?: number
+		running?: number
 		progress: number
 	}
 }

@@ -730,6 +730,7 @@ export interface SkillTacticsYieldSummary {
 	negative_count: number
 	avg_score: number
 	direct_buy_count: number
+	recommended_buy_count?: number
 	watch_count: number
 	empty_seat_count: number
 }
