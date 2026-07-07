@@ -194,7 +194,7 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 			? report.candidates.reduce((sum, item) => sum + (item.score || 0), 0) / report.candidates.length
 			: 0
 	);
-	const isCacheWarning = report.cache_status === "stale_logic_version" || report.cache_status === "missing_cache";
+	const isCacheWarning = ["stale_logic_version", "missing_cache", "data_source_fallback", "data_source_unavailable"].includes(report.cache_status || "");
 	const missingCacheWarning = report.cache_status === "missing_cache" ? "MySQL 暂无本战法缓存，页面不会实时生成，请等待定时任务或点击刷新。" : "";
 	const cacheWarning = report.source?.cache_warning || missingCacheWarning;
 	const alertType = isCacheWarning ? "warning" : "info";
