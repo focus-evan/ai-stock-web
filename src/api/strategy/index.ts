@@ -716,6 +716,21 @@ export interface SkillTacticsCandidate {
 	native_action?: string
 	buy_method?: string
 	price_trigger?: string
+	follow_action?: string
+	observation_focus?: string
+	buy_signal?: string
+	buy_price?: string
+	buy_price_value?: number
+	trigger_checklist?: string[]
+	execution_plan?: {
+		follow_action?: string
+		observation_focus?: string
+		buy_signal?: string
+		buy_price?: string
+		buy_price_value?: number
+		trigger_checklist?: string[]
+		risk_stop?: string
+	}
 	position?: string
 	invalid_condition?: string
 	reason?: string

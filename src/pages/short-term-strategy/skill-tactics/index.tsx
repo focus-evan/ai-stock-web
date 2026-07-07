@@ -92,6 +92,17 @@ function actionColor(action?: string, decision?: string) {
 	return "gold";
 }
 
+function followActionColor(action?: string) {
+	const text = action || "";
+	if (text.includes("可买"))
+		return "red";
+	if (text.includes("触发"))
+		return "blue";
+	if (text.includes("不买"))
+		return "default";
+	return "gold";
+}
+
 function riskColor(risk?: string) {
 	if (!risk)
 		return "default";
@@ -161,13 +172,49 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 			),
 		},
 		{
-			title: "交易触发",
+			title: "观察转买",
 			key: "execution",
+			width: 420,
 			render: (_, record) => (
-				<Space direction="vertical" size={4}>
-					<Text>{record.buy_method || "-"}</Text>
-					<Text type="secondary">{record.price_trigger || "-"}</Text>
-					{record.invalid_condition ? <Text type="warning">{record.invalid_condition}</Text> : null}
+				<Space direction="vertical" size={6}>
+					<Space wrap size={4}>
+						<Tag color={followActionColor(record.follow_action || record.execution_plan?.follow_action)}>
+							{record.follow_action || record.execution_plan?.follow_action || record.decision || "-"}
+						</Tag>
+						{(record.buy_price || record.execution_plan?.buy_price) && (record.buy_price || record.execution_plan?.buy_price) !== "-"
+							? (
+								<Tag color="red">
+									转买价
+									{(record.buy_price || record.execution_plan?.buy_price)}
+								</Tag>
+							)
+							: null}
+					</Space>
+					<Text>
+						<Text strong>观察：</Text>
+						{record.observation_focus || record.execution_plan?.observation_focus || "-"}
+					</Text>
+					<Text>
+						<Text strong>转买：</Text>
+						{record.buy_signal || record.execution_plan?.buy_signal || record.price_trigger || "-"}
+					</Text>
+					{(record.trigger_checklist || record.execution_plan?.trigger_checklist || []).length > 0
+						? (
+							<Space wrap size={4}>
+								{(record.trigger_checklist || record.execution_plan?.trigger_checklist || []).map(item => (
+									<Tag key={item} color="processing">{item}</Tag>
+								))}
+							</Space>
+						)
+						: null}
+					{record.invalid_condition
+						? (
+							<Text type="warning">
+								失效：
+								{record.invalid_condition}
+							</Text>
+						)
+						: null}
 				</Space>
 			),
 		},
@@ -265,7 +312,7 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 									columns={candidateColumns}
 									dataSource={report.candidates || []}
 									pagination={false}
-									scroll={{ x: 1120 }}
+									scroll={{ x: 1320 }}
 								/>
 								<Row gutter={[16, 16]}>
 									<Col xs={24} lg={12}>
@@ -295,7 +342,7 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 										>
 											<Row gutter={[12, 12]}>
 												<Col span={8}><Statistic title="跟踪数" value={summary?.tracked_count || 0} /></Col>
-												<Col span={8}><Statistic title="观察数" value={summary?.watch_count || 0} /></Col>
+												<Col span={8}><Statistic title="待触发" value={summary?.watch_count || 0} /></Col>
 												<Col span={8}><Statistic title="空仓席位" value={summary?.empty_seat_count || 0} /></Col>
 											</Row>
 											{yieldRows.length > 0
@@ -473,7 +520,7 @@ export default function SkillTacticsPage() {
 								<Tag color={tactic.color}>
 									买
 									{buyCount}
-									/观
+									/待触
 									{watchCount}
 								</Tag>
 								<span>{tactic.label}</span>
