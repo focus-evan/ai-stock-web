@@ -495,6 +495,7 @@ export default function EventDriven() {
 
 	// Empty state
 	if (!data || data.recommendations.length === 0) {
+		const sourceUnavailable = data?.source_status?.status === "unavailable";
 		const handleGenerate = async () => {
 			setLoading(true);
 			setError(null);
@@ -518,7 +519,9 @@ export default function EventDriven() {
 		return (
 			<BasicContent>
 				<Empty
-					description={loading ? "正在生成推荐数据，请稍候（约1-3分钟）..." : "暂无事件驱动推荐数据"}
+					description={loading
+						? "正在生成推荐数据，请稍候（约30-90秒）..."
+						: sourceUnavailable ? "新闻/行情数据源暂不可用，系统将自动重试" : "今日无合格事件驱动信号"}
 					style={{ marginTop: 80 }}
 				>
 					<Space>

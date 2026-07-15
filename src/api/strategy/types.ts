@@ -416,6 +416,14 @@ export interface EventDrivenData {
 	trading_date: string
 	/** Top 5 重要事件（按影响等级排序，供前端优先展示） */
 	top_events?: EventInfo[]
+	source_status?: {
+		status: string
+		source_counts?: Record<string, number>
+		available_sources?: string[]
+		total?: number
+		checked_at?: string
+	}
+	is_current_trading_date?: boolean
 }
 
 /** 事件驱动接口响应 */
@@ -917,12 +925,12 @@ export interface NorthboundStock {
 	northbound_score: number
 	score_detail: {
 		hold: number
-		increase: number
-		consecutive: number
-		trend: number
 		capital: number
+		large_orders: number
 		market: number
 		contrarian: number
+		liquidity: number
+		resonance: number
 	}
 	reasons: string[]
 	recommendation_level: string
@@ -940,6 +948,18 @@ export interface NorthboundData {
 	generated_at: string
 	trading_date: string
 	session_type?: string
+	disclosure_mode?: "quarterly_anchor_plus_proxy" | "proxy_only" | string
+	source_status?: {
+		status: string
+		mode?: string
+		disclosure_note?: string
+		holdings_as_of?: string
+		holdings_rows?: number
+		fund_flow_rows?: number
+		realtime_rows?: number
+		checked_at?: string
+	}
+	is_current_trading_date?: boolean
 }
 
 /** 北向资金接口响应 */

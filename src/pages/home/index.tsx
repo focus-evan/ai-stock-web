@@ -635,6 +635,11 @@ export default function Home() {
 							// Backend returns {stocks: [...], generated_at, trading_date} or legacy array
 							const recs = Array.isArray(recData) ? recData : (Array.isArray(recData?.stocks) ? recData.stocks : []);
 							const recGenAt = recData?.generated_at;
+							const emptyDescription = recData?.source_status?.status === "unavailable"
+								? "取数失败，等待自动重试"
+								: recData && recData?.is_current_trading_date === false
+									? "今日尚未刷新"
+									: "今日无合格信号";
 							return (
 								<Col xs={24} sm={12} md={8} lg={6} key={st}>
 									<Card
@@ -650,7 +655,7 @@ export default function Home() {
 										style={{ borderRadius: 10, borderLeft: `3px solid ${cfg.color}` }}
 									>
 										{recs.length === 0
-											? <Empty description="暂无推荐" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+											? <Empty description={emptyDescription} image={Empty.PRESENTED_IMAGE_SIMPLE} />
 											: (
 												<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
 													{recs.map((rec: any, idx: number) => (

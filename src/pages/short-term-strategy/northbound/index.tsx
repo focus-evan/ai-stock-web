@@ -54,7 +54,7 @@ const NorthboundPage: React.FC = () => {
 	const handleRefresh = async () => {
 		setRefreshing(true);
 		setRefreshSeconds(0);
-		message.loading({ content: "正在刷新推荐，需要2-3分钟（AI逐股分析中）...", key: "refresh", duration: 0 });
+		message.loading({ content: "正在刷新资金代理推荐，预计30-90秒...", key: "refresh", duration: 0 });
 		const timer = setInterval(() => {
 			setRefreshSeconds(prev => prev + 1);
 		}, 1000);
@@ -146,28 +146,14 @@ const NorthboundPage: React.FC = () => {
 			),
 		},
 		{
-			title: "北向占比",
+			title: "最近披露持仓占比",
 			dataIndex: "hold_ratio",
 			key: "hold_ratio",
 			width: 90,
 			align: "right",
 			render: (v: number, record: NorthboundStock) => (
 				<Text style={{ color: record.in_northbound ? "#722ed1" : "#8c8c8c", fontWeight: "bold" }}>
-					{v?.toFixed(2)}
-					%
-				</Text>
-			),
-		},
-		{
-			title: "今日增持",
-			dataIndex: "increase",
-			key: "increase",
-			width: 100,
-			align: "right",
-			render: (v: number) => (
-				<Text style={{ color: v > 0 ? "#f5222d" : v < 0 ? "#52c41a" : "#8c8c8c", fontWeight: "bold" }}>
-					{v > 0 ? "+" : ""}
-					{formatAmount(v)}
+					{record.in_northbound ? `${v?.toFixed(2)}%` : "—"}
 				</Text>
 			),
 		},
@@ -190,16 +176,9 @@ const NorthboundPage: React.FC = () => {
 			align: "center",
 			render: (_: any, record: NorthboundStock) => (
 				<Space direction="vertical" size={2}>
-					{record.in_northbound && <Tag color="purple">🏦 北向持仓</Tag>}
-					{record.is_contrarian && <Tag color="red">🔥 逆势加仓</Tag>}
-					{(record as any).consecutive_days >= 3 && (
-						<Tag color="volcano">
-							📈 连续增持
-							{(record as any).consecutive_days}
-							天
-						</Tag>
-					)}
-					{(record as any).is_accelerating && <Tag color="magenta">⚡ 增持加速</Tag>}
+					{record.in_northbound && <Tag color="purple">🏦 最近季度持仓</Tag>}
+					{record.is_contrarian && <Tag color="red">🔥 主力逆势承接</Tag>}
+					{!record.in_northbound && <Tag color="blue">资金代理</Tag>}
 				</Space>
 			),
 		},
@@ -326,7 +305,7 @@ const NorthboundPage: React.FC = () => {
 											<div>
 												<Title level={3} style={{ margin: 0, color: "#fff" }}>北向资金</Title>
 												<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-													跟踪沪深港通"聪明钱"流向信号
+													季度北向持仓锚 + 当日主力资金代理
 												</Text>
 											</div>
 											<Button
@@ -375,11 +354,22 @@ const NorthboundPage: React.FC = () => {
 								</Row>
 							</Card>
 
+							<Alert
+								showIcon
+								type="info"
+								style={{ marginBottom: 16 }}
+								message="北向个股持仓已改为季度披露"
+								description={data?.source_status?.disclosure_note || "页面中的日内流入为主力资金代理，不代表北向资金当日净买入。"}
+							/>
+
 							{isEmpty
 								? (
 									<Card bordered={false} style={{ borderRadius: 12 }}>
-										<Empty description="暂无北向资金信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
-											<Text type="secondary">当前暂无符合条件的北向资金推荐股，点击上方「刷新推荐」手动触发分析</Text>
+										<Empty
+											description={data?.source_status?.status === "unavailable" ? "资金数据源暂不可用" : "今日无合格资金代理信号"}
+											image={Empty.PRESENTED_IMAGE_SIMPLE}
+										>
+											<Text type="secondary">系统会在任务窗口内自动重试，也可点击上方「刷新推荐」重新分析</Text>
 											<Space style={{ marginTop: 16 }}>
 												<Button onClick={fetchData} icon={<ReloadOutlined />}>重试</Button>
 												<Button type="primary" loading={loading} onClick={handleGenerate}>立即生成推荐</Button>
@@ -399,23 +389,18 @@ const NorthboundPage: React.FC = () => {
 												<Space wrap>
 													<Text strong>资金信号分布：</Text>
 													<Tag color="purple">
-														🏦 北向持仓:
+														🏦 最近季度持仓:
 														{data!.signal_summary.northbound_total || 0}
 														只
 													</Tag>
 													<Tag color="red">
-														🔥 逆势加仓:
+														🔥 主力逆势承接:
 														{data!.signal_summary.contrarian_count || 0}
 														只
 													</Tag>
-													<Tag color="volcano">
-														📈 连续增持:
-														{(data!.signal_summary as any).consecutive_count || 0}
-														只
-													</Tag>
-													<Tag color="magenta">
-														⚡ 增持加速:
-														{(data!.signal_summary as any).accelerating_count || 0}
+													<Tag color="blue">
+														资金代理:
+														{data!.signal_summary.proxy_count || 0}
 														只
 													</Tag>
 												</Space>
@@ -428,7 +413,7 @@ const NorthboundPage: React.FC = () => {
 											title={(
 												<Space>
 													<DollarOutlined style={{ color: "#722ed1" }} />
-													<Text strong>北向资金关注股</Text>
+													<Text strong>北向季度锚与资金代理候选</Text>
 													<Tag color="purple">
 														{data!.recommendations.length}
 														只
