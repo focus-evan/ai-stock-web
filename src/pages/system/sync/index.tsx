@@ -67,11 +67,30 @@ function taskStatusView(task: SchedulerTask) {
 			text: task.status_label || "已过窗口未完成",
 		};
 	}
+	if (task.status === "failed") {
+		return {
+			color: "error",
+			icon: <ExclamationCircleOutlined style={{ color: "#ff4d4f", fontSize: 18 }} />,
+			text: task.status_label || "执行失败",
+		};
+	}
 	return {
 		color: "default",
 		icon: <MinusCircleOutlined style={{ color: "#d9d9d9", fontSize: 18 }} />,
 		text: task.status_label || "待执行",
 	};
+}
+
+function taskTooltip(task: SchedulerTask) {
+	const view = taskStatusView(task);
+	return (
+		<div style={{ maxWidth: 420 }}>
+			<div>{`${task.name} - ${task.label} (${task.time})`}</div>
+			<div>{`状态：${view.text}`}</div>
+			{task.reason && <div>{`原因：${task.reason}`}</div>}
+			{task.completed_at && <div>{`记录时间：${task.completed_at}`}</div>}
+		</div>
+	);
 }
 
 /** 策略颜色 */
@@ -356,7 +375,7 @@ export default function SchedulerPage() {
 			align: "center" as const,
 			render: (_done: boolean, record: SchedulerTask) => {
 				const view = taskStatusView(record);
-				return <Tooltip title={view.text}>{view.icon}</Tooltip>;
+				return <Tooltip title={taskTooltip(record)}>{view.icon}</Tooltip>;
 			},
 		},
 	];
@@ -635,7 +654,7 @@ export default function SchedulerPage() {
 						{tasks.map(task => (
 							<Tooltip
 								key={`${task.strategy}-${task.phase}`}
-								title={`${task.name} - ${task.label} (${task.time})`}
+								title={taskTooltip(task)}
 							>
 								<Tag
 									color={taskStatusView(task).color}
