@@ -85,6 +85,13 @@ function profitColor(v: number): string {
 	return "#8c8c8c";
 }
 
+function formatDashboardTime(value: unknown): string {
+	if (!value)
+		return "";
+	const text = String(value).replace("T", " ");
+	return text.length >= 16 ? text.slice(5, 16) : text.slice(0, 10);
+}
+
 export default function Home() {
 	const { data: dashData, loading, refresh } = useRequest(
 		async () => {
@@ -457,34 +464,51 @@ export default function Home() {
 									{(() => {
 										const recInfo = recommendations[s.strategy_type];
 										const lastRunDate = s.last_run_date || s.last_trade_date;
-										const lastActualTradeDate = s.last_actual_trade_date;
-										const recDate = recInfo?.trading_date || recInfo?.generated_at;
-										if (!lastRunDate && !lastActualTradeDate && !recDate)
+										const lastRunAt = s.last_run_at || lastRunDate;
+										const lastActualTradeAt = s.last_actual_trade_at || s.last_actual_trade_date;
+										const recAt = recInfo?.generated_at || recInfo?.trading_date;
+										const decisionStatus = s.decision_status;
+										const decisionReason = s.decision_reason;
+										if (!lastRunAt && !lastActualTradeAt && !recAt)
 											return null;
 										return (
-											<div style={{ display: "flex", gap: 12, marginBottom: 10, fontSize: 11, color: "#bfbfbf", flexWrap: "wrap" }}>
-												{lastRunDate && (
-													<Tooltip title="最近一次策略执行/收益结算日期">
-														<span>
-															🔄 跟踪:
-															{String(lastRunDate).slice(0, 10)}
-														</span>
-													</Tooltip>
-												)}
-												{lastActualTradeDate && String(lastActualTradeDate).slice(0, 10) !== String(lastRunDate || "").slice(0, 10) && (
-													<Tooltip title="最近一次真实买卖成交日期">
-														<span>
-															💱 成交:
-															{String(lastActualTradeDate).slice(0, 10)}
-														</span>
-													</Tooltip>
-												)}
-												{recDate && (
-													<Tooltip title="推荐数据生成时间">
-														<span>
-															📡 推荐:
-															{String(recDate).slice(0, 10)}
-														</span>
+											<div style={{ marginBottom: 10 }}>
+												<div style={{ display: "flex", gap: 12, fontSize: 11, color: "#bfbfbf", flexWrap: "wrap" }}>
+													{lastRunAt && (
+														<Tooltip title="最近一次策略交易决策或收益结算时间">
+															<span>
+																🧠 决策:
+																{formatDashboardTime(lastRunAt)}
+															</span>
+														</Tooltip>
+													)}
+													{lastActualTradeAt && (
+														<Tooltip title="最近一次真实买卖成交时间">
+															<span>
+																💱 成交:
+																{formatDashboardTime(lastActualTradeAt)}
+															</span>
+														</Tooltip>
+													)}
+													{recAt && (
+														<Tooltip title="推荐数据生成时间">
+															<span>
+																📡 推荐:
+																{formatDashboardTime(recAt)}
+															</span>
+														</Tooltip>
+													)}
+												</div>
+												{decisionStatus && decisionStatus !== "not_run" && (
+													<Tooltip title={decisionReason || "策略决策详情"}>
+														<Tag
+															color={decisionStatus === "traded" ? "green" : "default"}
+															style={{ marginTop: 5, marginInlineEnd: 0, whiteSpace: "normal", lineHeight: "18px" }}
+														>
+															{decisionStatus === "traded"
+																? `本轮成交 ${s.last_trade_count || 0} 笔`
+																: `本轮0笔：${decisionReason || "未触发交易条件"}`}
+														</Tag>
 													</Tooltip>
 												)}
 											</div>
