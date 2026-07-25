@@ -1166,6 +1166,17 @@ export interface StrategyFollowItem {
 	created_at: string
 }
 
+export interface StrategyFollowSummary {
+	total_count: number
+	priced_count: number
+	missing_snapshot_count: number
+	profitable_count: number
+	win_rate_pct?: number | null
+	overall_return_pct?: number | null
+	latest_snapshot_date?: string | null
+	aggregation_method: "equal_weight_latest_return"
+}
+
 export interface StrategyFollowSnapshot {
 	id: number
 	follow_id: number
@@ -1183,7 +1194,7 @@ export function fetchStrategyFollow(strategyType: StrategyFollowType, status: st
 			searchParams: { strategy_type: strategyType, status },
 			timeout: 15000,
 		})
-		.json<{ status: string, data: { items: StrategyFollowItem[], total: number } }>();
+		.json<{ status: string, data: { items: StrategyFollowItem[], total: number, summary: StrategyFollowSummary } }>();
 }
 
 /** \u4ece\u6700\u65b0\u63a8\u8350\u81ea\u52a8\u6dfb\u52a0\u8ddf\u8fdb */
@@ -1191,9 +1202,9 @@ export function triggerStrategyAutoFollow(strategyType: StrategyFollowType, trad
 	return request
 		.post("strategy/follow/auto-add", {
 			json: { strategy_type: strategyType, trading_date: tradingDate },
-			timeout: 30000,
+			timeout: 120000,
 		})
-		.json<{ status: string, data: { added: number, message: string } }>();
+		.json<{ status: string, data: { added: number, selected: number, selected_codes: string[], snapshot_updated: number, message: string } }>();
 }
 
 /** \u83b7\u53d6\u8ddf\u8fdb\u80a1\u7968\u8be6\u60c5+\u5feb\u7167 */
@@ -1220,7 +1231,7 @@ export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType)
 	return request
 		.post("strategy/follow/snapshot", {
 			searchParams: strategyType ? { strategy_type: strategyType } : {},
-			timeout: 30000,
+			timeout: 120000,
 		})
-		.json<{ status: string, message: string }>();
+		.json<{ status: string, data?: { updated: number }, message: string }>();
 }

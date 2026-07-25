@@ -1,6 +1,7 @@
 import type {
 	StrategyFollowItem,
 	StrategyFollowSnapshot,
+	StrategyFollowSummary,
 	StrategyFollowType,
 } from "#src/api/strategy";
 import {
@@ -48,7 +49,10 @@ interface Props {
 
 export default function StrategyFollowTab({ strategyType, title, isOvernight = false }: Props) {
 	const [loading, setLoading] = useState(false);
+	const [autoAddLoading, setAutoAddLoading] = useState(false);
+	const [snapshotLoading, setSnapshotLoading] = useState(false);
 	const [items, setItems] = useState<StrategyFollowItem[]>([]);
+	const [summary, setSummary] = useState<StrategyFollowSummary | null>(null);
 	const [status, setStatus] = useState<"tracking" | "closed">("tracking");
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailItem, setDetailItem] = useState<StrategyFollowItem | null>(null);
@@ -60,6 +64,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			const res = await fetchStrategyFollow(strategyType, status);
 			if (res.status === "success" && res.data) {
 				setItems(res.data.items || []);
+				setSummary(res.data.summary || null);
 			}
 		}
 		catch {
@@ -75,25 +80,39 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	}, [fetchData]);
 
 	const handleAutoAdd = async () => {
+		setAutoAddLoading(true);
 		try {
 			const res = await triggerStrategyAutoFollow(strategyType);
 			if (res.status === "success") {
 				message.success(res.data?.message || "添加成功");
-				fetchData();
+				await fetchData();
 			}
 		}
 		catch {
 			message.error("添加失败");
 		}
+		finally {
+			setAutoAddLoading(false);
+		}
 	};
 
 	const handleSnapshot = async () => {
+		setSnapshotLoading(true);
 		try {
-			await triggerStrategyFollowSnapshot(strategyType);
-			message.success("快照更新任务已启动");
+			const res = await triggerStrategyFollowSnapshot(strategyType);
+			if (res.status === "success") {
+				message.success(res.message || `快照更新完成，共更新 ${res.data?.updated ?? 0} 只`);
+				await fetchData();
+			}
+			else {
+				message.error(res.message || "快照更新失败");
+			}
 		}
 		catch {
 			message.error("快照更新失败");
+		}
+		finally {
+			setSnapshotLoading(false);
 		}
 	};
 
@@ -120,6 +139,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		try {
 			const res = await fetchStrategyFollowHistory(item.id);
 			if (res.status === "success" && res.data) {
+				setDetailItem(res.data.follow);
 				setSnapshots(res.data.snapshots || []);
 			}
 		}
@@ -128,22 +148,37 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		}
 	};
 
-	const wins = items.filter(i => (isOvernight ? (i.next_day_return_pct ?? 0) : (i.latest_return_pct ?? 0)) > 0).length;
-	const avgReturn = items.length > 0
-		? items.reduce((s, i) => s + (isOvernight ? (i.next_day_return_pct ?? 0) : (i.latest_return_pct ?? 0)), 0) / items.length
-		: 0;
+	const pricedItems = items.filter(i => (
+		isOvernight
+			? i.next_day_return_pct != null
+			: i.latest_return_pct != null
+	));
+	const wins = isOvernight
+		? pricedItems.filter(i => (i.next_day_return_pct ?? 0) > 0).length
+		: (summary?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
+	const overallReturn = isOvernight
+		? (pricedItems.length > 0
+			? pricedItems.reduce((sum, item) => sum + (item.next_day_return_pct ?? 0), 0) / pricedItems.length
+			: null)
+		: (summary?.overall_return_pct ?? null);
+	const pricedCount = isOvernight ? pricedItems.length : (summary?.priced_count ?? pricedItems.length);
+	const winRate = pricedCount > 0
+		? (isOvernight ? wins / pricedCount * 100 : (summary?.win_rate_pct ?? wins / pricedCount * 100))
+		: null;
 	const latestSnapshotDate = useMemo(() => {
+		if (summary?.latest_snapshot_date)
+			return summary.latest_snapshot_date;
 		const dates = items.map(i => i.latest_snapshot_date).filter(Boolean) as string[];
 		if (dates.length === 0)
 			return null;
 		return dates.sort().at(-1) || null;
-	}, [items]);
+	}, [items, summary?.latest_snapshot_date]);
 
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 	const isDragonHead = strategyType === "dragon_head";
-	const autoAddButtonLabel = isDragonHead ? "从可执行信号添加" : "从推荐添加";
-	const countTitle = isDragonHead ? "可执行跟进数" : "跟进数量";
-	const avgReturnTitle = isOvernight ? "平均次日收益" : isDragonHead ? "平均执行收益" : "平均收益";
+	const autoAddButtonLabel = isDragonHead ? "同步可执行信号" : "立即择优同步";
+	const countTitle = isDragonHead ? "可执行跟进数" : "自动跟进数";
+	const overallReturnTitle = isOvernight ? "平均次日收益" : "组合整体涨跌幅";
 
 	return (
 		<Spin spinning={loading}>
@@ -153,19 +188,30 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					<Tag color={status === "tracking" ? "processing" : "default"}>
 						{status === "tracking" ? "跟进中" : "已结束"}
 					</Tag>
+					{status === "tracking" && (
+						<Tag color="blue">自动择优持续跟进</Tag>
+					)}
 					{!isOvernight && latestSnapshotDate && (
 						<Tag color="green">
 							已更新到收盘：
 							{latestSnapshotDate}
 						</Tag>
 					)}
+					{!isOvernight && items.length > 0 && (
+						<Tag color={pricedCount === items.length ? "green" : "orange"}>
+							行情覆盖：
+							{pricedCount}
+							/
+							{items.length}
+						</Tag>
+					)}
 				</Space>
 				<Space>
 					<Button size="small" onClick={() => setStatus(status === "tracking" ? "closed" : "tracking")}>{status === "tracking" ? "查看已结束" : "查看跟进中"}</Button>
 					{!isOvernight && (
-						<Button size="small" icon={<SyncOutlined />} onClick={handleSnapshot}>更新快照</Button>
+						<Button size="small" loading={snapshotLoading} icon={<SyncOutlined />} onClick={handleSnapshot}>更新快照</Button>
 					)}
-					<Button size="small" type="primary" icon={<PlusOutlined />} onClick={handleAutoAdd}>{autoAddButtonLabel}</Button>
+					<Button size="small" type="primary" loading={autoAddLoading} icon={<PlusOutlined />} onClick={handleAutoAdd}>{autoAddButtonLabel}</Button>
 					<Button size="small" icon={<ReloadOutlined />} onClick={fetchData}>刷新</Button>
 				</Space>
 			</div>
@@ -173,8 +219,18 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
 				<Col span={6}><Card size="small"><Statistic title={countTitle} value={items.length} /></Card></Col>
 				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="胜率" value={items.length > 0 ? ((wins / items.length) * 100).toFixed(1) : 0} suffix="%" /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title={avgReturnTitle} value={avgReturn.toFixed(2)} suffix="%" valueStyle={{ color: avgReturn >= 0 ? "#cf1322" : "#389e0d" }} prefix={avgReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="胜率" value={winRate == null ? "--" : winRate.toFixed(1)} suffix={winRate == null ? undefined : "%"} /></Card></Col>
+				<Col span={6}>
+					<Card size="small">
+						<Statistic
+							title={overallReturnTitle}
+							value={overallReturn == null ? "--" : overallReturn.toFixed(2)}
+							suffix={overallReturn == null ? undefined : "%"}
+							valueStyle={{ color: overallReturn == null ? undefined : overallReturn >= 0 ? "#cf1322" : "#389e0d" }}
+							prefix={overallReturn == null ? undefined : overallReturn >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+						/>
+					</Card>
+				</Col>
 			</Row>
 
 			{items.length === 0
@@ -182,11 +238,13 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 				: (
 					<Row gutter={[12, 12]}>
 						{items.map((item) => {
-							const returnVal = isOvernight ? (item.next_day_return_pct ?? 0) : (item.latest_return_pct ?? 0);
-							const isUp = returnVal > 0;
+							const rawReturn = isOvernight ? item.next_day_return_pct : item.latest_return_pct;
+							const hasReturn = rawReturn != null;
+							const returnVal = rawReturn ?? 0;
+							const isUp = hasReturn && returnVal > 0;
 							return (
 								<Col key={item.id} xs={24} sm={12} md={8} lg={6}>
-									<Card size="small" hoverable onClick={() => handleDetail(item)} style={{ borderLeft: `3px solid ${isUp ? "#cf1322" : returnVal < 0 ? "#389e0d" : "#d9d9d9"}` }}>
+									<Card size="small" hoverable onClick={() => handleDetail(item)} style={{ borderLeft: `3px solid ${isUp ? "#cf1322" : hasReturn && returnVal < 0 ? "#389e0d" : "#d9d9d9"}` }}>
 										<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 											<div>
 												<Text strong>{item.stock_name}</Text>
@@ -196,10 +254,10 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 										</div>
 										<div style={{ marginTop: 8, display: "flex", justifyContent: "space-between" }}>
 											<Text type="secondary" style={{ fontSize: 12 }}>{isOvernight ? "次日收益" : "累计收益"}</Text>
-											<Text strong style={{ color: isUp ? "#cf1322" : returnVal < 0 ? "#389e0d" : undefined }}>
-												{returnVal > 0 ? "+" : ""}
-												{returnVal.toFixed(2)}
-												%
+											<Text strong style={{ color: isUp ? "#cf1322" : hasReturn && returnVal < 0 ? "#389e0d" : undefined }}>
+												{hasReturn
+													? `${returnVal > 0 ? "+" : ""}${returnVal.toFixed(2)}%`
+													: "--"}
 											</Text>
 										</div>
 										<div style={{ marginTop: 4, display: "flex", justifyContent: "space-between" }}>
@@ -287,10 +345,10 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							<Col span={12}>
 								<Text type="secondary">累计收益</Text>
 								<br />
-								<Text style={{ color: (detailItem.latest_return_pct ?? 0) >= 0 ? "#cf1322" : "#389e0d" }}>
-									{(detailItem.latest_return_pct ?? 0) > 0 ? "+" : ""}
-									{(detailItem.latest_return_pct ?? 0).toFixed(2)}
-									%
+								<Text style={{ color: detailItem.latest_return_pct == null ? undefined : detailItem.latest_return_pct >= 0 ? "#cf1322" : "#389e0d" }}>
+									{detailItem.latest_return_pct == null
+										? "--"
+										: `${detailItem.latest_return_pct > 0 ? "+" : ""}${detailItem.latest_return_pct.toFixed(2)}%`}
 								</Text>
 							</Col>
 						</Row>
