@@ -2,6 +2,7 @@ import type { CombinedData, CombinedStock } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import { fetchCombinedRecommendations, refreshCombinedRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
+import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import WatchlistModal from "#src/components/WatchlistModal";
 import WatchlistPanel from "#src/components/WatchlistPanel";
 import {
@@ -870,6 +871,10 @@ const CombinedPage: React.FC = () => {
 			<WatchlistPanel key={watchlistRefreshKey} />
 
 			<RecommendationHistory strategyType="combined" />
+
+			<Card bordered={false} style={{ marginTop: 16, borderRadius: 12 }}>
+				<StrategyFollowTab strategyType="combined" title="综合战法推荐跟进" />
+			</Card>
 
 			{/* 加入自选弹窗 */}
 			<WatchlistModal
