@@ -1143,6 +1143,153 @@ export function triggerPortfolioAnalysis() {
 		.json<{ status: string, data: PortfolioAnalysisData, message?: string }>();
 }
 
+// ===================== 不追加资金滚动降本 =====================
+
+export interface UnwindTechnicalSnapshot {
+	as_of: string
+	current_price: number
+	ma3: number
+	ma16: number
+	ma16_slope_pct: number
+	deviation16_pct: number
+	support_10d: number
+	resistance_10d: number
+	rsi14: number
+	atr14: number
+	volume_ratio_5d: number
+	trend: "UP" | "DOWN" | "RANGE"
+	trend_label: string
+	bars: Array<{
+		date: string
+		open: number
+		close: number
+		high: number
+		low: number
+		volume: number
+	}>
+}
+
+export interface UnwindAnalysis {
+	method: string
+	capital_rule: string
+	pnl_pct: number
+	sell_shares: number
+	buyback_shares: number
+	min_spread_pct: number
+	sell_zone_low?: number | null
+	sell_zone_high?: number | null
+	buyback_price?: number | null
+	decision: string
+	decision_label: string
+	risk_level: string
+	reason: string
+	invalid_condition: string
+	next_check: string
+	deep_analysis: {
+		trend: string
+		location: string
+		momentum: string
+		volume: string
+		position: string
+	}
+	technical: UnwindTechnicalSnapshot
+	generated_at: string
+}
+
+export interface UnwindAnalysisRecord {
+	id: number
+	account_id: number
+	trading_date: string
+	current_price: number
+	pnl_pct: number
+	decision: string
+	risk_level: string
+	analysis_data: UnwindAnalysis
+	generated_at: string
+}
+
+export interface UnwindTrade {
+	id: number
+	account_id: number
+	side: "sell" | "buy"
+	shares: number
+	price: number
+	fees: number
+	gross_amount: number
+	cash_change: number
+	cost_reduction: number
+	trade_date: string
+	note?: string
+	created_at: string
+}
+
+export interface UnwindPlan {
+	id: number
+	watchlist_id: number
+	stock_code: string
+	stock_name: string
+	baseline_cost_price: number
+	baseline_shares: number
+	current_shares: number
+	cash_pool: number
+	open_sold_shares: number
+	open_sell_amount: number
+	cumulative_cost_reduction: number
+	effective_cost: number
+	status: string
+	latest_analysis?: UnwindAnalysis | null
+	analysis_history: UnwindAnalysisRecord[]
+	trades: UnwindTrade[]
+}
+
+export interface UnwindMethod {
+	name: string
+	capital_rule: string
+	position_rule: string
+	trend_rule: string
+	risk_notice: string
+	schedule: string
+}
+
+export function fetchUnwindPlans(historyLimit = 10) {
+	return request
+		.get("strategy/combined/watchlist/unwind-plans", {
+			searchParams: { history_limit: historyLimit },
+			timeout: 30000,
+		})
+		.json<{ status: string, data: { items: UnwindPlan[], total: number, method: UnwindMethod } }>();
+}
+
+export function refreshUnwindPlans(watchlistId?: number) {
+	const searchParams: Record<string, number> = {};
+	if (watchlistId)
+		searchParams.watchlist_id = watchlistId;
+	return request
+		.post("strategy/combined/watchlist/unwind-plans/refresh", {
+			searchParams,
+			timeout: 180000,
+		})
+		.json<{ status: "success" | "partial", data: { generated: Array<{ watchlist_id: number, analysis: UnwindAnalysis }>, errors: Array<{ watchlist_id?: number, stock_code?: string, message: string }>, total: number }, message: string }>();
+}
+
+export interface RecordUnwindTradePayload {
+	side: "sell" | "buy"
+	shares: number
+	price: number
+	fees: number
+	trade_date: string
+	note?: string
+}
+
+export function recordUnwindTrade(watchlistId: number, payload: RecordUnwindTradePayload) {
+	return request
+		.post(`strategy/combined/watchlist/unwind-plans/${watchlistId}/trades`, {
+			json: payload,
+			timeout: 180000,
+		})
+		.json<{ status: string, data: { trade_id: number, account: UnwindPlan }, message: string }>();
+}
+
 export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined" | SkillTacticsStrategyType;
 
 export interface StrategyFollowItem {
