@@ -275,7 +275,7 @@ const OvernightPage: React.FC = () => {
 	];
 
 	const executionRules = useMemo(() => ({
-		execution_window: data?.execution_rules?.execution_window || "14:55尾盘确认后买入",
+		execution_window: data?.execution_rules?.execution_window || "14:50-14:55尾盘二次确认后买入",
 		sell_window: data?.execution_rules?.sell_window || "次日集合竞价 / 开盘5分钟卖出",
 		exit_rule: data?.execution_rules?.exit_rule || "绝不隔第二夜，竞价不及预期直接走",
 		overnight_risk: data?.execution_rules?.overnight_risk || "低开、竞价走弱、隔夜情绪反转",
@@ -304,7 +304,7 @@ const OvernightPage: React.FC = () => {
 												🌙 隔夜施工法
 											</Title>
 											<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-												14:30七步筛选强势股 → 尾盘买入 → 次日集合竞价/开盘卖出
+												14:30七步筛选 → 14:45二次确认 → 14:50-14:55买入 → 次日09:30-09:40退出
 											</Text>
 										</div>
 									</Space>
@@ -380,7 +380,7 @@ const OvernightPage: React.FC = () => {
 							</Row>
 						</Card>
 
-						<Alert message="隔夜施工法交易铁律" description="尾盘14:55买入 → 次日集合竞价/开盘5分钟卖出。止损-2%，绝不隔第二夜！" type="warning" showIcon style={{ marginTop: 16, borderRadius: 8 }} />
+						<Alert message="隔夜施工法交易铁律" description="14:50-14:55仅买入二次确认标的 → 次日09:30处理极端高低开，09:35后强制退出。绝不主动隔第二夜！" type="warning" showIcon style={{ marginTop: 16, borderRadius: 8 }} />
 						<RecommendationHistory strategyType="overnight" />
 					</div>
 				</BasicContent>
@@ -397,7 +397,7 @@ const OvernightPage: React.FC = () => {
 									<MoonOutlined style={{ fontSize: 32, color: "#ffd93d" }} />
 									<div>
 										<Title level={3} style={{ margin: 0, color: "#fff" }}>🌙 隔夜施工法</Title>
-										<Text style={{ color: "rgba(255,255,255,0.85)" }}>14:30七步筛选强势股 → 尾盘买入 → 次日集合竞价/开盘卖出</Text>
+										<Text style={{ color: "rgba(255,255,255,0.85)" }}>14:30七步筛选 → 14:45二次确认 → 14:50-14:55买入 → 次日09:30-09:40退出</Text>
 									</div>
 									<Button
 										type="primary"
