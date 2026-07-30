@@ -60,6 +60,8 @@ const decisionColors: Record<string, string> = {
 	WAIT_REBOUND: "gold",
 	TARGET_REACHED: "purple",
 	HOLD_TOO_SMALL: "default",
+	WAIT_ONE_LOT: "gold",
+	ST_ONE_LOT_NO_ROTATION: "volcano",
 };
 
 function money(value?: number | null, symbol = "¥") {
@@ -141,6 +143,11 @@ function ExecutionGuide({ analysis }: { analysis: UnwindAnalysis }) {
 				<Space wrap>
 					<Text strong>具体执行计划</Text>
 					<Tag color={analysis.market === "hk" ? "geekblue" : "red"}>{analysis.market_label || (analysis.market === "hk" ? "港股" : "A股")}</Tag>
+					{analysis.position_mode_label && (
+						<Tag color={analysis.requires_manual_confirmation ? "volcano" : "blue"}>
+							{analysis.position_mode_label}
+						</Tag>
+					)}
 					<Tag>{analysis.strategy_version || "3/16趋势门控"}</Tag>
 				</Space>
 				<Text type="secondary">
@@ -149,6 +156,16 @@ function ExecutionGuide({ analysis }: { analysis: UnwindAnalysis }) {
 					{analysis.technical.as_of}
 				</Text>
 			</div>
+			{analysis.requires_manual_confirmation && (
+				<Alert
+					banner
+					showIcon
+					type="warning"
+					message={analysis.position_mode === "ONE_LOT_FULL_ROTATION"
+						? "一手整手回转会暂时清空全部持仓，只有页面明确显示“条件成立”时才可作为高风险可选方案。"
+						: `本模式会滚动较大仓位；本轮至少保留${analysis.core_floor_shares || 0}股，需人工确认实际成交。`}
+				/>
+			)}
 			<div style={{ padding: "4px 14px" }}>
 				{steps.map(step => (
 					<div
@@ -360,6 +377,7 @@ export default function UnwindTrackingPanel() {
 							{method?.trend_rule}
 						</Text>
 						{method?.cost_rule && <div><Text type="secondary">{method.cost_rule}</Text></div>}
+						{method?.portfolio_rule && <div><Text type="secondary">{method.portfolio_rule}</Text></div>}
 						<div><Text type="secondary">{method?.schedule}</Text></div>
 						{Boolean(method?.evidence?.length) && (
 							<div style={{ marginTop: 4 }}>
@@ -421,6 +439,7 @@ export default function UnwindTrackingPanel() {
 											<Text strong style={{ fontSize: 16 }}>{plan.stock_name}</Text>
 											<Text type="secondary">{plan.stock_code}</Text>
 											{analysis && <Tag color={decisionColors[analysis.decision] || "blue"}>{analysis.decision_label}</Tag>}
+											{analysis?.position_mode_label && <Tag>{analysis.position_mode_label}</Tag>}
 											{plan.open_sold_shares > 0 && (
 												<Tag color="geekblue">
 													已卖待回
@@ -523,7 +542,7 @@ export default function UnwindTrackingPanel() {
 														disabled={plan.open_sold_shares > 0 || analysis.sell_shares < lotSize || analysis.decision !== "SELL_SLICE"}
 														onClick={() => openTrade(plan, "sell")}
 													>
-														记录已卖出
+														{analysis.position_mode === "ONE_LOT_FULL_ROTATION" ? "记录整手卖出" : "记录已卖出"}
 													</Button>
 													<Button
 														type="primary"
@@ -627,7 +646,9 @@ export default function UnwindTrackingPanel() {
 							type={tradeTarget.side === "sell" ? "warning" : "info"}
 							showIcon
 							message={tradeTarget.side === "sell"
-								? "只记录已经实际成交的卖单，系统会保留至少70%底仓。"
+								? tradeTarget.plan.latest_analysis?.position_mode === "ONE_LOT_FULL_ROTATION"
+									? "只记录已经实际成交的卖单；一手整手回转会暂时清空该股票，存在卖出后踏空风险。"
+									: `只记录已经实际成交的卖单；系统将至少保留${tradeTarget.plan.latest_analysis?.core_floor_shares || 0}股。`
 								: `只能使用滚动资金池${money(tradeTarget.plan.cash_pool, planCurrencySymbol(tradeTarget.plan))}，最多买回${tradeTarget.plan.open_sold_shares}股。`}
 							style={{ marginBottom: 16 }}
 						/>

@@ -1192,6 +1192,13 @@ export interface UnwindAnalysis {
 	currency?: "CNY" | "HKD"
 	currency_symbol?: string
 	lot_size?: number
+	position_mode?: "ODD_ONLY" | "ONE_LOT_FULL_ROTATION" | "TWO_LOT_HALF_ROTATION" | "SMALL_ONE_LOT_ROTATION" | "STANDARD_CORE_ROTATION"
+	position_mode_label?: string
+	core_floor_shares?: number
+	max_open_shares?: number
+	requires_manual_confirmation?: boolean
+	position_risk?: "medium" | "high" | "very_high"
+	is_special_treatment?: boolean
 	pnl_pct: number
 	sell_shares: number
 	buyback_shares: number
@@ -1282,6 +1289,7 @@ export interface UnwindMethod {
 	position_rule: string
 	trend_rule: string
 	cost_rule?: string
+	portfolio_rule?: string
 	risk_notice: string
 	schedule: string
 	evidence?: Array<{ title: string, url: string }>
