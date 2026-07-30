@@ -60,6 +60,40 @@ function fmtPnl(v: number): string {
 	return v >= 0 ? `+${v.toFixed(2)}` : v.toFixed(2);
 }
 
+function stockCurrency(stock: PortfolioStockAnalysis): "CNY" | "HKD" {
+	if (stock.currency === "HKD" || stock.market === "hk" || /^\d{5}$/.test(stock.stock_code))
+		return "HKD";
+	return "CNY";
+}
+
+function currencySymbol(stock: PortfolioStockAnalysis): string {
+	return stockCurrency(stock) === "HKD" ? "HK$" : "¥";
+}
+
+function currencyBreakdown(
+	stocks: PortfolioStockAnalysis[],
+	valueOf: (stock: PortfolioStockAnalysis) => number,
+	options: { inWan?: boolean, signed?: boolean } = {},
+): string {
+	const totals = stocks.reduce((result, stock) => {
+		const currency = stockCurrency(stock);
+		result[currency] += valueOf(stock) || 0;
+		return result;
+	}, { CNY: 0, HKD: 0 });
+
+	const values = (["CNY", "HKD"] as const)
+		.filter(currency => Math.abs(totals[currency]) > 0)
+		.map((currency) => {
+			const raw = totals[currency];
+			const scaled = options.inWan ? raw / 10000 : raw;
+			const sign = options.signed ? (raw >= 0 ? "+" : "-") : "";
+			const symbol = currency === "HKD" ? "HK$" : "¥";
+			const amount = Math.abs(scaled);
+			return `${sign}${symbol}${options.inWan ? amount.toFixed(1) : amount.toFixed(0)}${options.inWan ? "万" : ""}`;
+		});
+	return values.join(" / ") || "-";
+}
+
 /* ========== Mini Sparkline ========== */
 const MiniSparkline: React.FC<{ prices: PortfolioStockAnalysis["prices_7d"] }> = ({ prices }) => {
 	if (!prices || prices.length === 0)
@@ -132,7 +166,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 					</div>
 					<div style={{ textAlign: "right" }}>
 						<div style={{ fontSize: 18, fontWeight: 700, color: "#fff" }}>
-							¥
+							{currencySymbol(stock)}
 							{stock.current_price?.toFixed(2) || "-"}
 						</div>
 						<div style={{
@@ -161,7 +195,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 					<div style={{ textAlign: "center" }}>
 						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>成本价</div>
 						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
-							{stock.buy_price > 0 ? `¥${stock.buy_price.toFixed(2)}` : "-"}
+							{stock.buy_price > 0 ? `${currencySymbol(stock)}${stock.buy_price.toFixed(2)}` : "-"}
 						</div>
 					</div>
 					<div style={{ textAlign: "center" }}>
@@ -174,7 +208,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>市值</div>
 						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
 							{stock.current_price > 0 && stock.buy_shares > 0
-								? `¥${(stock.current_price * stock.buy_shares).toFixed(0)}`
+								? `${currencySymbol(stock)}${(stock.current_price * stock.buy_shares).toFixed(0)}`
 								: "-"}
 						</div>
 					</div>
@@ -187,7 +221,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						}}
 						>
 							{stock.pnl_amount != null
-								? `${stock.pnl_amount >= 0 ? "+" : ""}¥${stock.pnl_amount.toFixed(0)}`
+								? `${stock.pnl_amount >= 0 ? "+" : "-"}${currencySymbol(stock)}${Math.abs(stock.pnl_amount).toFixed(0)}`
 								: "-"}
 						</div>
 					</div>
@@ -205,6 +239,14 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 					>
 						{stock.sector || "未知赛道"}
 					</Tag>
+					{stockCurrency(stock) === "HKD" && (
+						<Tag color="cyan" style={{ margin: 0, fontSize: 10 }}>港股 · HKD</Tag>
+					)}
+					{stock.quote_stale && (
+						<Tooltip title={stock.quote_as_of ? `行情时间：${stock.quote_as_of}` : "实时行情不可用，当前展示最近收盘价"}>
+							<Tag color="orange" style={{ margin: 0, fontSize: 10 }}>非实时行情</Tag>
+						</Tooltip>
+					)}
 					<Tag style={{
 						margin: 0,
 						background: growthColor,
@@ -458,12 +500,21 @@ const PortfolioAnalysisPanel: React.FC = () => {
 	const avgPnl = stocks.length > 0
 		? stocks.reduce((sum, s) => sum + (s.pnl_pct || 0), 0) / stocks.length
 		: 0;
-	// 计算总市值
-	const totalValue = stocks.reduce((sum, s) => sum + (s.current_price || 0) * (s.buy_shares || 0), 0);
-	// 计算总盈亏金额
-	const totalPnl = stocks.reduce((sum, s) => sum + (s.pnl_amount || 0), 0);
-	// 计算总成本
-	const totalCost = stocks.reduce((sum, s) => sum + (s.buy_price || 0) * (s.buy_shares || 0), 0);
+	const totalCost = currencyBreakdown(
+		stocks,
+		stock => (stock.buy_price || 0) * (stock.buy_shares || 0),
+		{ inWan: true },
+	);
+	const totalValue = currencyBreakdown(
+		stocks,
+		stock => (stock.current_price || 0) * (stock.buy_shares || 0),
+		{ inWan: true },
+	);
+	const totalPnl = currencyBreakdown(
+		stocks,
+		stock => stock.pnl_amount || 0,
+		{ signed: true },
+	);
 
 	return (
 		<>
@@ -534,32 +585,30 @@ const PortfolioAnalysisPanel: React.FC = () => {
 						</Col>
 						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总成本</Text>
-								<div style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>
-									{totalCost > 0 ? `¥${(totalCost / 10000).toFixed(1)}万` : "-"}
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总成本</Text>
+								<div style={{ color: "#fff", fontSize: 17, fontWeight: 700 }}>
+									{totalCost}
 								</div>
 							</div>
 						</Col>
 						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总市值</Text>
-								<div style={{ color: "#e0d4ff", fontSize: 22, fontWeight: 700 }}>
-									{totalValue > 0 ? `¥${(totalValue / 10000).toFixed(1)}万` : "-"}
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总市值</Text>
+								<div style={{ color: "#e0d4ff", fontSize: 17, fontWeight: 700 }}>
+									{totalValue}
 								</div>
 							</div>
 						</Col>
 						<Col span={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>总盈亏</Text>
+								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总盈亏</Text>
 								<div style={{
-									fontSize: 22,
+									fontSize: 17,
 									fontWeight: 700,
-									color: totalPnl >= 0 ? "#ff7875" : "#95de64",
+									color: "#e0d4ff",
 								}}
 								>
-									{totalPnl >= 0 ? "+" : ""}
-									¥
-									{Math.abs(totalPnl).toFixed(0)}
+									{totalPnl}
 								</div>
 							</div>
 						</Col>

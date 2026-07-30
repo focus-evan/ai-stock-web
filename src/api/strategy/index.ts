@@ -1071,6 +1071,11 @@ export function fetchLatestGuidance() {
 export interface PortfolioStockAnalysis {
 	stock_code: string
 	stock_name: string
+	market?: "a" | "hk"
+	currency?: "CNY" | "HKD"
+	quote_source?: string
+	quote_as_of?: string
+	quote_stale?: boolean
 	current_price: number
 	buy_price: number
 	/** 持有数量（股） */
