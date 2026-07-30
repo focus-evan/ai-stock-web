@@ -1392,7 +1392,19 @@ export interface StrategyFollowSummary {
 	win_rate_pct?: number | null
 	overall_return_pct?: number | null
 	latest_snapshot_date?: string | null
+	trade_performance: StrategyFollowPerformance
+	watch_performance: StrategyFollowPerformance
 	aggregation_method: "equal_weight_latest_return"
+}
+
+export interface StrategyFollowPerformance {
+	total_count: number
+	priced_count: number
+	missing_snapshot_count: number
+	profitable_count: number
+	win_rate_pct?: number | null
+	overall_return_pct?: number | null
+	latest_snapshot_date?: string | null
 }
 
 export interface StrategyFollowSnapshot {

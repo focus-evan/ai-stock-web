@@ -154,22 +154,24 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		}
 	};
 
-	const pricedItems = items.filter(i => (
+	const tradeItems = items.filter(item => item.follow_type !== "watch");
+	const pricedItems = tradeItems.filter(i => (
 		isOvernight
 			? i.next_day_return_pct != null
 			: i.latest_return_pct != null
 	));
+	const tradePerformance = summary?.trade_performance;
 	const wins = isOvernight
 		? pricedItems.filter(i => (i.next_day_return_pct ?? 0) > 0).length
-		: (summary?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
+		: (tradePerformance?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
 	const overallReturn = isOvernight
 		? (pricedItems.length > 0
 			? pricedItems.reduce((sum, item) => sum + (item.next_day_return_pct ?? 0), 0) / pricedItems.length
 			: null)
-		: (summary?.overall_return_pct ?? null);
-	const pricedCount = isOvernight ? pricedItems.length : (summary?.priced_count ?? pricedItems.length);
+		: (tradePerformance?.overall_return_pct ?? null);
+	const pricedCount = isOvernight ? pricedItems.length : (tradePerformance?.priced_count ?? pricedItems.length);
 	const winRate = pricedCount > 0
-		? (isOvernight ? wins / pricedCount * 100 : (summary?.win_rate_pct ?? wins / pricedCount * 100))
+		? (isOvernight ? wins / pricedCount * 100 : (tradePerformance?.win_rate_pct ?? wins / pricedCount * 100))
 		: null;
 	const latestSnapshotDate = useMemo(() => {
 		if (summary?.latest_snapshot_date)
@@ -183,13 +185,17 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 	const isDragonHead = strategyType === "dragon_head";
 	const isSkillTactics = SKILL_TACTICS_TYPES.has(strategyType);
+	const hasWatchFollow = (
+		isSkillTactics
+		|| (summary?.watch_count ?? items.filter(item => item.follow_type === "watch").length) > 0
+	);
 	const autoAddButtonLabel = isDragonHead
 		? "同步可执行信号"
-		: isSkillTactics ? "同步推荐跟进" : "立即择优同步";
+		: "同步推荐跟进";
 	const countTitle = isDragonHead
 		? "可执行跟进数"
-		: isSkillTactics ? "推荐跟进数" : "自动跟进数";
-	const overallReturnTitle = isOvernight ? "平均次日收益" : "组合整体涨跌幅";
+		: "推荐跟进数";
+	const overallReturnTitle = isOvernight ? "可执行平均次日收益" : "可执行平均涨跌幅";
 
 	return (
 		<Spin spinning={loading}>
@@ -202,7 +208,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					{status === "tracking" && (
 						<Tag color="blue">自动择优持续跟进</Tag>
 					)}
-					{isSkillTactics && (
+					{hasWatchFollow && (
 						<>
 							<Tag color="red">
 								交易：
@@ -241,8 +247,8 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
 				<Col span={6}><Card size="small"><Statistic title={countTitle} value={items.length} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="盈利数量" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="胜率" value={winRate == null ? "--" : winRate.toFixed(1)} suffix={winRate == null ? undefined : "%"} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="可执行盈利数" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title="可执行胜率" value={winRate == null ? "--" : winRate.toFixed(1)} suffix={winRate == null ? undefined : "%"} /></Card></Col>
 				<Col span={6}>
 					<Card size="small">
 						<Statistic
@@ -274,7 +280,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 												<Text type="secondary" style={{ marginLeft: 6, fontSize: 12 }}>{item.stock_code}</Text>
 											</div>
 											<Space size={4}>
-												{isSkillTactics && (
+												{hasWatchFollow && (
 													<Tag color={item.follow_type === "watch" ? "gold" : "red"}>
 														{item.follow_type === "watch" ? "观察跟进" : "交易跟进"}
 													</Tag>
