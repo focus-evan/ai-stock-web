@@ -16,10 +16,8 @@ import {
 	AlertOutlined,
 	CrownOutlined,
 	ExperimentOutlined,
-	FireOutlined,
 	ReloadOutlined,
 	RiseOutlined,
-	SafetyOutlined,
 	StockOutlined,
 	WarningOutlined,
 } from "@ant-design/icons";
@@ -28,6 +26,7 @@ import {
 	Button,
 	Card,
 	Col,
+	Collapse,
 	Descriptions,
 	Empty,
 	List,
@@ -36,7 +35,6 @@ import {
 	Row,
 	Skeleton,
 	Space,
-	Statistic,
 	Table,
 	Tabs,
 	Tag,
@@ -322,7 +320,7 @@ export default function DragonHead() {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetchDragonHeadRecommendations(13);
+			const response = await fetchDragonHeadRecommendations(8);
 			if (response.status === "success" && response.data)
 				setData(response.data);
 			else
@@ -345,7 +343,7 @@ export default function DragonHead() {
 			setRefreshSeconds(prev => prev + 1);
 		}, 1000);
 		try {
-			const response = await refreshDragonHeadRecommendations(13);
+			const response = await refreshDragonHeadRecommendations(8);
 			if (response.status === "success" && response.data) {
 				setData(response.data);
 				message.success({ content: "刷新完成", key: "refresh" });
@@ -373,6 +371,42 @@ export default function DragonHead() {
 	const avoidCandidates = useMemo(() => data ? normalizeAvoidCandidates(data) : [], [data]);
 	const themeLadders = useMemo(() => data ? normalizeThemeLadders(data) : [], [data]);
 	const entrySignals = useMemo(() => data ? normalizeSignals(data) : [], [data]);
+	const primarySignal = useMemo(
+		() => [
+			entrySignals.find(signal => !["放弃", "观察"].includes(String(signal.action_verdict || ""))),
+			entrySignals[0],
+		].find(Boolean),
+		[entrySignals],
+	);
+	const primaryStock = useMemo(
+		() => [
+			coreLeaders.find(stock => stock.code === primarySignal?.code),
+			coreLeaders[0],
+			watchCandidates[0],
+		].find(Boolean),
+		[coreLeaders, primarySignal?.code, watchCandidates],
+	);
+	const backupSignals = useMemo(
+		() => entrySignals
+			.filter(signal => signal.code !== primarySignal?.code && signal.candidate_pool !== "avoid")
+			.slice(0, 2),
+		[entrySignals, primarySignal?.code],
+	);
+	const backupStocks = useMemo(
+		() => [...coreLeaders, ...watchCandidates]
+			.filter((stock, index, all) => stock.code !== primaryStock?.code && all.findIndex(item => item.code === stock.code) === index)
+			.slice(0, 2),
+		[coreLeaders, primaryStock?.code, watchCandidates],
+	);
+	const marketPhase = data?.market_regime?.phase || data?.market_sentiment?.phase || "-";
+	const marketRisk = data?.market_regime?.risk_level || data?.market_sentiment?.risk_level || "-";
+	const actionBias = data?.market_regime?.action_bias || (marketRisk === "高" ? "暂停开仓" : "等待确认");
+	const mainTheme = themeLadders[0]?.name || primaryStock?.theme_name || "暂无明确主线";
+	const primaryAction = primarySignal
+		? getSignalAction(primarySignal)
+		: primaryStock?.candidate_pool === "core" || primaryStock?.recommendation_level === "强烈推荐"
+			? { label: "条件买入", color: "red" }
+			: { label: primaryStock ? "重点观察" : "今日空仓", color: primaryStock ? "blue" : "default" };
 
 	const coreColumns: ColumnsType<StockRecommendation> = [
 		{
@@ -468,16 +502,15 @@ export default function DragonHead() {
 			items={[
 				{
 					key: "main",
-					label: "策略研判",
+					label: "今日重点",
 					children: (
 						<BasicContent>
 							<div style={{ paddingBottom: 24 }}>
 								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 									<Space align="center">
 										<CrownOutlined style={{ fontSize: 24, color: "#f5222d" }} />
-										<Title level={4} style={{ margin: 0 }}>龙头战法 V2</Title>
+										<Title level={4} style={{ margin: 0 }}>龙头战法 · 今日重点</Title>
 										<Tag color="processing">{data.trading_date}</Tag>
-										<Tag color={data.schema_version === "v2" ? "purple" : "default"}>{data.schema_version || "legacy"}</Tag>
 										{data.llm_enhanced ? <Tag color="purple" icon={<ExperimentOutlined />}>AI增强</Tag> : null}
 									</Space>
 									<Button type="primary" icon={<ReloadOutlined spin={refreshing} />} onClick={handleRefresh} loading={refreshing}>{refreshing ? `刷新中 ${refreshSeconds}s` : "刷新推荐"}</Button>
@@ -485,163 +518,219 @@ export default function DragonHead() {
 
 								{data.data_quality?.degraded && <Alert style={{ marginBottom: 16 }} type="warning" showIcon icon={<WarningOutlined />} message="当前结果使用了降级数据，请勿将其视为完全实时的龙头接力信号" description={`数据来源: ${data.data_quality?.source || "unknown"}，fallback: ${data.data_quality?.fallback_level || "none"}`} />}
 
+								<Alert
+									style={{ marginBottom: 16 }}
+									type={marketRisk === "高" ? "warning" : "info"}
+									showIcon
+									message={(
+										<Space wrap>
+											<Text strong>
+												今日结论：
+												{actionBias}
+											</Text>
+											<Tag color={getRiskColor(marketRisk)}>
+												风险
+												{marketRisk}
+											</Tag>
+										</Space>
+									)}
+									description={`市场处于${marketPhase}，只聚焦主线“${mainTheme}”的第一名；没有确认信号就空仓。`}
+								/>
+
 								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-									<Col xs={24} lg={8}>
-										<Card title={(
-											<Space>
-												<SafetyOutlined />
-												<span>市场阶段</span>
-											</Space>
-										)}
+									<Col xs={24} xl={16}>
+										<Card
+											title={(
+												<Space wrap>
+													<CrownOutlined style={{ color: "#f5222d" }} />
+													<span>第一选择</span>
+													<Tag color={primaryAction.color}>{primaryAction.label}</Tag>
+												</Space>
+											)}
+											style={{ height: "100%", borderTop: "3px solid #f5222d" }}
 										>
-											<Descriptions column={1} size="small">
-												<Descriptions.Item label="阶段">{data.market_regime?.phase || data.market_sentiment?.phase || "-"}</Descriptions.Item>
-												<Descriptions.Item label="风险"><Tag color={getRiskColor(data.market_regime?.risk_level || data.market_sentiment?.risk_level)}>{data.market_regime?.risk_level || data.market_sentiment?.risk_level || "-"}</Tag></Descriptions.Item>
-												<Descriptions.Item label="动作偏好">{data.market_regime?.action_bias || "观察"}</Descriptions.Item>
-												<Descriptions.Item label="最高连板">
-													{data.market_regime?.max_limit_up_days || 0}
-													{" "}
-													板
-												</Descriptions.Item>
-											</Descriptions>
-											{data.market_regime?.description ? <Paragraph style={{ marginTop: 12, marginBottom: 0 }}>{data.market_regime.description}</Paragraph> : null}
+											{primaryStock || primarySignal
+												? (
+													<>
+														<Space wrap style={{ marginBottom: 12 }}>
+															<Title level={3} style={{ margin: 0 }}>{primarySignal?.name || primaryStock?.name}</Title>
+															<Text type="secondary">{primarySignal?.code || primaryStock?.code}</Text>
+															<Tag color="volcano">{primaryStock?.theme_name || mainTheme}</Tag>
+															{primaryStock?.ladder_role ? <Tag color="purple">{primaryStock.ladder_role}</Tag> : null}
+														</Space>
+														<Descriptions bordered size="small" column={{ xs: 1, md: 2 }}>
+															<Descriptions.Item label="买入条件">{String(primarySignal?.entry_plan?.buy_price_range || primaryStock?.buy_price_range || primarySignal?.entry_window || "等待确认")}</Descriptions.Item>
+															<Descriptions.Item label="仓位">{primarySignal?.entry_plan?.position_advice || primaryStock?.position_advice || "轻仓试错"}</Descriptions.Item>
+															<Descriptions.Item label="目标价">{primarySignal?.entry_plan?.target_price ? `¥${Number(primarySignal.entry_plan.target_price).toFixed(2)}` : primaryStock?.target_price ? `¥${Number(primaryStock.target_price).toFixed(2)}` : "-"}</Descriptions.Item>
+															<Descriptions.Item label="止损价">{primarySignal?.entry_plan?.stop_loss_price ? `¥${Number(primarySignal.entry_plan.stop_loss_price).toFixed(2)}` : primaryStock?.stop_loss_price ? `¥${Number(primaryStock.stop_loss_price).toFixed(2)}` : "-"}</Descriptions.Item>
+															<Descriptions.Item label="失效条件" span={2}>{primarySignal?.invalid_condition || primaryStock?.risk_warning || "主线退潮或个股不再保持前排"}</Descriptions.Item>
+														</Descriptions>
+														<Paragraph style={{ marginTop: 12, marginBottom: 0 }}>
+															<Text strong>只看这一条理由：</Text>
+															{primarySignal?.reason_short || primaryStock?.reasons?.[0] || primaryStock?.operation_suggestion || "等待龙头确认"}
+														</Paragraph>
+													</>
+												)
+												: <Empty description="今日没有可执行主标的，保持空仓" />}
 										</Card>
 									</Col>
-									<Col xs={24} lg={8}>
-										<Card title={(
-											<Space>
-												<FireOutlined />
-												<span>核心统计</span>
-											</Space>
-										)}
-										>
-											<Row gutter={12}>
-												<Col span={8}><Statistic title="核心" value={coreLeaders.length} valueStyle={{ color: "#f5222d", fontSize: 20 }} /></Col>
-												<Col span={8}><Statistic title="观察" value={watchCandidates.length} valueStyle={{ color: "#1890ff", fontSize: 20 }} /></Col>
-												<Col span={8}><Statistic title="回避" value={avoidCandidates.length} valueStyle={{ color: "#8c8c8c", fontSize: 20 }} /></Col>
-											</Row>
+									<Col xs={24} xl={8}>
+										<Card title="备选（最多2只）" style={{ height: "100%" }}>
+											{backupSignals.length > 0
+												? (
+													<List
+														dataSource={backupSignals}
+														renderItem={(signal) => {
+															const action = getSignalAction(signal);
+															return (
+																<List.Item>
+																	<Space direction="vertical" size={2} style={{ width: "100%" }}>
+																		<Space wrap>
+																			<Text strong>{signal.name}</Text>
+																			<Text type="secondary">{signal.code}</Text>
+																			<Tag color={action.color}>{action.label}</Tag>
+																		</Space>
+																		<Text type="secondary">{signal.reason_short || signal.entry_window}</Text>
+																	</Space>
+																</List.Item>
+															);
+														}}
+													/>
+												)
+												: (
+													<List
+														dataSource={backupStocks}
+														locale={{ emptyText: "无备选，不为凑数降低标准" }}
+														renderItem={stock => (
+															<List.Item>
+																<Space direction="vertical" size={2} style={{ width: "100%" }}>
+																	<Space wrap>
+																		<Text strong>{stock.name}</Text>
+																		<Text type="secondary">{stock.code}</Text>
+																		<Tag color={stock.candidate_pool === "core" ? "red" : "blue"}>{stock.candidate_pool === "core" ? "条件买入" : "观察"}</Tag>
+																	</Space>
+																	<Text type="secondary">{stock.reasons?.[0] || stock.operation_suggestion || "等待确认"}</Text>
+																</Space>
+															</List.Item>
+														)}
+													/>
+												)}
 										</Card>
 									</Col>
-									<Col xs={24} lg={8}>
-										<Card title={(
+								</Row>
+
+								<Collapse
+									items={[{
+										key: "details",
+										label: (
 											<Space>
 												<ExperimentOutlined />
-												<span>AI摘要</span>
+												<span>更多详情：题材梯队、完整候选池、AI报告与历史</span>
+												<Tag>
+													核心
+													{coreLeaders.length}
+												</Tag>
+												<Tag>
+													观察
+													{watchCandidates.length}
+												</Tag>
+												<Tag>
+													回避
+													{avoidCandidates.length}
+												</Tag>
 											</Space>
-										)}
-										>
-											<Paragraph style={{ whiteSpace: "pre-wrap", marginBottom: 8 }}>{data.ai_summary?.market_summary || data.ai_summary?.strategy_report || data.strategy_explanation || "暂无 AI 摘要"}</Paragraph>
-											<Text type="secondary">{data.generated_at}</Text>
-										</Card>
-									</Col>
-								</Row>
-
-								<Card
-									title={(
-										<Space>
-											<RiseOutlined />
-											<span>主线题材与梯队</span>
-										</Space>
-									)}
-									style={{ marginBottom: 16 }}
-								>
-									{themeLadders.length === 0 ? <Empty description="暂无题材梯队数据" image={Empty.PRESENTED_IMAGE_SIMPLE} /> : <Row gutter={[16, 16]}>{themeLadders.map(theme => <Col xs={24} xl={12} key={theme.name}><ThemeLadderCard theme={theme} /></Col>)}</Row>}
-								</Card>
-
-								<Card
-									title={(
-										<Space>
-											<CrownOutlined />
-											<span>核心龙头与结构化买点</span>
-										</Space>
-									)}
-									style={{ marginBottom: 16 }}
-								>
-									<Alert
-										type="info"
-										showIcon
-										style={{ marginBottom: 16 }}
-										message="先看这里：次日直接执行结论"
-										description="这些信号是给次日实盘用的：优先区分是否可排板、是否只能竞价确认、是否只能等分歧回封，避免把昨日强势误读成次日无脑追涨。"
-									/>
-									<SignalList entrySignals={entrySignals} />
-									<Table<StockRecommendation> columns={coreColumns} dataSource={coreLeaders} rowKey="code" pagination={false} size="middle" />
-								</Card>
-
-								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-									<Col xs={24} lg={12}>
-										<Card title={(
-											<Space>
-												<StockOutlined />
-												<span>观察池</span>
-											</Space>
-										)}
-										>
-											<List
-												dataSource={watchCandidates}
-												locale={{ emptyText: "暂无观察池" }}
-												renderItem={item => (
-													<List.Item>
-														<Space wrap>
-															<Text strong>{item.name}</Text>
-															<Text type="secondary">{item.code}</Text>
-															<Tag color="blue">{item.theme_name || "无题材"}</Tag>
-															<Tag>
-																{item.limit_up_days}
-																{" "}
-																板
-															</Tag>
-														</Space>
-													</List.Item>
+										),
+										children: (
+											<Space direction="vertical" size={16} style={{ width: "100%" }}>
+												<Card title={(
+													<Space>
+														<RiseOutlined />
+														<span>主线题材与梯队</span>
+													</Space>
 												)}
-											/>
-										</Card>
-									</Col>
-									<Col xs={24} lg={12}>
-										<Card title={(
-											<Space>
-												<AlertOutlined />
-												<span>回避池</span>
-											</Space>
-										)}
-										>
-											<List
-												dataSource={avoidCandidates}
-												locale={{ emptyText: "暂无回避池" }}
-												renderItem={item => (
-													<List.Item>
-														<Space direction="vertical" size={0}>
-															<Space wrap>
-																<Text strong>{item.name}</Text>
-																<Text type="secondary">{item.code}</Text>
-																<Tag color="default">{item.theme_name || "无题材"}</Tag>
+												>
+													{themeLadders.length === 0 ? <Empty description="暂无题材梯队数据" image={Empty.PRESENTED_IMAGE_SIMPLE} /> : <Row gutter={[16, 16]}>{themeLadders.map(theme => <Col xs={24} xl={12} key={theme.name}><ThemeLadderCard theme={theme} /></Col>)}</Row>}
+												</Card>
+												<Card title={(
+													<Space>
+														<CrownOutlined />
+														<span>完整核心信号</span>
+													</Space>
+												)}
+												>
+													<SignalList entrySignals={entrySignals} />
+													<Table<StockRecommendation> columns={coreColumns} dataSource={coreLeaders} rowKey="code" pagination={false} size="middle" />
+												</Card>
+												<Row gutter={[16, 16]}>
+													<Col xs={24} lg={12}>
+														<Card title={(
+															<Space>
+																<StockOutlined />
+																<span>观察池</span>
 															</Space>
-															<Text type="warning">{item.risk_warning || item.operation_suggestion || "高位/后排/非核心，建议回避"}</Text>
-														</Space>
-													</List.Item>
-												)}
-											/>
-										</Card>
-									</Col>
-								</Row>
-
-								<Card title={(
-									<Space>
-										<ExperimentOutlined />
-										<span>AI解读 / 历史回看</span>
-									</Space>
-								)}
-								>
-									<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.ai_summary?.strategy_report || data.strategy_explanation || "暂无 AI 解读"}</Paragraph>
-								</Card>
-								<RecommendationHistory strategyType="dragon_head" />
+														)}
+														>
+															<List
+																dataSource={watchCandidates}
+																locale={{ emptyText: "暂无观察池" }}
+																renderItem={item => (
+																	<List.Item>
+																		<Space wrap>
+																			<Text strong>{item.name}</Text>
+																			<Text type="secondary">{item.code}</Text>
+																			<Tag color="blue">{item.theme_name || "无题材"}</Tag>
+																			<Tag>
+																				{item.limit_up_days}
+																				{" "}
+																				板
+																			</Tag>
+																		</Space>
+																	</List.Item>
+																)}
+															/>
+														</Card>
+													</Col>
+													<Col xs={24} lg={12}>
+														<Card title={(
+															<Space>
+																<AlertOutlined />
+																<span>回避池</span>
+															</Space>
+														)}
+														>
+															<List
+																dataSource={avoidCandidates}
+																locale={{ emptyText: "暂无回避池" }}
+																renderItem={item => (
+																	<List.Item>
+																		<Space direction="vertical" size={0}>
+																			<Space wrap>
+																				<Text strong>{item.name}</Text>
+																				<Text type="secondary">{item.code}</Text>
+																			</Space>
+																			<Text type="warning">{item.risk_warning || item.operation_suggestion || "高位/后排/非核心，建议回避"}</Text>
+																		</Space>
+																	</List.Item>
+																)}
+															/>
+														</Card>
+													</Col>
+												</Row>
+												<Card title="AI完整报告">
+													<Paragraph style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>{data.ai_summary?.strategy_report || data.strategy_explanation || "暂无 AI 解读"}</Paragraph>
+												</Card>
+												<RecommendationHistory strategyType="dragon_head" />
+											</Space>
+										),
+									}]}
+								/>
 							</div>
 						</BasicContent>
 					),
 				},
 				{
 					key: "execution",
-					label: "实盘跟投指导",
+					label: "执行清单",
 					children: (
 						<BasicContent>
 							<div style={{ paddingBottom: 24 }}>
@@ -652,7 +741,7 @@ export default function DragonHead() {
 				},
 				{
 					key: "follow",
-					label: "推荐跟踪",
+					label: "结果跟踪",
 					children: <StrategyFollowTab strategyType="dragon_head" isOvernight={false} />,
 				},
 			]}

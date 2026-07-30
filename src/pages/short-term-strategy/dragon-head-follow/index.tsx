@@ -32,7 +32,6 @@ import {
 	Empty,
 	List,
 	message,
-	Progress,
 	Result,
 	Row,
 	Skeleton,
@@ -512,7 +511,6 @@ export function FollowPanel({
 	const [latest, setLatest] = useState<DragonHeadFollowItem | null>(null);
 	const [history, setHistory] = useState<DragonHeadFollowItem[]>([]);
 
-	const panelTitle = strategyLabel === "情绪接力" ? "推荐池" : "跟投指导";
 	const actionNoun = strategyLabel === "情绪接力" ? "推荐池" : "跟投指导";
 	const extraSections = useMemo(() => latest && renderExtraSections ? renderExtraSections(latest) : null, [latest, renderExtraSections]);
 
@@ -605,10 +603,32 @@ export function FollowPanel({
 		);
 	}
 
-	const buyStocks = latest.recommendations?.filter(s => ["买入", "加仓"].includes(s.action)) || [];
-	const holdStocks = latest.recommendations?.filter(s => ["持有", "继续持有"].includes(s.action)) || [];
-	const sellStocks = latest.recommendations?.filter(s => ["卖出", "减仓", "清仓"].includes(s.action)) || [];
-	const watchStocks = latest.recommendations?.filter(s => ["观望", "回避", "跳过", "待定"].includes(s.action)) || [];
+	const normalizedRecommendations = (latest.recommendations || []).map(normalizeStock);
+	const actionPriority: Record<string, number> = {
+		清仓: 100,
+		卖出: 95,
+		减仓: 90,
+		买入: 80,
+		加仓: 75,
+		持有: 60,
+		继续持有: 60,
+		观望: 30,
+		待定: 25,
+		回避: 10,
+		跳过: 5,
+	};
+	const focusStocks = [...normalizedRecommendations]
+		.sort((a, b) => (
+			(actionPriority[b.action] || 0) - (actionPriority[a.action] || 0)
+			|| (b.confidence || 0) - (a.confidence || 0)
+		))
+		.slice(0, 3);
+	const primaryStock = focusStocks[0];
+	const buyCount = normalizedRecommendations.filter(stock => ["买入", "加仓"].includes(stock.action)).length;
+	const sellCount = normalizedRecommendations.filter(stock => ["卖出", "减仓", "清仓"].includes(stock.action)).length;
+	const todayDecision = primaryStock
+		? `${primaryStock.name}：${primaryStock.action}`
+		: "今日无操作，保持观察";
 
 	return (
 		<div>
@@ -618,9 +638,14 @@ export function FollowPanel({
 					<Title level={5} style={{ margin: 0 }}>
 						{strategyLabel}
 						{" "}
-						{panelTitle}
+						执行清单
 					</Title>
 					<Tag color="processing">{latest.trading_date}</Tag>
+					<Tag color={getConfidenceColor(latest.confidence_score)}>
+						置信度
+						{latest.confidence_score}
+						%
+					</Tag>
 					<Text type="secondary" style={{ fontSize: 12 }}>
 						生成于
 						{" "}
@@ -635,313 +660,163 @@ export function FollowPanel({
 				</Space>
 			</div>
 
-			<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-				<Col xs={24} md={6}>
-					<Card size="small" styles={{ body: { textAlign: "center", padding: "16px" } }}>
-						<Progress
-							type="circle"
-							percent={latest.confidence_score}
-							size={72}
-							strokeColor={getConfidenceColor(latest.confidence_score)}
-							format={pct => <span style={{ fontSize: 16, fontWeight: 700 }}>{pct}</span>}
-						/>
-						<div style={{ marginTop: 6 }}>
-							<Text strong style={{ fontSize: 12 }}>整体置信度</Text>
-						</div>
-					</Card>
-				</Col>
-				<Col xs={24} md={18}>
-					<Card
-						size="small"
-						title={(
-							<Space>
-								<CrownOutlined style={{ color: "#faad14" }} />
-								<span>{strategyLabel === "情绪接力" ? "推荐概览" : "操作概览"}</span>
-							</Space>
-						)}
-					>
-						<Row gutter={16}>
-							<Col span={6}>
-								<Statistic title="买入信号" value={buyStocks.length} valueStyle={{ color: "#f5222d", fontWeight: 700 }} suffix="只" />
-							</Col>
-							<Col span={6}>
-								<Statistic title="持有" value={holdStocks.length} valueStyle={{ color: "#1890ff", fontWeight: 700 }} suffix="只" />
-							</Col>
-							<Col span={6}>
-								<Statistic title="卖出信号" value={sellStocks.length} valueStyle={{ color: "#52c41a", fontWeight: 700 }} suffix="只" />
-							</Col>
-							<Col span={6}>
-								<Statistic title="观望/跳过" value={watchStocks.length} valueStyle={{ color: "#8c8c8c", fontWeight: 700 }} suffix="只" />
-							</Col>
-						</Row>
-					</Card>
-				</Col>
-			</Row>
-
-			{latest.market_overview && (
-				<Alert style={{ marginBottom: 16 }} type="info" showIcon icon={<AlertOutlined />} message={<Text strong>市场概览</Text>} description={latest.market_overview} />
-			)}
-
-			{latest.strategy_summary && (
-				<Card
-					size="small"
-					title={(
-						<Space>
-							<SafetyOutlined style={{ color: "#722ed1" }} />
-							<span>策略研判</span>
-						</Space>
-					)}
-					style={{ marginBottom: 16 }}
-				>
-					<div style={{ whiteSpace: "pre-wrap", lineHeight: 1.8 }}>{latest.strategy_summary}</div>
-				</Card>
-			)}
-
-			{extraSections}
-
 			{latest.risk_warning && (
 				<Alert style={{ marginBottom: 16 }} type="warning" showIcon message={<Text strong>风险提示</Text>} description={latest.risk_warning} />
 			)}
 
-			{latest.recommendations && latest.recommendations.length > 0 && (
-				<Card
-					title={(
-						<Space>
-							<ThunderboltOutlined style={{ color: "#fa541c" }} />
-							<span>个股操作指令</span>
-							<Tag>
-								{latest.stock_count}
-								{" "}
-								只
-							</Tag>
-						</Space>
-					)}
-					style={{ marginBottom: 16 }}
-				>
-					<Row gutter={[16, 16]}>
-						{latest.recommendations.map((raw: DragonHeadFollowStock, idx: number) => {
-							const stock = normalizeStock(raw);
-							return (
-								<Col xs={24} sm={12} lg={8} xl={6} key={stock.code || idx}>
-									<Card
-										size="small"
-										hoverable
-										style={{ borderLeft: `4px solid ${getActionColor(stock.action)}`, height: "100%" }}
-										styles={{ body: { padding: "12px 16px" } }}
-									>
-										<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-											<Space>
-												<Text strong style={{ fontSize: 15 }}>{stock.name}</Text>
-												<Text type="secondary" style={{ fontSize: 12 }}>{stock.code}</Text>
-											</Space>
-											<Tag color={getActionColor(stock.action)} icon={getActionIcon(stock.action)} style={{ fontWeight: 700, fontSize: 13 }}>
-												{stock.action}
-											</Tag>
-										</div>
-
-										{stock.current_price != null && (
-											<div style={{ marginBottom: 6 }}>
-												<Text style={{ color: "#f5222d", fontWeight: 600, fontSize: 16 }}>
-													¥
-													{stock.current_price.toFixed(2)}
-												</Text>
-												{stock.change_pct != null && (
-													<Text style={{ marginLeft: 8, color: stock.change_pct >= 0 ? "#f5222d" : "#52c41a", fontWeight: 600 }}>
-														{stock.change_pct >= 0 ? "+" : ""}
-														{stock.change_pct.toFixed(2)}
-														%
-													</Text>
-												)}
-											</div>
-										)}
-
-										<Row gutter={8} style={{ marginBottom: 6 }}>
-											{stock.target_price != null && stock.target_price > 0 && (
-												<Col span={12}>
-													<Text type="secondary" style={{ fontSize: 11 }}>目标价</Text>
-													<div>
-														<Text style={{ color: "#f5222d", fontWeight: 600 }}>
-															¥
-															{stock.target_price.toFixed(2)}
-														</Text>
-													</div>
-												</Col>
-											)}
-											{stock.stop_loss != null && stock.stop_loss > 0 && (
-												<Col span={12}>
-													<Text type="secondary" style={{ fontSize: 11 }}>止损价</Text>
-													<div>
-														<Text style={{ color: "#52c41a", fontWeight: 600 }}>
-															¥
-															{stock.stop_loss.toFixed(2)}
-														</Text>
-													</div>
-												</Col>
-											)}
-										</Row>
-
-										{stock.position_pct != null && (
-											<div style={{ marginBottom: 6 }}>
-												<Text type="secondary" style={{ fontSize: 11 }}>建议仓位</Text>
-												<Progress percent={stock.position_pct} size="small" strokeColor={getActionColor(stock.action)} format={pct => `${pct}%`} />
-											</div>
-										)}
-
-										{stock.confidence != null && (
-											<div style={{ marginBottom: 6 }}>
-												<Space>
-													<Text type="secondary" style={{ fontSize: 11 }}>置信度</Text>
-													<Tag color={getConfidenceColor(stock.confidence)} style={{ fontSize: 11 }}>
-														{stock.confidence}
-														%
-													</Tag>
-												</Space>
-											</div>
-										)}
-
-										{stock.reason && (
-											<div style={{ marginBottom: 4 }}>
-												<Text style={{ fontSize: 12, color: "#595959" }}>
-													💡
-													{" "}
-													{stock.reason}
-												</Text>
-											</div>
-										)}
-
-										{(stock as any).action_detail && (
-											<div style={{ marginBottom: 4 }}>
-												<Text style={{ fontSize: 12, color: "#595959" }}>{(stock as any).action_detail}</Text>
-											</div>
-										)}
-
-										{stock.risk_warning && (
-											<Text type="warning" style={{ fontSize: 11 }}>
-												⚠️
-												{" "}
-												{stock.risk_warning}
-											</Text>
-										)}
-									</Card>
-								</Col>
-							);
-						})}
-					</Row>
-				</Card>
-			)}
-
-			{history.length > 1 && (
-				<Card
-					title={(
-						<Space>
-							<ClockCircleOutlined style={{ color: "#1890ff" }} />
-							<span>历史跟投指导</span>
-							<Tag color="blue">
-								{history.length}
-								条
-							</Tag>
-						</Space>
-					)}
-				>
-					<Collapse
-						accordion
-						ghost
-						items={history.slice(1).map(item => ({
-							key: item.id,
-							label: (
-								<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-									<Text strong>{item.trading_date}</Text>
-									<Tag color={item.session_type === "morning" ? "blue" : item.session_type === "afternoon" ? "orange" : "default"}>
-										{item.session_type === "morning" ? "上午" : item.session_type === "afternoon" ? "下午" : item.session_type}
-									</Tag>
-									<Badge count={item.stock_count} style={{ backgroundColor: "#1890ff" }} overflowCount={99} />
-									<Text type="secondary" style={{ fontSize: 12 }}>
-										置信度:
-										{item.confidence_score}
-										%
-									</Text>
-								</div>
-							),
-							children: (
-								<div>
-									{item.strategy_summary && (
-										<Alert type="info" showIcon={false} message={item.strategy_summary} style={{ marginBottom: 12, fontSize: 13 }} />
-									)}
-									{item.recommendations && item.recommendations.length > 0
-										? (
-											<Row gutter={[12, 12]}>
-												{item.recommendations.map((raw: DragonHeadFollowStock, i: number) => {
-													const s = normalizeStock(raw);
-													return (
-														<Col xs={24} sm={12} lg={8} key={s.code || i}>
-															<Card
-																size="small"
-																style={{ borderLeft: `3px solid ${getActionColor(s.action)}` }}
-																styles={{ body: { padding: "8px 12px" } }}
-															>
-																<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-																	<Space size={4}>
-																		<Text strong style={{ fontSize: 13 }}>{s.name}</Text>
-																		<Text type="secondary" style={{ fontSize: 11 }}>{s.code}</Text>
-																	</Space>
-																	<Tag color={getActionColor(s.action)} icon={getActionIcon(s.action)} style={{ fontSize: 11, marginRight: 0 }}>{s.action}</Tag>
-																</div>
-																<div style={{ marginTop: 4, display: "flex", gap: 12, fontSize: 12 }}>
-																	{s.current_price != null && (
-																		<Text style={{ color: "#f5222d", fontWeight: 600 }}>
-																			¥
-																			{s.current_price.toFixed(2)}
-																		</Text>
-																	)}
-																	{s.target_price != null && s.target_price > 0 && (
-																		<Text type="secondary">
-																			目标¥
-																			{s.target_price.toFixed(2)}
-																		</Text>
-																	)}
-																	{s.stop_loss != null && s.stop_loss > 0 && (
-																		<Text type="secondary">
-																			止损¥
-																			{s.stop_loss.toFixed(2)}
-																		</Text>
-																	)}
-																</div>
-																{s.reason && (
-																	<Text style={{ fontSize: 11, color: "#8c8c8c", display: "block", marginTop: 2 }}>
-																		💡
-																		{s.reason}
-																	</Text>
-																)}
-															</Card>
-														</Col>
-													);
-												})}
-											</Row>
-										)
-										: (
-											<Text type="secondary" style={{ fontSize: 12 }}>无个股操作记录</Text>
-										)}
-								</div>
-							),
-						}))}
-					/>
-				</Card>
-			)}
-
-			{renderBottomContent}
-
 			<Card
 				title={(
 					<Space>
-						<SafetyOutlined style={{ color: "#52c41a" }} />
-						<span>生成流程</span>
+						<ThunderboltOutlined style={{ color: "#fa541c" }} />
+						<span>今日执行清单（最多3只）</span>
+						<Tag color={sellCount > 0 ? "green" : buyCount > 0 ? "red" : "default"}>
+							{todayDecision}
+						</Tag>
 					</Space>
 				)}
-				style={{ marginTop: 16 }}
-				size="small"
+				style={{ marginBottom: 16, borderTop: `3px solid ${primaryStock ? getActionColor(primaryStock.action) : "#d9d9d9"}` }}
 			>
-				<Steps size="small" items={pipelineSteps} />
+				{focusStocks.length > 0
+					? (
+						<Row gutter={[16, 16]}>
+							{focusStocks.map((stock, index) => (
+								<Col xs={24} lg={index === 0 ? 12 : 6} key={stock.code || index}>
+									<Card
+										size="small"
+										style={{ height: "100%", borderLeft: `4px solid ${getActionColor(stock.action)}` }}
+									>
+										<Space direction="vertical" size={8} style={{ width: "100%" }}>
+											<Space wrap>
+												{index === 0 ? <Tag color="gold">第一优先</Tag> : <Tag>备选</Tag>}
+												<Text strong style={{ fontSize: index === 0 ? 18 : 15 }}>{stock.name}</Text>
+												<Text type="secondary">{stock.code}</Text>
+												<Tag color={getActionColor(stock.action)} icon={getActionIcon(stock.action)}>{stock.action}</Tag>
+											</Space>
+											<Descriptions size="small" column={1}>
+												<Descriptions.Item label="执行价">
+													{stock.current_price != null ? `¥${stock.current_price.toFixed(2)}` : stock.entry_window || "等待触发"}
+												</Descriptions.Item>
+												<Descriptions.Item label="仓位">{stock.position_advice || (stock.position_pct != null ? `${stock.position_pct}%` : "按策略上限")}</Descriptions.Item>
+												<Descriptions.Item label="止盈/止损">
+													{stock.target_price ? `目标 ¥${stock.target_price.toFixed(2)}` : "目标待确认"}
+													{" / "}
+													{stock.stop_loss ? `止损 ¥${stock.stop_loss.toFixed(2)}` : "止损待确认"}
+												</Descriptions.Item>
+											</Descriptions>
+											<Text>{stock.action_detail || stock.reason || "按触发条件执行"}</Text>
+											{stock.invalid_condition
+												? (
+													<Text type="warning">
+														失效：
+														{stock.invalid_condition}
+													</Text>
+												)
+												: null}
+										</Space>
+									</Card>
+								</Col>
+							))}
+						</Row>
+					)
+					: <Empty description="今日没有需要执行的个股指令" />}
 			</Card>
+
+			<Collapse
+				items={[{
+					key: "details",
+					label: (
+						<Space>
+							<SafetyOutlined />
+							<span>更多详情：完整研判、全部信号、候选分层、历史与生成流程</span>
+							<Tag>
+								共
+								{normalizedRecommendations.length}
+								只
+							</Tag>
+						</Space>
+					),
+					children: (
+						<Space direction="vertical" size={16} style={{ width: "100%" }}>
+							{latest.market_overview ? <Alert type="info" showIcon icon={<AlertOutlined />} message="市场概览" description={latest.market_overview} /> : null}
+							{latest.strategy_summary ? <Card size="small" title="完整策略研判"><div style={{ whiteSpace: "pre-wrap", lineHeight: 1.8 }}>{latest.strategy_summary}</div></Card> : null}
+							{extraSections}
+							<Card title="全部个股信号">
+								<List
+									dataSource={normalizedRecommendations}
+									locale={{ emptyText: "暂无个股信号" }}
+									renderItem={stock => (
+										<List.Item>
+											<Space direction="vertical" size={2} style={{ width: "100%" }}>
+												<Space wrap>
+													<Text strong>{stock.name}</Text>
+													<Text type="secondary">{stock.code}</Text>
+													<Tag color={getActionColor(stock.action)}>{stock.action}</Tag>
+													{stock.current_price != null
+														? (
+															<Text>
+																¥
+																{stock.current_price.toFixed(2)}
+															</Text>
+														)
+														: null}
+													{stock.confidence != null
+														? (
+															<Tag>
+																{stock.confidence}
+																%
+															</Tag>
+														)
+														: null}
+												</Space>
+												<Text type="secondary">{stock.action_detail || stock.reason || "暂无说明"}</Text>
+											</Space>
+										</List.Item>
+									)}
+								/>
+							</Card>
+							{history.length > 1
+								? (
+									<Card title={(
+										<Space>
+											<ClockCircleOutlined />
+											<span>历史跟投指导</span>
+											<Badge count={history.length} />
+										</Space>
+									)}
+									>
+										<Collapse
+											accordion
+											ghost
+											items={history.slice(1).map(item => ({
+												key: item.id,
+												label: `${item.trading_date} · ${item.stock_count}只 · 置信度${item.confidence_score}%`,
+												children: (
+													<List
+														size="small"
+														dataSource={(item.recommendations || []).map(normalizeStock)}
+														renderItem={stock => (
+															<List.Item>
+																<Space wrap>
+																	<Text strong>{stock.name}</Text>
+																	<Text type="secondary">{stock.code}</Text>
+																	<Tag color={getActionColor(stock.action)}>{stock.action}</Tag>
+																	<Text type="secondary">{stock.reason || stock.action_detail || "-"}</Text>
+																</Space>
+															</List.Item>
+														)}
+													/>
+												),
+											}))}
+										/>
+									</Card>
+								)
+								: null}
+							{renderBottomContent}
+							<Card title="生成流程" size="small"><Steps size="small" items={pipelineSteps} /></Card>
+						</Space>
+					),
+				}]}
+			/>
 		</div>
 	);
 }

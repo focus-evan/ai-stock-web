@@ -10,7 +10,6 @@ import {
 	FireOutlined,
 	HeartOutlined,
 	ReloadOutlined,
-	ThunderboltOutlined,
 	TrophyOutlined,
 } from "@ant-design/icons";
 import {
@@ -18,13 +17,15 @@ import {
 	Button,
 	Card,
 	Col,
+	Collapse,
+	Descriptions,
 	Empty,
+	List,
 	message,
 	Result,
 	Row,
 	Skeleton,
 	Space,
-	Statistic,
 	Table,
 	Tabs,
 	Tag,
@@ -110,7 +111,7 @@ export default function EmotionRelayPage() {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetchEmotionRelayRecommendations(15);
+			const response = await fetchEmotionRelayRecommendations(8);
 			if (response.status === "success" && response.data)
 				setData(response.data as EmotionRelayData);
 			else
@@ -133,7 +134,7 @@ export default function EmotionRelayPage() {
 			setRefreshSeconds(prev => prev + 1);
 		}, 1000);
 		try {
-			const response = await refreshEmotionRelayRecommendations(15);
+			const response = await refreshEmotionRelayRecommendations(8);
 			if (response.status === "success" && response.data) {
 				setData(response.data as EmotionRelayData);
 				message.success({ content: `刷新完成，共 ${response.data?.recommendations?.length || 0} 只候选`, key: "refresh" });
@@ -162,6 +163,26 @@ export default function EmotionRelayPage() {
 	const hasCoreCandidates = coreCandidates.length > 0;
 	const watchTitle = `观察池（${watchCandidates.length}）`;
 	const avoidTitle = `回避池（${avoidCandidates.length}）`;
+	const entrySignals = useMemo(() => data?.entry_signals || [], [data]);
+	const primaryCandidate = useMemo(
+		() => coreCandidates[0] || watchCandidates[0],
+		[coreCandidates, watchCandidates],
+	);
+	const primarySignal = useMemo(
+		() => entrySignals.find((signal: any) => signal?.code === primaryCandidate?.code || signal?.stock_code === primaryCandidate?.code),
+		[entrySignals, primaryCandidate?.code],
+	);
+	const backupCandidates = useMemo(
+		() => [...coreCandidates, ...watchCandidates]
+			.filter((candidate: any, index: number, all: any[]) => candidate?.code !== primaryCandidate?.code && all.findIndex(item => item?.code === candidate?.code) === index)
+			.slice(0, 2),
+		[coreCandidates, primaryCandidate?.code, watchCandidates],
+	);
+	const phase = data?.market_regime?.phase || "观察";
+	const riskLevel = data?.market_regime?.risk_level || "中";
+	const actionBias = data?.market_regime?.action_bias || (hasCoreCandidates ? "只做最强核心" : "等待转强");
+	const mainTheme = data?.main_themes?.[0]?.name || primaryCandidate?.industry || "暂无明确主线";
+	const primaryAction = primaryCandidate?.candidate_pool === "core" ? "条件买入" : "只观察";
 
 	const columns: ColumnsType<any> = [
 		{ title: "股票", key: "stock", render: (_, record) => (
@@ -212,13 +233,13 @@ export default function EmotionRelayPage() {
 			items={[
 				{
 					key: "main",
-					label: "策略研判",
+					label: "今日重点",
 					children: (
 						<BasicContent>
 							<div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 								<Space>
 									<HeartOutlined style={{ fontSize: 24, color: "#f5222d" }} />
-									<Title level={4} style={{ margin: 0 }}>情绪接力</Title>
+									<Title level={4} style={{ margin: 0 }}>情绪接力 · 今日重点</Title>
 									{data.market_regime?.phase ? <Tag color={getRiskColor(data.market_regime?.risk_level)}>{data.market_regime.phase}</Tag> : null}
 								</Space>
 								<Space>
@@ -238,130 +259,161 @@ export default function EmotionRelayPage() {
 
 							<Alert
 								style={{ marginBottom: 16 }}
-								message="理论依据：情绪周期 + 2板定龙头 + 龙空龙纪律"
-								description={data.market_regime?.description || data.strategy_report || "冰点修复试错，升温做核心，高潮不追后排，退潮优先空仓。"}
-								type="info"
+								message={(
+									<Space wrap>
+										<Text strong>
+											今日结论：
+											{actionBias}
+										</Text>
+										<Tag color={getRiskColor(riskLevel)}>
+											风险
+											{riskLevel}
+										</Tag>
+									</Space>
+								)}
+								description={`情绪处于${phase}，只聚焦主线“${mainTheme}”的最强核心；不满足转强条件就空仓。`}
+								type={riskLevel === "高" ? "warning" : "info"}
 								showIcon
 							/>
 
 							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-								<Col xs={24} md={8}><Card><Statistic title="核心候选" value={coreCandidates.length} valueStyle={{ color: "#f5222d" }} /></Card></Col>
-								<Col xs={24} md={8}><Card><Statistic title="观察候选" value={watchCandidates.length} valueStyle={{ color: "#1677ff" }} /></Card></Col>
-								<Col xs={24} md={8}><Card><Statistic title="回避候选" value={avoidCandidates.length} valueStyle={{ color: "#8c8c8c" }} /></Card></Col>
-							</Row>
-
-							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-								<Col xs={24} lg={12}>
-									<Card title={(
-										<Space>
-											<FireOutlined />
-											<span>主线梯队</span>
-										</Space>
-									)}
+								<Col xs={24} xl={16}>
+									<Card
+										title={(
+											<Space wrap>
+												<TrophyOutlined style={{ color: "#faad14" }} />
+												<span>第一选择</span>
+												<Tag color={primaryAction === "条件买入" ? "red" : "blue"}>{primaryAction}</Tag>
+											</Space>
+										)}
+										style={{ height: "100%", borderTop: "3px solid #fa8c16" }}
 									>
-										{(data.main_themes || []).length > 0
+										{primaryCandidate
 											? (
-												<Space direction="vertical" style={{ width: "100%" }}>
-													{(data.main_themes || []).map((theme: any) => (
-														<Card
-															key={theme.name}
-															size="small"
-															title={(
-																<Space>
-																	<Tag color={theme.role === "主线" ? "red" : theme.role === "次主线" ? "orange" : "default"}>{theme.role}</Tag>
-																	<span>{theme.name}</span>
-																</Space>
-															)}
-														>
-															<Paragraph style={{ marginBottom: 8 }}>{theme.summary}</Paragraph>
-															{(theme.ladder || []).map((item: any) => (
-																<Tag key={`${theme.name}-${item.stock_code}`} color="purple">
-																	{item.stock_name}
-																	-
-																	{item.ladder_role}
-																</Tag>
-															))}
-														</Card>
-													))}
-												</Space>
+												<>
+													<Space wrap style={{ marginBottom: 12 }}>
+														<Title level={3} style={{ margin: 0 }}>{primaryCandidate.name}</Title>
+														<Text type="secondary">{primaryCandidate.code}</Text>
+														<Tag color="volcano">{primaryCandidate.industry || mainTheme}</Tag>
+														{primaryCandidate.display_board_tag ? <Tag color={getBoardColor(primaryCandidate)}>{primaryCandidate.display_board_tag}</Tag> : null}
+													</Space>
+													<Descriptions bordered size="small" column={{ xs: 1, md: 2 }}>
+														<Descriptions.Item label="买入条件">{primarySignal?.entry_plan?.buy_price_range || primarySignal?.entry_window || primaryCandidate.entry_timing || "等待弱转强确认"}</Descriptions.Item>
+														<Descriptions.Item label="仓位">{primarySignal?.entry_plan?.position_advice || data.market_regime?.position_advice || "20%-40%"}</Descriptions.Item>
+														<Descriptions.Item label="目标价">{primarySignal?.entry_plan?.target_price ? `¥${Number(primarySignal.entry_plan.target_price).toFixed(2)}` : primaryCandidate.target_price ? `¥${Number(primaryCandidate.target_price).toFixed(2)}` : "-"}</Descriptions.Item>
+														<Descriptions.Item label="止损价">{primarySignal?.entry_plan?.stop_loss_price ? `¥${Number(primarySignal.entry_plan.stop_loss_price).toFixed(2)}` : primaryCandidate.stop_loss_price ? `¥${Number(primaryCandidate.stop_loss_price).toFixed(2)}` : "-"}</Descriptions.Item>
+														<Descriptions.Item label="失效条件" span={2}>{primarySignal?.invalid_condition || primaryCandidate.risk_warning || "情绪退潮、主线瓦解或个股失去前排地位"}</Descriptions.Item>
+													</Descriptions>
+													<Paragraph style={{ marginTop: 12, marginBottom: 0 }}>
+														<Text strong>只看这一条理由：</Text>
+														{primarySignal?.reason_short || primaryCandidate.buy_reason || primaryCandidate.reasons?.[0] || "等待最强核心确认"}
+													</Paragraph>
+												</>
 											)
-											: <Empty description="暂无梯队数据" />}
+											: <Empty description="今天没有达到核心标准的标的，保持空仓" />}
 									</Card>
 								</Col>
-								<Col xs={24} lg={12}>
-									<Card title={(
+								<Col xs={24} xl={8}>
+									<Card title="备选（最多2只）" style={{ height: "100%" }}>
+										<List
+											dataSource={backupCandidates}
+											locale={{ emptyText: "无备选，不为凑数降低标准" }}
+											renderItem={(candidate: any) => (
+												<List.Item>
+													<Space direction="vertical" size={2} style={{ width: "100%" }}>
+														<Space wrap>
+															<Text strong>{candidate.name}</Text>
+															<Text type="secondary">{candidate.code}</Text>
+															<Tag color={candidate.candidate_pool === "core" ? "red" : "blue"}>{candidate.candidate_pool === "core" ? "条件买入" : "观察"}</Tag>
+														</Space>
+														<Text type="secondary">{candidate.buy_reason || candidate.reasons?.[0] || candidate.theory_tag || "等待转强"}</Text>
+													</Space>
+												</List.Item>
+											)}
+										/>
+									</Card>
+								</Col>
+							</Row>
+
+							<Collapse
+								items={[{
+									key: "details",
+									label: (
 										<Space>
-											<ThunderboltOutlined />
-											<span>执行纪律</span>
+											<ExperimentOutlined />
+											<span>更多详情：主线梯队、完整候选池、策略报告与历史</span>
+											<Tag>
+												核心
+												{coreCandidates.length}
+											</Tag>
+											<Tag>
+												观察
+												{watchCandidates.length}
+											</Tag>
+											<Tag>
+												回避
+												{avoidCandidates.length}
+											</Tag>
 										</Space>
-									)}
-									>
-										<Paragraph>
-											情绪阶段：
-											{data.market_regime?.phase || "-"}
-										</Paragraph>
-										<Paragraph>
-											风险等级：
-											<Tag color={getRiskColor(data.market_regime?.risk_level)}>{data.market_regime?.risk_level || "-"}</Tag>
-										</Paragraph>
-										<Paragraph>
-											行动偏好：
-											{data.market_regime?.action_bias || "观察"}
-										</Paragraph>
-										<Paragraph>
-											仓位建议：
-											{data.market_regime?.position_advice || "20%-40%"}
-										</Paragraph>
-									</Card>
-								</Col>
-							</Row>
-
-							<Card
-								title={(
-									<Space>
-										<TrophyOutlined style={{ color: "#faad14" }} />
-										<span>核心接力候选</span>
-									</Space>
-								)}
-								style={{ marginBottom: 16 }}
-							>
-								{hasCoreCandidates
-									? <Table dataSource={coreCandidates} rowKey="code" size="small" pagination={false} columns={columns} />
-									: <Empty description={watchCandidates.length > 0 ? "当前未出现满足强核心标准的标的，建议先在观察池中等待转强确认。" : "当前暂无满足条件的核心接力候选，说明市场更偏观察或试错阶段。"} />}
-							</Card>
-
-							<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-								<Col xs={24} lg={12}>
-									<Card title={watchTitle}>
-										<Table dataSource={watchCandidates} rowKey="code" size="small" pagination={false} columns={columns.slice(0, 4)} />
-									</Card>
-								</Col>
-								<Col xs={24} lg={12}>
-									<Card title={avoidTitle}>
-										<Table dataSource={avoidCandidates} rowKey={(record: any, idx?: number) => record.code || `avoid-${idx}`} size="small" pagination={false} columns={columns.slice(0, 4)} />
-									</Card>
-								</Col>
-							</Row>
-
-							<Card
-								title={(
-									<Space>
-										<ExperimentOutlined />
-										<span>策略报告</span>
-									</Space>
-								)}
-								style={{ marginBottom: 16 }}
-							>
-								<Paragraph style={{ whiteSpace: "pre-wrap" }}>{data.strategy_report || data.strategy_explanation || "暂无策略报告"}</Paragraph>
-							</Card>
-
-							<RecommendationHistory strategyType="emotion_relay" />
+									),
+									children: (
+										<Space direction="vertical" size={16} style={{ width: "100%" }}>
+											<Card title={(
+												<Space>
+													<FireOutlined />
+													<span>主线梯队</span>
+												</Space>
+											)}
+											>
+												{(data.main_themes || []).length > 0
+													? (
+														<Space direction="vertical" style={{ width: "100%" }}>
+															{(data.main_themes || []).map((theme: any) => (
+																<Card
+																	key={theme.name}
+																	size="small"
+																	title={(
+																		<Space>
+																			<Tag color={theme.role === "主线" ? "red" : theme.role === "次主线" ? "orange" : "default"}>{theme.role}</Tag>
+																			<span>{theme.name}</span>
+																		</Space>
+																	)}
+																>
+																	<Paragraph style={{ marginBottom: 8 }}>{theme.summary}</Paragraph>
+																	{(theme.ladder || []).map((item: any) => (
+																		<Tag key={`${theme.name}-${item.stock_code}`} color="purple">
+																			{item.stock_name}
+																			-
+																			{item.ladder_role}
+																		</Tag>
+																	))}
+																</Card>
+															))}
+														</Space>
+													)
+													: <Empty description="暂无梯队数据" />}
+											</Card>
+											<Card title="完整核心候选">
+												{hasCoreCandidates ? <Table dataSource={coreCandidates} rowKey="code" size="small" pagination={false} columns={columns} /> : <Empty description="当前没有达到核心标准的标的" />}
+											</Card>
+											<Row gutter={[16, 16]}>
+												<Col xs={24} lg={12}><Card title={watchTitle}><Table dataSource={watchCandidates} rowKey="code" size="small" pagination={false} columns={columns.slice(0, 4)} /></Card></Col>
+												<Col xs={24} lg={12}><Card title={avoidTitle}><Table dataSource={avoidCandidates} rowKey={(record: any, idx?: number) => record.code || `avoid-${idx}`} size="small" pagination={false} columns={columns.slice(0, 4)} /></Card></Col>
+											</Row>
+											<Card title="完整策略报告">
+												<Paragraph style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>{data.strategy_report || data.strategy_explanation || "暂无策略报告"}</Paragraph>
+											</Card>
+											<RecommendationHistory strategyType="emotion_relay" />
+										</Space>
+									),
+								}]}
+							/>
 						</BasicContent>
 					),
 				},
 				{
 					key: "follow_execution",
-					label: "次日执行 / 实盘跟投指导",
+					label: "执行清单",
 					children: (
 						<BasicContent>
 							<div style={{ paddingBottom: 24 }}>
@@ -372,7 +424,7 @@ export default function EmotionRelayPage() {
 				},
 				{
 					key: "follow",
-					label: "推荐跟踪",
+					label: "结果跟踪",
 					children: <StrategyFollowTab strategyType={"emotion_relay" as any} isOvernight={false} />,
 				},
 			]}
