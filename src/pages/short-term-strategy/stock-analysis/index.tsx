@@ -2,6 +2,7 @@ import type { StockAnalysisData, StrategySignal } from "#src/api/strategy/types"
 import type { ColumnsType } from "antd/es/table";
 import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
 import PortfolioAnalysisPanel from "#src/components/PortfolioAnalysisPanel";
+import StrategyPerformanceDashboard from "#src/components/StrategyPerformanceDashboard";
 import UnwindTrackingPanel from "#src/components/UnwindTrackingPanel";
 import WatchlistModal from "#src/components/WatchlistModal";
 import WatchlistPanel from "#src/components/WatchlistPanel";
@@ -924,7 +925,7 @@ function HistoryTab() {
 /* ====================== Main Page ====================== */
 const StockAnalysisPage: React.FC = () => {
 	const STOCK_TAB_KEY = "stock_analysis_active_tab";
-	const validTabs = ["analyze", "history", "watchlist", "portfolio", "unwind"];
+	const validTabs = ["analyze", "history", "performance", "watchlist", "portfolio", "unwind"];
 	const getInitialTab = () => {
 		try {
 			const saved = sessionStorage.getItem(STOCK_TAB_KEY);
@@ -1061,6 +1062,17 @@ const StockAnalysisPage: React.FC = () => {
 							</span>
 						),
 						children: <HistoryTab key={historyRefreshKey} />,
+					},
+					{
+						key: "performance",
+						label: (
+							<span>
+								<TrophyOutlined />
+								{" "}
+								战法胜率
+							</span>
+						),
+						children: <StrategyPerformanceDashboard />,
 					},
 					{
 						key: "watchlist",

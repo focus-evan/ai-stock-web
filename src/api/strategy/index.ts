@@ -1407,6 +1407,90 @@ export interface StrategyFollowPerformance {
 	latest_snapshot_date?: string | null
 }
 
+export interface StrategyPerformanceMetric {
+	sample_count: number
+	win_count: number
+	loss_count: number
+	flat_count?: number
+	win_rate_pct?: number | null
+	avg_return_pct?: number | null
+	median_return_pct?: number | null
+	max_return_pct?: number | null
+	min_return_pct?: number | null
+	avg_mfe_pct?: number | null
+	avg_mae_pct?: number | null
+}
+
+export type StrategyEvolutionWeeklyStatus = "no_data" | "pending_analysis" | "analyzed" | "evolved" | "rollback";
+export type StrategyEvolutionContinuity = "not_started" | "insufficient_history" | "continuous" | "interrupted";
+
+export interface StrategyPerformanceWeekly {
+	week_start: string
+	week_end: string
+	sample_count: number
+	win_rate_pct?: number | null
+	avg_return_pct?: number | null
+	analysis_run_count: number
+	analysis_new_sample_count: number
+	applied_count: number
+	rollback_count: number
+	observed_count: number
+	version_start?: number | null
+	version_end?: number | null
+	evolution_status: StrategyEvolutionWeeklyStatus
+}
+
+export interface StrategyPerformanceDashboardItem {
+	strategy_type: StrategyFollowType
+	strategy_name: string
+	settlement_rule: {
+		mode: string
+		horizon_days: number
+		label: string
+	}
+	trade: StrategyPerformanceMetric
+	watch: StrategyPerformanceMetric
+	confidence_level: "high" | "medium" | "low"
+	ranking_eligible: boolean
+	rank?: number | null
+	current_version: number
+	evolution_enabled: boolean
+	last_decision: string
+	last_reason: string
+	last_analyzed_at?: string | null
+	last_evolved_at?: string | null
+	changed_param_count: number
+	changed_params: string[]
+	analysis_run_count: number
+	parameter_update_count: number
+	continuity_status: StrategyEvolutionContinuity
+	weekly: StrategyPerformanceWeekly[]
+}
+
+export interface StrategyPerformanceDashboard {
+	status: string
+	generated_at: string
+	performance_start_date: string
+	week_count: number
+	week_starts: string[]
+	total_trade_samples: number
+	ranking_min_samples: number
+	eligible_strategy_count: number
+	excellent_strategy_count: number
+	analyzed_strategy_count: number
+	evolved_strategy_count: number
+	best_strategy_type?: StrategyFollowType | null
+	excellent_strategy_types: StrategyFollowType[]
+	strategies: StrategyPerformanceDashboardItem[]
+	methodology: {
+		ranking: string
+		win: string
+		watch_samples_excluded: boolean
+		weekly_basis: string
+		evolution_basis: string
+	}
+}
+
 export interface StrategyFollowSnapshot {
 	id: number
 	follow_id: number
@@ -1425,6 +1509,16 @@ export function fetchStrategyFollow(strategyType: StrategyFollowType, status: st
 			timeout: 15000,
 		})
 		.json<{ status: string, data: { items: StrategyFollowItem[], total: number, summary: StrategyFollowSummary } }>();
+}
+
+/** 获取全部战法累计收益、排名和周度自进化状态 */
+export function fetchStrategyPerformanceDashboard(weeks: number = 12) {
+	return request
+		.get("strategy/follow/performance/dashboard", {
+			searchParams: { weeks },
+			timeout: 60000,
+		})
+		.json<{ status: string, data: StrategyPerformanceDashboard, message?: string }>();
 }
 
 /** \u4ece\u6700\u65b0\u63a8\u8350\u81ea\u52a8\u6dfb\u52a0\u8ddf\u8fdb */
