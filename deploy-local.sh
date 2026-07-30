@@ -261,7 +261,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_connect_timeout 30s;
         proxy_send_timeout 30s;
-        proxy_read_timeout 30s;
+        proxy_read_timeout 360s;
     }
     
     # SPA路由支持

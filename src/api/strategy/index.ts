@@ -475,7 +475,7 @@ export function fetchStockAnalysis(stock: string) {
 	return request
 		.get("strategy/stock-analysis", {
 			searchParams: { stock },
-			timeout: 120000, // 120秒超时（含LLM分析）
+			timeout: 360000, // 6分钟：覆盖后端5分钟LLM超时及数据准备开销
 		})
 		.json<StockAnalysisResponse>();
 }
