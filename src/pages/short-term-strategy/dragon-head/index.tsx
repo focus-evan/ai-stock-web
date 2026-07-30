@@ -8,6 +8,7 @@ import type {
 import type { ColumnsType } from "antd/es/table";
 import { fetchDragonHeadRecommendations, refreshDragonHeadRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import { CompanyBasicInfo } from "#src/components/CompanyBasicInfo";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { DragonHeadFollowExecutionTab } from "#src/pages/short-term-strategy/dragon-head-follow";
@@ -381,6 +382,12 @@ export default function DragonHead() {
 				<Space direction="vertical" size={0}>
 					<Text strong>{record.name}</Text>
 					<Text type="secondary">{record.code}</Text>
+					<CompanyBasicInfo
+						summary={record.company_basic_info}
+						mainBusiness={record.main_business}
+						businessTrack={record.business_track}
+						maxWidth={220}
+					/>
 				</Space>
 			),
 		},

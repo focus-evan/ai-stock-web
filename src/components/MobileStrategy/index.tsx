@@ -1,3 +1,4 @@
+import { CompanyBasicInfo } from "#src/components/CompanyBasicInfo";
 import { ReloadOutlined } from "@ant-design/icons";
 import {
 	Badge,
@@ -180,7 +181,11 @@ export function MobileStockCard({ stock, extraContent }: MobileStockCardProps) {
 	const sp = stock.suggested_sell_price || stock.target_price || "";
 	const sl = stock.stop_loss_price || "";
 	const advice = stock.operation_advice || stock.operation_suggestion || stock.llm_operation || "";
-	const reason = stock.buy_reason || stock.llm_reason || (stock.reasons || []).join("；") || "";
+	const allReasons: string[] = Array.isArray(stock.reasons) ? stock.reasons : [];
+	const companyReason = allReasons.find(item => item.startsWith("公司基本说明："));
+	const strategyReasons = allReasons.filter(item => !item.startsWith("公司基本说明："));
+	const companySummary = stock.company_basic_info || companyReason?.replace(/^公司基本说明：/, "") || "";
+	const reason = stock.buy_reason || stock.llm_reason || strategyReasons.join("；") || "";
 	const level: string = stock.recommendation_level || "";
 	const ls = getLevelStyle(level);
 
@@ -266,6 +271,17 @@ export function MobileStockCard({ stock, extraContent }: MobileStockCardProps) {
 							<Text style={{ fontSize: 15, fontWeight: 700, color: "#8c8c8c" }}>{fmtPrice(sl)}</Text>
 						</div>
 					)}
+				</div>
+			)}
+
+			{/* 公司主营业务与所属赛道 */}
+			{companySummary && (
+				<div style={{ padding: "8px 14px", borderBottom: (reason || advice) ? "1px solid #f0f0f0" : undefined, background: "#fafafa" }}>
+					<CompanyBasicInfo
+						summary={companySummary}
+						mainBusiness={stock.main_business}
+						businessTrack={stock.business_track}
+					/>
 				</div>
 			)}
 

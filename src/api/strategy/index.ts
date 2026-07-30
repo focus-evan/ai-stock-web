@@ -709,6 +709,10 @@ export interface SkillTacticsCandidate {
 	rank: number
 	code: string
 	name: string
+	main_business?: string
+	business_track?: string
+	company_basic_info?: string
+	company_profile_source?: string
 	role?: string
 	theme?: string
 	score: number

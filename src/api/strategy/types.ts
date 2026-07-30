@@ -2,8 +2,15 @@
  * 龙头战法 API Types
  */
 
+export interface CompanyBasicProfileFields {
+	main_business?: string
+	business_track?: string
+	company_basic_info?: string
+	company_profile_source?: string
+}
+
 /** 个股推荐信息（兼容旧历史卡片） */
-export interface StockRecommendation {
+export interface StockRecommendation extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -308,7 +315,7 @@ export interface EventInfo {
 }
 
 /** 事件驱动个股推荐 */
-export interface EventStockRecommendation {
+export interface EventStockRecommendation extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -436,7 +443,7 @@ export interface EventDrivenResponse {
 // ===================== 突破战法 =====================
 
 /** 突破战法推荐股票 */
-export interface BreakthroughStock {
+export interface BreakthroughStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -486,7 +493,7 @@ export interface BreakthroughResponse {
 // ===================== 量价关系 =====================
 
 /** 量价关系推荐股票 */
-export interface VolumePriceStock {
+export interface VolumePriceStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -534,7 +541,7 @@ export interface VolumePriceResponse {
 // ===================== 隔夜施工法 =====================
 
 /** 隔夜施工法推荐股票 */
-export interface OvernightStock {
+export interface OvernightStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -593,7 +600,7 @@ export interface OvernightResponse {
 }
 
 /** 均线战法推荐股票 */
-export interface MovingAverageStock {
+export interface MovingAverageStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -840,7 +847,7 @@ export interface CombinedStrategyDetail {
 }
 
 /** 综合战法推荐股票 */
-export interface CombinedStock {
+export interface CombinedStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -898,7 +905,7 @@ export interface CombinedResponse {
 // ===================== 北向资金 =====================
 
 /** 北向资金推荐股票 */
-export interface NorthboundStock {
+export interface NorthboundStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -972,7 +979,7 @@ export interface NorthboundResponse {
 // ===================== 趋势动量 =====================
 
 /** 趋势动量推荐股票 */
-export interface TrendMomentumStock {
+export interface TrendMomentumStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string
@@ -1042,7 +1049,7 @@ export interface TrendMomentumResponse {
 // ===================== 连板接力战法 =====================
 
 /** 连板接力推荐股票 */
-export interface RelayStock {
+export interface RelayStock extends CompanyBasicProfileFields {
 	rank: number
 	code: string
 	name: string

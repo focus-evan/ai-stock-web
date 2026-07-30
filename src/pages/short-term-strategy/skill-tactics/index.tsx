@@ -11,6 +11,7 @@ import {
 	refreshSkillTacticsFramework,
 } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import { CompanyBasicInfo } from "#src/components/CompanyBasicInfo";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import {
@@ -139,11 +140,17 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 		{
 			title: "角色/赛道",
 			key: "role",
-			width: 180,
+			width: 260,
 			render: (_, record) => (
 				<Space direction="vertical" size={4}>
 					<Tag color="cyan">{record.role || "待确认角色"}</Tag>
 					<Text type="secondary">{record.theme || "-"}</Text>
+					<CompanyBasicInfo
+						summary={record.company_basic_info}
+						mainBusiness={record.main_business}
+						businessTrack={record.business_track}
+						maxWidth={230}
+					/>
 				</Space>
 			),
 		},

@@ -1,6 +1,7 @@
 import type { ColumnsType } from "antd/es/table";
 import { fetchEmotionRelayRecommendations, refreshEmotionRelayRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
+import { CompanyBasicInfo } from "#src/components/CompanyBasicInfo";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { EmotionRelayFollowExecutionTab } from "#src/pages/short-term-strategy/dragon-head-follow";
@@ -184,6 +185,12 @@ export default function EmotionRelayPage() {
 					{record.candidate_pool === "avoid" && record.display_board_tag ? <Tag color="red">{record.display_board_tag}</Tag> : null}
 				</Space>
 				<Text>{record.buy_reason || record.reasons?.[0] || "-"}</Text>
+				<CompanyBasicInfo
+					summary={record.company_basic_info}
+					mainBusiness={record.main_business}
+					businessTrack={record.business_track}
+					maxWidth={320}
+				/>
 				{record.risk_warning ? <Text type="warning" style={{ fontSize: 12 }}>{record.risk_warning}</Text> : null}
 			</Space>
 		) },
