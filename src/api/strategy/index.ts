@@ -1348,8 +1348,29 @@ export interface StrategyFollowItem {
 	pick_date: string
 	pick_price: number
 	recommendation_level: string
+	follow_type: "trade" | "watch"
 	reasons: string[]
 	pick_rank: number
+	session_type?: string
+	feature_snapshot?: {
+		decision?: string
+		native_action?: string
+		follow_action?: string
+		buy_method?: string
+		price_trigger?: string
+		buy_price_value?: number
+		execution_plan?: {
+			follow_action?: string
+			observation_focus?: string
+			buy_signal?: string
+			buy_price?: string
+			buy_price_value?: number
+			trigger_checklist?: string[]
+			risk_stop?: string
+		}
+		trigger_checklist?: string[]
+		[key: string]: unknown
+	}
 	status: string
 	closed_date?: string
 	closed_reason?: string
@@ -1363,6 +1384,8 @@ export interface StrategyFollowItem {
 
 export interface StrategyFollowSummary {
 	total_count: number
+	trade_count: number
+	watch_count: number
 	priced_count: number
 	missing_snapshot_count: number
 	profitable_count: number
@@ -1399,7 +1422,7 @@ export function triggerStrategyAutoFollow(strategyType: StrategyFollowType, trad
 			json: { strategy_type: strategyType, trading_date: tradingDate },
 			timeout: 120000,
 		})
-		.json<{ status: string, data: { added: number, selected: number, selected_codes: string[], snapshot_updated: number, message: string } }>();
+		.json<{ status: string, data: { added: number, added_trade: number, added_watch: number, selected: number, selected_trade: number, selected_watch: number, selected_codes: string[], snapshot_updated: number, message: string } }>();
 }
 
 /** \u83b7\u53d6\u8ddf\u8fdb\u80a1\u7968\u8be6\u60c5+\u5feb\u7167 */

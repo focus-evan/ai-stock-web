@@ -40,6 +40,12 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Text, Title } = Typography;
+const SKILL_TACTICS_TYPES = new Set<StrategyFollowType>([
+	"yangjia_emotion_cycle",
+	"kobe92_cycle_speculation",
+	"a_share_leader_tactics",
+	"beijing_chaogu_first_board",
+]);
 
 interface Props {
 	strategyType: StrategyFollowType
@@ -176,8 +182,13 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 	const isDragonHead = strategyType === "dragon_head";
-	const autoAddButtonLabel = isDragonHead ? "同步可执行信号" : "立即择优同步";
-	const countTitle = isDragonHead ? "可执行跟进数" : "自动跟进数";
+	const isSkillTactics = SKILL_TACTICS_TYPES.has(strategyType);
+	const autoAddButtonLabel = isDragonHead
+		? "同步可执行信号"
+		: isSkillTactics ? "同步推荐跟进" : "立即择优同步";
+	const countTitle = isDragonHead
+		? "可执行跟进数"
+		: isSkillTactics ? "推荐跟进数" : "自动跟进数";
 	const overallReturnTitle = isOvernight ? "平均次日收益" : "组合整体涨跌幅";
 
 	return (
@@ -190,6 +201,18 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 					</Tag>
 					{status === "tracking" && (
 						<Tag color="blue">自动择优持续跟进</Tag>
+					)}
+					{isSkillTactics && (
+						<>
+							<Tag color="red">
+								交易：
+								{summary?.trade_count ?? items.filter(item => item.follow_type !== "watch").length}
+							</Tag>
+							<Tag color="gold">
+								观察：
+								{summary?.watch_count ?? items.filter(item => item.follow_type === "watch").length}
+							</Tag>
+						</>
 					)}
 					{!isOvernight && latestSnapshotDate && (
 						<Tag color="green">
@@ -250,10 +273,19 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 												<Text strong>{item.stock_name}</Text>
 												<Text type="secondary" style={{ marginLeft: 6, fontSize: 12 }}>{item.stock_code}</Text>
 											</div>
-											<Tag color={item.recommendation_level === "强烈推荐" ? "red" : "blue"}>{item.recommendation_level}</Tag>
+											<Space size={4}>
+												{isSkillTactics && (
+													<Tag color={item.follow_type === "watch" ? "gold" : "red"}>
+														{item.follow_type === "watch" ? "观察跟进" : "交易跟进"}
+													</Tag>
+												)}
+												<Tag color={item.recommendation_level === "强烈推荐" ? "red" : item.recommendation_level === "关注" ? "gold" : "blue"}>{item.recommendation_level}</Tag>
+											</Space>
 										</div>
 										<div style={{ marginTop: 8, display: "flex", justifyContent: "space-between" }}>
-											<Text type="secondary" style={{ fontSize: 12 }}>{isOvernight ? "次日收益" : "累计收益"}</Text>
+											<Text type="secondary" style={{ fontSize: 12 }}>
+												{isOvernight ? "次日收益" : item.follow_type === "watch" ? "观察期涨跌" : "累计收益"}
+											</Text>
 											<Text strong style={{ color: isUp ? "#cf1322" : hasReturn && returnVal < 0 ? "#389e0d" : undefined }}>
 												{hasReturn
 													? `${returnVal > 0 ? "+" : ""}${returnVal.toFixed(2)}%`
@@ -333,6 +365,13 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								</Tag>
 							</Col>
 							<Col span={12}>
+								<Text type="secondary">跟进类型</Text>
+								<br />
+								<Tag color={detailItem.follow_type === "watch" ? "gold" : "red"}>
+									{detailItem.follow_type === "watch" ? "观察推荐" : "可执行推荐"}
+								</Tag>
+							</Col>
+							<Col span={12}>
 								<Text type="secondary">加入日期</Text>
 								<br />
 								<Text>{detailItem.pick_date}</Text>
@@ -352,6 +391,34 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								</Text>
 							</Col>
 						</Row>
+						{detailItem.feature_snapshot?.execution_plan && (
+							<div style={{ marginBottom: 16, padding: 12, background: detailItem.follow_type === "watch" ? "#fffbe6" : "#fff1f0", borderRadius: 6 }}>
+								<Text strong>{detailItem.follow_type === "watch" ? "观察转买条件" : "执行计划"}</Text>
+								<div style={{ marginTop: 6 }}>
+									<Text>{detailItem.feature_snapshot.execution_plan.buy_signal || detailItem.feature_snapshot.price_trigger || "等待下一检查点确认"}</Text>
+								</div>
+								{detailItem.feature_snapshot.execution_plan.observation_focus && (
+									<div style={{ marginTop: 4 }}>
+										<Text type="secondary">{detailItem.feature_snapshot.execution_plan.observation_focus}</Text>
+									</div>
+								)}
+								{(detailItem.feature_snapshot.execution_plan.trigger_checklist || []).length > 0 && (
+									<Space wrap size={[4, 4]} style={{ marginTop: 8 }}>
+										{detailItem.feature_snapshot.execution_plan.trigger_checklist?.map(item => (
+											<Tag key={item}>{item}</Tag>
+										))}
+									</Space>
+								)}
+								{detailItem.feature_snapshot.execution_plan.risk_stop && (
+									<div style={{ marginTop: 8 }}>
+										<Text type="danger">
+											失效：
+											{detailItem.feature_snapshot.execution_plan.risk_stop}
+										</Text>
+									</div>
+								)}
+							</div>
+						)}
 						{detailItem.reasons.length > 0 && (
 							<div style={{ marginBottom: 16 }}>
 								<Text type="secondary">推荐理由</Text>

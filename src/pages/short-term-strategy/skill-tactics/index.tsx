@@ -377,8 +377,8 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 					},
 					{
 						key: "follow",
-						label: "交易跟进",
-						children: <StrategyFollowTab strategyType={report.strategy_type as StrategyFollowType} title={`${report.short_name || report.strategy_name} 交易跟进`} />,
+						label: "推荐跟进",
+						children: <StrategyFollowTab strategyType={report.strategy_type as StrategyFollowType} title={`${report.short_name || report.strategy_name} 推荐跟进`} />,
 					},
 					{
 						key: "history",
