@@ -1174,28 +1174,57 @@ export interface UnwindTechnicalSnapshot {
 	}>
 }
 
+export interface UnwindExecutionStep {
+	step: number
+	action: string
+	price?: number | null
+	shares: number
+	condition: string
+	reason: string
+}
+
 export interface UnwindAnalysis {
+	strategy_version?: string
 	method: string
 	capital_rule: string
+	market?: "a" | "hk"
+	market_label?: string
+	currency?: "CNY" | "HKD"
+	currency_symbol?: string
+	lot_size?: number
 	pnl_pct: number
 	sell_shares: number
 	buyback_shares: number
 	min_spread_pct: number
+	estimated_round_trip_cost_pct?: number
+	sell_trigger_price?: number | null
 	sell_zone_low?: number | null
 	sell_zone_high?: number | null
 	buyback_price?: number | null
+	cancel_sell_above?: number | null
+	pause_buy_below?: number | null
+	expected_spread_per_share?: number
+	expected_gross_reduction?: number
+	estimated_fees?: number
+	expected_net_reduction?: number
+	projected_effective_cost?: number
 	decision: string
 	decision_label: string
 	risk_level: string
 	reason: string
+	sell_reason?: string
+	buyback_reason?: string
 	invalid_condition: string
+	no_trade_condition?: string
 	next_check: string
+	execution_steps?: UnwindExecutionStep[]
 	deep_analysis: {
 		trend: string
 		location: string
 		momentum: string
 		volume: string
 		position: string
+		cost_filter?: string
 	}
 	technical: UnwindTechnicalSnapshot
 	generated_at: string
@@ -1252,8 +1281,10 @@ export interface UnwindMethod {
 	capital_rule: string
 	position_rule: string
 	trend_rule: string
+	cost_rule?: string
 	risk_notice: string
 	schedule: string
+	evidence?: Array<{ title: string, url: string }>
 }
 
 export function fetchUnwindPlans(historyLimit = 10) {
