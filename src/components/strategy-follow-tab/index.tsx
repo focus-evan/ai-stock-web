@@ -30,6 +30,7 @@ import {
 	message,
 	Modal,
 	Row,
+	Segmented,
 	Space,
 	Spin,
 	Statistic,
@@ -47,6 +48,12 @@ const SKILL_TACTICS_TYPES = new Set<StrategyFollowType>([
 	"beijing_chaogu_first_board",
 ]);
 
+function formatDateTime(value?: string) {
+	if (!value)
+		return "--";
+	return value.replace("T", " ").slice(0, 19);
+}
+
 interface Props {
 	strategyType: StrategyFollowType
 	title?: string
@@ -54,12 +61,14 @@ interface Props {
 }
 
 export default function StrategyFollowTab({ strategyType, title, isOvernight = false }: Props) {
+	const isSkillTactics = SKILL_TACTICS_TYPES.has(strategyType);
 	const [loading, setLoading] = useState(false);
 	const [autoAddLoading, setAutoAddLoading] = useState(false);
 	const [snapshotLoading, setSnapshotLoading] = useState(false);
 	const [items, setItems] = useState<StrategyFollowItem[]>([]);
 	const [summary, setSummary] = useState<StrategyFollowSummary | null>(null);
 	const [status, setStatus] = useState<"tracking" | "closed">("tracking");
+	const [followTypeFilter, setFollowTypeFilter] = useState<"all" | "trade" | "watch">("all");
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailItem, setDetailItem] = useState<StrategyFollowItem | null>(null);
 	const [snapshots, setSnapshots] = useState<StrategyFollowSnapshot[]>([]);
@@ -67,7 +76,11 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const fetchData = useCallback(async () => {
 		setLoading(true);
 		try {
-			const res = await fetchStrategyFollow(strategyType, status);
+			const res = await fetchStrategyFollow(
+				strategyType,
+				status,
+				isSkillTactics && followTypeFilter !== "all" ? followTypeFilter : undefined,
+			);
 			if (res.status === "success" && res.data) {
 				setItems(res.data.items || []);
 				setSummary(res.data.summary || null);
@@ -79,7 +92,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		finally {
 			setLoading(false);
 		}
-	}, [strategyType, status]);
+	}, [followTypeFilter, isSkillTactics, strategyType, status]);
 
 	useEffect(() => {
 		fetchData();
@@ -154,24 +167,28 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		}
 	};
 
-	const tradeItems = items.filter(item => item.follow_type !== "watch");
-	const pricedItems = tradeItems.filter(i => (
+	const performanceItems = followTypeFilter === "watch"
+		? items.filter(item => item.follow_type === "watch")
+		: items.filter(item => item.follow_type !== "watch");
+	const pricedItems = performanceItems.filter(i => (
 		isOvernight
 			? i.next_day_return_pct != null
 			: i.latest_return_pct != null
 	));
-	const tradePerformance = summary?.trade_performance;
+	const selectedPerformance = followTypeFilter === "watch"
+		? summary?.watch_performance
+		: summary?.trade_performance;
 	const wins = isOvernight
 		? pricedItems.filter(i => (i.next_day_return_pct ?? 0) > 0).length
-		: (tradePerformance?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
+		: (selectedPerformance?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
 	const overallReturn = isOvernight
 		? (pricedItems.length > 0
 			? pricedItems.reduce((sum, item) => sum + (item.next_day_return_pct ?? 0), 0) / pricedItems.length
 			: null)
-		: (tradePerformance?.overall_return_pct ?? null);
-	const pricedCount = isOvernight ? pricedItems.length : (tradePerformance?.priced_count ?? pricedItems.length);
+		: (selectedPerformance?.overall_return_pct ?? null);
+	const pricedCount = isOvernight ? pricedItems.length : (selectedPerformance?.priced_count ?? pricedItems.length);
 	const winRate = pricedCount > 0
-		? (isOvernight ? wins / pricedCount * 100 : (tradePerformance?.win_rate_pct ?? wins / pricedCount * 100))
+		? (isOvernight ? wins / pricedCount * 100 : (selectedPerformance?.win_rate_pct ?? wins / pricedCount * 100))
 		: null;
 	const latestSnapshotDate = useMemo(() => {
 		if (summary?.latest_snapshot_date)
@@ -184,7 +201,6 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 
 	const displayTitle = title || (isOvernight ? "次日收益" : "推荐跟进");
 	const isDragonHead = strategyType === "dragon_head";
-	const isSkillTactics = SKILL_TACTICS_TYPES.has(strategyType);
 	const hasWatchFollow = (
 		isSkillTactics
 		|| (summary?.watch_count ?? items.filter(item => item.follow_type === "watch").length) > 0
@@ -194,8 +210,12 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		: "同步推荐跟进";
 	const countTitle = isDragonHead
 		? "可执行跟进数"
-		: "推荐跟进数";
-	const overallReturnTitle = isOvernight ? "可执行平均次日收益" : "可执行平均涨跌幅";
+		: followTypeFilter === "watch" ? "观察推荐数" : "推荐跟进数";
+	const overallReturnTitle = isOvernight
+		? "可执行平均次日收益"
+		: followTypeFilter === "watch" ? "观察期平均涨跌幅" : "可执行平均涨跌幅";
+	const winsTitle = followTypeFilter === "watch" ? "观察期上涨数" : "可执行盈利数";
+	const winRateTitle = followTypeFilter === "watch" ? "观察期上涨率" : "可执行胜率";
 
 	return (
 		<Spin spinning={loading}>
@@ -226,12 +246,12 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 							{latestSnapshotDate}
 						</Tag>
 					)}
-					{!isOvernight && items.length > 0 && (
-						<Tag color={pricedCount === items.length ? "green" : "orange"}>
+					{!isOvernight && performanceItems.length > 0 && (
+						<Tag color={pricedCount === performanceItems.length ? "green" : "orange"}>
 							行情覆盖：
 							{pricedCount}
 							/
-							{items.length}
+							{performanceItems.length}
 						</Tag>
 					)}
 				</Space>
@@ -245,10 +265,28 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 				</Space>
 			</div>
 
+			{isSkillTactics && (
+				<div style={{ marginBottom: 16 }}>
+					<Space wrap>
+						<Text strong>推荐类型</Text>
+						<Segmented
+							value={followTypeFilter}
+							onChange={value => setFollowTypeFilter(value as "all" | "trade" | "watch")}
+							options={[
+								{ label: "全部推荐", value: "all" },
+								{ label: "交易跟进", value: "trade" },
+								{ label: "观察推荐", value: "watch" },
+							]}
+						/>
+						<Text type="secondary">交易跟进计入胜率；观察推荐只验证触发条件</Text>
+					</Space>
+				</div>
+			)}
+
 			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
 				<Col span={6}><Card size="small"><Statistic title={countTitle} value={items.length} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="可执行盈利数" value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
-				<Col span={6}><Card size="small"><Statistic title="可执行胜率" value={winRate == null ? "--" : winRate.toFixed(1)} suffix={winRate == null ? undefined : "%"} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={winsTitle} value={wins} valueStyle={{ color: "#cf1322" }} /></Card></Col>
+				<Col span={6}><Card size="small"><Statistic title={winRateTitle} value={winRate == null ? "--" : winRate.toFixed(1)} suffix={winRate == null ? undefined : "%"} /></Card></Col>
 				<Col span={6}>
 					<Card size="small">
 						<Statistic
@@ -314,6 +352,10 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 												{item.latest_snapshot_date}
 											</Text>
 										)}
+										<Text type="secondary" style={{ fontSize: 11, display: "block", marginTop: 2 }}>
+											推荐时间：
+											{formatDateTime(item.recommended_at)}
+										</Text>
 										<div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 4 }}>
 											<span style={{ display: "flex", gap: 1 }}>
 												{[1, 2, 3, 4, 5].map(i => <StarFilled key={i} style={{ fontSize: 10, color: i <= (item.recommendation_level === "强烈推荐" ? 5 : 3) ? "#faad14" : "#f0f0f0" }} />)}
@@ -378,9 +420,9 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								</Tag>
 							</Col>
 							<Col span={12}>
-								<Text type="secondary">加入日期</Text>
+								<Text type="secondary">推荐时间</Text>
 								<br />
-								<Text>{detailItem.pick_date}</Text>
+								<Text>{formatDateTime(detailItem.recommended_at)}</Text>
 							</Col>
 							<Col span={12}>
 								<Text type="secondary">加入价格</Text>

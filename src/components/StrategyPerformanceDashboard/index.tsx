@@ -56,6 +56,13 @@ const CONTINUITY_LABELS: Record<string, { label: string, color: string }> = {
 	not_started: { label: "尚未启动", color: "default" },
 };
 
+const TREND_LABELS: Record<string, { label: string, color: string }> = {
+	improving: { label: "近期改善", color: "green" },
+	stable: { label: "基本稳定", color: "blue" },
+	weakening: { label: "近期走弱", color: "red" },
+	insufficient: { label: "样本不足", color: "default" },
+};
+
 const WEEKLY_STATUS_VALUE: Record<string, number> = {
 	no_data: 0,
 	pending_analysis: 1,
@@ -329,11 +336,62 @@ export default function StrategyPerformanceDashboard() {
 			),
 		},
 		{
+			title: "综合分",
+			key: "qualityScore",
+			width: 88,
+			align: "right",
+			sorter: (a, b) => a.quality_score - b.quality_score,
+			render: (_, item) => (
+				<Tooltip title="综合胜率、平均收益、盈亏比、稳定性和近10笔表现">
+					<Text strong style={{ color: item.quality_score >= 60 ? "#d48806" : undefined }}>
+						{item.quality_score.toFixed(1)}
+					</Text>
+				</Tooltip>
+			),
+		},
+		{
 			title: "成熟样本",
 			dataIndex: ["trade", "sample_count"],
 			width: 90,
 			align: "right",
 			sorter: (a, b) => a.trade.sample_count - b.trade.sample_count,
+		},
+		{
+			title: "盈亏与风险",
+			key: "risk",
+			width: 145,
+			render: (_, item) => (
+				<Space direction="vertical" size={2}>
+					<Text>
+						盈亏比：
+						{item.trade.profit_loss_ratio?.toFixed(2) ?? "--"}
+					</Text>
+					<Text type="secondary" style={{ fontSize: 12 }}>
+						序列回撤：
+						{formatPct(item.trade.max_drawdown_pct)}
+					</Text>
+				</Space>
+			),
+		},
+		{
+			title: "近10笔",
+			key: "recent",
+			width: 150,
+			render: (_, item) => {
+				const trend = TREND_LABELS[item.trade.trend_status] || TREND_LABELS.insufficient;
+				return (
+					<Space direction="vertical" size={2}>
+						<Tag color={trend.color}>{trend.label}</Tag>
+						<Text type="secondary" style={{ fontSize: 12 }}>
+							{item.trade.recent_sample_count}
+							笔 · 胜率
+							{formatRate(item.trade.recent_win_rate_pct)}
+							{" · 均"}
+							{formatPct(item.trade.recent_avg_return_pct)}
+						</Text>
+					</Space>
+				);
+			},
 		},
 		{
 			title: "累计胜率",
@@ -447,52 +505,79 @@ export default function StrategyPerformanceDashboard() {
 
 				{error && <Alert type="error" showIcon message={error} action={<Button size="small" onClick={() => void loadData()}>重试</Button>} />}
 
-				{data && best && (
+				{data && (
+					<Card title="简单分析报告" size="small">
+						<Alert
+							type={best && (best.trade.avg_return_pct ?? 0) >= 0 ? "success" : "warning"}
+							showIcon
+							message={data.analysis_report.headline}
+							description={data.analysis_report.summary}
+						/>
+						<Row gutter={[24, 12]} style={{ marginTop: 16 }}>
+							<Col xs={24} lg={12}>
+								<Text strong>怎么看</Text>
+								<ul style={{ margin: "8px 0 0", paddingLeft: 20 }}>
+									{data.analysis_report.key_findings.map(item => <li key={item}><Text>{item}</Text></li>)}
+								</ul>
+							</Col>
+							<Col xs={24} lg={12}>
+								<Text strong type="warning">需要注意</Text>
+								<ul style={{ margin: "8px 0 0", paddingLeft: 20 }}>
+									{data.analysis_report.cautions.map(item => <li key={item}><Text type="secondary">{item}</Text></li>)}
+								</ul>
+							</Col>
+						</Row>
+					</Card>
+				)}
+
+				{data && (
 					<>
-						<Card
-							bordered={false}
-							style={{
-								background: "linear-gradient(135deg, #1f1c4d 0%, #4c3494 58%, #7b5bd6 100%)",
-								color: "#fff",
-								overflow: "hidden",
-							}}
-						>
-							<Row gutter={[24, 16]} align="middle">
-								<Col xs={24} lg={10}>
-									<Space align="start" size={14}>
-										<TrophyFilled style={{ color: "#ffd666", fontSize: 40 }} />
-										<div>
-											<Text style={{ color: "rgba(255,255,255,0.72)" }}>当前综合表现最优秀</Text>
-											<Title level={2} style={{ color: "#fff", margin: "2px 0 4px" }}>{best.strategy_name}</Title>
-											<Paragraph style={{ color: "rgba(255,255,255,0.82)", margin: 0 }}>
-												在成熟交易样本不少于
-												{" "}
-												{data.ranking_min_samples}
-												{" "}
-												的战法中，按平均收益优先、胜率和样本数辅助排序。
-											</Paragraph>
-										</div>
-									</Space>
-								</Col>
-								<Col xs={12} sm={6} lg={3}>
-									<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>胜率</span>} value={best.trade.win_rate_pct || 0} precision={2} suffix="%" valueStyle={{ color: "#fff" }} />
-								</Col>
-								<Col xs={12} sm={6} lg={3}>
-									<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>平均收益</span>} value={best.trade.avg_return_pct || 0} precision={2} prefix={(best.trade.avg_return_pct || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} suffix="%" valueStyle={{ color: "#ffd666" }} />
-								</Col>
-								<Col xs={12} sm={6} lg={3}>
-									<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>成熟样本</span>} value={best.trade.sample_count} valueStyle={{ color: "#fff" }} />
-								</Col>
-								<Col xs={12} sm={6} lg={5}>
-									<Text style={{ color: "rgba(255,255,255,0.72)" }}>优秀战法</Text>
-									<div style={{ marginTop: 8 }}>
-										<Space wrap size={[4, 6]}>
-											{excellent.map(item => <Tag key={item.strategy_type} color="gold">{item.strategy_name}</Tag>)}
+						{best && (
+							<Card
+								bordered={false}
+								style={{
+									background: "linear-gradient(135deg, #1f1c4d 0%, #4c3494 58%, #7b5bd6 100%)",
+									color: "#fff",
+									overflow: "hidden",
+								}}
+							>
+								<Row gutter={[24, 16]} align="middle">
+									<Col xs={24} lg={10}>
+										<Space align="start" size={14}>
+											<TrophyFilled style={{ color: "#ffd666", fontSize: 40 }} />
+											<div>
+												<Text style={{ color: "rgba(255,255,255,0.72)" }}>当前综合表现最优秀</Text>
+												<Title level={2} style={{ color: "#fff", margin: "2px 0 4px" }}>{best.strategy_name}</Title>
+												<Paragraph style={{ color: "rgba(255,255,255,0.82)", margin: 0 }}>
+													在成熟交易样本不少于
+													{" "}
+													{data.ranking_min_samples}
+													{" "}
+													的战法中，综合胜率、收益、盈亏比、稳定性和近期表现排序。
+												</Paragraph>
+											</div>
 										</Space>
-									</div>
-								</Col>
-							</Row>
-						</Card>
+									</Col>
+									<Col xs={12} sm={6} lg={3}>
+										<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>胜率</span>} value={best.trade.win_rate_pct || 0} precision={2} suffix="%" valueStyle={{ color: "#fff" }} />
+									</Col>
+									<Col xs={12} sm={6} lg={3}>
+										<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>平均收益</span>} value={best.trade.avg_return_pct || 0} precision={2} prefix={(best.trade.avg_return_pct || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />} suffix="%" valueStyle={{ color: "#ffd666" }} />
+									</Col>
+									<Col xs={12} sm={6} lg={3}>
+										<Statistic title={<span style={{ color: "rgba(255,255,255,0.72)" }}>综合分</span>} value={best.quality_score} precision={1} suffix="分" valueStyle={{ color: "#fff" }} />
+									</Col>
+									<Col xs={12} sm={6} lg={5}>
+										<Text style={{ color: "rgba(255,255,255,0.72)" }}>优秀战法</Text>
+										<div style={{ marginTop: 8 }}>
+											<Space wrap size={[4, 6]}>
+												{excellent.map(item => <Tag key={item.strategy_type} color="gold">{item.strategy_name}</Tag>)}
+											</Space>
+										</div>
+									</Col>
+								</Row>
+							</Card>
+						)}
 
 						<Row gutter={[12, 12]}>
 							<Col xs={12} lg={6}><Card size="small"><Statistic title="成熟交易样本" value={data.total_trade_samples} prefix={<SafetyCertificateOutlined />} /></Card></Col>
@@ -546,7 +631,7 @@ export default function StrategyPerformanceDashboard() {
 								columns={columns}
 								pagination={false}
 								size="middle"
-								scroll={{ x: 1150 }}
+								scroll={{ x: 1450 }}
 								rowClassName={item => item.strategy_type === data.best_strategy_type ? "ant-table-row-selected" : ""}
 							/>
 						</Card>
@@ -558,6 +643,8 @@ export default function StrategyPerformanceDashboard() {
 							description={(
 								<Space direction="vertical" size={2}>
 									<Text>{data.methodology.ranking}</Text>
+									<Text>{data.methodology.drawdown_basis}</Text>
+									<Text>{data.methodology.recent_basis}</Text>
 									<Text>
 										{data.methodology.weekly_basis}
 										；只有实际应用新参数或回滚才标记为“已进化”。

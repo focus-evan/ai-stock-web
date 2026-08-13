@@ -1379,6 +1379,7 @@ export interface StrategyFollowItem {
 	latest_change_pct?: number
 	latest_return_pct?: number
 	latest_snapshot_date?: string
+	recommended_at: string
 	created_at: string
 }
 
@@ -1419,6 +1420,18 @@ export interface StrategyPerformanceMetric {
 	min_return_pct?: number | null
 	avg_mfe_pct?: number | null
 	avg_mae_pct?: number | null
+	avg_win_pct?: number | null
+	avg_loss_pct?: number | null
+	profit_loss_ratio?: number | null
+	profit_factor?: number | null
+	return_volatility_pct?: number | null
+	max_drawdown_pct?: number | null
+	stability_score?: number | null
+	recent_sample_count: number
+	recent_win_rate_pct?: number | null
+	recent_avg_return_pct?: number | null
+	recent_return_change_pct?: number | null
+	trend_status: "improving" | "stable" | "weakening" | "insufficient"
 }
 
 export type StrategyEvolutionWeeklyStatus = "no_data" | "pending_analysis" | "analyzed" | "evolved" | "rollback";
@@ -1452,6 +1465,7 @@ export interface StrategyPerformanceDashboardItem {
 	watch: StrategyPerformanceMetric
 	confidence_level: "high" | "medium" | "low"
 	ranking_eligible: boolean
+	quality_score: number
 	rank?: number | null
 	current_version: number
 	evolution_enabled: boolean
@@ -1481,6 +1495,12 @@ export interface StrategyPerformanceDashboard {
 	evolved_strategy_count: number
 	best_strategy_type?: StrategyFollowType | null
 	excellent_strategy_types: StrategyFollowType[]
+	analysis_report: {
+		headline: string
+		summary: string
+		key_findings: string[]
+		cautions: string[]
+	}
 	strategies: StrategyPerformanceDashboardItem[]
 	methodology: {
 		ranking: string
@@ -1488,6 +1508,8 @@ export interface StrategyPerformanceDashboard {
 		watch_samples_excluded: boolean
 		weekly_basis: string
 		evolution_basis: string
+		drawdown_basis: string
+		recent_basis: string
 	}
 }
 
@@ -1502,10 +1524,20 @@ export interface StrategyFollowSnapshot {
 }
 
 /** \u83b7\u53d6\u6218\u6cd5\u8ddf\u8fdb\u5217\u8868 */
-export function fetchStrategyFollow(strategyType: StrategyFollowType, status: string = "tracking") {
+export function fetchStrategyFollow(
+	strategyType: StrategyFollowType,
+	status: string = "tracking",
+	followType?: "trade" | "watch",
+) {
+	const searchParams: Record<string, string> = {
+		strategy_type: strategyType,
+		status,
+	};
+	if (followType)
+		searchParams.follow_type = followType;
 	return request
 		.get("strategy/follow", {
-			searchParams: { strategy_type: strategyType, status },
+			searchParams,
 			timeout: 15000,
 		})
 		.json<{ status: string, data: { items: StrategyFollowItem[], total: number, summary: StrategyFollowSummary } }>();
