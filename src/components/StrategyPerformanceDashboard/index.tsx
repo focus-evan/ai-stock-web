@@ -236,7 +236,7 @@ export default function StrategyPerformanceDashboard() {
 
 	const evolutionHeatmapOption = useMemo(() => {
 		const items = [...(data?.strategies || [])].reverse();
-		const heatData: Array<[number, number, number, number, number]> = [];
+		const heatData: Array<[number, number, number, number, number, number]> = [];
 		items.forEach((item, strategyIndex) => {
 			item.weekly.forEach((week, weekIndex) => {
 				heatData.push([
@@ -245,6 +245,7 @@ export default function StrategyPerformanceDashboard() {
 					WEEKLY_STATUS_VALUE[week.evolution_status] ?? 0,
 					week.sample_count,
 					week.analysis_run_count,
+					week.analysis_new_sample_count,
 				]);
 			});
 		});
@@ -252,7 +253,7 @@ export default function StrategyPerformanceDashboard() {
 			tooltip: {
 				position: "top",
 				formatter: (params: any) => {
-					const [weekIndex, strategyIndex, status, sampleCount, runCount] = params.data;
+					const [weekIndex, strategyIndex, status, sampleCount, runCount, analyzedNewCount] = params.data;
 					const item = items[strategyIndex];
 					const week = item?.weekly[weekIndex];
 					const statusLabel = ["无到期样本", "有样本待分析", "已分析", "已应用新参数", "已回滚"][status];
@@ -260,7 +261,8 @@ export default function StrategyPerformanceDashboard() {
 						`<b>${item?.strategy_name || ""}</b>`,
 						`${week?.week_start || ""} 至 ${week?.week_end || ""}`,
 						`状态：${statusLabel}`,
-						`本周成熟样本：${sampleCount}`,
+						`本周到期样本：${sampleCount}`,
+						`本周分析新增成熟样本：${analyzedNewCount}`,
 						`进化分析次数：${runCount}`,
 						`周平均收益：${formatPct(week?.avg_return_pct)}`,
 					].join("<br/>");
@@ -285,7 +287,7 @@ export default function StrategyPerformanceDashboard() {
 				left: "center",
 				bottom: 0,
 				pieces: [
-					{ value: 0, label: "无样本", color: "#f0f0f0" },
+					{ value: 0, label: "本周无新增", color: "#f0f0f0" },
 					{ value: 1, label: "待分析", color: "#ffe58f" },
 					{ value: 2, label: "已分析", color: "#91caff" },
 					{ value: 3, label: "已进化", color: "#95de64" },
@@ -297,7 +299,21 @@ export default function StrategyPerformanceDashboard() {
 				data: heatData,
 				label: {
 					show: true,
-					formatter: (params: any) => params.data[2] >= 3 ? (params.data[2] === 4 ? "回" : "进") : "",
+					formatter: (params: any) => {
+						const status = Number(params.data[2] || 0);
+						const matured = Number(params.data[3] || 0);
+						const analyzedNew = Number(params.data[5] || 0);
+						const count = Math.max(matured, analyzedNew);
+						if (status === 4)
+							return count > 0 ? `回·${count}` : "回";
+						if (status === 3)
+							return count > 0 ? `进·${count}` : "进";
+						if (matured > 0)
+							return `${matured}样`;
+						if (analyzedNew > 0)
+							return `+${analyzedNew}`;
+						return status === 2 ? "已析" : "";
+					},
 				},
 				emphasis: {
 					itemStyle: { shadowBlur: 8, shadowColor: "rgba(0,0,0,0.25)" },
@@ -436,7 +452,22 @@ export default function StrategyPerformanceDashboard() {
 							</Text>
 						</Space>
 					)
-					: <Text type="secondary">暂无到期样本</Text>;
+					: week && week.analysis_new_sample_count > 0
+						? (
+							<Space direction="vertical" size={2}>
+								<Text>
+									分析新增
+									{" "}
+									{week.analysis_new_sample_count}
+									{" "}
+									个成熟样本
+								</Text>
+								<Text type="secondary" style={{ fontSize: 12 }}>结算日在历史周，已纳入累计统计</Text>
+							</Space>
+						)
+						: week && week.analysis_run_count > 0
+							? <Text type="secondary">已分析，本周无新增到期样本</Text>
+							: <Text type="secondary">暂无到期样本</Text>;
 			},
 		},
 		{
@@ -606,10 +637,17 @@ export default function StrategyPerformanceDashboard() {
 							extra={(
 								<Space wrap>
 									<Tag icon={<ClockCircleOutlined />}>分析日志按周聚合</Tag>
+									<Tag color="blue">格内数字为到期/分析新增样本</Tag>
 									<Tag icon={<WarningOutlined />} color="gold">“已分析”不等于参数已更新</Tag>
 								</Space>
 							)}
 						>
+							<Alert
+								type="info"
+								showIcon
+								message="灰色只表示该自然周没有新到期样本，不代表该战法累计样本为 0；累计数量请看下方“成熟样本”列。"
+								style={{ marginBottom: 12 }}
+							/>
 							<ReactECharts
 								option={evolutionHeatmapOption}
 								style={{ height: Math.max(460, data.strategies.length * 32 + 120) }}
