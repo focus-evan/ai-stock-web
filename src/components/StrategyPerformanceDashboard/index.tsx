@@ -12,7 +12,6 @@ import {
 	ClockCircleOutlined,
 	ExperimentOutlined,
 	ReloadOutlined,
-	RocketOutlined,
 	SafetyCertificateOutlined,
 	TrophyFilled,
 	WarningOutlined,
@@ -39,6 +38,43 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const { Title, Text, Paragraph } = Typography;
 
+type TrustStatus = "disabled" | "observe" | "canary" | "trusted";
+
+type TrustedDashboardItem = StrategyPerformanceDashboardItem & {
+	trust_status: TrustStatus
+	trust_score: number
+	follow_allowed: boolean
+	canary_allowed: boolean
+	trust_reason: string
+	trust_failures: string[]
+	paper_validation: {
+		has_paper_account: boolean
+		account_return_pct?: number
+		max_drawdown_pct?: number
+		clean_forward_days?: number
+		data_quality_passed?: boolean | null
+		data_quality_issue_count?: number
+		data_quality_issues?: string[]
+	}
+	trade: StrategyPerformanceDashboardItem["trade"] & {
+		estimated_net_avg_return_pct?: number
+		estimated_net_recent_return_pct?: number
+		estimated_round_trip_cost_pct?: number
+	}
+};
+
+type TrustedDashboard = DashboardData & {
+	trusted_strategy_count: number
+	canary_strategy_count: number
+	disabled_strategy_count: number
+	statistical_best_strategy_type?: string | null
+	strategies: TrustedDashboardItem[]
+	methodology: DashboardData["methodology"] & {
+		trust_admission?: string
+		estimated_round_trip_cost_pct?: number
+	}
+};
+
 const DECISION_LABELS: Record<string, { label: string, color: string }> = {
 	applied: { label: "已应用新参数", color: "green" },
 	rollback: { label: "已自动回滚", color: "red" },
@@ -61,6 +97,13 @@ const TREND_LABELS: Record<string, { label: string, color: string }> = {
 	stable: { label: "基本稳定", color: "blue" },
 	weakening: { label: "近期走弱", color: "red" },
 	insufficient: { label: "样本不足", color: "default" },
+};
+
+const TRUST_LABELS: Record<TrustStatus, { label: string, color: string }> = {
+	disabled: { label: "禁用跟投", color: "red" },
+	observe: { label: "仅观察", color: "gold" },
+	canary: { label: "小仓验证", color: "blue" },
+	trusted: { label: "可跟投", color: "green" },
 };
 
 const WEEKLY_STATUS_VALUE: Record<string, number> = {
@@ -95,7 +138,7 @@ function currentWeek(item: StrategyPerformanceDashboardItem): StrategyPerformanc
 
 export default function StrategyPerformanceDashboard() {
 	const [weeks, setWeeks] = useState(12);
-	const [data, setData] = useState<DashboardData | null>(null);
+	const [data, setData] = useState<TrustedDashboard | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -106,7 +149,7 @@ export default function StrategyPerformanceDashboard() {
 			const response = await fetchStrategyPerformanceDashboard(weeks);
 			if (response.status !== "success" || !response.data)
 				throw new Error(response.message || "战法表现数据加载失败");
-			setData(response.data);
+			setData(response.data as TrustedDashboard);
 		}
 		catch (cause) {
 			const detail = cause instanceof Error ? cause.message : "战法表现数据加载失败";
@@ -128,6 +171,10 @@ export default function StrategyPerformanceDashboard() {
 	);
 	const excellent = useMemo(
 		() => data?.strategies.filter(item => data.excellent_strategy_types.includes(item.strategy_type)) || [],
+		[data],
+	);
+	const statisticalBest = useMemo(
+		() => data?.strategies.find(item => item.strategy_type === data.statistical_best_strategy_type),
 		[data],
 	);
 
@@ -179,7 +226,7 @@ export default function StrategyPerformanceDashboard() {
 					data: items.map(item => ({
 						value: item.trade.win_rate_pct ?? 0,
 						itemStyle: {
-							color: item.strategy_type === data?.best_strategy_type ? "#faad14" : "#ff7875",
+							color: item.strategy_type === data?.statistical_best_strategy_type ? "#faad14" : "#ff7875",
 							borderRadius: [4, 4, 0, 0],
 						},
 					})),
@@ -322,7 +369,7 @@ export default function StrategyPerformanceDashboard() {
 		};
 	}, [data]);
 
-	const columns: ColumnsType<StrategyPerformanceDashboardItem> = [
+	const columns: ColumnsType<TrustedDashboardItem> = [
 		{
 			title: "排名",
 			key: "rank",
@@ -345,11 +392,35 @@ export default function StrategyPerformanceDashboard() {
 				<Space direction="vertical" size={2}>
 					<Space size={4}>
 						<Text strong>{item.strategy_name}</Text>
-						{item.strategy_type === data?.best_strategy_type && <TrophyFilled style={{ color: "#faad14" }} />}
+						{item.trust_status === "trusted" && <TrophyFilled style={{ color: "#faad14" }} />}
 					</Space>
 					<Text type="secondary" style={{ fontSize: 12 }}>{item.settlement_rule.label}</Text>
 				</Space>
 			),
+		},
+		{
+			title: "跟投资格",
+			key: "trust",
+			width: 180,
+			render: (_, item) => {
+				const trust = TRUST_LABELS[item.trust_status] || TRUST_LABELS.observe;
+				const detail = item.trust_failures?.length
+					? item.trust_failures.join("；")
+					: item.trust_reason;
+				return (
+					<Space direction="vertical" size={2}>
+						<Space size={4}>
+							<Tag color={trust.color}>{trust.label}</Tag>
+							<Text strong>{item.trust_score.toFixed(1)}</Text>
+						</Space>
+						<Tooltip title={detail}>
+							<Text type="secondary" ellipsis style={{ width: 150, fontSize: 12 }}>
+								{item.trust_reason}
+							</Text>
+						</Tooltip>
+					</Space>
+				);
+			},
 		},
 		{
 			title: "综合分",
@@ -424,10 +495,47 @@ export default function StrategyPerformanceDashboard() {
 			align: "right",
 			sorter: (a, b) => (a.trade.avg_return_pct || 0) - (b.trade.avg_return_pct || 0),
 			render: (_, item) => (
-				<Text strong style={{ color: returnColor(item.trade.avg_return_pct) }}>
-					{formatPct(item.trade.avg_return_pct)}
-				</Text>
+				<Space direction="vertical" size={2}>
+					<Text strong style={{ color: returnColor(item.trade.avg_return_pct) }}>
+						{formatPct(item.trade.avg_return_pct)}
+					</Text>
+					<Text type="secondary" style={{ fontSize: 12 }}>
+						估算净
+						{" "}
+						{formatPct(item.trade.estimated_net_avg_return_pct)}
+					</Text>
+				</Space>
 			),
+		},
+		{
+			title: "模拟账户验证",
+			key: "paper",
+			width: 165,
+			render: (_, item) => {
+				const paper = item.paper_validation;
+				if (!paper?.has_paper_account)
+					return <Tag>缺少账户</Tag>;
+				return (
+					<Space direction="vertical" size={2}>
+						<Space size={4}>
+							<Tag color={paper.data_quality_passed ? "green" : "red"}>
+								{paper.data_quality_passed ? "数据通过" : "数据异常"}
+							</Tag>
+							<Text style={{ color: returnColor(paper.account_return_pct) }}>
+								{formatPct(paper.account_return_pct)}
+							</Text>
+						</Space>
+						<Text type="secondary" style={{ fontSize: 12 }}>
+							回撤
+							{" "}
+							{formatPct(paper.max_drawdown_pct)}
+							{" · 干净前向 "}
+							{paper.clean_forward_days ?? 0}
+							天
+						</Text>
+					</Space>
+				);
+			},
 		},
 		{
 			title: "本周表现",
@@ -517,7 +625,7 @@ export default function StrategyPerformanceDashboard() {
 					<div>
 						<Title level={4} style={{ margin: 0 }}>战法胜率与周度自进化</Title>
 						<Text type="secondary">
-							交易推荐按各战法自己的结算周期统计；观察候选不计入胜率
+							统计排名与跟投资格分离；没有战法达标时明确保持现金
 						</Text>
 					</div>
 					<Space wrap>
@@ -561,6 +669,17 @@ export default function StrategyPerformanceDashboard() {
 					</Card>
 				)}
 
+				{data && !best && (
+					<Alert
+						type="warning"
+						showIcon
+						message="当前无可放心跟投战法"
+						description={statisticalBest
+							? `统计第一是${statisticalBest.strategy_name}，但仍未同时通过净收益、模拟账户、回撤和数据质量硬门槛；本轮建议保持现金。`
+							: "所有战法仍在积累可信样本，本轮建议保持现金。"}
+					/>
+				)}
+
 				{data && (
 					<>
 						{best && (
@@ -577,14 +696,10 @@ export default function StrategyPerformanceDashboard() {
 										<Space align="start" size={14}>
 											<TrophyFilled style={{ color: "#ffd666", fontSize: 40 }} />
 											<div>
-												<Text style={{ color: "rgba(255,255,255,0.72)" }}>当前综合表现最优秀</Text>
+												<Text style={{ color: "rgba(255,255,255,0.72)" }}>当前通过可信跟投准入</Text>
 												<Title level={2} style={{ color: "#fff", margin: "2px 0 4px" }}>{best.strategy_name}</Title>
 												<Paragraph style={{ color: "rgba(255,255,255,0.82)", margin: 0 }}>
-													在成熟交易样本不少于
-													{" "}
-													{data.ranking_min_samples}
-													{" "}
-													的战法中，综合胜率、收益、盈亏比、稳定性和近期表现排序。
+													已通过估算成本后收益、模拟账户、异常成交、前向验证和回撤硬门槛。
 												</Paragraph>
 											</div>
 										</Space>
@@ -611,23 +726,23 @@ export default function StrategyPerformanceDashboard() {
 						)}
 
 						<Row gutter={[12, 12]}>
+							<Col xs={12} lg={6}><Card size="small"><Statistic title="可跟投" value={data.trusted_strategy_count} suffix="个战法" prefix={<CheckCircleOutlined />} valueStyle={{ color: data.trusted_strategy_count > 0 ? "#389e0d" : "#8c8c8c" }} /></Card></Col>
+							<Col xs={12} lg={6}><Card size="small"><Statistic title="小仓验证" value={data.canary_strategy_count} suffix="个战法" prefix={<ExperimentOutlined />} valueStyle={{ color: "#1677ff" }} /></Card></Col>
+							<Col xs={12} lg={6}><Card size="small"><Statistic title="禁用跟投" value={data.disabled_strategy_count} suffix="个战法" prefix={<WarningOutlined />} valueStyle={{ color: data.disabled_strategy_count > 0 ? "#cf1322" : undefined }} /></Card></Col>
 							<Col xs={12} lg={6}><Card size="small"><Statistic title="成熟交易样本" value={data.total_trade_samples} prefix={<SafetyCertificateOutlined />} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="达到排名门槛" value={data.eligible_strategy_count} suffix={`/ ${data.strategies.length}`} prefix={<CheckCircleOutlined />} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="已执行进化/回滚" value={data.evolved_strategy_count} suffix="个战法" prefix={<RocketOutlined />} valueStyle={{ color: data.evolved_strategy_count > 0 ? "#722ed1" : undefined }} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="本周期有分析日志" value={data.analyzed_strategy_count} suffix={`/ ${data.strategies.length}`} prefix={<ExperimentOutlined />} /></Card></Col>
 						</Row>
 
 						<Row gutter={[16, 16]}>
 							<Col xs={24} xl={14}>
-								<Card title="累计胜率与平均收益" extra={<Tag color="gold">金色为当前第一</Tag>}>
+								<Card title="统计排名（不等于可跟投）" extra={<Tag color="gold">金色为统计第一</Tag>}>
 									<ReactECharts option={rankingOption} style={{ height: 390 }} />
 								</Card>
 							</Col>
 							<Col xs={24} xl={10}>
-								<Card title="优秀战法周均收益趋势" extra={<Text type="secondary">按结算周</Text>}>
+								<Card title="通过可信准入战法的周均收益" extra={<Text type="secondary">按结算周</Text>}>
 									{excellent.length > 0
 										? <ReactECharts option={weeklyTrendOption} style={{ height: 390 }} />
-										: <Empty description="暂无达到样本门槛且平均收益为正的战法" style={{ paddingTop: 100 }} />}
+										: <Empty description="暂无通过可信跟投准入的战法" style={{ paddingTop: 100 }} />}
 								</Card>
 							</Col>
 						</Row>
@@ -669,8 +784,8 @@ export default function StrategyPerformanceDashboard() {
 								columns={columns}
 								pagination={false}
 								size="middle"
-								scroll={{ x: 1450 }}
-								rowClassName={item => item.strategy_type === data.best_strategy_type ? "ant-table-row-selected" : ""}
+								scroll={{ x: 1650 }}
+								rowClassName={item => item.trust_status === "trusted" ? "ant-table-row-selected" : ""}
 							/>
 						</Card>
 
@@ -681,13 +796,19 @@ export default function StrategyPerformanceDashboard() {
 							description={(
 								<Space direction="vertical" size={2}>
 									<Text>{data.methodology.ranking}</Text>
+									{data.methodology.trust_admission && <Text>{data.methodology.trust_admission}</Text>}
 									<Text>{data.methodology.drawdown_basis}</Text>
 									<Text>{data.methodology.recent_basis}</Text>
 									<Text>
 										{data.methodology.weekly_basis}
 										；只有实际应用新参数或回滚才标记为“已进化”。
 									</Text>
-									<Text type="secondary">周胜率和收益仅代表历史结算结果，不包含手续费、滑点及无法成交影响。</Text>
+									<Text type="secondary">
+										原始收益是历史结算结果；跟投资格已额外扣除
+										{" "}
+										{data.methodology.estimated_round_trip_cost_pct ?? 0.25}
+										%估算往返成本，并核验模拟账户和异常成交。
+									</Text>
 								</Space>
 							)}
 						/>
