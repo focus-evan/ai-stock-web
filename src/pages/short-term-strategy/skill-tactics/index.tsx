@@ -3,10 +3,12 @@ import type {
 	SkillTacticsReport,
 	SkillTacticsStrategyType,
 	StrategyFollowType,
+	StrategyPerformanceDashboardItem,
 } from "#src/api/strategy";
 import type { ColumnsType } from "antd/es/table";
 import {
 	fetchSkillTacticsDashboard,
+	fetchStrategyPerformanceDashboard,
 	refreshAllSkillTactics,
 	refreshSkillTacticsFramework,
 } from "#src/api/strategy";
@@ -124,6 +126,131 @@ function findReport(reports: SkillTacticsReport[], type: SkillTacticsStrategyTyp
 	return reports.find(item => item.strategy_type === type);
 }
 
+function signalStateLabel(state?: string) {
+	return ({
+		buy_now: "当前可执行",
+		wait_trigger: "只等触发",
+		premarket_plan: "盘前计划",
+		review_only: "收盘复盘",
+		seal_validation: "封板复核",
+		no_buy: "不买",
+	} as Record<string, string>)[state || ""] || state || "待确认";
+}
+
+function pct(value?: number | null) {
+	if (value == null)
+		return "--";
+	return `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
+}
+
+const EVOLUTION_LABELS: Record<string, { label: string, color: string }> = {
+	applied: { label: "已应用新参数", color: "green" },
+	rollback: { label: "已自动回滚", color: "red" },
+	observed: { label: "持续观察", color: "blue" },
+	rejected: { label: "参数未通过留出验证", color: "orange" },
+	insufficient_data: { label: "样本积累中", color: "gold" },
+	frozen: { label: "进化已冻结", color: "default" },
+	not_analyzed: { label: "尚未分析", color: "default" },
+};
+
+function SkillTacticsPerformancePanel({ strategyType }: { strategyType: SkillTacticsStrategyType }) {
+	const [item, setItem] = useState<StrategyPerformanceDashboardItem | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		let active = true;
+		const loadPerformance = async () => {
+			setLoading(true);
+			try {
+				const response = await fetchStrategyPerformanceDashboard(12);
+				if (!active)
+					return;
+				const matched = response.data?.strategies?.find(row => row.strategy_type === strategyType) || null;
+				setItem(matched);
+				setError(matched ? null : "暂无该战法的成熟收益样本");
+			}
+			catch (cause: any) {
+				if (active)
+					setError(cause?.message || "收益复盘加载失败");
+			}
+			finally {
+				if (active)
+					setLoading(false);
+			}
+		};
+		void loadPerformance();
+		return () => {
+			active = false;
+		};
+	}, [strategyType]);
+
+	if (loading)
+		return <Skeleton active paragraph={{ rows: 8 }} />;
+	if (!item)
+		return <Empty description={error || "暂无收益复盘"} />;
+
+	const evolution = EVOLUTION_LABELS[item.last_decision] || EVOLUTION_LABELS.not_analyzed;
+	const weekly = [...(item.weekly || [])].reverse().slice(0, 8);
+	return (
+		<Space direction="vertical" size={16} style={{ width: "100%" }}>
+			<Alert
+				showIcon
+				type={item.trade.avg_return_pct != null && item.trade.avg_return_pct < 0 ? "warning" : "info"}
+				message="不可改写收益复盘"
+				description={`只统计明确买入且已成熟的样本；观察票单独对照、不进入参数训练。当前结算口径：${item.settlement_rule.label}。`}
+			/>
+			<Row gutter={[12, 12]}>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="成熟买入样本" value={item.trade.sample_count || 0} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="胜率" value={item.trade.win_rate_pct ?? 0} suffix="%" precision={1} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="平均收益" value={item.trade.avg_return_pct ?? 0} suffix="%" precision={2} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="最近10笔平均" value={item.trade.recent_avg_return_pct ?? 0} suffix="%" precision={2} /></Card></Col>
+			</Row>
+			<Card
+				size="small"
+				title={(
+					<Space>
+						<ExperimentOutlined />
+						<span>受约束自动进化</span>
+					</Space>
+				)}
+				extra={<Tag color={evolution.color}>{evolution.label}</Tag>}
+			>
+				<Space direction="vertical" size={6}>
+					<Text>
+						参数版本：v
+						{item.current_version}
+						；累计分析：
+						{item.analysis_run_count}
+						次；参数更新：
+						{item.parameter_update_count}
+						次。
+					</Text>
+					<Text>
+						最近结论：
+						{item.last_reason || "尚未形成参数调整结论"}
+					</Text>
+					<Text type="secondary">自动进化只允许有限步长、留出样本验证和自动回滚，不允许模型改写历史信号或直接修改代码。</Text>
+				</Space>
+			</Card>
+			<Table
+				size="small"
+				pagination={false}
+				rowKey={row => row.week_start}
+				dataSource={weekly}
+				columns={[
+					{ title: "周", key: "week", render: (_, row) => `${row.week_start.slice(5)}~${row.week_end.slice(5)}` },
+					{ title: "样本", dataIndex: "sample_count", key: "sample_count" },
+					{ title: "胜率", key: "win_rate", render: (_, row) => pct(row.win_rate_pct) },
+					{ title: "平均收益", key: "avg_return", render: (_, row) => pct(row.avg_return_pct) },
+					{ title: "进化状态", key: "status", render: (_, row) => <Tag>{row.evolution_status}</Tag> },
+					{ title: "版本", key: "version", render: (_, row) => row.version_end ? `v${row.version_end}` : "--" },
+				]}
+			/>
+		</Space>
+	);
+}
+
 function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 	const candidateColumns: ColumnsType<SkillTacticsCandidate> = [
 		{
@@ -173,6 +300,9 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 			width: 150,
 			render: (_, record) => (
 				<Space direction="vertical" size={4}>
+					<Tag color={record.signal_state === "buy_now" ? "red" : record.signal_state === "wait_trigger" ? "blue" : "default"}>
+						{signalStateLabel(record.signal_state)}
+					</Tag>
 					<Tag color={actionColor(record.native_action, record.decision)}>{record.native_action || "观察"}</Tag>
 					<Text type="secondary">{record.decision || "-"}</Text>
 				</Space>
@@ -264,6 +394,15 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 						description={(
 							<Space direction="vertical" size={6}>
 								{cacheWarning ? <Text type="warning">{cacheWarning}</Text> : null}
+								{report.session_policy?.reason
+									? (
+										<Text strong>
+											{report.session_policy.label || "当前时点"}
+											：
+											{report.session_policy.reason}
+										</Text>
+									)
+									: null}
 								<Text>{report.source?.note || "候选池来自原始行情事实，再按四个本地 skill 规则分别评分和映射动作。"}</Text>
 								<Space wrap>
 									{(report.mainlines || []).map(item => <Tag key={item} color="processing">{item}</Tag>)}
@@ -279,6 +418,8 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 							<Text>{report.source?.base_generated_at || report.generated_at || report.timestamp}</Text>
 							<Text type="secondary">下一检查点</Text>
 							<Text>{report.next_checkpoint || "-"}</Text>
+							<Text type="secondary">新仓权限</Text>
+							<Text>{report.session_policy?.can_open_new_position ? `允许，最多${report.session_policy.max_direct_buys || 1}席` : "禁止，只做计划/复核"}</Text>
 						</Space>
 					</Card>
 				</Col>
@@ -382,8 +523,13 @@ function SkillTacticPanel({ report }: { report: SkillTacticsReport }) {
 					},
 					{
 						key: "history",
-						label: "历史推荐/复盘",
-						children: <RecommendationHistory strategyType={report.strategy_type} />,
+						label: "历史信号/复盘",
+						children: <RecommendationHistory strategyType={report.strategy_type} skillTacticsMode title="不可改写历史信号" />,
+					},
+					{
+						key: "performance",
+						label: "收益复盘/自动进化",
+						children: <SkillTacticsPerformancePanel strategyType={report.strategy_type} />,
 					},
 				]}
 			/>

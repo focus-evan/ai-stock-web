@@ -19,6 +19,7 @@ import {
 	Col,
 	Empty,
 	Row,
+	Segmented,
 	Space,
 	Spin,
 	Tag,
@@ -36,6 +37,11 @@ const SESSION_LABELS: Record<string, { label: string, color: string }> = {
 	afternoon: { label: "午盘", color: "orange" },
 	manual: { label: "手动刷新", color: "purple" },
 	auto: { label: "定时", color: "green" },
+	premarket: { label: "盘前计划", color: "gold" },
+	morning_confirm: { label: "早盘确认", color: "blue" },
+	first_board_radar: { label: "10:35首板雷达", color: "volcano" },
+	seal_check: { label: "14:20封板复核", color: "orange" },
+	review: { label: "收盘复盘", color: "purple" },
 };
 
 /** 推荐等级配色 */
@@ -61,15 +67,18 @@ interface Props {
 	strategyType?: string
 	limit?: number
 	title?: string
+	skillTacticsMode?: boolean
 }
 
 const RecommendationHistory: React.FC<Props> = ({
 	strategyType,
 	limit = 30,
 	title = "历史推荐记录",
+	skillTacticsMode = false,
 }) => {
 	const [items, setItems] = useState<RecommendationHistoryItem[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [signalScope, setSignalScope] = useState<"buy" | "all">("buy");
 	const [followUpStock, setFollowUpStock] = useState<{
 		code: string
 		name: string
@@ -132,21 +141,33 @@ const RecommendationHistory: React.FC<Props> = ({
 	const currentDate = sortedDates[dateIdx] || "";
 	const currentItems = grouped[currentDate] || [];
 
-	// 合并当天所有 session 的推荐
+	// 军训版默认只展示明确“买”信号；“全部信号”从 metadata.candidates
+	// 读取并保留检查点，避免再把观察票混成历史推荐。
 	const allStocks = useMemo(() => {
-		const result: Array<{ stock: any, session: string, generatedAt: string }> = [];
+		const result: Array<{ stock: any, session: string, generatedAt: string, checkpoint?: string }> = [];
 		for (const rec of currentItems) {
-			const recs = rec.recommendations || [];
+			const candidateSignals = Array.isArray(rec.metadata?.candidates) ? rec.metadata?.candidates || [] : [];
+			const source = skillTacticsMode && signalScope === "all"
+				? candidateSignals
+				: rec.recommendations || [];
+			const recs = skillTacticsMode && signalScope === "buy"
+				? source.filter((stock: any) => stock?.decision === "买")
+				: source;
 			for (const stock of recs) {
 				result.push({
 					stock,
 					session: rec.session_type,
 					generatedAt: rec.generated_at,
+					checkpoint: rec.metadata?.checkpoint,
 				});
 			}
 		}
 		return result;
-	}, [currentItems]);
+	}, [currentItems, signalScope, skillTacticsMode]);
+	const uniqueStockCount = useMemo(
+		() => new Set(allStocks.map(item => item.stock?.code || item.stock?.stock_code).filter(Boolean)).size,
+		[allStocks],
+	);
 
 	// ---------- Render ----------
 
@@ -252,7 +273,10 @@ const RecommendationHistory: React.FC<Props> = ({
 							<Text strong style={{ color: "#722ed1" }}>
 								{allStocks.length}
 								{" "}
-								只
+								条信号 /
+								{uniqueStockCount}
+								{" "}
+								只股票
 							</Text>
 						</Space>
 						{latestSession?.generated_at && (
@@ -264,6 +288,16 @@ const RecommendationHistory: React.FC<Props> = ({
 							</Space>
 						)}
 					</Space>
+					{skillTacticsMode
+						? (
+							<Segmented
+								size="small"
+								value={signalScope}
+								onChange={value => setSignalScope(value as "buy" | "all")}
+								options={[{ label: "明确买入", value: "buy" }, { label: "全部候选信号", value: "all" }]}
+							/>
+						)
+						: null}
 
 					{/* 日期跳转快捷按钮 */}
 					<Space size={4} wrap>
@@ -297,7 +331,7 @@ const RecommendationHistory: React.FC<Props> = ({
 					? <Empty description="该日无推荐数据" image={Empty.PRESENTED_IMAGE_SIMPLE} />
 					: (
 						<Row gutter={[12, 12]}>
-							{allStocks.map(({ stock }, si) => {
+							{allStocks.map(({ stock, session, generatedAt, checkpoint }, si) => {
 								const code = stock.code || stock.stock_code || "";
 								const name = stock.name || stock.stock_name || "未知";
 								const changePct: number = stock.change_pct ?? 0;
@@ -308,6 +342,8 @@ const RecommendationHistory: React.FC<Props> = ({
 								const reason = stock.buy_reason || stock.llm_reason || (stock.reasons || []).join("；") || "";
 								const level: string = stock.recommendation_level || "";
 								const ls = LEVEL_STYLES[level] || defaultLevel;
+								const sessionMeta = SESSION_LABELS[session] || { label: session || "未知检查点", color: "default" };
+								const decision = stock.decision || "";
 
 								return (
 
@@ -345,6 +381,14 @@ const RecommendationHistory: React.FC<Props> = ({
 													{level
 														? <Tag color={ls.tag} style={{ margin: 0, fontWeight: 600 }}>{level}</Tag>
 														: null}
+												</div>
+												<div style={{ marginTop: 6 }}>
+													<Tag color={sessionMeta.color} style={{ marginBottom: 4 }}>
+														{sessionMeta.label}
+														{checkpoint ? ` · ${checkpoint}` : ""}
+													</Tag>
+													{decision ? <Tag color={decision === "买" ? "red" : decision === "只观察" ? "blue" : "default"}>{decision}</Tag> : null}
+													<Text type="secondary" style={{ fontSize: 11 }}>{generatedAt?.slice(11, 19)}</Text>
 												</div>
 												{/* 命中战法标签（综合战法专用） */}
 												{strategyType === "combined" && stock.strategy_names && stock.strategy_names.length > 0 && (
@@ -463,6 +507,28 @@ const RecommendationHistory: React.FC<Props> = ({
 													{advice}
 												</div>
 											)}
+											{skillTacticsMode && (stock.buy_method || stock.price_trigger || stock.invalid_condition)
+												? (
+													<div style={{ margin: "0 10px 10px", padding: "8px 10px", borderRadius: 6, background: "#fafafa", fontSize: 12, lineHeight: "19px" }}>
+														<div>
+															<b>买法：</b>
+															{stock.buy_method || "不开仓"}
+														</div>
+														<div>
+															<b>触发：</b>
+															{stock.price_trigger || "无"}
+														</div>
+														<div>
+															<b>仓位：</b>
+															{stock.position || "空仓"}
+														</div>
+														<div>
+															<b>失效：</b>
+															{stock.invalid_condition || "未提供"}
+														</div>
+													</div>
+												)
+												: null}
 
 											{/* 跟投分析按钮（仅综合战法显示） */}
 											{strategyType === "combined" && (

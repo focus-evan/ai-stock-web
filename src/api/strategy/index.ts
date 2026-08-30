@@ -662,6 +662,12 @@ export interface RecommendationHistoryItem {
 	stock_count: number
 	generated_at: string
 	recommendations?: any[]
+	metadata?: {
+		candidates?: any[]
+		checkpoint?: string
+		session_policy?: Record<string, any>
+		[key: string]: any
+	}
 }
 
 export interface RecommendationHistoryResponse {
@@ -737,6 +743,23 @@ export interface SkillTacticsCandidate {
 	}
 	position?: string
 	invalid_condition?: string
+	session_type?: string
+	signal_state?: "buy_now" | "wait_trigger" | "no_buy" | "premarket_plan" | "review_only" | "seal_validation" | string
+	action_summary?: string
+	next_action_time?: string
+	session_downgraded?: boolean
+	session_policy?: {
+		mode?: string
+		label?: string
+		can_open_new_position?: boolean
+		max_direct_buys?: number
+		reason?: string
+	}
+	risk_profile?: {
+		stop_loss_pct?: number
+		take_profit_pct?: number
+		min_rr?: number
+	}
 	reason?: string
 	recommendation_level?: string
 	current_price?: number
@@ -767,6 +790,15 @@ export interface SkillTacticsReport {
 	timestamp: string
 	trading_date?: string
 	generated_at?: string
+	requested_session_type?: string
+	session_type?: string
+	session_policy?: {
+		mode?: string
+		label?: string
+		can_open_new_position?: boolean
+		max_direct_buys?: number
+		reason?: string
+	}
 	market_phase?: string
 	mode?: string
 	risk_gate?: string
@@ -776,6 +808,8 @@ export interface SkillTacticsReport {
 	next_checkpoint?: string
 	candidates: SkillTacticsCandidate[]
 	recommendations?: any[]
+	candidate_recommendations?: any[]
+	candidate_total?: number
 	prior_follow_up?: any[]
 	yield_summary?: SkillTacticsYieldSummary
 	yield_tracking?: any[]
