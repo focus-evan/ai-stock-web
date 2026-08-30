@@ -1118,6 +1118,100 @@ export function fetchLatestGuidance() {
 
 // ===================== 整体持仓分析 =====================
 
+export interface PortfolioSkillFinancialPeriod {
+	period?: string
+	revenue_yuan?: number | null
+	revenue_yoy_pct?: number | null
+	net_profit_yuan?: number | null
+	net_profit_yoy_pct?: number | null
+	gross_margin_pct?: number | null
+	net_margin_pct?: number | null
+	operating_cash_flow_yuan?: number | null
+	roe_pct?: number | null
+	margin_scope?: string
+	roe_scope?: string
+	deducted_net_profit?: number | null
+}
+
+export interface PortfolioDomesticSubstitutionAnalysis {
+	score?: number
+	stage?: string
+	bottleneck?: string
+	benchmarks?: string[]
+	judgement?: string
+}
+
+export interface PortfolioCompetitorMoatAnalysis {
+	domestic?: string[]
+	overseas?: string[]
+	unique?: string
+	stronger?: string
+	weaker?: string
+	grade?: string
+}
+
+export interface PortfolioStockSkillAnalysis {
+	analysis_version?: string
+	skills?: string[]
+	data_as_of?: string
+	risk_gate?: {
+		status?: string
+		flags?: string[]
+	}
+	stock_v231_selector?: {
+		score?: number
+		strategy_label?: string
+		recommendation_level?: string
+		dimension_scores?: Array<{
+			dimension?: string
+			weight?: number
+			score?: number
+			conclusion?: string
+		}>
+		domestic_substitution?: PortfolioDomesticSubstitutionAnalysis
+		competitor_moat?: PortfolioCompetitorMoatAnalysis
+		new_strategic_business?: string
+		valuation_odds?: string
+		direct_action?: string
+		triggers?: string[]
+		invalidations?: string[]
+	}
+	s_quant_5d_subtraction?: {
+		score?: number
+		factor_percentiles?: Record<string, number>
+		latest_metrics?: Partial<PortfolioSkillFinancialPeriod>
+		weights?: Record<string, number>
+		method?: string
+		operating_world_conclusion?: string
+		latest_four_reported_periods?: PortfolioSkillFinancialPeriod[]
+		market_cap?: string
+		pe_ttm?: number
+		valuation_scored?: boolean
+		limitations?: string[]
+	}
+	s40_tech_growth_stock?: {
+		score?: number
+		applicability?: string
+		conclusion?: string
+		true_track?: string
+		bottleneck_and_substitution?: PortfolioDomesticSubstitutionAnalysis
+		true_technology_and_customer?: PortfolioCompetitorMoatAnalysis
+		true_finance?: {
+			operating_conclusion?: string
+			latest_metrics?: Partial<PortfolioSkillFinancialPeriod>
+		}
+		true_valuation?: string
+		ability_circle?: string
+		triggers?: string[]
+		failure_conditions?: string[]
+	}
+	sources?: Array<{
+		name?: string
+		url?: string
+		as_of?: string
+	}>
+}
+
 export interface PortfolioStockAnalysis {
 	stock_code: string
 	stock_name: string
@@ -1159,6 +1253,8 @@ export interface PortfolioStockAnalysis {
 	verdict_reason?: string
 	risk_factors: string[]
 	highlight: string
+	/** Codex 三套自研框架的详细研判；历史记录可能没有该字段 */
+	skill_analysis?: PortfolioStockSkillAnalysis
 	prices_7d: Array<{
 		date: string
 		open?: number
