@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import type { RecommendationHistoryItem } from "#src/api/strategy";
-import { fetchRecommendationHistory } from "#src/api/strategy";
+import type { RecommendationHistoryItem, SkillTacticsStrategyType } from "#src/api/strategy";
+import { fetchRecommendationHistory, fetchSkillTacticsSignalHistory } from "#src/api/strategy";
 import WatchlistModal from "#src/components/WatchlistModal";
 import {
 	CalendarOutlined,
@@ -99,7 +99,9 @@ const RecommendationHistory: React.FC<Props> = ({
 		(async () => {
 			setLoading(true);
 			try {
-				const resp = await fetchRecommendationHistory(strategyType, limit, true);
+				const resp = skillTacticsMode && strategyType
+					? await fetchSkillTacticsSignalHistory(strategyType as SkillTacticsStrategyType, limit)
+					: await fetchRecommendationHistory(strategyType, limit, true);
 				if (resp.status === "success")
 					setItems(resp.data.items || []);
 			}
@@ -110,7 +112,7 @@ const RecommendationHistory: React.FC<Props> = ({
 				setLoading(false);
 			}
 		})();
-	}, [strategyType, limit]);
+	}, [strategyType, limit, skillTacticsMode]);
 
 	// 按日期分组
 	const grouped = useMemo(() => {

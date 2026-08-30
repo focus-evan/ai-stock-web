@@ -845,6 +845,18 @@ export function fetchSkillTacticsDashboard(limit: number = 5) {
 		.json<SkillTacticsDashboardResponse>();
 }
 
+export function fetchSkillTacticsSignalHistory(
+	strategyType: SkillTacticsStrategyType,
+	limit: number = 30,
+) {
+	return request
+		.get(`strategy/skill-tactics/${strategyType}/signals`, {
+			searchParams: { limit },
+			timeout: 30000,
+		})
+		.json<RecommendationHistoryResponse>();
+}
+
 export function fetchSkillTacticsFramework(strategyType: SkillTacticsStrategyType, limit: number = 5) {
 	return request
 		.get(`strategy/skill-tactics/${strategyType}`, {
