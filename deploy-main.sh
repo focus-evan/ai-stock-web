@@ -1,112 +1,142 @@
-#!/bin/bash
-# ==========================================
-# main 分支前端部署脚本
-# 构建后部署到独立的 Nginx 目录和端口
-# ==========================================
+#!/usr/bin/env bash
 
-set -e
+set -Eeuo pipefail
 
-NGINX_WEB_ROOT="/var/www/html/financial-data-platform-main"
-NGINX_CONF_SOURCE="nginx-config-main.conf"
-NGINX_CONF_TARGET="/etc/nginx/conf.d/ai-stock-main.conf"
-BACKUP_DIR="/data/backups/ai-stock-web-main"
-PORT=3667
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+cd "$script_dir"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-NC='\033[0m'
+web_root=${AI_STOCK_WEB_ROOT:-/var/www/html/financial-data-platform-main}
+nginx_conf_source=${AI_STOCK_WEB_NGINX_SOURCE:-$script_dir/nginx-config-main.conf}
+nginx_conf_target=${AI_STOCK_WEB_NGINX_TARGET:-/etc/nginx/conf.d/ai-stock-main.conf}
+release_root=${AI_STOCK_WEB_RELEASE_ROOT:-/data/ai-stock-web-main/releases}
+port=3667
+timestamp=$(date +%Y%m%d-%H%M%S)
+metadata_dir="$release_root/$timestamp"
+stage_root="${web_root}.stage-${timestamp}"
+rollback_web_root="${web_root}.rollback-${timestamp}"
+failed_web_root="${web_root}.failed-${timestamp}"
 
-log_info()    { echo -e "${BLUE}[INFO]${NC} $1"; }
-log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
-log_error()   { echo -e "${RED}[✗]${NC} $1"; }
-log_warning() { echo -e "${YELLOW}[!]${NC} $1"; }
-log_header()  { echo -e "${CYAN}$1${NC}"; }
+info() { printf '[INFO] %s\n' "$1"; }
+fail() { printf '[ERROR] %s\n' "$1" >&2; exit 1; }
 
-echo ""
-log_header "=========================================="
-log_header "  main 分支前端部署 (端口 ${PORT})"
-log_header "=========================================="
-echo ""
+for tool in curl git nginx; do
+  command -v "$tool" >/dev/null 2>&1 || fail "required tool is missing: $tool"
+done
 
-# 1. 切换到 main 分支并拉取
-log_info "[1/6] 切换到 main 分支..."
-git checkout main
-git pull origin main
-log_success "代码已更新"
-git log --oneline -3
-echo ""
-
-# 2. 安装依赖
-log_info "[2/6] 检查依赖..."
-if command -v pnpm &> /dev/null; then
-    PKG_MANAGER="pnpm"
-elif command -v npm &> /dev/null; then
-    PKG_MANAGER="npm"
+if command -v corepack >/dev/null 2>&1; then
+  package_manager=(corepack pnpm)
+elif command -v pnpm >/dev/null 2>&1; then
+  package_manager=(pnpm)
 else
-    log_error "未找到包管理器 (npm/pnpm)"
-    exit 1
+  fail 'pnpm/corepack is unavailable'
 fi
-log_info "使用 $PKG_MANAGER"
-$PKG_MANAGER install
-log_success "依赖安装完成"
-echo ""
 
-# 3. 构建
-log_info "[3/6] 构建生产版本..."
-$PKG_MANAGER run build
-if [ -d "build" ]; then
-    build_size=$(du -sh build | cut -f1)
-    log_success "构建完成，产物大小: ${build_size}"
+test -f package.json || fail 'package.json is missing'
+test -f pnpm-lock.yaml || fail 'pnpm-lock.yaml is missing'
+test -f "$nginx_conf_source" || fail 'candidate Nginx configuration is missing'
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || fail 'candidate is not a Git worktree'
+
+candidate_commit=$(git rev-parse HEAD)
+origin_commit=$(git rev-parse origin/main)
+test "$candidate_commit" = "$origin_commit" || fail 'candidate HEAD is not the fetched origin/main commit'
+git diff --quiet || fail 'candidate has tracked content changes'
+git diff --cached --quiet || fail 'candidate has staged changes'
+test -z "$(git ls-files --others --exclude-standard)" || fail 'candidate has untracked files'
+bash -n "$script_dir/deploy-main.sh"
+
+umask 077
+mkdir -p "$metadata_dir"
+
+candidate_nginx_main="$metadata_dir/nginx-candidate-main.conf"
+printf 'pid /tmp/nginx-ai-stock-main-%s.pid;\nerror_log /tmp/nginx-ai-stock-main-%s.log notice;\nevents {}\nhttp {\n  include /etc/nginx/mime.types;\n  access_log off;\n  include %s;\n}\n' \
+  "$timestamp" "$timestamp" "$nginx_conf_source" > "$candidate_nginx_main"
+nginx -t -c "$candidate_nginx_main" -p /
+
+info 'installing the exact committed dependency graph with a frozen lockfile'
+CI=1 "${package_manager[@]}" install --frozen-lockfile
+git diff --quiet -- pnpm-lock.yaml || fail 'frozen installation changed pnpm-lock.yaml'
+
+info 'building the production frontend candidate'
+"${package_manager[@]}" run build
+test -f build/index.html || fail 'build/index.html is missing'
+
+asset_path=$(grep -Eo '(src|href)="[^"]+\.(js|css)"' build/index.html | head -n 1 | cut -d '"' -f 2)
+test -n "$asset_path" || fail 'no representative hashed asset was found in build/index.html'
+asset_relative=${asset_path#/}
+test -f "build/$asset_relative" || fail "referenced build asset is missing: $asset_relative"
+
+test ! -e "$stage_root" || fail "staging root already exists: $stage_root"
+test ! -e "$rollback_web_root" || fail "rollback root already exists: $rollback_web_root"
+mkdir -p "$stage_root"
+chmod 0755 "$stage_root"
+cp -a build/. "$stage_root/"
+test -f "$stage_root/index.html" || fail 'staged index.html is missing'
+test -f "$stage_root/$asset_relative" || fail 'staged representative asset is missing'
+
+if [ -f "$nginx_conf_target" ]; then
+  cp -a "$nginx_conf_target" "$metadata_dir/nginx.conf.previous"
 else
-    log_error "构建失败：build 目录不存在"
-    exit 1
-fi
-echo ""
-
-# 4. 备份旧版本
-log_info "[4/6] 备份..."
-if [ -d "$NGINX_WEB_ROOT" ] && [ "$(ls -A $NGINX_WEB_ROOT 2>/dev/null)" ]; then
-    mkdir -p "$BACKUP_DIR"
-    backup_name="backup_$(date +%Y%m%d_%H%M%S)"
-    cp -r "$NGINX_WEB_ROOT" "${BACKUP_DIR}/${backup_name}" 2>/dev/null || true
-    # 只保留最近 3 个备份
-    cd "$BACKUP_DIR" && ls -dt backup_* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
-    cd - > /dev/null
-    log_success "备份完成"
-fi
-echo ""
-
-# 5. 部署
-log_info "[5/6] 部署到 ${NGINX_WEB_ROOT}..."
-mkdir -p "$NGINX_WEB_ROOT"
-rm -rf "${NGINX_WEB_ROOT:?}"/*
-cp -r build/* "$NGINX_WEB_ROOT/"
-log_success "文件已复制"
-
-# 6. 配置 Nginx
-log_info "[6/6] 配置 Nginx..."
-if [ -f "$NGINX_CONF_SOURCE" ]; then
-    cp "$NGINX_CONF_SOURCE" "$NGINX_CONF_TARGET"
-    log_success "Nginx 配置已更新 → $NGINX_CONF_TARGET"
+  : > "$metadata_dir/nginx.conf.previous.missing"
 fi
 
-if command -v nginx &> /dev/null; then
-    nginx -t 2>&1 && nginx -s reload
-    log_success "Nginx 已重新加载"
-else
-    log_warning "nginx 未安装，请手动配置"
-fi
+rollback_needed=0
+rollback_frontend() {
+  rollback_needed=0
+  set +e
+  printf '[ERROR] frontend acceptance failed; restoring the previous web root and Nginx config\n' >&2
+  if [ -d "$web_root" ]; then
+    mv "$web_root" "$failed_web_root"
+  fi
+  if [ -d "$rollback_web_root" ]; then
+    mv "$rollback_web_root" "$web_root"
+  fi
+  if [ -f "$metadata_dir/nginx.conf.previous" ]; then
+    cp -a "$metadata_dir/nginx.conf.previous" "$nginx_conf_target"
+  else
+    rm -f "$nginx_conf_target"
+  fi
+  nginx -t && nginx -s reload
+  set -e
+}
 
-echo ""
-log_header "=========================================="
-log_header "  main 分支前端部署完成！"
-log_header "=========================================="
-echo ""
-echo "  访问地址: http://$(hostname -I 2>/dev/null | awk '{print $1}'):${PORT}"
-echo ""
-echo "  dev  前端: http://<IP>:80   → 后端 :8000"
-echo "  main 前端: http://<IP>:${PORT} → 后端 :8001"
-echo ""
+handle_error() {
+  exit_code=$?
+  if [ "$rollback_needed" -eq 1 ]; then
+    rollback_frontend
+  fi
+  exit "$exit_code"
+}
+trap handle_error ERR
+
+info 'atomically swapping the staged web root while retaining the previous root'
+if [ -d "$web_root" ]; then
+  mv "$web_root" "$rollback_web_root"
+fi
+mv "$stage_root" "$web_root"
+rollback_needed=1
+
+install -m 0644 "$nginx_conf_source" "$nginx_conf_target"
+if ! nginx -t; then
+  rollback_frontend
+  fail 'candidate Nginx configuration failed live validation'
+fi
+nginx -s reload
+
+frontend_url="http://127.0.0.1:${port}/"
+asset_url="http://127.0.0.1:${port}/${asset_relative}"
+api_url="http://127.0.0.1:${port}/api/health"
+if ! curl -fsS --retry 20 --retry-delay 2 --retry-all-errors --max-time 10 "$frontend_url" >/dev/null || \
+   ! curl -fsS --retry 10 --retry-delay 2 --retry-all-errors --max-time 10 "$asset_url" >/dev/null || \
+   ! curl -fsS --retry 10 --retry-delay 2 --retry-all-errors --max-time 10 "$api_url" >/dev/null; then
+  rollback_frontend
+  fail 'frontend HTTP, asset, or API proxy acceptance failed'
+fi
+rollback_needed=0
+
+printf 'candidate_commit=%s\nasset_path=%s\nrollback_web_root=%s\n' \
+  "$candidate_commit" "$asset_relative" "$rollback_web_root" > "$metadata_dir/release-metadata.txt"
+
+printf 'FRONTEND_RELEASE_STATUS=PASS\n'
+printf 'candidate_commit=%s\n' "$candidate_commit"
+printf 'asset_path=%s\n' "$asset_relative"
+printf 'rollback_point=%s\n' "$rollback_web_root"
