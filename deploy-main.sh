@@ -68,10 +68,14 @@ test -f "build/$asset_relative" || fail "referenced build asset is missing: $ass
 test ! -e "$stage_root" || fail "staging root already exists: $stage_root"
 test ! -e "$rollback_web_root" || fail "rollback root already exists: $rollback_web_root"
 mkdir -p "$stage_root"
-chmod 0755 "$stage_root"
 cp -a build/. "$stage_root/"
+find "$stage_root" -type d -exec chmod 0755 {} +
+find "$stage_root" -type f -exec chmod 0644 {} +
 test -f "$stage_root/index.html" || fail 'staged index.html is missing'
 test -f "$stage_root/$asset_relative" || fail 'staged representative asset is missing'
+test "$(stat -c '%a' "$stage_root")" = 755 || fail 'staged web root is not world-readable'
+test "$(stat -c '%a' "$stage_root/index.html")" = 644 || fail 'staged index.html is not world-readable'
+test "$(stat -c '%a' "$stage_root/$asset_relative")" = 644 || fail 'staged asset is not world-readable'
 
 if [ -f "$nginx_conf_target" ]; then
   cp -a "$nginx_conf_target" "$metadata_dir/nginx.conf.previous"
