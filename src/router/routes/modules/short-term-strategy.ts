@@ -17,6 +17,7 @@ const Northbound = lazy(() => import("#src/pages/short-term-strategy/northbound"
 const TrendMomentum = lazy(() => import("#src/pages/short-term-strategy/trend-momentum"));
 const StockAnalysis = lazy(() => import("#src/pages/short-term-strategy/stock-analysis"));
 const Portfolio = lazy(() => import("#src/pages/short-term-strategy/portfolio"));
+const Optimization = lazy(() => import("#src/pages/short-term-strategy/optimization"));
 const Review = lazy(() => import("#src/pages/short-term-strategy/review"));
 
 const routes: AppRouteRecordRaw[] = [
@@ -131,6 +132,14 @@ const routes: AppRouteRecordRaw[] = [
 				handle: {
 					icon: "PieChartOutlined",
 					title: "策略组合",
+				},
+			},
+			{
+				path: "/short-term-strategy/optimization",
+				Component: Optimization,
+				handle: {
+					icon: "ExperimentOutlined",
+					title: "优化前后对比",
 				},
 			},
 			{

@@ -23,6 +23,7 @@ import {
 	triggerRebalance,
 } from "#src/api/portfolio";
 import { BasicContent } from "#src/components/basic-content";
+import OptimizationComparison from "#src/components/optimization-comparison";
 import PortfolioAuditPanel from "#src/components/portfolio-audit";
 import {
 	ArrowDownOutlined,
@@ -48,6 +49,7 @@ import {
 	Button,
 	Card,
 	Col,
+	Collapse,
 	Empty,
 	Form,
 	InputNumber,
@@ -945,6 +947,14 @@ export default function PortfolioDashboard() {
 			</div>
 
 			<PortfolioAuditPanel />
+			<Collapse
+				style={{ marginBottom: 20 }}
+				items={[{
+					key: "optimization-comparison",
+					label: "重大优化前后对比 · 查看战绩、同成本胜率与数据质量",
+					children: <OptimizationComparison />,
+				}]}
+			/>
 			<Alert
 				style={{ marginBottom: 16 }}
 				showIcon
