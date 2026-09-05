@@ -198,13 +198,19 @@ function SkillTacticsPerformancePanel({ strategyType }: { strategyType: SkillTac
 				showIcon
 				type={item.trade.avg_return_pct != null && item.trade.avg_return_pct < 0 ? "warning" : "info"}
 				message="不可改写收益复盘"
-				description={`只统计明确买入且已成熟的样本；观察票单独对照、不进入参数训练。当前结算口径：${item.settlement_rule.label}。`}
+				description={`按交易所日历结算；历史重建和异常基线排除，历史缓存仅作研究，自动进化仅使用前向留存的交易样本。当前结算口径：${item.settlement_rule.label}。`}
+			/>
+			<Alert
+				type="warning"
+				showIcon
+				message={item.trust_reason || "信号收益尚未通过前向成交验证"}
+				description={`前向成熟样本：${item.trade.forward_sample_count ?? 0}；胜率95%区间：${item.trade.win_rate_ci95_pct?.map(v => `${v.toFixed(1)}%`).join(" ～ ") || "未验证"}。`}
 			/>
 			<Row gutter={[12, 12]}>
 				<Col xs={12} md={6}><Card size="small"><Statistic title="成熟买入样本" value={item.trade.sample_count || 0} /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="胜率" value={item.trade.win_rate_pct ?? 0} suffix="%" precision={1} /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="平均收益" value={item.trade.avg_return_pct ?? 0} suffix="%" precision={2} /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="最近10笔平均" value={item.trade.recent_avg_return_pct ?? 0} suffix="%" precision={2} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="固定周期推荐胜率" value={item.trade.win_rate_pct ?? "未验证"} suffix={item.trade.win_rate_pct == null ? undefined : "%"} precision={1} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="信号平均收益" value={item.trade.avg_return_pct ?? "未验证"} suffix={item.trade.avg_return_pct == null ? undefined : "%"} precision={2} /></Card></Col>
+				<Col xs={12} md={6}><Card size="small"><Statistic title="最近10笔平均" value={item.trade.recent_avg_return_pct ?? "未验证"} suffix={item.trade.recent_avg_return_pct == null ? undefined : "%"} precision={2} /></Card></Col>
 			</Row>
 			<Card
 				size="small"

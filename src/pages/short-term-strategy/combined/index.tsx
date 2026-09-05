@@ -517,7 +517,7 @@ const CombinedPage: React.FC = () => {
 							<div>
 								<Title level={3} style={{ margin: 0, color: "#fff" }}>综合战法</Title>
 								<Text style={{ color: "rgba(255,255,255,0.85)" }}>
-									七种战法推荐交集 · 多重验证 · 强共识股
+									当前激活战法推荐交集 · 按信号簇去重 · 共识待验证
 								</Text>
 							</div>
 							<Button

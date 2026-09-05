@@ -1483,6 +1483,10 @@ export function recordUnwindTrade(watchlistId: number, payload: RecordUnwindTrad
 export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined" | SkillTacticsStrategyType;
 
 export interface StrategyFollowItem {
+	evidence_origin?: string
+	evidence_label?: string
+	performance_eligible?: boolean
+	settlement_status?: string
 	id: number
 	strategy_type: StrategyFollowType
 	stock_code: string
@@ -1526,6 +1530,11 @@ export interface StrategyFollowItem {
 }
 
 export interface StrategyFollowSummary {
+	fixed_trade_performance?: StrategyPerformanceMetric
+	fixed_watch_performance?: StrategyPerformanceMetric
+	settlement_horizon_days?: number
+	settlement_mode?: string
+	excluded_reconstruction_count?: number
 	total_count: number
 	trade_count: number
 	watch_count: number
@@ -1551,6 +1560,10 @@ export interface StrategyFollowPerformance {
 }
 
 export interface StrategyPerformanceMetric {
+	forward_sample_count?: number
+	origin_counts?: Record<string, number>
+	win_rate_ci95_pct?: [number, number] | null
+	cost_scenarios?: Record<string, number>
 	sample_count: number
 	win_count: number
 	loss_count: number
@@ -1596,6 +1609,9 @@ export interface StrategyPerformanceWeekly {
 }
 
 export interface StrategyPerformanceDashboardItem {
+	data_quality?: { record_count: number, settlement_counts: Record<string, number>, calendar_version: string }
+	trust_status?: string
+	trust_reason?: string
 	strategy_type: StrategyFollowType
 	strategy_name: string
 	settlement_rule: {

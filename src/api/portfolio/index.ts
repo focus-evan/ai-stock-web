@@ -210,3 +210,8 @@ export function triggerFollowRecommendation(portfolioId: number) {
 		.post(`portfolio/${portfolioId}/follow/trigger`, { timeout: 120000 })
 		.json<PortfolioResponse>();
 }
+
+export function fetchPortfolioQualityAudit() {
+	return request.get("portfolio/quality-audit", { timeout: 60000 })
+		.json<{ status: string, data: { accounts: import("./types").PortfolioQualityAudit[] } }>();
+}

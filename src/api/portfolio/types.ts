@@ -94,6 +94,7 @@ export interface DailySummary {
 export interface PortfolioDetailResponse {
 	status: string
 	data: {
+		quality_audit?: { data_quality_passed: boolean, data_quality_issues: string[] }
 		portfolio: PortfolioConfig
 		positions: PortfolioPosition[]
 		recent_trades: PortfolioTrade[]
@@ -248,4 +249,21 @@ export interface FollowDetailResponse {
 	status: string
 	data?: FollowRecommendation
 	message?: string
+}
+
+export interface PortfolioQualityAudit {
+	portfolio_id: number
+	name: string
+	strategy_type: string
+	status: string
+	account_return_pct?: number | null
+	data_quality_passed: boolean
+	data_quality_issues: string[]
+	validation_status: string
+	sell_count: number
+	closed_cycle_count: number
+	verified_cycle_win_rate_pct?: number | null
+	cash_residual: number
+	excluded_reconstruction_trade_count: number
+	clean_forward_days: number
 }

@@ -7,8 +7,8 @@ import type {
 	PortfolioTrade,
 	StockPnlItem,
 } from "#src/api/portfolio";
-
 import type { ColumnsType } from "antd/es/table";
+
 import {
 	createPortfolio,
 	fetchFollowList,
@@ -23,6 +23,7 @@ import {
 	triggerRebalance,
 } from "#src/api/portfolio";
 import { BasicContent } from "#src/components/basic-content";
+import PortfolioAuditPanel from "#src/components/portfolio-audit";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -375,6 +376,7 @@ export default function PortfolioDashboard() {
 	const [portfolios, setPortfolios] = useState<PortfolioConfig[]>([]);
 	const [selectedId, setSelectedId] = useState<number | null>(null);
 	const [detail, setDetail] = useState<{
+		quality_audit?: { data_quality_passed: boolean, data_quality_issues: string[] }
 		portfolio: PortfolioConfig
 		positions: PortfolioPosition[]
 		recent_trades: PortfolioTrade[]
@@ -942,6 +944,14 @@ export default function PortfolioDashboard() {
 				</Space>
 			</div>
 
+			<PortfolioAuditPanel />
+			<Alert
+				style={{ marginBottom: 16 }}
+				showIcon
+				type={detail?.portfolio.id === selectedId && detail?.quality_audit?.data_quality_passed ? "info" : "warning"}
+				message={detail?.portfolio.id === selectedId && detail?.quality_audit?.data_quality_passed ? "当前组合账务已核验，策略盈利能力仍需独立前向验证" : "当前组合收益为账面显示值，尚未通过完整证据核验"}
+				description="归档账户保留在上方审计表；异常买价、资金缺口和重建成交不能作为战法盈利证据。"
+			/>
 			{loading && portfolios.length === 0
 				? (
 					<Skeleton active paragraph={{ rows: 12 }} />
@@ -991,7 +1001,7 @@ export default function PortfolioDashboard() {
 											styles={{ body: { padding: "20px 24px" } }}
 										>
 											<Statistic
-												title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>累计收益</Text>}
+												title={<Text style={{ color: "rgba(255,255,255,0.7)" }}>账面累计收益</Text>}
 												value={portfolio.total_profit}
 												precision={2}
 												prefix={

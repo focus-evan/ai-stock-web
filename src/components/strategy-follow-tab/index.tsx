@@ -22,6 +22,7 @@ import {
 	SyncOutlined,
 } from "@ant-design/icons";
 import {
+	Alert,
 	Button,
 	Card,
 	Col,
@@ -166,26 +167,16 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		)),
 		[allItems, followTypeFilter],
 	);
-	const pricedItems = items.filter(i => (
-		isOvernight
-			? i.next_day_return_pct != null
-			: i.latest_return_pct != null
-	));
 	const selectedPerformance = followTypeFilter === "watch"
 		? summary?.watch_performance
 		: summary?.trade_performance;
-	const wins = isOvernight
-		? pricedItems.filter(i => (i.next_day_return_pct ?? 0) > 0).length
-		: (selectedPerformance?.profitable_count ?? pricedItems.filter(i => (i.latest_return_pct ?? 0) > 0).length);
-	const overallReturn = isOvernight
-		? (pricedItems.length > 0
-			? pricedItems.reduce((sum, item) => sum + (item.next_day_return_pct ?? 0), 0) / pricedItems.length
-			: null)
-		: (selectedPerformance?.overall_return_pct ?? null);
-	const pricedCount = isOvernight ? pricedItems.length : (selectedPerformance?.priced_count ?? pricedItems.length);
-	const winRate = pricedCount > 0
-		? (isOvernight ? wins / pricedCount * 100 : (selectedPerformance?.win_rate_pct ?? wins / pricedCount * 100))
-		: null;
+	const fixedPerformance = followTypeFilter === "watch"
+		? summary?.fixed_watch_performance
+		: summary?.fixed_trade_performance;
+	const wins = fixedPerformance?.win_count ?? 0;
+	const overallReturn = fixedPerformance?.avg_return_pct ?? null;
+	const pricedCount = fixedPerformance?.sample_count ?? 0;
+	const winRate = fixedPerformance?.win_rate_pct ?? null;
 	const latestSnapshotDate = useMemo(() => {
 		if (selectedPerformance?.latest_snapshot_date)
 			return selectedPerformance.latest_snapshot_date;
@@ -201,14 +192,19 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 		? "同步可执行信号"
 		: "同步交易/推荐跟进";
 	const countTitle = followTypeFilter === "watch" ? "推荐跟进数" : "交易跟进数";
-	const overallReturnTitle = isOvernight
-		? followTypeFilter === "watch" ? "推荐后平均次日涨跌" : "交易信号平均次日收益"
-		: followTypeFilter === "watch" ? "推荐后平均涨跌幅" : "交易平均涨跌幅";
-	const winsTitle = followTypeFilter === "watch" ? "推荐后上涨数" : "交易盈利数";
-	const winRateTitle = followTypeFilter === "watch" ? "推荐上涨率" : "交易胜率";
+	const overallReturnTitle = "固定周期信号平均收益";
+	const winsTitle = "成熟信号盈利数";
+	const winRateTitle = followTypeFilter === "watch" ? "固定周期观察上涨率" : "固定周期推荐胜率";
 
 	return (
 		<Spin spinning={loading}>
+			<Alert
+				style={{ marginBottom: 16 }}
+				type="info"
+				showIcon
+				message={`${summary?.settlement_horizon_days ?? "待确认"}个交易日 / ${summary?.settlement_mode === "next_day_open" ? "次日开盘" : "到期收盘"}，成熟样本${pricedCount}条`}
+				description={`历史重建已排除${summary?.excluded_reconstruction_count ?? 0}条；缺失和未成熟记录不按0%计入。下面卡片的最新涨跌幅仅是跟进参考，不是已成交利润。`}
+			/>
 			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
 				<Space align="center" wrap>
 					<Title level={4} style={{ margin: 0 }}>{displayTitle}</Title>
@@ -338,6 +334,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 										<Text type="secondary" style={{ fontSize: 11, display: "block", marginTop: 2 }}>
 											推荐时间：
 											{formatDateTime(item.recommended_at)}
+											{item.evidence_label && <Tag color={item.performance_eligible === false ? "orange" : "default"}>{item.evidence_label}</Tag>}
 										</Text>
 										<div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 4 }}>
 											<span style={{ display: "flex", gap: 1 }}>
