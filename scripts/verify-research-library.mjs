@@ -4,12 +4,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { load } from "cheerio";
+import { defaultSource } from "./sync-research-library.mjs";
 
 const root = fileURLToPath(new URL("../public/research-library/", import.meta.url));
 const contentRoot = path.join(root, "content");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "catalog.json"), "utf8"));
 const manifest = JSON.parse(fs.readFileSync(path.join(root, ".sync-manifest.json"), "utf8"));
-const source = process.env.RESEARCH_SOURCE_DIR || "D:/Evan/html";
+const source = defaultSource();
 const missing = [];
 const alteredText = [];
 const sourceChanged = [];

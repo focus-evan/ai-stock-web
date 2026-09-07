@@ -88,3 +88,27 @@ test("sync preserves source files, disables broken local links and remains repea
 		fs.rmSync(target, { recursive: true, force: true });
 	}
 });
+
+ test("Mac absolute URLs resolve and merge keeps other source collections", async () => {
+ const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "research-merge-"));
+ try {
+ const source = path.join(temporaryRoot, "mac");
+ const destination = path.join(temporaryRoot, "output");
+ fs.mkdirSync(source);
+ const options = { source, destination, reportFile: path.join(temporaryRoot, "report.json") };
+ fs.writeFileSync(path.join(source, "index.html"), "<html><title>入口</title></html>");
+ fs.writeFileSync(path.join(source, "old.html"), "<html><title>旧资料</title></html>");
+ await syncLibrary(options);
+ fs.unlinkSync(path.join(source, "old.html"));
+ fs.writeFileSync(path.join(source, "new.html"), "<html><title>新资料</title></html>");
+ const result = await syncLibrary({ ...options, merge: true });
+ assert.equal(result.htmlPages, 3);
+ assert.deepEqual(result.removedFiles, []);
+ assert.ok(fs.existsSync(path.join(destination, "content/old.html")));
+ assert.equal((await syncLibrary({ ...options, merge: true })).changedFiles, 0);
+ const files = new Set(["中文/index.html"]);
+ for (const url of ["file:///Users/evan/html/中文/index.html", "/Users/evan/html/中文/index.html"]) {
+ assert.equal(resolveLocalLink(url, "index.html", files, "/Users/evan/html").href, "%E4%B8%AD%E6%96%87/index.html");
+ }
+ } finally { fs.rmSync(temporaryRoot, { recursive: true, force: true }); }
+});

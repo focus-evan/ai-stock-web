@@ -1,0 +1,205 @@
+{
+  "generated": "2026-09-08 07:33",
+  "quality_pass": "finance-context-v3",
+  "glossary": "/Users/evan/.codex/skills/douyin-research-digest/references/finance_asr_glossary.json",
+  "total": 212,
+  "status_counts": {
+    "通过": 88,
+    "通过（已修正）": 99,
+    "通过（画面OCR）": 1,
+    "通过（标题文本）": 7,
+    "需复核": 17
+  },
+  "needs_review": 17,
+  "items": [
+    {
+      "aweme_id": "7665567163129980261",
+      "title": "科技元年，不会轻易结束！屠龙刀哥的预言",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7665326161303956666",
+      "title": "#科技投资方向#半导体还能涨吗",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7664510105135729974",
+      "title": "1191期|星宸科技：视觉AISoC#星宸科技#北京君正#富瀚微#瑞芯微#全志科技",
+      "status": "需复核",
+      "score": 88,
+      "transcript_source": "audio_asr",
+      "reasons": [
+        "仍有1个可疑词"
+      ],
+      "suspicious_terms": [
+        "制价"
+      ]
+    },
+    {
+      "aweme_id": "7662210123465170597",
+      "title": "时间会证明一切！！#财经#李一恩#机会",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "audio_asr",
+      "reasons": [
+        "历史低精度ASR，需从音频重新转写"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7444877073967091007",
+      "title": "新质生产力十大科技领域龙头公司一览#新质生产力#科技领域#低空经济#人形机器人#人工",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7592609364935581044",
+      "title": "航天题材。明天航天分歧，大家就没有点了，少了它突然迷茫的！停下来歇歇",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7611879359200967643",
+      "title": "把gemini调成给你盯盘的猎犬#投资#炒股#gemini#ai工具#提示词",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7640742922456368234",
+      "title": "特斯拉人形机器人。#特斯拉机器人#人形机器人产业链#关节模组#灵巧手技术#谐波减速器",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7641629506944200948",
+      "title": "存储双巨头来了！20家供应商盘点！#股票#财经",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7641887941766322597",
+      "title": "兄弟们，多学多了解总没错，继续加油✊#股票#股市#股票知识#热点小助手#创作者扶持计",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7644844216422104803",
+      "title": "5.28周四人气排行榜",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7644879131608311993",
+      "title": "自存。#股票知识#股票交易#股票干货#大盘分析干货#以上内容仅供参考",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7646057472662720168",
+      "title": "重要预期差：华通线缆戴尔英伟达VR机柜。#华通线缆#戴尔#英伟达",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7646400505857510707",
+      "title": "英伟达世界模型，物理AI时代来临。#物理AI#具身智能#英伟达世界模型#机器人概念#",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7656780683964183026",
+      "title": "【重视】白毛女最新投资观点260629",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7655915327268311971",
+      "title": "2026年6月26日晚李一恩直播总结!大胆预言：未来两周出“买点”",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7658198135567806713",
+      "title": "七月最新人气前瞻。#股票#股民交流#热点输出#股民",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    }
+  ]
+}

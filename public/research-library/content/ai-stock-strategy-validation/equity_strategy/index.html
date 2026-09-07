@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI Stock 全战法收益曲线与交易策略</title>
+  <style>
+:root{--bg:#f6f8fb;--panel:#fff;--ink:#17202a;--muted:#64748b;--line:#dce4ed;--up:#d71920;--up-soft:#fff1f1;--down:#13823d;--down-soft:#edf8f0;--flat:#8a5a00;--flat-soft:#fff7e8;--blue:#245ee8;--dark:#111827}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.58;letter-spacing:0}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}header{background:var(--dark);color:#fff;border-bottom:5px solid var(--up);padding:30px 24px 25px}.wrap{max-width:1420px;margin:0 auto}
+h1{margin:0 0 8px;font-size:32px;line-height:1.18;letter-spacing:0}.sub{max-width:980px;margin:0;color:#d8e2ef;font-size:15px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.nav a{color:#e6eefb;border:1px solid #334155;border-radius:7px;padding:7px 11px}.nav a:hover{background:#25324a;text-decoration:none}
+main{padding:24px}section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:18px}h2{margin:0 0 12px;font-size:21px;line-height:1.35;letter-spacing:0}h3{margin:0;font-size:16px;line-height:1.3;letter-spacing:0}p{margin:0;color:#344153;font-size:14px}.note{color:var(--muted);font-size:13px}
+.notice{background:var(--flat-soft);border:1px solid #efcd91;color:#543500;border-radius:8px;padding:12px 14px;margin-bottom:18px}.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.kpi{border:1px solid var(--line);border-radius:8px;background:#fbfdff;padding:13px;min-height:104px}.kpi span{display:block;color:var(--muted);font-size:13px}.kpi b{display:block;font-size:22px;line-height:1.25;margin:5px 0}.kpi small{color:var(--muted);font-size:12px}
+.up{color:var(--up);font-weight:700}.down{color:var(--down);font-weight:700}.flat{color:var(--flat);font-weight:700}.chart-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff}.chart-svg{display:block;min-width:920px;width:100%;height:auto}.curve-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.curve-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:13px;box-shadow:0 6px 18px rgba(22,34,51,.05)}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.card-head p{color:var(--muted);font-size:12px;margin-top:4px}.card-head strong{white-space:nowrap;font-size:18px}.sparkline{display:block;width:100%;height:94px;margin:8px 0}.empty-chart{height:94px;display:grid;place-items:center;color:var(--muted);font-size:13px;background:#f8fbfe;border-radius:7px}.mini-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px}.mini-metrics span{background:#f8fbfe;border:1px solid var(--line);border-radius:7px;padding:6px 7px;color:#344153;font-size:12px}.tile-note{margin-top:9px;color:#344153;font-size:13px}
+.two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.rule-list{display:grid;gap:10px}.rule{border:1px solid var(--line);border-radius:8px;background:#fbfdff;padding:12px}.rule b{display:block;margin-bottom:4px}.rule ul{margin:6px 0 0 18px;padding:0;color:#344153;font-size:14px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;font-size:13px;white-space:nowrap}th{background:#f0f3f7;font-weight:700}td.explain{white-space:normal;min-width:260px}.playbook-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.playbook-card{border:1px solid var(--line);background:#fbfdff;border-radius:8px;padding:13px}.playbook-card h3{margin-bottom:8px}.playbook-card ol,.playbook-card ul{margin:0 0 0 18px;padding:0;color:#344153;font-size:14px}.playbook-card li{margin:5px 0}.file-links{display:flex;gap:10px;flex-wrap:wrap}.file-links a{border:1px solid var(--line);border-radius:7px;background:#fbfdff;color:var(--ink);padding:8px 11px}
+@media(max-width:1120px){.kpi-grid,.curve-grid,.playbook-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
+@media(max-width:700px){header,main{padding-left:16px;padding-right:16px}h1{font-size:27px}.kpi-grid,.curve-grid,.playbook-grid{grid-template-columns:1fr}.mini-metrics{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-stock-strategy-validation&amp;view=reports">策略回测验证</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <div class="wrap">
+      <h1>AI Stock 全战法收益曲线与交易策略</h1>
+      <p class="sub">曲线采用“日批次等权复利”：同一战法同一兑现日的推荐先等权平均，再按兑现日期复利。收益为正用红色，收益为负用绿色。所有结果未扣手续费、滑点和无法成交影响。</p>
+      <div class="nav">
+        <a href="../index.html">返回总览</a>
+        <a href="strategy_equity_summary.csv">收益汇总 CSV</a>
+        <a href="strategy_equity_curves.csv">曲线 CSV</a>
+        <a href="portfolio_curves.csv">组合曲线 CSV</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <div class="notice">这是一套基于历史验证结果的交易纪律模板，不是承诺收益。执行时必须叠加当日市场环境、成交量、涨跌停可成交性和个人风险承受能力。</div>
+
+      <section>
+        <h2>核心结论</h2>
+        
+      <div class="kpi-grid">
+        <div class="kpi"><span>主收益最强</span><b class="up">北向资金 +4.82%</b><small>样本 91，胜率 60.4%</small></div>
+        <div class="kpi"><span>曲线累计最强</span><b class="up">北向资金 +292.43%</b><small>日批次复利，最大回撤 -34.24%</small></div>
+        <div class="kpi"><span>执行组合曲线</span><b class="up">+119.40%</b><small>最大回撤 -13.73%，按固定权重投入</small></div>
+        <div class="kpi"><span>最大回撤警报</span><b class="down">趋势动量 -95.35%</b><small>该类不应进入独立交易池</small></div>
+      </div>
+    
+      </section>
+
+      <section>
+        <h2>组合收益曲线</h2>
+        <p class="note">执行组合权重：北向 25%、事件 25%、龙头 15%、接力 10%、情绪 10%、量价 10%、竞价 3%、隔夜 2%；没有信号的资金按现金处理。</p>
+        <div class="chart-wrap">
+    <svg class="chart-svg" viewBox="0 0 1120 360" role="img" aria-label="组合收益曲线">
+      <style>
+        .grid{stroke:#dde5ee;stroke-width:1}
+        .base-line{stroke:#7d8794;stroke-width:1;stroke-dasharray:4 4}
+        .axis-text{fill:#64748b;font-size:12px}
+        .line-label{font-size:12px;font-weight:700}
+      </style>
+      <rect x="0" y="0" width="1120" height="360" rx="8" fill="#fff"></rect>
+      <line x1="56" y1="24.0" x2="988" y2="24.0" class="grid"></line><text x="10" y="28.0" class="axis-text">369</text><line x1="56" y1="98.5" x2="988" y2="98.5" class="grid"></line><text x="10" y="102.5" class="axis-text">293</text><line x1="56" y1="173.0" x2="988" y2="173.0" class="grid"></line><text x="10" y="177.0" class="axis-text">218</text><line x1="56" y1="247.5" x2="988" y2="247.5" class="grid"></line><text x="10" y="251.5" class="axis-text">143</text><line x1="56" y1="322.0" x2="988" y2="322.0" class="grid"></line><text x="10" y="326.0" class="axis-text">67</text><line x1="56" y1="289.6" x2="988" y2="289.6" class="base-line"></line>
+      <path d="M 56.0 289.6 L 70.3 289.7 L 77.5 289.8 L 84.7 292.5 L 106.2 297.5 L 113.4 297.3 L 120.5 292.9 L 127.7 293.7 L 134.9 293.5 L 156.4 291.8 L 163.5 291.6 L 170.7 291.2 L 177.9 290.4 L 185.0 290.2 L 213.7 292.1 L 220.9 293.0 L 228.1 289.7 L 235.2 290.2 L 256.7 290.0 L 263.9 287.4 L 271.1 285.1 L 278.2 279.6 L 285.4 279.4 L 306.9 276.1 L 314.1 273.3 L 321.3 267.3 L 328.4 262.1 L 335.6 263.7 L 357.1 264.3 L 364.3 259.1 L 371.4 258.9 L 378.6 256.4 L 421.6 242.3 L 428.8 221.3 L 436.0 212.4 L 457.5 207.1 L 464.6 198.2 L 471.8 176.9 L 479.0 170.2 L 486.2 164.8 L 507.7 169.9 L 514.8 178.5 L 522.0 183.7 L 529.2 191.5 L 536.3 195.5 L 557.8 180.3 L 565.0 165.6 L 572.2 158.9 L 579.4 153.7 L 586.5 151.3 L 608.0 150.7 L 615.2 158.3 L 622.4 155.5 L 629.5 153.8 L 636.7 157.6 L 658.2 158.7 L 665.4 160.5 L 672.6 161.8 L 679.7 163.6 L 686.9 163.6 L 708.4 163.2 L 715.6 161.2 L 722.7 160.7 L 729.9 159.8 L 758.6 154.1 L 765.8 151.3 L 772.9 147.5 L 780.1 145.5 L 787.3 145.6 L 808.8 146.9 L 815.9 146.6 L 823.1 147.9 L 830.3 147.7 L 837.4 147.3 L 859.0 148.5 L 866.1 149.4 L 873.3 151.8 L 880.5 153.2 L 887.6 153.3 L 909.1 154.4 L 916.3 154.4 L 923.5 156.4 L 930.6 157.0 L 937.8 156.3 L 959.3 162.4 L 966.5 164.9 L 973.7 172.1 L 980.8 171.1 L 988.0 171.5" fill="none" stroke="#d71920" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path><text x="996" y="175.5" class="line-label" fill="#d71920">执行组合 +119.4%</text><path d="M 56.0 289.6 L 70.3 289.6 L 77.5 289.6 L 84.7 293.7 L 106.2 301.4 L 113.4 301.4 L 120.5 296.8 L 127.7 297.8 L 134.9 301.3 L 156.4 300.2 L 163.5 296.9 L 170.7 296.9 L 177.9 294.6 L 185.0 293.1 L 213.7 296.3 L 220.9 298.1 L 228.1 294.2 L 235.2 294.2 L 256.7 294.2 L 263.9 293.5 L 271.1 290.7 L 278.2 283.2 L 285.4 285.4 L 306.9 282.7 L 314.1 277.3 L 321.3 269.4 L 328.4 266.5 L 335.6 266.5 L 357.1 266.5 L 364.3 254.6 L 371.4 255.6 L 378.6 252.2 L 421.6 229.0 L 428.8 191.4 L 436.0 175.9 L 457.5 168.3 L 464.6 150.6 L 471.8 109.0 L 479.0 88.5 L 486.2 74.2 L 507.7 84.2 L 514.8 104.5 L 522.0 117.7 L 529.2 134.0 L 536.3 139.7 L 557.8 124.8 L 565.0 87.5 L 572.2 68.1 L 579.4 54.2 L 586.5 44.6 L 608.0 44.6 L 615.2 59.1 L 622.4 51.5 L 629.5 60.0 L 636.7 68.6 L 658.2 68.6 L 665.4 68.6 L 672.6 68.6 L 679.7 68.6 L 686.9 68.6 L 708.4 68.6 L 715.6 68.6 L 722.7 68.6 L 729.9 68.6 L 758.6 68.6 L 765.8 68.6 L 772.9 68.6 L 780.1 68.6 L 787.3 68.6 L 808.8 68.6 L 815.9 68.6 L 823.1 68.6 L 830.3 68.6 L 837.4 68.6 L 859.0 68.6 L 866.1 68.6 L 873.3 68.6 L 880.5 68.6 L 887.6 68.6 L 909.1 68.6 L 916.3 68.6 L 923.5 68.6 L 930.6 68.6 L 937.8 68.6 L 959.3 68.6 L 966.5 68.6 L 973.7 90.4 L 980.8 90.4 L 988.0 90.4" fill="none" stroke="#245ee8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path><text x="996" y="94.4" class="line-label" fill="#245ee8">核心组合 +201.4%</text><path d="M 56.0 289.5 L 70.3 289.2 L 77.5 289.5 L 84.7 290.7 L 106.2 293.1 L 113.4 293.3 L 120.5 291.4 L 127.7 292.8 L 134.9 293.0 L 156.4 291.5 L 163.5 292.8 L 170.7 291.9 L 177.9 292.1 L 185.0 292.9 L 213.7 294.2 L 220.9 295.0 L 228.1 295.9 L 235.2 296.3 L 256.7 296.7 L 263.9 295.7 L 271.1 296.0 L 278.2 294.7 L 285.4 292.5 L 306.9 289.5 L 314.1 288.8 L 321.3 285.4 L 328.4 281.5 L 335.6 278.9 L 357.1 276.8 L 364.3 276.5 L 371.4 275.1 L 378.6 274.3 L 421.6 266.9 L 428.8 256.3 L 436.0 248.1 L 457.5 246.9 L 464.6 244.3 L 471.8 237.4 L 479.0 237.0 L 486.2 235.9 L 507.7 237.3 L 514.8 241.1 L 522.0 242.7 L 529.2 244.8 L 536.3 242.2 L 557.8 234.2 L 565.0 230.5 L 572.2 229.6 L 579.4 228.8 L 586.5 230.3 L 608.0 231.8 L 615.2 234.4 L 622.4 235.3 L 629.5 233.9 L 636.7 237.1 L 658.2 237.5 L 665.4 242.3 L 672.6 243.1 L 679.7 244.8 L 686.9 246.5 L 708.4 247.8 L 715.6 249.4 L 722.7 248.0 L 729.9 246.6 L 758.6 243.8 L 765.8 243.6 L 772.9 239.8 L 780.1 234.7 L 787.3 234.5 L 808.8 235.5 L 815.9 230.7 L 823.1 232.8 L 830.3 231.8 L 837.4 229.4 L 859.0 231.8 L 866.1 234.6 L 873.3 235.2 L 880.5 236.2 L 887.6 238.7 L 909.1 243.5 L 916.3 243.8 L 923.5 247.8 L 930.6 246.5 L 937.8 247.3 L 959.3 254.5 L 966.5 258.6 L 973.7 262.1 L 980.8 262.5 L 988.0 266.0" fill="none" stroke="#8a5a00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path><text x="996" y="270.0" class="line-label" fill="#8a5a00">可交易战法等权 +23.8%</text>
+      <text x="56" y="350" class="axis-text">2026-03-16</text>
+      <text x="918" y="350" class="axis-text">2026-07-24</text>
+    </svg>
+    </div>
+      </section>
+
+      <section>
+        <h2>全战法收益曲线矩阵</h2>
+        <div class="curve-grid">
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>北向资金</h3>
+                  <p>资金波段 · T+15 收盘 · 核心启用</p>
+                </div>
+                <strong class="up">+292.43%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="北向资金收益曲线">
+      <line x1="10" y1="78.8" x2="290" y2="78.8" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 78.6 L 19.3 77.8 L 28.7 76.4 L 38.0 77.1 L 47.3 76.3 L 56.7 74.7 L 66.0 73.8 L 75.3 72.2 L 84.7 68.3 L 94.0 66.2 L 103.3 61.2 L 112.7 50.3 L 122.0 49.1 L 131.3 45.1 L 140.7 32.7 L 150.0 32.3 L 159.3 22.9 L 168.7 27.3 L 178.0 32.8 L 187.3 34.1 L 196.7 36.7 L 206.0 37.5 L 215.3 38.3 L 224.7 23.5 L 234.0 15.7 L 243.3 13.2 L 252.7 21.9 L 262.0 27.8 L 271.3 34.5 L 280.7 37.3 L 290.0 40.2" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="40.2" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +4.82%</span>
+                <span>胜率 60.4%</span>
+                <span>回撤 -34.24%</span>
+                <span>批次 31</span>
+              </div>
+              <p class="tile-note">按 10-15 个交易日波段持有，回撤到成本下方或北向逻辑失效时退出。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>事件驱动</h3>
+                  <p>催化兑现 · T+5 收盘 · 核心启用</p>
+                </div>
+                <strong class="up">+100.86%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="事件驱动收益曲线">
+      <line x1="10" y1="69.0" x2="290" y2="69.0" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 72.4 L 18.0 78.7 L 26.0 75.3 L 34.0 76.1 L 42.0 78.8 L 50.0 78.0 L 58.0 75.4 L 66.0 73.7 L 74.0 72.5 L 82.0 75.1 L 90.0 76.5 L 98.0 73.5 L 106.0 71.4 L 114.0 67.7 L 122.0 69.6 L 130.0 70.3 L 138.0 71.8 L 146.0 66.1 L 154.0 60.7 L 162.0 52.9 L 170.0 50.4 L 178.0 46.3 L 186.0 40.7 L 194.0 31.0 L 202.0 35.9 L 210.0 39.5 L 218.0 44.5 L 226.0 49.6 L 234.0 51.4 L 242.0 43.5 L 250.0 42.9 L 258.0 41.9 L 266.0 38.1 L 274.0 26.0 L 282.0 13.2 L 290.0 26.6" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="26.6" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +2.97%</span>
+                <span>胜率 53.4%</span>
+                <span>回撤 -25.57%</span>
+                <span>批次 36</span>
+              </div>
+              <p class="tile-note">只做事件清晰、兑现期明确的样本，T+5 前后主动兑现。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>龙头战法</h3>
+                  <p>高弹性情绪 · T+3 收盘 · 条件启用</p>
+                </div>
+                <strong class="up">+172.87%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="龙头战法收益曲线">
+      <line x1="10" y1="76.6" x2="290" y2="76.6" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 76.9 L 13.4 77.1 L 16.7 78.0 L 20.1 78.8 L 23.5 77.9 L 26.9 75.3 L 30.2 74.3 L 33.6 71.9 L 37.0 69.1 L 40.4 70.5 L 43.7 69.7 L 47.1 68.4 L 50.5 69.3 L 53.9 68.3 L 57.2 69.6 L 60.6 69.0 L 64.0 64.7 L 67.3 62.7 L 70.7 59.5 L 74.1 56.9 L 77.5 54.8 L 80.8 55.0 L 84.2 52.8 L 87.6 50.4 L 91.0 52.1 L 94.3 49.9 L 97.7 50.2 L 101.1 49.5 L 104.5 50.3 L 107.8 47.7 L 111.2 43.3 L 114.6 39.2 L 118.0 35.7 L 121.3 32.8 L 124.7 28.0 L 128.1 25.2 L 131.4 25.8 L 134.8 28.1 L 138.2 27.7 L 141.6 27.9 L 144.9 27.4 L 148.3 23.8 L 151.7 23.7 L 155.1 24.2 L 158.4 26.2 L 161.8 28.0 L 165.2 27.0 L 168.6 26.7 L 171.9 26.2 L 175.3 25.7 L 178.7 26.9 L 182.0 28.0 L 185.4 31.5 L 188.8 33.7 L 192.2 36.4 L 195.5 36.9 L 198.9 36.2 L 202.3 32.6 L 205.7 31.3 L 209.0 29.1 L 212.4 25.0 L 215.8 24.2 L 219.2 19.0 L 222.5 13.9 L 225.9 14.5 L 229.3 17.6 L 232.7 16.9 L 236.0 15.2 L 239.4 14.4 L 242.8 13.2 L 246.1 15.6 L 249.5 17.7 L 252.9 22.8 L 256.3 28.3 L 259.6 28.7 L 263.0 30.7 L 266.4 31.1 L 269.8 35.0 L 273.1 32.7 L 276.5 31.0 L 279.9 33.4 L 283.3 38.4 L 286.6 37.5 L 290.0 32.8" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="32.8" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +1.01%</span>
+                <span>胜率 47.1%</span>
+                <span>回撤 -28.32%</span>
+                <span>批次 84</span>
+              </div>
+              <p class="tile-note">只在情绪上升期做强烈推荐，T+1 到 T+3 分批兑现。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>连板接力</h3>
+                  <p>接力情绪 · T+2 收盘 · 条件启用</p>
+                </div>
+                <strong class="up">+10.36%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="连板接力收益曲线">
+      <line x1="10" y1="58.8" x2="290" y2="58.8" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 63.2 L 38.0 61.1 L 66.0 62.3 L 94.0 64.3 L 122.0 37.1 L 150.0 70.1 L 178.0 75.8 L 206.0 54.5 L 234.0 62.6 L 262.0 42.8 L 290.0 16.2" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="16.2" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +0.95%</span>
+                <span>胜率 54.8%</span>
+                <span>回撤 -8.96%</span>
+                <span>批次 11</span>
+              </div>
+              <p class="tile-note">只做弱转强、分歧转一致，不追连续缩量加速。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>情绪战法</h3>
+                  <p>市场情绪 · T+3 收盘 · 条件启用</p>
+                </div>
+                <strong class="up">+83.01%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="情绪战法收益曲线">
+      <line x1="10" y1="71.1" x2="290" y2="71.1" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 72.3 L 18.5 71.0 L 27.0 71.9 L 35.5 75.0 L 43.9 77.0 L 52.4 72.9 L 60.9 71.4 L 69.4 69.9 L 77.9 71.6 L 86.4 73.2 L 94.8 76.8 L 103.3 78.0 L 111.8 78.8 L 120.3 72.9 L 128.8 71.5 L 137.3 70.5 L 145.8 69.5 L 154.2 70.6 L 162.7 70.9 L 171.2 74.9 L 179.7 74.5 L 188.2 71.5 L 196.7 67.7 L 205.2 57.3 L 213.6 51.0 L 222.1 49.7 L 230.6 46.8 L 239.1 45.2 L 247.6 46.0 L 256.1 49.3 L 264.5 54.7 L 273.0 57.1 L 281.5 52.5 L 290.0 13.2" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="13.2" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +0.65%</span>
+                <span>胜率 50.7%</span>
+                <span>回撤 -12.47%</span>
+                <span>批次 34</span>
+              </div>
+              <p class="tile-note">只在主线扩散期启用，退潮日不开新仓。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>量价关系</h3>
+                  <p>量价结构 · T+5 收盘 · 条件启用</p>
+                </div>
+                <strong class="down">-27.88%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="量价关系收益曲线">
+      <line x1="10" y1="40.6" x2="290" y2="40.6" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 40.3 L 15.8 43.6 L 21.7 59.3 L 27.5 50.9 L 33.3 63.5 L 39.2 60.1 L 45.0 70.9 L 50.8 67.1 L 56.7 73.9 L 62.5 71.9 L 68.3 67.7 L 74.2 65.0 L 80.0 61.4 L 85.8 57.0 L 91.7 47.9 L 97.5 49.1 L 103.3 38.4 L 109.2 14.5 L 115.0 13.2 L 120.8 22.6 L 126.7 31.9 L 132.5 34.2 L 138.3 30.6 L 144.2 25.4 L 150.0 30.9 L 155.8 19.4 L 161.7 25.2 L 167.5 38.0 L 173.3 46.2 L 179.2 61.1 L 185.0 66.4 L 190.8 62.1 L 196.7 75.0 L 202.5 54.5 L 208.3 58.2 L 214.2 41.0 L 220.0 25.0 L 225.8 21.4 L 231.7 24.9 L 237.5 37.1 L 243.3 39.8 L 249.2 33.3 L 255.0 32.9 L 260.8 31.0 L 266.7 42.7 L 272.5 71.3 L 278.3 70.5 L 284.2 76.7 L 290.0 78.8" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.8" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +0.36%</span>
+                <span>胜率 52.6%</span>
+                <span>回撤 -39.92%</span>
+                <span>批次 49</span>
+              </div>
+              <p class="tile-note">只配合趋势和事件做确认，不单独重仓。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>竞价/尾盘</h3>
+                  <p>隔夜快打 · T+1 收盘 · 快打战术</p>
+                </div>
+                <strong class="up">+14.11%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="竞价/尾盘收益曲线">
+      <line x1="10" y1="56.7" x2="290" y2="56.7" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 54.0 L 15.6 35.4 L 21.2 48.2 L 26.8 53.2 L 32.4 72.0 L 38.0 78.2 L 43.6 58.2 L 49.2 60.2 L 54.8 55.3 L 60.4 52.1 L 66.0 54.6 L 71.6 40.5 L 77.2 45.3 L 82.8 39.8 L 88.4 40.4 L 94.0 39.4 L 99.6 34.1 L 105.2 24.3 L 110.8 22.2 L 116.4 34.5 L 122.0 46.1 L 127.6 43.5 L 133.2 30.0 L 138.8 28.6 L 144.4 41.1 L 150.0 28.8 L 155.6 16.9 L 161.2 14.4 L 166.8 27.1 L 172.4 26.2 L 178.0 27.0 L 183.6 27.3 L 189.2 25.4 L 194.8 27.0 L 200.4 40.8 L 206.0 47.5 L 211.6 39.5 L 217.2 50.8 L 222.8 53.8 L 228.4 71.8 L 234.0 66.4 L 239.6 64.8 L 245.2 56.8 L 250.8 60.6 L 256.4 69.6 L 262.0 52.4 L 267.6 63.8 L 273.2 35.4 L 278.8 23.3 L 284.4 13.8 L 290.0 15.6" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="15.6" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 +0.02%</span>
+                <span>胜率 46.9%</span>
+                <span>回撤 -17.21%</span>
+                <span>批次 51</span>
+              </div>
+              <p class="tile-note">只做次日冲高卖出，不能拖成波段。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>突破战法</h3>
+                  <p>技术突破 · T+5 收盘 · 快打战术</p>
+                </div>
+                <strong class="down">-2.78%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="突破战法收益曲线">
+      <line x1="10" y1="20.3" x2="290" y2="20.3" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 19.4 L 22.2 19.4 L 34.3 42.1 L 46.5 60.7 L 58.7 67.4 L 70.9 58.7 L 83.0 78.8 L 95.2 46.4 L 107.4 30.4 L 119.6 42.0 L 131.7 65.9 L 143.9 63.5 L 156.1 74.8 L 168.3 74.7 L 180.4 74.9 L 192.6 58.2 L 204.8 46.7 L 217.0 43.0 L 229.1 37.6 L 241.3 30.6 L 253.5 13.2 L 265.7 19.1 L 277.8 22.9 L 290.0 26.7" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="26.7" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -0.09%</span>
+                <span>胜率 43.8%</span>
+                <span>回撤 -25.70%</span>
+                <span>批次 24</span>
+              </div>
+              <p class="tile-note">突破后只做放量确认和回踩不破，触发失败立即退出。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>隔夜战法</h3>
+                  <p>隔夜快打 · T+1 均价 · 快打战术</p>
+                </div>
+                <strong class="down">-25.63%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="隔夜战法收益曲线">
+      <line x1="10" y1="13.7" x2="290" y2="13.7" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 13.2 L 13.8 16.2 L 17.7 19.5 L 21.5 22.7 L 25.3 27.7 L 29.2 33.7 L 33.0 33.7 L 36.8 35.0 L 40.7 33.4 L 44.5 30.5 L 48.4 29.0 L 52.2 34.3 L 56.0 30.0 L 59.9 31.2 L 63.7 31.4 L 67.5 30.2 L 71.4 31.3 L 75.2 27.5 L 79.0 21.9 L 82.9 24.9 L 86.7 26.5 L 90.5 25.6 L 94.4 28.4 L 98.2 25.4 L 102.1 27.9 L 105.9 29.5 L 109.7 28.3 L 113.6 26.0 L 117.4 20.8 L 121.2 31.3 L 125.1 30.1 L 128.9 26.0 L 132.7 26.2 L 136.6 30.5 L 140.4 21.3 L 144.2 28.6 L 148.1 23.5 L 151.9 26.2 L 155.8 26.7 L 159.6 28.8 L 163.4 29.5 L 167.3 33.3 L 171.1 29.4 L 174.9 35.2 L 178.8 36.9 L 182.6 33.6 L 186.4 33.3 L 190.3 34.1 L 194.1 35.6 L 197.9 32.3 L 201.8 31.4 L 205.6 34.6 L 209.5 26.1 L 213.3 23.8 L 217.1 26.5 L 221.0 28.5 L 224.8 28.2 L 228.6 28.2 L 232.5 35.8 L 236.3 40.0 L 240.1 32.7 L 244.0 34.2 L 247.8 43.3 L 251.6 44.5 L 255.5 45.9 L 259.3 49.5 L 263.2 53.2 L 267.0 58.0 L 270.8 58.5 L 274.7 62.5 L 278.5 70.9 L 282.3 73.5 L 286.2 77.8 L 290.0 78.8" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.8" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -0.33%</span>
+                <span>胜率 40.5%</span>
+                <span>回撤 -25.75%</span>
+                <span>批次 74</span>
+              </div>
+              <p class="tile-note">尾盘买入后次日优先卖强，不以收盘价幻想持有。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>综合战法</h3>
+                  <p>多战法共振 · T+5 收盘 · 辅助观察</p>
+                </div>
+                <strong class="up">+21.27%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="综合战法收益曲线">
+      <line x1="10" y1="61.5" x2="290" y2="61.5" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 63.8 L 19.3 57.8 L 28.7 68.0 L 38.0 76.2 L 47.3 69.9 L 56.7 72.5 L 66.0 76.4 L 75.3 78.8 L 84.7 76.8 L 94.0 76.8 L 103.3 65.7 L 112.7 56.6 L 122.0 50.7 L 131.3 43.5 L 140.7 38.5 L 150.0 31.9 L 159.3 27.4 L 168.7 29.1 L 178.0 31.0 L 187.3 21.1 L 196.7 18.5 L 206.0 13.2 L 215.3 20.6 L 224.7 15.6 L 234.0 22.8 L 243.3 30.2 L 252.7 37.6 L 262.0 46.1 L 271.3 48.1 L 280.7 44.4 L 290.0 41.2" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="41.2" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -1.06%</span>
+                <span>胜率 48.8%</span>
+                <span>回撤 -24.34%</span>
+                <span>批次 31</span>
+              </div>
+              <p class="tile-note">用于提高候选优先级，不能替代单战法风控。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>均线战法</h3>
+                  <p>趋势确认 · T+10 收盘 · 辅助观察</p>
+                </div>
+                <strong class="up">+19.75%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="均线战法收益曲线">
+      <line x1="10" y1="39.8" x2="290" y2="39.8" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 45.3 L 23.3 32.9 L 36.7 49.2 L 50.0 39.8 L 63.3 34.6 L 76.7 58.5 L 90.0 58.0 L 103.3 62.6 L 116.7 64.4 L 130.0 70.1 L 143.3 75.5 L 156.7 77.7 L 170.0 78.8 L 183.3 68.6 L 196.7 57.2 L 210.0 59.7 L 223.3 61.1 L 236.7 61.6 L 250.0 56.0 L 263.3 46.9 L 276.7 13.2 L 290.0 20.1" fill="none" stroke="#d71920" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="20.1" r="3.2" fill="#d71920"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -1.32%</span>
+                <span>胜率 44.9%</span>
+                <span>回撤 -43.00%</span>
+                <span>批次 22</span>
+              </div>
+              <p class="tile-note">只作为仓位过滤和趋势确认，不单独作为买入理由。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>趋势动量</h3>
+                  <p>趋势延续 · T+10 收盘 · 辅助观察</p>
+                </div>
+                <strong class="down">-92.47%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="趋势动量收益曲线">
+      <line x1="10" y1="39.6" x2="290" y2="39.6" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 43.6 L 14.8 46.7 L 19.7 47.2 L 24.5 47.8 L 29.3 48.1 L 34.1 50.8 L 39.0 51.7 L 43.8 52.8 L 48.6 50.7 L 53.4 47.4 L 58.3 44.3 L 63.1 45.5 L 67.9 39.9 L 72.8 41.2 L 77.6 35.4 L 82.4 27.7 L 87.2 22.3 L 92.1 23.6 L 96.9 25.5 L 101.7 25.1 L 106.6 34.4 L 111.4 36.3 L 116.2 29.8 L 121.0 13.2 L 125.9 19.0 L 130.7 26.2 L 135.5 34.5 L 140.3 39.8 L 145.2 46.3 L 150.0 57.4 L 154.8 58.2 L 159.7 62.1 L 164.5 64.6 L 169.3 68.4 L 174.1 66.8 L 179.0 65.1 L 183.8 65.6 L 188.6 66.6 L 193.4 65.2 L 198.3 59.8 L 203.1 60.5 L 207.9 52.6 L 212.8 55.4 L 217.6 52.8 L 222.4 47.2 L 227.2 53.2 L 232.1 56.9 L 236.9 54.2 L 241.7 55.7 L 246.6 59.1 L 251.4 65.1 L 256.2 69.4 L 261.0 67.9 L 265.9 68.9 L 270.7 73.7 L 275.5 76.0 L 280.3 77.2 L 285.2 77.3 L 290.0 78.8" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.8" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -1.86%</span>
+                <span>胜率 40.4%</span>
+                <span>回撤 -95.35%</span>
+                <span>批次 59</span>
+              </div>
+              <p class="tile-note">只在低位启动段使用，连续加速段不追。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>情绪接力</h3>
+                  <p>接力情绪 · T+3 收盘 · 暂停观察</p>
+                </div>
+                <strong class="down">-58.36%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="情绪接力收益曲线">
+      <line x1="10" y1="18.2" x2="290" y2="18.2" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 22.1 L 16.4 25.0 L 22.7 16.1 L 29.1 19.5 L 35.5 26.0 L 41.8 32.3 L 48.2 23.0 L 54.5 24.4 L 60.9 18.2 L 67.3 21.6 L 73.6 20.4 L 80.0 21.5 L 86.4 26.5 L 92.7 29.2 L 99.1 29.6 L 105.5 24.1 L 111.8 31.0 L 118.2 21.3 L 124.5 19.1 L 130.9 15.7 L 137.3 13.2 L 143.6 22.0 L 150.0 26.1 L 156.4 23.2 L 162.7 24.9 L 169.1 29.3 L 175.5 21.0 L 181.8 21.3 L 188.2 17.3 L 194.5 28.2 L 200.9 32.9 L 207.3 30.2 L 213.6 42.7 L 220.0 45.5 L 226.4 52.5 L 232.7 57.4 L 239.1 63.3 L 245.5 67.7 L 251.8 68.5 L 258.2 69.4 L 264.5 74.3 L 270.9 78.8 L 277.3 78.5 L 283.6 75.1 L 290.0 75.4" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="75.4" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -2.35%</span>
+                <span>胜率 35.2%</span>
+                <span>回撤 -63.68%</span>
+                <span>批次 45</span>
+              </div>
+              <p class="tile-note">暂停独立开仓，只作为情绪温度计。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>92科比周期投机</h3>
+                  <p>短线周期投机 · T+3 收盘 · 暂停观察</p>
+                </div>
+                <strong class="down">-1.34%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="92科比周期投机收益曲线">
+      <line x1="10" y1="66.8" x2="290" y2="66.8" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 18.5 L 103.3 18.3 L 196.7 25.3 L 290.0 73.7" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="73.7" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -4.26%</span>
+                <span>胜率 31.6%</span>
+                <span>回撤 -9.82%</span>
+                <span>批次 4</span>
+              </div>
+              <p class="tile-note">等待更多样本，暂不独立交易。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>护城河价值</h3>
+                  <p>中短期价值 · T+20 收盘 · 暂停观察</p>
+                </div>
+                <strong class="down">-30.41%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="护城河价值收益曲线">
+      <line x1="10" y1="13.2" x2="290" y2="13.2" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 15.2 L 150.0 57.4 L 290.0 78.8" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.8" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -7.05%</span>
+                <span>胜率 23.1%</span>
+                <span>回撤 -30.41%</span>
+                <span>批次 3</span>
+              </div>
+              <p class="tile-note">另建中期估值模型，不纳入短线组合。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>A股龙头合力</h3>
+                  <p>短线龙头 · T+3 收盘 · 暂停观察</p>
+                </div>
+                <strong class="down">-21.66%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="A股龙头合力收益曲线">
+      <line x1="10" y1="13.9" x2="290" y2="13.9" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 31.2 L 290.0 78.1" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.1" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -14.06%</span>
+                <span>胜率 0.0%</span>
+                <span>回撤 -21.66%</span>
+                <span>批次 2</span>
+              </div>
+              <p class="tile-note">只保留观察，不做自动执行。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>养家情绪周期</h3>
+                  <p>短线情绪周期 · T+3 收盘 · 暂停观察</p>
+                </div>
+                <strong class="down">-54.66%</strong>
+              </div>
+              
+    <svg class="sparkline" viewBox="0 0 300 94" role="img" aria-label="养家情绪周期收益曲线">
+      <line x1="10" y1="13.2" x2="290" y2="13.2" stroke="#aab4c1" stroke-dasharray="3 4"></line>
+      <path d="M 10.0 21.3 L 103.3 48.4 L 196.7 67.4 L 290.0 78.8" fill="none" stroke="#13823d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="290.0" cy="78.8" r="3.2" fill="#13823d"></circle>
+    </svg>
+    
+              <div class="mini-metrics">
+                <span>主均 -15.48%</span>
+                <span>胜率 9.1%</span>
+                <span>回撤 -54.66%</span>
+                <span>批次 4</span>
+              </div>
+              <p class="tile-note">只用于判断仓位阀门，不直接触发买入。</p>
+            </article>
+            
+
+            <article class="curve-card">
+              <div class="card-head">
+                <div>
+                  <h3>北京炒家首板</h3>
+                  <p>首板套利 · T+1 收盘 · 暂无样本</p>
+                </div>
+                <strong class="flat">-</strong>
+              </div>
+              <div class="empty-chart">暂无可画曲线</div>
+              <div class="mini-metrics">
+                <span>主均 -</span>
+                <span>胜率 -</span>
+                <span>回撤 -</span>
+                <span>批次 0</span>
+              </div>
+              <p class="tile-note">先补样本，再进入资金曲线比较。</p>
+            </article>
+            </div>
+      </section>
+
+      <section>
+        <h2>战法分层</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>执行层级</th><th>包含战法</th><th>使用原则</th></tr></thead>
+            <tbody><tr><td>核心启用</td><td>北向资金、事件驱动</td><td class="explain">可以作为主要资金来源，优先从强烈推荐中选股。</td></tr>
+<tr><td>条件启用</td><td>龙头战法、连板接力、情绪战法、量价关系</td><td class="explain">必须叠加市场情绪、主线强度和个股形态过滤。</td></tr>
+<tr><td>快打战术</td><td>竞价/尾盘、突破战法、隔夜战法</td><td class="explain">只做隔日或短窗口冲高，不允许因为被套变成长持。</td></tr>
+<tr><td>辅助观察</td><td>综合战法、均线战法、趋势动量</td><td class="explain">用于提高或降低候选优先级，不单独触发买入。</td></tr>
+<tr><td>暂停观察</td><td>情绪接力、92科比周期投机、护城河价值、A股龙头合力、养家情绪周期</td><td class="explain">不进入自动交易池，只保留复盘和样本积累。</td></tr>
+<tr><td>暂无样本</td><td>北京炒家首板</td><td class="explain">先补足有效样本再讨论执行。</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>一整套可执行交易策略</h2>
+        <div class="playbook-grid">
+          <div class="playbook-card">
+            <h3>1. 开仓前过滤</h3>
+            <ol>
+              <li>只看“推荐”和“强烈推荐”，优先强烈推荐。</li>
+              <li>核心启用战法优先级最高：北向资金、事件驱动。</li>
+              <li>大盘弱、主线退潮、跌停扩散时，只允许北向轻仓或空仓。</li>
+              <li>同一股票被多个正向战法同时选中时，才允许提高仓位。</li>
+            </ol>
+          </div>
+          <div class="playbook-card">
+            <h3>2. 仓位结构</h3>
+            <ol>
+              <li>常态总仓位不超过 50%，强赚钱效应可到 70%。</li>
+              <li>核心战法占 50%，条件启用占 35%，快打战术不超过 15%。</li>
+              <li>单票上限：强烈推荐 8%，推荐 5%，低流动性股票再减半。</li>
+              <li>同一题材最多 3 只，避免看似分散、实际同涨同跌。</li>
+            </ol>
+          </div>
+          <div class="playbook-card">
+            <h3>3. 买入纪律</h3>
+            <ol>
+              <li>回测统一按推荐日收盘买入，实盘不追高超过推荐价 3%。</li>
+              <li>北向/事件允许分两笔，第一笔收盘，第二笔次日确认承接。</li>
+              <li>龙头/接力只在情绪上升和板块强度确认时买。</li>
+              <li>隔夜/竞价只做尾盘或次日确定性，不把短线单做成长线。</li>
+            </ol>
+          </div>
+          <div class="playbook-card">
+            <h3>4. 卖出纪律</h3>
+            <ol>
+              <li>隔夜和竞价：次日冲高优先卖，均价不占优时不能等收盘。</li>
+              <li>事件驱动：T+3 到 T+5 兑现，利好落地或放量滞涨先减半。</li>
+              <li>北向资金：T+10 到 T+15 兑现，跌破入场价或资金逻辑断开退出。</li>
+              <li>龙头/接力：T+1 到 T+3 分批卖，断板弱修复失败立即退出。</li>
+            </ol>
+          </div>
+          <div class="playbook-card">
+            <h3>5. 止损规则</h3>
+            <ol>
+              <li>快打战术单笔止损 -2.5% 到 -3%。</li>
+              <li>事件/量价/突破单笔止损 -4% 到 -5%。</li>
+              <li>北向/趋势类单笔止损 -6%，但若逻辑失效不等止损价。</li>
+              <li>组合从高点回撤超过 8%，总仓位降到 20% 以下。</li>
+            </ol>
+          </div>
+          <div class="playbook-card">
+            <h3>6. 每日复盘</h3>
+            <ol>
+              <li>收盘后记录：战法、推荐级别、买入价、卖出价、是否按纪律执行。</li>
+              <li>每周更新各战法胜率和平均收益，连续 20 笔低于 0 的战法降权。</li>
+              <li>只复盘“按纪律交易”的样本，违规交易单独统计。</li>
+              <li>每月重算策略权重，核心战法必须同时满足正收益和可控回撤。</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>收益与风险排名表</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>战法</th><th>层级</th><th>类型</th><th>验证窗口</th><th>样本</th><th>有效</th>
+                <th>单笔均值</th><th>单笔胜率</th><th>机会均值</th><th>曲线累计</th><th>最大回撤</th><th>验证理由</th><th>执行动作</th>
+              </tr>
+            </thead>
+            <tbody><tr><td>北向资金</td><td>核心启用</td><td>资金波段</td><td>T+15 收盘</td><td>98</td><td>91</td><td class="up">+4.82%</td><td>60.4%</td><td class="up">+3.86%</td><td class="up">+292.43%</td><td class="down">-34.24%</td><td class="explain">北向资金属于慢变量，使用 T+15 收盘验证更贴近资金流入后的波段兑现。</td><td class="explain">按 10-15 个交易日波段持有，回撤到成本下方或北向逻辑失效时退出。</td></tr>
+<tr><td>事件驱动</td><td>核心启用</td><td>催化兑现</td><td>T+5 收盘</td><td>216</td><td>206</td><td class="up">+2.97%</td><td>53.4%</td><td class="up">+13.06%</td><td class="up">+100.86%</td><td class="down">-25.57%</td><td class="explain">普通事件2-3天兑现，政策/公告可发酵到5-10天；混合事件样本用T+5作为主验证，T+10作扩散对照。</td><td class="explain">只做事件清晰、兑现期明确的样本，T+5 前后主动兑现。</td></tr>
+<tr><td>龙头战法</td><td>条件启用</td><td>高弹性情绪</td><td>T+3 收盘</td><td>1959</td><td>1959</td><td class="up">+1.01%</td><td>47.1%</td><td class="up">+9.65%</td><td class="up">+172.87%</td><td class="down">-28.32%</td><td class="explain">龙头战法是1-3天快进快出，最多5天；用T+3收盘看是否有持续溢价，窗口最高收益看次日到T+3冲高兑现能力。</td><td class="explain">只在情绪上升期做强烈推荐，T+1 到 T+3 分批兑现。</td></tr>
+<tr><td>连板接力</td><td>条件启用</td><td>接力情绪</td><td>T+2 收盘</td><td>42</td><td>42</td><td class="up">+0.95%</td><td>54.8%</td><td class="up">+8.02%</td><td class="up">+10.36%</td><td class="down">-8.96%</td><td class="explain">连板接力的交易窗口非常短，核心看次日/隔日弱转强或断板修复；主验证点取T+2。</td><td class="explain">只做弱转强、分歧转一致，不追连续缩量加速。</td></tr>
+<tr><td>情绪战法</td><td>条件启用</td><td>市场情绪</td><td>T+3 收盘</td><td>219</td><td>219</td><td class="up">+0.65%</td><td>50.7%</td><td class="up">+7.04%</td><td class="up">+83.01%</td><td class="down">-12.47%</td><td class="explain">情绪战法跟随赚钱效应和板块热度，常见持有2-4天；T+3位于情绪扩散和退潮之间。</td><td class="explain">只在主线扩散期启用，退潮日不开新仓。</td></tr>
+<tr><td>量价关系</td><td>条件启用</td><td>量价结构</td><td>T+5 收盘</td><td>119</td><td>114</td><td class="up">+0.36%</td><td>52.6%</td><td class="up">+7.52%</td><td class="down">-27.88%</td><td class="down">-39.92%</td><td class="explain">放量突破通常1-3天，缩量整理3-7天；量价混合信号用T+5验证资金承接是否延续。</td><td class="explain">只配合趋势和事件做确认，不单独重仓。</td></tr>
+<tr><td>竞价/尾盘</td><td>快打战术</td><td>隔夜快打</td><td>T+1 收盘</td><td>207</td><td>207</td><td class="up">+0.02%</td><td>46.9%</td><td class="up">+3.43%</td><td class="up">+14.11%</td><td class="down">-17.21%</td><td class="explain">集合竞价和尾盘异动本质是隔日溢价验证，纪律要求次日冲高/开盘处理，因此主验证点为T+1。</td><td class="explain">只做次日冲高卖出，不能拖成波段。</td></tr>
+<tr><td>突破战法</td><td>快打战术</td><td>技术突破</td><td>T+5 收盘</td><td>112</td><td>112</td><td class="down">-0.09%</td><td>43.8%</td><td class="up">+8.04%</td><td class="down">-2.78%</td><td class="down">-25.70%</td><td class="explain">强势突破2-3天，震荡突破5-7天；T+5能过滤次日假突破，也不过度拖长到趋势战法。</td><td class="explain">突破后只做放量确认和回踩不破，触发失败立即退出。</td></tr>
+<tr><td>隔夜战法</td><td>快打战术</td><td>隔夜快打</td><td>T+1 均价</td><td>297</td><td>274</td><td class="down">-0.33%</td><td>40.5%</td><td class="up">+3.25%</td><td class="down">-25.63%</td><td class="down">-25.75%</td><td class="explain">尾盘买、次日卖；本次不再用次日收盘统计，主口径用次日均价，机会口径用次日最高价。</td><td class="explain">尾盘买入后次日优先卖强，不以收盘价幻想持有。</td></tr>
+<tr><td>综合战法</td><td>辅助观察</td><td>多战法共振</td><td>T+5 收盘</td><td>80</td><td>80</td><td class="down">-1.06%</td><td>48.8%</td><td class="up">+7.93%</td><td class="up">+21.27%</td><td class="down">-24.34%</td><td class="explain">综合战法跟随主导子战法，系统纪律为2-7天；T+5用于验证共振后是否能走出短波段。</td><td class="explain">用于提高候选优先级，不能替代单战法风控。</td></tr>
+<tr><td>均线战法</td><td>辅助观察</td><td>趋势确认</td><td>T+10 收盘</td><td>118</td><td>118</td><td class="down">-1.32%</td><td>44.9%</td><td class="up">+4.17%</td><td class="up">+19.75%</td><td class="down">-43.00%</td><td class="explain">均线信号有滞后性，使用 T+10 验证趋势是否真正延续。</td><td class="explain">只作为仓位过滤和趋势确认，不单独作为买入理由。</td></tr>
+<tr><td>趋势动量</td><td>辅助观察</td><td>趋势延续</td><td>T+10 收盘</td><td>209</td><td>193</td><td class="down">-1.86%</td><td>40.4%</td><td class="up">+12.44%</td><td class="down">-92.47%</td><td class="down">-95.35%</td><td class="explain">趋势动量强调MACD/ADX和多周期动量，持有7-15天；T+10是中位验证点。</td><td class="explain">只在低位启动段使用，连续加速段不追。</td></tr>
+<tr><td>情绪接力</td><td>暂停观察</td><td>接力情绪</td><td>T+3 收盘</td><td>173</td><td>165</td><td class="down">-2.35%</td><td>35.2%</td><td class="up">+6.67%</td><td class="down">-58.36%</td><td class="down">-63.68%</td><td class="explain">情绪接力在情绪高涨时1-2天兑现，低迷反转可等3-5天；T+3作为折中主验证。</td><td class="explain">暂停独立开仓，只作为情绪温度计。</td></tr>
+<tr><td>92科比周期投机</td><td>暂停观察</td><td>短线周期投机</td><td>T+3 收盘</td><td>19</td><td>19</td><td class="down">-4.26%</td><td>31.6%</td><td class="up">+6.72%</td><td class="down">-1.34%</td><td class="down">-9.82%</td><td class="explain">92科比框架围绕龙头、补涨、高低切，通常1-3天，主验证T+3。</td><td class="explain">等待更多样本，暂不独立交易。</td></tr>
+<tr><td>护城河价值</td><td>暂停观察</td><td>中短期价值</td><td>T+20 收盘</td><td>13</td><td>13</td><td class="down">-7.05%</td><td>23.1%</td><td class="up">+3.82%</td><td class="down">-30.41%</td><td class="down">-30.41%</td><td class="explain">该策略不是短线战法，缓存样本极少；用T+20作为中短期观察，不与短线策略直接横向比较。</td><td class="explain">另建中期估值模型，不纳入短线组合。</td></tr>
+<tr><td>A股龙头合力</td><td>暂停观察</td><td>短线龙头</td><td>T+3 收盘</td><td>4</td><td>4</td><td class="down">-14.06%</td><td>0.0%</td><td class="up">+2.83%</td><td class="down">-21.66%</td><td class="down">-21.66%</td><td class="explain">合力龙头以辨识度和分歧转一致为核心，通常1-3天，主验证T+3。</td><td class="explain">只保留观察，不做自动执行。</td></tr>
+<tr><td>养家情绪周期</td><td>暂停观察</td><td>短线情绪周期</td><td>T+3 收盘</td><td>11</td><td>11</td><td class="down">-15.48%</td><td>9.1%</td><td class="up">+4.25%</td><td class="down">-54.66%</td><td class="down">-54.66%</td><td class="explain">养家框架以赚钱效应和主线强弱为仓位阀门，通常1-3天见效，主验证T+3。</td><td class="explain">只用于判断仓位阀门，不直接触发买入。</td></tr>
+<tr><td>北京炒家首板</td><td>暂无样本</td><td>首板套利</td><td>T+1 收盘</td><td>0</td><td>0</td><td class="flat">-</td><td>-</td><td class="flat">-</td><td class="flat">-</td><td class="flat">-</td><td class="explain">首板战法是当日打板、次日套利，主验证T+1；若只有关注样本则不计入收益。</td><td class="explain">先补样本，再进入资金曲线比较。</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>文件入口</h2>
+        <div class="file-links">
+          <a href="../overnight/index.html">隔夜报告</a>
+          <a href="../northbound/index.html">北向报告</a>
+          <a href="../moving_average/index.html">均线报告</a>
+          <a href="../remaining_strategies/index.html">其他战法报告</a>
+          <a href="../index.html">全战法总览</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

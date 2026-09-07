@@ -1,0 +1,1433 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Codex Skills 目录</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f4;
+      --ink: #17201b;
+      --muted: #61706a;
+      --line: #d9ded5;
+      --panel: #ffffff;
+      --accent: #0c7a64;
+      --accent-2: #3659a8;
+      --soft: #e9f3ef;
+      --shadow: 0 12px 30px rgba(30, 42, 35, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+    }
+    header {
+      background: #13231d;
+      color: #fff;
+      border-bottom: 4px solid #d5b35f;
+    }
+    .wrap {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+    .hero {
+      padding: 34px 0 28px;
+    }
+    .top-link {
+      color: #cbe8dd;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    h1 {
+      margin: 16px 0 8px;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    .sub {
+      max-width: 820px;
+      margin: 0;
+      color: #dce8e2;
+      font-size: 16px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .stat {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      padding: 14px 16px;
+      min-height: 82px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: #dce8e2;
+      font-size: 13px;
+    }
+    main {
+      padding: 24px 0 46px;
+    }
+    .toolbar {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .search {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      min-height: 44px;
+      padding: 0 13px;
+      font-size: 15px;
+      color: var(--ink);
+      background: #fff;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .chip {
+      border: 1px solid var(--line);
+      background: #fbfcfa;
+      color: var(--ink);
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }
+    .chip span {
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .chip.active span { color: #d7f0e8; }
+    .toolbar-label {
+      margin: 14px 0 6px;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .result-line {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .source-section {
+      margin-top: 22px;
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: 0;
+    }
+    .section-head span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .skill-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 14px rgba(30, 42, 35, .05);
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .skill-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+    .skill-card p {
+      margin: 0;
+      color: #34413b;
+      font-size: 14px;
+    }
+    .file-link {
+      flex: 0 0 auto;
+      color: #fff;
+      background: var(--accent-2);
+      text-decoration: none;
+      border-radius: 6px;
+      padding: 6px 9px;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .meta-row span {
+      background: var(--soft);
+      color: #23443b;
+      border: 1px solid #d8ebe4;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
+    }
+    code {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .empty {
+      display: none;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 18px;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 20px 0 32px;
+    }
+    @media (max-width: 780px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .skill-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+      .skill-main { display: block; }
+      .file-link { display: inline-block; margin-top: 10px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=skills&amp;view=reports">技能目录</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <div class="wrap hero">
+      <a class="top-link" href="../index.html">返回 HTML 功能入口</a>
+      <h1>Codex Skills 目录</h1>
+      <p class="sub">按当前本机文件系统中可发现的 SKILL.md 扫描生成，覆盖本地自建 skill、系统内置 skill，以及已安装插件缓存中的 skill。</p>
+      <div class="stats">
+        <div class="stat"><strong>70</strong><span>已发现 skill</span></div>
+        <div class="stat"><strong>22</strong><span>本地自建</span></div>
+        <div class="stat"><strong>6</strong><span>系统内置</span></div>
+        <div class="stat"><strong>42</strong><span>插件附带</span></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="搜索 skill 名称、说明、领域、路径">
+        <div class="toolbar-label">来源筛选</div>
+        <div class="filters" id="sourceFilters">
+          <button class="chip active" type="button" data-filter="source" data-value="">全部来源 <span>70</span></button>
+          <button class="chip" type="button" data-filter="source" data-value="插件：Curated Remote">插件：Curated Remote <span>32</span></button>
+<button class="chip" type="button" data-filter="source" data-value="插件：OpenAI Bundled">插件：OpenAI Bundled <span>4</span></button>
+<button class="chip" type="button" data-filter="source" data-value="插件：Primary Runtime">插件：Primary Runtime <span>6</span></button>
+<button class="chip" type="button" data-filter="source" data-value="本地自建">本地自建 <span>22</span></button>
+<button class="chip" type="button" data-filter="source" data-value="系统内置">系统内置 <span>6</span></button>
+        </div>
+        <div class="toolbar-label">领域筛选</div>
+        <div class="filters" id="domainFilters">
+          <button class="chip active" type="button" data-filter="domain" data-value="">全部领域 <span>70</span></button>
+          <button class="chip" type="button" data-filter="domain" data-value="Codex / 工作流">Codex / 工作流 <span>6</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="投资 / A股 / 研究">投资 / A股 / 研究 <span>11</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="文档 / 表格 / 模板">文档 / 表格 / 模板 <span>24</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="网页 / 可视化 / 图像">网页 / 可视化 / 图像 <span>4</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="视频 / 素材 / 语料">视频 / 素材 / 语料 <span>10</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="设计 / Figma">设计 / Figma <span>14</span></button>
+<button class="chip" type="button" data-filter="domain" data-value="通用工具">通用工具 <span>1</span></button>
+        </div>
+        <p class="result-line" id="resultLine">显示 70 个 skill。生成时间：2026-07-24 22:36:33</p>
+      </div>
+      <div class="empty" id="empty">没有匹配的 skill。</div>
+      
+      <section class="source-section" data-section="插件：Curated Remote">
+        <div class="section-head">
+          <h2>插件：Curated Remote</h2>
+          <span>32 个</span>
+        </div>
+        <div class="skill-grid">
+          
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-analytics-dashboard&quot;, &quot;folder&quot;: &quot;artifact-template-analytics-dashboard&quot;, &quot;description&quot;: &quot;生成分析仪表盘模板，适合展示核心指标、趋势、细分维度和数据洞察。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-analytics-dashboard/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-analytics-dashboard/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-analytics-dashboard</h3>
+              <p>生成分析仪表盘模板，适合展示核心指标、趋势、细分维度和数据洞察。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-analytics-dashboard</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-analytics-dashboard/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-business-review&quot;, &quot;folder&quot;: &quot;artifact-template-business-review&quot;, &quot;description&quot;: &quot;生成业务复盘模板，适合阶段性经营回顾、关键指标分析、问题总结和下一步计划。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-business-review/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-business-review/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-business-review</h3>
+              <p>生成业务复盘模板，适合阶段性经营回顾、关键指标分析、问题总结和下一步计划。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-business-review</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-business-review/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-design-report&quot;, &quot;folder&quot;: &quot;artifact-template-design-report&quot;, &quot;description&quot;: &quot;生成设计报告模板，适合呈现设计目标、方案比较、用户体验发现和建议。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-design-report/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-design-report/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-design-report</h3>
+              <p>生成设计报告模板，适合呈现设计目标、方案比较、用户体验发现和建议。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-design-report</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-design-report/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-experiment-analysis&quot;, &quot;folder&quot;: &quot;artifact-template-experiment-analysis&quot;, &quot;description&quot;: &quot;生成实验分析模板，适合 A/B 测试、实验结果、统计解释和行动建议。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-experiment-analysis/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-experiment-analysis/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-experiment-analysis</h3>
+              <p>生成实验分析模板，适合 A/B 测试、实验结果、统计解释和行动建议。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-experiment-analysis</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-experiment-analysis/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-financial-budget&quot;, &quot;folder&quot;: &quot;artifact-template-financial-budget&quot;, &quot;description&quot;: &quot;生成财务预算模板，适合预算拆解、收入成本预测、差异分析和财务计划。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-financial-budget/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-financial-budget/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-financial-budget</h3>
+              <p>生成财务预算模板，适合预算拆解、收入成本预测、差异分析和财务计划。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-financial-budget</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-financial-budget/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-investment-committee-memo&quot;, &quot;folder&quot;: &quot;artifact-template-investment-committee-memo&quot;, &quot;description&quot;: &quot;生成投委会备忘录模板，适合投资机会、风险、估值、交易结构和决策建议。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-investment-committee-memo/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-investment-committee-memo/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-investment-committee-memo</h3>
+              <p>生成投委会备忘录模板，适合投资机会、风险、估值、交易结构和决策建议。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-investment-committee-memo</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-investment-committee-memo/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-legal-memorandum&quot;, &quot;folder&quot;: &quot;artifact-template-legal-memorandum&quot;, &quot;description&quot;: &quot;生成法律备忘录模板，适合法律问题分析、事实背景、适用规则、风险和结论。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-legal-memorandum/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-legal-memorandum/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-legal-memorandum</h3>
+              <p>生成法律备忘录模板，适合法律问题分析、事实背景、适用规则、风险和结论。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-legal-memorandum</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-legal-memorandum/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-market-trends-report&quot;, &quot;folder&quot;: &quot;artifact-template-market-trends-report&quot;, &quot;description&quot;: &quot;生成市场趋势报告模板，适合行业趋势、竞争格局、增长驱动和机会判断。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-market-trends-report/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-market-trends-report/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-market-trends-report</h3>
+              <p>生成市场趋势报告模板，适合行业趋势、竞争格局、增长驱动和机会判断。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-market-trends-report</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-market-trends-report/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-minimal-letterhead&quot;, &quot;folder&quot;: &quot;artifact-template-minimal-letterhead&quot;, &quot;description&quot;: &quot;生成极简信笺模板，适合正式信函、通知、说明函和带抬头的文档。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-minimal-letterhead/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-minimal-letterhead/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-minimal-letterhead</h3>
+              <p>生成极简信笺模板，适合正式信函、通知、说明函和带抬头的文档。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-minimal-letterhead</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-minimal-letterhead/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-operating-calendar&quot;, &quot;folder&quot;: &quot;artifact-template-operating-calendar&quot;, &quot;description&quot;: &quot;生成运营日历模板，适合排期活动、里程碑、责任人和周期性工作安排。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-calendar/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-calendar/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-operating-calendar</h3>
+              <p>生成运营日历模板，适合排期活动、里程碑、责任人和周期性工作安排。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-operating-calendar</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-calendar/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-operating-review&quot;, &quot;folder&quot;: &quot;artifact-template-operating-review&quot;, &quot;description&quot;: &quot;生成运营复盘模板，适合团队经营节奏、指标变化、问题追踪和行动项管理。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-review/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-review/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-operating-review</h3>
+              <p>生成运营复盘模板，适合团队经营节奏、指标变化、问题追踪和行动项管理。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-operating-review</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-operating-review/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-project-kickoff&quot;, &quot;folder&quot;: &quot;artifact-template-project-kickoff&quot;, &quot;description&quot;: &quot;生成项目启动模板，适合明确目标、范围、角色分工、时间线、风险和启动计划。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-kickoff/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-kickoff/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-project-kickoff</h3>
+              <p>生成项目启动模板，适合明确目标、范围、角色分工、时间线、风险和启动计划。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-project-kickoff</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-kickoff/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-project-tracker&quot;, &quot;folder&quot;: &quot;artifact-template-project-tracker&quot;, &quot;description&quot;: &quot;生成项目追踪模板，适合任务状态、负责人、截止日期、阻塞项和进度管理。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-tracker/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-tracker/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-project-tracker</h3>
+              <p>生成项目追踪模板，适合任务状态、负责人、截止日期、阻塞项和进度管理。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-project-tracker</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-project-tracker/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-sales-pipeline&quot;, &quot;folder&quot;: &quot;artifact-template-sales-pipeline&quot;, &quot;description&quot;: &quot;生成销售管道模板，适合商机阶段、客户线索、成交概率、金额预测和跟进动作。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-sales-pipeline/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-sales-pipeline/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-sales-pipeline</h3>
+              <p>生成销售管道模板，适合商机阶段、客户线索、成交概率、金额预测和跟进动作。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-sales-pipeline</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-sales-pipeline/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-simple-dark-mode&quot;, &quot;folder&quot;: &quot;artifact-template-simple-dark-mode&quot;, &quot;description&quot;: &quot;生成简洁深色主题模板，适合需要暗色视觉风格的报告或网页型交付物。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-dark-mode/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-dark-mode/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-simple-dark-mode</h3>
+              <p>生成简洁深色主题模板，适合需要暗色视觉风格的报告或网页型交付物。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-simple-dark-mode</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-dark-mode/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-simple-light-mode&quot;, &quot;folder&quot;: &quot;artifact-template-simple-light-mode&quot;, &quot;description&quot;: &quot;生成简洁浅色主题模板，适合清爽、通用、易读的报告或网页型交付物。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-light-mode/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-light-mode/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-simple-light-mode</h3>
+              <p>生成简洁浅色主题模板，适合清爽、通用、易读的报告或网页型交付物。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-simple-light-mode</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-simple-light-mode/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-strategy-memorandum&quot;, &quot;folder&quot;: &quot;artifact-template-strategy-memorandum&quot;, &quot;description&quot;: &quot;生成战略备忘录模板，适合战略背景、选择、权衡、执行路径和决策建议。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-strategy-memorandum/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-strategy-memorandum/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-strategy-memorandum</h3>
+              <p>生成战略备忘录模板，适合战略背景、选择、权衡、执行路径和决策建议。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-strategy-memorandum</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-strategy-memorandum/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-system-design&quot;, &quot;folder&quot;: &quot;artifact-template-system-design&quot;, &quot;description&quot;: &quot;生成系统设计模板，适合架构方案、组件关系、数据流、接口、扩展性和风险说明。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-system-design/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-system-design/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-system-design</h3>
+              <p>生成系统设计模板，适合架构方案、组件关系、数据流、接口、扩展性和风险说明。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-system-design</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-system-design/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-team-alignment&quot;, &quot;folder&quot;: &quot;artifact-template-team-alignment&quot;, &quot;description&quot;: &quot;生成团队对齐模板，适合共识同步、目标拆解、角色职责、决策事项和行动清单。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-team-alignment/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-team-alignment/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-team-alignment</h3>
+              <p>生成团队对齐模板，适合共识同步、目标拆解、角色职责、决策事项和行动清单。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-team-alignment</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-team-alignment/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;artifact-template-three-statement-forecast&quot;, &quot;folder&quot;: &quot;artifact-template-three-statement-forecast&quot;, &quot;description&quot;: &quot;生成三表财务预测模板，适合利润表、资产负债表、现金流和关键假设联动。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;openai-templates 0.1.0&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-three-statement-forecast/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-three-statement-forecast/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>artifact-template-three-statement-forecast</h3>
+              <p>生成三表财务预测模板，适合利润表、资产负债表、现金流和关键假设联动。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>openai-templates 0.1.0</span>
+            <span>artifact-template-three-statement-forecast</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/openai-templates/0.1.0/skills/artifact-template-three-statement-forecast/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-code-connect&quot;, &quot;folder&quot;: &quot;figma-code-connect&quot;, &quot;description&quot;: &quot;创建或维护 Figma Code Connect 文件，把 Figma 组件映射到代码片段，适合设计系统和组件对齐。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-code-connect/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-code-connect/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-code-connect</h3>
+              <p>创建或维护 Figma Code Connect 文件，把 Figma 组件映射到代码片段，适合设计系统和组件对齐。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-code-connect</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-code-connect/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-create-new-file&quot;, &quot;folder&quot;: &quot;figma-create-new-file&quot;, &quot;description&quot;: &quot;在 Figma 中创建新的 Design、FigJam 或 Slides 文件；调用新建文件工具前必须先加载。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-create-new-file/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-create-new-file/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-create-new-file</h3>
+              <p>在 Figma 中创建新的 Design、FigJam 或 Slides 文件；调用新建文件工具前必须先加载。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-create-new-file</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-create-new-file/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-design-to-code&quot;, &quot;folder&quot;: &quot;figma-design-to-code&quot;, &quot;description&quot;: &quot;把 Figma 设计稿实现为代码，读取设计上下文并按布局、样式、组件和动效还原页面。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-design-to-code/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-design-to-code/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-design-to-code</h3>
+              <p>把 Figma 设计稿实现为代码，读取设计上下文并按布局、样式、组件和动效还原页面。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-design-to-code</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-design-to-code/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-generate-design&quot;, &quot;folder&quot;: &quot;figma-generate-design&quot;, &quot;description&quot;: &quot;把应用页面、弹窗、侧边栏、面板或多区块视图从代码或文字说明生成到 Figma 中。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-design/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-design/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-generate-design</h3>
+              <p>把应用页面、弹窗、侧边栏、面板或多区块视图从代码或文字说明生成到 Figma 中。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-generate-design</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-design/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-generate-diagram&quot;, &quot;folder&quot;: &quot;figma-generate-diagram&quot;, &quot;description&quot;: &quot;在 FigJam 中生成流程图、架构图、时序图、ERD、状态机、甘特图、时间线等 Mermaid 图。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-diagram/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-diagram/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-generate-diagram</h3>
+              <p>在 FigJam 中生成流程图、架构图、时序图、ERD、状态机、甘特图、时间线等 Mermaid 图。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-generate-diagram</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-diagram/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-generate-library&quot;, &quot;folder&quot;: &quot;figma-generate-library&quot;, &quot;description&quot;: &quot;从代码库构建或更新 Figma 设计系统，包括变量、主题、组件、变体和组件文档。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-library/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-library/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-generate-library</h3>
+              <p>从代码库构建或更新 Figma 设计系统，包括变量、主题、组件、变体和组件文档。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-generate-library</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-generate-library/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-implement-motion&quot;, &quot;folder&quot;: &quot;figma-implement-motion&quot;, &quot;description&quot;: &quot;把 Figma 中的动画和动效转成生产代码，适合实现设计稿里的过渡、关键帧和交互动效。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-implement-motion/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-implement-motion/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-implement-motion</h3>
+              <p>把 Figma 中的动画和动效转成生产代码，适合实现设计稿里的过渡、关键帧和交互动效。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-implement-motion</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-implement-motion/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-swiftui&quot;, &quot;folder&quot;: &quot;figma-swiftui&quot;, &quot;description&quot;: &quot;在 SwiftUI 与 Figma 之间双向转换：既可把 Figma 设计实现成 iOS 代码，也可把 SwiftUI 页面推回 Figma。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-swiftui/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-swiftui/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-swiftui</h3>
+              <p>在 SwiftUI 与 Figma 之间双向转换：既可把 Figma 设计实现成 iOS 代码，也可把 SwiftUI 页面推回 Figma。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-swiftui</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-swiftui/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-use&quot;, &quot;folder&quot;: &quot;figma-use&quot;, &quot;description&quot;: &quot;执行 Figma 文件中的读写操作，例如创建节点、修改布局、绑定变量、编辑组件或检查文件结构；调用 use_figma 前必须加载。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-use</h3>
+              <p>执行 Figma 文件中的读写操作，例如创建节点、修改布局、绑定变量、编辑组件或检查文件结构；调用 use_figma 前必须加载。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-use</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-use-figjam&quot;, &quot;folder&quot;: &quot;figma-use-figjam&quot;, &quot;description&quot;: &quot;在 FigJam 场景下使用 Figma 工具，适合白板、流程图、图形节点和 FigJam 特有对象操作。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-figjam/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-figjam/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-use-figjam</h3>
+              <p>在 FigJam 场景下使用 Figma 工具，适合白板、流程图、图形节点和 FigJam 特有对象操作。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-use-figjam</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-figjam/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-use-motion&quot;, &quot;folder&quot;: &quot;figma-use-motion&quot;, &quot;description&quot;: &quot;在 Figma 中添加、编辑或检查动画关键帧、时间线、缓动曲线和运动样式。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-motion/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-motion/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-use-motion</h3>
+              <p>在 Figma 中添加、编辑或检查动画关键帧、时间线、缓动曲线和运动样式。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-use-motion</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-motion/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;figma-use-slides&quot;, &quot;folder&quot;: &quot;figma-use-slides&quot;, &quot;description&quot;: &quot;在 Figma Slides 场景下使用 Figma 工具，适合创建和调整演示文稿页面。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Curated Remote&quot;, &quot;source_detail&quot;: &quot;figma 2.0.16&quot;, &quot;domain&quot;: &quot;设计 / Figma&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-slides/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-slides/SKILL.md&quot;}" data-source="插件：Curated Remote" data-domain="设计 / Figma">
+          <div class="skill-main">
+            <div>
+              <h3>figma-use-slides</h3>
+              <p>在 Figma Slides 场景下使用 Figma 工具，适合创建和调整演示文稿页面。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>设计 / Figma</span>
+            <span>figma 2.0.16</span>
+            <span>figma-use-slides</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-curated-remote/figma/2.0.16/skills/figma-use-slides/SKILL.md</code>
+        </article>
+        </div>
+      </section>
+      <section class="source-section" data-section="插件：OpenAI Bundled">
+        <div class="section-head">
+          <h2>插件：OpenAI Bundled</h2>
+          <span>4 个</span>
+        </div>
+        <div class="skill-grid">
+          
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;control-in-app-browser&quot;, &quot;folder&quot;: &quot;control-in-app-browser&quot;, &quot;description&quot;: &quot;控制 Codex 内置浏览器：打开网页、点击、输入、截图、检查页面状态，适合本地网页测试和需要登录态的网页操作。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：OpenAI Bundled&quot;, &quot;source_detail&quot;: &quot;browser 26.715.72359&quot;, &quot;domain&quot;: &quot;网页 / 可视化 / 图像&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-bundled/browser/26.715.72359/skills/control-in-app-browser/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-bundled/browser/26.715.72359/skills/control-in-app-browser/SKILL.md&quot;}" data-source="插件：OpenAI Bundled" data-domain="网页 / 可视化 / 图像">
+          <div class="skill-main">
+            <div>
+              <h3>control-in-app-browser</h3>
+              <p>控制 Codex 内置浏览器：打开网页、点击、输入、截图、检查页面状态，适合本地网页测试和需要登录态的网页操作。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>网页 / 可视化 / 图像</span>
+            <span>browser 26.715.72359</span>
+            <span>control-in-app-browser</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-bundled/browser/26.715.72359/skills/control-in-app-browser/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;sites-building&quot;, &quot;folder&quot;: &quot;sites-building&quot;, &quot;description&quot;: &quot;构建网站、落地页、作品集、仪表盘、门户、追踪器、小游戏和内部工具；若项目里有 .openai/hosting.json，应优先使用。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：OpenAI Bundled&quot;, &quot;source_detail&quot;: &quot;sites 0.1.30&quot;, &quot;domain&quot;: &quot;网页 / 可视化 / 图像&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-building/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-building/SKILL.md&quot;}" data-source="插件：OpenAI Bundled" data-domain="网页 / 可视化 / 图像">
+          <div class="skill-main">
+            <div>
+              <h3>sites-building</h3>
+              <p>构建网站、落地页、作品集、仪表盘、门户、追踪器、小游戏和内部工具；若项目里有 .openai/hosting.json，应优先使用。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>网页 / 可视化 / 图像</span>
+            <span>sites 0.1.30</span>
+            <span>sites-building</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-building/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;sites-hosting&quot;, &quot;folder&quot;: &quot;sites-hosting&quot;, &quot;description&quot;: &quot;把 Sites 项目保存版本并部署上线，管理生产部署和访问控制；通常接在网站构建流程之后使用。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：OpenAI Bundled&quot;, &quot;source_detail&quot;: &quot;sites 0.1.30&quot;, &quot;domain&quot;: &quot;网页 / 可视化 / 图像&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-hosting/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-hosting/SKILL.md&quot;}" data-source="插件：OpenAI Bundled" data-domain="网页 / 可视化 / 图像">
+          <div class="skill-main">
+            <div>
+              <h3>sites-hosting</h3>
+              <p>把 Sites 项目保存版本并部署上线，管理生产部署和访问控制；通常接在网站构建流程之后使用。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>网页 / 可视化 / 图像</span>
+            <span>sites 0.1.30</span>
+            <span>sites-hosting</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-bundled/sites/0.1.30/skills/sites-hosting/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;visualize&quot;, &quot;folder&quot;: &quot;visualize&quot;, &quot;description&quot;: &quot;在对话中创建交互式可视化、模拟器、地图、图表、对比工具和可调参数实验台。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：OpenAI Bundled&quot;, &quot;source_detail&quot;: &quot;visualize 1.0.14&quot;, &quot;domain&quot;: &quot;网页 / 可视化 / 图像&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-bundled/visualize/1.0.14/skills/visualize/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-bundled/visualize/1.0.14/skills/visualize/SKILL.md&quot;}" data-source="插件：OpenAI Bundled" data-domain="网页 / 可视化 / 图像">
+          <div class="skill-main">
+            <div>
+              <h3>visualize</h3>
+              <p>在对话中创建交互式可视化、模拟器、地图、图表、对比工具和可调参数实验台。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>网页 / 可视化 / 图像</span>
+            <span>visualize 1.0.14</span>
+            <span>visualize</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-bundled/visualize/1.0.14/skills/visualize/SKILL.md</code>
+        </article>
+        </div>
+      </section>
+      <section class="source-section" data-section="插件：Primary Runtime">
+        <div class="section-head">
+          <h2>插件：Primary Runtime</h2>
+          <span>6 个</span>
+        </div>
+        <div class="skill-grid">
+          
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;Presentations&quot;, &quot;folder&quot;: &quot;presentations&quot;, &quot;description&quot;: &quot;创建或编辑 PowerPoint、PPTX 和 Google Slides 风格演示文稿，适合做幻灯片交付。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;presentations 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/presentations/26.723.12215/skills/presentations/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/presentations/26.723.12215/skills/presentations/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>Presentations</h3>
+              <p>创建或编辑 PowerPoint、PPTX 和 Google Slides 风格演示文稿，适合做幻灯片交付。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>presentations 26.723.12215</span>
+            <span>presentations</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/presentations/26.723.12215/skills/presentations/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;Spreadsheets&quot;, &quot;folder&quot;: &quot;spreadsheets&quot;, &quot;description&quot;: &quot;创建、编辑、分析和验证独立表格文件，包括 .xlsx、.xls、.csv、.tsv 和 Google Sheets 可导入工作簿。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;spreadsheets 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/spreadsheets/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/spreadsheets/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>Spreadsheets</h3>
+              <p>创建、编辑、分析和验证独立表格文件，包括 .xlsx、.xls、.csv、.tsv 和 Google Sheets 可导入工作簿。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>spreadsheets 26.723.12215</span>
+            <span>spreadsheets</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/spreadsheets/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;documents&quot;, &quot;folder&quot;: &quot;documents&quot;, &quot;description&quot;: &quot;创建、编辑、批注和渲染校验 Word 或 .docx 文档，适合需要版式质量检查的正式文档交付。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;documents 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/documents/26.723.12215/skills/documents/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/documents/26.723.12215/skills/documents/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>documents</h3>
+              <p>创建、编辑、批注和渲染校验 Word 或 .docx 文档，适合需要版式质量检查的正式文档交付。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>documents 26.723.12215</span>
+            <span>documents</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/documents/26.723.12215/skills/documents/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;excel-live-control&quot;, &quot;folder&quot;: &quot;excel-live-control&quot;, &quot;description&quot;: &quot;通过已连接的 Excel 会话控制当前工作簿，适合实时操作打开的 Microsoft Excel 文件。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;spreadsheets 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/excel-live-control/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/excel-live-control/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>excel-live-control</h3>
+              <p>通过已连接的 Excel 会话控制当前工作簿，适合实时操作打开的 Microsoft Excel 文件。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>spreadsheets 26.723.12215</span>
+            <span>excel-live-control</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.723.12215/skills/excel-live-control/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;pdf&quot;, &quot;folder&quot;: &quot;pdf&quot;, &quot;description&quot;: &quot;读取、创建、检查、渲染和验证 PDF，包括表单 PDF；适合抽取内容、生成文件和做视觉 QA。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;pdf 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/pdf/26.723.12215/skills/pdf/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/pdf/26.723.12215/skills/pdf/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>pdf</h3>
+              <p>读取、创建、检查、渲染和验证 PDF，包括表单 PDF；适合抽取内容、生成文件和做视觉 QA。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>pdf 26.723.12215</span>
+            <span>pdf</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/pdf/26.723.12215/skills/pdf/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;template-creator&quot;, &quot;folder&quot;: &quot;template-creator&quot;, &quot;description&quot;: &quot;从参考文档、演示、表格、图片、邮件或消息中沉淀可复用的个人 Codex artifact-template skill。&quot;, &quot;source_key&quot;: &quot;plugin&quot;, &quot;source_label&quot;: &quot;插件：Primary Runtime&quot;, &quot;source_detail&quot;: &quot;template-creator 26.723.12215&quot;, &quot;domain&quot;: &quot;文档 / 表格 / 模板&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/plugins/cache/openai-primary-runtime/template-creator/26.723.12215/skills/template-creator/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/plugins/cache/openai-primary-runtime/template-creator/26.723.12215/skills/template-creator/SKILL.md&quot;}" data-source="插件：Primary Runtime" data-domain="文档 / 表格 / 模板">
+          <div class="skill-main">
+            <div>
+              <h3>template-creator</h3>
+              <p>从参考文档、演示、表格、图片、邮件或消息中沉淀可复用的个人 Codex artifact-template skill。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>文档 / 表格 / 模板</span>
+            <span>template-creator 26.723.12215</span>
+            <span>template-creator</span>
+          </div>
+          <code>/Users/evan/.codex/plugins/cache/openai-primary-runtime/template-creator/26.723.12215/skills/template-creator/SKILL.md</code>
+        </article>
+        </div>
+      </section>
+      <section class="source-section" data-section="本地自建">
+        <div class="section-head">
+          <h2>本地自建</h2>
+          <span>22 个</span>
+        </div>
+        <div class="skill-grid">
+          
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;a-share-direct-execution-guide&quot;, &quot;folder&quot;: &quot;a-share-direct-execution-guide&quot;, &quot;description&quot;: &quot;汇总多个 A 股短线框架的结论，直接给出买不买、怎么买、价格区间、排板、回封、低吸和风控建议。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/a-share-direct-execution-guide/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/a-share-direct-execution-guide/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>a-share-direct-execution-guide</h3>
+              <p>汇总多个 A 股短线框架的结论，直接给出买不买、怎么买、价格区间、排板、回封、低吸和风控建议。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>a-share-direct-execution-guide</span>
+          </div>
+          <code>/Users/evan/.codex/skills/a-share-direct-execution-guide/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;a-share-leader-tactics&quot;, &quot;folder&quot;: &quot;a-share-leader-tactics&quot;, &quot;description&quot;: &quot;按龙头战法和情绪合力框架做 A 股短线龙头雷达，判断情绪周期、主线题材、连板梯队和接力机会。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/a-share-leader-tactics/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/a-share-leader-tactics/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>a-share-leader-tactics</h3>
+              <p>按龙头战法和情绪合力框架做 A 股短线龙头雷达，判断情绪周期、主线题材、连板梯队和接力机会。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>a-share-leader-tactics</span>
+          </div>
+          <code>/Users/evan/.codex/skills/a-share-leader-tactics/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;ai-video-jianying-edit&quot;, &quot;folder&quot;: &quot;ai-video-jianying-edit&quot;, &quot;description&quot;: &quot;把中文口播稿和飞书剪辑要求转成密集镜头方案，整理素材并生成可编辑的剪映项目和参考视频。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/ai-video-jianying-edit/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/ai-video-jianying-edit/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>ai-video-jianying-edit</h3>
+              <p>把中文口播稿和飞书剪辑要求转成密集镜头方案，整理素材并生成可编辑的剪映项目和参考视频。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>ai-video-jianying-edit</span>
+          </div>
+          <code>/Users/evan/.codex/skills/ai-video-jianying-edit/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;beijing-chaogu-first-board&quot;, &quot;folder&quot;: &quot;beijing-chaogu-first-board&quot;, &quot;description&quot;: &quot;按北京炒家首板打法生成 A 股首板雷达，评估回封、换手、板块效应、分仓和炸板风险。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/beijing-chaogu-first-board/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/beijing-chaogu-first-board/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>beijing-chaogu-first-board</h3>
+              <p>按北京炒家首板打法生成 A 股首板雷达，评估回封、换手、板块效应、分仓和炸板风险。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>beijing-chaogu-first-board</span>
+          </div>
+          <code>/Users/evan/.codex/skills/beijing-chaogu-first-board/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;codex-obsidian-sync&quot;, &quot;folder&quot;: &quot;codex-obsidian-sync&quot;, &quot;description&quot;: &quot;把 Codex Desktop 工作记录增量整理到 Obsidian 知识库，适合归档任务、总结进展和同步工作日志。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/codex-obsidian-sync/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/codex-obsidian-sync/SKILL.md&quot;}" data-source="本地自建" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>codex-obsidian-sync</h3>
+              <p>把 Codex Desktop 工作记录增量整理到 Obsidian 知识库，适合归档任务、总结进展和同步工作日志。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>本地</span>
+            <span>codex-obsidian-sync</span>
+          </div>
+          <code>/Users/evan/.codex/skills/codex-obsidian-sync/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;douyin-research-digest&quot;, &quot;folder&quot;: &quot;douyin-research-digest&quot;, &quot;description&quot;: &quot;下载、筛选、转写和纠错抖音财经研究视频，生成编号摘要和 HTML 研究 digest。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/douyin-research-digest/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/douyin-research-digest/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>douyin-research-digest</h3>
+              <p>下载、筛选、转写和纠错抖音财经研究视频，生成编号摘要和 HTML 研究 digest。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>douyin-research-digest</span>
+          </div>
+          <code>/Users/evan/.codex/skills/douyin-research-digest/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;douyin-speech-corpus&quot;, &quot;folder&quot;: &quot;douyin-speech-corpus&quot;, &quot;description&quot;: &quot;从抖音账号、搜索或用户链接构建中文语音语料库，输出可读 HTML、Markdown、JSONL 和分块语料。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/douyin-speech-corpus/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/douyin-speech-corpus/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>douyin-speech-corpus</h3>
+              <p>从抖音账号、搜索或用户链接构建中文语音语料库，输出可读 HTML、Markdown、JSONL 和分块语料。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>douyin-speech-corpus</span>
+          </div>
+          <code>/Users/evan/.codex/skills/douyin-speech-corpus/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;global-tech-capex-liquidity-radar&quot;, &quot;folder&quot;: &quot;global-tech-capex-liquidity-radar&quot;, &quot;description&quot;: &quot;跟踪全球科技巨头资本开支、美联储及全球流动性、重大科技催化和风险，并生成中文 HTML 雷达。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/global-tech-capex-liquidity-radar/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/global-tech-capex-liquidity-radar/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>global-tech-capex-liquidity-radar</h3>
+              <p>跟踪全球科技巨头资本开支、美联储及全球流动性、重大科技催化和风险，并生成中文 HTML 雷达。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>global-tech-capex-liquidity-radar</span>
+          </div>
+          <code>/Users/evan/.codex/skills/global-tech-capex-liquidity-radar/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;ip-asset-compliance-delivery&quot;, &quot;folder&quot;: &quot;ip-asset-compliance-delivery&quot;, &quot;description&quot;: &quot;审计和打包 IP 口播视频素材，检查授权来源、区分可下载与仅参考素材、清理目录并生成交付清单。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/ip-asset-compliance-delivery/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/ip-asset-compliance-delivery/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>ip-asset-compliance-delivery</h3>
+              <p>审计和打包 IP 口播视频素材，检查授权来源、区分可下载与仅参考素材、清理目录并生成交付清单。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>ip-asset-compliance-delivery</span>
+          </div>
+          <code>/Users/evan/.codex/skills/ip-asset-compliance-delivery/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;ip-roughcut-quality-editor&quot;, &quot;folder&quot;: &quot;ip-roughcut-quality-editor&quot;, &quot;description&quot;: &quot;复核口播分镜素材质量，替换不匹配素材，并按旁白和镜头映射自动组装粗剪视频。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/ip-roughcut-quality-editor/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/ip-roughcut-quality-editor/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>ip-roughcut-quality-editor</h3>
+              <p>复核口播分镜素材质量，替换不匹配素材，并按旁白和镜头映射自动组装粗剪视频。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>ip-roughcut-quality-editor</span>
+          </div>
+          <code>/Users/evan/.codex/skills/ip-roughcut-quality-editor/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;ip-storyboard-material-finder&quot;, &quot;folder&quot;: &quot;ip-storyboard-material-finder&quot;, &quot;description&quot;: &quot;理解中文或英文口播稿后拆分高精度分镜，寻找公司、产业、会议、工厂、技术等表达性视频素材并产出素材包。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/ip-storyboard-material-finder/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/ip-storyboard-material-finder/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>ip-storyboard-material-finder</h3>
+              <p>理解中文或英文口播稿后拆分高精度分镜，寻找公司、产业、会议、工厂、技术等表达性视频素材并产出素材包。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>ip-storyboard-material-finder</span>
+          </div>
+          <code>/Users/evan/.codex/skills/ip-storyboard-material-finder/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;kobe92-cycle-speculation&quot;, &quot;folder&quot;: &quot;kobe92-cycle-speculation&quot;, &quot;description&quot;: &quot;按 92 科比情绪周期和龙头补涨切换框架做 A 股五股雷达，判断低位试错、主升、高位震荡和退潮阶段。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/kobe92-cycle-speculation/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/kobe92-cycle-speculation/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>kobe92-cycle-speculation</h3>
+              <p>按 92 科比情绪周期和龙头补涨切换框架做 A 股五股雷达，判断低位试错、主升、高位震荡和退潮阶段。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>kobe92-cycle-speculation</span>
+          </div>
+          <code>/Users/evan/.codex/skills/kobe92-cycle-speculation/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;macro-a-share-radar&quot;, &quot;folder&quot;: &quot;macro-a-share-radar&quot;, &quot;description&quot;: &quot;按宏观环境与 A 股情绪雷达判断大盘状态、风险偏好、流动性、市场宽度、题材情绪和仓位上限。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/macro-a-share-radar/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/macro-a-share-radar/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>macro-a-share-radar</h3>
+              <p>按宏观环境与 A 股情绪雷达判断大盘状态、风险偏好、流动性、市场宽度、题材情绪和仓位上限。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>macro-a-share-radar</span>
+          </div>
+          <code>/Users/evan/.codex/skills/macro-a-share-radar/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;s-quant-5d-subtraction&quot;, &quot;folder&quot;: &quot;s-quant-5d-subtraction&quot;, &quot;description&quot;: &quot;用 S 量化五维框架处理产业链、公司池和研究资料，拉取财务数据、做 PK 表、排名并筛选优质标的。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;通用工具&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/s-quant-5d-subtraction/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/s-quant-5d-subtraction/SKILL.md&quot;}" data-source="本地自建" data-domain="通用工具">
+          <div class="skill-main">
+            <div>
+              <h3>s-quant-5d-subtraction</h3>
+              <p>用 S 量化五维框架处理产业链、公司池和研究资料，拉取财务数据、做 PK 表、排名并筛选优质标的。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>通用工具</span>
+            <span>本地</span>
+            <span>s-quant-5d-subtraction</span>
+          </div>
+          <code>/Users/evan/.codex/skills/s-quant-5d-subtraction/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;s-teacher-live-board&quot;, &quot;folder&quot;: &quot;s-teacher-live-board&quot;, &quot;description&quot;: &quot;把中文直播、视频或演讲提纲改写并渲染成 S 老师风格的手写黑板板书图片。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/s-teacher-live-board/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/s-teacher-live-board/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>s-teacher-live-board</h3>
+              <p>把中文直播、视频或演讲提纲改写并渲染成 S 老师风格的手写黑板板书图片。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>s-teacher-live-board</span>
+          </div>
+          <code>/Users/evan/.codex/skills/s-teacher-live-board/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;s-teacher-video-assembler&quot;, &quot;folder&quot;: &quot;s-teacher-video-assembler&quot;, &quot;description&quot;: &quot;把 S 老师原始视频、口播稿和素材库组装成完整口播视频，处理音轨、出镜片段、B-roll、字幕和清晰度。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/s-teacher-video-assembler/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/s-teacher-video-assembler/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>s-teacher-video-assembler</h3>
+              <p>把 S 老师原始视频、口播稿和素材库组装成完整口播视频，处理音轨、出镜片段、B-roll、字幕和清晰度。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>s-teacher-video-assembler</span>
+          </div>
+          <code>/Users/evan/.codex/skills/s-teacher-video-assembler/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;s40-tech-growth-stock&quot;, &quot;folder&quot;: &quot;s40-tech-growth-stock&quot;, &quot;description&quot;: &quot;把 S40 科技成长股框架用于 A 股科技板块，评估赛道空间、竞争格局、国产替代、护城河和买入观察结论。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/s40-tech-growth-stock/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/s40-tech-growth-stock/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>s40-tech-growth-stock</h3>
+              <p>把 S40 科技成长股框架用于 A 股科技板块，评估赛道空间、竞争格局、国产替代、护城河和买入观察结论。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>s40-tech-growth-stock</span>
+          </div>
+          <code>/Users/evan/.codex/skills/s40-tech-growth-stock/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;stock-v231-selector&quot;, &quot;folder&quot;: &quot;stock-v231-selector&quot;, &quot;description&quot;: &quot;按 V2.3.1 五层六维选股框架分析 A 股、港股或美股，做基本面、财务、估值、护城河、催化和风险打分。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/stock-v231-selector/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/stock-v231-selector/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>stock-v231-selector</h3>
+              <p>按 V2.3.1 五层六维选股框架分析 A 股、港股或美股，做基本面、财务、估值、护城河、催化和风险打分。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>stock-v231-selector</span>
+          </div>
+          <code>/Users/evan/.codex/skills/stock-v231-selector/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;theme-v12-ignition&quot;, &quot;folder&quot;: &quot;theme-v12-ignition&quot;, &quot;description&quot;: &quot;按题材雷达 V1.2 判断叙事点火、扩散、正宗滞后股、早期叙事机会、总龙头和跨市场接力。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/theme-v12-ignition/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/theme-v12-ignition/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>theme-v12-ignition</h3>
+              <p>按题材雷达 V1.2 判断叙事点火、扩散、正宗滞后股、早期叙事机会、总龙头和跨市场接力。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>theme-v12-ignition</span>
+          </div>
+          <code>/Users/evan/.codex/skills/theme-v12-ignition/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;three-sixteen-pullback-trading&quot;, &quot;folder&quot;: &quot;three-sixteen-pullback-trading&quot;, &quot;description&quot;: &quot;按 3 穿 16 均线和回踩加仓趋势方法，给出买入、加仓、减仓、卖出、等待和价格触发条件。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/three-sixteen-pullback-trading/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/three-sixteen-pullback-trading/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>three-sixteen-pullback-trading</h3>
+              <p>按 3 穿 16 均线和回踩加仓趋势方法，给出买入、加仓、减仓、卖出、等待和价格触发条件。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>three-sixteen-pullback-trading</span>
+          </div>
+          <code>/Users/evan/.codex/skills/three-sixteen-pullback-trading/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;video-transform&quot;, &quot;folder&quot;: &quot;video-transform&quot;, &quot;description&quot;: &quot;把视频链接或本地视频转成纠错后的转写文本、Word、摘要、单视频 HTML 和总索引页。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/video-transform/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/video-transform/SKILL.md&quot;}" data-source="本地自建" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>video-transform</h3>
+              <p>把视频链接或本地视频转成纠错后的转写文本、Word、摘要、单视频 HTML 和总索引页。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>本地</span>
+            <span>video-transform</span>
+          </div>
+          <code>/Users/evan/.codex/skills/video-transform/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;yangjia-emotion-cycle&quot;, &quot;folder&quot;: &quot;yangjia-emotion-cycle&quot;, &quot;description&quot;: &quot;按炒股养家情绪周期框架生成 A 股短线五股雷达，判断赚钱效应、亏钱效应、主线热点、仓位门和套利机会。&quot;, &quot;source_key&quot;: &quot;local&quot;, &quot;source_label&quot;: &quot;本地自建&quot;, &quot;source_detail&quot;: &quot;本地&quot;, &quot;domain&quot;: &quot;投资 / A股 / 研究&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/yangjia-emotion-cycle/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/yangjia-emotion-cycle/SKILL.md&quot;}" data-source="本地自建" data-domain="投资 / A股 / 研究">
+          <div class="skill-main">
+            <div>
+              <h3>yangjia-emotion-cycle</h3>
+              <p>按炒股养家情绪周期框架生成 A 股短线五股雷达，判断赚钱效应、亏钱效应、主线热点、仓位门和套利机会。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>投资 / A股 / 研究</span>
+            <span>本地</span>
+            <span>yangjia-emotion-cycle</span>
+          </div>
+          <code>/Users/evan/.codex/skills/yangjia-emotion-cycle/SKILL.md</code>
+        </article>
+        </div>
+      </section>
+      <section class="source-section" data-section="系统内置">
+        <div class="section-head">
+          <h2>系统内置</h2>
+          <span>6 个</span>
+        </div>
+        <div class="skill-grid">
+          
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;imagegen&quot;, &quot;folder&quot;: &quot;imagegen&quot;, &quot;description&quot;: &quot;生成或编辑位图图片，例如照片、插画、纹理、精灵、透明背景素材和视觉 mockup。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;视频 / 素材 / 语料&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/imagegen/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/imagegen/SKILL.md&quot;}" data-source="系统内置" data-domain="视频 / 素材 / 语料">
+          <div class="skill-main">
+            <div>
+              <h3>imagegen</h3>
+              <p>生成或编辑位图图片，例如照片、插画、纹理、精灵、透明背景素材和视觉 mockup。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>视频 / 素材 / 语料</span>
+            <span>系统</span>
+            <span>imagegen</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/imagegen/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;openai-docs&quot;, &quot;folder&quot;: &quot;openai-docs&quot;, &quot;description&quot;: &quot;查询并引用最新 OpenAI 官方文档，适合 OpenAI API、模型选择、Codex 使用方式和提示词升级问题。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/openai-docs/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/openai-docs/SKILL.md&quot;}" data-source="系统内置" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>openai-docs</h3>
+              <p>查询并引用最新 OpenAI 官方文档，适合 OpenAI API、模型选择、Codex 使用方式和提示词升级问题。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>系统</span>
+            <span>openai-docs</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/openai-docs/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;plugin-creator&quot;, &quot;folder&quot;: &quot;plugin-creator&quot;, &quot;description&quot;: &quot;创建和更新个人 Codex 插件目录、manifest、可选技能文件和本地市场条目。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/plugin-creator/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/plugin-creator/SKILL.md&quot;}" data-source="系统内置" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>plugin-creator</h3>
+              <p>创建和更新个人 Codex 插件目录、manifest、可选技能文件和本地市场条目。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>系统</span>
+            <span>plugin-creator</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/plugin-creator/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;review-agent&quot;, &quot;folder&quot;: &quot;review-agent&quot;, &quot;description&quot;: &quot;以代码审查视角检查变更，优先发现 bug、回归风险、缺失测试和可维护性问题。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/review-agent/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/review-agent/SKILL.md&quot;}" data-source="系统内置" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>review-agent</h3>
+              <p>以代码审查视角检查变更，优先发现 bug、回归风险、缺失测试和可维护性问题。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>系统</span>
+            <span>review-agent</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/review-agent/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;skill-creator&quot;, &quot;folder&quot;: &quot;skill-creator&quot;, &quot;description&quot;: &quot;创建或更新 Codex skill 的指导流程，适合把专门工作流沉淀成可复用技能。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/skill-creator/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/skill-creator/SKILL.md&quot;}" data-source="系统内置" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>skill-creator</h3>
+              <p>创建或更新 Codex skill 的指导流程，适合把专门工作流沉淀成可复用技能。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>系统</span>
+            <span>skill-creator</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/skill-creator/SKILL.md</code>
+        </article>
+        <article class="skill-card" data-skill="{&quot;name&quot;: &quot;skill-installer&quot;, &quot;folder&quot;: &quot;skill-installer&quot;, &quot;description&quot;: &quot;从官方 curated 列表、GitHub 仓库或指定路径安装 Codex skill 到 $CODEX_HOME/skills。&quot;, &quot;source_key&quot;: &quot;system&quot;, &quot;source_label&quot;: &quot;系统内置&quot;, &quot;source_detail&quot;: &quot;系统&quot;, &quot;domain&quot;: &quot;Codex / 工作流&quot;, &quot;path&quot;: &quot;/Users/evan/.codex/skills/.system/skill-installer/SKILL.md&quot;, &quot;uri&quot;: &quot;file:///Users/evan/.codex/skills/.system/skill-installer/SKILL.md&quot;}" data-source="系统内置" data-domain="Codex / 工作流">
+          <div class="skill-main">
+            <div>
+              <h3>skill-installer</h3>
+              <p>从官方 curated 列表、GitHub 仓库或指定路径安装 Codex skill 到 $CODEX_HOME/skills。</p>
+            </div>
+            <a class="file-link" href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">SKILL.md</a>
+          </div>
+          <div class="meta-row">
+            <span>Codex / 工作流</span>
+            <span>系统</span>
+            <span>skill-installer</span>
+          </div>
+          <code>/Users/evan/.codex/skills/.system/skill-installer/SKILL.md</code>
+        </article>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">本页由本机 `/Users/evan/.codex/skills` 和 `/Users/evan/.codex/plugins/cache` 扫描生成。</div>
+  </footer>
+  <script>
+    const search = document.querySelector('#search');
+    const resultLine = document.querySelector('#resultLine');
+    const empty = document.querySelector('#empty');
+    const cards = [...document.querySelectorAll('.skill-card')];
+    const sections = [...document.querySelectorAll('.source-section')];
+    const filters = { source: '', domain: '' };
+
+    function normalize(value) {
+      return value.toLowerCase().normalize('NFKC');
+    }
+
+    function setActiveButtons(kind, value) {
+      document.querySelectorAll(`[data-filter="${kind}"]`).forEach(button => {
+        button.classList.toggle('active', button.dataset.value === value);
+      });
+    }
+
+    function applyFilters() {
+      const query = normalize(search.value.trim());
+      let shown = 0;
+      cards.forEach(card => {
+        const data = JSON.parse(card.dataset.skill);
+        const haystack = normalize(Object.values(data).join(' '));
+        const matchesQuery = !query || haystack.includes(query);
+        const matchesSource = !filters.source || card.dataset.source === filters.source;
+        const matchesDomain = !filters.domain || card.dataset.domain === filters.domain;
+        const visible = matchesQuery && matchesSource && matchesDomain;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      sections.forEach(section => {
+        const visibleCards = [...section.querySelectorAll('.skill-card')].some(card => !card.hidden);
+        section.hidden = !visibleCards;
+      });
+      empty.style.display = shown ? 'none' : 'block';
+      resultLine.textContent = `显示 ${shown} 个 skill。生成时间：2026-07-24 22:36:33`;
+    }
+
+    document.querySelectorAll('.chip').forEach(button => {
+      button.addEventListener('click', () => {
+        const kind = button.dataset.filter;
+        filters[kind] = button.dataset.value;
+        setActiveButtons(kind, filters[kind]);
+        applyFilters();
+      });
+    });
+    search.addEventListener('input', applyFilters);
+  </script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

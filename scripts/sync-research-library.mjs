@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { load } from "cheerio";
 
@@ -13,6 +14,15 @@ export const categories = [
 	{ id: "engineering", title: "系统与工程", description: "产品研究、系统审查与运维记录" },
 ];
 const collections = {
+	"douyin": ["抖音研究资料", "research", "账号概览、收藏汇总、逐条摘要与校验原文。"],
+	"douyin_account_MS4wLjABAAAAuNn_since_20260501": ["抖音账号文字库", "research", "账号视频转写与研究原文。"],
+	"douyin_research_all": ["抖音研究汇总", "research", "跨视频研究汇总与相关资料。"],
+	"ai-stock-strategies": ["量化策略说明", "strategy", "交易策略、实现逻辑与研究说明。"],
+	"ai-stock-strategy-validation": ["策略回测验证", "strategy", "策略推荐记录、回测结果与验证明细。"],
+	"ai-stock-system-audit": ["AI投研系统审计", "engineering", "系统审计结论与改进记录。"],
+	"citic-securities-six-month-views-2026": ["中信证券半年观点", "research", "中信证券研究观点与阶段性展望。"],
+	"github-ai-finance-money-skills-20260725": ["AI金融开源工具", "method", "GitHub 金融研究工具与技能整理。"],
+	"skills": ["技能目录", "method", "本机研究技能与使用说明。"],
 	"a-share-four-strategies": ["短线四法", "strategy", "养家、92科比、龙头战法与北京炒家，每日雷达和历史复盘。"],
 	"a-share-macro-radar": ["A股大盘情绪", "radar", "宏观环境、市场宽度、资金风险偏好与仓位观察。"],
 	"a-share-macro-radar-20260703": ["宏观雷达专题", "radar", "阶段性市场情绪与宏观环境研究。"],
@@ -71,7 +81,7 @@ export function resolveLocalLink(value, from, files, sourceRoot = "D:/Evan/html"
 	let decoded;
 	try { decoded = decodeURIComponent(value); } catch { return { unavailable: "链接格式不完整" }; }
 	const [, pathname, suffix = ""] = decoded.match(/^([^?#]*)([?#][\s\S]*)?$/);
-	let relative = slash(pathname).replace(/^file:\/+/i, "");
+	let relative = slash(pathname).replace(/^file:\/\/\//i, "/").replace(/^\/(?=[A-Za-z]:)/, "");
 	const roots = [slash(sourceRoot).replace(/\/$/, ""), "D:/Evan/html", "D:/Evan/Codes/reports"];
 	const matchedRoot = roots.find(root => relative.toLowerCase().startsWith(`${root.toLowerCase()}/`));
 	if (matchedRoot) relative = relative.slice(matchedRoot.length + 1);
@@ -112,23 +122,29 @@ function writeChanged(filename, contents) {
 	return true;
 }
 
-export async function syncLibrary({ source = process.env.RESEARCH_SOURCE_DIR || "D:/Evan/html", destination = path.join(projectRoot, "public/research-library"), reportFile = path.join(projectRoot, "research-library/sync-report.json") } = {}) {
+export const defaultSource = () => process.env.RESEARCH_SOURCE_DIR || (process.platform === "win32" ? "D:/Evan/html" : path.join(os.homedir(), "html"));
+
+export async function syncLibrary({ merge = false, source = defaultSource(), destination = path.join(projectRoot, "public/research-library"), reportFile = path.join(projectRoot, "research-library/sync-report.json") } = {}) {
 	source = path.resolve(source);
 	destination = path.resolve(destination);
 	if (!fs.existsSync(path.join(source, "index.html"))) throw new Error(`Source index.html not found: ${source}`);
 	if (destination === source || destination.startsWith(`${source}${path.sep}`) || source.startsWith(`${destination}${path.sep}`)) throw new Error("Source and destination must not overlap.");
 	const contentRoot = path.join(destination, "content");
+	const previousCatalogFile = path.join(destination, "catalog.json");
+	const previousCatalog = fs.existsSync(previousCatalogFile) ? JSON.parse(fs.readFileSync(previousCatalogFile, "utf8")) : {};
+	const previousFile = path.join(destination, ".sync-manifest.json");
+	const previous = fs.existsSync(previousFile) ? JSON.parse(fs.readFileSync(previousFile, "utf8")) : { files: [], sourceHashes: {} };
 	const versionOf = filename => fs.existsSync(path.join(destination, filename)) ? hash(fs.readFileSync(path.join(destination, filename))).slice(0, 12) : "1";
 	const readerCssVersion = versionOf("_ui/reader.css");
 	const readerJsVersion = versionOf("_ui/reader.js");
 	const allFiles = walk(source);
 	const included = allFiles.filter(shouldInclude).sort();
 	const fileSet = new Set(included);
-	const entries = [];
-	const attachments = [];
+	const entries = merge ? (previousCatalog.entries || []).filter(entry => !fileSet.has(entry.id)) : [];
+	const attachments = merge ? (previousCatalog.attachments || []).filter(entry => !fileSet.has(entry.id)) : [];
 	const issues = [];
 	const repairedLinks = [];
-	const sourceHashes = {};
+	const sourceHashes = merge ? { ...previous.sourceHashes } : {};
 	let changed = 0;
 	let totalBytes = 0;
 		for (const relative of included) {
@@ -182,9 +198,7 @@ export async function syncLibrary({ source = process.env.RESEARCH_SOURCE_DIR || 
 		const landing = pages.find(entry => entry.id === `${group}/latest.html`) || pages.find(entry => entry.id === `${group}/index.html`) || pages[0];
 		return { id: group, title: details[0], category: details[1], description: details[2], pageCount: pages.length, attachmentCount: attachments.filter(entry => entry.collection === group).length, href: landing?.href || null, date: landing?.date || null };
 	});
-	const previousFile = path.join(destination, ".sync-manifest.json");
-	const previous = fs.existsSync(previousFile) ? JSON.parse(fs.readFileSync(previousFile, "utf8")) : { files: [] };
-	const managedFiles = included.map(publishedPath);
+	const managedFiles = [...new Set([...(merge ? previous.files : []), ...included.map(publishedPath)])].sort();
 	const managedSet = new Set(managedFiles);
 	const removed = previous.files.filter(relative => !managedSet.has(relative));
 	for (const relative of removed) {
@@ -192,9 +206,8 @@ export async function syncLibrary({ source = process.env.RESEARCH_SOURCE_DIR || 
 		if (!target.startsWith(`${contentRoot}${path.sep}`)) throw new Error("Invalid previous manifest path.");
 		if (fs.existsSync(target) && fs.lstatSync(target).isFile()) fs.unlinkSync(target);
 	}
-	const fingerprint = hash(JSON.stringify(sourceHashes));
-	const previousCatalogFile = path.join(destination, "catalog.json");
-	const previousCatalog = fs.existsSync(previousCatalogFile) ? JSON.parse(fs.readFileSync(previousCatalogFile, "utf8")) : {};
+	totalBytes = managedFiles.reduce((sum, relative) => sum + fs.statSync(path.join(contentRoot, relative)).size, 0);
+	const fingerprint = hash(JSON.stringify(Object.entries(sourceHashes).sort(([a], [b]) => a.localeCompare(b))));
 	const syncedAt = previousCatalog.fingerprint === fingerprint ? previousCatalog.syncedAt : new Date().toISOString();
 	const catalog = { version: 1, fingerprint, syncedAt, categories, collections: grouped, entries, attachments, totalBytes };
 	writeChanged(previousCatalogFile, `${JSON.stringify(catalog)}\n`);
@@ -211,6 +224,6 @@ export async function syncLibrary({ source = process.env.RESEARCH_SOURCE_DIR || 
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 	const sourceIndex = process.argv.indexOf("--source");
-	const report = await syncLibrary(sourceIndex >= 0 ? { source: process.argv[sourceIndex + 1] } : {});
+	const report = await syncLibrary({ ...(sourceIndex >= 0 ? { source: process.argv[sourceIndex + 1] } : {}), merge: process.argv.includes("--merge") });
 	console.log(JSON.stringify({ htmlPages: report.htmlPages, collections: report.collections, attachments: report.attachments, copiedFiles: report.copiedFiles, changedFiles: report.changedFiles, unavailableLinks: report.unavailableLinks.length, MiB: Math.round(report.copiedBytes / 1024 / 1024 * 100) / 100 }, null, 2));
 }

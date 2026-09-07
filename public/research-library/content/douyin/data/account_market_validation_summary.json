@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-09-07T00:04:57+08:00",
+  "as_of": "2026-09-07",
+  "accounts": [
+    {
+      "videos": 69,
+      "generated": 69,
+      "preserved_manual": 0,
+      "verdict_counts": {
+        "观察中": 59,
+        "已验证": 5,
+        "部分验证": 2,
+        "未验证": 3
+      },
+      "scored_videos": 10,
+      "average_score": 60.0,
+      "name": "立伟",
+      "slug": "liwei"
+    },
+    {
+      "videos": 57,
+      "generated": 57,
+      "preserved_manual": 0,
+      "verdict_counts": {
+        "观察中": 40,
+        "已验证": 9,
+        "未验证": 2,
+        "部分验证": 6
+      },
+      "scored_videos": 17,
+      "average_score": 70.6,
+      "name": "李一恩",
+      "slug": "li-yien"
+    },
+    {
+      "videos": 295,
+      "generated": 295,
+      "preserved_manual": 0,
+      "verdict_counts": {
+        "观察中": 274,
+        "已验证": 9,
+        "未验证": 6,
+        "部分验证": 6
+      },
+      "scored_videos": 21,
+      "average_score": 57.1,
+      "name": "全能的野人",
+      "slug": "quan-neng-ye-ren"
+    },
+    {
+      "videos": 65,
+      "generated": 65,
+      "preserved_manual": 0,
+      "verdict_counts": {
+        "观察中": 57,
+        "部分验证": 2,
+        "已验证": 4,
+        "未验证": 2
+      },
+      "scored_videos": 8,
+      "average_score": 62.5,
+      "name": "宇菠萝",
+      "slug": "yu-bo-luo"
+    }
+  ]
+}

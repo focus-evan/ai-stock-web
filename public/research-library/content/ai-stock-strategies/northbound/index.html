@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="ai-stock 北向资金战法详细说明：真实数据口径、七维评分、风控、调度、API 与源码审计。">
+  <title>北向资金战法｜AI Stock 战法手册</title>
+  <meta http-equiv="refresh" content="0; url=v2.html">
+  <link rel="stylesheet" href="../assets/strategy-doc.css">
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-stock-strategies&amp;view=reports">量化策略说明</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">S</span><span>AI Stock · 战法手册</span></a>
+      <nav class="topnav" aria-label="主导航">
+        <a href="../../index.html">HTML 总入口</a>
+        <a href="../index.html">战法总览</a>
+        <a href="index.html" aria-current="page">北向资金</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Capital flow strategy · Source audited</div>
+      <h1>北向资金<br>战法说明书</h1>
+      <p class="hero-lead">从源码还原真实可执行口径：这不是“当日北向个股净买入榜”，而是一套以季度持仓为慢变量设计、以日内主力资金和量价为代理信号、持有 10—15 个交易日的资金流波段模型。</p>
+      <div class="hero-meta">
+        <span class="hero-chip">七维百分制</span>
+        <span class="hero-chip">当前实际 proxy_only</span>
+        <span class="hero-chip">默认 13 只</span>
+        <span class="hero-chip">T+15 主验证</span>
+        <span class="hero-chip">源码快照 0f22300</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell">
+    <div class="mobile-toc">
+      <select data-mobile-toc="" aria-label="跳转到章节">
+        <option value="#definition">01 真实定义</option>
+        <option value="#architecture">02 信号架构</option>
+        <option value="#data">03 数据与模式</option>
+        <option value="#universe">04 候选池</option>
+        <option value="#scoring">05 七维评分</option>
+        <option value="#calculator">06 评分计算器</option>
+        <option value="#recommendation">07 推荐与 LLM</option>
+        <option value="#execution">08 执行与风控</option>
+        <option value="#schedule">09 调度与接口</option>
+        <option value="#tracking">10 跟踪与进化</option>
+        <option value="#sop">11 每日 SOP</option>
+        <option value="#fields">12 字段字典</option>
+        <option value="#audit">13 源码审计</option>
+        <option value="#sources">14 依据与来源</option>
+      </select>
+    </div>
+
+    <div class="doc-layout">
+      <aside class="toc" aria-label="目录">
+        <div class="toc-title">Contents</div>
+        <a href="#definition">01 · 真实定义</a>
+        <a href="#architecture">02 · 信号架构</a>
+        <a href="#data">03 · 数据与模式</a>
+        <a href="#universe">04 · 候选池</a>
+        <a href="#scoring">05 · 七维评分</a>
+        <a href="#calculator">06 · 评分计算器</a>
+        <a href="#recommendation">07 · 推荐与 LLM</a>
+        <a href="#execution">08 · 执行与风控</a>
+        <a href="#schedule">09 · 调度与接口</a>
+        <a href="#tracking">10 · 跟踪与进化</a>
+        <a href="#sop">11 · 每日 SOP</a>
+        <a href="#fields">12 · 字段字典</a>
+        <a href="#audit">13 · 源码审计</a>
+        <a href="#sources">14 · 依据与来源</a>
+      </aside>
+
+      <article class="content">
+        <section class="section" id="definition">
+          <div class="section-kicker">01 · Definition</div>
+          <h2>先把战法名称解释准确</h2>
+          <p class="lead">当前实现的“北向资金战法”，更准确的名字应当是<strong>“北向季度持仓锚点设计下的主力资金代理波段策略”</strong>。它关注机构偏好的延续性，但不具备合法、实时的单只股票北向净买入数据。</p>
+          <div class="verdict">
+            <div class="verdict-body">
+              <strong>当前有效结论</strong>
+              主流程把北向持仓表直接设为空表，因此运行时基本固定为 <span class="mono">proxy_only</span>：候选主要由当日主力净流入、超大单/大单、涨跌幅与成交额生成。页面上出现“主力净流入”，不能解释成“北向净买入”。
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><div class="metric-label">策略家族</div><div class="metric-value">资金流</div><div class="metric-note">capital_flow</div></div>
+            <div class="metric"><div class="metric-label">核心持有期</div><div class="metric-value">10–15日</div><div class="metric-note">T+15 为主验证点</div></div>
+            <div class="metric"><div class="metric-label">原生止盈 / 止损</div><div class="metric-value">+8 / −4%</div><div class="metric-note">统一护栏另有执行基线</div></div>
+            <div class="metric"><div class="metric-label">推荐阈值</div><div class="metric-value">≥ 60</div><div class="metric-note">80 分以上强烈推荐</div></div>
+          </div>
+
+          <h3>为什么不能再写“今日北向增持”</h3>
+          <p>沪深交易所自 2024 年 8 月 19 日起调整互联互通信息披露：单只证券的沪股通、深股通投资者合计持有数量改为<strong>每季度第五个交易日披露上季度末数据</strong>。交易所仍披露每日总成交及前十大活跃证券，但这不等于全市场逐股日度净买入。</p>
+          <p class="small muted">官方依据：<a href="https://www.szse.cn/www/szhk/hkbussiness/news/t20240726_608353.html">深交所关于深港通交易信息披露机制调整的通知</a>、<a href="https://www.sse.com.cn/services/hkexsc/hgtscsj/hgtzqcysl/">上交所沪股通证券持有数量页面</a>、<a href="https://www.hkex.com.hk/News/Market-Communications/2024/2404122news?sc_lang=en">港交所三地交易所联合安排</a>。</p>
+
+          <div class="split">
+            <div class="mini-card">
+              <h3>它擅长什么</h3>
+              <ul class="compact-list">
+                <li>从强资金流候选中筛选短中期承接较好的股票</li>
+                <li>寻找“温和上涨 + 大资金同向”的波段延续</li>
+                <li>发现股价回落但主力资金仍承接的逆势结构</li>
+                <li>用统一技术护栏过滤过热和赔率不足的标的</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>它不能证明什么</h3>
+              <ul class="compact-list">
+                <li>不能证明某只股票今天被北向资金净买入</li>
+                <li>不能从季度持仓推导连续 3 日、5 日增持</li>
+                <li>不能把主力资金口径等同境外机构资金</li>
+                <li>不能仅凭高分确认即时买点或保证 15 日收益</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="architecture">
+          <div class="section-kicker">02 · Architecture</div>
+          <h2>从数据到推荐的完整链路</h2>
+          <p>系统先构造资金流候选，再进行确定性评分；LLM 只做解释与操作增强；最后由统一护栏进行技术面和风险收益复核。GET 接口默认读取定时任务缓存，并不会在访问页面时重新抓取市场数据。</p>
+          <div class="flow" aria-label="策略处理流程">
+            <div class="flow-step"><div class="flow-num">STEP 01</div><strong>抓取</strong><span>主力资金榜、实时行情；季度持仓接口代码保留但主流程未启用</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 02</div><strong>标准化</strong><span>统一股票代码、价格、资金流、成交额与大单字段</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 03</div><strong>硬过滤</strong><span>市场板块、ST/退市、价格与最低资金流条件</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 04</div><strong>七维评分</strong><span>百分制排序，生成推荐等级与解释理由</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 05</div><strong>增强 / 护栏</strong><span>LLM 处理 Top 5；技术过热、RSI、RR 再过滤</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 06</div><strong>缓存 / 跟踪</strong><span>写推荐缓存，自动跟进，T+15 评估与参数进化</span></div>
+          </div>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>确定性与生成式边界</strong>七维总分由代码确定；LLM 可以改写推荐等级、理由、风险提示和操作建议，但不会回写七维分项。最终“推荐/关注”可能因此与原始分数不完全一致。</div>
+          </div>
+        </section>
+
+        <section class="section" id="data">
+          <div class="section-kicker">03 · Data contract</div>
+          <h2>数据源、降级顺序与运行模式</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>数据</th><th>优先顺序</th><th>用途</th><th>当前状态 / 限制</th></tr></thead>
+              <tbody>
+                <tr><td>季度北向持仓</td><td>AkShare → 网关 → 沪股通降级</td><td>持仓占比慢变量，最高 25 分</td><td><strong>主流程当前未调用</strong>；代码只接受距今不超过 130 天的披露</td></tr>
+                <tr><td>当日主力资金</td><td>东方财富直连 → 同花顺独立源 → AkShare → 网关</td><td>候选池与 25 分主力代理</td><td>东方财富只取按主力净流入排序的前 100；同花顺降级缺少超大单/大单拆分时，一致性分可能为 0</td></tr>
+                <tr><td>实时行情</td><td>新浪直连，最多 30 页</td><td>价格、涨跌幅、成交额、换手率、市值</td><td>失败时可回退使用资金流表自带行情字段</td></tr>
+                <tr><td>技术护栏行情</td><td>新浪日 K → AkShare 日线</td><td>近 3/5 日涨幅、RSI、动态买点与 RR</td><td>用于最终筛选，不参与七维原始分</td></tr>
+                <tr><td>公司画像</td><td>公司信息增强服务</td><td>展示公司简介等附加字段</td><td>失败不阻断推荐主链路</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>系统定义的三种状态</h3>
+          <div class="cards">
+            <div class="mini-card">
+              <div class="tag good">quarterly_anchor_plus_proxy</div>
+              <h3>锚点 + 代理</h3>
+              <p>存在有效季度持仓，同时叠加日内主力资金与实时量价。这是代码设计的完整版，但当前主流程没有把季度持仓接入。</p>
+            </div>
+            <div class="mini-card">
+              <div class="tag warn">proxy_only</div>
+              <h3>纯代理模式</h3>
+              <p>没有季度持仓，仅用主力资金代理和量价信号。当前运行基本落在此模式。</p>
+            </div>
+            <div class="mini-card">
+              <div class="tag risk">no_capital_signal</div>
+              <h3>不可用</h3>
+              <p>季度持仓与主力资金代理同时为空就抛出异常；即使实时行情存在，也不会生成“伪空推荐”。</p>
+            </div>
+          </div>
+          <div class="verdict risk">
+            <div class="verdict-body"><strong>必须显示的风险标签</strong>使用任何结果前先看 <span class="mono">source_status.status</span>、<span class="mono">source_status.mode</span> 与 <span class="mono">fund_flow_source</span>。如果是 <span class="mono">proxy_only</span>，所有“北向”叙述都应降级为“资金流代理观察”。</div>
+          </div>
+        </section>
+
+        <section class="section" id="universe">
+          <div class="section-kicker">04 · Candidate universe</div>
+          <h2>哪些股票能进入候选池</h2>
+          <p>候选代码来自“有效季度持仓代码集合”和“资金流榜代码集合”的并集；不过当前季度集合为空，实际主要就是资金流榜。</p>
+          <div class="split">
+            <div>
+              <h3>硬性保留条件</h3>
+              <ul class="checklist">
+                <li>股票代码前两位只能是 <span class="mono">00 / 30 / 60</span></li>
+                <li>名称非空，且不包含 <span class="mono">ST</span> 或“退”</li>
+                <li>价格必须大于 0</li>
+                <li>在季度持仓中，或当日主力净流入至少 5000 万元</li>
+              </ul>
+            </div>
+            <div>
+              <h3>隐含排除</h3>
+              <ul class="compact-list">
+                <li>科创板 <span class="mono">68</span> 开头股票不进入</li>
+                <li>北交所股票不进入</li>
+                <li>资金流低于 5000 万且无季度锚点不进入</li>
+                <li>资金流源完全不可用时整套策略失败</li>
+              </ul>
+            </div>
+          </div>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>候选池容量</strong>代码合并处最多考虑资金流字典前 200 个代码，但东方财富直连抓取本身固定为前 100 条，因此常态候选上限由上游 100 条决定。API 默认返回 13 只，允许 1—50 只。</div>
+          </div>
+        </section>
+
+        <section class="section" id="scoring">
+          <div class="section-kicker">05 · Scoring model</div>
+          <h2>七维百分制评分表</h2>
+          <p>总分为七个分项直接相加，并截断到 0—100。它不是概率，也不是预期收益率；它代表当前信号结构与代码规则的匹配程度。</p>
+          <div class="bars" aria-label="评分权重">
+            <div class="bar-row"><span>季度持仓锚点</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">25</span></div>
+            <div class="bar-row"><span>主力资金代理</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">25</span></div>
+            <div class="bar-row"><span>大单一致性</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-value">15</span></div>
+            <div class="bar-row"><span>市场表现</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-value">10</span></div>
+            <div class="bar-row"><span>逆势主力承接</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-value">10</span></div>
+            <div class="bar-row"><span>交易活跃度</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-value">10</span></div>
+            <div class="bar-row"><span>锚点 / 代理共振</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-value">5</span></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>维度</th><th>最高</th><th>代码中的精确规则</th><th>解释</th></tr></thead>
+              <tbody>
+                <tr><td>季度持仓锚点</td><td class="score">25</td><td>占比 ≥10%：25；≥5%：21；≥2%：17；≥1%：12；&lt;1%：8；不在锚点：0</td><td>只衡量最近公开季度持仓深度</td></tr>
+                <tr><td>主力资金代理</td><td class="score">25</td><td>净流入 ≥5 亿：25；≥1 亿：21；≥5000 万：16；&gt;0：8；&lt;−1 亿：<span class="negative">−5</span>；其余 0</td><td>不是北向净买入</td></tr>
+                <tr><td>超大单 / 大单一致性</td><td class="score">15</td><td>两者同时为正：15；任一为正：8；否则 0</td><td>验证大额委托方向是否同向</td></tr>
+                <tr><td>市场表现</td><td class="score">10</td><td>0%—5%：10；&gt;5% 且 &lt;9.8%：8；−2%—0%：7；&lt;−2%：3；其余：2</td><td>偏好温和上涨，涨停附近降分</td></tr>
+                <tr><td>逆势主力承接</td><td class="score">10</td><td>涨幅 &lt;0 且主力净流入 &gt;1 亿：10；否则 0</td><td>捕捉下跌中仍有大资金承接</td></tr>
+                <tr><td>交易活跃度</td><td class="score">10</td><td>成交额 ≥10 亿：10；≥5 亿：7；其余：3</td><td>保证基础流动性</td></tr>
+                <tr><td>锚点与代理共振</td><td class="score">5</td><td>存在季度持仓且主力净流入为正：5；否则 0</td><td>慢变量与日内代理同向</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>分数如何映射推荐等级</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>原始总分</th><th>确定性等级</th><th>后续仍可能发生什么</th></tr></thead>
+              <tbody>
+                <tr><td>80—100</td><td><span class="tag risk">强烈推荐</span></td><td>LLM 可改级；统一护栏可删除或降级</td></tr>
+                <tr><td>60—79</td><td><span class="tag warn">推荐</span></td><td>仍需满足追高、RSI 与最小 RR</td></tr>
+                <tr><td>40—59</td><td><span class="tag info">关注</span></td><td>可进入观察跟踪，但不属于默认可执行跟进</td></tr>
+                <tr><td>0—39</td><td><span class="tag">回避</span></td><td>通常不应执行</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>proxy_only 的分数天花板</strong>没有季度持仓时，“持仓 25 分”和“共振 5 分”恒为 0。温和上涨结构的理论最高分约为 60；下跌但主力强承接的理论最高分约为 67。因此当前确定性评分几乎不可能产生 80 分“强烈推荐”，除非 LLM 后续改写等级。</div>
+          </div>
+        </section>
+
+        <section class="section" id="calculator">
+          <div class="section-kicker">06 · Interactive calculator</div>
+          <h2>用一组数据复算原始分</h2>
+          <p>下面严格复现 <span class="mono">northbound_strategy.py</span> 的七维评分和候选硬过滤。结果只代表进入 LLM 和统一护栏之前的原始状态。</p>
+          <form class="calc" data-score-calculator="">
+            <div class="calc-grid">
+              <div class="field"><label for="in_northbound">有有效季度持仓锚点</label><select id="in_northbound" name="in_northbound"><option value="no">否（当前常态）</option><option value="yes">是</option></select></div>
+              <div class="field"><label for="hold_ratio">季度持仓占流通比（%）</label><input id="hold_ratio" name="hold_ratio" type="number" step="0.1" min="0" value="0"></div>
+              <div class="field"><label for="main_inflow">当日主力净流入（亿元）</label><input id="main_inflow" name="main_inflow" type="number" step="0.1" value="5.2"></div>
+              <div class="field"><label for="super_positive">超大单净流入为正</label><select id="super_positive" name="super_positive"><option value="yes">是</option><option value="no">否</option></select></div>
+              <div class="field"><label for="large_positive">大单净流入为正</label><select id="large_positive" name="large_positive"><option value="yes">是</option><option value="no">否</option></select></div>
+              <div class="field"><label for="change_pct">当日涨跌幅（%）</label><input id="change_pct" name="change_pct" type="number" step="0.1" value="1.8"></div>
+              <div class="field"><label for="amount">当日成交额（亿元）</label><input id="amount" name="amount" type="number" step="0.1" min="0" value="16"></div>
+            </div>
+            <div class="calc-actions"><button class="btn" type="submit">重新计算</button><span class="small" data-eligibility=""></span></div>
+            <div class="calc-result">
+              <div><div class="total-score"><span data-total="">0</span><span> / 100</span></div><div class="result-level" data-level="">—</div></div>
+              <div class="breakdown" data-breakdown=""></div>
+            </div>
+          </form>
+        </section>
+
+        <section class="section" id="recommendation">
+          <div class="section-kicker">07 · Recommendation &amp; LLM</div>
+          <h2>原始推荐、LLM 与最终列表</h2>
+          <div class="layer-grid">
+            <div class="layer-card" data-layer="LAYER 1 · DETERMINISTIC">
+              <h3>原始评分层</h3>
+              <p>七维分数降序排列，写入价格、资金流、分项得分、原因、推荐等级和 10—15 日原生交易画像。</p>
+            </div>
+            <div class="layer-card" data-layer="LAYER 2 · GENERATIVE">
+              <h3>LLM 增强层</h3>
+              <p>仅把原始 Top 5 交给模型，要求给出等级、三条理由、具体风险和波段操作建议；失败不阻断。</p>
+            </div>
+            <div class="layer-card" data-layer="LAYER 3 · GUARDRAIL">
+              <h3>统一护栏层</h3>
+              <p>再抓日 K 计算近 3/5 日涨幅、RSI、理想介入区和风险收益比，决定保留或剔除。</p>
+            </div>
+          </div>
+
+          <h3>LLM 被明确要求遵守的交易语义</h3>
+          <ul class="checklist">
+            <li>季度持仓只能作为慢变量，不能推断今日北向增持</li>
+            <li>主力净流入必须标注为代理信号</li>
+            <li>给出 5—15 个交易日计划，重点复核 T+10 与 T+15</li>
+            <li>不追高，优先回踩支撑、缩量企稳或持续资金承接</li>
+            <li>原生要求约 4% 止损、8% 目标；大幅偏离支撑者降级</li>
+          </ul>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>Top 5 收缩效应</strong>即使 API 请求 <span class="mono">limit=13</span>，LLM 成功时也只增强输入的前 5 只，并用这 5 只替换原列表，所以最终推荐可能收缩为最多 5 只；LLM 失败时才保留原始上限。</div>
+          </div>
+        </section>
+
+        <section class="section" id="execution">
+          <div class="section-kicker">08 · Execution &amp; risk</div>
+          <h2>执行参数为什么看起来有三套</h2>
+          <p>源码存在“战法原生字段、LLM 提示词、统一护栏配置”三层参数。它们目标接近，但数值并不完全一致。实际最终候选会经过统一护栏，因此执行复核应优先看护栏生成的具体价格字段。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>参数层</th><th>止损</th><th>目标</th><th>介入</th><th>持有 / 复核</th></tr></thead>
+              <tbody>
+                <tr><td>战法原生字段</td><td>−4%</td><td>+8%</td><td>不追高，回踩或缩量企稳分批</td><td>10—15 日；T+10 可分批止盈，T+15 无预期退出</td></tr>
+                <tr><td>LLM 提示词</td><td>4%</td><td>约 8%</td><td>给出具体介入区间和仓位建议</td><td>5—15 日；T+10 / T+15 复核</td></tr>
+                <tr><td>统一护栏基线</td><td>4.5%</td><td>名义 12%</td><td>当前价下方 0.8% 为理想介入价</td><td>资本流族目标按 0.6 系数估算，默认约为理想介入价上方 7.2%</td></tr>
+                <tr><td>综合战法旧常量</td><td>5%</td><td>10%</td><td>用于综合聚合体系的策略常量</td><td>不应直接覆盖本页单战法具体字段</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>统一护栏的实际规则</h3>
+          <div class="metrics">
+            <div class="metric"><div class="metric-label">回踩缓冲</div><div class="metric-value">0.8%</div><div class="metric-note">理想价 = 当前价 × 99.2%</div></div>
+            <div class="metric"><div class="metric-label">最低风险收益比</div><div class="metric-value">1.4</div><div class="metric-note">低于即剔除</div></div>
+            <div class="metric"><div class="metric-label">3 日追高线</div><div class="metric-value">22%</div><div class="metric-note">资本流策略专属阈值</div></div>
+            <div class="metric"><div class="metric-label">5 日追高线</div><div class="metric-value">35%</div><div class="metric-note">RSI 上限 75</div></div>
+          </div>
+          <ul class="compact-list">
+            <li>理想介入价：<span class="mono">current_price × (1 − 0.8%)</span></li>
+            <li>介入区：理想介入价上下各 0.3%</li>
+            <li>避免追高价：当前价上方 0.5%</li>
+            <li>默认止损价：理想介入价下方 4.5%</li>
+            <li>默认目标价：资本流族按 12% × 0.6 = 7.2% 的保守空间估算</li>
+            <li>近 3 日涨幅 &gt;22%、近 5 日涨幅 &gt;35%、RSI &gt;75 或 RR &lt;1.4 时剔除</li>
+          </ul>
+          <div class="verdict risk">
+            <div class="verdict-body"><strong>护栏全灭时不会真正清空</strong>如果所有候选都被护栏剔除，系统会降级保留原列表前 3 只并打上 <span class="mono">guardrail_degraded</span>，推荐等级降为“关注”。这些降级标的不应进入自动可执行跟进。</div>
+          </div>
+        </section>
+
+        <section class="section" id="schedule">
+          <div class="section-kicker">09 · Schedule &amp; API</div>
+          <h2>什么时候运行，接口返回什么</h2>
+          <p>调度器按北京时间工作，并通过 <span class="mono">GIT_BRANCH</span> 区分 main 与 dev，避免两个分支同时请求第三方数据源。下表以当前常量为准，不采用文件顶部仍保留的旧时间说明。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>环境</th><th>推荐开始</th><th>推荐补跑截止</th><th>交易开始</th><th>交易截止</th></tr></thead>
+              <tbody>
+                <tr><td>main</td><td>13:00</td><td>14:35</td><td>13:15（依赖推荐完成）</td><td>14:57</td></tr>
+                <tr><td>dev / 默认</td><td>13:10</td><td>14:40</td><td>13:25（依赖推荐完成）</td><td>14:57</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="split">
+            <div class="mini-card">
+              <div class="tag info">GET</div>
+              <h3><span class="mono">/api/strategy/northbound</span></h3>
+              <p>读取 <span class="mono">strategy_recommendation_cache</span> 中的最新结果。默认 13 只，范围 1—50；缓存不存在时返回成功但推荐为空。</p>
+            </div>
+            <div class="mini-card">
+              <div class="tag warn">POST</div>
+              <h3><span class="mono">/api/strategy/northbound/refresh</span></h3>
+              <p>清除战法内部 10 分钟缓存，重新抓数与计算，保存 manual 缓存，触发自动跟进，并标记调度器已刷新。</p>
+            </div>
+          </div>
+          <h3>GET 返回的关键元数据</h3>
+          <div class="codebox">{
+  "recommendations": [...],
+  "total": 5,
+  "strategy_report": "...",
+  "llm_enhanced": true,
+  "generated_at": "YYYY-MM-DD HH:mm:ss",
+  "trading_date": "YYYY-MM-DD",
+  "session_type": "afternoon | manual",
+  "source_status": { "status": "ok", "mode": "proxy_only", ... },
+  "disclosure_mode": "proxy_only",
+  "is_current_trading_date": true
+}</div>
+        </section>
+
+        <section class="section" id="tracking">
+          <div class="section-kicker">10 · Tracking &amp; evolution</div>
+          <h2>推荐之后如何跟踪和自我校准</h2>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-num">T</div><strong>推荐快照</strong><span>保存代码、价格、等级、分数与护栏特征</span></div>
+            <div class="flow-step"><div class="flow-num">AUTO</div><strong>交易跟进</strong><span>推荐 / 强烈推荐中最多选择 3 只合格标的</span></div>
+            <div class="flow-step"><div class="flow-num">WATCH</div><strong>观察跟进</strong><span>关注级且有触发条件者最多 5 只，最长 7 天</span></div>
+            <div class="flow-step"><div class="flow-num">DAILY</div><strong>收盘快照</strong><span>优先收盘价，实时价作为兜底</span></div>
+            <div class="flow-step"><div class="flow-num">T+15</div><strong>成熟样本</strong><span>以 15 个交易日为北向策略结算周期</span></div>
+            <div class="flow-step"><div class="flow-num">EVOLVE</div><strong>受限进化</strong><span>确定性调整参数，有边界、版本和回滚记录</span></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>进化参数</th><th>北向配置</th><th>含义</th></tr></thead>
+              <tbody>
+                <tr><td>horizon_days</td><td>15</td><td>推荐满 15 个交易日后才作为成熟训练样本</td></tr>
+                <tr><td>lookback_days</td><td>300</td><td>评估回看窗口</td></tr>
+                <tr><td>min_samples</td><td>15</td><td>至少 15 个成熟样本才允许评估候选参数</td></tr>
+                <tr><td>min_new_samples</td><td>3</td><td>新增长至少 3 个样本再触发一轮</td></tr>
+                <tr><td>risk_penalty</td><td>0.22</td><td>对不利波动的惩罚系数</td></tr>
+                <tr><td>target_edge</td><td>0.55</td><td>参数激活的目标优势门槛</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>系统不会让 LLM 直接改代码。可调整项受到全局边界约束，包括策略权重、止损、止盈、回踩缓冲、最小 RR 和最小质量分；每次变更保留版本并支持冻结或回滚。</p>
+          <div class="actions"><a class="btn secondary" href="../../ai-stock-strategy-validation/northbound/index.html">查看现有 T+15 可靠性验证</a></div>
+        </section>
+
+        <section class="section" id="sop">
+          <div class="section-kicker">11 · Operating procedure</div>
+          <h2>每天怎么用：一份可执行检查表</h2>
+          <div class="split">
+            <div>
+              <h3>13:00 后看推荐</h3>
+              <ol>
+                <li>先确认 <span class="mono">generated_at</span> 与 <span class="mono">trading_date</span> 是当天。</li>
+                <li>检查 <span class="mono">source_status.status=ok</span>，记录 <span class="mono">mode</span> 和资金流来源。</li>
+                <li>若为 <span class="mono">proxy_only</span>，把所有结果理解为主力资金代理，不使用“北向今日买入”措辞。</li>
+                <li>只从“推荐 / 强烈推荐”且 <span class="mono">guardrail_passed=true</span> 的标的开始复核。</li>
+              </ol>
+            </div>
+            <div>
+              <h3>下单前再复核</h3>
+              <ol>
+                <li>当前价不高于 <span class="mono">avoid_chase_above</span>，最好进入 <span class="mono">entry_zone</span>。</li>
+                <li>风险收益比不低于 1.4，且近 3/5 日涨幅、RSI 没触发护栏。</li>
+                <li>查看主力资金代理是否继续为正，大单方向是否一致。</li>
+                <li>仓位由组合风控决定；北向核心代码没有写死固定仓位百分比。</li>
+              </ol>
+            </div>
+          </div>
+          <div class="split">
+            <div class="mini-card">
+              <h3>持有中</h3>
+              <ul class="checklist">
+                <li>以买入价 / 理想介入价为基准执行止损，不用推荐日高点做风险基准</li>
+                <li>T+10 已有明显浮盈可分批止盈</li>
+                <li>放量长阴或资金承接转弱时提前处理</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>退出时</h3>
+              <ul class="checklist">
+                <li>达到目标价：分批落袋，不等待机械满 15 日</li>
+                <li>跌破止损价：执行减仓或退出</li>
+                <li>T+15 仍未达到预期：退出或重新立项，不自动延期</li>
+              </ul>
+            </div>
+          </div>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>一条总纪律</strong>这套战法的优势来自“资金承接 + 等回踩 + 给时间”，不是看到榜单后立即追涨。季度慢变量更不应被当成分时买点。</div>
+          </div>
+        </section>
+
+        <section class="section" id="fields">
+          <div class="section-kicker">12 · Field dictionary</div>
+          <h2>推荐对象关键字段字典</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>字段</th><th>含义</th><th>使用注意</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">northbound_score</td><td>七维原始总分</td><td>0—100，当前 proxy_only 通常难超 67</td></tr>
+                <tr><td class="mono">score_detail</td><td>七个分项得分</td><td>用于解释总分来源</td></tr>
+                <tr><td class="mono">in_northbound</td><td>是否有有效季度持仓锚点</td><td>当前主流程通常为 false</td></tr>
+                <tr><td class="mono">hold_ratio</td><td>最近公开季度持仓占比</td><td>不是今日持仓比例</td></tr>
+                <tr><td class="mono">main_net_inflow</td><td>当日主力净流入代理</td><td>单位为元；不等于北向净买入</td></tr>
+                <tr><td class="mono">super_large_net / large_net</td><td>超大单 / 大单净额</td><td>两者同时为正可得 15 分</td></tr>
+                <tr><td class="mono">is_contrarian</td><td>下跌中主力承接</td><td>涨幅 &lt;0 且主力流入 &gt;1 亿</td></tr>
+                <tr><td class="mono">disclosure_mode</td><td>披露 / 代理模式</td><td>重点辨别 proxy_only</td></tr>
+                <tr><td class="mono">recommendation_level</td><td>推荐等级</td><td>LLM 可能覆盖原始分数映射</td></tr>
+                <tr><td class="mono">gain_3d / gain_5d / rsi_14</td><td>统一护栏技术指标</td><td>用于过滤追高与超买</td></tr>
+                <tr><td class="mono">ideal_entry_price</td><td>回踩后的理想介入价</td><td>当前价默认下方 0.8%</td></tr>
+                <tr><td class="mono">entry_zone_low / high</td><td>允许介入区间</td><td>理想介入价上下约 0.3%</td></tr>
+                <tr><td class="mono">avoid_chase_above</td><td>避免追价上限</td><td>当前价上方 0.5%</td></tr>
+                <tr><td class="mono">risk_reward_ratio_current</td><td>当前结构风险收益比</td><td>低于 1.4 将被护栏剔除</td></tr>
+                <tr><td class="mono">guardrail_passed</td><td>是否通过统一护栏</td><td>false 不应自动跟进</td></tr>
+                <tr><td class="mono">guardrail_degraded</td><td>护栏全灭后的降级保留</td><td>只观察，不进入自动可执行跟进</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="audit">
+          <div class="section-kicker">13 · Source audit</div>
+          <h2>源码审计发现的关键偏差</h2>
+          <p>以下不是策略理念争论，而是“代码写了什么”和“实际调用什么”之间的差异。理解这些偏差，才能避免把页面文案当成事实数据。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>优先级</th><th>发现</th><th>实际影响</th><th>建议</th></tr></thead>
+              <tbody>
+                <tr><td><span class="tag risk">P0 口径</span></td><td>主流程直接把 <span class="mono">hold_data</span>、5 日、10 日持仓设为空</td><td>季度锚点、持仓分、共振分、连续增持全部不生效；实际为纯代理模式</td><td>页面永久显示模式；若要启用锚点，应接入季度数据并保留披露日期</td></tr>
+                <tr><td><span class="tag risk">P0 命名</span></td><td>策略名称仍叫“北向资金”，但日内数据是主力资金代理</td><td>用户容易误读为境外机构当日买入</td><td>界面改为“北向锚点 / 主力资金代理”，展示不可省略的披露说明</td></tr>
+                <tr><td><span class="tag warn">P1 参数</span></td><td>原生 +8/−4、LLM 约 +8/−4、护栏名义 +12/−4.5、综合常量 +10/−5 并存</td><td>不同页面可能显示不同止盈止损</td><td>明确最终价格字段的优先级，或统一为单一配置源</td></tr>
+                <tr><td><span class="tag warn">P1 列表</span></td><td>LLM 只接收 Top 5，成功后替换整个列表</td><td>默认请求 13 只时，最终通常只剩 5 只</td><td>明确产品预期；若需 13 只，应合并未增强尾部而非覆盖</td></tr>
+                <tr><td><span class="tag warn">P1 评分</span></td><td>逆势承接的 7 分分支永远到不了</td><td>只要下跌且流入 &gt;1 亿就直接得 10 分</td><td>删除死分支或重新定义 10 / 7 分条件</td></tr>
+                <tr><td><span class="tag info">P2 范围</span></td><td>只允许 00 / 30 / 60 开头代码</td><td>科创板 68 与北交所被排除</td><td>若非有意限制，应把板块白名单配置化</td></tr>
+                <tr><td><span class="tag info">P2 文档</span></td><td>旧 <span class="mono">STRATEGY_ARCHITECTURE.md</span> 仍写五维评分、日频增持和旧调度时间</td><td>维护者可能依据过时说明排查问题</td><td>用本说明更新项目内架构文档</td></tr>
+                <tr><td><span class="tag info">P2 调度</span></td><td>调度器顶部注释与当前常量不一致</td><td>阅读注释会误判实际触发时间</td><td>从常量生成时间表，减少双重维护</td></tr>
+                <tr><td><span class="tag info">P2 跟踪</span></td><td>旧北向持仓跟踪表和 <span class="mono">_track_and_enrich</span> 仍在，但主推荐链路不再调用</td><td>“连续增持”相关字段和表结构容易造成能力错觉</td><td>标记 deprecated 或迁移为推荐连续性跟踪</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="verdict">
+            <div class="verdict-body"><strong>总体判断</strong>策略的资金流代理、评分、LLM 与护栏链路是完整的；最大问题不在“能否运行”，而在名称和展示容易把代理信号说成北向事实。文档和界面必须把 <span class="mono">proxy_only</span> 放在首屏。</div>
+          </div>
+        </section>
+
+        <section class="section" id="sources">
+          <div class="section-kicker">14 · Sources &amp; version</div>
+          <h2>本文依据与版本范围</h2>
+          <h3>核心源码</h3>
+          <ul class="source-list">
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/northbound_strategy.py</a> <span class="source-meta">抓取、合并、七维评分、推荐字段、模式说明</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/northbound_llm.py</a> <span class="source-meta">Top 5 增强提示词、风险与操作建议</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/strategy_guardrails.py</a> <span class="source-meta">动态买点、追高阈值、RSI、RR 与降级保留</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/northbound_endpoints.py</a> <span class="source-meta">GET 缓存读取与 POST 手动刷新</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/portfolio_scheduler.py</a> <span class="source-meta">北京时间调度与补跑窗口</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/strategy_follow_service.py</a> <span class="source-meta">自动交易 / 观察跟进规则</span></li>
+            <li><a href="#library-source-note" data-library-unavailable="原始目录中没有此文件，或它是未发布的运行文件" title="原始目录中没有此文件，或它是未发布的运行文件">api/strategy_evolution_service.py</a> <span class="source-meta">T+15 评估政策与受限参数进化</span></li>
+          </ul>
+          <h3>官方披露依据</h3>
+          <ul class="source-list">
+            <li><a href="https://www.szse.cn/www/szhk/hkbussiness/news/t20240726_608353.html">深圳证券交易所：关于深港通交易信息披露机制调整相关事项的通知</a></li>
+            <li><a href="https://www.sse.com.cn/services/hkexsc/hgtscsj/hgtzqcysl/">上海证券交易所：沪股通证券持有数量</a></li>
+            <li><a href="https://www.hkex.com.hk/News/Market-Communications/2024/2404122news?sc_lang=en">香港交易所：三地交易所调整互联互通行情披露安排</a></li>
+          </ul>
+          <div class="split">
+            <div class="mini-card"><h3>源码快照</h3><p><span class="mono">0f22300</span><br><span class="small muted">最后相关提交：2026-08-28</span></p></div>
+            <div class="mini-card"><h3>文档审阅</h3><p>2026-08-29 · Asia/Shanghai<br><span class="small muted">后续源码参数变化需重新审阅</span></p></div>
+          </div>
+          <div class="actions"><a class="btn" href="../index.html">返回战法总览</a><a class="btn secondary" href="../../index.html">返回 HTML 总入口</a></div>
+          <p class="small muted">风险声明：本文用于说明本地项目中的策略逻辑、数据边界和操作流程，不构成个股推荐、收益承诺或适合任何特定投资者的投资建议。</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner"><span>AI Stock · 北向资金战法说明书</span><span>源码审计版 · 0f22300 · 2026-08-29</span></div>
+  </footer>
+  <script src="../assets/strategy-doc.js"></script>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

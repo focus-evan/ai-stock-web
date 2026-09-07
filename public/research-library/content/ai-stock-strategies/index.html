@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="ai-stock 项目战法总览与详细战法文档入口。">
+  <title>AI Stock 战法手册｜总览</title>
+  <link rel="stylesheet" href="assets/strategy-doc.css">
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=ai-stock-strategies&amp;view=reports">量化策略说明</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">S</span><span>AI Stock · 战法手册</span></a>
+      <nav class="topnav" aria-label="主导航">
+        <a href="../index.html">HTML 总入口</a>
+        <a href="index.html" aria-current="page">战法总览</a>
+        <a href="#map">全部明细</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Strategy knowledge base</div>
+      <h1>AI Stock<br>战法手册</h1>
+      <p class="hero-lead">把项目里的策略代码翻译成可以执行、可以审计、也可以持续更新的中文说明。短线四法已同步 2026-08-30 军训时点、候选/买入分账、T+1有效样本与不可变信号账本优化。</p>
+      <div class="hero-meta">
+        <span class="hero-chip">14 个策略模块</span>
+        <span class="hero-chip">14 份完整明细</span>
+        <span class="hero-chip">短线四法快照 fe74d11</span>
+        <span class="hero-chip">更新于 2026-08-30</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell">
+    <section class="section" id="start">
+      <div class="section-kicker">Start here</div>
+      <h2>先按你的交易问题进入</h2>
+      <p class="lead">北向资金适合理解跨境资金证据；龙头与情绪类适合判断短线周期；突破、量价、均线与动量解释趋势结构；综合战法负责相关性去重后的多源共振。</p>
+      <div class="split">
+        <div class="mini-card">
+          <div class="tag-row"><span class="tag good">14 份已完成</span><span class="tag info">源码审计</span></div>
+          <h3>完整战法地图</h3>
+          <p>每份文档均覆盖适用边界、数据来源、评分公式、推荐等级、执行 SOP、已知局限和 P0/P1/P2 优化建议。</p>
+          <div class="actions"><a class="btn" href="#map">选择战法明细</a></div>
+        </div>
+        <div class="mini-card">
+          <div class="tag-row"><span class="tag warn">配套材料</span><span class="tag">历史验证</span></div>
+          <h3>统一优化原则</h3>
+          <p>先做时间一致性、证据门、真实可成交与单一评分口径，再做因子增强；所有改造都需要 point-in-time 回测和净费用验证。</p>
+          <div class="actions"><a class="btn secondary" href="combined/index.html#optimizations">查看综合优化路线</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="short-term-v10">
+      <div class="section-kicker">Short-term tactics v10</div>
+      <h2>短线四法：只有主检查点可以开新仓</h2>
+      <p class="lead">盘前负责计划，主检查点负责确认，盘中/收盘负责验收与复盘。候选池不等于买入池，非执行时点统一降为只观察。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>战法</th><th>唯一开仓检查点</th><th>明确买入上限</th><th>其他检查点</th><th>归因</th></tr></thead>
+          <tbody>
+            <tr><td>炒股养家情绪周期</td><td>10:05</td><td>1只</td><td>08:50计划；15:25复盘</td><td>T+1，仅10:05有效样本</td></tr>
+            <tr><td>92科比周期投机</td><td>10:15</td><td>1只</td><td>08:45计划；15:20复盘</td><td>T+1，仅10:15有效样本</td></tr>
+            <tr><td>陈小群龙头战法</td><td>10:05</td><td>1只</td><td>08:50计划；15:25复盘</td><td>T+1，仅10:05有效样本</td></tr>
+            <tr><td>北京炒家首板</td><td>10:35</td><td>2只</td><td>14:20验收；15:25复盘</td><td>T+1，仅10:35有效样本</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="verdict warn"><div class="verdict-body"><strong>统一口径</strong>四法的 <span class="mono">recommendations</span> 现在只保存明确“买”，完整候选另存 <span class="mono">candidate_recommendations</span>；每次运行通过 <span class="mono">signal_revision</span> 追加进不可变账本。</div></div>
+    </section>
+
+    <section class="section" id="map">
+      <div class="section-kicker">Strategy map</div>
+      <h2>项目战法地图</h2>
+      <p>下列 14 个模块来自当前调度器的 <span class="mono">ACTIVE_STRATEGIES</span>。每张卡片都链接到基于当前源码编制的明细；旧 sentiment、relay 等文件属于兼容/底层实现，不再作为独立活跃战法重复统计。</p>
+      <div class="strategy-grid">
+        <article class="strategy-card featured">
+          <div class="tag-row"><span class="tag good">已编制</span><span class="tag">资金流</span></div>
+          <h3>北向资金</h3>
+          <p>季度持仓慢变量设计 + 日内主力资金代理 + 量价与风险收益护栏。</p>
+          <a class="card-link" href="northbound/index.html">查看明细 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">高辨识度</span><span class="tag">情绪</span></div>
+          <h3>龙头战法</h3>
+          <p>围绕高辨识度核心、竞价确认、封板与分歧回封展开。</p>
+          <a class="card-link" href="dragon-head/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">高波动</span><span class="tag">情绪</span></div>
+          <h3>情绪接力</h3>
+          <p>以接力节奏、市场热度和短线承接为核心的高弹性策略。</p>
+          <a class="card-link" href="emotion-relay/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">催化剂</span></div>
+          <h3>事件驱动</h3>
+          <p>从新闻、事件与题材催化中提取候选，并验证事件相关性。</p>
+          <a class="card-link" href="event-driven/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">趋势结构</span></div>
+          <h3>突破战法</h3>
+          <p>突破位、回踩确认与风险收益比共同约束的趋势结构策略。</p>
+          <a class="card-link" href="breakthrough/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">趋势结构</span></div>
+          <h3>量价关系</h3>
+          <p>从量价配合、换手和资金承接中寻找趋势延续信号。</p>
+          <a class="card-link" href="volume-price/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">趋势结构</span></div>
+          <h3>均线战法</h3>
+          <p>均线多头、交叉与回踩支撑确认，偏中短波段。</p>
+          <a class="card-link" href="moving-average/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">趋势结构</span></div>
+          <h3>趋势动量</h3>
+          <p>多周期动量、趋势强度与技术健康度的组合判断。</p>
+          <a class="card-link" href="trend-momentum/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag">隔夜</span></div>
+          <h3>隔夜施工法</h3>
+          <p>尾盘确认、次日竞价与强制退出组成的短生命周期策略。</p>
+          <a class="card-link" href="overnight/index.html">查看明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card featured">
+          <div class="tag-row"><span class="tag good">v10 已更新</span><span class="tag">10:05 · 1席</span></div>
+          <h3>炒股养家情绪周期</h3>
+          <p>赚钱/亏钱效应先行；盘前只计划，10:05唯一执行，T+1归因。</p>
+          <a class="card-link" href="yangjia-emotion-cycle/index.html">查看 v10 明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card featured">
+          <div class="tag-row"><span class="tag good">v10 已更新</span><span class="tag">10:15 · 1席</span></div>
+          <h3>92 科比周期投机</h3>
+          <p>周期—角色双门；龙头、补涨、切换三选一，不做中位。</p>
+          <a class="card-link" href="kobe92-cycle-speculation/index.html">查看 v10 明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card featured">
+          <div class="tag-row"><span class="tag good">v10 已更新</span><span class="tag">10:05 · 1席</span></div>
+          <h3>陈小群龙头战法（Skill）</h3>
+          <p>正宗、辨识、合力六门合取；最高质量龙头才进入执行层。</p>
+          <a class="card-link" href="a-share-leader-tactics/index.html">查看 v10 明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card featured">
+          <div class="tag-row"><span class="tag good">v10 已更新</span><span class="tag">10:35 · 2席</span></div>
+          <h3>北京炒家首板</h3>
+          <p>10:35建仓；14:20只验收早盘席位，不再尾盘重选。</p>
+          <a class="card-link" href="beijing-chaogu-first-board/index.html">查看 v10 明细与优化建议 →</a>
+        </article>
+        <article class="strategy-card">
+          <div class="tag-row"><span class="tag info">元策略</span><span class="tag">综合</span></div>
+          <h3>综合战法</h3>
+          <p>聚合多个子战法的推荐缓存，处理跨战法共振与降级精选。</p>
+          <a class="card-link" href="combined/index.html">查看明细与优化建议 →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="rules">
+      <div class="section-kicker">Documentation rules</div>
+      <h2>这套手册如何保持可信</h2>
+      <div class="cards">
+        <div class="mini-card">
+          <h3>源码优先</h3>
+          <p>当旧架构文档、注释与运行常量不一致时，以当前被调用的代码路径和常量为准，并把差异单独列出。</p>
+        </div>
+        <div class="mini-card">
+          <h3>事实与解释分开</h3>
+          <p>硬阈值、接口和字段按代码记录；策略含义与操作建议标注为解释，不把代理信号改写成真实北向净买入。</p>
+        </div>
+        <div class="mini-card">
+          <h3>版本可追溯</h3>
+          <p>每份明细标明源码快照、审阅日期和源文件范围，避免后续参数变化后仍沿用过时结论。</p>
+        </div>
+      </div>
+      <div class="verdict warn">
+        <div class="verdict-body"><strong>阅读提示</strong>战法手册用于解释系统逻辑与辅助复核，不构成收益承诺或个股买卖建议。策略输出仍需结合数据状态、价格位置和个人风险承受能力。</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner"><span>AI Stock 战法手册 · 本地知识库</span><span>短线四法 fe74d11 · 更新于 2026-08-30</span></div>
+  </footer>
+  <script src="assets/strategy-doc.js"></script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

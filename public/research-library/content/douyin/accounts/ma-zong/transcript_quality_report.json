@@ -1,0 +1,103 @@
+{
+  "generated": "2026-09-07 00:04",
+  "quality_pass": "finance-context-v3",
+  "glossary": "/Users/evan/.codex/skills/douyin-research-digest/references/finance_asr_glossary.json",
+  "total": 387,
+  "status_counts": {
+    "通过（画面OCR）": 19,
+    "通过": 218,
+    "通过（已修正）": 142,
+    "需复核": 8
+  },
+  "needs_review": 8,
+  "items": [
+    {
+      "aweme_id": "7675577379259340017",
+      "title": "#股票#股民#马总#财经#同花顺",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7668260816294039667",
+      "title": "未来的四种走势，你觉得是哪个？#股票#股民#马总#财经#同花顺",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7664816219878444490",
+      "title": "吸干全场#股票#股民#马总#财经#同花顺",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7661521635656206171",
+      "title": "马总绵薄之力，愿汛区平安。洪水早日退去",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7657431421514550258",
+      "title": "选择你的英雄吧。#股票#股民#马总#交易魔法师#财经",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7653024301814270026",
+      "title": "球王马总#股票#股民#马总#交易魔法师#财经",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7647147497857521139",
+      "title": "一决高下！#股票#股民#马总#交易魔法师#财经",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7645282371395661489",
+      "title": "战胜一切！#股票#股民#马总#交易魔法师#财经",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    }
+  ]
+}

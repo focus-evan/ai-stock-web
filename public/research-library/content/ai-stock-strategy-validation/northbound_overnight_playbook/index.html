@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>北向资金与隔夜战法深度执行手册</title>
+  <style>
+:root{--bg:#f6f8fb;--panel:#fff;--ink:#17202a;--muted:#64748b;--line:#dce4ed;--up:#d71920;--up-soft:#fff1f1;--down:#13823d;--down-soft:#edf8f0;--flat:#8a5a00;--flat-soft:#fff7e8;--blue:#245ee8;--dark:#111827}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.62;letter-spacing:0}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1360px;margin:0 auto}header{background:var(--dark);color:#fff;border-bottom:5px solid var(--up);padding:30px 24px 25px}h1{margin:0 0 8px;font-size:32px;line-height:1.18;letter-spacing:0}.sub{max-width:980px;color:#d8e2ef;margin:0;font-size:15px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.nav a{color:#e6eefb;border:1px solid #334155;border-radius:7px;padding:7px 11px}.nav a:hover{background:#25324a;text-decoration:none}
+main{padding:24px}section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:18px}h2{font-size:21px;margin:0 0 12px;letter-spacing:0}h3{font-size:16px;margin:0 0 10px;letter-spacing:0}p{margin:0;color:#344153;font-size:14px}.note{font-size:13px;color:var(--muted)}.notice{background:var(--flat-soft);border:1px solid #efcd91;color:#543500;border-radius:8px;padding:12px 14px;margin-bottom:18px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.kpi{border:1px solid var(--line);background:#fbfdff;border-radius:8px;padding:13px}.kpi span{display:block;color:var(--muted);font-size:13px}.kpi b{display:block;font-size:24px;line-height:1.25;margin:4px 0}.kpi small{color:var(--muted);font-size:12px}.up{color:var(--up);font-weight:700}.down{color:var(--down);font-weight:700}.flat{color:var(--flat);font-weight:700}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section-gap{margin-top:16px}.chart-card,.rule-card{border:1px solid var(--line);background:#fbfdff;border-radius:8px;padding:14px}.bar-row{display:grid;grid-template-columns:74px 1fr 76px;gap:10px;align-items:center;margin:9px 0}.bar-row span,.bar-row b{font-size:13px}.bar-track{height:13px;background:#edf1f6;border-radius:999px;overflow:hidden}.bar-track i{display:block;height:100%;border-radius:999px}.up-fill{background:var(--up)}.down-fill{background:var(--down)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;font-size:13px;white-space:nowrap}th{background:#f0f3f7;font-weight:700}td.explain{white-space:normal;min-width:270px}.rule-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rule-card b{display:block;margin-bottom:6px}.rule-card ol,.rule-card ul{margin:0 0 0 18px;padding:0;color:#344153;font-size:14px}.rule-card li{margin:5px 0}.danger{border-color:#f1b6b6;background:#fff8f8}.good{border-color:#abd9b8;background:#f7fff9}.timeline{display:grid;gap:10px}.time-row{display:grid;grid-template-columns:115px 1fr;gap:12px;border:1px solid var(--line);background:#fbfdff;border-radius:8px;padding:10px}.time-row b{color:var(--ink)}
+@media(max-width:1080px){.kpi-grid,.rule-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
+@media(max-width:680px){header,main{padding-left:16px;padding-right:16px}h1{font-size:27px}.kpi-grid,.rule-grid{grid-template-columns:1fr}.time-row{grid-template-columns:1fr}.bar-row{grid-template-columns:66px 1fr 70px}}
+</style>
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-stock-strategy-validation&amp;view=reports">策略回测验证</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <div class="wrap">
+      <h1>北向资金与隔夜战法深度执行手册</h1>
+      <p class="sub">这份手册只围绕两个策略：北向资金作为慢变量波段，隔夜战法作为极短线冲高战术。规则按“能跟投、能复盘、能止损”的标准写，不把回测收益当作确定收益。</p>
+      <div class="nav">
+        <a href="../index.html">返回总览</a>
+        <a href="../northbound/index.html">北向原报告</a>
+        <a href="../overnight/index.html">隔夜原报告</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <div class="notice">跟投版核心约束：北向资金可以做主仓，但必须按 T+10/T+15 节奏管理；隔夜战法只允许做小仓快打，次日冲高卖出，不允许把隔夜单拖成波段单。</div>
+
+      <section>
+        <h2>一页结论</h2>
+        
+    <div class="kpi-grid">
+      <div class="kpi"><span>北向主口径</span><b class="up">+4.82%</b><small>T+15 收盘，胜率 60.4%，样本 91</small></div>
+      <div class="kpi"><span>北向中段兑现</span><b class="up">+3.86%</b><small>T+10 收盘，胜率 62.6%</small></div>
+      <div class="kpi"><span>隔夜保守口径</span><b class="down">-0.33%</b><small>次日均价 OHLC4，胜率 40.5%，样本 274</small></div>
+      <div class="kpi"><span>隔夜进攻上限</span><b class="up">+3.25%</b><small>次日最高价，触正 80.3%</small></div>
+    </div>
+    
+      </section>
+
+      <section>
+        <h2>收益结构对比</h2>
+        
+    <div class="two-col">
+      <div class="chart-card"><h3>北向资金：持有越久收益越明显</h3><div class="bar-row"><span>T+1</span><div class="bar-track"><i class="up-fill" style="width:5.9%"></i></div><b class="up">+0.35%</b></div><div class="bar-row"><span>T+3</span><div class="bar-track"><i class="up-fill" style="width:26.3%"></i></div><b class="up">+1.58%</b></div><div class="bar-row"><span>T+5</span><div class="bar-track"><i class="up-fill" style="width:41.3%"></i></div><b class="up">+2.48%</b></div><div class="bar-row"><span>T+10</span><div class="bar-track"><i class="up-fill" style="width:64.3%"></i></div><b class="up">+3.86%</b></div><div class="bar-row"><span>T+15</span><div class="bar-track"><i class="up-fill" style="width:80.4%"></i></div><b class="up">+4.82%</b></div></div>
+      <div class="chart-card"><h3>隔夜战法：均价弱，冲高强</h3><div class="bar-row"><span>次日均价</span><div class="bar-track"><i class="down-fill" style="width:6.6%"></i></div><b class="down">-0.33%</b></div><div class="bar-row"><span>次日最高</span><div class="bar-track"><i class="up-fill" style="width:64.9%"></i></div><b class="up">+3.25%</b></div></div>
+    </div>
+    
+      </section>
+
+      <section>
+        <h2>北向资金：策略判断</h2>
+        <p class="note">北向资金不是盘中追单策略。官方披露机制调整后，沪深股通实时买入/卖出/成交总额不再披露，实盘应按盘后或系统推荐信号做“慢变量确认”。</p>
+        <div class="table-wrap section-gap">
+          <table>
+            <thead><tr><th>验证窗口</th><th>样本</th><th>平均收益</th><th>中位数</th><th>胜率</th><th>P25/P75</th><th>涨超3%</th><th>跌超5%</th></tr></thead>
+            <tbody><tr><td>T+1</td><td>91</td><td class="up">+0.35%</td><td class="down">-0.03%</td><td>47.3%</td><td>-1.76% / +2.15%</td><td>19.8%</td><td>4.4%</td></tr>
+<tr><td>T+3</td><td>91</td><td class="up">+1.58%</td><td class="up">+0.69%</td><td>56.0%</td><td>-2.21% / +4.26%</td><td>33.0%</td><td>9.9%</td></tr>
+<tr><td>T+5</td><td>91</td><td class="up">+2.48%</td><td class="up">+1.43%</td><td>60.4%</td><td>-2.28% / +6.27%</td><td>46.2%</td><td>9.9%</td></tr>
+<tr><td>T+10</td><td>91</td><td class="up">+3.86%</td><td class="up">+2.33%</td><td>62.6%</td><td>-3.33% / +9.88%</td><td>47.3%</td><td>15.4%</td></tr>
+<tr><td>T+15</td><td>91</td><td class="up">+4.82%</td><td class="up">+2.81%</td><td>60.4%</td><td>-5.90% / +12.39%</td><td>49.5%</td><td>26.4%</td></tr></tbody>
+          </table>
+        </div>
+        <div class="section-gap">
+    <div class="two-col">
+      <div>
+        <h3>按推荐级别</h3>
+        <div class="table-wrap"><table><thead><tr><th>级别</th><th>样本</th><th>T+15均值</th><th>胜率</th><th>P25/P75</th><th>跌超5%</th></tr></thead><tbody><tr><td>强烈推荐</td><td>25</td><td class="up">+5.28%</td><td>64.0%</td><td>-7.19% / +11.58%</td><td>28.0%</td></tr><tr><td>推荐</td><td>66</td><td class="up">+4.65%</td><td>59.1%</td><td>-5.36% / +12.41%</td><td>25.8%</td></tr></tbody></table></div>
+      </div>
+      <div>
+        <h3>按月份</h3>
+        <div class="table-wrap"><table><thead><tr><th>月份</th><th>样本</th><th>T+15均值</th><th>胜率</th><th>P25/P75</th><th>跌超5%</th></tr></thead><tbody><tr><td>2026-03</td><td>26</td><td class="up">+4.46%</td><td>69.2%</td><td>-0.82% / +8.58%</td><td>11.5%</td></tr><tr><td>2026-04</td><td>46</td><td class="up">+7.66%</td><td>58.7%</td><td>-5.25% / +17.96%</td><td>26.1%</td></tr><tr><td>2026-05</td><td>19</td><td class="down">-1.55%</td><td>52.6%</td><td>-15.65% / +8.78%</td><td>47.4%</td></tr></tbody></table></div>
+      </div>
+    </div>
+    </div>
+      </section>
+
+      <section>
+        <h2>北向资金：可跟投执行规则</h2>
+        <div class="rule-grid">
+          <div class="rule-card good"><b>可以买的条件</b><ol><li>系统给出北向资金推荐或强烈推荐。</li><li>优先强烈推荐，普通推荐只做半仓。</li><li>推荐股不是连续大涨后的高位加速。</li><li>大盘不处在连续放量下跌或系统性风险日。</li></ol></div>
+          <div class="rule-card"><b>买入方式</b><ol><li>若信号在盘中出现，14:40-14:55 靠近收盘价分批买。</li><li>若盘后才看到，次日不追高；高开超过 2.5% 先等回踩。</li><li>强烈推荐单票 6%-8% 上限；推荐单票 3%-5% 上限。</li><li>同一行业最多两只，避免伪分散。</li></ol></div>
+          <div class="rule-card"><b>持有节奏</b><ol><li>T+3 只看承接，不急着卖。</li><li>T+5 若收益超过 6%，先卖 1/3。</li><li>T+10 若收益超过 10%，再卖 1/3。</li><li>T+15 必须重新评估，没有新信号就退出剩余仓位。</li></ol></div>
+          <div class="rule-card danger"><b>必须止损</b><ol><li>收盘亏损超过 4%，次日不能修复则减半。</li><li>收盘亏损超过 6%，直接清仓。</li><li>跌破入场逻辑对应的关键均线或资金逻辑失效，不等价格止损。</li><li>组合连续两笔北向亏损，下一笔仓位减半。</li></ol></div>
+          <div class="rule-card"><b>加仓规则</b><ol><li>只有浮盈超过 3% 且回踩不破成本，才允许加仓。</li><li>加仓后单票总仓不超过 10%。</li><li>亏损不加仓，不做摊平。</li><li>T+10 以后不加仓，只管理退出。</li></ol></div>
+          <div class="rule-card danger"><b>禁止动作</b><ol><li>用北向资金做盘中秒级追涨。</li><li>因为“外资买”忽视个股放量滞涨。</li><li>把 T+15 失败单继续拖成长期持仓。</li><li>同一天买满多个高度相关的大盘白马。</li></ol></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>隔夜战法：策略判断</h2>
+        <p class="note">隔夜战法的关键不是“买了能不能收盘赚钱”，而是“次日有没有冲高可卖”。本次报告已经停止用次日收盘口径，主看次日均价和次日最高价。</p>
+        
+      <div class="table-wrap"><table><thead><tr><th>卖出方式</th><th>样本</th><th>均值</th><th>中位</th><th>胜率/触正</th><th>P25/P75</th><th>跌超2%</th></tr></thead><tbody><tr><td>次日均价卖出</td><td>274</td><td class="down">-0.33%</td><td class="down">-0.74%</td><td>40.5%</td><td>-2.07% / +1.20%</td><td>27.0%</td></tr><tr><td>次日最高价卖出</td><td>274</td><td class="up">+3.25%</td><td class="up">+2.08%</td><td>80.3%</td><td>+0.30% / +5.18%</td><td>1.5%</td></tr></tbody></table></div>
+      <div class="two-col section-gap">
+        <div><h3>按评分</h3><div class="table-wrap"><table><thead><tr><th>评分</th><th>样本</th><th>均价收益</th><th>均价胜率</th><th>最高收益</th><th>最高触正</th></tr></thead><tbody><tr><td>90+</td><td>121</td><td class="down">-0.11%</td><td>47.1%</td><td class="up">+3.58%</td><td>84.3%</td></tr><tr><td>85-89</td><td>60</td><td class="down">-0.73%</td><td>33.3%</td><td class="up">+2.75%</td><td>80.0%</td></tr><tr><td>80-84</td><td>36</td><td class="down">-0.25%</td><td>30.6%</td><td class="up">+3.36%</td><td>80.6%</td></tr><tr><td>&lt;80</td><td>57</td><td class="down">-0.44%</td><td>40.4%</td><td class="up">+2.99%</td><td>71.9%</td></tr></tbody></table></div></div>
+        <div><h3>按排名</h3><div class="table-wrap"><table><thead><tr><th>排名</th><th>样本</th><th>均价收益</th><th>均价胜率</th><th>最高收益</th><th>最高触正</th></tr></thead><tbody><tr><td>1</td><td>56</td><td class="down">-0.77%</td><td>37.5%</td><td class="up">+2.71%</td><td>71.4%</td></tr><tr><td>2-3</td><td>107</td><td class="down">-0.53%</td><td>40.2%</td><td class="up">+3.04%</td><td>80.4%</td></tr><tr><td>4-5</td><td>84</td><td class="up">+0.19%</td><td>44.0%</td><td class="up">+3.94%</td><td>86.9%</td></tr><tr><td>6+</td><td>27</td><td class="down">-0.25%</td><td>37.0%</td><td class="up">+3.02%</td><td>77.8%</td></tr></tbody></table></div></div>
+      </div>
+      <div class="section-gap">
+        <h3>按月份</h3>
+        <div class="table-wrap"><table><thead><tr><th>月份</th><th>样本</th><th>均价收益</th><th>均价胜率</th><th>最高收益</th><th>最高触正</th></tr></thead><tbody><tr><td>2026-03</td><td>19</td><td class="down">-0.95%</td><td>26.3%</td><td class="up">+2.29%</td><td>84.2%</td></tr><tr><td>2026-04</td><td>60</td><td class="up">+0.16%</td><td>51.7%</td><td class="up">+3.21%</td><td>85.0%</td></tr><tr><td>2026-05</td><td>47</td><td class="down">-0.26%</td><td>40.4%</td><td class="up">+3.32%</td><td>85.1%</td></tr><tr><td>2026-06</td><td>98</td><td class="down">-0.14%</td><td>44.9%</td><td class="up">+3.77%</td><td>80.6%</td></tr><tr><td>2026-07</td><td>50</td><td class="down">-1.12%</td><td>24.0%</td><td class="up">+2.57%</td><td>68.0%</td></tr></tbody></table></div>
+      </div>
+    
+      </section>
+
+      <section>
+        <h2>隔夜战法：可跟投执行规则</h2>
+        <div class="rule-grid">
+          <div class="rule-card good"><b>可以买的条件</b><ol><li>只做评分 90+ 或强烈推荐优先。</li><li>当日市场不能是明显退潮日。</li><li>个股尾盘不能放量跳水，不能收在日内低位。</li><li>单日最多 2-3 只，宁可错过，不做拥挤。</li></ol></div>
+          <div class="rule-card"><b>买入方式</b><ol><li>14:45-14:57 买，不提前追。</li><li>买入价尽量贴近系统推荐价或当日收盘价。</li><li>强烈推荐单票不超过 2.5%；推荐不超过 1.5%。</li><li>隔夜总仓不超过 8%，强行情也不超过 12%。</li></ol></div>
+          <div class="rule-card good"><b>次日卖出</b><ol><li>高开 1%-3%，开盘 15 分钟内卖一半。</li><li>盘中冲到 +3%，卖到只剩观察仓。</li><li>冲到 +5% 以上，不贪，剩余仓位用分时跌破均线卖。</li><li>没有冲高但横盘走弱，10:30 前处理完。</li></ol></div>
+          <div class="rule-card danger"><b>止损规则</b><ol><li>低开超过 1.5%，先不补仓，观察 15 分钟。</li><li>无法收回开盘价或昨日收盘价，直接卖。</li><li>浮亏达到 3%，无条件退出。</li><li>隔夜单绝不允许因为亏损变成北向/趋势单。</li></ol></div>
+          <div class="rule-card"><b>优先选择</b><ol><li>评分 90+ 的样本表现明显更稳。</li><li>排名 4-5 的历史均价表现反而好于排名 1，排名 1 要防高位拥挤。</li><li>强烈推荐和推荐差别不大，卖出纪律比级别更重要。</li><li>连续退潮月份或近期隔夜胜率差时暂停。</li></ol></div>
+          <div class="rule-card danger"><b>禁止动作</b><ol><li>次日已经给冲高仍然幻想涨停。</li><li>开盘低于预期还补仓。</li><li>把隔夜战法持有到第三天。</li><li>在大盘连续杀跌时做隔夜满仓。</li></ol></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>组合执行：北向做主仓，隔夜做刀尖</h2>
+        <div class="rule-grid">
+          <div class="rule-card"><b>默认资金分配</b><ul><li>北向资金：60%-75% 的策略资金。</li><li>隔夜战法：5%-8% 的策略资金。</li><li>现金：至少 20%，用来防回撤和等新信号。</li></ul></div>
+          <div class="rule-card good"><b>强市场</b><ul><li>北向可提到 75%。</li><li>隔夜可提到 10%-12%，但只做 90+ 评分。</li><li>龙头/事件有共振时，优先给北向票加权。</li></ul></div>
+          <div class="rule-card danger"><b>弱市场</b><ul><li>北向降到 30%-40%。</li><li>隔夜直接降到 0%-3%。</li><li>连续两天组合亏损，第三天不开隔夜新仓。</li></ul></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>每日跟投时间表</h2>
+        <div class="timeline">
+          <div class="time-row"><b>09:25-09:35</b><span>只处理隔夜旧仓。高开卖、低开观察 15 分钟，不做临时加仓。</span></div>
+          <div class="time-row"><b>10:30 前</b><span>隔夜旧仓必须基本处理完；没有冲高的弱票退出，不拖到下午。</span></div>
+          <div class="time-row"><b>14:20-14:40</b><span>检查北向和隔夜新信号：只保留强烈推荐、评分高、形态没有明显破坏的候选。</span></div>
+          <div class="time-row"><b>14:45-14:57</b><span>执行买入：北向按计划分批，隔夜只小仓；价格偏离推荐价过大则放弃。</span></div>
+          <div class="time-row"><b>收盘后</b><span>记录每笔交易的策略、买卖原因、是否按纪律执行；违规单独统计，不混入策略胜率。</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>跟投前最终检查清单</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>问题</th><th>北向资金</th><th>隔夜战法</th></tr></thead>
+            <tbody>
+              <tr><td>今天能不能做？</td><td>大盘不系统性下跌，推荐逻辑没有失效。</td><td>市场不退潮，尾盘不跳水，评分最好 90+。</td></tr>
+              <tr><td>单票仓位多少？</td><td>强烈推荐 6%-8%，推荐 3%-5%。</td><td>强烈推荐 ≤2.5%，推荐 ≤1.5%。</td></tr>
+              <tr><td>最大总仓位？</td><td>常态 60%-75% 策略资金。</td><td>常态 5%-8%，强市场最高 12%。</td></tr>
+              <tr><td>什么时候卖？</td><td>T+5/T+10/T+15 分段兑现。</td><td>次日开盘到 10:30 优先兑现。</td></tr>
+              <tr><td>什么情况马上停？</td><td>收盘亏超 6% 或资金逻辑失效。</td><td>低开弱修复失败或浮亏 3%。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>数据与来源</h2>
+        <div class="table-wrap"><table><thead><tr><th>来源</th><th>说明</th></tr></thead><tbody><tr><td><a href="https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20240412_10753188.shtml">上海证券交易所：沪深港通交易信息披露机制调整</a></td><td class="explain">沪深股通不再披露实时买入交易金额、卖出交易金额和交易总额；盘后披露成交、活跃证券等信息。</td></tr>
+<tr><td><a href="https://www.hkex.com.hk/mutual-market/stock-connect/statistics/historical-daily?sc_lang=zh-HK">香港交易所：沪深港通每日数据</a></td><td class="explain">用于核对沪深股通历史每日数据和成交活跃证券。</td></tr></tbody></table></div>
+        <p class="note section-gap">回测数据来自本地 ai-stock 推荐记录和未复权日线，未扣手续费、滑点、冲击成本、涨跌停不可成交等因素。报告不是保证收益，实盘必须小仓验证并严格止损。</p>
+      </section>
+    </div>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

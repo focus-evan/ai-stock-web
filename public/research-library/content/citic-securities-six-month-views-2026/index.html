@@ -1,0 +1,596 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="中信证券最近半年公开观点、申万31个一级行业涨跌幅与观点验证，覆盖2026年2月24日至8月24日。">
+  <title>中信证券最近半年观点与市场验证｜2026.02.24—2026.08.24</title>
+  <style>
+    :root {
+      --ink: #172235;
+      --muted: #657186;
+      --paper: #f7f3eb;
+      --white: #fffdf8;
+      --navy: #10223e;
+      --navy-2: #18385e;
+      --red: #c73935;
+      --red-soft: #f6ded8;
+      --gold: #b99352;
+      --line: #dcd5c9;
+      --teal: #16827a;
+      --shadow: 0 16px 40px rgba(16, 34, 62, .09);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(185, 147, 82, .12), transparent 22rem),
+        linear-gradient(180deg, #f9f6f0 0%, var(--paper) 100%);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(16, 34, 62, .94);
+      backdrop-filter: blur(14px);
+      color: white;
+    }
+    .topbar .shell {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: .02em; }
+    .brand-mark { width: 26px; height: 26px; position: relative; transform: rotate(45deg); border: 2px solid #df5a52; }
+    .brand-mark::after { content: ""; position: absolute; inset: 5px; background: #df5a52; }
+    .nav { display: flex; gap: 24px; font-size: 14px; color: #cbd5e4; }
+    .nav a { text-decoration: none; }
+    .nav a:hover { color: white; }
+
+    .hero {
+      color: white;
+      overflow: hidden;
+      background:
+        linear-gradient(120deg, rgba(199,57,53,.9), rgba(199,57,53,0) 45%),
+        radial-gradient(circle at 82% 18%, rgba(90,139,190,.38), transparent 25rem),
+        var(--navy);
+    }
+    .hero .shell { padding: 74px 0 62px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.5fr .8fr; gap: 60px; align-items: end; }
+    .eyebrow { margin: 0 0 14px; color: #f6c8bd; font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 780px; font-size: clamp(40px, 6vw, 76px); line-height: 1.05; letter-spacing: -.045em; }
+    .hero-lead { max-width: 720px; margin: 24px 0 0; color: #dbe5f2; font-size: 18px; }
+    .hero-note { margin-top: 18px; color: #b9c6d7; font-size: 13px; }
+    .metric-panel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .metric { min-height: 112px; padding: 18px; border: 1px solid rgba(255,255,255,.17); border-radius: 16px; background: rgba(255,255,255,.07); }
+    .metric strong { display: block; color: white; font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1; }
+    .metric span { color: #bfcadd; font-size: 13px; }
+
+    main { padding: 54px 0 90px; }
+    section { scroll-margin-top: 80px; }
+    .section-head { display: grid; grid-template-columns: .72fr 1.3fr; gap: 44px; align-items: start; margin-bottom: 28px; }
+    .kicker { color: var(--red); font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h2 { margin: 5px 0 0; color: var(--navy); font-family: Georgia, "Songti SC", serif; font-size: clamp(30px, 4vw, 48px); line-height: 1.16; letter-spacing: -.025em; }
+    .section-intro { margin: 6px 0 0; color: var(--muted); font-size: 16px; }
+
+    .thesis {
+      margin-bottom: 64px;
+      display: grid;
+      grid-template-columns: 1.6fr .9fr;
+      gap: 20px;
+    }
+    .thesis-main, .thesis-side { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,253,248,.8); box-shadow: var(--shadow); }
+    .thesis-main { padding: 34px; }
+    .thesis-main .quote { margin: 0; color: var(--navy); font-family: Georgia, "Songti SC", serif; font-size: clamp(24px, 3vw, 38px); line-height: 1.45; }
+    .thesis-main .quote em { color: var(--red); font-style: normal; }
+    .thesis-side { padding: 28px; background: var(--navy); color: white; }
+    .thesis-side h3 { margin: 0 0 16px; font-size: 17px; }
+    .signal-list { display: grid; gap: 13px; }
+    .signal { display: flex; align-items: flex-start; gap: 11px; color: #d6e0ec; font-size: 14px; }
+    .signal i { flex: 0 0 9px; width: 9px; height: 9px; margin-top: 7px; border-radius: 50%; background: #e15b52; box-shadow: 0 0 0 5px rgba(225,91,82,.12); }
+
+    .timeline { margin-bottom: 68px; }
+    .timeline-track { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 2px solid var(--navy); }
+    .phase { position: relative; padding: 24px 18px 20px 0; }
+    .phase::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border: 2px solid var(--paper); border-radius: 50%; background: var(--red); box-shadow: 0 0 0 2px var(--navy); }
+    .phase .month { color: var(--red); font-weight: 800; font-size: 13px; }
+    .phase h3 { margin: 4px 0 7px; color: var(--navy); font-size: 17px; line-height: 1.35; }
+    .phase p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    .validation { margin-bottom: 72px; }
+    .focus-box {
+      position: relative;
+      overflow: hidden;
+      margin: 0 0 18px;
+      padding: 34px;
+      border-radius: var(--radius);
+      background: var(--navy);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .focus-box::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -120px;
+      width: 290px;
+      height: 290px;
+      border: 52px solid rgba(199,57,53,.28);
+      border-radius: 50%;
+    }
+    .focus-box .label { position: relative; z-index: 1; color: #ef8c83; font-size: 12px; font-weight: 900; letter-spacing: .16em; }
+    .focus-box h3 { position: relative; z-index: 1; max-width: 900px; margin: 8px 0 13px; font-family: Georgia, "Songti SC", serif; font-size: clamp(25px, 3.3vw, 42px); line-height: 1.35; }
+    .focus-box p { position: relative; z-index: 1; max-width: 900px; margin: 0; color: #ced8e5; font-size: 15px; }
+    .focus-box mark { padding: 0 .16em; background: #f4c66b; color: var(--navy); }
+    .verdict-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+    .verdict-card { padding: 20px; border: 1px solid var(--line); border-radius: 15px; background: var(--white); }
+    .verdict-card strong { display: block; margin-bottom: 3px; color: var(--navy); font-family: Georgia, "Times New Roman", serif; font-size: 29px; line-height: 1.15; }
+    .verdict-card span { color: var(--muted); font-size: 12px; }
+    .validation-block { margin-top: 18px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,253,248,.86); }
+    .validation-block h3 { margin: 0 0 7px; color: var(--navy); font-size: 21px; }
+    .validation-block > p { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: white; }
+    .data-table { width: 100%; border-collapse: collapse; min-width: 820px; font-size: 13px; }
+    .data-table th { padding: 11px 12px; background: #edf1f5; color: #425168; font-size: 11px; letter-spacing: .03em; text-align: left; white-space: nowrap; }
+    .data-table td { padding: 12px; border-top: 1px solid #e7e1d7; vertical-align: top; }
+    .data-table tbody tr:hover { background: #faf7f1; }
+    .return { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 800; white-space: nowrap; }
+    .return.up { color: #b7302d; }
+    .return.down { color: #16827a; }
+    .result-badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .result-badge.hit { background: #dcefe7; color: #146e55; }
+    .result-badge.partial { background: #faebc9; color: #87600f; }
+    .result-badge.miss { background: #f6ded8; color: #a52f2b; }
+    .ranking-table { min-width: 730px; }
+    .ranking-table td:nth-child(1), .ranking-table td:nth-child(4) { width: 44px; color: #7d8797; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .deep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .deep-card { padding: 23px; border-left: 4px solid var(--red); border-radius: 0 14px 14px 0; background: #f2eee6; }
+    .deep-card:nth-child(even) { border-left-color: var(--gold); }
+    .deep-card .num { color: var(--red); font-family: Georgia, "Times New Roman", serif; font-size: 27px; font-weight: 800; }
+    .deep-card h4 { margin: 3px 0 8px; color: var(--navy); font-size: 17px; }
+    .deep-card p { margin: 0; color: var(--muted); font-size: 13px; }
+    .key-line { margin-top: 18px; padding: 18px 20px; border-left: 5px solid var(--red); background: var(--red-soft); color: var(--navy); font-size: 15px; }
+    .key-line strong { color: #9e2825; }
+
+    .radar-wrap { margin-bottom: 70px; }
+    .radar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .radar-card { padding: 23px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); }
+    .radar-card .icon { display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 17px; border-radius: 12px; background: var(--red-soft); color: var(--red); font-weight: 900; }
+    .radar-card h3 { margin: 0; color: var(--navy); font-size: 17px; }
+    .radar-card p { margin: 8px 0 16px; color: var(--muted); font-size: 13px; min-height: 63px; }
+    .meter { height: 6px; overflow: hidden; border-radius: 999px; background: #ebe5db; }
+    .meter span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--red), var(--gold)); }
+    .meter-label { display: flex; justify-content: space-between; margin-top: 8px; color: #7b8290; font-size: 11px; }
+    .radar-note { margin-top: 12px; color: var(--muted); font-size: 12px; }
+
+    .library { margin-bottom: 72px; }
+    .tools { margin: 26px 0 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .search { flex: 1 1 260px; min-width: 220px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; outline: none; background: var(--white); color: var(--ink); }
+    .search:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(199,57,53,.1); }
+    .filter { padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+    .filter:hover, .filter.active { border-color: var(--navy); background: var(--navy); color: white; }
+    .result-count { margin-left: auto; color: var(--muted); font-size: 13px; }
+
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .card { position: relative; display: flex; flex-direction: column; min-height: 270px; padding: 25px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); transition: transform .18s ease, box-shadow .18s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .card.hidden { display: none; }
+    .card-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .date { color: var(--red); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; font-weight: 800; }
+    .tag { padding: 4px 9px; border-radius: 999px; background: #eceff3; color: #4a5b70; font-size: 11px; font-weight: 700; }
+    .card h3 { margin: 15px 0 10px; color: var(--navy); font-size: 21px; line-height: 1.38; }
+    .card p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+    .card-bottom { margin-top: auto; padding-top: 17px; border-top: 1px solid #e8e2d8; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .stance { color: var(--teal); font-size: 12px; font-weight: 800; }
+    .source { color: var(--navy); font-size: 13px; font-weight: 800; text-decoration: none; }
+    .source:hover { color: var(--red); }
+
+    .risk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 72px; }
+    .risk { padding: 22px; border-top: 3px solid var(--red); background: var(--navy); color: white; }
+    .risk b { display: block; margin-bottom: 8px; font-size: 15px; }
+    .risk p { margin: 0; color: #c9d3df; font-size: 13px; }
+
+    .method { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+    .method-box { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .method-box h3 { margin: 0 0 10px; color: var(--navy); font-size: 18px; }
+    .method-box p, .method-box li { color: var(--muted); font-size: 13px; }
+    .method-box ul { margin: 10px 0 0; padding-left: 20px; }
+    .method-box li + li { margin-top: 6px; }
+    .source-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .source-links a { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--navy); font-size: 12px; font-weight: 700; text-decoration: none; }
+    .source-links a:hover { border-color: var(--red); color: var(--red); }
+
+    footer { padding: 26px 0 38px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    footer .shell { display: flex; justify-content: space-between; gap: 20px; }
+    .empty { display: none; grid-column: 1 / -1; padding: 50px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); text-align: center; }
+    .empty.show { display: block; }
+
+    @media (max-width: 960px) {
+      .hero-grid, .section-head, .thesis, .method { grid-template-columns: 1fr; }
+      .hero-grid { gap: 34px; }
+      .metric-panel { max-width: 560px; }
+      .timeline-track { grid-template-columns: repeat(3, 1fr); border-top: 0; }
+      .phase { border-top: 2px solid var(--navy); }
+      .radar-grid { grid-template-columns: repeat(2, 1fr); }
+      .risk-grid { grid-template-columns: repeat(2, 1fr); }
+      .verdict-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 26px, 1180px); }
+      .nav { display: none; }
+      .hero .shell { padding: 54px 0 44px; }
+      .metric { min-height: 96px; }
+      .cards, .radar-grid, .risk-grid, .timeline-track, .verdict-grid, .deep-grid { grid-template-columns: 1fr; }
+      .focus-box, .validation-block { padding: 23px; }
+      .result-count { width: 100%; margin-left: 0; }
+      .phase { padding-right: 0; }
+      footer .shell { flex-direction: column; }
+    }
+    @media print {
+      .topbar, .tools { display: none; }
+      body { background: white; }
+      .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=citic-securities-six-month-views-2026&amp;view=reports">中信证券半年观点</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>中信证券观点观察</span></div>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#overview">核心结论</a>
+        <a href="#timeline">主线迁移</a>
+        <a href="#validation">市场验证</a>
+        <a href="#library">观点库</a>
+        <a href="#method">口径说明</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="shell">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">CITIC Securities · Public View Digest</p>
+          <h1>从“涨价 + AI”<br>走向均衡配置</h1>
+          <p class="hero-lead">中信证券最近半年公开观点精选与市场验证：以 31 个申万一级行业的真实涨跌幅，检验 AI、能化、银行、消费与非 AI 修复等判断是否兑现。</p>
+          <p class="hero-note">观察窗口：2026-02-24 — 2026-08-24 ｜ 更新于 2026-08-24</p>
+        </div>
+        <div class="metric-panel" aria-label="摘要指标">
+          <div class="metric"><strong>23</strong><span>条代表性公开观点</span></div>
+          <div class="metric"><strong>6</strong><span>个月度阶段</span></div>
+          <div class="metric"><strong>5</strong><span>类核心配置方向</span></div>
+          <div class="metric"><strong>31</strong><span>个一级行业量化检验</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section id="overview">
+      <div class="section-head">
+        <div><span class="kicker">Executive view</span><h2>半年核心结论</h2></div>
+        <p class="section-intro">中信证券的判断并非简单从“看多”切到“看空”，而是随着地缘、流动性与拥挤度变化，不断调整组合结构：先抓稀缺景气，再应对极致分化，最后回到业绩与均衡。</p>
+      </div>
+      <div class="thesis">
+        <div class="thesis-main">
+          <p class="quote">核心资产框架可概括为：<em>AI 提供进攻性</em>，<em>能化与优势制造提供确定性</em>，金融与消费承担估值修复；进入 8 月后，策略重点由超跌博弈转向更均衡、更看业绩的配置。</p>
+        </div>
+        <aside class="thesis-side">
+          <h3>反复出现的四个信号</h3>
+          <div class="signal-list">
+            <div class="signal"><i></i><span>中国优势制造的全球定价权重估，是贯穿半年的底层逻辑。</span></div>
+            <div class="signal"><i></i><span>AI 产业趋势仍处早期，但估值、持仓和流动性约束上升。</span></div>
+            <div class="signal"><i></i><span>非 AI 修复依赖宏观叙事、政策与新增资金，而非简单“高切低”。</span></div>
+            <div class="signal"><i></i><span>市场从 K 型极致分化逐步走向行业内部、跨行业与中外估值收敛。</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="timeline" id="timeline">
+      <div class="section-head">
+        <div><span class="kicker">Narrative shift</span><h2>主线如何迁移</h2></div>
+        <p class="section-intro">这条时间轴聚焦“边际变化”，避免把多次重复出现的同类观点简单堆叠。</p>
+      </div>
+      <div class="timeline-track">
+        <article class="phase"><span class="month">MAR</span><h3>涨价 + AI</h3><p>叙事和涨价催化主导，关注供给约束与 AI 敞口的交集。</p></article>
+        <article class="phase"><span class="month">APR</span><h3>缩圈聚焦</h3><p>市场收敛至 AI 硬件、资源、周期涨价和红利四条趋势线。</p></article>
+        <article class="phase"><span class="month">MAY</span><h3>AI + 能化杠铃</h3><p>AI 满足成长需求，能化承接供需缺口与确定性收益。</p></article>
+        <article class="phase"><span class="month">JUN</span><h3>等待临界点</h3><p>科技拥挤升高，非 AI 的启动需等待宏观和流动性条件变化。</p></article>
+        <article class="phase"><span class="month">JUL</span><h3>三类收敛</h3><p>AI 内部、非 AI 中外估值、科技与非科技之间的差异开始修复。</p></article>
+        <article class="phase"><span class="month">AUG</span><h3>修复后再均衡</h3><p>先交易超跌弹性，再回到核心资产、能化有色、非银与电新。</p></article>
+      </div>
+    </section>
+
+    <section class="validation" id="validation">
+      <div class="section-head">
+        <div><span class="kicker">Market validation</span><h2>观点与行情是否一致</h2></div>
+        <p class="section-intro">用 2026 年 2 月 24 日至 8 月 24 日的申万一级行业收盘指数做事后检验。结论不是简单判断“对或错”，而是拆分框架、方向、时点和内部结构，看哪些判断真正转化为相对收益。</p>
+      </div>
+
+      <div class="focus-box">
+        <span class="label">重点结论</span>
+        <h3><mark>框架胜于行业</mark>，硬件胜于应用，银行胜于非银，防御修复胜于全面复苏。</h3>
+        <p>中信对“K 型分化—缩圈—收敛—再均衡”的市场结构判断总体有效，但行业配置并非全面兑现。最强命中是 AI 硬件与银行，最大偏差是 AI 应用、传媒，以及把能化视作杠铃稳定端。</p>
+      </div>
+
+      <div class="verdict-grid" aria-label="市场验证摘要">
+        <article class="verdict-card"><strong>4 / 31</strong><span>一级行业录得正收益，极端分化获数据确认</span></article>
+        <article class="verdict-card"><strong>56.67pct</strong><span>通信与传媒首尾收益差，K 型结构显著</span></article>
+        <article class="verdict-card"><strong>49.59pct</strong><span>AI 硬件相对软件应用的收益差</span></article>
+        <article class="verdict-card"><strong>5 / 10</strong><span>代表性判断明确命中；另有 2 次部分命中</span></article>
+      </div>
+
+      <div class="validation-block">
+        <h3>31 个行业半年涨跌幅</h3>
+        <p>全区间行业中位数为 <strong>-13.89%</strong>，同期申万 A 指 <strong>-6.30%</strong>、申万创业 <strong>-2.29%</strong>、申万 50 <strong>+0.03%</strong>。红色为上涨，绿色为下跌。</p>
+        <div class="table-wrap">
+          <table class="data-table ranking-table">
+            <thead><tr><th>排名</th><th>行业</th><th>涨跌幅</th><th>排名</th><th>行业</th><th>涨跌幅</th></tr></thead>
+            <tbody>
+              <tr><td>01</td><td>通信</td><td class="return up">+27.61%</td><td>17</td><td>纺织服饰</td><td class="return down">-14.55%</td></tr>
+              <tr><td>02</td><td>电子</td><td class="return up">+21.85%</td><td>18</td><td>农林牧渔</td><td class="return down">-14.98%</td></tr>
+              <tr><td>03</td><td>煤炭</td><td class="return up">+7.75%</td><td>19</td><td>建筑装饰</td><td class="return down">-14.99%</td></tr>
+              <tr><td>04</td><td>银行</td><td class="return up">+3.25%</td><td>20</td><td>综合</td><td class="return down">-15.67%</td></tr>
+              <tr><td>05</td><td>医药生物</td><td class="return down">-3.35%</td><td>21</td><td>食品饮料</td><td class="return down">-15.76%</td></tr>
+              <tr><td>06</td><td>公用事业</td><td class="return down">-3.93%</td><td>22</td><td>房地产</td><td class="return down">-18.20%</td></tr>
+              <tr><td>07</td><td>机械设备</td><td class="return down">-7.22%</td><td>23</td><td>计算机</td><td class="return down">-20.67%</td></tr>
+              <tr><td>08</td><td>家用电器</td><td class="return down">-7.81%</td><td>24</td><td>社会服务</td><td class="return down">-21.68%</td></tr>
+              <tr><td>09</td><td>建筑材料</td><td class="return down">-9.19%</td><td>25</td><td>轻工制造</td><td class="return down">-21.84%</td></tr>
+              <tr><td>10</td><td>环保</td><td class="return down">-10.07%</td><td>26</td><td>汽车</td><td class="return down">-22.34%</td></tr>
+              <tr><td>11</td><td>交通运输</td><td class="return down">-10.21%</td><td>27</td><td>钢铁</td><td class="return down">-23.79%</td></tr>
+              <tr><td>12</td><td>石油石化</td><td class="return down">-10.54%</td><td>28</td><td>美容护理</td><td class="return down">-24.04%</td></tr>
+              <tr><td>13</td><td>有色金属</td><td class="return down">-13.22%</td><td>29</td><td>商贸零售</td><td class="return down">-24.89%</td></tr>
+              <tr><td>14</td><td>非银金融</td><td class="return down">-13.52%</td><td>30</td><td>国防军工</td><td class="return down">-24.99%</td></tr>
+              <tr><td>15</td><td>电力设备</td><td class="return down">-13.88%</td><td>31</td><td>传媒</td><td class="return down">-29.06%</td></tr>
+              <tr><td>16</td><td>基础化工</td><td class="return down">-13.89%</td><td>—</td><td>行业中位数</td><td class="return down">-13.89%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="validation-block">
+        <h3>代表性观点逐项验证</h3>
+        <p>以公开日期前后最近交易日为起点，在最能覆盖原观点催化窗口的区间进行检验。命中指方向和相对收益均得到数据支持；部分命中指仅一侧兑现或时效较短。</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>观点与日期</th><th>检验区间</th><th>实际行情</th><th>判断</th><th>解释</th></tr></thead>
+            <tbody>
+              <tr><td><a href="https://www.stcn.com/article/detail/3655796.html" target="_blank" rel="noopener">03-01 涨价 + AI 延续</a></td><td>02-27—03-31</td><td>AI 硬件 -7.27%；能化 -5.14%</td><td><span class="result-badge miss">未命中</span></td><td>两条线均回撤；虽跑赢申万 A 指 -8.76%，但“延续性”不足。</td></tr>
+              <tr><td><a href="https://www.stcn.com/article/detail/3666844.html" target="_blank" rel="noopener">03-09 银行绝对与相对价值</a></td><td>03-06—08-24</td><td>银行 +2.27%；申万 A 指 -5.69%</td><td><span class="result-badge hit">命中</span></td><td>银行取得正收益并形成约 7.96 个百分点的相对收益。</td></tr>
+              <tr><td><a href="https://www.cls.cn/detail/2341517" target="_blank" rel="noopener">04-12 缩圈至四条趋势线</a></td><td>04-10—05-26</td><td>AI 硬件 +32.93%；周期 +0.28%；红利 -1.79%</td><td><span class="result-badge partial">部分命中</span></td><td>国产 AI 硬件强兑现，但资源、周期涨价与红利明显弱于指数。</td></tr>
+              <tr><td><a href="https://www.stcn.com/article/detail/3912928.html" target="_blank" rel="noopener">05-18 AI 应用与 IP</a></td><td>05-15—08-24</td><td>计算机 -15.86%；传媒 -16.50%</td><td><span class="result-badge miss">未命中</span></td><td>应用与内容板块未接过硬件主线，商业化叙事没有转化为板块收益。</td></tr>
+              <tr><td><a href="https://www.cls.cn/detail/2382384" target="_blank" rel="noopener">05-27 AI + 能化杠铃</a></td><td>05-26—07-03</td><td>AI 硬件 +5.89%；能化 -7.86%</td><td><span class="result-badge partial">部分命中</span></td><td>进攻端 AI 有效，稳定端能化失效；若持有至 8 月，两端均为负。</td></tr>
+              <tr><td><a href="https://www.stcn.com/article/detail/3975947.html" target="_blank" rel="noopener">06-24 银行重估</a></td><td>06-23—08-24</td><td>银行 +3.23%；申万 A 指 -9.12%</td><td><span class="result-badge hit">命中</span></td><td>风险周期尾部与高确定性资产逻辑得到绝对和相对收益双重验证。</td></tr>
+              <tr><td><a href="https://www.stcn.com/article/detail/3998677.html" target="_blank" rel="noopener">07-05/07 非 AI 与消费修复</a></td><td>07-06—08-24</td><td>消费 +0.38%；申万 A 指 -7.22%</td><td><span class="result-badge hit">命中</span></td><td>绝对涨幅有限，但银行、煤炭、石油与食品饮料的相对修复清晰。</td></tr>
+              <tr><td><a href="https://www.stcn.com/article/detail/4027673.html" target="_blank" rel="noopener">07-19 三类收敛</a></td><td>07-17—08-24</td><td>29 个行业上涨；能化 +9.34%</td><td><span class="result-badge hit">命中</span></td><td>广度扩张，优势制造 +7.76%、消费 +3.36%，收敛从叙事变成行情。</td></tr>
+              <tr><td><a href="https://4g.stockstar.com/detail/IG2026080900009377" target="_blank" rel="noopener">08-02/09 普遍修复后均衡</a></td><td>07-31—08-24</td><td>19 个行业上涨；中位数 +1.59%</td><td><span class="result-badge hit">命中</span></td><td>修复成立，但并不平均：AI 硬件、有色与制造更强，消费和非银仍弱。</td></tr>
+              <tr><td><a href="https://www.guandian.cn/m/show/580853" target="_blank" rel="noopener">08-05 硬件与软件再平衡</a></td><td>08-04—08-24</td><td>硬件 +6.02%；计算机 -4.20%；传媒 -6.90%</td><td><span class="result-badge miss">尚未兑现</span></td><td>截至观察截止日，资金仍强化硬件，软件估值修复尚无板块证据。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="validation-block">
+        <h3>深度结论</h3>
+        <p>把半年总收益、观点后的阶段收益与板块内部差异放在一起，得到以下六点。</p>
+        <div class="deep-grid">
+          <article class="deep-card"><span class="num">01</span><h4>市场结构判断明显强于行业落点</h4><p>仅 4 个行业上涨、27 个下跌，行业中位数 -13.89%，首尾差 56.67 个百分点。“K 型极致分化”和后续“收敛”是最有解释力的框架；具体行业篮子却经常只有一部分兑现。</p></article>
+          <article class="deep-card"><span class="num">02</span><h4>“看对 AI”必须进一步限定为硬件</h4><p>电子与通信等权组合半年约 +24.73%，计算机与传媒约 -24.86%，差距 49.59 个百分点。AI 产业趋势成立，不等于 AI 全产业链都能获得超额收益。</p></article>
+          <article class="deep-card"><span class="num">03</span><h4>“AI + 能化”杠铃只成功了一半</h4><p>能化周期组合半年约 -7.95%，基础化工、有色、电力设备、石油石化和公用事业均为负，仅煤炭 +7.75%。供给约束逻辑没有在整个组合层面稳定兑现。</p></article>
+          <article class="deep-card"><span class="num">04</span><h4>金融内部不能用一个标签概括</h4><p>银行 +3.25%，非银金融 -13.52%，相差 16.77 个百分点。市场奖励的是低波动、盈利稳定和高确定性，而非对“金融”整体做无差别重估。</p></article>
+          <article class="deep-card"><span class="num">05</span><h4>7 月非 AI 修复成立，但更像防御轮动</h4><p>食品饮料、银行、煤炭、石油石化阶段领涨，消费组合相对指数占优；但汽车、军工、钢铁等工业方向半年仍深跌。因此是估值与防御偏好修复，不是全面工业复苏。</p></article>
+          <article class="deep-card"><span class="num">06</span><h4>8 月“普遍修复”正确，“软件接棒”仍待验证</h4><p>7 月末至 8 月 24 日有 19 个行业上涨，但通信、电子、有色、机械和化工领涨；消费和非银偏弱。行情在变宽的同时，领导权再次集中到硬件、资源与制造。</p></article>
+        </div>
+        <div class="key-line"><strong>最终判断：</strong>中信证券对市场阶段与风格迁移的把握具有较高参考价值，但实际配置应把宏观框架继续下钻到行业内部。若简单照搬“AI、能化、金融、消费”四个大标签，会掩盖最关键的内部差异。</div>
+      </div>
+    </section>
+
+    <section class="radar-wrap">
+      <div class="section-head">
+        <div><span class="kicker">Allocation radar</span><h2>配置雷达</h2></div>
+        <p class="section-intro">按半年公开样本中的反复出现程度与持续性做编辑性归纳，不代表收益预测或正式评级。</p>
+      </div>
+      <div class="radar-grid">
+        <article class="radar-card"><div class="icon">AI</div><h3>AI / 科技</h3><p>国产算力、云平台、存储、光通信、半导体设备；后期更强调核心资产与商业兑现。</p><div class="meter"><span style="width:95%"></span></div><div class="meter-label"><span>持续性</span><span>高</span></div></article>
+        <article class="radar-card"><div class="icon">能</div><h3>能化 / 周期</h3><p>新能源、化工、有色、电力设备，以及具备供给约束和涨价信号的细分环节。</p><div class="meter"><span style="width:88%"></span></div><div class="meter-label"><span>持续性</span><span>高</span></div></article>
+        <article class="radar-card"><div class="icon">造</div><h3>优势制造</h3><p>以全球份额、海外重置成本和供给弹性为抓手，寻找定价权重估。</p><div class="meter"><span style="width:84%"></span></div><div class="meter-label"><span>持续性</span><span>高</span></div></article>
+        <article class="radar-card"><div class="icon">金</div><h3>金融</h3><p>券商、保险与银行先后进入低估值修复视野，关键变量是资金流与经营稳定性。</p><div class="meter"><span style="width:66%"></span></div><div class="meter-label"><span>持续性</span><span>中高</span></div></article>
+        <article class="radar-card"><div class="icon">消</div><h3>消费</h3><p>持仓与估值较低，关注服务消费、必选消费、新消费及大众品的环比改善。</p><div class="meter"><span style="width:52%"></span></div><div class="meter-label"><span>持续性</span><span>阶段性</span></div></article>
+      </div>
+      <p class="radar-note">注：条形长度仅表达本页样本中的相对持续性，不是量化打分或投资评级。</p>
+    </section>
+
+    <section class="library" id="library">
+      <div class="section-head">
+        <div><span class="kicker">View library</span><h2>观点库</h2></div>
+        <p class="section-intro">23 条代表性公开观点，按日期倒序排列。可按主题筛选，也可搜索“算力、银行、消费、流动性”等关键词。</p>
+      </div>
+      <div class="tools" aria-label="观点筛选工具">
+        <input id="search" class="search" type="search" placeholder="搜索观点或关键词…" aria-label="搜索观点">
+        <button class="filter active" data-filter="all">全部</button>
+        <button class="filter" data-filter="A股策略">A股策略</button>
+        <button class="filter" data-filter="AI科技">AI科技</button>
+        <button class="filter" data-filter="周期能化">周期能化</button>
+        <button class="filter" data-filter="金融">金融</button>
+        <button class="filter" data-filter="消费">消费</button>
+        <button class="filter" data-filter="大类资产">大类资产</button>
+        <span class="result-count" id="count">显示 23 / 23</span>
+      </div>
+
+      <div class="cards" id="cards">
+        <article class="card" data-category="AI科技" data-search="算力 新技术 微盘跨界 供电新架构 锂电 通信">
+          <div class="card-top"><time class="date">2026-08-19</time><span class="tag">AI科技</span></div><h3>主题热度转向算力新技术、供电新架构与锂电</h3><p>市场普涨后进入高位分化，通信在海外算力链验证下相对占优。基于催化时序，关注算力新技术、微盘跨界、供电新架构和锂电四个主题。</p><div class="card-bottom"><span class="stance">低位反攻仍在蓄力</span><a class="source" href="https://finance.eastmoney.com/a/202608193845221692.html" target="_blank" rel="noopener">第一财经转载 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="超跌反弹 均衡配置 科技 核心资产 有色 化工 非银 电新">
+          <div class="card-top"><time class="date">2026-08-09</time><span class="tag">A股策略</span></div><h3>市场进入修复进程，配置由超跌交易转向均衡</h3><p>8 月初先体现“跌得多、反弹弹性大”，随后应随流动性与价格发现恢复，逐步淡化超跌博弈。科技聚焦核心资产，并增配能化、有色、非银、电新。</p><div class="card-bottom"><span class="stance">修复 → 均衡</span><a class="source" href="https://4g.stockstar.com/detail/IG2026080900009377" target="_blank" rel="noopener">证券之星 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="AI 硬件 软件 再平衡 云 光通信 估值修复 EPS">
+          <div class="card-top"><time class="date">2026-08-05</time><span class="tag">AI科技</span></div><h3>AI 景气未变，硬件与软件有望再平衡</h3><p>全球科技股回调并未伴随产业景气或盈利预测的根本下修；硬件此前显著占优后，软件估值存在修复可能，继续关注云与光通信等方向。</p><div class="card-bottom"><span class="stance">产业未逆转</span><a class="source" href="https://www.guandian.cn/m/show/580853" target="_blank" rel="noopener">观点网 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="8月 普遍修复 流动性 超跌 均衡 科技 卖压">
+          <div class="card-top"><time class="date">2026-08-02</time><span class="tag">A股策略</span></div><h3>8 月普遍修复概率上升，但不是简单反弹</h3><p>流动性冲击后的超跌效应主要集中于初期，随后行情结构会与前期跌幅脱钩。科技反弹仍可能面对机构调仓与前期抄底盘卖压，因此更强调均衡化。</p><div class="card-bottom"><span class="stance">不追求线性反弹</span><a class="source" href="https://finance.jrj.com.cn/2026/08/02175157988265.shtml" target="_blank" rel="noopener">金融界 ↗</a></div>
+        </article>
+        <article class="card" data-category="金融" data-search="银行 市场风格 资金面 经营预期 高确定性 价值">
+          <div class="card-top"><time class="date">2026-07-27</time><span class="tag">金融</span></div><h3>银行迎来风格、资金与经营预期共振</h3><p>二季度银行受 ETF 赎回和“跷跷板”效应压制，机构持仓降至低位。7 月风格再平衡后资金改善，经营格局稳定继续支撑高确定性价值。</p><div class="card-bottom"><span class="stance">绝对收益逻辑</span><a class="source" href="https://www.stcn.com/article/detail/4042019.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="中期行情 休整 酝酿 三个收敛 北美AI 国产AI 非AI 创新药 非银 有色 化工 锂电">
+          <div class="card-top"><time class="date">2026-07-19</time><span class="tag">A股策略</span></div><h3>中期休整接近尾声，新行情仍待新板块启动</h3><p>科技补跌后的短期出清接近尾声。配置聚焦三类收敛：AI 上下游收益差、非 AI 工业股相对海外折价、科技与非科技差异。</p><div class="card-bottom"><span class="stance">酝酿新一轮行情</span><a class="source" href="https://www.stcn.com/article/detail/4027673.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="非AI 修复 K型分化 券商 中报 海外投融资 博弈降温">
+          <div class="card-top"><time class="date">2026-07-12</time><span class="tag">A股策略</span></div><h3>博弈降温后，重视有业绩支撑的非 AI 修复</h3><p>极致分化放大后，部分非 AI 品种的基本面和估值吸引力重新进入视野；同时继续关注低估值券商的短期业绩弹性与长期国际化逻辑。</p><div class="card-bottom"><span class="stance">从极致分化回摆</span><a class="source" href="https://www.cls.cn/detail/2423860" target="_blank" rel="noopener">财联社 ↗</a></div>
+        </article>
+        <article class="card" data-category="消费" data-search="消费 高切低 农业 养殖 服务消费 必选消费 新消费 低估值 高股息">
+          <div class="card-top"><time class="date">2026-07-07</time><span class="tag">消费</span></div><h3>消费板块的阶段性平衡配置价值上升</h3><p>低持仓、低估值、较高股息与潜在政策预期共同提高吸引力。关注供给侧反转的农业、长期扩容的服务消费、必选消费估值洼地及新消费。</p><div class="card-bottom"><span class="stance">阶段性高切低</span><a class="source" href="https://www.stcn.com/article/detail/4001714.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="非AI 修复 美联储 加息 强美元 宽基ETF 流动性 业绩">
+          <div class="card-top"><time class="date">2026-07-05</time><span class="tag">A股策略</span></div><h3>两项边际变化催化非 AI 修复</h3><p>市场对美联储紧缩与强美元的预设开始松动，同时宽基 ETF 流出压力有望缓解。宏观叙事与流动性改善叠加，利好有业绩支撑的非 AI 板块。</p><div class="card-bottom"><span class="stance">宏观 + 资金共振</span><a class="source" href="https://www.stcn.com/article/detail/3998677.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="消费" data-search="大众品 乳制品 饮料 零食 高股息 餐供 估值">
+          <div class="card-top"><time class="date">2026-06-30</time><span class="tag">消费</span></div><h3>下半年大众品景气有望环比改善</h3><p>需求同比仍稳、竞争趋于理性、库存健康，叠加低基数与估值下行，关注餐供与乳制品、饮料与零食，以及高股息防御三条线。</p><div class="card-bottom"><span class="stance">景气与估值共振</span><a class="source" href="https://www.stcn.com/article/detail/3987911.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="金融" data-search="银行 高确定性 权益资产 ROE 风险周期 重估">
+          <div class="card-top"><time class="date">2026-06-24</time><span class="tag">金融</span></div><h3>银行有望向“高确定性权益资产”重估</h3><p>银行步入风险周期尾部，行业 ROE 的边际变化改善。资金持续偏好高收益金融资产时，稳健、回报确定性较高的银行股配置吸引力上升。</p><div class="card-bottom"><span class="stance">重估窗口</span><a class="source" href="https://www.stcn.com/article/detail/3975947.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="液冷 存储 具身智能 AI上游通胀 科创板 硬科技">
+          <div class="card-top"><time class="date">2026-06-23</time><span class="tag">AI科技</span></div><h3>科技景气向液冷、存储与具身智能扩散</h3><p>金融资源继续向硬科技与新质生产力倾斜，增量资金更偏好筹码健康、业绩确定的科技成长。主题催化集中在 AI 上游通胀、液冷、存储和具身智能。</p><div class="card-bottom"><span class="stance">寻找景气扩散</span><a class="source" href="https://www.stcn.com/article/detail/3973450.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="非AI 修复 霍尔木兹 海峡 美联储 通胀 紧缩 宏观叙事">
+          <div class="card-top"><time class="date">2026-06-07</time><span class="tag">A股策略</span></div><h3>部分非 AI 标的可能更早、也更大幅修复</h3><p>非 AI 的启动并不只是资金从高位切低位，而要等待宏观叙事和新增买家。关键临界点包括海峡通航、通胀紧缩预期与美联储政策预期变化。</p><div class="card-bottom"><span class="stance">等待宏观临界点</span><a class="source" href="https://finance.sina.com.cn/stock/marketresearch/2026-06-07/doc-iniaqtns4623406.shtml" target="_blank" rel="noopener">中信证券研究转载 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="下半年 科技 AI商业化 世界模型 物理AI 国产算力 估值 拥挤 上市 流动性">
+          <div class="card-top"><time class="date">2026-06-02</time><span class="tag">AI科技</span></div><h3>AI 商业化加速，但科技行情将更分化</h3><p>AI 产业仍处早期、机遇大于挑战；模型向企业高价值场景落地。下半年需正视估值偏高、持仓拥挤与潜在 IPO 的流动性冲击，行情更依赖业绩兑现。</p><div class="card-bottom"><span class="stance">产业乐观，交易审慎</span><a class="source" href="https://www.stcn.com/article/detail/3938208.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="周期能化" data-search="AI 能化 杠铃 新能源 传统能源 化工 有色 电力设备 中国优势制造 券商 保险">
+          <div class="card-top"><time class="date">2026-05-27</time><span class="tag">周期能化</span></div><h3>下半年配置主轴：“AI + 能化”新杠铃</h3><p>Agentic AI 驱动需求，中东供应链扰动抑制供给，AI 与能化分别承担进攻与稳健。长期仍围绕新能源、化工、有色、电力设备等优势制造定价权重估。</p><div class="card-bottom"><span class="stance">半年最核心框架</span><a class="source" href="https://www.cls.cn/detail/2382384" target="_blank" rel="noopener">财联社 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="AI 应用 IP 商业化 营销 游戏 影视 Token 模型">
+          <div class="card-top"><time class="date">2026-05-18</time><span class="tag">AI科技</span></div><h3>模型商业化提速，关注 AI 应用与 IP</h3><p>大模型能力继续增强，应用落地与 Token 消耗增长成为新催化，重点方向包括 AI 营销、游戏、影视及 AI + IP，并关注业绩已验证的内容板块。</p><div class="card-bottom"><span class="stance">从算力向应用延伸</span><a class="source" href="https://www.stcn.com/article/detail/3912928.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="大类资产" data-search="大类资产 黄金 商品 权益 小市值 成长 锂电 半导体 5月">
+          <div class="card-top"><time class="date">2026-05-11</time><span class="tag">大类资产</span></div><h3>5 月增配黄金、商品与权益</h3><p>大类资产层面偏向黄金、商品和权益；股票风格偏向小市值与成长，行业配置关注锂电池和半导体。</p><div class="card-bottom"><span class="stance">风险资产偏积极</span><a class="source" href="https://flash.jin10.com/detail/20260511083119919800" target="_blank" rel="noopener">金十数据 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="科技 5月 国产大模型 半导体设备 国产算力 光通信 MLCC 模拟芯片 CCL">
+          <div class="card-top"><time class="date">2026-05-08</time><span class="tag">AI科技</span></div><h3>科技配置坚守四条高景气主线</h3><p>关注国产大模型迭代、半导体设备与国产算力、光通信龙头及上游光芯片，以及 AI 敞口提升的 MLCC、模拟芯片、电子布与覆铜板等环节。</p><div class="card-bottom"><span class="stance">硬件景气领先</span><a class="source" href="https://www.cs.com.cn/gppd/gsyj/2026/05/08/detail_2026050810010147.html" target="_blank" rel="noopener">中国证券报 ↗</a></div>
+        </article>
+        <article class="card" data-category="AI科技" data-search="国产算力 存储 被动元件 半导体设备 PCB 一季报">
+          <div class="card-top"><time class="date">2026-04-24</time><span class="tag">AI科技</span></div><h3>继续看好国产算力和存储，新增被动元件</h3><p>一季报业绩线索仍集中在存储涨价、AI 与算力方向；半导体设备、国产算力、PCB 和存储的基本面趋势较强，并将被动元件纳入关注。</p><div class="card-bottom"><span class="stance">业绩验证强化</span><a class="source" href="https://www.stcn.com/article/detail/3802293.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="缩圈 AI硬件 资源 周期涨价 红利 国产AI 中国优势制造">
+          <div class="card-top"><time class="date">2026-04-12</time><span class="tag">A股策略</span></div><h3>空头回补后，市场会缩圈而不是扩散</h3><p>保有基本面与趋势的方向收缩到 AI 硬件、资源、周期涨价和红利，预期差主要在国产 AI 硬件与周期涨价，配置继续围绕中国优势制造。</p><div class="card-bottom"><span class="stance">聚焦四条线索</span><a class="source" href="https://www.cls.cn/detail/2341517" target="_blank" rel="noopener">财联社 ↗</a></div>
+        </article>
+        <article class="card" data-category="A股策略" data-search="春季策略 中国资产 低估值 定价权 优势制造 地缘 风险">
+          <div class="card-top"><time class="date">2026-03-19</time><span class="tag">A股策略</span></div><h3>春季是信心重塑期，低估值与定价权最重要</h3><p>地缘动荡与指数关键位置相遇，春季被定义为信心重塑与指数过渡阶段。全球优化成本上升、金融条件走弱时，更强调低估值和中国优势制造定价权。</p><div class="card-bottom"><span class="stance">外部冲击不改主轴</span><a class="source" href="https://www.cls.cn/detail/2317975" target="_blank" rel="noopener">财联社 ↗</a></div>
+        </article>
+        <article class="card" data-category="金融" data-search="银行 政府工作报告 经营环境 政策 平稳 相对价值 绝对价值">
+          <div class="card-top"><time class="date">2026-03-09</time><span class="tag">金融</span></div><h3>银行基本面格局稳定，兼具相对与绝对价值</h3><p>结合政府工作报告与部委表态，判断 2026 年银行业经济与政策环境总体平稳，基本面稳定性使银行股同时具备相对价值与绝对收益属性。</p><div class="card-bottom"><span class="stance">稳健配置</span><a class="source" href="https://www.stcn.com/article/detail/3666844.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <article class="card" data-category="周期能化" data-search="涨价 AI 供给约束 3月 贵金属 稀土 小金属 风电 芯片">
+          <div class="card-top"><time class="date">2026-03-01</time><span class="tag">周期能化</span></div><h3>涨价驱动行情在 3 月仍有延续性</h3><p>行情主要由叙事与涨价催化推动，“AI 敞口 + 供给约束”强化涨价预期。涨价与 AI 两条线仍在安全区，但同时区分情绪驱动与基本面驱动。</p><div class="card-bottom"><span class="stance">半年叙事起点</span><a class="source" href="https://www.stcn.com/article/detail/3655796.html" target="_blank" rel="noopener">证券时报 ↗</a></div>
+        </article>
+        <div class="empty" id="empty">没有匹配的观点，请更换关键词或筛选条件。</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div><span class="kicker">Risk checklist</span><h2>风险线索</h2></div>
+        <p class="section-intro">以下并非本页新增判断，而是中信证券在半年观点中多次提及、会改变配置节奏的变量。</p>
+      </div>
+      <div class="risk-grid">
+        <article class="risk"><b>地缘与供应链</b><p>中东局势、霍尔木兹海峡实际通航量，以及由此带来的供给与价格冲击。</p></article>
+        <article class="risk"><b>通胀与流动性</b><p>海外紧缩预期、强美元叙事、长端利率与下半年宏观流动性变化。</p></article>
+        <article class="risk"><b>拥挤与资金流</b><p>科技持仓集中、宽基 ETF 赎回、趋势资金强度和反弹阶段的调仓卖压。</p></article>
+        <article class="risk"><b>业绩与商业闭环</b><p>AI 上游投资能否由下游商业化承接，以及非 AI 修复是否获得盈利验证。</p></article>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="section-head">
+        <div><span class="kicker">Method &amp; sources</span><h2>口径与来源</h2></div>
+        <p class="section-intro">本页是公开信息的研究摘要，不是中信证券完整研报目录，也不代替原始报告。</p>
+      </div>
+      <div class="method">
+        <div class="method-box">
+          <h3>整理口径</h3>
+          <ul>
+            <li>时间范围：2026 年 2 月 24 日至 2026 年 8 月 24 日。</li>
+            <li>纳入中信证券研究团队公开发布、或由主流财经媒体直接归因并转述的代表性观点。</li>
+            <li>同一报告被多家媒体转载时优先保留信息更完整、来源标注更清楚的一条。</li>
+            <li>卡片内容均为编辑性概括，尽量避免脱离上下文的逐字摘录。</li>
+            <li>行情数据采用申万宏源研究公开的申万指数历史日行情；半年收益为 2026-02-24 至 2026-08-24 的收盘点位涨跌幅。</li>
+            <li>观点验证从发布日前后最近交易日开始；主题组合采用所列申万一级行业等权计算，不计分红、交易成本与个股差异。</li>
+            <li>“命中 / 部分命中 / 未命中”是基于方向、相对收益与有效时窗的编辑性复盘，不是对研究质量的正式评级。</li>
+            <li>由于部分完整研报需登录或具备访问权限，本页不能视为“全部研报”的穷尽清单。</li>
+          </ul>
+        </div>
+        <div class="method-box">
+          <h3>主要公开来源</h3>
+          <p>每张观点卡都附有对应链接。核心信息来源包括：</p>
+          <div class="source-links">
+            <a href="https://www.swsresearch.com/institute_sw/allIndex/releasedIndex" target="_blank" rel="noopener">申万指数历史行情</a>
+            <a href="https://research.citics.com/rpt" target="_blank" rel="noopener">中信证券研究</a>
+            <a href="https://www.stcn.com/" target="_blank" rel="noopener">证券时报</a>
+            <a href="https://www.cs.com.cn/" target="_blank" rel="noopener">中国证券报</a>
+            <a href="https://www.cls.cn/" target="_blank" rel="noopener">财联社</a>
+            <a href="https://finance.sina.com.cn/" target="_blank" rel="noopener">新浪财经</a>
+            <a href="https://finance.eastmoney.com/" target="_blank" rel="noopener">东方财富</a>
+            <a href="https://finance.eastmoney.com/a/202606303788469092.html" target="_blank" rel="noopener">上半年行情旁证</a>
+            <a href="https://www.yicai.com/news/103301900.html" target="_blank" rel="noopener">7 月行情旁证</a>
+          </div>
+          <p><strong>风险提示：</strong>本页仅作资料整理，不构成证券研究报告、投资顾问意见或任何投资建议。市场有风险，决策需独立判断。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell"><span>中信证券最近半年公开观点整理</span><span>资料截止 2026-08-24 · 单页离线版</span></div>
+  </footer>
+
+  <script>
+    const search = document.getElementById('search');
+    const buttons = [...document.querySelectorAll('.filter')];
+    const cards = [...document.querySelectorAll('.card')];
+    const count = document.getElementById('count');
+    const empty = document.getElementById('empty');
+    let active = 'all';
+
+    function applyFilters() {
+      const term = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const categoryMatch = active === 'all' || card.dataset.category === active;
+        const haystack = (card.textContent + ' ' + card.dataset.search).toLowerCase();
+        const searchMatch = !term || haystack.includes(term);
+        const show = categoryMatch && searchMatch;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      count.textContent = `显示 ${visible} / ${cards.length}`;
+      empty.classList.toggle('show', visible === 0);
+    }
+
+    buttons.forEach(button => button.addEventListener('click', () => {
+      active = button.dataset.filter;
+      buttons.forEach(item => item.classList.toggle('active', item === button));
+      applyFilters();
+    }));
+    search.addEventListener('input', applyFilters);
+  </script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

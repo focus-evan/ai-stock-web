@@ -1,0 +1,59 @@
+{
+  "generated": "2026-09-02 23:35",
+  "quality_pass": "finance-context-v3",
+  "glossary": "/Users/evan/.codex/skills/douyin-research-digest/references/finance_asr_glossary.json",
+  "total": 295,
+  "status_counts": {
+    "通过": 179,
+    "通过（画面OCR）": 10,
+    "通过（已修正）": 102,
+    "需复核": 4
+  },
+  "needs_review": 4,
+  "items": [
+    {
+      "aweme_id": "7675930780057326056",
+      "title": "8.20日上午10点我过几天出门度假了",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7675224939675294888",
+      "title": "#这是个真实的事情#活久见#金融#股市#牛来",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7664436457076198627",
+      "title": "7月20日中午护盘资金就是我#金融#财经#股票#股市#股民",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频无有效口播，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    },
+    {
+      "aweme_id": "7644584237119375183",
+      "title": "#金融#股市#财经#交易人生#股民交流",
+      "status": "需复核",
+      "score": 75,
+      "transcript_source": "title_metadata",
+      "reasons": [
+        "音频ASR疑似识别为外语歌词，使用发布标题/文案"
+      ],
+      "suspicious_terms": []
+    }
+  ]
+}

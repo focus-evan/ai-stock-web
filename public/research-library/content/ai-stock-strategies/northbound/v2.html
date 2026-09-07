@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="AI Stock 北向资金五层雷达 2.0：官方季度持仓、每日活跃度、海外ETF申赎、全球风险和境内确认。">
+  <title>北向资金五层雷达 2.0｜AI Stock 战法手册</title>
+  <link rel="stylesheet" href="../assets/strategy-doc.css">
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-stock-strategies&amp;view=reports">量化策略说明</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">S</span><span>AI Stock · 战法手册</span></a>
+      <nav class="topnav" aria-label="主导航">
+        <a href="../../index.html">HTML 总入口</a>
+        <a href="../index.html">战法总览</a>
+        <a href="v2.html" aria-current="page">北向资金 2.0</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Northbound capital · Five-layer evidence radar</div>
+      <h1>北向资金<br>五层雷达 2.0</h1>
+      <p class="hero-lead">以交易所季度真实持仓为锚，以官方每日成交活跃度、海外 A 股 ETF 份额、全球风险偏好和境内量价资金作为补充；每条信号明确区分“官方事实、模型估算、市场代理”。</p>
+      <div class="hero-meta">
+        <span class="hero-chip">35 / 20 / 20 / 10 / 15</span>
+        <span class="hero-chip">事实 / 估算 / 代理</span>
+        <span class="hero-chip">缺失层不重标化</span>
+        <span class="hero-chip">T+10—T+15</span>
+        <span class="hero-chip">2026-08-29 改造</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell">
+    <div class="mobile-toc">
+      <select data-mobile-toc="" aria-label="跳转到章节">
+        <option value="#outcome">01 改造成果</option>
+        <option value="#disclosure">02 披露边界</option>
+        <option value="#layers">03 五层模型</option>
+        <option value="#pipeline">04 数据链路</option>
+        <option value="#score">05 评分与门槛</option>
+        <option value="#output">06 输出字段</option>
+        <option value="#degrade">07 降级机制</option>
+        <option value="#sop">08 执行 SOP</option>
+        <option value="#sources">09 来源与代码</option>
+      </select>
+    </div>
+
+    <div class="doc-layout">
+      <aside class="toc" aria-label="目录">
+        <div class="toc-title">Contents</div>
+        <a href="#outcome">01 · 改造成果</a>
+        <a href="#disclosure">02 · 披露边界</a>
+        <a href="#layers">03 · 五层模型</a>
+        <a href="#pipeline">04 · 数据链路</a>
+        <a href="#score">05 · 评分与门槛</a>
+        <a href="#output">06 · 输出字段</a>
+        <a href="#degrade">07 · 降级机制</a>
+        <a href="#sop">08 · 执行 SOP</a>
+        <a href="#sources">09 · 来源与代码</a>
+      </aside>
+
+      <article class="content">
+        <section class="section" id="outcome">
+          <div class="section-kicker">01 · Outcome</div>
+          <h2>旧版“资金代理榜”已改成跨境资金证据雷达</h2>
+          <p class="lead">旧实现的主流程直接跳过季度持仓，实际主要按境内主力净流入排名。2.0 已恢复上交所、深交所官方季度持仓，并新增三类跨市场信号；境内主力资金只保留为最后 15 分的确认层。</p>
+          <div class="metrics">
+            <div class="metric"><div class="metric-label">官方锚点</div><div class="metric-value">35</div><div class="metric-note">最新季末 + 上季度变化</div></div>
+            <div class="metric"><div class="metric-label">官方活跃度</div><div class="metric-value">20</div><div class="metric-note">前十大成交额，无方向</div></div>
+            <div class="metric"><div class="metric-label">海外 ETF</div><div class="metric-value">20</div><div class="metric-note">CNYA 份额申赎</div></div>
+            <div class="metric"><div class="metric-label">代理上限</div><div class="metric-value">关注</div><div class="metric-note">无季度锚点不得推荐</div></div>
+          </div>
+          <div class="verdict">
+            <div class="verdict-body"><strong>最重要的变化</strong>代码不再把高额境内主力净流入自动判成“北向推荐”。即使 LLM 给出更激进等级，证据门槛也会再次把结果压回允许的最高等级。</div>
+          </div>
+        </section>
+
+        <section class="section" id="disclosure">
+          <div class="section-kicker">02 · Disclosure boundary</div>
+          <h2>先承认公开数据能看到什么、看不到什么</h2>
+          <div class="split">
+            <div class="mini-card">
+              <h3>可以直接验证</h3>
+              <ul class="compact-list">
+                <li>每季度末单只证券的沪股通、深股通投资者合计持有数量</li>
+                <li>每日沪/深股通交易总额、总笔数、ETF 交易额</li>
+                <li>每日交易金额前十大证券及其成交总额</li>
+                <li>CNYA 官方份额、基金持仓股票与权重</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>不能从公开数据推出</h3>
+              <ul class="compact-list">
+                <li>某只股票今日北向净买入或净卖出金额</li>
+                <li>单只股票连续 3 日、5 日、10 日北向增持</li>
+                <li>前十大活跃证券的买入方向</li>
+                <li>境内主力大单等于境外机构资金</li>
+              </ul>
+            </div>
+          </div>
+          <div class="verdict risk">
+            <div class="verdict-body"><strong>强制口径</strong>自 2024-08-19 起，前十大活跃证券只有成交总额，没有买卖方向。系统字段固定输出 <span class="mono">official_activity_has_direction: false</span>，避免前端或 LLM 误读。</div>
+          </div>
+        </section>
+
+        <section class="section" id="layers">
+          <div class="section-kicker">03 · Five layers</div>
+          <h2>五层评分各自解决什么问题</h2>
+          <div class="bars" aria-label="五层评分权重">
+            <div class="bar-row"><span>官方季度持仓锚点</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">35</span></div>
+            <div class="bar-row"><span>官方每日成交活跃度</span><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><span class="bar-value">20</span></div>
+            <div class="bar-row"><span>海外 A 股 ETF 份额申赎</span><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><span class="bar-value">20</span></div>
+            <div class="bar-row"><span>全球风险偏好</span><div class="bar-track"><div class="bar-fill" style="width:29%"></div></div><span class="bar-value">10</span></div>
+            <div class="bar-row"><span>境内量价资金确认</span><div class="bar-track"><div class="bar-fill" style="width:43%"></div></div><span class="bar-value">15</span></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>层</th><th>证据类型</th><th>计算内容</th><th>用途与限制</th></tr></thead>
+              <tbody>
+                <tr><td>季度持仓 35</td><td><span class="tag good">official_fact</span></td><td>当前持股数量 × 当前价格估算持仓市值；与上季持股数量计算季度变化率</td><td>判断外资长期配置深度；不是日内买点</td></tr>
+                <tr><td>每日活跃度 20</td><td><span class="tag good">official_fact_no_direction</span></td><td>当日前十大排名 + 数据库累计近 20 期上榜次数</td><td>衡量跨境交易关注度；不判断买卖方向</td></tr>
+                <tr><td>ETF 申赎 20</td><td><span class="tag warn">model_estimate</span></td><td>CNYA 当期份额与上一有效快照比较；按基金内个股权重调整暴露</td><td>份额增加代表申购压力，避免把净值上涨误作资金流</td></tr>
+                <tr><td>全球风险 10</td><td><span class="tag warn">market_proxy</span></td><td>离岸 A50 ETF 五日表现、MCHI 相对 EEM、USD/CNY 五日变化</td><td>刻画 risk-on / risk-off；不是直接资金流</td></tr>
+                <tr><td>境内确认 15</td><td><span class="tag warn">market_proxy</span></td><td>主力净流入、超大单/大单一致性、温和涨幅和成交活跃度</td><td>确认承接质量；永远不写成北向净买入</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="pipeline">
+          <div class="section-kicker">04 · Data pipeline</div>
+          <h2>数据抓取、缓存与合并</h2>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-num">STEP 01</div><strong>官方季度锚点</strong><span>上交所 JSON 分页 + 深交所 XLSX；同时抓上一季度并计算差值</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 02</div><strong>官方日度事实</strong><span>两所每日前十大证券及交易概况，记录近 20 期出现频次</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 03</div><strong>海外与风险</strong><span>iShares CNYA 官方 CSV + 离岸 ETF、汇率和区域相对强弱</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 04</div><strong>境内确认</strong><span>主力资金榜与实时行情补齐价格、涨幅、成交额和大单结构</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 05</div><strong>证据化评分</strong><span>五层直接相加；不可用层记 0，不把剩余层重新放大到 100</span></div>
+            <div class="flow-step"><div class="flow-num">STEP 06</div><strong>解释与护栏</strong><span>LLM 仅解释 Top 5；随后再做证据等级和统一技术风控</span></div>
+          </div>
+          <p>季度数据独立缓存 6 小时；官方日度活跃度和全球风险缓存 10 分钟；CNYA 快照缓存 30 分钟。跨日份额与活跃度快照写入 <span class="mono">northbound_signal_snapshot</span>，数据库失败时退化为进程内基线，不阻断主链路。</p>
+        </section>
+
+        <section class="section" id="score">
+          <div class="section-kicker">05 · Score and gates</div>
+          <h2>分数之外，还有不可绕过的证据门槛</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>原始分</th><th>基础等级</th><th>额外证据要求</th></tr></thead>
+              <tbody>
+                <tr><td>≥ 75</td><td>强烈推荐</td><td>必须有季度持仓锚点，证据覆盖率 ≥75；LLM 不得提高等级</td></tr>
+                <tr><td>55—74</td><td>推荐</td><td>必须有季度锚点，且至少有官方活跃度或 CNYA 份额变化之一</td></tr>
+                <tr><td>30—54</td><td>关注</td><td>用于等待下一层确认，不自动执行</td></tr>
+                <tr><td>&lt; 30</td><td>回避</td><td>即使境内主力流入很大，也不能仅凭代理层升级</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="verdict warn">
+            <div class="verdict-body"><strong>缺失层不重标化</strong>如果 CNYA 尚未形成上一日份额基线，该层显示 <span class="mono">baseline_pending</span> 并记 0 分。这样会降低覆盖率和等级上限，但不会用其他代理信号补满缺口。</div>
+          </div>
+        </section>
+
+        <section class="section" id="output">
+          <div class="section-kicker">06 · Output contract</div>
+          <h2>每只候选都带完整证据谱系</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>字段</th><th>含义</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">score_detail</td><td>五层实际得分：quarterly_anchor / official_activity / external_etf_flow / global_risk / onshore_confirmation</td></tr>
+                <tr><td class="mono">signal_layers</td><td>每层的 score、max、available、available_weight 与 evidence_type</td></tr>
+                <tr><td class="mono">evidence.official_facts</td><td>季度持仓与官方前十大活跃证券原始事实</td></tr>
+                <tr><td class="mono">evidence.model_estimates</td><td>CNYA 份额变化形成的基金申赎估算</td></tr>
+                <tr><td class="mono">evidence.market_proxies</td><td>全球风险和境内量价代理</td></tr>
+                <tr><td class="mono">evidence_coverage</td><td>当前可用数据层对应的权重总和，不等于个股得分</td></tr>
+                <tr><td class="mono">evidence_cap_applied</td><td>LLM 或原始等级是否因证据不足被强制降级</td></tr>
+                <tr><td class="mono">source_status.layers</td><td>整次任务各数据层的状态、日期、来源与关键摘要</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>GET <span class="mono">/api/strategy/northbound</span> 仍读取定时任务缓存；POST <span class="mono">/api/strategy/northbound/refresh</span> 强制刷新，并把 <span class="mono">radar_model</span>、<span class="mono">signal_summary</span>、<span class="mono">source_status</span> 一并写入缓存元数据。</p>
+        </section>
+
+        <section class="section" id="degrade">
+          <div class="section-kicker">07 · Degradation</div>
+          <h2>数据缺失时如何安全降级</h2>
+          <div class="cards">
+            <div class="mini-card"><div class="tag good">five_layer_radar</div><h3>完整雷达</h3><p>季度持仓存在，至少四层数据可用。仍需逐股满足证据门槛。</p></div>
+            <div class="mini-card"><div class="tag warn">partial_radar</div><h3>部分雷达</h3><p>官方季度持仓或官方活跃度可用，但一个或多个补充层缺失。缺失层记 0。</p></div>
+            <div class="mini-card"><div class="tag risk">proxy_only</div><h3>仅代理</h3><p>只有境内资金/量价。最多用于观察；当前规则下典型最高仅 15 分，不会成为推荐。</p></div>
+          </div>
+          <p>当季度持仓、官方活跃度和境内资金确认三者全部不可用时，任务抛出数据不可用异常，不把取数失败保存成“正常空推荐”。</p>
+        </section>
+
+        <section class="section" id="sop">
+          <div class="section-kicker">08 · Daily SOP</div>
+          <h2>实盘阅读顺序</h2>
+          <ol class="compact-list">
+            <li>先看 <span class="mono">source_status.mode</span> 与五层可用状态，不在 proxy_only 下执行。</li>
+            <li>确认季度报告日期和季度变化率；季度减持较大时，即使日内活跃也要降级。</li>
+            <li>确认官方活跃榜字段是“成交额、无方向”，不要从排名猜测买入。</li>
+            <li>等待 CNYA 份额形成跨日基线；份额下降时不把 ETF 净值上涨当流入。</li>
+            <li>全球风险至少观察人民币、离岸 A50 与 China/EEM 相对强弱是否同向。</li>
+            <li>境内主力和量价只做最终确认，避免高开追涨；优先回踩、缩量企稳、分批介入。</li>
+            <li>延续原策略 10—15 个交易日窗口：约 −4% 止损、约 +8% 目标，T+10/T+15 复核。</li>
+          </ol>
+        </section>
+
+        <section class="section" id="sources">
+          <div class="section-kicker">09 · Sources and implementation</div>
+          <h2>官方来源、研究依据与改造代码</h2>
+          <ul class="source-list">
+            <li><a href="https://www.szse.cn/www/szhk/hkbussiness/news/t20240726_608353.html">深交所：深港通交易信息披露机制调整通知</a></li>
+            <li><a href="https://www.sse.com.cn/services/hkexsc/hgtscsj/hgtzqcysl/">上交所：沪股通证券持有数量</a></li>
+            <li><a href="https://www.sse.com.cn/services/hkexsc/hgtscsj/hgtcjhyzq/">上交所：沪股通成交活跃证券</a></li>
+            <li><a href="https://www.szse.cn/szhk/szhkshareholding/szholdamount/">深交所：深股通证券持有数量</a></li>
+            <li><a href="https://www.szse.cn/szhk/szhktradeinfo/szdaily/">深交所：深股通交易日报</a></li>
+            <li><a href="https://www.ishares.com/us/products/273318/ishares-msci-china-a-etf">iShares：CNYA 官方基金页与持仓文件</a></li>
+          </ul>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>代码文件</th><th>职责</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">api/northbound_radar.py</td><td>官方数据、ETF份额、全球风险与数据证据标注</td></tr>
+                <tr><td class="mono">api/northbound_strategy.py</td><td>五层合并评分、推荐理由与证据门槛</td></tr>
+                <tr><td class="mono">api/northbound_llm.py</td><td>只读证据的解释层与不支持表述清洗</td></tr>
+                <tr><td class="mono">api/database/northbound_radar_repository.py</td><td>ETF 与官方活跃度跨日快照</td></tr>
+                <tr><td class="mono">tests/test_strategy_data_reliability.py</td><td>代理不得升级、五层评分、LLM门槛、ETF份额流测试</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="verdict">
+            <div class="verdict-body"><strong>结论</strong>2.0 不试图复原已经停止公开的逐股日度北向净流入，而是用“季度真实持仓确定身份、官方活跃度确定关注、ETF份额确定海外申赎、全球变量确定风向、境内量价确定承接”构成可审计的决策链。</div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+  <script src="../assets/strategy-doc.js"></script>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

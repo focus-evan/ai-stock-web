@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>均线战法可靠性验证</title><style>
+:root {
+  --ink: #1b2430;
+  --muted: #5f6b7a;
+  --line: #d9e0e7;
+  --paper: #f7f8fa;
+  --panel: #ffffff;
+  --teal: #127c72;
+  --amber: #b46a00;
+  --rose: #b42318;
+  --blue: #285d9c;
+  --green-soft: #e8f4f1;
+  --amber-soft: #fff2dc;
+  --rose-soft: #ffe9e7;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner, main {
+  width: min(1280px, calc(100vw - 32px));
+  margin: 0 auto;
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0;
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+h1 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+}
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+nav a, .button-link {
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+nav a.active, .button-link.primary {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--green-soft);
+}
+main {
+  padding: 22px 0 42px;
+}
+.section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  margin: 0 0 16px;
+}
+.section h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+.note {
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 14px;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.stat-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #fff;
+}
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+.stat-value {
+  margin-top: 8px;
+  font-size: 26px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+.stat-note {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  min-height: 16px;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th, td {
+  border-bottom: 1px solid var(--line);
+  padding: 9px 8px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+th {
+  color: var(--muted);
+  background: #fbfcfd;
+  font-weight: 650;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.compact th, .compact td { white-space: normal; }
+.table-wrap {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  max-height: calc(100vh - 220px);
+}
+.pill, .status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+.pill.strong { background: var(--rose-soft); color: var(--rose); border-color: #ffc7c2; }
+.pill.regular { background: var(--amber-soft); color: var(--amber); border-color: #f3d19b; }
+.status.ok { background: var(--green-soft); color: var(--teal); border-color: #b6dbd4; }
+.status.pending { background: #eaf1fb; color: var(--blue); border-color: #c1d5ee; }
+.status.missing { background: #f1f2f4; color: var(--muted); border-color: var(--line); }
+.chart-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.bucket-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bucket-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 88px;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+}
+.bucket-track {
+  height: 12px;
+  border-radius: 999px;
+  background: #edf0f3;
+  overflow: hidden;
+}
+.bucket-fill {
+  height: 100%;
+  background: var(--teal);
+}
+.bucket-value {
+  color: var(--muted);
+  text-align: right;
+}
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+input[type="search"] {
+  width: min(420px, 100%);
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+.callout {
+  border-left: 4px solid var(--teal);
+  background: var(--green-soft);
+  padding: 12px 14px;
+  border-radius: 6px;
+  line-height: 1.65;
+  font-size: 14px;
+}
+.bad {
+  color: var(--teal);
+}
+.good {
+  color: var(--rose);
+}
+@media (max-width: 900px) {
+  .stat-grid, .two-col { grid-template-columns: 1fr; }
+  .topbar-inner { align-items: flex-start; flex-direction: column; }
+  h1 { font-size: 22px; }
+}
+</style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head><body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-stock-strategy-validation&amp;view=reports">策略回测验证</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav><header class="topbar"><div class="topbar-inner"><div class="brand"><h1>均线战法可靠性验证</h1><div class="subtitle">ai-stock 均线战法：推荐/强烈推荐记录的 T+10 收盘验证</div></div><nav><a class="active" href="index.html">汇总验证</a><a class="" href="moving_average_recommendations_detail.html">推荐明细子页</a><a href="moving_average_backtest_records.csv">CSV</a></nav></div></header><main><section class="section"><h2>样本范围</h2><div class="stat-grid"><div class="stat-card"><div class="stat-label">原始推荐记录</div><div class="stat-value">250</div><div class="stat-note">专表+缓存表合并</div></div><div class="stat-card"><div class="stat-label">按日期+股票去重</div><div class="stat-value">118</div><div class="stat-note">同日同股保留最后一次生成</div></div><div class="stat-card"><div class="stat-label">T+5可验证样本</div><div class="stat-value">118</div><div class="stat-note">主验证点已有收盘价</div></div><div class="stat-card"><div class="stat-label">唯一股票数</div><div class="stat-value">98</div><div class="stat-note">2026-03-13 至 2026-04-22</div></div></div></section><section class="section"><h2>验证口径</h2><div class="callout"><strong class="bad">T+10 收盘验证尚未体现稳定优势。</strong>均线战法以多头排列、金叉、回踩支撑、粘合突破等趋势确认信号为主；均线本身有滞后性，项目真实跟投阈值配置为 moving_average max_days=10、目标收益10%、止损5%，因此主验证点改为 T+10 收盘价。T+1/T+3/T+5 用作提前兑现对照，T+20 用作过持有观察。买入口径为推荐后第一个可实现收盘价。</div><p class="note">价格使用新浪财经未复权日 K 收盘价；收益未计交易费用、滑点、分红和停牌处置。</p></section><section class="section"><h2>核心指标</h2><div class="stat-grid"><div class="stat-card"><div class="stat-label">T+10平均收益</div><div class="stat-value">-1.32%</div><div class="stat-note">去重可验证样本</div></div><div class="stat-card"><div class="stat-label">T+10胜率</div><div class="stat-value">44.9%</div><div class="stat-note">收益 &gt; 0</div></div><div class="stat-card"><div class="stat-label">T+10中位收益</div><div class="stat-value">-1.85%</div><div class="stat-note">抗极值观察</div></div><div class="stat-card"><div class="stat-label">T+10最大/最小</div><div class="stat-value">+79.45% / -34.28%</div><div class="stat-note">单笔去重样本</div></div><div class="stat-card"><div class="stat-label">T+1平均收益</div><div class="stat-value">+0.18%</div><div class="stat-note">敏感性对照</div></div><div class="stat-card"><div class="stat-label">T+3平均收益</div><div class="stat-value">-1.57%</div><div class="stat-note">敏感性对照</div></div><div class="stat-card"><div class="stat-label">T+5平均收益</div><div class="stat-value">-2.20%</div><div class="stat-note">敏感性对照</div></div><div class="stat-card"><div class="stat-label">T+20平均收益</div><div class="stat-value">+4.17%</div><div class="stat-note">过持有观察</div></div><div class="stat-card"><div class="stat-label">T+10 ≥ 1%</div><div class="stat-value">41.5%</div><div class="stat-note">收益不低于 1%</div></div><div class="stat-card"><div class="stat-label">T+10 ≤ -2%</div><div class="stat-value">48.3%</div><div class="stat-note">回撤压力</div></div></div></section><section class="section"><h2>强烈推荐 / 推荐 分组</h2><table class="compact"><thead><tr><th>推荐级别</th><th>样本</th><th>T+10可验证</th><th>T+1胜率</th><th>T+1均值</th><th>T+3胜率</th><th>T+3均值</th><th>T+5胜率</th><th>T+5均值</th><th>T+10胜率</th><th>T+10均值</th><th>T+20胜率</th><th>T+20均值</th></tr></thead><tbody><tr><td>强烈推荐</td><td>62</td><td>62</td><td>46.8%</td><td>+0.52%</td><td>37.1%</td><td>-1.91%</td><td>37.1%</td><td>-2.04%</td><td>45.2%</td><td>-2.30%</td><td>50.0%</td><td>+2.75%</td></tr><tr><td>推荐</td><td>56</td><td>56</td><td>42.9%</td><td>-0.21%</td><td>37.5%</td><td>-1.20%</td><td>33.9%</td><td>-2.38%</td><td>44.6%</td><td>-0.23%</td><td>48.2%</td><td>+5.75%</td></tr></tbody></table></section><section class="section"><h2>信号类型分组</h2><table class="compact"><thead><tr><th>信号类型</th><th>样本</th><th>T+10可验证</th><th>T+1胜率</th><th>T+1均值</th><th>T+3胜率</th><th>T+3均值</th><th>T+5胜率</th><th>T+5均值</th><th>T+10胜率</th><th>T+10均值</th><th>T+20胜率</th><th>T+20均值</th></tr></thead><tbody><tr><td>5日/10日金叉</td><td>9</td><td>9</td><td>77.8%</td><td>+2.57%</td><td>55.6%</td><td>+3.66%</td><td>77.8%</td><td>+4.90%</td><td>88.9%</td><td>+3.82%</td><td>55.6%</td><td>+3.02%</td></tr><tr><td>5日/20日金叉</td><td>2</td><td>2</td><td>0.0%</td><td>-2.19%</td><td>0.0%</td><td>-4.65%</td><td>50.0%</td><td>-7.30%</td><td>50.0%</td><td>+2.06%</td><td>50.0%</td><td>+10.87%</td></tr><tr><td>均线多头排列</td><td>100</td><td>100</td><td>42.0%</td><td>+0.01%</td><td>36.0%</td><td>-2.05%</td><td>31.0%</td><td>-2.79%</td><td>43.0%</td><td>-1.61%</td><td>51.0%</td><td>+4.80%</td></tr><tr><td>均线支撑/回踩</td><td>1</td><td>1</td><td>0.0%</td><td>-0.10%</td><td>0.0%</td><td>-0.20%</td><td>0.0%</td><td>-0.68%</td><td>0.0%</td><td>-9.22%</td><td>0.0%</td><td>-11.29%</td></tr><tr><td>均线粘合突破</td><td>5</td><td>5</td><td>80.0%</td><td>+0.46%</td><td>60.0%</td><td>-0.54%</td><td>40.0%</td><td>-1.90%</td><td>20.0%</td><td>-4.43%</td><td>20.0%</td><td>-3.78%</td></tr><tr><td>均线金叉</td><td>1</td><td>1</td><td>0.0%</td><td>-1.01%</td><td>0.0%</td><td>-1.75%</td><td>100.0%</td><td>+0.64%</td><td>0.0%</td><td>-1.85%</td><td>0.0%</td><td>-6.31%</td></tr></tbody></table></section><section class="section"><h2>按月份表现</h2><table class="compact"><thead><tr><th>月份</th><th>样本</th><th>T+10可验证</th><th>T+1胜率</th><th>T+1均值</th><th>T+3胜率</th><th>T+3均值</th><th>T+5胜率</th><th>T+5均值</th><th>T+10胜率</th><th>T+10均值</th><th>T+20胜率</th><th>T+20均值</th></tr></thead><tbody><tr><td>2026-03</td><td>65</td><td>65</td><td>46.2%</td><td>+0.23%</td><td>35.4%</td><td>-2.02%</td><td>26.2%</td><td>-4.33%</td><td>38.5%</td><td>-3.96%</td><td>41.5%</td><td>+2.05%</td></tr><tr><td>2026-04</td><td>53</td><td>53</td><td>43.4%</td><td>+0.11%</td><td>39.6%</td><td>-1.03%</td><td>47.2%</td><td>+0.41%</td><td>52.8%</td><td>+1.91%</td><td>58.5%</td><td>+6.78%</td></tr></tbody></table></section><section class="section"><h2>T+10 极值样本</h2><div class="two-col"><div><h2>T+10 Top</h2><table class="compact"><thead><tr><th>推荐日</th><th>代码</th><th>名称</th><th>级别</th><th>信号</th><th>买入日</th><th>买入收盘</th><th>T+10日</th><th>T+10收盘</th><th>T+10收益</th></tr></thead><tbody><tr><td>2026-04-21</td><td>301217</td><td>铜冠铜箔</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-04-21</td><td>49.34</td><td>2026-05-08</td><td>88.54</td><td>+79.45%</td></tr><tr><td>2026-03-24</td><td>300668</td><td>杰恩设计</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-24</td><td>32.99</td><td>2026-04-08</td><td>46.54</td><td>+41.07%</td></tr><tr><td>2026-04-10</td><td>002008</td><td>大族激光</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-04-10</td><td>76.55</td><td>2026-04-24</td><td>102.46</td><td>+33.85%</td></tr><tr><td>2026-03-23</td><td>301292</td><td>海科新源</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-23</td><td>66.03</td><td>2026-04-07</td><td>85.96</td><td>+30.18%</td></tr><tr><td>2026-03-17</td><td>002730</td><td>电光科技</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-17</td><td>20.90</td><td>2026-03-31</td><td>26.50</td><td>+26.79%</td></tr><tr><td>2026-04-20</td><td>601208</td><td>东材科技</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-20</td><td>35.65</td><td>2026-05-07</td><td>45.16</td><td>+26.68%</td></tr><tr><td>2026-03-26</td><td>002082</td><td>万邦德</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-26</td><td>23.67</td><td>2026-04-10</td><td>29.80</td><td>+25.90%</td></tr><tr><td>2026-03-17</td><td>300720</td><td>海川智能</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-17</td><td>49.50</td><td>2026-03-31</td><td>61.95</td><td>+25.15%</td></tr><tr><td>2026-04-01</td><td>301128</td><td>强瑞技术</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-01</td><td>153.33</td><td>2026-04-16</td><td>190.07</td><td>+23.96%</td></tr><tr><td>2026-03-24</td><td>002840</td><td>华统股份</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-24</td><td>10.67</td><td>2026-04-08</td><td>13.05</td><td>+22.31%</td></tr><tr><td>2026-04-13</td><td>000967</td><td>盈峰环境</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-13</td><td>10.63</td><td>2026-04-27</td><td>12.89</td><td>+21.26%</td></tr><tr><td>2026-04-13</td><td>300051</td><td>琏升科技</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-13</td><td>13.63</td><td>2026-04-27</td><td>16.50</td><td>+21.06%</td></tr></tbody></table></div><div><h2>T+10 Bottom</h2><table class="compact"><thead><tr><th>推荐日</th><th>代码</th><th>名称</th><th>级别</th><th>信号</th><th>买入日</th><th>买入收盘</th><th>T+10日</th><th>T+10收盘</th><th>T+10收益</th></tr></thead><tbody><tr><td>2026-03-31</td><td>000048</td><td>京基智农</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-31</td><td>23.66</td><td>2026-04-15</td><td>15.55</td><td>-34.28%</td></tr><tr><td>2026-03-30</td><td>000048</td><td>京基智农</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-30</td><td>22.61</td><td>2026-04-14</td><td>15.66</td><td>-30.74%</td></tr><tr><td>2026-03-31</td><td>300385</td><td>雪浪环境</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-31</td><td>20.62</td><td>2026-04-16</td><td>14.42</td><td>-30.07%</td></tr><tr><td>2026-03-26</td><td>600726</td><td>华电能源</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-26</td><td>6.77</td><td>2026-04-10</td><td>4.75</td><td>-29.84%</td></tr><tr><td>2026-04-01</td><td>301201</td><td>诚达药业</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-01</td><td>59.61</td><td>2026-04-16</td><td>43.00</td><td>-27.86%</td></tr><tr><td>2026-03-25</td><td>300385</td><td>雪浪环境</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-25</td><td>20.90</td><td>2026-04-09</td><td>15.10</td><td>-27.75%</td></tr><tr><td>2026-03-19</td><td>300302</td><td>同有科技</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-19</td><td>26.44</td><td>2026-04-02</td><td>19.30</td><td>-27.00%</td></tr><tr><td>2026-03-31</td><td>600726</td><td>华电能源</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-31</td><td>6.41</td><td>2026-04-15</td><td>4.68</td><td>-26.99%</td></tr><tr><td>2026-03-27</td><td>600758</td><td>辽宁能源</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-27</td><td>5.53</td><td>2026-04-13</td><td>4.07</td><td>-26.40%</td></tr><tr><td>2026-04-14</td><td>301509</td><td>金凯生科</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-04-14</td><td>47.16</td><td>2026-04-28</td><td>35.55</td><td>-24.62%</td></tr><tr><td>2026-03-31</td><td>603618</td><td>杭电股份</td><td><span class="pill strong">强烈推荐</span></td><td>均线多头排列</td><td>2026-03-31</td><td>28.49</td><td>2026-04-15</td><td>21.62</td><td>-24.11%</td></tr><tr><td>2026-03-26</td><td>600780</td><td>通宝能源</td><td><span class="pill regular">推荐</span></td><td>均线多头排列</td><td>2026-03-26</td><td>8.43</td><td>2026-04-10</td><td>6.40</td><td>-24.08%</td></tr></tbody></table></div></div></section><section class="section"><h2>输出说明</h2><p class="note">报告生成时间：2026-07-25 21:22:40。明细子页包含全部 250 条合并后原始推荐记录；收益统计建议以“日期+股票去重”口径为准。</p></section></main><script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

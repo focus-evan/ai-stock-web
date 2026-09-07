@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { syncLibrary } from "./sync-research-library.mjs";
+import { defaultSource, syncLibrary } from "./sync-research-library.mjs";
 
 export async function prepareLibrary() {
-	const source = process.env.RESEARCH_SOURCE_DIR || "D:/Evan/html";
+	const source = defaultSource();
 	if (process.env.RESEARCH_SYNC !== "0" && fs.existsSync(path.join(source, "index.html"))) {
-		const report = await syncLibrary({ source });
+		const report = await syncLibrary({ source, merge: true });
 		console.log(`[research] ${report.htmlPages} pages, ${report.collections} collections; ${report.changedFiles} files updated.`);
 		return;
 	}

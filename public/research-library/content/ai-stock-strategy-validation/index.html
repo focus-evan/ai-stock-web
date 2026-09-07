@@ -1,0 +1,685 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI Stock 全战法可靠性验证总览</title>
+  <style>
+    :root {
+      --bg:#f6f8fb;
+      --panel:#fff;
+      --ink:#17202a;
+      --muted:#64748b;
+      --line:#dce4ed;
+      --up:#d71920;
+      --up-soft:#fff1f1;
+      --down:#13823d;
+      --down-soft:#edf8f0;
+      --flat:#8a5a00;
+      --flat-soft:#fff7e8;
+      --blue:#245ee8;
+      --dark:#111827;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.58;letter-spacing:0}
+    a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+    header{background:var(--dark);color:#fff;border-bottom:5px solid #d71920;padding:32px 24px 26px}
+    .wrap{max-width:1380px;margin:0 auto}
+    h1{margin:0 0 8px;font-size:32px;line-height:1.18;letter-spacing:0}
+    .sub{max-width:930px;margin:0;color:#d8e2ef;font-size:15px}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+    .stat{min-height:82px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);padding:12px 14px}
+    .stat b{display:block;font-size:25px;line-height:1.2}.stat span{display:block;margin-top:6px;color:#d8e2ef;font-size:13px}
+    main{padding:24px}section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:18px}
+    h2{margin:0 0 12px;font-size:21px;line-height:1.35;letter-spacing:0}h3{margin:0 0 6px;font-size:17px;line-height:1.32;letter-spacing:0}
+    p{margin:0;color:#344153;font-size:14px}.note{color:var(--muted);font-size:13px}
+    .notice{background:var(--flat-soft);border:1px solid #efcd91;color:#5b3900;border-radius:8px;padding:12px 14px;margin-bottom:18px}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .summary-card{border:1px solid var(--line);border-radius:8px;background:#fbfdff;padding:14px;min-height:122px}
+    .summary-card strong{display:block;font-size:24px;line-height:1.2;margin-bottom:6px}
+    .strategy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .strategy-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px;box-shadow:0 6px 18px rgba(22,34,51,.055)}
+    .card-top{display:flex;gap:11px;align-items:flex-start;margin-bottom:10px}
+    .signal-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;font-weight:800;border:1px solid var(--line);font-size:16px;flex:0 0 auto}
+    .signal-icon.up{color:var(--up);background:var(--up-soft);border-color:#f1b6b6}.signal-icon.down{color:var(--down);background:var(--down-soft);border-color:#abd9b8}.signal-icon.flat{color:var(--flat);background:var(--flat-soft);border-color:#efcd91}
+    .chips{display:flex;gap:7px;flex-wrap:wrap}.chips span{border:1px solid var(--line);background:#f8fbfe;border-radius:999px;padding:2px 8px;font-size:12px;color:var(--muted)}.chips span.up{color:var(--up);background:var(--up-soft);border-color:#f1b6b6}.chips span.down{color:var(--down);background:var(--down-soft);border-color:#abd9b8}.chips span.flat{color:var(--flat);background:var(--flat-soft);border-color:#efcd91}
+    .metric-row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-top:12px;font-size:13px;color:var(--muted)}.metric-row strong{font-size:22px}
+    .up{color:var(--up);font-weight:700}.down{color:var(--down);font-weight:700}.flat{color:var(--flat);font-weight:700}
+    .zero-bar{position:relative;height:12px;background:#f0f3f7;border-radius:999px;margin:8px 0 12px;overflow:hidden}.zero-bar .axis{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#aab4c1}.bar-right{position:absolute;left:50%;top:0;bottom:0;background:var(--up);border-radius:999px}.bar-left{position:absolute;right:50%;top:0;bottom:0;background:var(--down);border-radius:999px}.zero-bar.empty{background:#f4f4f4}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}.mini-grid div{background:#f8fbfe;border:1px solid var(--line);border-radius:7px;padding:8px;min-width:0}.mini-grid b{display:block;font-size:16px;line-height:1.2;white-space:nowrap}.mini-grid span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.links a{border:1px solid var(--line);border-radius:7px;background:#fbfdff;padding:7px 10px;color:var(--ink);font-size:13px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;font-size:13px;white-space:nowrap}th{background:#f0f3f7;font-weight:700}td.explain{white-space:normal;min-width:280px}
+    .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.legend span{font-size:13px;color:var(--muted)}.legend b{padding:1px 7px;border-radius:999px}
+    @media(max-width:1100px){.strategy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.summary-grid,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:680px){header,main{padding-left:16px;padding-right:16px}h1{font-size:28px}.strategy-grid,.summary-grid,.stats{grid-template-columns:1fr}}
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=ai-stock-strategy-validation&amp;view=reports">策略回测验证</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <div class="wrap">
+      <h1>AI Stock 全战法可靠性验证总览</h1>
+      <p class="sub">按每种战法自己的交易特点选择验证窗口：隔夜看 T+1，情绪/龙头看 T+2/T+3，技术结构看 T+5，趋势/资金看 T+10/T+15。颜色按 A 股习惯：收益为正用红色，收益为负用绿色。</p>
+      <div class="stats">
+        <div class="stat"><b>18</b><span>覆盖战法/策略</span></div>
+        <div class="stat"><b>3896</b><span>主口径去重样本</span></div>
+        <div class="stat"><b>3827</b><span>主验证可用样本</span></div>
+        <div class="stat"><b>7</b><span>主验证平均收益为正</span></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <div class="notice">本页只放总结和图形化看板；完整明细仍在各子报告中。收益使用未复权日 K，未扣交易费用、滑点、涨跌停无法成交和分时触发条件。</div>
+
+      <section>
+        <h2>先看结论</h2>
+        <div class="summary-grid">
+          <div class="summary-card"><strong class="up">北向资金</strong><p>有效样本不少的战法里，主验证平均收益最高：+4.82%，胜率 60.4%。</p></div>
+          <div class="summary-card"><strong class="down">情绪接力</strong><p>有效样本不少的战法里，主验证平均收益最弱：-2.35%，胜率 35.2%。</p></div>
+          <div class="summary-card"><strong class="flat">冲高型很明显</strong><p>隔夜用次日均价和最高价统计；龙头、突破、趋势动量的窗口最高收益也明显好于主验证收益，说明卖点纪律比单纯推荐更关键。</p></div>
+          <div class="summary-card"><strong class="up">北向/事件较优</strong><p>北向资金适合 T+15 波段验证；事件驱动适合 T+5 催化验证，是当前表现更稳的两类。</p></div>
+        </div>
+        <div class="legend">
+          <span><b class="up">红色</b> 收益为正</span>
+          <span><b class="down">绿色</b> 收益为负</span>
+          <span><b class="flat">黄色</b> 打平、样本少或冲高型</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>每种战法效果卡片</h2>
+        <div class="strategy-grid">
+          
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>隔夜战法</h3>
+            <div class="chips">
+              <span>隔夜快打</span>
+              <span>T+1</span>
+              <span class="down">偏弱</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>次日均价平均收益</span>
+          <strong class="down">-0.33%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:1.0%"></span></div>
+        <div class="mini-grid">
+          <div><b>40.5%</b><span>胜率</span></div>
+          <div><b>274/297</b><span>有效/样本</span></div>
+          <div><b class="up">+3.25%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>均价口径偏弱，但次日最高价触正比例高，必须按冲高卖出纪律执行。</p>
+        <div class="links">
+          <a href="overnight/index.html">子报告</a>
+          <a href="overnight/overnight_recommendations_detail.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>北向资金</h3>
+            <div class="chips">
+              <span>资金波段</span>
+              <span>T+15</span>
+              <span class="up">强</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+4.82%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:15.1%"></span></div>
+        <div class="mini-grid">
+          <div><b>60.4%</b><span>胜率</span></div>
+          <div><b>91/98</b><span>有效/样本</span></div>
+          <div><b class="flat">-</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+15表现最好，是目前最稳定的波段型策略。</p>
+        <div class="links">
+          <a href="northbound/index.html">子报告</a>
+          <a href="northbound/northbound_recommendations_detail.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>均线战法</h3>
+            <div class="chips">
+              <span>趋势确认</span>
+              <span>T+10</span>
+              <span class="down">偏弱</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-1.32%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:4.1%"></span></div>
+        <div class="mini-grid">
+          <div><b>44.9%</b><span>胜率</span></div>
+          <div><b>118/118</b><span>有效/样本</span></div>
+          <div><b class="flat">-</b><span>窗口最高均值</span></div>
+        </div>
+        <p>整体偏弱，普通多头排列要降权，优先新金叉和回踩确认。</p>
+        <div class="links">
+          <a href="moving_average/index.html">子报告</a>
+          <a href="moving_average/moving_average_recommendations_detail.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>竞价/尾盘</h3>
+            <div class="chips">
+              <span>隔夜快打</span>
+              <span>T+1</span>
+              <span class="up">偏交易型</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+0.02%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:0.1%"></span></div>
+        <div class="mini-grid">
+          <div><b>46.9%</b><span>胜率</span></div>
+          <div><b>207/207</b><span>有效/样本</span></div>
+          <div><b class="up">+3.43%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>收盘几乎打平，窗口最高较好，必须隔日冲高处理。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_auction.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>龙头战法</h3>
+            <div class="chips">
+              <span>高弹性情绪</span>
+              <span>T+3</span>
+              <span class="up">偏交易型</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+1.01%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:3.1%"></span></div>
+        <div class="mini-grid">
+          <div><b>47.1%</b><span>胜率</span></div>
+          <div><b>1959/1959</b><span>有效/样本</span></div>
+          <div><b class="up">+9.65%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>收盘均值为正但胜率不足50%，更像高弹性冲高策略。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_dragon_head.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>情绪战法</h3>
+            <div class="chips">
+              <span>市场情绪</span>
+              <span>T+3</span>
+              <span class="up">可用</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+0.65%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:2.0%"></span></div>
+        <div class="mini-grid">
+          <div><b>50.7%</b><span>胜率</span></div>
+          <div><b>219/219</b><span>有效/样本</span></div>
+          <div><b class="up">+7.04%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+3小幅为正，适合情绪扩散期，退潮要快撤。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_sentiment.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>事件驱动</h3>
+            <div class="chips">
+              <span>催化兑现</span>
+              <span>T+5</span>
+              <span class="up">强</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+2.97%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:9.3%"></span></div>
+        <div class="mini-grid">
+          <div><b>53.4%</b><span>胜率</span></div>
+          <div><b>206/216</b><span>有效/样本</span></div>
+          <div><b class="up">+13.06%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+5收益和胜率都突出，是剩余战法里表现最好的一类。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_event_driven.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>突破战法</h3>
+            <div class="chips">
+              <span>技术突破</span>
+              <span>T+5</span>
+              <span class="flat">冲高型</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-0.09%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:0.3%"></span></div>
+        <div class="mini-grid">
+          <div><b>43.8%</b><span>胜率</span></div>
+          <div><b>112/112</b><span>有效/样本</span></div>
+          <div><b class="up">+8.04%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>收盘略负但窗口最高好，说明突破后卖点比买点更关键。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_breakthrough.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>量价关系</h3>
+            <div class="chips">
+              <span>量价结构</span>
+              <span>T+5</span>
+              <span class="up">可用</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+0.36%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:1.1%"></span></div>
+        <div class="mini-grid">
+          <div><b>52.6%</b><span>胜率</span></div>
+          <div><b>114/119</b><span>有效/样本</span></div>
+          <div><b class="up">+7.52%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+5温和为正，量价承接有效但收益不厚。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_volume_price.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>趋势动量</h3>
+            <div class="chips">
+              <span>趋势延续</span>
+              <span>T+10</span>
+              <span class="flat">冲高型</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-1.86%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:5.8%"></span></div>
+        <div class="mini-grid">
+          <div><b>40.4%</b><span>胜率</span></div>
+          <div><b>193/209</b><span>有效/样本</span></div>
+          <div><b class="up">+12.44%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+10收盘偏弱但窗口最高高，当前算法追高或衰竭识别不足。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_trend_momentum.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>综合战法</h3>
+            <div class="chips">
+              <span>多战法共振</span>
+              <span>T+5</span>
+              <span class="flat">冲高型</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-1.06%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:3.3%"></span></div>
+        <div class="mini-grid">
+          <div><b>48.8%</b><span>胜率</span></div>
+          <div><b>80/80</b><span>有效/样本</span></div>
+          <div><b class="up">+7.93%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>综合共振没有显著提升收盘收益，需要重新审查子战法权重。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_combined.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon up">▲</span>
+          <div>
+            <h3>连板接力</h3>
+            <div class="chips">
+              <span>接力情绪</span>
+              <span>T+2</span>
+              <span class="up">可用</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="up">+0.95%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-right" style="width:3.0%"></span></div>
+        <div class="mini-grid">
+          <div><b>54.8%</b><span>胜率</span></div>
+          <div><b>42/42</b><span>有效/样本</span></div>
+          <div><b class="up">+8.02%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+2表现可用，但样本不大，适合快进快出。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_relay.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>情绪接力</h3>
+            <div class="chips">
+              <span>接力情绪</span>
+              <span>T+3</span>
+              <span class="down">偏弱</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-2.35%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:7.3%"></span></div>
+        <div class="mini-grid">
+          <div><b>35.2%</b><span>胜率</span></div>
+          <div><b>165/173</b><span>有效/样本</span></div>
+          <div><b class="up">+6.67%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>T+3偏弱，退潮期和高位接力过滤不足。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_emotion_relay.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>养家情绪周期</h3>
+            <div class="chips">
+              <span>短线情绪周期</span>
+              <span>T+3</span>
+              <span class="flat">样本少</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-15.48%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:48.4%"></span></div>
+        <div class="mini-grid">
+          <div><b>9.1%</b><span>胜率</span></div>
+          <div><b>11/11</b><span>有效/样本</span></div>
+          <div><b class="up">+4.25%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>样本很少且表现弱，只能作观察。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_yangjia_emotion_cycle.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>92科比周期投机</h3>
+            <div class="chips">
+              <span>短线周期投机</span>
+              <span>T+3</span>
+              <span class="flat">样本少</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-4.26%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:13.3%"></span></div>
+        <div class="mini-grid">
+          <div><b>31.6%</b><span>胜率</span></div>
+          <div><b>19/19</b><span>有效/样本</span></div>
+          <div><b class="up">+6.72%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>样本少，当前阶段收益偏弱，需等更多数据。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_kobe92_cycle_speculation.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>A股龙头合力</h3>
+            <div class="chips">
+              <span>短线龙头</span>
+              <span>T+3</span>
+              <span class="flat">样本少</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-14.06%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:43.9%"></span></div>
+        <div class="mini-grid">
+          <div><b>0.0%</b><span>胜率</span></div>
+          <div><b>4/4</b><span>有效/样本</span></div>
+          <div><b class="up">+2.83%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>样本太少且亏损大，不适合下结论。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_a_share_leader_tactics.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon flat">●</span>
+          <div>
+            <h3>北京炒家首板</h3>
+            <div class="chips">
+              <span>首板套利</span>
+              <span>T+1</span>
+              <span class="flat">无样本</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="flat">-</strong>
+        </div>
+        <div class="zero-bar empty"></div>
+        <div class="mini-grid">
+          <div><b>-</b><span>胜率</span></div>
+          <div><b>0/0</b><span>有效/样本</span></div>
+          <div><b class="flat">-</b><span>窗口最高均值</span></div>
+        </div>
+        <p>没有推荐/强烈推荐样本，未进入收益统计。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_beijing_chaogu_first_board.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+
+      <article class="strategy-card">
+        <div class="card-top">
+          <span class="signal-icon down">▼</span>
+          <div>
+            <h3>护城河价值</h3>
+            <div class="chips">
+              <span>中短期价值</span>
+              <span>T+20</span>
+              <span class="flat">样本少</span>
+            </div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span>主验证平均收益</span>
+          <strong class="down">-7.05%</strong>
+        </div>
+        <div class="zero-bar"><span class="axis"></span><span class="bar-left" style="width:22.0%"></span></div>
+        <div class="mini-grid">
+          <div><b>23.1%</b><span>胜率</span></div>
+          <div><b>13/13</b><span>有效/样本</span></div>
+          <div><b class="up">+3.82%</b><span>窗口最高均值</span></div>
+        </div>
+        <p>样本少且不是短线战法，不能和短线策略横比。</p>
+        <div class="links">
+          <a href="remaining_strategies/strategy_moat_value.html">子报告</a>
+          <a href="remaining_strategies/recommendation_details.html">明细</a>
+        </div>
+      </article>
+    
+        </div>
+      </section>
+
+      <section>
+        <h2>收益与胜率总表</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>战法</th><th>类型</th><th>主验证</th><th>样本</th><th>有效</th>
+                <th>平均收益</th><th>胜率</th><th>窗口最高均值</th><th>窗口最高胜率</th>
+                <th>为什么这样验证</th><th>结论</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><a href="northbound/index.html">北向资金</a></td><td>资金波段</td><td>T+15</td><td>98</td><td>91</td><td class="up">+4.82%</td><td>60.4%</td><td class="flat">-</td><td>-</td><td class="explain">机构资金和北向持仓是慢变量，主验证应放在10-15个交易日。</td><td class="explain">T+15表现最好，是目前最稳定的波段型策略。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_event_driven.html">事件驱动</a></td><td>催化兑现</td><td>T+5</td><td>216</td><td>206</td><td class="up">+2.97%</td><td>53.4%</td><td class="up">+13.06%</td><td>90.8%</td><td class="explain">普通事件2-3天兑现，政策/公告可发酵到5-10天；混合事件样本用T+5作为主验证，T+10作扩散对照。</td><td class="explain">T+5收益和胜率都突出，是剩余战法里表现最好的一类。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_dragon_head.html">龙头战法</a></td><td>高弹性情绪</td><td>T+3</td><td>1959</td><td>1959</td><td class="up">+1.01%</td><td>47.1%</td><td class="up">+9.65%</td><td>90.4%</td><td class="explain">龙头战法是1-3天快进快出，最多5天；用T+3收盘看是否有持续溢价，窗口最高收益看次日到T+3冲高兑现能力。</td><td class="explain">收盘均值为正但胜率不足50%，更像高弹性冲高策略。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_relay.html">连板接力</a></td><td>接力情绪</td><td>T+2</td><td>42</td><td>42</td><td class="up">+0.95%</td><td>54.8%</td><td class="up">+8.02%</td><td>92.9%</td><td class="explain">连板接力的交易窗口非常短，核心看次日/隔日弱转强或断板修复；主验证点取T+2。</td><td class="explain">T+2表现可用，但样本不大，适合快进快出。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_sentiment.html">情绪战法</a></td><td>市场情绪</td><td>T+3</td><td>219</td><td>219</td><td class="up">+0.65%</td><td>50.7%</td><td class="up">+7.04%</td><td>93.6%</td><td class="explain">情绪战法跟随赚钱效应和板块热度，常见持有2-4天；T+3位于情绪扩散和退潮之间。</td><td class="explain">T+3小幅为正，适合情绪扩散期，退潮要快撤。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_volume_price.html">量价关系</a></td><td>量价结构</td><td>T+5</td><td>119</td><td>114</td><td class="up">+0.36%</td><td>52.6%</td><td class="up">+7.52%</td><td>91.2%</td><td class="explain">放量突破通常1-3天，缩量整理3-7天；量价混合信号用T+5验证资金承接是否延续。</td><td class="explain">T+5温和为正，量价承接有效但收益不厚。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_auction.html">竞价/尾盘</a></td><td>隔夜快打</td><td>T+1</td><td>207</td><td>207</td><td class="up">+0.02%</td><td>46.9%</td><td class="up">+3.43%</td><td>84.5%</td><td class="explain">集合竞价和尾盘异动本质是隔日溢价验证，纪律要求次日冲高/开盘处理，因此主验证点为T+1。</td><td class="explain">收盘几乎打平，窗口最高较好，必须隔日冲高处理。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_breakthrough.html">突破战法</a></td><td>技术突破</td><td>T+5</td><td>112</td><td>112</td><td class="down">-0.09%</td><td>43.8%</td><td class="up">+8.04%</td><td>88.4%</td><td class="explain">强势突破2-3天，震荡突破5-7天；T+5能过滤次日假突破，也不过度拖长到趋势战法。</td><td class="explain">收盘略负但窗口最高好，说明突破后卖点比买点更关键。</td></tr>
+<tr><td><a href="overnight/index.html">隔夜战法</a></td><td>隔夜快打</td><td>T+1</td><td>297</td><td>274</td><td class="down">-0.33%</td><td>40.5%</td><td class="up">+3.25%</td><td>80.3%</td><td class="explain">尾盘买、次日卖，不用次日收盘统计；主口径用次日均价，进攻上限用次日最高价。</td><td class="explain">均价口径偏弱，但次日最高价触正比例高，必须按冲高卖出纪律执行。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_combined.html">综合战法</a></td><td>多战法共振</td><td>T+5</td><td>80</td><td>80</td><td class="down">-1.06%</td><td>48.8%</td><td class="up">+7.93%</td><td>90.0%</td><td class="explain">综合战法跟随主导子战法，系统纪律为2-7天；T+5用于验证共振后是否能走出短波段。</td><td class="explain">综合共振没有显著提升收盘收益，需要重新审查子战法权重。</td></tr>
+<tr><td><a href="moving_average/index.html">均线战法</a></td><td>趋势确认</td><td>T+10</td><td>118</td><td>118</td><td class="down">-1.32%</td><td>44.9%</td><td class="flat">-</td><td>-</td><td class="explain">均线信号有滞后性，应看5-10日趋势延续，而不是次日。</td><td class="explain">整体偏弱，普通多头排列要降权，优先新金叉和回踩确认。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_trend_momentum.html">趋势动量</a></td><td>趋势延续</td><td>T+10</td><td>209</td><td>193</td><td class="down">-1.86%</td><td>40.4%</td><td class="up">+12.44%</td><td>94.3%</td><td class="explain">趋势动量强调MACD/ADX和多周期动量，持有7-15天；T+10是中位验证点。</td><td class="explain">T+10收盘偏弱但窗口最高高，当前算法追高或衰竭识别不足。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_emotion_relay.html">情绪接力</a></td><td>接力情绪</td><td>T+3</td><td>173</td><td>165</td><td class="down">-2.35%</td><td>35.2%</td><td class="up">+6.67%</td><td>88.5%</td><td class="explain">情绪接力在情绪高涨时1-2天兑现，低迷反转可等3-5天；T+3作为折中主验证。</td><td class="explain">T+3偏弱，退潮期和高位接力过滤不足。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_kobe92_cycle_speculation.html">92科比周期投机</a></td><td>短线周期投机</td><td>T+3</td><td>19</td><td>19</td><td class="down">-4.26%</td><td>31.6%</td><td class="up">+6.72%</td><td>73.7%</td><td class="explain">92科比框架围绕龙头、补涨、高低切，通常1-3天，主验证T+3。</td><td class="explain">样本少，当前阶段收益偏弱，需等更多数据。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_moat_value.html">护城河价值</a></td><td>中短期价值</td><td>T+20</td><td>13</td><td>13</td><td class="down">-7.05%</td><td>23.1%</td><td class="up">+3.82%</td><td>92.3%</td><td class="explain">该策略不是短线战法，缓存样本极少；用T+20作为中短期观察，不与短线策略直接横向比较。</td><td class="explain">样本少且不是短线战法，不能和短线策略横比。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_a_share_leader_tactics.html">A股龙头合力</a></td><td>短线龙头</td><td>T+3</td><td>4</td><td>4</td><td class="down">-14.06%</td><td>0.0%</td><td class="up">+2.83%</td><td>100.0%</td><td class="explain">合力龙头以辨识度和分歧转一致为核心，通常1-3天，主验证T+3。</td><td class="explain">样本太少且亏损大，不适合下结论。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_yangjia_emotion_cycle.html">养家情绪周期</a></td><td>短线情绪周期</td><td>T+3</td><td>11</td><td>11</td><td class="down">-15.48%</td><td>9.1%</td><td class="up">+4.25%</td><td>81.8%</td><td class="explain">养家框架以赚钱效应和主线强弱为仓位阀门，通常1-3天见效，主验证T+3。</td><td class="explain">样本很少且表现弱，只能作观察。</td></tr>
+<tr><td><a href="remaining_strategies/strategy_beijing_chaogu_first_board.html">北京炒家首板</a></td><td>首板套利</td><td>T+1</td><td>0</td><td>0</td><td class="flat">-</td><td>-</td><td class="flat">-</td><td>-</td><td class="explain">首板战法是当日打板、次日套利，主验证T+1；若只有关注样本则不计入收益。</td><td class="explain">没有推荐/强烈推荐样本，未进入收益统计。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>报告入口</h2>
+        <div class="summary-grid">
+          <div class="summary-card"><strong>隔夜战法</strong><p><a href="overnight/index.html">汇总</a> / <a href="overnight/overnight_recommendations_detail.html">明细</a></p></div>
+          <div class="summary-card"><strong>北向资金</strong><p><a href="northbound/index.html">汇总</a> / <a href="northbound/northbound_recommendations_detail.html">明细</a></p></div>
+          <div class="summary-card"><strong>均线战法</strong><p><a href="moving_average/index.html">汇总</a> / <a href="moving_average/moving_average_recommendations_detail.html">明细</a></p></div>
+          <div class="summary-card"><strong>剩余战法</strong><p><a href="remaining_strategies/index.html">汇总</a> / <a href="remaining_strategies/recommendation_details.html">明细</a></p></div>
+          <div class="summary-card"><strong>收益曲线与交易策略</strong><p><a href="equity_strategy/index.html">策略总报告</a> / <a href="equity_strategy/strategy_equity_summary.csv">CSV</a></p></div>
+          <div class="summary-card"><strong>北向+隔夜深度手册</strong><p><a href="northbound_overnight_playbook/index.html">执行手册</a> / <a href="northbound_overnight_playbook/execution_rules.csv">规则CSV</a></p></div>
+        </div>
+      </section>
+
+      <p class="note">本页路径：file:///Users/evan/html/ai-stock-strategy-validation/index.html</p>
+    </div>
+  </main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

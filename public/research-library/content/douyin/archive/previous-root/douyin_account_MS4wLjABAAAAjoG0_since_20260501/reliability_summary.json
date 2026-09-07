@@ -1,0 +1,19 @@
+{
+  "account": "全能的野人",
+  "slug": "quan-neng-ye-ren",
+  "generated_at": "2026-09-02T23:36:09+08:00",
+  "as_of": "2026-09-02",
+  "reliability": {
+    "rating": "中等",
+    "average_score": 57.1,
+    "scored_videos": 21,
+    "total_videos": 295,
+    "verdict_counts": {
+      "观察中": 274,
+      "已验证": 9,
+      "未验证": 6,
+      "部分验证": 6
+    }
+  },
+  "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
+}
