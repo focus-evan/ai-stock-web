@@ -1,0 +1,58 @@
+{
+  "started": "20260908_072925",
+  "finished": "2026-09-08 07:35:05",
+  "log": "/Users/evan/html/douyin/logs/update_20260908_072925.log",
+  "sources": [
+    {
+      "name": "我的收藏",
+      "selected_new": 13,
+      "downloaded": 13,
+      "merged_new": 11,
+      "status": "ok",
+      "post_filter_rejected": 2
+    },
+    {
+      "name": "李一恩",
+      "selected_new": 0,
+      "downloaded": 0,
+      "merged_new": 0,
+      "status": "download_failed:1"
+    },
+    {
+      "name": "立伟",
+      "selected_new": 0,
+      "downloaded": 0,
+      "merged_new": 0,
+      "status": "download_failed:1"
+    },
+    {
+      "name": "交易魔法师（马总）",
+      "selected_new": 0,
+      "downloaded": 0,
+      "merged_new": 0,
+      "status": "download_failed:1"
+    },
+    {
+      "name": "全能的野人",
+      "selected_new": 0,
+      "downloaded": 0,
+      "merged_new": 0,
+      "status": "download_failed:1",
+      "market_validation_status": "unchanged"
+    },
+    {
+      "name": "宇菠萝",
+      "selected_new": 0,
+      "downloaded": 0,
+      "merged_new": 0,
+      "status": "download_failed:1",
+      "market_validation_status": "unchanged"
+    }
+  ],
+  "site": {
+    "formal_pages": 1138,
+    "local_refs": 13458,
+    "external_refs": 7924,
+    "package": "/Users/evan/Documents/Codex/2026-07-22/hoy/outputs/douyin_static_site_20260723.tar.gz"
+  }
+}
