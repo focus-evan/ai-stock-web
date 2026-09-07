@@ -55,7 +55,19 @@ const hash = value => createHash("sha256").update(value).digest("hex");
 const compact = value => value.replace(/\s+/g, " ").trim();
 const escapeHtml = value => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const isManualAttachment = relative => /^server-cleanup-[^/]+\/files\/[^/]+\.(sh|conf)$/i.test(relative);
-const publishedPath = relative => isManualAttachment(relative) ? `${relative}.txt` : relative;
+export const publishedPath = (relative) => {
+ const portable = relative.split("/").map(segment => {
+  if (Buffer.byteLength(segment, "utf8") <= 240) return segment;
+  const extension = path.posix.extname(segment);
+  let prefix = "";
+  for (const character of segment.slice(0, segment.length - extension.length)) {
+   if (Buffer.byteLength(prefix + character, "utf8") > 160) break;
+   prefix += character;
+  }
+  return `${prefix}-${hash(segment).slice(0, 12)}${extension}`;
+ }).join("/");
+ return isManualAttachment(relative) ? `${portable}.txt` : portable;
+};
 
 export function shouldInclude(relativePath) {
 	const parts = slash(relativePath).split("/");
@@ -102,7 +114,7 @@ export function resolveLocalLink(value, from, files, sourceRoot = "D:/Evan/html"
 		}
 	}
 	if (!files.has(relative)) return { unavailable: "原始目录中没有此文件，或它是未发布的运行文件", target: relative };
-	const linked = path.posix.relative(path.posix.dirname(from), publishedPath(relative)) || path.posix.basename(publishedPath(relative));
+	const linked = path.posix.relative(path.posix.dirname(publishedPath(from)), publishedPath(relative)) || path.posix.basename(publishedPath(relative));
 	return { href: `${encodePath(linked)}${suffix}`, target: relative, ...(repairedFrom ? { repairedFrom } : {}) };
 }
 
@@ -160,7 +172,7 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 				const text = compact($("h1, h2, h3, p, time, .meta, .subtitle").map((_, node) => $(node).text()).get().join(" "));
 				const description = compact($('meta[name="description"]').attr("content") || $("header p, .hero p, main > p, p").first().text() || details[2]).slice(0, 180);
 				const date = findReportDate(relative, title, text);
-				entries.push({ id: relative, title, description, collection: group, category: details[1], date, modifiedAt: fs.statSync(path.join(source, relative)).mtime.toISOString(), href: `content/${encodePath(relative)}`, searchText: text.slice(0, 1000), isArchive: /(?:archive\/|backup|before[_-]|\.bak\.)/i.test(relative) || (!/^(index|latest)\.html?$/i.test(path.basename(relative)) && Boolean(date)) });
+				entries.push({ id: relative, title, description, collection: group, category: details[1], date, modifiedAt: fs.statSync(path.join(source, relative)).mtime.toISOString(), href: `content/${encodePath(publishedPath(relative))}`, searchText: text.slice(0, 1000), isArchive: /(?:archive\/|backup|before[_-]|\.bak\.)/i.test(relative) || (!/^(index|latest)\.html?$/i.test(path.basename(relative)) && Boolean(date)) });
 				for (const node of $("a[href], img[src], script[src], link[href], iframe[src], source[src]").toArray()) {
 					const element = $(node);
 					const attribute = element.attr("href") !== undefined ? "href" : "src";
@@ -198,7 +210,7 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 		const landing = pages.find(entry => entry.id === `${group}/latest.html`) || pages.find(entry => entry.id === `${group}/index.html`) || pages[0];
 		return { id: group, title: details[0], category: details[1], description: details[2], pageCount: pages.length, attachmentCount: attachments.filter(entry => entry.collection === group).length, href: landing?.href || null, date: landing?.date || null };
 	});
-	const managedFiles = [...new Set([...(merge ? previous.files : []), ...included.map(publishedPath)])].sort();
+	const managedFiles = [...new Set([...(merge ? previous.files.filter(relative => !fileSet.has(relative) || publishedPath(relative) === relative) : []), ...included.map(publishedPath)])].sort();
 	const managedSet = new Set(managedFiles);
 	const removed = previous.files.filter(relative => !managedSet.has(relative));
 	for (const relative of removed) {

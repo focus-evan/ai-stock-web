@@ -2,13 +2,13 @@
   {
     "name": "我的收藏",
     "slug": "favorites",
-    "count": 201,
-    "ai_count": 147,
+    "count": 212,
+    "ai_count": 156,
     "range": "收藏汇总：发布时间元数据缺失，按采集顺序展示",
     "description": "从个人收藏中筛选出的财经、股票、公司研究、赛道研究和 AI 相关视频。",
     "category_counts": {
-      "ai": 147,
-      "trading": 44,
+      "trading": 46,
+      "ai": 156,
       "macro": 7,
       "research": 3
     }

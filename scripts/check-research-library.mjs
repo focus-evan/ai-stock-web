@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { findReportDate, resolveLocalLink, shouldInclude, syncLibrary } from "./sync-research-library.mjs";
+import { findReportDate, publishedPath, resolveLocalLink, shouldInclude, syncLibrary } from "./sync-research-library.mjs";
 import { filterItems, matches, safeHref } from "../public/research-library/_ui/catalog.js";
 
 test("local report URLs keep subdirectories, Unicode, queries and fragments", () => {
@@ -111,4 +111,12 @@ test("sync preserves source files, disables broken local links and remains repea
  assert.equal(resolveLocalLink(url, "index.html", files, "/Users/evan/html").href, "%E4%B8%AD%E6%96%87/index.html");
  }
  } finally { fs.rmSync(temporaryRoot, { recursive: true, force: true }); }
+});
+
+test("published Unicode filenames fit Linux byte limits and preserve links", () => {
+ const relative = `transcripts/${"中文标题".repeat(30)}.txt`;
+ const published = publishedPath(relative);
+ assert.ok(Buffer.byteLength(path.basename(published), "utf8") < 255);
+ assert.equal(publishedPath(relative), published);
+ assert.equal(resolveLocalLink(relative, "index.html", new Set([relative])).href, published.split("/").map(encodeURIComponent).join("/"));
 });
