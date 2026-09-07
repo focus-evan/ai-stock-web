@@ -1,0 +1,738 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>四方达 300179｜V2.3.1 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f6f7f3;
+      --ink: #20231f;
+      --muted: #6b7068;
+      --line: #d9ded2;
+      --panel: #ffffff;
+      --accent: #146c5c;
+      --accent-2: #b45f06;
+      --danger: #9b2c2c;
+      --good: #207245;
+      --soft: #eef5f0;
+      --warn: #fff3df;
+      --risk: #fff0f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 28px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-main,
+    .score-card,
+    section,
+    .note,
+    .source-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .hero-main {
+      padding: 28px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .verdict {
+      margin-top: 22px;
+      padding: 18px;
+      background: var(--soft);
+      border-left: 5px solid var(--accent);
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .score-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .score {
+      font-size: 58px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .score small {
+      font-size: 22px;
+      color: var(--muted);
+    }
+
+    .label {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    section {
+      padding: 24px;
+      margin-top: 18px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fff;
+    }
+
+    .mini .name {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .mini .value {
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .good {
+      color: var(--good);
+    }
+
+    .warn {
+      color: var(--accent-2);
+    }
+
+    .danger {
+      color: var(--danger);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef1e9;
+      font-weight: 700;
+    }
+
+    .risk-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--risk);
+      border: 1px solid #f1c5c5;
+    }
+
+    .warn-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--warn);
+      border: 1px solid #efd2a1;
+    }
+
+    .ok-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid #cfe0d3;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: #e6e9e1;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .source-box {
+      margin-top: 18px;
+      padding: 18px 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .page {
+        padding: 22px 16px 44px;
+      }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <div class="hero">
+      <div class="hero-main">
+        <div class="kicker">V2.3.1 五层六维｜四方达 300179</div>
+        <h1>从超硬材料龙头，到金刚石散热弹性票</h1>
+        <div class="subtitle">报告日期：2026-06-25｜框架：风险门 → 四季度财务 → S五维 → 六维评分 → 利润池与执行条件</div>
+        <div class="verdict">
+          结论：四方达不是“假科技”，它有真实的超硬材料主业、CVD金刚石研发和客户验证；但目前股价已经在交易“金刚石散热放量”的未来，经营世界尚未完全兑现资本世界的定价。模型标签为“题材高弹性观察仓”，不适合追高加仓。
+        </div>
+        <div class="tag-row">
+          <span class="tag">CVD金刚石散热</span>
+          <span class="tag">超硬材料</span>
+          <span class="tag">GPU热管理</span>
+          <span class="tag">PCD微钻</span>
+          <span class="tag">高估值高波动</span>
+        </div>
+      </div>
+      <div class="score-card">
+        <div>
+          <div class="score">68<small>/100</small></div>
+          <div class="label">标签：题材高弹性观察仓</div>
+          <p class="subtitle">若CVD散热订单放量，评分可上修；若二季度仍只有小批量供货，估值会成为主要压力。</p>
+        </div>
+        <div class="grid-2">
+          <div class="mini">
+            <div class="name">6/25 收盘价</div>
+            <div class="value">62.00 元</div>
+          </div>
+          <div class="mini">
+            <div class="name">对应市值</div>
+            <div class="value">约301 亿</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>一、风险门先行</h2>
+      <div class="grid-3">
+        <div class="risk-box">
+          <h3>估值风险：高</h3>
+          <p>按2025年归母净利0.93亿元测算，当前市值约301亿元，对应历史利润口径PE超过300倍；即使用2026Q1归母净利年化，也约175倍。</p>
+        </div>
+        <div class="warn-box">
+          <h3>交易拥挤：高</h3>
+          <p>金刚石散热叙事近期快速升温，6/25盘中高点已到66元，换手率约24%。这不是低位未启动票，而是已被市场充分定价的强题材票。</p>
+        </div>
+        <div class="warn-box">
+          <h3>产业兑现：中等偏早</h3>
+          <p>CVD金刚石散热片已通过海外客户测试并进入小批量供货，但当前还没有看到大额订单、放量收入和利润率持续验证。</p>
+        </div>
+      </div>
+      <p><strong>一票否决：</strong>暂无ST、退市、重大违法类一票否决。但存在三类硬风险：股东/高管减持记录、337诉讼后续应诉、控股子公司天璇半导体仍处亏损投入期。</p>
+    </section>
+
+    <section>
+      <h2>二、公司基本面</h2>
+      <div class="grid-2">
+        <div class="ok-box">
+          <h3>主业不是空壳</h3>
+          <p>公司深耕复合超硬材料二十多年，主营包括资源开采/工程施工类复合超硬材料、精密加工类复合超硬材料以及CVD金刚石。2025年资源开采/工程施工类收入3.04亿元，占53.60%，毛利率58.70%；精密加工类收入1.67亿元，占29.39%，毛利率32.23%。</p>
+        </div>
+        <div class="ok-box">
+          <h3>CVD金刚石是重估核心</h3>
+          <p>CVD金刚石可用于光学窗口、芯片热沉等场景。公司自称具备MPCVD合成及加工设备技术、CVD金刚石生长工艺，并在2025年研发项目中列示MPCVD设备三代机、大尺寸超高热导率多晶金刚石热沉片等方向。</p>
+        </div>
+      </div>
+      <h3>利润池判断</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>利润池</th>
+            <th>四方达位置</th>
+            <th>验证程度</th>
+            <th>V2.3.1判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>传统油气/矿山超硬耗材</td>
+            <td>高端齿国产替代，海外也有客户基础</td>
+            <td>已验证</td>
+            <td>提供现金流底座，但成长斜率不够陡。</td>
+          </tr>
+          <tr>
+            <td>精密加工超硬刀具</td>
+            <td>受益制造升级、汽车轻量化和高端刀具国产替代</td>
+            <td>部分验证</td>
+            <td>稳定成长支线，不是本轮估值重构主线。</td>
+          </tr>
+          <tr>
+            <td>CVD金刚石散热片</td>
+            <td>热导率2000W/(m·K)以上，海外客户测试通过，小批量供货</td>
+            <td>早期验证</td>
+            <td>重估核心。若量产订单落地，可从材料公司重估为AI热管理卖铲人。</td>
+          </tr>
+          <tr>
+            <td>PCD微钻/PCB高端制造</td>
+            <td>具备φ0.2mm-φ3mm规格产品供应能力，M8/M9板打孔数达万孔级别</td>
+            <td>验证中</td>
+            <td>可作为AI PCB卖铲支线，但目前市场关注度低于金刚石散热。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>三、最近四个单季度财务验证</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>单季度</th>
+            <th>营收</th>
+            <th>归母净利</th>
+            <th>扣非净利</th>
+            <th>毛利率</th>
+            <th>净利率</th>
+            <th>经营现金流</th>
+            <th>ROE趋势</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026Q1</td>
+            <td>1.84亿，同比+40.20%</td>
+            <td>0.43亿，同比+25.66%</td>
+            <td>0.40亿，同比+28.20%</td>
+            <td>46.80%</td>
+            <td>23.33%</td>
+            <td class="good">+0.33亿</td>
+            <td class="good">3.44%，改善</td>
+          </tr>
+          <tr>
+            <td>2025Q4</td>
+            <td>1.59亿</td>
+            <td>0.34亿</td>
+            <td>0.11亿</td>
+            <td>54.33%</td>
+            <td>21.08%</td>
+            <td class="good">+0.24亿</td>
+            <td>约2.7%，修复</td>
+          </tr>
+          <tr>
+            <td>2025Q3</td>
+            <td>1.47亿</td>
+            <td>0.06亿</td>
+            <td>0.02亿</td>
+            <td class="danger">15.14%</td>
+            <td class="danger">4.32%</td>
+            <td class="danger">-0.34亿</td>
+            <td class="danger">约0.5%，低谷</td>
+          </tr>
+          <tr>
+            <td>2025Q2</td>
+            <td>1.29亿</td>
+            <td>0.19亿</td>
+            <td>0.07亿</td>
+            <td>45.53%</td>
+            <td>14.74%</td>
+            <td class="good">+0.14亿</td>
+            <td>约1.5%，一般</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="subtitle">说明：2025Q2-Q4营收、归母、扣非、经营现金流来自年报分季度数据；单季毛利率按各期累计利润表拆分营业成本测算。</p>
+      <div class="warn-box">
+        <strong>财务结论：</strong>2026Q1明显修复，这是四方达能被市场重新定价的财务基础。但2025全年是“增收不增利”，扣非净利同比-46.68%，经营现金流为负；所以它当前不是财务持续高增长的硬核票，而是“产业预期 + Q1修复 + 新材料验证”的重估票。
+      </div>
+    </section>
+
+    <section>
+      <h2>四、S五维量化校验</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>评分</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>成长性</td>
+            <td>14 / 20</td>
+            <td>2026Q1营收与利润恢复增长，但2025全年利润下滑，持续性还要看Q2。</td>
+          </tr>
+          <tr>
+            <td>盈利性</td>
+            <td>13 / 20</td>
+            <td>传统资源类毛利率高，CVD业务仍处投入期；2025“其他”毛利率只有2.53%，拖累明显。</td>
+          </tr>
+          <tr>
+            <td>经营规模</td>
+            <td>9 / 20</td>
+            <td>2025收入5.67亿，归母0.93亿，体量偏小，承接百亿市值需要新业务放量。</td>
+          </tr>
+          <tr>
+            <td>资产效率</td>
+            <td>11 / 20</td>
+            <td>2025加权ROE 7.64%，2026Q1单季ROE 3.44%；效率有修复，但不算顶级。</td>
+          </tr>
+          <tr>
+            <td>市值/估值</td>
+            <td>3 / 20</td>
+            <td>当前市值已按CVD散热打开远期空间定价，安全边际很薄。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mini">
+        <div class="name">S五维总分</div>
+        <div class="value warn">50 / 100</div>
+        <div class="bar"><span style="width:50%"></span></div>
+        <p>经营世界只能部分支撑资本世界定价。它的产业逻辑很诱人，但硬数据还没有跟上股价的速度。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>五、V2.3.1 六维评分</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>评分</th>
+            <th>理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>行业</td>
+            <td>88</td>
+            <td>AI芯片功耗上行推动热管理升级，金刚石热沉属于潜在高弹性新材料方向。</td>
+          </tr>
+          <tr>
+            <td>竞争力</td>
+            <td>80</td>
+            <td>超硬材料积累深，自研MPCVD设备与CVD生长工艺是加分项，但散热片大客户和份额未完全透明。</td>
+          </tr>
+          <tr>
+            <td>财务质量</td>
+            <td>63</td>
+            <td>Q1修复强，但2025全年扣非、现金流、天璇亏损均拖累。</td>
+          </tr>
+          <tr>
+            <td>估值赔率</td>
+            <td>25</td>
+            <td>股价已大幅重估，市值/利润明显偏贵，赔率主要来自订单超预期。</td>
+          </tr>
+          <tr>
+            <td>催化/影子</td>
+            <td>90</td>
+            <td>Intel CEO人造钻石散热、AI GPU散热、CVD金刚石热沉、PCB微钻均可形成叙事扩散。</td>
+          </tr>
+          <tr>
+            <td>治理/流动性</td>
+            <td>61</td>
+            <td>流动性极强，但高换手和减持记录增加波动；337诉讼仍需跟踪。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mini">
+        <div class="name">六维综合</div>
+        <div class="value warn">68 / 100</div>
+        <div class="bar"><span style="width:68%"></span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>六、V2.3.1 修正项</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>判断</th>
+            <th>对评分影响</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>利润池位置</td>
+            <td>传统业务在高端超硬材料有位置，CVD散热属于潜在新增利润池。</td>
+            <td class="good">+8</td>
+          </tr>
+          <tr>
+            <td>影子股逻辑</td>
+            <td>受益于AI芯片散热、英伟达/Intel相关叙事，但不是已公开绑定英伟达订单的确定性供应商。</td>
+            <td class="good">+7</td>
+          </tr>
+          <tr>
+            <td>估值重构</td>
+            <td>若从“超硬材料周期耗材”重估为“AI热管理功能材料”，有重构逻辑；但市场已经提前交易。</td>
+            <td class="warn">+4</td>
+          </tr>
+          <tr>
+            <td>客户验证</td>
+            <td>海外客户测试通过、小批量供货是重要节点；但客户名称、订单金额、盈利水平未公开。</td>
+            <td class="warn">+3</td>
+          </tr>
+          <tr>
+            <td>二阶增长</td>
+            <td>Q1收入、利润、现金流三项改善；需要Q2确认不是单季脉冲。</td>
+            <td class="good">+4</td>
+          </tr>
+          <tr>
+            <td>相对强弱</td>
+            <td>近期强势明显，说明市场认可度高；但也意味着追高风险变大。</td>
+            <td class="warn">0</td>
+          </tr>
+          <tr>
+            <td>组合暴露</td>
+            <td>与你持仓的新易盛、英维克、生益科技、联瑞新材同属AI硬件链，属于同一风险偏好变量。</td>
+            <td class="danger">-5</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>七、核心跟踪变量</h2>
+      <div class="grid-3">
+        <div class="mini">
+          <div class="name">第一优先级</div>
+          <div class="value">CVD散热订单</div>
+          <p>是否披露客户认证、大额合同、批量出货、价格和毛利率。</p>
+        </div>
+        <div class="mini">
+          <div class="name">第二优先级</div>
+          <div class="value">天璇减亏</div>
+          <p>2025天璇收入0.63亿、净亏损1.22亿，若亏损继续扩大，会削弱重估逻辑。</p>
+        </div>
+        <div class="mini">
+          <div class="name">第三优先级</div>
+          <div class="value">高位筹码</div>
+          <p>持续高换手后，如果放量长上影或跌破关键均线，容易从叙事扩散进入兑现压力。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>八、执行条件</h2>
+      <div class="grid-2">
+        <div class="ok-box">
+          <h3>持有条件</h3>
+          <ul>
+            <li>价格不跌破强势趋势线，且金刚石散热叙事仍在扩散。</li>
+            <li>没有新增大股东密集减持、监管问询或订单证伪。</li>
+            <li>Q2能继续看到收入、扣非、现金流至少两项改善。</li>
+          </ul>
+        </div>
+        <div class="warn-box">
+          <h3>加仓条件</h3>
+          <ul>
+            <li>不追高。只有回撤到强支撑并缩量企稳，才考虑小仓位。</li>
+            <li>公司披露批量订单、客户验证升级、沙雅项目实质投产节点时，可上修评分。</li>
+            <li>若股价先涨而订单没跟上，加仓条件无效。</li>
+          </ul>
+        </div>
+        <div class="warn-box">
+          <h3>减仓条件</h3>
+          <ul>
+            <li>冲高后放量滞涨，尤其是高位换手超过20%但收盘走弱。</li>
+            <li>金刚石散热板块龙头分歧，题材从主升转为震荡。</li>
+            <li>你的AI硬件链仓位过重时，四方达应优先被当作弹性仓处理。</li>
+          </ul>
+        </div>
+        <div class="risk-box">
+          <h3>卖出/回避条件</h3>
+          <ul>
+            <li>Q2没有延续Q1改善，扣非或现金流转弱。</li>
+            <li>CVD散热仍停留在“小批量供货”，但股价继续拔估值。</li>
+            <li>出现新一轮减持、337诉讼不利进展或监管层对概念炒作降温。</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>对你当前持仓：</strong>你持有400股，成本59元，6/25收盘62元，浮盈约1200元。这个仓位不大，可以把它当作“AI热管理新材料观察仓”，但不建议在60元上方追着加。更好的动作是等一次分歧回踩后，看承接强弱和公告兑现。</p>
+    </section>
+
+    <div class="source-box">
+      <strong>资料来源：</strong>
+      <ul>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-02/1225073611.pdf">四方达2025年年度报告</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-23/1225149736.PDF">四方达2026年第一季度报告</a></li>
+        <li><a href="https://pdf.dfcfw.com/pdf/H2_AN202605271822918861_1.pdf">四方达2026年5月27日投资者关系活动记录表</a></li>
+        <li><a href="https://www.stcn.com/article/detail/3926206.html">证券时报：四方达股票交易异常波动相关报道</a></li>
+        <li><a href="https://www.cs.com.cn/ssgs/cj2020/2026/06/12/detail_2026061210017757.html">中国证券报：金刚石散热产业化进展观察</a></li>
+        <li><a href="https://qt.gtimg.cn/q=sz300179">腾讯行情接口：300179实时行情快照</a></li>
+      </ul>
+    </div>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

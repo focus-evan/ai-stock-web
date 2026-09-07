@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>每日持仓利多利空监控</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --line: #dfe5ec;
+      --text: #1f2933;
+      --muted: #667085;
+      --red: #b42318;
+      --red-bg: #fff1f0;
+      --amber: #b54708;
+      --green: #067647;
+      --blue: #175cd3;
+      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, var(--bg) 100%);
+    }
+    .wrap {
+      width: min(1380px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 42px;
+    }
+    .hero, .section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      padding: 28px 30px;
+      border-radius: 8px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.18;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      background: #f8fafc;
+    }
+    .risk {
+      color: var(--red);
+      background: var(--red-bg);
+      border-color: #fecdca;
+      font-weight: 700;
+    }
+    .gate {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .stat {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .section {
+      margin-top: 16px;
+      border-radius: 8px;
+      padding: 22px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: #344054;
+      background: #f2f4f7;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .tag.red { color: var(--red); background: var(--red-bg); border-color: #fecdca; }
+    .tag.amber { color: var(--amber); background: #fffaeb; border-color: #fedf89; }
+    .tag.green { color: var(--green); background: #ecfdf3; border-color: #abefc6; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+    .note {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    @media (max-width: 900px) {
+      .grid, .cards { grid-template-columns: 1fr; }
+      .wrap { width: min(100vw - 20px, 1380px); padding-top: 14px; }
+      .hero, .section { padding: 18px; }
+      table { font-size: 13px; }
+      th, td { padding: 10px 8px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=automation-2-holdings&amp;view=reports">持仓晨报</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="wrap">
+    <section class="hero">
+      <h1>每日持仓利多利空监控</h1>
+      <div class="note">本页为 automation-2 持仓晨报的固定 HTML 输出落点。后续每日 06:00 运行后覆盖 latest.html/latest.json，并将历史版本写入 archive。</div>
+      <div class="meta">
+        <span class="pill">生成时间：2026-07-03 08:04:39 +08:00</span>
+        <span class="pill">输出目录：D:\Evan\Codes\reports\automation-2-holdings</span>
+        <span class="pill risk">今日高危预警：待下次晨报生成</span>
+      </div>
+      <div class="gate">总阀门：当前仅记录最新持仓基准；下一次自动化晨报将填充当日操作结论。</div>
+      <div class="grid">
+        <div class="stat"><div class="label">A股持仓</div><div class="value">10</div></div>
+        <div class="stat"><div class="label">港股持仓</div><div class="value">2</div></div>
+        <div class="stat"><div class="label">成本待补</div><div class="value">4项</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>需要重点注意的3只股票</h2>
+      <div class="cards">
+        <div class="card">
+          <strong>新易盛</strong>
+          <div class="note">已加仓 300 股，现按 1060 股跟踪；新增部分成本待补，后续晨报需重点看 CPO/AI算力外围传导。</div>
+        </div>
+        <div class="card">
+          <strong>雅克科技</strong>
+          <div class="note">新增 300 股，半导体材料/电子特气方向，高波动阶段需纳入红橙预警筛查。</div>
+        </div>
+        <div class="card">
+          <strong>联得装备</strong>
+          <div class="note">新增 200 股，自动化设备/面板设备属性强，需区分题材弹性与真实订单兑现。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>最新持仓基准</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>股票</th>
+            <th>代码</th>
+            <th>数量</th>
+            <th>成本</th>
+            <th>组合角色</th>
+            <th>后续晨报处理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>新易盛</td><td>300502</td><td>1060股</td><td>原760股约544.6；新增300股待补</td><td><span class="tag red">核心高波动</span></td><td>每日重点跟踪 CPO、AI算力、美股科技传导。</td></tr>
+          <tr><td>绿的谐波</td><td>688017</td><td>400股</td><td>320</td><td><span class="tag amber">机器人观察</span></td><td>估值和异动/风险提示严格筛查。</td></tr>
+          <tr><td>生益科技</td><td>600183</td><td>500股</td><td>138.2</td><td><span class="tag">PCB材料</span></td><td>关注高速板材景气与减持窗口。</td></tr>
+          <tr><td>澜起科技</td><td>688008</td><td>200股</td><td>263</td><td><span class="tag red">半导体核心</span></td><td>跟踪存储/AI芯片风格和回购/公告。</td></tr>
+          <tr><td>英维克</td><td>002837</td><td>300股</td><td>74.8</td><td><span class="tag amber">液冷观察</span></td><td>区分液冷行业催化与利润兑现压力。</td></tr>
+          <tr><td>中微公司</td><td>688012</td><td>200股</td><td>380</td><td><span class="tag red">设备核心</span></td><td>关注半导体设备板块与解禁/公告扰动。</td></tr>
+          <tr><td>联瑞新材</td><td>688300</td><td>200股</td><td>247</td><td><span class="tag amber">材料观察</span></td><td>关注高端材料景气和可转债相关风险。</td></tr>
+          <tr><td>雅克科技</td><td>002409</td><td>300股</td><td>待补</td><td><span class="tag amber">新增题材仓</span></td><td>成本待补；每日跟踪异动公告和半导体材料热度。</td></tr>
+          <tr><td>联得装备</td><td>300545</td><td>200股</td><td>待补</td><td><span class="tag amber">新增题材仓</span></td><td>成本待补；重点看设备订单、自动化题材强弱。</td></tr>
+          <tr><td>紫光国微</td><td>002049</td><td>100股</td><td>待补</td><td><span class="tag">半导体设计</span></td><td>成本待补；关注重组/军工电子/芯片风格。</td></tr>
+          <tr><td>阿里巴巴-W</td><td>09988.HK</td><td>600股</td><td>160</td><td><span class="tag green">港股核心</span></td><td>跟踪回购、ADR、恒科与中概风格。</td></tr>
+          <tr><td>宁德时代-H</td><td>03750.HK</td><td>100股</td><td>660</td><td><span class="tag green">港股核心</span></td><td>跟踪新能源链、港股流动性与公告。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>风险预案模板</h2>
+      <table>
+        <tbody>
+          <tr><th>开盘弱</th><td>不补仓，先看持仓所在板块是否止跌；新增题材仓优先防守。</td></tr>
+          <tr><th>冲高回落</th><td>高波动仓先减 T 或降仓，不把反抽当成基本面修复。</td></tr>
+          <tr><th>跌破关键位</th><td>以当日晨报给出的关键价位为准，放量跌破且板块无修复则降风险。</td></tr>
+          <tr><th>反包转强</th><td>仅在板块共振、成交健康、公告无新增利空时考虑持有或小 T。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>已移除持仓</h2>
+      <p class="note">三环集团、鼎龙股份、四方达、三安光电已按用户最新指令清空并移出后续 automation-2 晨报；除非用户明确重新买入，不再从旧提示或旧记忆中恢复。</p>
+    </section>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

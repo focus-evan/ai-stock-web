@@ -1,0 +1,18 @@
+{
+  "timestamp": "20260819102824",
+  "quotes": [
+    {
+      "code": "000735",
+      "name": "罗牛山",
+      "latest": 5.96,
+      "previous_close": 6.18,
+      "open": 6.15,
+      "quote_time": "20260819102824",
+      "change": -0.22,
+      "change_pct": -3.56,
+      "high": 6.47,
+      "low": 5.82,
+      "source": "Tencent quote backup"
+    }
+  ]
+}

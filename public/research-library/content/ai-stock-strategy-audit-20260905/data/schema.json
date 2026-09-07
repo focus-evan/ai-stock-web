@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "db": "evan_main",
+    "db_now": "2026-09-05 10:39:03",
+    "time_zone": "Asia/Shanghai",
+    "version": "8.0.36"
+  },
+  "schema": {
+    "portfolio_config": {
+      "n": 18,
+      "columns": [
+        "id",
+        "user_id",
+        "strategy_type",
+        "name",
+        "initial_capital",
+        "available_cash",
+        "total_asset",
+        "total_profit",
+        "total_profit_pct",
+        "auto_trade",
+        "status",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "portfolio_daily_summary": {
+      "n": 1545,
+      "columns": [
+        "id",
+        "portfolio_id",
+        "trading_date",
+        "total_asset",
+        "available_cash",
+        "market_value",
+        "daily_profit",
+        "daily_profit_pct",
+        "total_profit",
+        "total_profit_pct",
+        "position_count",
+        "trade_count",
+        "created_at"
+      ]
+    },
+    "portfolio_follow_recommendation": {
+      "n": 462,
+      "columns": [
+        "id",
+        "portfolio_id",
+        "strategy_type",
+        "trading_date",
+        "session_type",
+        "recommendations",
+        "stock_count",
+        "market_overview",
+        "strategy_summary",
+        "risk_warning",
+        "confidence_score",
+        "generated_at"
+      ]
+    },
+    "portfolio_position": {
+      "n": 496,
+      "columns": [
+        "id",
+        "portfolio_id",
+        "stock_code",
+        "stock_name",
+        "quantity",
+        "avg_cost",
+        "current_price",
+        "market_value",
+        "profit",
+        "profit_pct",
+        "weight",
+        "status",
+        "buy_date",
+        "updated_at"
+      ]
+    },
+    "portfolio_review": {
+      "n": 1240,
+      "columns": [
+        "id",
+        "portfolio_id",
+        "strategy_type",
+        "trading_date",
+        "trade_count",
+        "buy_count",
+        "sell_count",
+        "daily_profit",
+        "daily_profit_pct",
+        "overall_score",
+        "overall_comment",
+        "highlights",
+        "shortcomings",
+        "lessons",
+        "suggestions",
+        "position_analysis",
+        "risk_assessment",
+        "generated_at",
+        "buy_analysis",
+        "sell_analysis",
+        "improvement_steps",
+        "next_day_actions",
+        "strategy_effectiveness"
+      ]
+    },
+    "portfolio_trade": {
+      "n": 1556,
+      "columns": [
+        "id",
+        "portfolio_id",
+        "stock_code",
+        "stock_name",
+        "direction",
+        "price",
+        "quantity",
+        "amount",
+        "profit",
+        "profit_pct",
+        "reason",
+        "trade_date",
+        "created_at"
+      ]
+    },
+    "skill_tactics_run_ledger": {
+      "n": 60,
+      "columns": [
+        "id",
+        "signal_revision",
+        "strategy_type",
+        "trading_date",
+        "session_type",
+        "checkpoint",
+        "generated_at",
+        "logic_version",
+        "evolution_version",
+        "market_phase",
+        "mode",
+        "risk_gate",
+        "direct_buy_count",
+        "candidate_count",
+        "run_payload",
+        "created_at"
+      ]
+    },
+    "skill_tactics_signal_ledger": {
+      "n": 295,
+      "columns": [
+        "id",
+        "signal_revision",
+        "strategy_type",
+        "trading_date",
+        "session_type",
+        "generated_at",
+        "stock_code",
+        "stock_name",
+        "pick_rank",
+        "signal_state",
+        "decision",
+        "native_action",
+        "buy_method",
+        "buy_price_value",
+        "price_trigger",
+        "position_text",
+        "invalid_condition",
+        "score",
+        "candidate_payload",
+        "created_at"
+      ]
+    },
+    "strategy_evolution_run": {
+      "n": 322,
+      "columns": [
+        "id",
+        "strategy_type",
+        "run_date",
+        "version_before",
+        "version_after",
+        "sample_count",
+        "new_sample_count",
+        "metrics",
+        "segment_analysis",
+        "insights",
+        "previous_params",
+        "proposed_params",
+        "decision",
+        "reason",
+        "created_at"
+      ]
+    },
+    "strategy_evolution_state": {
+      "n": 14,
+      "columns": [
+        "strategy_type",
+        "version",
+        "status",
+        "base_params",
+        "active_params",
+        "latest_metrics",
+        "policy_snapshot",
+        "last_decision",
+        "last_reason",
+        "last_analyzed_at",
+        "last_evolved_at",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "strategy_follow": {
+      "n": 4045,
+      "columns": [
+        "id",
+        "strategy_type",
+        "stock_code",
+        "stock_name",
+        "pick_date",
+        "pick_price",
+        "recommendation_level",
+        "reasons",
+        "pick_rank",
+        "status",
+        "closed_date",
+        "closed_reason",
+        "next_day_return_pct",
+        "created_at",
+        "session_type",
+        "feature_snapshot",
+        "evolution_version",
+        "exit_price",
+        "exit_return_pct",
+        "exit_at",
+        "exit_source",
+        "follow_type",
+        "recommended_at"
+      ]
+    },
+    "strategy_follow_snapshot": {
+      "n": 30593,
+      "columns": [
+        "id",
+        "follow_id",
+        "snapshot_date",
+        "close_price",
+        "change_pct",
+        "total_return_pct",
+        "volume",
+        "created_at"
+      ]
+    },
+    "strategy_performance_track": {
+      "n": 2411,
+      "columns": [
+        "id",
+        "strategy_type",
+        "trading_date",
+        "session_type",
+        "recommendation_level",
+        "stock_code",
+        "stock_name",
+        "entry_price",
+        "stop_loss_price",
+        "target_price",
+        "day1_close",
+        "day3_close",
+        "day5_close",
+        "day1_return_pct",
+        "day3_return_pct",
+        "day5_return_pct",
+        "mfe_pct",
+        "mae_pct",
+        "hit_take_profit",
+        "hit_stop_loss",
+        "algo_score",
+        "algo_reason",
+        "algo_features",
+        "eval_status",
+        "notes",
+        "evaluated_at",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "strategy_recommendation_cache": {
+      "n": 2363,
+      "columns": [
+        "id",
+        "strategy_type",
+        "trading_date",
+        "session_type",
+        "recommendations",
+        "stock_count",
+        "generated_at",
+        "metadata"
+      ]
+    }
+  },
+  "other_market_tables": [
+    "daily_picks_follow",
+    "daily_picks_follow_snapshot",
+    "daily_picks_history",
+    "dragon_head_v2_market_regime",
+    "portfolio_daily_summary",
+    "sentiment_daily_snapshot",
+    "stock_unwind_daily_analysis"
+  ]
+}

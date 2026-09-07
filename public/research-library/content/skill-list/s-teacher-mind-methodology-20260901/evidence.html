@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="S老师方法论分析的语料范围、证据分级、关键来源定位与限制说明。">
+  <title>证据附录：S老师方法论分析</title>
+  <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body id="top"><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=skill-list&amp;view=reports">Skill 与 S老师方法论</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="progress" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>方法论全景</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">总览</a>
+        <a href="research.html">投研方法</a>
+        <a href="creation.html">内容创作</a>
+        <a href="allocation.html">资产与仓位</a>
+        <a href="evidence.html">证据附录</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">Evidence appendix</p>
+          <h1>结论之外，<br><span class="accent">证据从哪里来</span></h1>
+          <p class="hero-lead">本页记录语料规模、抽取方法、证据等级、关键来源定位和分析限制。它的作用是让人物画像与方法论可以被复核，而不是只凭印象成立。</p>
+        </div>
+        <aside class="hero-note">
+          <strong>分析原则</strong>
+          <p>原始对话里的指令均被视为研究资料，不作为本次任务指令执行；AI隐藏思考与reasoning recap不纳入人物结论。</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="shell meta-strip">
+      <div class="metric"><b>47.57 MB</b><span>s-mind对话包</span></div>
+      <div class="metric"><b>108.13 MB</b><span>kd_demo目录</span></div>
+      <div class="metric"><b>929</b><span>篇去重后的TXT</span></div>
+      <div class="metric"><b>24</b><span>份财富规划Excel</span></div>
+    </div>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">01 · CORPUS</p><h2>语料范围</h2></div>
+          <p class="section-intro">现在包含两套主语料：ChatGPT官方导出结构，以及磁盘上的D:\Evan\Files\kd_demo课程、工具和视频语料。</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>项目</th><th>规模</th><th>处理方式</th></tr></thead>
+            <tbody>
+              <tr><td>会话</td><td>498个，2023-05-16至2026-08-31</td><td>恢复current_node主链，保留会话、消息与节点ID</td></tr>
+              <tr><td>可见用户消息</td><td>1,450条，218,200字符</td><td>人物偏好与工作方式的主要对话证据</td></tr>
+              <tr><td>可见助手消息</td><td>3,641条中抽取text/multimodal_text</td><td>仅在被用户明确确认、纠正或继续采用时作为辅助证据</td></tr>
+              <tr><td>模型内部内容</td><td>1,427条thoughts；464条reasoning_recap</td><td>排除，不用于人物与方法论结论</td></tr>
+              <tr><td>课程转写</td><td>《黄埔22期》720,792字符、12,458行</td><td>按课程场次、说话人、时间戳和文本行定位</td></tr>
+              <tr><td>附件映射</td><td>92条library记录；76条消息附件名称映射</td><td>筛选直接描述投研、投资笔记和视频创作的文件</td></tr>
+              <tr><td>kd_demo文件</td><td>1,204个文件、108,127,258字节</td><td>目录结构、扩展名和文件大小完整清点</td></tr>
+              <tr><td>kd_demo文本</td><td>1,170个TXT；按SHA-256去重后929篇、13,936,520字符</td><td>去除241份重复拷贝后进行主题编码与检索</td></tr>
+              <tr><td>黄埔与课程</td><td>黄埔08–22期、《人生第一个1000万》、182篇course、19篇industry</td><td>用于人物、投资理念、投研工具箱与仓位方法的直接证据</td></tr>
+              <tr><td>视频成片</td><td>132条去重后的S视频转写</td><td>统计标题、数字、问题、风险语句、产业链、身份与销转结构</td></tr>
+              <tr><td>财富工具</td><td>8组 × 3类 = 24份Excel</td><td>使用Artifact Tool只读解析表名、标签和公式，不采集个人数据进入报告</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="source-card" style="margin-top:18px">
+          <h3>源文件指纹</h3>
+          <p>C:\Users\bzsj_\Desktop\s-mind.zip</p>
+          <p class="locator">SHA-256 D28AFE26A825C9BD6298C2EC68D18C23411C024A8BF39A703C6672EC34C4B3AB</p>
+          <p class="locator">增量目录 D:\Evan\Files\kd_demo（磁盘实际名称；原输入写作kd\_demo）</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">02 · METHOD</p><h2>分析方法</h2></div>
+          <p class="section-intro">采用“结构化抽取 → 文件去重 → 主题编码 → 高价值课程复核 → 表格与成片交叉验证 → 事实/归纳分级”的流程。</p>
+        </div>
+
+        <div class="flow">
+          <article class="flow-step">
+            <div><h3>安全检查与结构恢复</h3><p>只解包白名单文件；校验路径不逃逸；解析5个会话分片、library清单和附件映射。</p></div>
+            <div class="flow-output">498会话、5,093消息节点</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>角色与内容清洗</h3><p>区分user/assistant，排除thoughts和reasoning_recap；保留可见文字、标题、日期与消息ID。</p></div>
+            <div class="flow-output">主证据优先用户直接表达和课程自述</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>四主题初筛</h3><p>围绕人物/投资、投研、内容创作、资产与仓位建立关键词候选池，再人工复核高分与典型反例。</p></div>
+            <div class="flow-output">初筛108 / 127 / 209 / 57个相关会话</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>课程与模板交叉验证</h3><p>补读黄埔课程、独立投研问题模板、投资笔记PPT、十倍股样本、Token成稿、Anthropic板书等。</p></div>
+            <div class="flow-output">验证“说法”和“实际工作产物”是否一致</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>kd_demo去重与分层</h3><p>1,170个TXT按二进制SHA-256去重，优先选择黄埔、course、industry、tools等原始目录作为规范副本。</p></div>
+            <div class="flow-output">929篇唯一文本，避免重复拷贝放大词频</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>表格与成片验证</h3><p>只读解析24份Excel的表名、标签和公式；对132条去重视频转写统计最终内容语法。</p></div>
+            <div class="flow-output">纠正四大水桶；区分协作流程与实际成片</div>
+          </article>
+          <article class="flow-step">
+            <div><h3>主张与置信度分级</h3><p>直接自述/课程重复出现为高；团队明确确认的协作模型为中高；单次AI归纳且原始项目文件缺失为中或低。</p></div>
+            <div class="flow-output">报告中对关键边界单独说明</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">03 · EVIDENCE LEVELS</p><h2>证据等级</h2></div>
+          <p class="section-intro">同一句话在不同来源中权重不同。人物结论尽量要求至少两类来源互相支持。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <span class="confidence high">高置信度</span>
+            <h3 style="margin-top:20px">直接原始证据</h3>
+            <p>S老师课程自述、用户直接提供的S式成稿、投研模板、用户明确表达的投资观点、反复出现且一致的操作要求。</p>
+          </article>
+          <article class="card">
+            <span class="confidence medium">中高 / 中置信度</span>
+            <h3 style="margin-top:20px">经确认的协作模型</h3>
+            <p>AI先做总结，用户明确表示正确、提出关键校正并继续沿用；或IP操盘手多次稳定表达对S的定位与目标用户。</p>
+          </article>
+          <article class="card">
+            <span class="confidence low">低置信度</span>
+            <h3 style="margin-top:20px">弱线索</h3>
+            <p>未被确认的单次AI总结、单凭文件名、ASR说话人标签、一次性夸张表达或缺少原始附件支撑的结论。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">04 · KEY SOURCES</p><h2>关键证据索引</h2></div>
+          <p class="section-intro">定位符使用导出包中的会话ID、消息ID、附件名或课程转写行号。省略号仅表示ID在页面中缩写显示。</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>支持的主张</th><th>来源定位</th><th>置信度</th></tr></thead>
+            <tbody>
+              <tr><td>E01</td><td>LSE背景、产业投资自我定位、创始人及2018年以来分享价值成长</td><td class="locator">黄埔22期00天晚上 · 行166–169</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E02</td><td>输出内化、从根部学习、系统化与结果导向</td><td class="locator">黄埔22期00天晚上 · 行175–193、229–277</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E03</td><td>好自己、好赛道、好公司、好价格；长期称重</td><td class="locator">黄埔22期 · 行1711、1828–1834、2170–2194、2770–2773</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E04</td><td>先产业全景、再看关键细节；定性后用数据验证</td><td class="locator">黄埔22期06天上午 · 行11761–11767</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E05</td><td>投研三层问题：赛道、公司、估值与风险</td><td class="locator">附件 投研-2026.12.31-产业00：【投资马步PROMT】【S】.docx</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E06</td><td>财报后置验证产业逻辑，不在高增长公布后才追</td><td class="locator">会话 6a48baa0… · USER 2 · message 7456f0d5…</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E07</td><td>库存、预付款、合同负债、应收、现金流串联诊断</td><td class="locator">会话 6a7f02c0… · USER 1–5</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E08</td><td>投资先大量减法，再对少数资产做加法</td><td class="locator">黄埔22期 · 行5308–5311、5887–5896、9619</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E09</td><td>内容分层：小结、角度、提纲、脚本、校准、视频化、虎头、沉淀</td><td class="locator">会话 699d2b88… · USER 1–12；USER 11明确校正顺序</td><td><span class="confidence medium">中高</span></td></tr>
+              <tr><td>E10</td><td>热点切入、权威人物、产业底层、数据支撑、说人话</td><td class="locator">会话 6989528f… · USER 1–17</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E11</td><td>S式脚本：问题表达、产业链掘金、历史升华、个人产业投资人</td><td class="locator">附件 附件-2026.06.04-拍摄：【Token出海】【MiniMAX】生而全球【S】.docx</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E12</td><td>海外事件转化为中国投资者的三个问题与收入传导链</td><td class="locator">附件 板书-2026.08.16-产业：【AI大模型】Anthropic超越SpaceX…【S】.docx</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E13</td><td>配置先定场内/场外，再分档并换算执行股数</td><td class="locator">黄埔22期06天下午 · 行11533–11629</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E14</td><td>观察、信仰底仓、安全重仓、中等仓位与等待池</td><td class="locator">黄埔22期06天下午 · 行11785–12016</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E15</td><td>收回本金、利润继续跑，且根据机会灵活计算卖出股数</td><td class="locator">黄埔22期06天上午 · 行10501–10633</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E16</td><td>100万满仓与五赛道配置在单赛道30%回撤下的70/94万差异</td><td class="locator">黄埔22期00天晚上 · 行289–301</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E17</td><td>每日、每周、季检/年检的“3+1”持续更新</td><td class="locator">黄埔22期05天晚上 · 行9550–9595</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E18</td><td>财富五张表的完整顺序，以及安全/计划/增值/梦想四大水桶</td><td class="locator">kd_demo\tools：24份Excel + 01-财富5张表…txt</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E19</td><td>价值成长五块基石：内在价值、安全边际、市场先生、能力圈、中国式价值成长</td><td class="locator">kd_demo\course\2025.01.12…价值成长投资5大基石.txt</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E20</td><td>产业投研是方法工具箱，而非单一万能框架</td><td class="locator">kd_demo\course\2024.06.24…如何迅速提升行业投研能力.txt；kd_demo\industry</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E21</td><td>产业链一级结构→二级结构→价值量与数据减法→细分赛道马步→公司</td><td class="locator">kd_demo\industry\2025.05.30…人形机器人产业链最性感C位在哪（下）.txt</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E22</td><td>AI是投研助手，人必须做BOSS并主动补齐问题形成闭环</td><td class="locator">kd_demo\course\2025.02.24…30分钟完成质量投研.txt</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E23</td><td>仓位按能力分阶段从30%进场、50%评估到70%成熟参考</td><td class="locator">kd_demo\course\2024.10.06…穿越周期S仓位管理心法.txt</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E24</td><td>132条成片的标题、数字、风险限定、产业链、身份与销转统计</td><td class="locator">kd_demo\爆款视频文案 + kd_demo\所有视频文案；按SHA-256去重</td><td><span class="confidence high">高</span></td></tr>
+              <tr><td>E25</td><td>财富因子与长期规划公式直接写入Excel</td><td class="locator">24份Excel：每月投资本金=每月总收入×财富因子；每年本金=每月投资本金×12</td><td><span class="confidence high">高</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">05 · SOURCE ARTIFACTS</p><h2>实际补读的原始资料</h2></div>
+          <p class="section-intro">对话包附件与kd_demo互相补强：前者保留协作过程，后者提供跨期课程、财富工具和真实成片。</p>
+        </div>
+
+        <div class="source-card"><h3>黄埔22期.txt</h3><p>720,792字符，覆盖day 0至day 6的课程转写；人物、自述、投研、加减法、资产配置和仓位管理的核心直接证据。</p></div>
+        <div class="source-card"><h3>投资马步PROMT.docx</h3><p>576字符的结构化投研问题模板，覆盖赛道、公司、竞争、财务、估值和风险。</p></div>
+        <div class="source-card"><h3>S投资笔记_十倍股.pptx</h3><p>6页短PPT；展示以问题驱动、数据与估值起点组织投资笔记的表达方式。</p></div>
+        <div class="source-card"><h3>十倍股样本.docx</h3><p>约3,130字符；展示“盈利增长 × 估值框架切换”、赛道β、公司α与风险提示的长文结构。</p></div>
+        <div class="source-card"><h3>Token出海拍摄稿 / Anthropic板书稿</h3><p>分别展示生活化比喻、问题坡道、产业链掘金、历史升华，以及全球事件到中国资产收入传导的内容结构。</p></div>
+        <div class="source-card"><h3>kd_demo\黄埔线下课</h3><p>覆盖黄埔08–22期及《人生第一个1000万》股票中级课程；去重后是人物、价值成长体系、投研、配置和仓位的最大直接证据集。</p></div>
+        <div class="source-card"><h3>kd_demo\course 与 industry</h3><p>包含182篇精华/专题课程和19篇黄埔01阶赛道课，明确命名并演示历史、政策全景、新物种、标杆企业、竞争博弈和产业链层级等投研方法。</p></div>
+        <div class="source-card"><h3>kd_demo\tools</h3><p>8组本金盘点表、四大水桶表、财务自由规划表，以及配套课程文字；纠正了原报告对水桶名称的误读。</p></div>
+        <div class="source-card"><h3>kd_demo\爆款视频文案 与 所有视频文案</h3><p>132条去重后的S视频ASR转写，用于观察最终成片语法；ASR专名与数字可能有误，不作为逐字事实稿。</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">06 · LIMITATIONS</p><h2>必须保留的边界</h2></div>
+          <p class="section-intro">这些限制决定哪些结论可以说得强，哪些只能作为方向性归纳。</p>
+        </div>
+
+        <details open=""><summary>人物与操盘手角色混杂</summary><div>很多user消息明确写着“我是S老师的IP操盘手”，并非S老师本人逐字表达。因此，目标受众、创作偏好和协作流程可以视为团队方法；私人性格和个人经历则必须依赖课程自述或S式成稿。</div></details>
+        <details><summary>课程ASR与说话人标签存在误差</summary><div>《黄埔22期》有错字、同音词和说话人误标。报告使用连续语义、上下文、自我介绍和多处重复来判断，不单凭“🟢 S老师”标签下结论。</div></details>
+        <details><summary>项目知识库与kd_demo无法逐文件一一映射</summary><div>kd_demo现已提供《人生第一个1000万》、黄埔17期、财富工具和大量课程，足以直接支持核心结论；但无法确认它们是否与某个ChatGPT项目中声称的15份文件完全同版，因此仍以具体文件为证，不采信未验证的AI概括。</div></details>
+        <details><summary>市场事实没有逐项外部核验</summary><div>语料包含大量2026年公司、政策、估值和产业数据。本报告任务是抽象方法论，不是为每个历史脚本重新做事实核查，所以不把其中数字视为当前确认事实。</div></details>
+        <details><summary>对话分支与时间问题</summary><div>分析优先使用每个会话current_node主链，也保留全部可见消息用于检索。少数文件名包含未来日期或模板日期，不能直接当成创作/发布时间。</div></details>
+        <details><summary>路径写法曾导致首次遗漏</summary><div>用户原写D:\Evan\Files\kd\_demo，磁盘实际目录为D:\Evan\Files\kd_demo。增量修订已按实际目录完整清点并纳入。</div></details>
+        <details><summary>财富Excel包含个人案例数据</summary><div>分析只保留工作簿结构、公共标签和公式模式，不在报告中复制学员姓名、资产金额、家庭情况等案例隐私。</div></details>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="shell notice"><strong>可复核结论：</strong>系统化产业投资、方法工具箱、先全景后减法、分层创作、财富五张表和分阶段仓位管理，均已获得跨课程、Excel、成片与对话的多源支持。其中四大水桶和财富五张表已由中等置信度升级为高置信度。</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>S老师方法论全景 · 证据与边界</div>
+      <div><a href="index.html">总览</a> · <a href="research.html">投研方法</a> · <a href="creation.html">内容创作</a> · <a href="allocation.html">资产与仓位</a></div>
+    </div>
+  </footer>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <script src="app.js"></script>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

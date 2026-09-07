@@ -1,0 +1,364 @@
+{
+  "generated_at_beijing": "2026-08-14 06:00",
+  "run_label": "06:00 morning",
+  "headline": "Orange：PPI缓和给科技估值喘息，但 Fed 流动性仍偏紧；AI 卖铲链继续有业绩确认",
+  "top_conclusion": "本轮为 2026-08-14 10:00 北京时间执行的 06:00 延迟早间版。结论先放前面：总闸门维持 Orange。AI CapEx 是 Expansion，应用材料、联想、腾讯、鸿海继续给出设备、服务器、云与算力采购确认；但 Fed H.4.1 显示准备金下降、TGA 上升，长端和实际利率仍高，流动性不能按 Easing 处理。操作上不追高拥挤科技，只保留能被订单、利润率、现金流继续验证的 AI 卖铲方向。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Bullish"
+  },
+  "focus_summary": {
+    "action": "总闸门 Orange：不把 PPI 缓和直接等同于流动性宽松；高位科技不追，只做有订单、利润率和现金流确认的 AI 卖铲链。",
+    "positive": "最大正反馈来自 AI 卖铲确认扩散：应用材料设备强指引、联想 ISG/AI 收入高增、腾讯 AI 算力预付款、鸿海 AI rack 出货上行。",
+    "risk": "最大压制项仍是 Fed 流动性：H.4.1 准备金周降约 493 亿美元、TGA 周增约 566 亿美元，长端和实际利率仍压估值。",
+    "next": "下一步只盯 Fed H.15/H.4.1、PCE/就业、Intel 200 亿美元融资是否正式关闭，以及 AI 服务器/设备订单能否继续转利润和现金流。"
+  },
+  "top_changes": [
+    {
+      "title": "PPI 缓和，但 H.4.1 仍显示流动性偏紧",
+      "fact": "BLS 8 月 13 日发布的 7 月 PPI 显示 final demand 环比持平、同比 +4.7%；Fed H.15 对应 8 月 12 日数据仍显示 10Y 4.68%、30Y 5.24%、10Y TIPS 2.42%、30Y TIPS 2.99%。Fed H.4.1 显示准备金平均约 2.944 万亿美元、周降约 493 亿美元；TGA 平均约 9639.5 亿美元、周增约 566 亿美元。",
+      "impact": "通胀数据给降息预期一点缓冲，但准备金下降叠加 TGA 上升，使科技估值仍受流动性约束；维持 Orange 而不是 Green。",
+      "confidence": "High",
+      "source": "BLS / Federal Reserve",
+      "url": "https://www.bls.gov/news.release/ppi.nr0.htm"
+    },
+    {
+      "title": "联想 Q1：AI 收入与 ISG 利润确认服务器链景气",
+      "fact": "联想 FY2026/27 Q1 收入 269 亿美元，同比 +43%；调整后净利润 11 亿美元，同比 +176%。AI 相关收入 93 亿美元，同比 +60%，占集团收入 35%；ISG 收入 85 亿美元，同比 +98%，经营利润 7.77 亿美元、经营利润率 9.1%。",
+      "impact": "AI 服务器从订单故事进入收入和利润验证，强化服务器 ODM/OEM、液冷、电源、连接器、PCB 与光模块的卖铲链条。",
+      "confidence": "High",
+      "source": "Lenovo IR",
+      "url": "https://investor.lenovo.com/"
+    },
+    {
+      "title": "应用材料 Q3：半导体设备需求与先进封装/HBM 逻辑增强",
+      "fact": "Applied Materials 8 月 13 日发布 Q3 FY2026：收入 91.15 亿美元，同比 +25%；GAAP 毛利率 50.3%，non-GAAP 毛利率 50.4%；GAAP EPS 3.17 美元，non-GAAP EPS 3.50 美元；经营现金流 30.4 亿美元，并给出 Q4 FY2026 收入 102.5 亿美元正负 5 亿美元指引。",
+      "impact": "设备端继续验证 AI 带来的 DRAM/HBM、foundry-logic 与先进封装投资，利好半导体设备、材料、先进封装与工艺控制方向。",
+      "confidence": "High",
+      "source": "Applied Materials IR",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results"
+    },
+    {
+      "title": "腾讯 Q2：AI 采购压低 FCF，但确认云与模型算力投入",
+      "fact": "腾讯 Q2 收入 2048 亿元人民币，同比 +11%；毛利 1184 亿元，同比 +13%；non-IFRS 净利润 706 亿元，同比 +9%。经营现金流 527 亿元，但资本开支付款 593 亿元，叠加内容和租赁付款后自由现金流为 -138 亿元；公司说明若剔除算力采购预付款，自由现金流为 376 亿元，并提到 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 与云需求。",
+      "impact": "腾讯确认 AI 算力仍在投入期，利好 GPU/ASIC、服务器、IDC、网络与云基础设施，但现金流压力也提醒市场区分真实需求和资本化压力。",
+      "confidence": "High",
+      "source": "Tencent IR",
+      "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf"
+    },
+    {
+      "title": "鸿海/Foxconn：AI rack 出货上行，服务器 ODM 链再获确认",
+      "fact": "鸿海 8 月 12 日发布 Q2：收入 2.53 万亿新台币，同比 +41%；毛利 1545 亿新台币，同比 +36%；经营利润 948 亿新台币，同比 +68%；归母净利 600 亿新台币，同比 +35%；EPS 4.27 新台币。Cloud and Networking Products 占比 51%，并披露 AI rack shipment 环比高双位数增长、2026 年 AI rack shipment 预期翻倍以上。",
+      "impact": "AI 服务器需求继续外溢到 ODM、机柜、散热、电源、连接器、线束与高速传输，卖铲链确认度上升。",
+      "confidence": "High",
+      "source": "Hon Hai / Foxconn IR",
+      "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx 模块为 Expansion。新增重点不是单一 hyperscaler 指引，而是 AI 设备、服务器 ODM、云厂算力预付款和网络设备订单共同确认。需要注意：现金流、融资成本和订单转收入节奏将决定卖铲链能否继续扩散。",
+    "items": [
+      {
+        "entity": "Lenovo",
+        "signal": "FY2026/27 Q1 收入 269 亿美元，同比 +43%；AI 相关收入 93 亿美元，同比 +60%；ISG 收入 85 亿美元，同比 +98%，经营利润率 9.1%。",
+        "direction": "上修/强化",
+        "impact": "AI 服务器、HPC、液冷、电源、连接器、PCB、光模块与 ODM/OEM 链条受益。",
+        "confidence": "High",
+        "source": "Lenovo IR",
+        "url": "https://investor.lenovo.com/"
+      },
+      {
+        "entity": "Applied Materials",
+        "signal": "Q3 FY2026 收入 91.15 亿美元，同比 +25%；non-GAAP 毛利率 50.4%；Q4 收入指引 102.5 亿美元正负 5 亿美元。",
+        "direction": "上修/强化",
+        "impact": "先进制程、DRAM/HBM、先进封装、设备材料与工艺控制受益。",
+        "confidence": "High",
+        "source": "Applied Materials IR",
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results"
+      },
+      {
+        "entity": "Tencent",
+        "signal": "Q2 资本开支付款 593 亿元人民币，剔除算力采购预付款后 FCF 为 376 亿元；公司继续指向 Hunyuan、办公/代码助手、微信 AI 和云需求。",
+        "direction": "强投入但需现金流验证",
+        "impact": "GPU/ASIC、AI 服务器、IDC、云基础设施和网络设备受益；现金流压力需要跟踪。",
+        "confidence": "High",
+        "source": "Tencent IR",
+        "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf"
+      },
+      {
+        "entity": "Hon Hai / Foxconn",
+        "signal": "Q2 收入 2.53 万亿新台币，同比 +41%；Cloud and Networking Products 占比 51%；AI rack shipment 环比高双位数增长，2026 年预计翻倍以上。",
+        "direction": "强化",
+        "impact": "AI 服务器 ODM、机柜、散热、电源、连接器、线束和高速传输链条受益。",
+        "confidence": "High",
+        "source": "Hon Hai / Foxconn IR",
+        "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095"
+      },
+      {
+        "entity": "Cisco",
+        "signal": "FY2026 AI infrastructure 订单 93 亿美元，约 40 亿美元已交付；公司预计 FY2027 AI infrastructure 收入 75 亿美元。",
+        "direction": "强化",
+        "impact": "AI 网络、交换机、ASIC、800G/1.6T 光模块与数据中心网络链继续受益。",
+        "confidence": "High",
+        "source": "Cisco IR",
+        "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx"
+      },
+      {
+        "entity": "Nebius / CoreWeave / Supermicro / Lumentum",
+        "signal": "Nebius AI cloud 收入高增且 2026 预付款超过 90 亿美元；CoreWeave backlog 约 1040 亿美元；Supermicro FY2027 收入指引 650-720 亿美元；Lumentum Q4 收入 10.063 亿美元。",
+        "direction": "强但拥挤",
+        "impact": "AI 云、GPU 租赁、服务器、光模块、CPO/OCS 与电力容量链条仍强；估值和融资成本需警惕。",
+        "confidence": "High",
+        "source": "Company IR",
+        "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Intel",
+        "signal": "公司已公告 200 亿美元普通股发行定价和扩大发行规模，但本轮未见官方 closing release。",
+        "direction": "待验证",
+        "impact": "若完成，将改善资产负债表与 CapEx 空间；但稀释、投资回报和先进制程兑现仍待核实。",
+        "confidence": "Medium",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块为 Tightening。PPI 给市场风险偏好一点支撑，但 Fed H.4.1 的准备金下降、TGA 上升，以及 H.15 的长端/实际利率仍高，使科技成长股不能按宽松交易处理。PBOC 等量续作买断式逆回购偏稳定，但不足以抵消美元流动性约束。",
+    "items": [
+      {
+        "entity": "BLS PPI",
+        "signal": "7 月 PPI final demand 环比持平、同比 +4.7%；final demand services +0.2%，goods -0.7%；剔除食品、能源和贸易服务后环比 +0.4%、同比 +4.7%。",
+        "direction": "边际缓和",
+        "impact": "缓和加息/更高利率压力，但不足以单独确认宽松交易。",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/news.release/ppi.nr0.htm"
+      },
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-12：EFFR 3.63%，2Y 4.20%，5Y 4.38%，10Y 4.68%，20Y 5.24%，30Y 5.24%，10Y TIPS 2.42%，30Y TIPS 2.99%。",
+        "direction": "估值压制",
+        "impact": "长端与实际利率仍高，限制 AI/成长股估值扩张空间。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "截至 2026-08-12 周：准备金平均约 2.944 万亿美元，周降约 493 亿美元；TGA 平均约 9639.5 亿美元，周增约 566 亿美元；ON RRP 平均约 3509 亿美元，周增约 82 亿美元。",
+        "direction": "收紧",
+        "impact": "准备金下降与 TGA 上升抵消 PPI 利好，是总闸门维持 Orange 的核心压制。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "US market reaction",
+        "signal": "AP 报道 8 月 13 日 S&P 500 +0.7% 至 7,798.99，Nasdaq +0.8% 至 26,803.03，10Y Treasury 约 4.65%，PPI 缓和支撑风险偏好。",
+        "direction": "短线风险偏好回升",
+        "impact": "利好科技交易弹性，但仍需服从真实流动性与盈利验证。",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/3a23f22469cd0e0062f711096906525c"
+      },
+      {
+        "entity": "PBOC / China liquidity",
+        "signal": "新华社报道央行 8 月 14 日将开展 10000 亿元 6 个月买断式逆回购，8 月到期量同为 10000 亿元；另据央行公告口径，8 月 14 日及 17-19 日临时隔夜正、逆回购每日操作量不超过 6000 亿元。",
+        "direction": "稳定对冲",
+        "impact": "有助于稳定国内资金面，但更像等量滚动和短端平滑，不能替代美元流动性改善。",
+        "confidence": "Medium",
+        "source": "Xinhua / PBOC announcement via 21st Century Business Herald",
+        "url": "https://www.xinhuanet.com/20260813/77521d4b52ad4854951d2a9ae454c6d9/c.html"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化为 Bullish，但这是卖铲链的 Bullish，不是无差别追高的 Bullish。新增催化集中在设备、AI 服务器、算力采购、云与网络。",
+    "items": [
+      {
+        "event": "Lenovo AI revenue and ISG surge",
+        "affected_chain": "AI 服务器、HPC、液冷、电源、连接器、PCB、ODM/OEM",
+        "direction": "利好",
+        "winners": "能把 AI 服务器订单转成收入和利润的供应链。",
+        "losers": "缺订单、缺利润率或仅靠概念映射的高估值标的。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Lenovo IR",
+        "url": "https://investor.lenovo.com/"
+      },
+      {
+        "event": "Applied Materials Q3 beat and Q4 guide",
+        "affected_chain": "半导体设备、HBM/DRAM、先进封装、工艺控制",
+        "direction": "利好",
+        "winners": "设备、材料、检测计量、先进封装与 HBM 资本开支链。",
+        "losers": "订单周期下行或客户扩产延后的环节。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Applied Materials IR",
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results"
+      },
+      {
+        "event": "Tencent AI compute procurement",
+        "affected_chain": "GPU/ASIC、AI 服务器、云、IDC、网络设备",
+        "direction": "利好但需现金流验证",
+        "winners": "真实参与大模型训练/推理和云算力交付的上游硬件与云基础设施。",
+        "losers": "算力采购回报不清晰、现金流压力无法缓释的方向。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Tencent IR",
+        "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf"
+      },
+      {
+        "event": "Hon Hai / Foxconn AI rack shipment growth",
+        "affected_chain": "AI 服务器 ODM、机柜、散热、电源、连接器、线束",
+        "direction": "利好",
+        "winners": "能进入 AI rack 批量交付的 ODM 和关键零部件。",
+        "losers": "传统低端服务器或消费电子订单占比过高的供应链。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Hon Hai / Foxconn IR",
+        "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095"
+      },
+      {
+        "event": "NVIDIA AI infrastructure financing platform",
+        "affected_chain": "AI 数据中心融资、GPU 集群、云租赁、电力容量",
+        "direction": "中性偏利好",
+        "winners": "拿到真实项目、长约客户和低成本资本的 AI 基建平台。",
+        "losers": "依赖循环融资、租赁回款不确定或负债成本过高的平台。",
+        "evidence": "官方确认但项目落地需跟踪",
+        "confidence": "Medium",
+        "source": "NVIDIA",
+        "url": "https://nvidianews.nvidia.com/news/ai-infrastructure-financing-platform"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI 服务器/ODM/液冷/电源",
+      "verified_direct": "本轮仅验证联想、鸿海/Foxconn、腾讯等官方事实；A/H 具体公司映射多为产业链推断。",
+      "inferred": "关注有服务器、液冷、电源、连接器、PCB、线束、机柜批量订单和利润率验证的供应链。",
+      "risk": "不要把全球客户订单直接映射为 A/H 公司订单，除非公司公告或客户认证明确披露。"
+    },
+    {
+      "theme": "半导体设备/先进封装/HBM",
+      "verified_direct": "应用材料官方确认 AI 需求驱动设备与产能投资，但未直接确认 A/H 上市公司订单。",
+      "inferred": "设备、材料、检测计量、先进封装、HBM 配套材料和封测链条受益概率提高。",
+      "risk": "估值已交易预期的环节要等订单、收入和毛利率再确认。"
+    },
+    {
+      "theme": "光模块/CPO/OCS/高速网络",
+      "verified_direct": "Cisco、Lumentum 等海外公司此前已确认 AI 网络与 1.6T/OCS/CPO 需求；本轮未新增 A/H 直接订单。",
+      "inferred": "800G/1.6T 光模块、交换芯片、高速连接与数据中心网络仍是卖铲链核心方向。",
+      "risk": "若云厂 CapEx 延后或融资成本上升，订单节奏可能波动。"
+    },
+    {
+      "theme": "云算力/IDC/电力容量",
+      "verified_direct": "腾讯披露 AI 相关预付款和算力采购，Nebius/CoreWeave 等海外云平台订单和 backlog 仍强。",
+      "inferred": "IDC、电力容量、变配电、液冷和云基础设施方向受益。",
+      "risk": "自由现金流、客户长约质量和电力交付周期是下一阶段主要验证点。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "Fed H.15/H.4.1 下一次更新",
+      "why": "若长端/实际利率回落且准备金修复，流动性才可能从 Tightening 转向 Neutral/Easing watch。"
+    },
+    {
+      "item": "PCE、就业和美债供给",
+      "why": "区分降息预期带来的估值修复，和宏观降温导致的盈利下修风险。"
+    },
+    {
+      "item": "Intel 200 亿美元发行 closing release",
+      "why": "本轮未见官方关闭确认；需要核实最终规模、稀释、资金用途和先进制程 ROI。"
+    },
+    {
+      "item": "联想/鸿海 AI 服务器订单转收入、利润率和现金流",
+      "why": "这是判断 AI 卖铲链能否继续扩散的核心验证点。"
+    },
+    {
+      "item": "应用材料先进封装/HBM/DRAM 订单延续性",
+      "why": "设备链已强，后续要看订单持续性和客户扩产节奏是否兑现。"
+    },
+    {
+      "item": "腾讯 AI 算力采购回报",
+      "why": "需要观察 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 与云需求能否转化为收入和现金流恢复。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "BLS Producer Price Index News Release",
+      "url": "https://www.bls.gov/news.release/ppi.nr0.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Federal Reserve H.15",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Federal Reserve H.4.1",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "AP market report",
+      "url": "https://apnews.com/article/3a23f22469cd0e0062f711096906525c",
+      "used_for": "Liquidity / market reaction",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Lenovo Investor Relations",
+      "url": "https://investor.lenovo.com/",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Applied Materials Q3 FY2026 Results",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Tencent Q2 2026 Results",
+      "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Hon Hai / Foxconn Q2 2026 Results",
+      "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Cisco FY2026 Q4 results",
+      "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "NVIDIA AI infrastructure financing platform",
+      "url": "https://nvidianews.nvidia.com/news/ai-infrastructure-financing-platform",
+      "used_for": "Tech catalyst / financing risk",
+      "published_at": "2026-08-10"
+    },
+    {
+      "title": "Xinhua PBOC reverse repo report",
+      "url": "https://www.xinhuanet.com/20260813/77521d4b52ad4854951d2a9ae454c6d9/c.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Intel common stock offering pricing",
+      "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common",
+      "used_for": "CapEx / watch item",
+      "published_at": "2026-08-10"
+    }
+  ]
+}

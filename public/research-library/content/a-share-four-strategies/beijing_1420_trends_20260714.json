@@ -1,0 +1,26 @@
+﻿[
+    {
+        "code":  "001389",
+        "start":  "2026-07-14 10:49",
+        "points":  128,
+        "entry":  186.01,
+        "max":  186.01,
+        "min":  181.5,
+        "last":  186.01,
+        "max_gain_pct":  0,
+        "max_drawdown_pct":  -2.42,
+        "current_pct":  0
+    },
+    {
+        "code":  "600183",
+        "start":  "2026-07-14 13:00",
+        "points":  86,
+        "entry":  147.9,
+        "max":  147.9,
+        "min":  147.9,
+        "last":  147.9,
+        "max_gain_pct":  0,
+        "max_drawdown_pct":  0,
+        "current_pct":  0
+    }
+]

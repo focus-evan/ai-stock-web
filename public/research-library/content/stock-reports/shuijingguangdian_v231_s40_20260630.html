@@ -1,0 +1,718 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>水晶光电(002273) V2.3.1 + S40 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf8;
+      --ink: #18222d;
+      --muted: #5d6a72;
+      --line: #d8d0c3;
+      --accent: #0f6c7a;
+      --accent-2: #b85c38;
+      --good: #1f7a4d;
+      --warn: #b26a00;
+      --bad: #ad2e24;
+      --chip: #e9f4f6;
+      --chip-2: #f8ebe4;
+      --shadow: 0 12px 28px rgba(24, 34, 45, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(15,108,122,0.12), transparent 22%),
+        radial-gradient(circle at top left, rgba(184,92,56,0.10), transparent 18%),
+        var(--bg);
+      line-height: 1.65;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 28px auto 56px;
+    }
+
+    .hero, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px 30px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(15,108,122,0.16), transparent 68%);
+      pointer-events: none;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.25;
+    }
+
+    h1 { font-size: 34px; }
+    h2 {
+      font-size: 24px;
+      margin-top: 24px;
+      padding-top: 4px;
+    }
+    h3 { font-size: 18px; margin-top: 18px; }
+
+    p { margin: 8px 0; }
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .chip.orange {
+      background: var(--chip-2);
+      color: var(--accent-2);
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card {
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .metric {
+      background: #faf6ef;
+      border: 1px solid #ece2d1;
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .metric .label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .metric .value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .score {
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .score.good { color: var(--good); background: rgba(31,122,77,0.10); }
+    .score.warn { color: var(--warn); background: rgba(178,106,0,0.12); }
+    .score.bad { color: var(--bad); background: rgba(173,46,36,0.10); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      background: rgba(15,108,122,0.04);
+    }
+
+    ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .verdict {
+      border-left: 5px solid var(--accent);
+      padding: 14px 16px;
+      background: #f4fbfc;
+      border-radius: 0 14px 14px 0;
+      margin-top: 10px;
+    }
+
+    .warning {
+      border-left-color: var(--accent-2);
+      background: #fff6f1;
+    }
+
+    .footnote a, .sources a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .sources li { margin-bottom: 6px; }
+
+    @media (max-width: 960px) {
+      .metrics,
+      .grid.cols-3,
+      .grid.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 20px, 1180px); }
+      .hero, .card { padding: 18px; border-radius: 16px; }
+      h1 { font-size: 28px; }
+      .metrics,
+      .grid.cols-3,
+      .grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+      table { font-size: 13px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="small muted">V2.3.1 + S40 Tech Growth Joint Report</div>
+          <h1>水晶光电(002273) 深度分析报告</h1>
+          <p class="muted">生成时间：2026-06-30，基于官方披露、官网业务口径、腾讯实时行情与财务摘要重构。</p>
+        </div>
+        <div class="chips">
+          <span class="chip">V2.3.1：成长配置</span>
+          <span class="chip orange">S40：可纳入核心观察 / 只等触发</span>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="label">收盘价</div>
+          <div class="value">35.48</div>
+        </div>
+        <div class="metric">
+          <div class="label">当日涨跌幅</div>
+          <div class="value">+10.02%</div>
+        </div>
+        <div class="metric">
+          <div class="label">静态PE</div>
+          <div class="value">42.38x</div>
+        </div>
+        <div class="metric">
+          <div class="label">PB</div>
+          <div class="value">4.97x</div>
+        </div>
+      </div>
+
+      <div class="verdict">
+        <strong>一句话结论：</strong>
+        水晶光电已经不是单纯题材票，核心逻辑是“消费电子光学基本盘 + 车载HUD第二曲线 + AR光学长期期权”。
+        经营数据支持成长配置，但 2026-06-30 涨停后交易拥挤，当前更适合 <strong>继续跟踪 / 只等触发</strong>，不适合情绪化追涨。
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>一、业务与赛道概览</h2>
+        <span class="score good">主营清晰</span>
+      </div>
+      <p><strong>主营业务：</strong>精密光学薄膜元器件、微棱镜模块、薄膜光学面板、车载HUD光学、AR/VR光学器件与解决方案。</p>
+      <p><strong>当前核心赛道：</strong>消费电子光学元器件为基本盘，车载光学/HUD为第二增长曲线，AR/VR光学为长期前瞻曲线。</p>
+      <p><strong>细分赛道判断：</strong>如果只看“手机滤光片”，空间已经偏成熟；但公司实际已经升级到“精密光学器件平台”，综合赛道天花板应按 <strong>千亿级</strong> 处理，而不是单一百亿级小赛道。</p>
+
+      <div class="grid cols-3">
+        <div class="metric">
+          <div class="label">消费电子光学</div>
+          <div class="value">大盘稳</div>
+          <div class="small muted">全球手机出货约 12.6 亿部，2025 年同比 +1.9%，看点是单机价值量升级而不是总量爆发。</div>
+        </div>
+        <div class="metric">
+          <div class="label">车载 AR-HUD</div>
+          <div class="value">高增速</div>
+          <div class="small muted">中国乘用车 W/AR-HUD 前装渗透率 19.11%，AR-HUD 标配量同比 +75.28%。</div>
+        </div>
+        <div class="metric">
+          <div class="label">AI 智能眼镜</div>
+          <div class="value">早期爆发</div>
+          <div class="small muted">公司引用 Omdia：2025 年全球 AI 智能眼镜出货约 870 万台，同比 +322%。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>二、V2.3.1 结论</h2>
+        <span class="score good">78 / 100</span>
+      </div>
+
+      <h3>1. 风险闸门</h3>
+      <ul>
+        <li>未见 ST、重大财务异常、重大监管红旗。</li>
+        <li>核心风险是：消费电子周期波动、头部客户集中、AR 光学兑现节奏不确定、涨停后交易拥挤。</li>
+        <li>当前不是基本面坏，而是 <strong>赔率不如前期舒适</strong>。</li>
+      </ul>
+
+      <h3>2. 卡脖子 / 国产替代位置</h3>
+      <p>公司并非传统低端光学件厂商，而是在 <strong>微棱镜、AR-HUD、反射/衍射光波导、激光雷达视窗片</strong> 等更高附加值环节向上走。按 V2.3.1 口径，它具备明确的国产升级与替代属性，但还不能把 AR 光波导这类业务表述为“已大规模利润兑现”。</p>
+      <div class="verdict">
+        <strong>判断：</strong>有真实国产升级卡位，但更接近“能力与客户验证逐步落地”，不是那种已经全面吃满利润池的极致垄断环节。
+      </div>
+
+      <h3>3. 竞争对手与护城河</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>我有你没有</td>
+            <td>微棱镜模块、AR-HUD、薄膜光学面板、反射/衍射光波导等多产品线平台能力。</td>
+          </tr>
+          <tr>
+            <td>你有我更强</td>
+            <td>在消费电子光学量产、良率、客户覆盖与工艺迭代上，处于国内更强的一档。</td>
+          </tr>
+          <tr>
+            <td>对手比我强</td>
+            <td>下游客户对单一大客户依赖仍存在，新业务的全球高端竞争力还需更多收入与利润验证。</td>
+          </tr>
+          <tr>
+            <td>护城河等级</td>
+            <td><strong>B+</strong>，已被毛利率、净利率、现金流和客户导入部分验证。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4. 新战略业务 / 未来布局</h3>
+      <ul>
+        <li><strong>微棱镜：</strong>已是现实业绩弹性来源之一，不再是纯概念。</li>
+        <li><strong>AR-HUD：</strong>在国内前装渗透率加速提升阶段，属于第二曲线里最硬的一块。</li>
+        <li><strong>AR 光波导：</strong>属于长期期权，能抬估值上限，但还不是当前利润锚。</li>
+        <li><strong>AI 光学平台：</strong>公司官方已把 AI 光学列为“十五五”期间第三成长曲线。</li>
+      </ul>
+
+      <h3>5. 最近四个单季度财务重构</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>单季度</th>
+            <th>营收</th>
+            <th>营收同比</th>
+            <th>归母净利</th>
+            <th>归母同比</th>
+            <th>扣非净利</th>
+            <th>经营现金流</th>
+            <th>毛利率</th>
+            <th>净利率</th>
+            <th>结论</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026Q1</td>
+            <td>17.21 亿</td>
+            <td>+16.08%</td>
+            <td>2.47 亿</td>
+            <td>+11.69%</td>
+            <td>2.27 亿</td>
+            <td>4.19 亿</td>
+            <td>29.47%</td>
+            <td>13.65%</td>
+            <td>稳健增长</td>
+          </tr>
+          <tr>
+            <td>2025Q4</td>
+            <td>18.05 亿</td>
+            <td>+15.14%</td>
+            <td>1.89 亿</td>
+            <td>+12.36%</td>
+            <td>1.18 亿</td>
+            <td>5.23 亿</td>
+            <td>13.83%</td>
+            <td>10.09%</td>
+            <td>收官不错</td>
+          </tr>
+          <tr>
+            <td>2025Q3</td>
+            <td>21.03 亿</td>
+            <td>+2.33%</td>
+            <td>4.83 亿</td>
+            <td>+10.98%</td>
+            <td>4.80 亿</td>
+            <td>3.24 亿</td>
+            <td>22.95%</td>
+            <td>22.84%</td>
+            <td>高盈利季度</td>
+          </tr>
+          <tr>
+            <td>2025Q2</td>
+            <td>15.38 亿</td>
+            <td>+17.45%</td>
+            <td>2.80 亿</td>
+            <td>+12.80%</td>
+            <td>2.39 亿</td>
+            <td>2.88 亿</td>
+            <td>17.69%</td>
+            <td>18.45%</td>
+            <td>增长健康</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small muted">注：Q2-Q4 毛利率/净利率为基于累计口径拆分的趋势判断值，适合方向判断，不替代审计口径。</p>
+
+      <h3>6. S 五维量化校验</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>因子</th>
+            <th>评分</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>成长性</td>
+            <td>16 / 20</td>
+            <td>近四季营收、利润均保持正增长，质量明显高于多数题材股。</td>
+          </tr>
+          <tr>
+            <td>盈利性</td>
+            <td>17 / 20</td>
+            <td>毛利率和净利率总体不错，说明不是低端价格战逻辑。</td>
+          </tr>
+          <tr>
+            <td>经营规模</td>
+            <td>17 / 20</td>
+            <td>年营收接近 70 亿，已不是纯小票故事。</td>
+          </tr>
+          <tr>
+            <td>资产效率</td>
+            <td>15 / 20</td>
+            <td>ROE、现金流、负债率都在较健康区间。</td>
+          </tr>
+          <tr>
+            <td>市值 / 估值</td>
+            <td>13 / 20</td>
+            <td>不便宜，但还能被当前基本面部分支撑。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>7. 六维评分</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>评分</th>
+            <th>结论</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>行业面</td><td>17 / 20</td><td>消费电子稳、车载光学快、AR 光学有期权。</td></tr>
+          <tr><td>核心竞争力</td><td>17 / 20</td><td>平台型精密光学能力已形成。</td></tr>
+          <tr><td>财务质量</td><td>16 / 20</td><td>正增长 + 强现金流，质量较高。</td></tr>
+          <tr><td>估值与赔率</td><td>13 / 20</td><td>偏贵但未极端透支。</td></tr>
+          <tr><td>催化 / 影子逻辑</td><td>17 / 20</td><td>微棱镜、HUD、AI 眼镜均有催化。</td></tr>
+          <tr><td>流动性与治理</td><td>15 / 20</td><td>流动性好，但客户集中度是持续观察项。</td></tr>
+        </tbody>
+      </table>
+
+      <h3>8. V2.3.1 最终判断</h3>
+      <div class="verdict warning">
+        <strong>综合标签：</strong>成长配置<br>
+        <strong>推荐级别：</strong>关注<br>
+        <strong>当前动作：</strong>不追高，等回踩 / 等下一次业绩验证。<br>
+        <strong>理由：</strong>公司已经具备成长配置资格，但 2026-06-30 涨停后，交易时点从“可低位配置”切换到了“只等更好赔率”。
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>三、S40 科技成长进一步分析</h2>
+        <span class="score good">76 / 100</span>
+      </div>
+      <p><strong>一句话判断：</strong><strong>可纳入核心观察 / 只等触发</strong>。S40 视角下，它不是最便宜，但属于“真赛道 + 真技术 + 真客户 + 真财务”较完整的科技成长票。</p>
+
+      <h3>1. 真赛道天花板</h3>
+      <p><strong>主营细分赛道：</strong>精密光学元器件与车载光学/AR 光学平台。</p>
+      <p><strong>天花板级别：</strong><strong>千亿级</strong>。如果只看传统手机滤光片，天花板偏低；但公司已经扩到微棱镜、HUD、AR 光波导、激光雷达视窗片，赛道上限明显被抬高。</p>
+      <p><strong>成长来源：</strong>单机价值量升级 + 车载渗透率上升 + AI 智能眼镜新应用。</p>
+      <p><strong>竞争格局：</strong>消费电子光学相对成熟，车载 HUD 与 AR 光学仍在集中化早期；对水晶光电有利的是，它并非单点赌赛道，而是多产品平台卡位。</p>
+      <div class="verdict">
+        <strong>S40判断：</strong>赛道不是“万亿级超级主线”，但也绝不是小众百亿级死胡同；在科技成长框架里足够进入重点池。
+      </div>
+
+      <h3>2. 卡脖子 / 国产替代</h3>
+      <p><strong>被卡环节：</strong>高端车载光学、AR 光波导、精密光学器件良率与量产。</p>
+      <p><strong>替代对象：</strong>海外高端光学方案与部分核心光学组件供应链。</p>
+      <p><strong>替代证据：</strong>公司已经在微棱镜、北美大客户滤光片、AR-HUD、AI 眼镜光学件等方向形成客户验证和部分放量。</p>
+      <p><strong>判断：</strong>这不是“口号式国产替代”，但高端 AR 光学仍偏早期，不能按全面兑现定价。</p>
+
+      <h3>3. 真技术</h3>
+      <ul>
+        <li>技术不是 PPT 级，而是可以对应到微棱镜、薄膜光学、HUD、反射/衍射光波导等具体产品。</li>
+        <li>有量产、良率和工艺壁垒，尤其适合用 S40 的“真技术 + 真客户”双重验证方式。</li>
+        <li>短板在于：未来光波导路线是否能做到高商业回报，仍需时间。</li>
+      </ul>
+
+      <h3>4. 真客户</h3>
+      <p>公司并非只靠“行业趋势”吃饭，而是已经进入头部客户链。S40 里这属于真客户加分项，因为客户验证比单纯专利或研发投入更关键。</p>
+      <div class="verdict">
+        <strong>判断：</strong>客户真实性成立，但客户集中度需要持续盯。
+      </div>
+
+      <h3>5. 真财务</h3>
+      <ul>
+        <li>近四季营收和利润全部正增长。</li>
+        <li>经营现金流强，资产负债率低，说明增长不是纸面增长。</li>
+        <li>这让它在 S40 里比很多“科技成长概念股”更值得放进核心观察池。</li>
+      </ul>
+
+      <h3>6. 竞争对手与护城河</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>我有你没有</td>
+            <td>平台型精密光学能力，从消费电子跨到车载、AR/VR。</td>
+          </tr>
+          <tr>
+            <td>你有我更强</td>
+            <td>在量产交付、客户导入、良率稳定性上具备国内前排优势。</td>
+          </tr>
+          <tr>
+            <td>对手比我强</td>
+            <td>全球最高端 AR 光学竞争格局仍未完全定型，海外高端路线和终端生态仍强。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>S40判断：</strong>属于“护城河已经能讲清”的科技成长股，不是只能靠主题热度活着。</p>
+
+      <h3>7. 真龙头事实</h3>
+      <p>它不是所有光学链条上的绝对总龙头，但在 <strong>微棱镜、车载光学、薄膜光学元器件</strong> 这些细分里具备前排地位。按 S40，足够算“细分龙头/前排龙头”，不是边缘跟风票。</p>
+
+      <h3>8. 真估值</h3>
+      <p>42 倍 PE 对“有真实增长和真实赛道”的公司不算离谱，但也绝不算便宜。S40 里这属于：</p>
+      <ul>
+        <li><strong>公司质量：</strong>过关</li>
+        <li><strong>价格位置：</strong>要等</li>
+      </ul>
+      <div class="verdict warning">
+        <strong>S40估值结论：</strong>公司可以进观察池，但买点需要更挑剔。当前不是“无脑便宜”，而是“好公司 + 一般赔率”。
+      </div>
+
+      <h3>9. 真能力圈</h3>
+      <p>这家公司在能力圈内是可以讲清楚的：</p>
+      <ul>
+        <li>产品是什么：光学器件、微棱镜、HUD、AR 光学。</li>
+        <li>钱从哪来：消费电子基本盘 + 新品类升级。</li>
+        <li>增长从哪来：微棱镜、HUD、AI 智能眼镜、光学升级。</li>
+        <li>风险在哪：客户集中、估值抬升、AR 光学兑现时间。</li>
+      </ul>
+      <p><strong>能力圈判断：</strong>在能力圈内，可持续跟踪，不属于“完全讲不明白的科技故事”。</p>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>四、AI 赛道切入边界</h2>
+        <span class="score warn">需分层理解</span>
+      </div>
+      <p><strong>官方已支持的部分：</strong></p>
+      <ul>
+        <li>AI 手机/消费电子硬件升级中的光学增量。</li>
+        <li>AI 智能眼镜 / AR 眼镜的反射光波导、衍射光波导、光机零组件。</li>
+        <li>车载智能化中的 HUD、激光雷达视窗片等光学零组件。</li>
+        <li>年报已将 AI 光学列为“十五五”期间第三成长曲线。</li>
+      </ul>
+      <p><strong>不能过度表述的部分：</strong></p>
+      <ul>
+        <li>官方没有单独拆出 AI 相关收入和利润占比。</li>
+        <li>AR 光波导、AI 智能眼镜仍更多是“能力 + 客户验证 + 放量早期”，不是当前利润主导型业务。</li>
+      </ul>
+      <div class="verdict warning">
+        <strong>边界结论：</strong>水晶光电已经明确切入 AI 光学赛道，但当前更准确的表述是“AI 光学平台型布局者”，而不是“AI 收入已经全面兑现的纯 AI 公司”。
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>五、执行条件</h2>
+        <span class="score warn">只等触发</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>动作</th>
+            <th>条件</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>现在买不买</td>
+            <td><strong>不追高</strong>。6 月 30 日涨停后赔率收缩。</td>
+          </tr>
+          <tr>
+            <td>观察转买入</td>
+            <td>回踩后量价收敛，或下一次财报继续确认微棱镜/HUD/光学升级兑现。</td>
+          </tr>
+          <tr>
+            <td>加分触发</td>
+            <td>AR-HUD、微棱镜继续放量，AI 智能眼镜与 AR 光学出现更明确收入/利润披露。</td>
+          </tr>
+          <tr>
+            <td>失效条件</td>
+            <td>营收与利润连续两个季度明显走弱，或股价继续拉升但业绩不跟。</td>
+          </tr>
+          <tr>
+            <td>仓位上限</td>
+            <td>若后续触发买点，也更适合 <strong>分仓 / 成长配置仓</strong>，而不是情绪顶格追涨。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card sources">
+      <div class="section-title">
+        <h2>六、主要来源</h2>
+      </div>
+      <ul>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-18/1225122417.PDF">水晶光电 2025 年年度报告摘要 / CNINFO</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2025-08-28/1224590658.PDF">水晶光电 2025 年半年报 / CNINFO</a></li>
+        <li><a href="https://www.crystal-optech.com/">水晶光电官网</a></li>
+        <li><a href="https://qt.gtimg.cn/q=sz002273">腾讯实时行情 / 2026-06-30 收盘快照</a></li>
+        <li><a href="https://github.com/akfamily/akshare">AkShare 财务摘要接口</a></li>
+      </ul>
+      <p class="small muted footnote">说明：报告中关于赛道天花板、竞争格局和估值舒适度的部分，含有在官方披露基础上的分析推断；已尽量把“官方已支持”和“仍需验证”的部分分开表述。</p>
+    </section>
+  </div>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

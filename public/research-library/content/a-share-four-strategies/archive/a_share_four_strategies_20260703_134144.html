@@ -1,0 +1,4459 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A股四战法统一总览</title>
+  <style>
+    :root {
+      --bg: #f7efe7;
+      --bg-soft: #fffaf5;
+      --paper: rgba(255, 252, 248, 0.92);
+      --paper-strong: rgba(255, 255, 255, 0.96);
+      --line: rgba(182, 79, 61, 0.12);
+      --red: #b64f3d;
+      --red-deep: #7f3229;
+      --text: #2e2623;
+      --muted: #7f716a;
+      --shadow: 0 22px 50px rgba(123, 63, 48, 0.10);
+      --shadow-soft: 0 12px 28px rgba(123, 63, 48, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(216, 133, 109, 0.28), transparent 28%),
+        radial-gradient(circle at top right, rgba(234, 192, 170, 0.34), transparent 24%),
+        linear-gradient(180deg, #fbf4ec 0%, #f7efe7 42%, #f4ebe2 100%);
+    }
+    .wrap {
+      width: min(1480px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    .hero {
+      padding: 34px 36px 30px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,247,241,0.96));
+      border: 1px solid rgba(182, 79, 61, 0.09);
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--red-deep);
+    }
+    .hero-copy {
+      max-width: 900px;
+      margin: 14px 0 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .hero-meta, .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .hero-pill, .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 247, 240, 0.92);
+      border: 1px solid var(--line);
+      color: var(--red-deep);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .hero-stat {
+      min-width: 160px;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(255, 251, 246, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+    .hero-stat-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .overview-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      min-height: 292px;
+      padding: 24px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(202, 73, 55, 0.10), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,249,244,0.92));
+      border: 1px solid rgba(190, 79, 61, 0.16);
+      box-shadow: 0 24px 70px rgba(130, 62, 45, 0.12);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .overview-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 20px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(182, 79, 61, 0.34), transparent);
+    }
+    .overview-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(182, 79, 61, 0.28);
+      box-shadow: 0 30px 88px rgba(130, 62, 45, 0.16);
+    }
+    .overview-top, .history-head, .panel-head, .framework-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .overview-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--red-deep);
+      letter-spacing: -0.02em;
+    }
+    .overview-subtitle, .framework-copy, .subtle, .path-line, .muted-note, .meta-path {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .overview-subtitle {
+      margin: 10px 0 0;
+      font-size: 13px;
+      min-height: 44px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .overview-body {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overview-kicker,
+    .overview-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #b05a49;
+    }
+    .overview-kicker {
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .overview-verdict {
+      min-height: 70px;
+      font-size: 22px;
+      font-weight: 850;
+      line-height: 1.34;
+      color: #4b2a24;
+      letter-spacing: -0.03em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .overview-section {
+      margin-top: 16px;
+      padding: 14px 0 0;
+      border-top: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .overview-section-radar {
+      margin-top: 12px;
+    }
+    .overview-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 64px;
+      overflow: hidden;
+    }
+    .overview-chip,
+    .overview-muted {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: #7b463b;
+      background: rgba(255, 243, 236, 0.88);
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .overview-chip-stock {
+      color: #9b3e32;
+      background: rgba(202, 73, 55, 0.08);
+      border-color: rgba(202, 73, 55, 0.18);
+      font-weight: 700;
+    }
+    .overview-muted {
+      color: var(--muted);
+      background: rgba(255,255,255,0.62);
+    }
+    .overview-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .overview-link {
+      color: var(--red);
+      font-weight: 600;
+    }
+    .framework {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 32px;
+      background: rgba(255, 252, 248, 0.82);
+      border: 1px solid rgba(182, 79, 61, 0.09);
+      box-shadow: var(--shadow-soft);
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #8f7e75;
+    }
+    h2, h3 {
+      margin: 0;
+      color: var(--red-deep);
+    }
+    h2 {
+      margin-top: 10px;
+      font-size: clamp(28px, 2.8vw, 42px);
+      line-height: 1.12;
+    }
+    .framework-copy {
+      margin: 10px 0 0;
+      max-width: 780px;
+      font-size: 15px;
+    }
+    .framework-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      min-width: 280px;
+    }
+    .meta-path {
+      max-width: 420px;
+      font-size: 12px;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .panel {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 24px;
+      background: var(--paper);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .soft-panel {
+      background: rgba(255,255,255,0.84);
+    }
+    .action-board {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255,252,248,0.92), rgba(255,245,239,0.88));
+      border: 1px solid rgba(182, 79, 61, 0.10);
+      box-shadow: var(--shadow-soft);
+    }
+    .decision-hero {
+      margin-top: 18px;
+      padding: 22px 24px 20px;
+      border-radius: 28px;
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,247,241,0.94));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .decision-buy {
+      background: linear-gradient(135deg, rgba(255,250,246,0.98), rgba(255,236,228,0.96));
+      border-color: rgba(182, 79, 61, 0.22);
+    }
+    .decision-wait {
+      background: linear-gradient(135deg, rgba(255,252,248,0.98), rgba(255,243,235,0.96));
+      border-color: rgba(182, 79, 61, 0.18);
+    }
+    .decision-avoid {
+      background: linear-gradient(135deg, rgba(255,248,245,0.98), rgba(252,232,227,0.96));
+      border-color: rgba(182, 79, 61, 0.20);
+    }
+    .decision-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9f6c61;
+    }
+    .decision-value {
+      margin-top: 8px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--red-deep);
+    }
+    .decision-note {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #7d6e66;
+    }
+    .signal-spotlight {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 16px;
+    }
+    .signal-spotlight-copy {
+      padding: 22px 22px 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .signal-spotlight-copy h3 {
+      margin-top: 10px;
+      font-size: clamp(24px, 2.2vw, 34px);
+      line-height: 1.1;
+    }
+    .overlap-panel {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overlap-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .overlap-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .overlap-card {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overlap-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .overlap-name {
+      margin-top: 3px;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #402824;
+    }
+    .overlap-score {
+      min-height: 28px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: rgba(193, 69, 43, 0.12);
+      color: #8e392c;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .overlap-frameworks {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #75675f;
+    }
+    .action-detail-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .signal-grid-compact {
+      grid-template-columns: 1fr;
+    }
+    .avoid-shell {
+      margin-top: 12px;
+    }
+    .avoid-list {
+      display: grid;
+      gap: 8px;
+    }
+    .avoid-row {
+      display: grid;
+      grid-template-columns: minmax(160px, 0.9fr) minmax(180px, 1.35fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 250, 247, 0.62);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: none;
+    }
+    .avoid-main {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      min-width: 0;
+    }
+    .avoid-code {
+      flex: none;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: rgba(160, 75, 58, 0.76);
+    }
+    .avoid-main strong {
+      min-width: 0;
+      font-size: 15px;
+      line-height: 1.35;
+      color: #51342e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .avoid-reason {
+      min-width: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #8a756b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .avoid-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8a473a;
+      background: rgba(122, 56, 44, 0.08);
+      white-space: nowrap;
+    }
+    .execution-focus {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(202, 73, 55, 0.10), transparent 38%),
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,244,238,0.86));
+      border: 1px solid rgba(182, 79, 61, 0.14);
+    }
+    .execution-focus-empty {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #7d665d;
+    }
+    .execution-focus-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .exec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .exec-card {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 10px 26px rgba(123, 63, 48, 0.06);
+    }
+    .exec-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .exec-code {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #b15a47;
+    }
+    .exec-name {
+      margin-top: 4px;
+      font-size: 24px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #3f2823;
+    }
+    .exec-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .exec-noqueue .exec-badge {
+      color: #fff8f3;
+      background: linear-gradient(135deg, #a7372a, #cf6048);
+      box-shadow: 0 8px 22px rgba(177, 59, 44, 0.24);
+    }
+    .exec-board .exec-badge {
+      color: #8f3d2f;
+      background: rgba(238, 187, 145, 0.55);
+      border: 1px solid rgba(190, 91, 57, 0.16);
+    }
+    .exec-watch .exec-badge {
+      color: #8d584b;
+      background: rgba(249, 231, 220, 0.8);
+    }
+    .exec-avoid {
+      opacity: 0.82;
+      background: rgba(255,250,247,0.62);
+    }
+    .exec-avoid .exec-badge {
+      color: #8a473a;
+      background: rgba(122, 56, 44, 0.09);
+    }
+    .exec-method {
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 800;
+      color: #50342d;
+    }
+    .exec-price {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 239, 230, 0.76);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .exec-price span,
+    .exec-invalid span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #a46a5b;
+    }
+    .exec-price b {
+      font-size: 22px;
+      line-height: 1.18;
+      color: var(--red-deep);
+    }
+    .exec-invalid {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #7c6a62;
+    }
+    .signal-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+      box-shadow: 0 10px 24px rgba(123, 63, 48, 0.06);
+    }
+    .signal-watch {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,249,245,0.93));
+    }
+    .signal-buy {
+      background: linear-gradient(180deg, rgba(255,250,247,0.98), rgba(255,240,232,0.94));
+      border-color: rgba(182, 79, 61, 0.20);
+    }
+    .signal-avoid {
+      background: linear-gradient(180deg, rgba(255,248,246,0.96), rgba(251,237,232,0.92));
+      border-color: rgba(182, 79, 61, 0.16);
+    }
+    .signal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .stock-code {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #b35a47;
+    }
+    .stock-name {
+      margin-top: 4px;
+      font-size: 28px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #402824;
+    }
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .action-watch {
+      background: rgba(250, 225, 212, 0.9);
+      color: #9c533f;
+    }
+    .action-buy {
+      background: rgba(193, 69, 43, 0.14);
+      color: #8e392c;
+    }
+    .action-avoid {
+      background: rgba(122, 56, 44, 0.10);
+      color: #7c3e32;
+    }
+    .signal-headline {
+      margin-top: 14px;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 700;
+      color: #43312d;
+    }
+    .signal-reason {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.82;
+      color: #75675f;
+      overflow-wrap: anywhere;
+    }
+    .data-strip {
+      margin-top: 16px;
+      padding-top: 4px;
+    }
+    .strategy-tabs {
+      margin-top: 22px;
+      padding: 10px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 250, 247, 0.78), rgba(255, 245, 239, 0.58));
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .tab-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .tab-bar {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .tab-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #8a6e64;
+      cursor: pointer;
+      transition: background .16s ease, color .16s ease, box-shadow .16s ease;
+      user-select: none;
+    }
+    .tab-button:hover {
+      color: var(--red-deep);
+      background: rgba(202, 73, 55, 0.06);
+    }
+    .tab-content {
+      display: none;
+    }
+    .strategy-tabs .panel {
+      margin-top: 12px;
+      box-shadow: none;
+    }
+    .strategy-tabs .strategy-actions,
+    .strategy-tabs .strategy-performance {
+      margin-top: 12px;
+    }
+    .strategy-tabs input[id$="-recommendations"]:checked ~ .tab-bar .tab-recommend,
+    .strategy-tabs input[id$="-tracking"]:checked ~ .tab-bar .tab-track {
+      color: #8f3328;
+      background: linear-gradient(180deg, rgba(255, 238, 230, 0.96), rgba(246, 215, 203, 0.92));
+      box-shadow: 0 8px 20px rgba(137, 62, 44, 0.12);
+    }
+    .strategy-tabs input[id$="-recommendations"]:checked ~ .tab-content-recommend,
+    .strategy-tabs input[id$="-tracking"]:checked ~ .tab-content-track {
+      display: block;
+    }
+    .strategy-actions,
+    .strategy-performance {
+      margin-top: 20px;
+    }
+    .strategy-action-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .inner-panel {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      background: rgba(255,255,255,0.82);
+    }
+    .watch-panel {
+      margin-top: 14px;
+    }
+    .tracking-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .tracking-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 1.2fr) repeat(5, minmax(100px, 0.8fr));
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: 0 10px 22px rgba(123, 63, 48, 0.035);
+    }
+    .tracking-stock {
+      min-width: 0;
+    }
+    .tracking-name {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #43312d;
+    }
+    .tracking-metric {
+      min-width: 0;
+      line-height: 1.35;
+    }
+    .tracking-metric span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: #9b877d;
+    }
+    .tracking-metric b {
+      display: block;
+      font-size: 17px;
+      color: #4a3d36;
+      white-space: nowrap;
+    }
+    .metric-current b {
+      font-size: 22px;
+      color: var(--red-deep);
+    }
+    .metric-drawdown b {
+      color: #7d6259;
+    }
+    .tracking-date b {
+      color: #75675f;
+      font-size: 15px;
+    }
+    .fact-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px dashed rgba(182, 79, 61, 0.10);
+      color: #4a3d36;
+      line-height: 1.7;
+    }
+    .fact-line:first-of-type {
+      margin-top: 12px;
+    }
+    .perf-panel {
+      margin-top: 20px;
+    }
+    .table-wrap {
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 920px;
+      font-size: 14px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(182, 79, 61, 0.08);
+      line-height: 1.75;
+      color: #433630;
+    }
+    .compare-table th {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8f7e75;
+      background: rgba(255,247,241,0.92);
+      position: sticky;
+      top: 0;
+    }
+    .compare-table td:first-child {
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .metric {
+      min-height: 126px;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .metric-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #8f7e75;
+    }
+    .metric-value {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.78;
+      color: #3c302b;
+      overflow-wrap: anywhere;
+    }
+    .history-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .history-item {
+      padding: 16px 16px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .history-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .history-title {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #4f2d26;
+    }
+    .history-copy {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.78;
+      color: #564943;
+      overflow-wrap: anywhere;
+    }
+    .history-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .chip, .risk-pill {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .chip {
+      background: rgba(249, 239, 232, 0.94);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      color: #8d5548;
+    }
+    .risk-pill {
+      background: rgba(243, 237, 231, 0.92);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      color: #7a6b63;
+      white-space: nowrap;
+    }
+    .risk-red { background: rgba(214, 82, 64, 0.12); color: #a33628; }
+    .risk-orange { background: rgba(230, 150, 63, 0.14); color: #b2601d; }
+    .risk-yellow { background: rgba(214, 177, 80, 0.16); color: #9b6f0f; }
+    .risk-neutral { background: rgba(156, 155, 151, 0.12); color: #6c655e; }
+    .run-card {
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      background: rgba(255,255,255,0.88);
+    }
+    .run-card[open] {
+      background: rgba(255,255,255,0.96);
+      box-shadow: var(--shadow-soft);
+    }
+    .run-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .run-summary::-webkit-details-marker { display: none; }
+    .run-left {
+      display: flex;
+      gap: 14px;
+      min-width: 0;
+    }
+    .run-index {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f3d9d0, #fff5ef);
+      color: var(--red-deep);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .run-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #4f2d26;
+    }
+    .run-lead {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .run-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .run-time {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .run-body {
+      padding: 0 18px 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .mini-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+    pre {
+      margin: 12px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #4b403a;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .footer {
+      margin-top: 26px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    @media (max-width: 1200px) {
+      .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-spotlight,
+      .action-detail-grid,
+      .signal-grid,
+      .strategy-action-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .history-list { grid-template-columns: 1fr; }
+      .framework-head { flex-direction: column; }
+      .framework-side { align-items: flex-start; min-width: 0; }
+      .meta-path { text-align: left; }
+      .decision-value { font-size: 40px; }
+      .stock-name { font-size: 24px; }
+    }
+    @media (max-width: 720px) {
+      .wrap { width: min(100vw - 20px, 1480px); padding-top: 14px; }
+      .hero { padding: 24px 20px; border-radius: 26px; }
+      .overview { grid-template-columns: 1fr; }
+      .metrics-grid, .mini-grid { grid-template-columns: 1fr; }
+      .framework { padding: 20px 16px; border-radius: 24px; }
+      .run-summary { flex-direction: column; }
+      .run-right { align-items: flex-start; }
+      .action-board { padding: 20px 16px; border-radius: 24px; }
+      .decision-value { font-size: 32px; }
+      .exec-grid { grid-template-columns: 1fr; }
+      .execution-focus-head { flex-direction: column; }
+      .exec-top { flex-direction: column; }
+      .exec-badge { align-self: flex-start; }
+      .signal-card { padding: 16px; }
+      .signal-head { flex-direction: column; }
+      .action-tag { align-self: flex-start; }
+      .tracking-row { grid-template-columns: 1fr 1fr; }
+      .tracking-stock { grid-column: 1 / -1; }
+      .avoid-row {
+        grid-template-columns: 1fr auto;
+        gap: 6px 10px;
+      }
+      .avoid-reason {
+        grid-column: 1 / -1;
+        white-space: normal;
+      }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="wrap">
+    <header class="hero">
+      <h1>A股四战法统一总览</h1>
+      <p class="hero-copy">把四套短线方法放在一个统一目录里看。首页只保留每套战法最新判断、主线、雷达与检查点，旧日志降到二级面板，避免一屏都是生硬的 memory 文本。</p>
+      <div class="hero-meta">
+        <span class="hero-pill">生成时间：2026-07-03 13:41:44 +0800</span>
+        <span class="hero-pill">目录：D:\Evan\Codes\reports\a-share-four-strategies</span>
+        <span class="hero-pill">归档：a_share_four_strategies_20260703_134144.html</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-label">Frameworks</div>
+          <div class="hero-stat-value">4</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Recent Runs</div>
+          <div class="hero-stat-value">10</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Primary View</div>
+          <div class="hero-stat-value">latest.html</div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="overview">
+      
+    <a class="overview-card" href="#yangjia">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">养家情绪周期</div>
+          <p class="overview-subtitle">从赚钱效应与亏钱效应出发，看次日是否允许出手。</p>
+        </div>
+        <span class="risk-pill risk-red">Red</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">最新判断</div>
+        <div class="overview-verdict">情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/…</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">主线</div>
+        <div class="overview-chips"><span class="overview-chip">医药/海南海药独立强势</span><span class="overview-chip">自动化设备/低位首板</span><span class="overview-chip">锆链/氟化工补涨分化</span></div>
+      </div>
+      <div class="overview-section overview-section-radar">
+        <div class="overview-label">雷达</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">000566海南海药</span><span class="overview-chip overview-chip-stock">002979雷赛智能</span><span class="overview-chip overview-chip-stock">600641先导基电</span><span class="overview-chip overview-chip-stock">002167东方锆业</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-07-02 15:27:32 +08:00</span>
+        <span class="overview-link">查看详情</span>
+      </div>
+    </a>
+    
+
+    <a class="overview-card" href="#kobe92">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">Kobe92 周期切换</div>
+          <p class="overview-subtitle">先判周期，再看龙头、补涨与切换，不做中位情绪幻觉。</p>
+        </div>
+        <span class="risk-pill risk-neutral">待补录</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">最新判断</div>
+        <div class="overview-verdict">高位震荡退潮后的低位震荡；今日模式：切换试错/轻仓修复观察，继续不做中位。主线故事：1…</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">主线</div>
+        <div class="overview-chips"><span class="overview-chip">自动化设备/雷赛智能独立二板一字，…</span><span class="overview-chip">贵金属/黄金低位集群二板试错</span><span class="overview-chip">通信设备/AI网络首板与炸板并存，…</span></div>
+      </div>
+      <div class="overview-section overview-section-radar">
+        <div class="overview-label">雷达</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">002979雷赛智能</span><span class="overview-chip overview-chip-stock">000506招金黄金</span><span class="overview-chip overview-chip-stock">600988赤峰黄金</span><span class="overview-chip overview-chip-stock">002396星网锐捷</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-07-03 10:18:30 +08:00</span>
+        <span class="overview-link">查看详情</span>
+      </div>
+    </a>
+    
+
+    <a class="overview-card" href="#beijing-chaogu">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">北京炒家首板</div>
+          <p class="overview-subtitle">只做前排首板、回封与换手，重视封板质量和次日套利窗口。</p>
+        </div>
+        <span class="risk-pill risk-red">Red</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">最新判断</div>
+        <div class="overview-verdict">15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14…</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">主线</div>
+        <div class="overview-chips"><span class="overview-muted">待补录</span></div>
+      </div>
+      <div class="overview-section overview-section-radar">
+        <div class="overview-label">雷达</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">000566海南海药</span><span class="overview-chip overview-chip-stock">002979雷赛智能</span><span class="overview-chip overview-chip-stock">600641先导基电</span><span class="overview-chip overview-chip-stock">002167东方锆业</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-07-02 15:27:32 +08:00</span>
+        <span class="overview-link">查看详情</span>
+      </div>
+    </a>
+    
+
+    <a class="overview-card" href="#leader">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">陈小群龙头战法</div>
+          <p class="overview-subtitle">偏情绪合力与龙头辨识度，只保留真正能带队的前排席位。</p>
+        </div>
+        <span class="risk-pill risk-red">Red</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">最新判断</div>
+        <div class="overview-verdict">情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分…</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">主线</div>
+        <div class="overview-chips"><span class="overview-chip">医药/海南海药</span><span class="overview-chip">自动化设备/低位新分支</span><span class="overview-chip">锆链/氟化工补涨退潮观察</span></div>
+      </div>
+      <div class="overview-section overview-section-radar">
+        <div class="overview-label">雷达</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">000566海南海药</span><span class="overview-chip overview-chip-stock">002979雷赛智能</span><span class="overview-chip overview-chip-stock">600641先导基电</span><span class="overview-chip overview-chip-stock">002167东方锆业</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-07-02 15:27:32 +08:00</span>
+        <span class="overview-link">查看详情</span>
+      </div>
+    </a>
+    
+    </nav>
+
+    
+    <section class="action-board">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Execution</div>
+          <h2>今日统一操作面板</h2>
+        </div>
+        <span class="meta-pill">2026-07-03 10:18:30 +08:00（四战法最新合成）</span>
+      </div>
+      <div class="decision-hero decision-avoid">
+        <div class="decision-label">今日结论</div>
+        <div class="decision-value">直接执行指南未更新到最新检查点；按四战法最新记录：无直接买，空仓/只观察价格触发优先。</div>
+        <div class="decision-note">先看结论，再看主攻票，最后看备选与禁买。</div>
+      </div>
+      <div class="signal-spotlight">
+        <div class="signal-spotlight-copy">
+          <div class="metric-label">主攻 / 首选观察位</div>
+          <h3>今天最重要的一只</h3>
+          <div class="overlap-panel">
+            <div class="overlap-label">四战法可买交集</div>
+            <div class="overlap-list">
+              
+    <article class="overlap-card">
+      <div class="overlap-top">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="overlap-name">海南海药</div>
+        </div>
+        <span class="overlap-score">3 套</span>
+      </div>
+      <div class="overlap-frameworks">养家情绪周期 / Kobe92 周期切换 / 陈小群龙头战法</div>
+    </article>
+    
+    <article class="overlap-card">
+      <div class="overlap-top">
+        <div>
+          <div class="stock-code">002326</div>
+          <div class="overlap-name">永太科技</div>
+        </div>
+        <span class="overlap-score">3 套</span>
+      </div>
+      <div class="overlap-frameworks">养家情绪周期 / Kobe92 周期切换 / 北京炒家首板</div>
+    </article>
+    
+    <article class="overlap-card">
+      <div class="overlap-top">
+        <div>
+          <div class="stock-code">002167</div>
+          <div class="overlap-name">东方锆业</div>
+        </div>
+        <span class="overlap-score">3 套</span>
+      </div>
+      <div class="overlap-frameworks">养家情绪周期 / Kobe92 周期切换 / 陈小群龙头战法</div>
+    </article>
+    
+    <article class="overlap-card">
+      <div class="overlap-top">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="overlap-name">雷赛智能</div>
+        </div>
+        <span class="overlap-score">2 套</span>
+      </div>
+      <div class="overlap-frameworks">养家情绪周期 / 陈小群龙头战法</div>
+    </article>
+    
+    <article class="overlap-card">
+      <div class="overlap-top">
+        <div>
+          <div class="stock-code">600641</div>
+          <div class="overlap-name">先导基电</div>
+        </div>
+        <span class="overlap-score">2 套</span>
+      </div>
+      <div class="overlap-frameworks">养家情绪周期 / 陈小群龙头战法</div>
+    </article>
+    
+            </div>
+          </div>
+        </div>
+        
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">观察位</div>
+          <div class="stock-name">空仓席位 当前无</div>
+        </div>
+        <span class="action-tag action-watch">主攻</span>
+      </div>
+      <div class="signal-headline">空仓席位 当前无直接买</div>
+      <div class="signal-reason">等待封板、回封或价格触发后再看。</div>
+    </article>
+    
+      </div>
+      <div class="action-detail-grid">
+        <div class="panel soft-panel">
+          <div class="panel-head">
+            <h3>备选与触发</h3>
+            <span class="subtle">只保留可执行观察位</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="stock-name">雷赛智能</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">只观察 / 价格触发后再看</div>
+      <div class="signal-reason">最新四战法来源：Kobe92 周期切换</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000506</div>
+          <div class="stock-name">招金黄金</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">只观察 / 价格触发后再看</div>
+      <div class="signal-reason">最新四战法来源：Kobe92 周期切换</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600988</div>
+          <div class="stock-name">赤峰黄金</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">只观察 / 价格触发后再看</div>
+      <div class="signal-reason">最新四战法来源：Kobe92 周期切换</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002396</div>
+          <div class="stock-name">星网锐捷</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">只观察 / 价格触发后再看</div>
+      <div class="signal-reason">最新四战法来源：Kobe92 周期切换</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="stock-name">海南海药今日开板回落</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">只观察 / 价格触发后再看</div>
+      <div class="signal-reason">最新四战法来源：Kobe92 周期切换</div>
+    </article>
+    
+          </div>
+        </div>
+        <div class="panel soft-panel">
+          <div class="panel-head">
+            <h3>明确不买</h3>
+            <span class="subtle">避免把精力浪费在错误位置</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002167</span>
+                <strong>东方锆业约</strong>
+              </div>
+              <div class="avoid-reason">昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002326</span>
+                <strong>永太科技约</strong>
+              </div>
+              <div class="avoid-reason">昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002979</span>
+                <strong>雷赛智能</strong>
+              </div>
+              <div class="avoid-reason">主线故事：1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">000506</span>
+                <strong>招金黄金</strong>
+              </div>
+              <div class="avoid-reason">五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/0005…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">600988</span>
+                <strong>赤峰黄金</strong>
+              </div>
+              <div class="avoid-reason">五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/0005…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002396</span>
+                <strong>星网锐捷</strong>
+              </div>
+              <div class="avoid-reason">五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/0005…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">688432</span>
+                <strong>有研硅约</strong>
+              </div>
+              <div class="avoid-reason">昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002…</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            </div>
+          </div>
+          <div class="data-strip">
+            <div class="fact-line"><b>Cutoff</b><span>四战法最新：2026-07-03 10:18:30 +08:00；直接执行指南最新仍为 2026-07-02 10:52 +08</span></div>
+            <div class="fact-line"><b>耗时</b><span>生成器自动兜底：直接指南 stale 时用四战法最新记录刷新首页。</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <section class="panel perf-panel">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Performance</div>
+          <h3>四战法近期收益对比</h3>
+        </div>
+        <span class="meta-pill">2026-06-25 10:50 +08</span>
+      </div>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>战法</th>
+              <th>样本</th>
+              <th>平均最大涨幅</th>
+              <th>平均次日收盘</th>
+              <th>平均最大回撤</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>龙头雷达</td>
+              <td>9</td>
+              <td>+7.20%</td>
+              <td>+3.98%</td>
+              <td>-2.55%</td>
+              <td>样本 9，平均最大涨幅约 +7.20%，平均次日收盘涨幅约 +3.98%，平均最大回撤约 -2.55%；收益质量最好，但多数票在信号时已接近封板，按“当时直接能买”口径可操作性最低。</td>
+            </tr>
+            
+
+            <tr>
+              <td>养家</td>
+              <td>9</td>
+              <td>+7.77%</td>
+              <td>+3.77%</td>
+              <td>-3.53%</td>
+              <td>样本 9，平均最大涨幅约 +7.77%，平均次日收盘涨幅约 +3.77%，平均最大回撤约 -3.53%；爆发力略高于龙头雷达，但回撤更大，且有效样本更依赖少数强票（如 6 月 24 日东方锆业、长江证券）。</td>
+            </tr>
+            
+
+            <tr>
+              <td>92科比</td>
+              <td>9</td>
+              <td>+6.31%</td>
+              <td>+2.67%</td>
+              <td>-5.15%</td>
+              <td>样本 9，平均最大涨幅约 +6.31%，平均次日收盘涨幅约 +2.67%，平均最大回撤约 -5.15%；信号时仍可买的比例最高，执行性最好，但波动和试错成本最大。</td>
+            </tr>
+            
+
+            <tr>
+              <td>北京炒家首板</td>
+              <td>9</td>
+              <td>+6.67%</td>
+              <td>+2.33%</td>
+              <td>-2.19%</td>
+              <td>样本 9，平均最大涨幅约 +6.67%，平均次日收盘涨幅约 +2.33%，平均最大回撤约 -2.19%；首板逻辑清晰，但这几天很多信号在 10:40 以后已是封板后的观察位，实盘追进空间不如纸面强。</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+
+    
+    <section class="framework" id="yangjia">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>养家情绪周期</h2>
+          <p class="framework-copy">从赚钱效应与亏钱效应出发，看次日是否允许出手。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-07-02 15:27:32 +08:00</span>
+          <span class="meta-path">C:\Users\bzsj_\.codex\automations\yangjia-emotion-cycle-memory.md</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/海南海药独立强势 2) 自动化设备/低位…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药独立强势 2) 自动化设备/低位首板 3) 锆链/氟化工补涨分化。收盘跟踪：000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药/002979雷赛智能/600641先导基电/002167东方锆业/空仓席位。操作指导：明日不追一字；海南海药只看分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业只有弱转强修复才恢复，否则不买。收益跟踪：海南海药封板样本 +10.02%；东方锆业若按涨停触发，收盘收益 +7.29%、从涨停回撤约 2.72pct；永太科技未回封不…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微/水晶光电/彩虹/莱宝/TCL继续旧科技亏钱反馈。明日前瞻五股雷达：000566海南海药…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+      </div>
+
+      
+    <section class="strategy-tabs" aria-label="养家情绪周期 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-yangjia" id="yangjia-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-yangjia" id="yangjia-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="yangjia-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="yangjia-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-07-02 15:27:32 +08:00</span>
+      </div>
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-board">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">000566</div>
+                  <div class="exec-name">海南海药</div>
+                </div>
+                <span class="exec-badge">需要板上确认</span>
+              </div>
+              <div class="exec-method">只看封板有效或开板回封，不扫下落</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>看结构触发</b></div>
+              <div class="exec-invalid"><span>失效</span>炸板放量且回不到封板价</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002979</div>
+                  <div class="exec-name">雷赛智能</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 /600641先导基电/002167东方锆业/空仓席位 明日前瞻五股雷达：000566海南海药/002979雷赛智能/600641…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600641</div>
+                  <div class="exec-name">先导基电</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 /002167东方锆业/空仓席位 明日前瞻五股雷达：000566海南海药/002979雷赛智能/600641先导基电/002167…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002167</div>
+                  <div class="exec-name">东方锆业</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 /空仓席位 002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；明日前瞻五股雷达：000566海南海药/002979雷…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002326</div>
+                  <div class="exec-name">永太科技</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 未回封不计触发 002326永太科技未回封收 +7.61%，降级；永太科技未回封不计触发</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">688432</div>
+                  <div class="exec-name">有研硅</div>
+                </div>
+                <span class="exec-badge">只观察</span>
+              </div>
+              <div class="exec-method">未形成可执行买点</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>看结构触发</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 收 +0.24% 688432有研硅收 +0.24%，只观察</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>推荐可买</h3>
+            <span class="subtle">最新记录提取</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="stock-name">海南海药</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">/002979雷赛智能/600641先导基电/002167东方锆业/空仓席位</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="stock-name">雷赛智能</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">/600641先导基电/002167东方锆业/空仓席位</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600641</div>
+          <div class="stock-name">先导基电</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">/002167东方锆业/空仓席位</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002167</div>
+          <div class="stock-name">东方锆业</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">/空仓席位</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002326</div>
+          <div class="stock-name">永太科技</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">未回封不计触发</div>
+    </article>
+    
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="empty">当前记录未写出明确不买清单。</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>继续观察</h3>
+          <span class="subtle">未升级为直接买入</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">688432</div>
+          <div class="stock-name">有研硅</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">收 +0.24%</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600909</div>
+          <div class="stock-name">华安证券</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">/长江证券金融线失败</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">688106</div>
+          <div class="stock-name">金宏气体</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">华安证券/长江证券金融线失败， -4.10%</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000783</div>
+          <div class="stock-name">长江证券</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">华安证券/金融线失败</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002273</div>
+          <div class="stock-name">水晶光电</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微//彩虹/莱宝/TCL继续旧科技亏钱反馈</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000100</div>
+          <div class="stock-name">TCL</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微/水晶光电/彩虹/莱宝/继续旧科技亏钱反馈</div>
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">收益图按推荐当日收盘价归一为 0%，用于持续跟踪强弱，不等同真实成交收益。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000566</div>
+                <div class="tracking-name">海南海药</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-25</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+33.55%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+33.55%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-10.02%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002106</div>
+                <div class="tracking-name">莱宝高科</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-8.16%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+13.31%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-18.95%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002273</div>
+                <div class="tracking-name">水晶光电</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-2.20%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-2.20%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600707</div>
+                <div class="tracking-name">彩虹股份</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-14.10%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-14.10%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000100</div>
+                <div class="tracking-name">TCL科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-6.21%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-6.21%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+
+      <div class="panel shared-panel">
+        <div class="panel-head">
+          <h3>最新共享记忆</h3>
+          <span class="risk-pill risk-red">Red</span>
+        </div>
+        <pre>- 2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/海南海药独立强势 2) 自动化设备/低位首板 3) 锆链/氟化工补涨分化。收盘跟踪：000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微/水晶光电/彩虹/莱宝/TCL继续旧科技亏钱反馈。明日前瞻五股雷达：000566海南海药/002979雷赛智能/600641先导基电/002167东方锆业/空仓席位。操作指导：明日不追一字；海南海药只看分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业只有弱转强修复才恢复，否则不买。收益跟踪：海南海药封板样本 +10.02%；东方锆业若按涨停触发，收盘收益 +7.29%、从涨停回撤约 2.72pct；永太科技未回封不计触发。风险门：Orange偏Red；下个检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</pre>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>近期轨迹</h3>
+          <span class="subtle">最多展示最近 6 条</span>
+        </div>
+        <div class="history-list">
+          
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 10:27:30 CST</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">分歧震荡（偏赚钱扩散）</div>
+              <div class="history-copy">2026-07-01 10:27:30 CST | 情绪: 分歧震荡（偏赚钱扩散） | 主线: 光学光电/半导体, 氟化工/锂盐, 电子元件/PCB | 五股雷达: 水晶光电/多氟多/格科微/彩虹股份/空仓席位 | 前序跟踪: 水晶光电升级核心但不追高，彩虹股份保留观察，莱宝高科与联得装备淘汰 | 风险门: Oran…</div>
+              <div class="history-meta">
+                <span class="chip">光学光电/半导体, 氟化工/锂盐, 电子元件/PCB</span>
+                <span class="chip">2026-07-01 15:25 CST，重点看水晶光电是否继续一字无买点、多氟多能否回封带动氟化工、格科微与彩虹股份午后是否守住分时强势 | 耗时约 6 分钟</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 15:33:40 CST</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">分歧震荡（广度强赚钱，科技高位亏钱回流）</div>
+              <div class="history-copy">2026-07-01 15:33:40 CST | 情绪: 分歧震荡（广度强赚钱，科技高位亏钱回流） | 主线: 大金融/券商, 医药/海南海药, 电子特气/氟化工 | 收盘跟踪: 水晶光电与格科微升级留队，多氟多保留但只等分歧确认，彩虹股份与TCL科技保留观察，莱宝高科降级，联得装备淘汰 | 明日前瞻: 华安证券/…</div>
+              <div class="history-meta">
+                <span class="chip">大金融/券商, 医药/海南海药, 电子特气/氟化工</span>
+                <span class="chip">2026-07-02 08:50 CST，重点看券商是否继续带量、海南海药是否给分歧承接、金宏气体能否非一致高开仍守强、水晶光电若继续一字则只看不追 | 耗时…</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:45:00 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">分歧震荡（广度强但高位科技分化，盘前低一档置信）</div>
+              <div class="history-copy">2026-07-02 07:45:00 +08:00 | 情绪: 分歧震荡（广度强但高位科技分化，盘前低一档置信） | 主线: 大金融/券商, 医药/海南海药, 电子特气/氟化工 | 五股雷达: 600909华安证券/000566海南海药/688106金宏气体/000783长江证券/空仓席位 | 前序跟踪: 水晶光电…</div>
+              <div class="history-meta">
+                <span class="chip">大金融/券商, 医药/海南海药, 电子特气/氟化工</span>
+                <span class="chip">2026-07-02 10:05 CST | 耗时约4分钟</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:55:25 +08:00</div>
+                <span class="risk-pill risk-neutral">待补录</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 07:55:25 +08:00: 08:50 盘前计划顺序执行。基于 2026-07-01 收盘结构，上证指数 4112.45（+0.44%），涨停 152 家、炸板 74 家、昨日涨停次日涨跌幅均值约 +3.13%，赚钱效应扩散但炸板率和高位抛压偏高，情绪定为`分歧震荡（偏赚钱扩散，开盘前低一…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 10:51:41 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 10:51:41 +08:00: 延后补跑 10:05 情绪确认，实际数据截取约 10:51。市场结构：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，赚钱效应仍在但较昨收明显降温；券商方向华安证券 -2.13%、长江证券 -3.98%确认低位切换失败，旧光学/显示彩虹股份 -10.0…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药 2) 化工/锆链/氟化工 3) 局部半导体材料修复。五股雷达：000566海南海药（轻仓试错/已封板，6.04 涨停封住才算有效）/00…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 15:27:32 +08:00</div>
+                <span class="risk-pill risk-red">Red</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/海南海药独立强势 2) 自动化设备/低位…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药独立强势 2) 自动化设备/低位首板 3) 锆链/氟化工补涨分化。收盘跟踪：000566海南海药封住涨停，升级为明日唯一情绪锚；00216…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>运行卡片</h3>
+          <span class="subtle">按配置目录聚合</span>
+        </div>
+        
+            <details class="run-card" open="">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">01</div>
+                  <div class="run-copy">
+                    <div class="run-name">yangjia-08-50-emotion-plan</div>
+                    <div class="run-lead">2026-07-02 07:55:25 +08:00: 08:50 盘前计划顺序执行。基于 2026-07-01 收盘结构，上证指数 4112.45（+0.44%），涨停 152 家、炸板 74 家、昨日涨停次日涨跌幅均值约 +3.13%，赚钱效应扩散但炸板率和高位抛压偏高，情…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 07:55:25 +08:00</div>
+                  <span class="risk-pill risk-neutral">待补录</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 07:55:25 +08:00: 08:50 盘前计划顺序执行。基于 2026-07-01 收盘结构，上证指数 4112.45（+0.44%），涨停 152 家、炸板 74 家、昨日涨停次日涨跌幅均值约 +3.13%，赚钱效应扩散但炸板率和高位抛压偏高，情绪定为`分歧震荡（偏赚钱扩散，开盘前低一…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">华安证券/海南海药/金宏气体/长江证券/空仓席位；操作指导：华安证券只在竞价高开不失控且开盘 10 分钟承接强于券商板块时试错，海南海药/金宏气体只做弱转强确认，长江证券仅作券商跟随观察；其余空仓。推荐买入后的收益跟踪：以前一交易日收盘为基准，今日未开盘暂无新增收益，继续跟踪 600909/000566/688106/000783。前序跟踪：水晶光电、莱宝…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">水晶光电、莱宝高科、彩虹股份、TCL科技从主买降为旧主线观察。风险门为`Orange`，下个检查点固定为 2026-07-02 10:05 CST，若券商冲高回落或炸板继续扩散，则全部降为不买。当前运行耗时约 6 分钟。</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\yangjia-08-50-emotion-plan\memory.md</div>
+                <pre>- 2026-07-02 07:55:25 +08:00: 08:50 盘前计划顺序执行。基于 2026-07-01 收盘结构，上证指数 4112.45（+0.44%），涨停 152 家、炸板 74 家、昨日涨停次日涨跌幅均值约 +3.13%，赚钱效应扩散但炸板率和高位抛压偏高，情绪定为`分歧震荡（偏赚钱扩散，开盘前低一档置信）`，允许策略为`只等确认，不做一致追高`。主线按强弱排为：1) 大金融/券商 2) 医药/海南海药 3) 电子特气/半导体材料。五股雷达：华安证券/海南海药/金宏气体/长江证券/空仓席位；操作指导：华安证券只在竞价高开不失控且开盘 10 分钟承接强于券商板块时试错，海南海药/金宏气体只做弱转强确认，长江证券仅作券商跟随观察；其余空仓。推荐买入后的收益跟踪：以前一交易日收盘为基准，今日未开盘暂无新增收益，继续跟踪 600909/000566/688106/000783。前序跟踪：水晶光电、莱宝高科、彩虹股份、TCL科技从主买降为旧主线观察。风险门为`Orange`，下个检查点固定为 2026-07-02 10:05 CST，若券商冲高回落或炸板继续扩散，则全部降为不买。当前运行耗时约 6 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">02</div>
+                  <div class="run-copy">
+                    <div class="run-name">yangjia-10-05-emotion-confirmation</div>
+                    <div class="run-lead">2026-07-02 10:51:41 +08:00: 延后补跑 10:05 情绪确认，实际数据截取约 10:51。市场结构：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，赚钱效应仍在但较昨收明显降温；券商方向华安证券 -2.13%、长江证券 -3.98%确认低位切…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 10:51:41 +08:00</div>
+                  <span class="risk-pill risk-orange">Orange</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 10:51:41 +08:00: 延后补跑 10:05 情绪确认，实际数据截取约 10:51。市场结构：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，赚钱效应仍在但较昨收明显降温；券商方向华安证券 -2.13%、长江证券 -3.98%确认低位切换失败，旧光学/显示彩虹股份 -10.0…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药 2) 化工/锆链/氟化工 3) 局部半导体材料修复。五股雷达：000566海南海药（轻仓试错/已封板，6.04 涨停封住才算有效）/002167东方锆业（只等确认/26.71 涨停封住且不开板恶化）/002326永太科技（只观察，接近涨停但需回封确认）/688432有研硅（只观察，深水修复后波动大，不追）/空仓席位。操作指导：华安证券…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药（轻仓试错/已封板，6.04 涨停封住才算有效）/002167东方锆业（只等确认/26.71 涨停封住且不开板恶化）/002326永太科技（只观察，接近涨停但需回封确认）/688432有研硅（只观察，深水修复后波动大，不追）/空仓席位。操作指导：华安证券、长江证券触发失败转不买；金宏气体未强，转观察；海南海药与东方锆业若开板回封失败即不…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">水晶光电冲高回落只看不追，格科微不强，彩虹/TCL/莱宝淘汰。风险门：Orange；下个检查点 2026-07-02 15:25 CST。当前运行耗时约 6 分钟。</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Orange</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\yangjia-10-05-emotion-confirmation\memory.md</div>
+                <pre>- 2026-07-02 10:51:41 +08:00: 延后补跑 10:05 情绪确认，实际数据截取约 10:51。市场结构：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，赚钱效应仍在但较昨收明显降温；券商方向华安证券 -2.13%、长江证券 -3.98%确认低位切换失败，旧光学/显示彩虹股份 -10.02%、莱宝高科 -9.42%、TCL科技 -6.70%形成亏钱反馈。情绪定为分歧震荡偏亏钱回流，允许策略为只做已确认前排，不做预判追高。主线：1) 医药/海南海药 2) 化工/锆链/氟化工 3) 局部半导体材料修复。五股雷达：000566海南海药（轻仓试错/已封板，6.04 涨停封住才算有效）/002167东方锆业（只等确认/26.71 涨停封住且不开板恶化）/002326永太科技（只观察，接近涨停但需回封确认）/688432有研硅（只观察，深水修复后波动大，不追）/空仓席位。操作指导：华安证券、长江证券触发失败转不买；金宏气体未强，转观察；海南海药与东方锆业若开板回封失败即不买。收益跟踪：盘前可买中华安证券触发失败，海南海药相对 5.49 最大约 +10.02%，东方锆业相对 24.28 最大约 +10.01%；未触发项不计胜率。前序跟踪：水晶光电冲高回落只看不追，格科微不强，彩虹/TCL/莱宝淘汰。风险门：Orange；下个检查点 2026-07-02 15:25 CST。当前运行耗时约 6 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">03</div>
+                  <div class="run-copy">
+                    <div class="run-name">yangjia-15-25-close-review</div>
+                    <div class="run-lead">2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 15:27:32 +08:00</div>
+                  <span class="risk-pill risk-red">Red</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/海南海药独立强势 2) 自动化设备/低位…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药独立强势 2) 自动化设备/低位首板 3) 锆链/氟化工补涨分化。收盘跟踪：000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药/002979雷赛智能/600641先导基电/002167东方锆业/空仓席位。操作指导：明日不追一字；海南海药只看分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业只有弱转强修复才恢复，否则不买。收益跟踪：海南海药封板样本 +10.02%；东方锆业若按涨停触发，收盘收益 +7.29%、从涨停回撤约 2.72pct；永太科技未回封不…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微/水晶光电/彩虹/莱宝/TCL继续旧科技亏钱反馈。明日前瞻五股雷达：000566海南海药…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\yangjia-15-25-close-review\memory.md</div>
+                <pre>- 2026-07-02 15:27:32 +08:00: 15:25 收盘复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，赚钱效应从上午强扩散退回强分歧，情绪定为分歧震荡偏亏钱扩散，明日允许策略为只观察/只做前排分歧确认。主线：1) 医药/海南海药独立强势 2) 自动化设备/低位首板 3) 锆链/氟化工补涨分化。收盘跟踪：000566海南海药封住涨停，升级为明日唯一情绪锚；002167东方锆业尾盘炸板收 +7.29%，从买点降级为观察；002326永太科技未回封收 +7.61%，降级；688432有研硅收 +0.24%，只观察；华安证券/长江证券金融线失败，金宏气体 -4.10%，格科微/水晶光电/彩虹/莱宝/TCL继续旧科技亏钱反馈。明日前瞻五股雷达：000566海南海药/002979雷赛智能/600641先导基电/002167东方锆业/空仓席位。操作指导：明日不追一字；海南海药只看分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业只有弱转强修复才恢复，否则不买。收益跟踪：海南海药封板样本 +10.02%；东方锆业若按涨停触发，收盘收益 +7.29%、从涨停回撤约 2.72pct；永太科技未回封不计触发。风险门：Orange偏Red；下个检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</pre>
+              </div>
+            </details>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="kobe92">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>Kobe92 周期切换</h2>
+          <p class="framework-copy">先判周期，再看龙头、补涨与切换，不做中位情绪幻觉。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-07-03 10:18:30 +08:00</span>
+          <span class="meta-path">C:\Users\bzsj_\.codex\automations\kobe92-cycle-speculation-memory.md</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46%，说明资金从昨日高位补涨退回低位试错。…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需换手回封确认）/002396星网锐捷（切换试错/通信设备首板，需放量回封且锐捷网络炸板不继续拖累）/空仓席位。买/不买/只观察：本轮无直接买；002979…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+      </div>
+
+      
+    <section class="strategy-tabs" aria-label="Kobe92 周期切换 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-kobe92" id="kobe92-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-kobe92" id="kobe92-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="kobe92-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="kobe92-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-07-03 10:18:30 +08:00</span>
+      </div>
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-noqueue">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">000506</div>
+                  <div class="exec-name">招金黄金</div>
+                </div>
+                <span class="exec-badge">不用排板</span>
+              </div>
+              <div class="exec-method">等开板换手承接，不排一字</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>看结构触发</b></div>
+              <div class="exec-invalid"><span>失效</span>开板后不能快速回封或分时承接失败</div>
+            </article>
+            
+            <article class="exec-card exec-noqueue">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002396</div>
+                  <div class="exec-name">星网锐捷</div>
+                </div>
+                <span class="exec-badge">不用排板</span>
+              </div>
+              <div class="exec-method">等开板换手承接，不排一字</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>看结构触发</b></div>
+              <div class="exec-invalid"><span>失效</span>开板后不能快速回封或分时承接失败</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">000566</div>
+                  <div class="exec-name">海南海药</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 昨日触发样本今日开板回落至约5.90（相对昨收 -2.32%） 昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002167</div>
+                  <div class="exec-name">东方锆业</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），约24.79（-4.84%） 昨日触发样本00…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002326</div>
+                  <div class="exec-name">永太科技</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002167东方锆业约24.79（-4.84%…</div>
+            </article>
+            
+            <article class="exec-card exec-noqueue">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002979</div>
+                  <div class="exec-name">雷赛智能</div>
+                </div>
+                <span class="exec-badge">不用排板</span>
+              </div>
+              <div class="exec-method">等开板换手承接，不排一字</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>看结构触发</b></div>
+              <div class="exec-invalid"><span>失效</span>开板后不能快速回封或分时承接失败</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>推荐可买</h3>
+            <span class="subtle">最新记录提取</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000506</div>
+          <div class="stock-name">招金黄金</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（切换试错/黄金低位二板</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002396</div>
+          <div class="stock-name">星网锐捷</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（切换试错/通信设备首板</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="stock-name">海南海药</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">昨日触发样本今日开板回落至约5.90（相对昨收 -2.32%）</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002167</div>
+          <div class="stock-name">东方锆业</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），约24.79（-4.84%）</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002326</div>
+          <div class="stock-name">永太科技</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002167东方锆业约24.79（-4.84%），约25.…</div>
+    </article>
+    
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002648</span>
+                <strong>是否</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002979</span>
+                <strong>雷赛智能</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">600988</span>
+                <strong>赤峰黄金</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>继续观察</h3>
+          <span class="subtle">未升级为直接买入</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="stock-name">雷赛智能</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">（补涨观察/2板一字</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600988</div>
+          <div class="stock-name">赤峰黄金</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">（补涨观察/黄金分支联动</div>
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">收益图按推荐当日收盘价归一为 0%，用于持续跟踪强弱，不等同真实成交收益。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">688432</div>
+                <div class="tracking-name">有研硅</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+19.71%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+23.81%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-3.31%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600667</div>
+                <div class="tracking-name">太极实业</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+6.58%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+10.94%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-10.00%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002129</div>
+                <div class="tracking-name">TCL中环</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-9.72%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+2.47%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-11.90%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600584</div>
+                <div class="tracking-name">长电科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-9.13%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+3.28%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-12.02%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">603986</div>
+                <div class="tracking-name">兆易创新</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-06-30</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-13.50%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-14.75%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+
+      <div class="panel shared-panel">
+        <div class="panel-head">
+          <h3>最新共享记忆</h3>
+          <span class="risk-pill risk-neutral">待补录</span>
+        </div>
+        <pre>- 2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46%，说明资金从昨日高位补涨退回低位试错。周期阶段：高位震荡退潮后的低位震荡；今日模式：切换试错/轻仓修复观察，继续不做中位。主线故事：1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需换手回封确认）/002396星网锐捷（切换试错/通信设备首板，需放量回封且锐捷网络炸板不继续拖累）/空仓席位。买/不买/只观察：本轮无直接买；002979/000506/600988/002396均为只观察或价格触发后再看，空仓席位优先。价格触发：002979只有开板后重新回封69.55且封单恢复才算；000506守住13.87封板或开板快速回封才算；600988守住31.23封板或换手回封才算；002396守住23.40封板才算。失效条件：昨日补涨核心继续跳水、昨日涨停均值维持负值且炸板扩散、黄金/通信分支无法形成梯队、候选开板后无法回封。推荐买入收益跟踪：本轮无买入建议，收益样本为空；昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002167东方锆业约24.79（-4.84%），002326永太科技约25.31（-9.61%），688432有研硅约40.09（-12.68%），确认昨日补涨退潮。prior-pick follow-up：000566由情绪锚降级观察；002167弱转强失败淘汰；002326未回封后继续负反馈淘汰；688432深水回落不做中位；002979封死一字保留为低位情绪锚但不追。risk gate：Orange偏Red。next checkpoint：2026-07-03 15:20 CST，重点看雷赛智能是否仍能带动自动化设备、黄金二板是否扩成梯队、通信设备是否回封扩散；若午后炸板继续增加或昨日涨停均值更弱，收盘继续空仓优先。当前运行耗时约 7 分钟。</pre>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>近期轨迹</h3>
+          <span class="subtle">最多展示最近 6 条</span>
+        </div>
+        <div class="history-list">
+          
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 15:24:54 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">高位震荡</div>
+              <div class="history-copy">2026-07-01 15:24:54 +08:00 | 周期阶段: 高位震荡 | 选定模式: 补涨 | 收盘复盘跟进: 半导体前排补涨与锆系旧题材回流都能赚钱, 但容量中军与中位分化显著扩大; 688432有研硅自10:26触发价45.49到收盘45.80仅+0.68%但全天强势封靠近高位, 保留前排锚定; 300…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">2026-07-02 08:45 北京时间, 先看有研硅是否给分歧承接而非一致加速, 富满微能否弱转强修复, 太极实业/东方锆业能否带出同题材二梯队, 否则继…</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:45:00 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">高位震荡</div>
+              <div class="history-copy">2026-07-02 07:45:00 +08:00 | 周期阶段: 高位震荡 | 选定模式: 补涨/分歧确认 | 主线故事: 1) 半导体前排补涨但容量中军负反馈 2) 锆系/化工旧题材回流只看持续性 3) 券商低位切换观察 | 五股雷达: 688432有研硅(分歧介入), 300671富满微(补涨观察), 600…</div>
+              <div class="history-meta">
+                <span class="chip">1) 半导体前排补涨但容量中军负反馈 2) 锆系/化工旧题材回流只看持续性 3) 券商低位切换观察</span>
+                <span class="chip">2026-07-02 10:15 北京时间。</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:55:51 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 07:55:51 +08:00: 08:45 周期计划顺序执行。基于 2026-07-01 收盘，涨停 152、炸板 74、昨日涨停溢价均值 +3.13%，赚钱效应仍在但高度接力与容量高位出现分歧，周期阶段定为`高位震荡`，今日模式为`补涨/切换确认`，不做中位。主线故事：1) 半导体材料/设备…</div>
+              <div class="history-meta">
+                <span class="chip">1) 半导体材料/设备低位补涨 2) 大金融/券商分支试图切换 3) 化工/氟化工与锆链局部补涨。五股雷达：有研硅（分歧介入，45.80 为昨日收盘基准，只等…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 10:52:02 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">高位震荡转强分歧；今日模式：补涨确认/局部切换，继续不做中位。市场反馈：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，高位科技旧主线彩虹股份 -10.02%、莱宝高科 -9.42%、TCL科技 -6.70%、兆易创新 -7.96%，容量/旧主线亏钱反馈明显；补涨端东方锆业涨停、海南海药涨停、永太科技接近涨停，有研硅深水拉回但波动大。主线故事：1) 医药/海南海药情绪分支 2) 锆链/氟化工补涨 3) 半导体材料修复但容量中军负反馈。五股雷达：002167东方锆业（分歧介入/已涨停，26.71 封住才有效）/000566海南海药（补涨观察/6.04 封住才有效）/002326永太科技（补涨观察/28.62 回封确认才买）/688432有研硅（不做追高，只看回落承接）/空仓席位。前序跟踪：688432有研硅从 45.80 到 46.97 约 +2.55%但振幅大，保留观察；300671富满微 +3.66%但仍是中位高波动，不做主买；600667太极实业 -4.95%淘汰；603986兆易创新 -7.96%继续负反馈淘汰。操作指导：只允许东方锆业、海南海药封板有效后轻仓；永太科技必须回封；有研硅只做首次分歧承接观察。推荐买入收益跟踪：东方锆业相对昨收最大 +10.01%，海南海药 +10.02%，有研硅盘中最高相对昨收约 +6.53%但非买入触发样本。风险门：Orange；下个检查点 2026-07-02 15:20 CST。当前运行耗时约 5 分钟。</div>
+              <div class="history-copy">2026-07-02 10:52:02 +08:00: 10:15 周期确认延后补跑，实际数据截取约 10:51。周期阶段：高位震荡转强分歧；今日模式：补涨确认/局部切换，继续不做中位。市场反馈：涨停 81、炸板 16、昨日涨停当前均值约 +1.53%，高位科技旧主线彩虹股份 -10.02%、莱宝高科 -9.42%、…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药情绪分支 2) 锆链/氟化工补涨 3) 半导体材料修复但容量中军负反馈。五股雷达：002167东方锆业（分歧介入/已涨停，26.71 封住…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 15:21:52 +08:00</div>
+                <span class="risk-pill risk-red">Red</span>
+              </div>
+              <div class="history-title">高位震荡转强分歧/局部退潮；下一模式：轻仓修复观察，优先等新低位切换，不做中位。主线故事：1) 医药/海南海药独立强势 2) 锆链/氟化工补涨分化 3) 设备/低位首板局部试错。收盘跟踪：000566海南海药封板成功，保留为明日情绪锚；002167东方锆业上午触发但尾盘炸板回落，降级为只看明日竞价修复；002326永太科技未回封，降级观察；688432有研硅深水修复但收盘仅 +0.24%，只观察；300671富满微收 +0.55%仍不做中位；600667太极实业与603986兆易创新淘汰。明日初选雷达：000566海南海药(分歧介入/只看高开承接或开板回封), 002979雷赛智能(低位试错/只看竞价量能与开板承接), 600641先导基电(补涨观察/3连板但需换手确认), 002167东方锆业(淘汰观察/明日弱转强才恢复), 空仓席位。操作指导：明日不追一字；海南海药只能分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业未弱转强前不买。推荐买入收益跟踪：海南海药按封板触发当日约 +10.02%；东方锆业若按涨停封板触发，收盘回落至 +7.29%，最大回撤约从涨停到 +7.29%；永太科技未回封确认不计入买入样本。风险门：Orange偏Red；下个检查点 2026-07-03 08:45 CST。当前运行耗时约 6 分钟。</div>
+              <div class="history-copy">2026-07-02 15:21:52 +08:00: 15:20 收盘周期复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，说明赚钱效应从上午扩散回落到强分歧；高位/容量旧科技继续负反馈，603986兆易创新跌停、600667太极实业跌停、002106莱宝高科接近跌停、6007…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药独立强势 2) 锆链/氟化工补涨分化 3) 设备/低位首板局部试错。收盘跟踪：000566海南海药封板成功，保留为明日情绪锚；002167…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-03 10:18:30 +08:00</div>
+                <span class="risk-pill risk-neutral">待补录</span>
+              </div>
+              <div class="history-title">高位震荡退潮后的低位震荡；今日模式：切换试错/轻仓修复观察，继续不做中位。主线故事：1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需换手回封确认）/002396星网锐捷（切换试错/通信设备首板，需放量回封且锐捷网络炸板不继续拖累）/空仓席位。买/不买/只观察：本轮无直接买；002979/000506/600988/002396均为只观察或价格触发后再看，空仓席位优先。价格触发：002979只有开板后重新回封69.55且封单恢复才算；000506守住13.87封板或开板快速回封才算；600988守住31.23封板或换手回封才算；002396守住23.40封板才算。失效条件：昨日补涨核心继续跳水、昨日涨停均值维持负值且炸板扩散、黄金/通信分支无法形成梯队、候选开板后无法回封。推荐买入收益跟踪：本轮无买入建议，收益样本为空；昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002167东方锆业约24.79（-4.84%），002326永太科技约25.31（-9.61%），688432有研硅约40.09（-12.68%），确认昨日补涨退潮。prior-pick follow-up：000566由情绪锚降级观察；002167弱转强失败淘汰；002326未回封后继续负反馈淘汰；688432深水回落不做中位；002979封死一字保留为低位情绪锚但不追。risk gate：Orange偏Red。next checkpoint：2026-07-03 15:20 CST，重点看雷赛智能是否仍能带动自动化设备、黄金二板是否扩成梯队、通信设备是否回封扩散；若午后炸板继续增加或昨日涨停均值更弱，收盘继续空仓优先。当前运行耗时约 7 分钟。</div>
+              <div class="history-copy">2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46%，说明资金从昨日高位补涨退回低位试错。…</div>
+              <div class="history-meta">
+                <span class="chip">1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：00…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>运行卡片</h3>
+          <span class="subtle">按配置目录聚合</span>
+        </div>
+        
+            <details class="run-card" open="">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">01</div>
+                  <div class="run-copy">
+                    <div class="run-name">kobe92-08-45-cycle-plan</div>
+                    <div class="run-lead">2026-07-02 07:55:51 +08:00: 08:45 周期计划顺序执行。基于 2026-07-01 收盘，涨停 152、炸板 74、昨日涨停溢价均值 +3.13%，赚钱效应仍在但高度接力与容量高位出现分歧，周期阶段定为`高位震荡`，今日模式为`补涨/切换确认`，不…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 07:55:51 +08:00</div>
+                  <span class="risk-pill risk-orange">Orange</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 07:55:51 +08:00: 08:45 周期计划顺序执行。基于 2026-07-01 收盘，涨停 152、炸板 74、昨日涨停溢价均值 +3.13%，赚钱效应仍在但高度接力与容量高位出现分歧，周期阶段定为`高位震荡`，今日模式为`补涨/切换确认`，不做中位。主线故事：1) 半导体材料/设备…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 半导体材料/设备低位补涨 2) 大金融/券商分支试图切换 3) 化工/氟化工与锆链局部补涨。五股雷达：有研硅（分歧介入，45.80 为昨日收盘基准，只等分歧承接不追高）/富满微（不做中位，除非竞价弱转强且站稳昨日高位，否则不买）/太极实业（补涨观察，只看换手回封）/东方锆业（低位补涨延续，24.28 为基准，只做回落承接或弱转强）/空仓席位。前序跟踪…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">有研硅（分歧介入，45.80 为昨日收盘基准，只等分歧承接不追高）/富满微（不做中位，除非竞价弱转强且站稳昨日高位，否则不买）/太极实业（补涨观察，只看换手回封）/东方锆业（低位补涨延续，24.28 为基准，只做回落承接或弱转强）/空仓席位。前序跟踪：兆易创新 7月1日收跌约 -5.27%，从容量核心降为负反馈观察；水晶光电继续涨停但更偏旧主线高位，不能作…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">兆易创新 7月1日收跌约 -5.27%，从容量核心降为负反馈观察；水晶光电继续涨停但更偏旧主线高位，不能作为本框架追高买点。操作指导：本轮只允许有研硅、东方锆业在分歧承接后轻仓试错，其余未触发则不买。推荐买入收益跟踪：今日未开盘，新增推荐以昨日收盘价为收益基准，等待 10:15 触发复盘。风险门：Orange；下个检查点 2026-07-02 10:15…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Orange</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\kobe92-08-45-cycle-plan\memory.md</div>
+                <pre>- 2026-07-02 07:55:51 +08:00: 08:45 周期计划顺序执行。基于 2026-07-01 收盘，涨停 152、炸板 74、昨日涨停溢价均值 +3.13%，赚钱效应仍在但高度接力与容量高位出现分歧，周期阶段定为`高位震荡`，今日模式为`补涨/切换确认`，不做中位。主线故事：1) 半导体材料/设备低位补涨 2) 大金融/券商分支试图切换 3) 化工/氟化工与锆链局部补涨。五股雷达：有研硅（分歧介入，45.80 为昨日收盘基准，只等分歧承接不追高）/富满微（不做中位，除非竞价弱转强且站稳昨日高位，否则不买）/太极实业（补涨观察，只看换手回封）/东方锆业（低位补涨延续，24.28 为基准，只做回落承接或弱转强）/空仓席位。前序跟踪：兆易创新 7月1日收跌约 -5.27%，从容量核心降为负反馈观察；水晶光电继续涨停但更偏旧主线高位，不能作为本框架追高买点。操作指导：本轮只允许有研硅、东方锆业在分歧承接后轻仓试错，其余未触发则不买。推荐买入收益跟踪：今日未开盘，新增推荐以昨日收盘价为收益基准，等待 10:15 触发复盘。风险门：Orange；下个检查点 2026-07-02 10:15 CST，若半导体容量继续分歧且补涨无承接，全部转空仓。当前运行耗时约 7 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">02</div>
+                  <div class="run-copy">
+                    <div class="run-name">kobe92-10-15-cycle-confirmation</div>
+                    <div class="run-lead">2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-03 10:18:30 +08:00</div>
+                  <span class="risk-pill risk-neutral">待补录</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46%，说明资金从昨日高位补涨退回低位试错。…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需换手回封确认）/002396星网锐捷（切换试错/通信设备首板，需放量回封且锐捷网络炸板不继续拖累）/空仓席位。买/不买/只观察：本轮无直接买；002979…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\kobe92-10-15-cycle-confirmation\memory.md</div>
+                <pre>- 2026-07-03 10:18:30 +08:00: 10:15 周期确认。数据截取约 10:18，指数修复但接力弱：上证/深成/创业板约 +0.41%/+0.76%/+1.01%，涨停约 60、炸板约 12、跌停约 11，昨日涨停池均值约 -0.43%、中位数约 -1.46%，说明资金从昨日高位补涨退回低位试错。周期阶段：高位震荡退潮后的低位震荡；今日模式：切换试错/轻仓修复观察，继续不做中位。主线故事：1) 自动化设备/雷赛智能独立二板一字，但无低风险买点 2) 贵金属/黄金低位集群二板试错 3) 通信设备/AI网络首板与炸板并存，待回封确认。五股雷达：002979雷赛智能（补涨观察/2板一字，只看开板换手承接，不追一字）/000506招金黄金（切换试错/黄金低位二板，需板块继续3只以上封板且非一字回封）/600988赤峰黄金（补涨观察/黄金分支联动，需换手回封确认）/002396星网锐捷（切换试错/通信设备首板，需放量回封且锐捷网络炸板不继续拖累）/空仓席位。买/不买/只观察：本轮无直接买；002979/000506/600988/002396均为只观察或价格触发后再看，空仓席位优先。价格触发：002979只有开板后重新回封69.55且封单恢复才算；000506守住13.87封板或开板快速回封才算；600988守住31.23封板或换手回封才算；002396守住23.40封板才算。失效条件：昨日补涨核心继续跳水、昨日涨停均值维持负值且炸板扩散、黄金/通信分支无法形成梯队、候选开板后无法回封。推荐买入收益跟踪：本轮无买入建议，收益样本为空；昨日触发样本000566海南海药今日开板回落至约5.90（相对昨收 -2.32%），002167东方锆业约24.79（-4.84%），002326永太科技约25.31（-9.61%），688432有研硅约40.09（-12.68%），确认昨日补涨退潮。prior-pick follow-up：000566由情绪锚降级观察；002167弱转强失败淘汰；002326未回封后继续负反馈淘汰；688432深水回落不做中位；002979封死一字保留为低位情绪锚但不追。risk gate：Orange偏Red。next checkpoint：2026-07-03 15:20 CST，重点看雷赛智能是否仍能带动自动化设备、黄金二板是否扩成梯队、通信设备是否回封扩散；若午后炸板继续增加或昨日涨停均值更弱，收盘继续空仓优先。当前运行耗时约 7 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">03</div>
+                  <div class="run-copy">
+                    <div class="run-name">kobe92-15-20-cycle-review</div>
+                    <div class="run-lead">2026-07-02 15:21:52 +08:00: 15:20 收盘周期复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，说明赚钱效应从上午扩散回落到强分歧；高位/容量旧科技继续负反馈，603986兆易创新跌停、600667太极实业跌停…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 15:21:52 +08:00</div>
+                  <span class="risk-pill risk-red">Red</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:21:52 +08:00: 15:20 收盘周期复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，说明赚钱效应从上午扩散回落到强分歧；高位/容量旧科技继续负反馈，603986兆易创新跌停、600667太极实业跌停、002106莱宝高科接近跌停、6007…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药独立强势 2) 锆链/氟化工补涨分化 3) 设备/低位首板局部试错。收盘跟踪：000566海南海药封板成功，保留为明日情绪锚；002167东方锆业上午触发但尾盘炸板回落，降级为只看明日竞价修复；002326永太科技未回封，降级观察；688432有研硅深水修复但收盘仅 +0.24%，只观察；300671富满微收 +0.55%仍不做中位；6…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药(分歧介入/只看高开承接或开板回封), 002979雷赛智能(低位试错/只看竞价量能与开板承接), 600641先导基电(补涨观察/3连板但需换手确认), 002167东方锆业(淘汰观察/明日弱转强才恢复), 空仓席位。操作指导：明日不追一字；海南海药只能分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业未弱转强前不买。推荐买入收…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">000566海南海药封板成功，保留为明日情绪锚；002167东方锆业上午触发但尾盘炸板回落，降级为只看明日竞价修复；002326永太科技未回封，降级观察；688432有研硅深水修复但收盘仅 +0.24%，只观察；300671富满微收 +0.55%仍不做中位；600667太极实业与603986兆易创新淘汰。明日初选雷达：000566海南海药(分歧介入/只看高…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\kobe92-15-20-cycle-review\memory.md</div>
+                <pre>- 2026-07-02 15:21:52 +08:00: 15:20 收盘周期复盘。数据截取约 15:21，涨停 94、炸板 39、昨日涨停当前均值约 +0.04%，说明赚钱效应从上午扩散回落到强分歧；高位/容量旧科技继续负反馈，603986兆易创新跌停、600667太极实业跌停、002106莱宝高科接近跌停、600707彩虹股份 -5.49%、000100TCL科技 -3.27%，上午强势的002167东方锆业尾盘开板收 +7.29%，002326永太科技冲板回落收 +7.61%，只有000566海南海药封住涨停。周期阶段：高位震荡转强分歧/局部退潮；下一模式：轻仓修复观察，优先等新低位切换，不做中位。主线故事：1) 医药/海南海药独立强势 2) 锆链/氟化工补涨分化 3) 设备/低位首板局部试错。收盘跟踪：000566海南海药封板成功，保留为明日情绪锚；002167东方锆业上午触发但尾盘炸板回落，降级为只看明日竞价修复；002326永太科技未回封，降级观察；688432有研硅深水修复但收盘仅 +0.24%，只观察；300671富满微收 +0.55%仍不做中位；600667太极实业与603986兆易创新淘汰。明日初选雷达：000566海南海药(分歧介入/只看高开承接或开板回封), 002979雷赛智能(低位试错/只看竞价量能与开板承接), 600641先导基电(补涨观察/3连板但需换手确认), 002167东方锆业(淘汰观察/明日弱转强才恢复), 空仓席位。操作指导：明日不追一字；海南海药只能分歧承接或回封，雷赛智能/先导基电只看开板换手，东方锆业未弱转强前不买。推荐买入收益跟踪：海南海药按封板触发当日约 +10.02%；东方锆业若按涨停封板触发，收盘回落至 +7.29%，最大回撤约从涨停到 +7.29%；永太科技未回封确认不计入买入样本。风险门：Orange偏Red；下个检查点 2026-07-03 08:45 CST。当前运行耗时约 6 分钟。</pre>
+              </div>
+            </details>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="beijing-chaogu">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>北京炒家首板</h2>
+          <p class="framework-copy">只做前排首板、回封与换手，重视封板质量和次日套利窗口。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-07-02 15:27:32 +08:00</span>
+          <span class="meta-path">C:\Users\bzsj_\.codex\automations\beijing-chaogu-first-board-memory.md</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字的明日竞价观察、换手回封的次日套利；弱板…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药(明日竞价观察), 002979雷赛智能(明日套利观察), 600641先导基电(换手观察), 002167东方锆业(炸板降级), 空仓席位。操作指导：明日不隔夜追买；海南海药高开过强不追，雷赛/先导必须开板换手承接，东方锆业低开弱承接直接淘汰。收益跟踪：海南海药封板样本 +10.02%；东方锆业封板触发后收盘 +7.29%，炸板回撤；…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">000566海南海药封住涨停，明日只观察竞价强弱与开盘承接；002167东方锆业尾盘炸板回落，套利降级；002326永太科技冲板未回封，淘汰为明日只观察；002979雷赛智能09:25一字封住，明日看竞价量能与是否开板承接；000595宝塔实业一字封但成交极低，只作小票情绪观察；600641先导基电3连板封住但曾分歧，明日只看换手。明日5槽套利雷达：000…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+      </div>
+
+      
+    <section class="strategy-tabs" aria-label="北京炒家首板 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-beijing-chaogu" id="beijing-chaogu-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-beijing-chaogu" id="beijing-chaogu-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="beijing-chaogu-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="beijing-chaogu-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-07-02 15:27:32 +08:00</span>
+      </div>
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002326</div>
+                  <div class="exec-name">永太科技</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 未触发 002326永太科技冲板未回封，淘汰为明日只观察；永太科技未触发</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">000566</div>
+                  <div class="exec-name">海南海药</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 (明日竞价观察) 收盘跟踪：000566海南海药封住涨停，明日只观察竞价强弱与开盘承接；明日5槽套利雷达：000566海南海药(明日…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002979</div>
+                  <div class="exec-name">雷赛智能</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 (明日套利观察) 002979雷赛智能09:25一字封住，明日看竞价量能与是否开板承接；明日5槽套利雷达：000566海南海药(明日…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600641</div>
+                  <div class="exec-name">先导基电</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 (换手观察) 600641先导基电3连板封住但曾分歧，明日只看换手；明日5槽套利雷达：000566海南海药(明日竞价观察), 002…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002167</div>
+                  <div class="exec-name">东方锆业</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 (炸板降级) 002167东方锆业尾盘炸板回落，套利降级；明日5槽套利雷达：000566海南海药(明日竞价观察), 002979雷赛…</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>推荐可买</h3>
+            <span class="subtle">最新记录提取</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002326</div>
+          <div class="stock-name">永太科技</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">未触发</div>
+    </article>
+    
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">000566</span>
+                <strong>海南海药</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002167</span>
+                <strong>东方锆业</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002979</span>
+                <strong>雷赛智能</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">000595</span>
+                <strong>宝塔实业</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">600641</span>
+                <strong>先导基电</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002648</span>
+                <strong>是否</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>继续观察</h3>
+          <span class="subtle">未升级为直接买入</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="stock-name">海南海药</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">(明日竞价观察)</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="stock-name">雷赛智能</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">(明日套利观察)</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600641</div>
+          <div class="stock-name">先导基电</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">(换手观察)</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002167</div>
+          <div class="stock-name">东方锆业</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">(炸板降级)</div>
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">收益图按推荐当日收盘价归一为 0%，用于持续跟踪强弱，不等同真实成交收益。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002326</div>
+                <div class="tracking-name">永太科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+1.27%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+7.61%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-5.89%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600845</div>
+                <div class="tracking-name">宝信软件</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-0.27%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-0.98%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600909</div>
+                <div class="tracking-name">华安证券</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-8.92%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-8.92%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000733</div>
+                <div class="tracking-name">振华科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-2.75%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-2.75%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000566</div>
+                <div class="tracking-name">海南海药</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+1.49%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+1.49%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+
+      <div class="panel shared-panel">
+        <div class="panel-head">
+          <h3>最新共享记忆</h3>
+          <span class="risk-pill risk-red">Red</span>
+        </div>
+        <pre>- 2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字的明日竞价观察、换手回封的次日套利；弱板和炸板淘汰。收盘跟踪：000566海南海药封住涨停，明日只观察竞价强弱与开盘承接；002167东方锆业尾盘炸板回落，套利降级；002326永太科技冲板未回封，淘汰为明日只观察；002979雷赛智能09:25一字封住，明日看竞价量能与是否开板承接；000595宝塔实业一字封但成交极低，只作小票情绪观察；600641先导基电3连板封住但曾分歧，明日只看换手。明日5槽套利雷达：000566海南海药(明日竞价观察), 002979雷赛智能(明日套利观察), 600641先导基电(换手观察), 002167东方锆业(炸板降级), 空仓席位。操作指导：明日不隔夜追买；海南海药高开过强不追，雷赛/先导必须开板换手承接，东方锆业低开弱承接直接淘汰。收益跟踪：海南海药封板样本 +10.02%；东方锆业封板触发后收盘 +7.29%，炸板回撤；永太科技未触发。风险门：Orange偏Red；下个检查点 2026-07-03 10:35 CST。当前运行耗时约 5 分钟。</pre>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>近期轨迹</h3>
+          <span class="subtle">最多展示最近 6 条</span>
+        </div>
+        <div class="history-list">
+          
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 15:31 CST</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">可打首板，但明日只做前排硬封 / 中军 / 强换手套利，不接午后分歧扩大的弱回封与尾板弱转强。</div>
+              <div class="history-copy">## 2026-07-01 15:31 CST</div>
+              <div class="history-meta">
+                <span class="chip">1) 化工新材料（化学制品+塑料+化学原料） 2) 信创/IT服务 3) 券商，军工电子只保留最强中军。</span>
+                <span class="chip">2026-07-02 10:35 CST，先看 002326/603859/000733 是否给出高开 2%-5% 且开盘承接不弱；600909/600845…</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:45 CST</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">盘前只能做次日套利观察，未到 10:35 不发布新的盘中首板池；明早只看前排硬封 / 中军 / 强换手承接。</div>
+              <div class="history-copy">## 2026-07-02 07:45 CST</div>
+              <div class="history-meta">
+                <span class="chip">1) 化工新材料 2) 信创/IT服务 3) 券商/金融科技。</span>
+                <span class="chip">2026-07-02 10:35 CST。</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:56:14 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 07:56:14 +08:00: 10:35 首板框架盘前顺序执行。当前时间早于开盘，不能发布真实 10:35 首板五股池，本轮仅基于 2026-07-01 收盘首板/强板结构做次日可执行观察。市场板块气候：只打前排/只做回封换手；允许板型：回封、换手、中军，禁止无板块秒拉和尾盘偷鸡。强势方向：…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 10:52:23 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 10:52:23 +08:00: 10:35 首板雷达延后补跑，实际数据截取约 10:51。市场板块气候：只打前排/只做回封换手；当前涨停 81、炸板 16，封板率较昨日修复但高位旧主线分歧大。允许板型：早盘前排封板、回封确认、换手中军；不做尾盘票、不做无板块秒拉。强势方向：1) 医药/化学制药…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 14:18:13 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 14:18:13 +08:00: 14:20 封板质量检查。数据截取约 14:17，当前涨停 95、炸板 36，较 10:51 的涨停 81/炸板 16 明显扩容但炸板也扩大；昨日涨停当前均值约 +0.77%，说明接力溢价继续降温，尾盘新增仓位要更谨慎。板块气候：只做已封住前排/不新增弱尾盘；允…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 15:27:32 +08:00</div>
+                <span class="risk-pill risk-red">Red</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字的明日竞价观察、换手回封的次日套利；弱板…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>运行卡片</h3>
+          <span class="subtle">按配置目录聚合</span>
+        </div>
+        
+            <details class="run-card" open="">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">01</div>
+                  <div class="run-copy">
+                    <div class="run-name">beijing-chaogu-10-35-first-board-radar</div>
+                    <div class="run-lead">2026-07-02 10:52:23 +08:00: 10:35 首板雷达延后补跑，实际数据截取约 10:51。市场板块气候：只打前排/只做回封换手；当前涨停 81、炸板 16，封板率较昨日修复但高位旧主线分歧大。允许板型：早盘前排封板、回封确认、换手中军；不做尾盘票、不做无…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 10:52:23 +08:00</div>
+                  <span class="risk-pill risk-orange">Orange</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 10:52:23 +08:00: 10:35 首板雷达延后补跑，实际数据截取约 10:51。市场板块气候：只打前排/只做回封换手；当前涨停 81、炸板 16，封板率较昨日修复但高位旧主线分歧大。允许板型：早盘前排封板、回封确认、换手中军；不做尾盘票、不做无板块秒拉。强势方向：1) 医药/化学制药…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药（非首板但强情绪板，6.04 封住可轻仓，开板回封失败不买）/002167东方锆业（强板延续，26.71 封住可轻仓，炸板放量不回封不买）/002326永太科技（高位接近涨停，28.62 回封才买）/002979雷赛智能（09:25 首封，自动化设备首板，63.23 封单有效才可排板）/000595宝塔实业（09:25 首封，低位电力首…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">华安证券高开低走不买，能科科技/振华科技/宝信软件均未给强首板结构，降级；永太科技表现强但需回封确认。收益跟踪：海南海药、东方锆业若按涨停封板触发，当前相对昨收约 +10%；永太科技未完全确认，未触发不计。风险门：Orange；下个检查点 2026-07-02 14:20 CST，重点看海南海药/东方锆业/永太科技封单是否保持，以及首板炸板率是否扩大。当前…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Orange</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\beijing-chaogu-10-35-first-board-radar\memory.md</div>
+                <pre>- 2026-07-02 10:52:23 +08:00: 10:35 首板雷达延后补跑，实际数据截取约 10:51。市场板块气候：只打前排/只做回封换手；当前涨停 81、炸板 16，封板率较昨日修复但高位旧主线分歧大。允许板型：早盘前排封板、回封确认、换手中军；不做尾盘票、不做无板块秒拉。强势方向：1) 医药/化学制药 2) 化工/氟化工/锆链 3) 电力/低位首板。五股首板/强板雷达：000566海南海药（非首板但强情绪板，6.04 封住可轻仓，开板回封失败不买）/002167东方锆业（强板延续，26.71 封住可轻仓，炸板放量不回封不买）/002326永太科技（高位接近涨停，28.62 回封才买）/002979雷赛智能（09:25 首封，自动化设备首板，63.23 封单有效才可排板）/000595宝塔实业（09:25 首封，低位电力首板，只能小仓排板观察）。前序跟踪：华安证券高开低走不买，能科科技/振华科技/宝信软件均未给强首板结构，降级；永太科技表现强但需回封确认。收益跟踪：海南海药、东方锆业若按涨停封板触发，当前相对昨收约 +10%；永太科技未完全确认，未触发不计。风险门：Orange；下个检查点 2026-07-02 14:20 CST，重点看海南海药/东方锆业/永太科技封单是否保持，以及首板炸板率是否扩大。当前运行耗时约 5 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">02</div>
+                  <div class="run-copy">
+                    <div class="run-name">beijing-chaogu-14-20-seal-quality-check</div>
+                    <div class="run-lead">2026-07-02 14:18:13 +08:00: 14:20 封板质量检查。数据截取约 14:17，当前涨停 95、炸板 36，较 10:51 的涨停 81/炸板 16 明显扩容但炸板也扩大；昨日涨停当前均值约 +0.77%，说明接力溢价继续降温，尾盘新增仓位要更谨慎。板…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 14:18:13 +08:00</div>
+                  <span class="risk-pill risk-orange">Orange</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 14:18:13 +08:00: 14:20 封板质量检查。数据截取约 14:17，当前涨停 95、炸板 36，较 10:51 的涨停 81/炸板 16 明显扩容但炸板也扩大；昨日涨停当前均值约 +0.77%，说明接力溢价继续降温，尾盘新增仓位要更谨慎。板块气候：只做已封住前排/不新增弱尾盘；允…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药（继续有效，6.04 涨停，若尾盘开板且回封失败则不买/降级）/002167东方锆业（继续有效，26.71 涨停，若放量炸板回不到涨停则不买）/002326永太科技（从可打降级为只观察，28.62 冲板后回落至 28.33，尾盘不回封不买）/002979雷赛智能（09:25 首封，63.23 一字封，已无舒服买点，只作明日溢价观察）/0…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">华安证券、能科科技、振华科技、宝信软件继续淘汰；券商线不再作为北京炒家下午开仓方向。操作指导：仅海南海药/东方锆业封板继续有效；永太科技必须尾盘回封才恢复，雷赛智能/宝塔实业不新开。收益跟踪：海南海药相对昨收约 +10.02%，东方锆业约 +10.01%，永太科技从最高涨停回落，未按回封触发计入。风险门：Orange；下个检查点 2026-07-02 15…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Orange</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\beijing-chaogu-14-20-seal-quality-check\memory.md</div>
+                <pre>- 2026-07-02 14:18:13 +08:00: 14:20 封板质量检查。数据截取约 14:17，当前涨停 95、炸板 36，较 10:51 的涨停 81/炸板 16 明显扩容但炸板也扩大；昨日涨停当前均值约 +0.77%，说明接力溢价继续降温，尾盘新增仓位要更谨慎。板块气候：只做已封住前排/不新增弱尾盘；允许板型：早盘强封、回封确认、换手中军；禁止尾盘偷鸡和后排补位。强势方向：1) 医药/化学制药 2) 锆链/化工 3) 低位电力/设备首板。更新雷达：000566海南海药（继续有效，6.04 涨停，若尾盘开板且回封失败则不买/降级）/002167东方锆业（继续有效，26.71 涨停，若放量炸板回不到涨停则不买）/002326永太科技（从可打降级为只观察，28.62 冲板后回落至 28.33，尾盘不回封不买）/002979雷赛智能（09:25 首封，63.23 一字封，已无舒服买点，只作明日溢价观察）/000595宝塔实业（09:25 首封，5.67 一字封但成交极低，当前不排新单，只观察明日竞价）。前序跟踪：华安证券、能科科技、振华科技、宝信软件继续淘汰；券商线不再作为北京炒家下午开仓方向。操作指导：仅海南海药/东方锆业封板继续有效；永太科技必须尾盘回封才恢复，雷赛智能/宝塔实业不新开。收益跟踪：海南海药相对昨收约 +10.02%，东方锆业约 +10.01%，永太科技从最高涨停回落，未按回封触发计入。风险门：Orange；下个检查点 2026-07-02 15:25 CST，复盘封住/炸板结果与明日套利预期。当前运行耗时约 4 分钟。</pre>
+              </div>
+            </details>
+            
+
+            <details class="run-card">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">03</div>
+                  <div class="run-copy">
+                    <div class="run-name">beijing-chaogu-15-25-first-board-review</div>
+                    <div class="run-lead">2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 15:27:32 +08:00</div>
+                  <span class="risk-pill risk-red">Red</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字的明日竞价观察、换手回封的次日套利；弱板…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566海南海药(明日竞价观察), 002979雷赛智能(明日套利观察), 600641先导基电(换手观察), 002167东方锆业(炸板降级), 空仓席位。操作指导：明日不隔夜追买；海南海药高开过强不追，雷赛/先导必须开板换手承接，东方锆业低开弱承接直接淘汰。收益跟踪：海南海药封板样本 +10.02%；东方锆业封板触发后收盘 +7.29%，炸板回撤；…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">000566海南海药封住涨停，明日只观察竞价强弱与开盘承接；002167东方锆业尾盘炸板回落，套利降级；002326永太科技冲板未回封，淘汰为明日只观察；002979雷赛智能09:25一字封住，明日看竞价量能与是否开板承接；000595宝塔实业一字封但成交极低，只作小票情绪观察；600641先导基电3连板封住但曾分歧，明日只看换手。明日5槽套利雷达：000…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\beijing-chaogu-15-25-first-board-review\memory.md</div>
+                <pre>- 2026-07-02 15:27:32 +08:00: 15:25 首板收盘复盘。数据截取约 15:21，涨停 94、炸板 39，炸板数较14:20继续扩大，昨日涨停当前均值约 +0.04%，明日首板套利预期一般。板块气候：只看前排封住后的次日竞价，不开新仓；允许板型：强封一字的明日竞价观察、换手回封的次日套利；弱板和炸板淘汰。收盘跟踪：000566海南海药封住涨停，明日只观察竞价强弱与开盘承接；002167东方锆业尾盘炸板回落，套利降级；002326永太科技冲板未回封，淘汰为明日只观察；002979雷赛智能09:25一字封住，明日看竞价量能与是否开板承接；000595宝塔实业一字封但成交极低，只作小票情绪观察；600641先导基电3连板封住但曾分歧，明日只看换手。明日5槽套利雷达：000566海南海药(明日竞价观察), 002979雷赛智能(明日套利观察), 600641先导基电(换手观察), 002167东方锆业(炸板降级), 空仓席位。操作指导：明日不隔夜追买；海南海药高开过强不追，雷赛/先导必须开板换手承接，东方锆业低开弱承接直接淘汰。收益跟踪：海南海药封板样本 +10.02%；东方锆业封板触发后收盘 +7.29%，炸板回撤；永太科技未触发。风险门：Orange偏Red；下个检查点 2026-07-03 10:35 CST。当前运行耗时约 5 分钟。</pre>
+              </div>
+            </details>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="leader">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>陈小群龙头战法</h2>
+          <p class="framework-copy">偏情绪合力与龙头辨识度，只保留真正能带队的前排席位。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-07-02 15:27:32 +08:00</span>
+          <span class="meta-path">C:\Users\bzsj_\.codex\automations\a\memory.md</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察，弱转强才恢复）/空仓席位。操作指导：海南海药明日不追一字，分歧承接或回封才轻仓；雷赛智能/先导基…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">华安证券/长江证券金融线失败淘汰；兆易创新/太极实业跌停为高位容量负反馈；格科微/水晶光电降级。风险门：Orange偏Red；下一检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+      </div>
+
+      
+    <section class="strategy-tabs" aria-label="陈小群龙头战法 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-leader" id="leader-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-leader" id="leader-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="leader-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="leader-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-07-02 15:27:32 +08:00</span>
+      </div>
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">000566</div>
+                  <div class="exec-name">海南海药</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 （医药情绪龙 主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察；五名龙头雷达：000566…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002979</div>
+                  <div class="exec-name">雷赛智能</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 （低位设备首板辨识 五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600641</div>
+                  <div class="exec-name">先导基电</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 （设备/半导体支线3连板 五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002167</div>
+                  <div class="exec-name">东方锆业</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 （锆链辨识龙但尾盘炸板 五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智…</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600909</div>
+                  <div class="exec-name">华安证券</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>最新推荐池 永太科技未回封不计 前序跟踪：华安证券/长江证券金融线失败淘汰</div>
+            </article>
+            
+            <article class="exec-card exec-avoid">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">688728</div>
+                  <div class="exec-name">格科微</div>
+                </div>
+                <span class="exec-badge">不买 / 空仓</span>
+              </div>
+              <div class="exec-method">不参与，等下一检查点重新确认</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>无买入区间</b></div>
+              <div class="exec-invalid"><span>失效</span>继续跟踪 /水晶光电降级 格科微/水晶光电降级</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>推荐可买</h3>
+            <span class="subtle">最新记录提取</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">000566</div>
+          <div class="stock-name">海南海药</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（医药情绪龙</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002979</div>
+          <div class="stock-name">雷赛智能</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（低位设备首板辨识</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600641</div>
+          <div class="stock-name">先导基电</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（设备/半导体支线3连板</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002167</div>
+          <div class="stock-name">东方锆业</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">（锆链辨识龙但尾盘炸板</div>
+    </article>
+    
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600909</div>
+          <div class="stock-name">华安证券</div>
+        </div>
+        <span class="action-tag action-buy">可买清单</span>
+      </div>
+      <div class="signal-headline">最新推荐池</div>
+      <div class="signal-reason">永太科技未回封不计</div>
+    </article>
+    
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002273</span>
+                <strong>水晶光电</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">688728</span>
+                <strong>格科微</strong>
+              </div>
+              <div class="avoid-reason">回避</div>
+              <span class="avoid-tag">不该买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>继续观察</h3>
+          <span class="subtle">未升级为直接买入</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">688728</div>
+          <div class="stock-name">格科微</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">/水晶光电降级</div>
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002273</div>
+          <div class="stock-name">水晶光电</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">继续跟踪</div>
+      <div class="signal-reason">格科微/降级</div>
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">收益图按推荐当日收盘价归一为 0%，用于持续跟踪强弱，不等同真实成交收益。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002273</div>
+                <div class="tracking-name">水晶光电</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-2.13%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-2.13%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">688728</div>
+                <div class="tracking-name">格科微</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-6.46%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-6.46%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002167</div>
+                <div class="tracking-name">东方锆业</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-01</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+3.38%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+7.29%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-3.65%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600909</div>
+                <div class="tracking-name">华安证券</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-6.86%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-6.86%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">603986</div>
+                <div class="tracking-name">兆易创新</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+1.47%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+1.47%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-07-03</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+
+      <div class="panel shared-panel">
+        <div class="panel-head">
+          <h3>最新共享记忆</h3>
+          <span class="risk-pill risk-red">Red</span>
+        </div>
+        <pre>- 2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察，弱转强才恢复）/空仓席位。操作指导：海南海药明日不追一字，分歧承接或回封才轻仓；雷赛智能/先导基电只观察开板换手；东方锆业不弱转强不买。推荐买入收益汇总：触发样本2个，海南海药收盘 +10.02%，东方锆业收盘 +7.29%，平均约 +8.66%，最大回撤来自东方锆业涨停炸板回落；永太科技未回封不计。前序跟踪：华安证券/长江证券金融线失败淘汰；兆易创新/太极实业跌停为高位容量负反馈；格科微/水晶光电降级。风险门：Orange偏Red；下一检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</pre>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>近期轨迹</h3>
+          <span class="subtle">最多展示最近 6 条</span>
+        </div>
+        <div class="history-list">
+          
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 23:49:00 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">mixed risk-on (repaired 10:28 leader radar, confidence downgraded due original encoding damage)</div>
+              <div class="history-copy">2026-07-01 23:49:00 +08:00 | Board climate: mixed risk-on (repaired 10:28 leader radar, confidence downgraded due original encoding damage) | Mainline themes:…</div>
+              <div class="history-meta">
+                <span class="chip">optics-display and semiconductor leaders, fluorochemical and electronic-chemica…</span>
+                <span class="chip">2026-07-01 11:15 Beijing time, watch whether 002273 gives turnover, 688728 hold…</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-01 23:50:00 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">mixed risk-on (repaired 10:28 leader radar, confidence downgraded due original encoding damage)</div>
+              <div class="history-copy">2026-07-01 23:50:00 +08:00 | Board climate: mixed risk-on (repaired 10:28 leader radar, confidence downgraded due original encoding damage) | Mainline themes:…</div>
+              <div class="history-meta">
+                <span class="chip">optics-display and semiconductor leaders, fluorochemical and electronic-chemica…</span>
+                <span class="chip">2026-07-01 11:15 Beijing time, watch whether 002273 gives turnover, 688728 hold…</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:45:00 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">mixed risk-on pre-open, breadth strong but high-tech split widened</div>
+              <div class="history-copy">2026-07-02 07:45:00 +08:00 | Board climate: mixed risk-on pre-open, breadth strong but high-tech split widened | Mainline themes: brokerage/financial technolog…</div>
+              <div class="history-meta">
+                <span class="chip">brokerage/financial technology low-position switch, pharma/Hainan-Haiyao branch…</span>
+                <span class="chip">2026-07-02 10:05 Beijing time.</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 07:56:37 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">mixed / 分歧中的赚钱扩散；今日允许策略：只确认龙头，不追一字和过热高位。主线主题：1) 大金融/券商情绪合力 2) 半导体材料/设备 3) 光学光电/TGV与化工补涨。五名龙头雷达：600909 华安证券（券商情绪合力核心，只等竞价和开盘承接确认，昨日收 12.22）/688432 有研硅（半导体材料分支龙，首分承接才买，昨日收 45.80）/688728 格科微（20CM 光学补涨，连续加速不追，只看首次分歧承接，昨日收 25.25）/002167 东方锆业（锆链旧龙修复，24.28 为基准，只看弱转强或回落承接）/002273 水晶光电（旧主线高辨识度但高位拥挤，39.03 涨停后不追）。操作指导：可买只限华安证券、有研硅、东方锆业在结构触发后轻仓；格科微、水晶光电当前为不追高。推荐买入收益跟踪：今日未开盘，以上买点未触发，按昨日收盘价建立跟踪基准，10:05 后验证最大涨幅/回撤。前序跟踪：兆易创新负反馈明显，剔出核心龙头；富满微偏情绪补涨，不作为陈小群龙头主买。风险门：Orange；下一检查点 2026-07-02 10:05 CST，若华安证券无法带动券商、半导体材料开盘分歧转弱，则只观察不买。当前运行耗时约 7 分钟。</div>
+              <div class="history-copy">2026-07-02 07:56:37 +08:00: 陈小群龙头战法 08:50 盘前雷达顺序执行。市场情绪：mixed / 分歧中的赚钱扩散；今日允许策略：只确认龙头，不追一字和过热高位。主线主题：1) 大金融/券商情绪合力 2) 半导体材料/设备 3) 光学光电/TGV与化工补涨。五名龙头雷达：600909 华…</div>
+              <div class="history-meta">
+                <span class="chip">待补录</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 10:51:41 +08:00</div>
+                <span class="risk-pill risk-orange">Orange</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 10:51:41 +08:00: 陈小群龙头战法 10:05 早盘确认延后补跑，实际数据截取约 10:51。情绪周期：mixed 偏分歧，今日允许策略：只确认龙头，不追后排；主线：1) 医药/海南海药 2) 锆链/化工 3) 半导体材料修复。五名龙头雷达：000566 海南海药（医药情绪龙，6.…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药 2) 锆链/化工 3) 半导体材料修复。五名龙头雷达：000566 海南海药（医药情绪龙，6.04 涨停封住可轻仓，开板回封失败则不买）…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+
+            <article class="history-item">
+              <div class="history-head">
+                <div class="history-time">2026-07-02 15:27:32 +08:00</div>
+                <span class="risk-pill risk-red">Red</span>
+              </div>
+              <div class="history-title">待补录</div>
+              <div class="history-copy">2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头…</div>
+              <div class="history-meta">
+                <span class="chip">1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承…</span>
+                <span class="chip">待补录</span>
+              </div>
+            </article>
+            
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>运行卡片</h3>
+          <span class="subtle">按配置目录聚合</span>
+        </div>
+        
+            <details class="run-card" open="">
+              <summary class="run-summary">
+                <div class="run-left">
+                  <div class="run-index">01</div>
+                  <div class="run-copy">
+                    <div class="run-name">a</div>
+                    <div class="run-lead">2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支…</div>
+                  </div>
+                </div>
+                <div class="run-right">
+                  <div class="run-time">2026-07-02 15:27:32 +08:00</div>
+                  <span class="risk-pill risk-red">Red</span>
+                </div>
+              </summary>
+              <div class="run-body">
+                <div class="metrics-grid mini-grid">
+                  
+            <div class="metric">
+              <div class="metric-label">最新判断</div>
+              <div class="metric-value">2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">主线</div>
+              <div class="metric-value">1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">雷达</div>
+              <div class="metric-value">000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察，弱转强才恢复）/空仓席位。操作指导：海南海药明日不追一字，分歧承接或回封才轻仓；雷赛智能/先导基…</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">前序跟踪</div>
+              <div class="metric-value">华安证券/长江证券金融线失败淘汰；兆易创新/太极实业跌停为高位容量负反馈；格科微/水晶光电降级。风险门：Orange偏Red；下一检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">风险门</div>
+              <div class="metric-value">Red</div>
+            </div>
+            
+
+            <div class="metric">
+              <div class="metric-label">下个检查点</div>
+              <div class="metric-value">待补录</div>
+            </div>
+            
+                </div>
+                <div class="path-line">C:\Users\bzsj_\.codex\automations\a\memory.md</div>
+                <pre>- 2026-07-02 15:27:32 +08:00: 陈小群龙头战法 15:25 收盘复盘。数据截取约 15:21。情绪周期：mixed 偏 risk-off，今日允许策略从早盘只确认龙头降为明日只做分歧确认/不追高。主线：1) 医药/海南海药 2) 自动化设备/低位新分支 3) 锆链/氟化工补涨退潮观察。五名龙头雷达：000566 海南海药（医药情绪龙，封住涨停，明日只等分歧承接/回封）/002979 雷赛智能（低位设备首板辨识，一字无买点，明日看开板承接）/600641 先导基电（设备/半导体支线3连板，需换手确认）/002167 东方锆业（锆链辨识龙但尾盘炸板，降级观察，弱转强才恢复）/空仓席位。操作指导：海南海药明日不追一字，分歧承接或回封才轻仓；雷赛智能/先导基电只观察开板换手；东方锆业不弱转强不买。推荐买入收益汇总：触发样本2个，海南海药收盘 +10.02%，东方锆业收盘 +7.29%，平均约 +8.66%，最大回撤来自东方锆业涨停炸板回落；永太科技未回封不计。前序跟踪：华安证券/长江证券金融线失败淘汰；兆易创新/太极实业跌停为高位容量负反馈；格科微/水晶光电降级。风险门：Orange偏Red；下一检查点 2026-07-03 08:50 CST。当前运行耗时约 6 分钟。</pre>
+              </div>
+            </details>
+            
+      </div>
+    </section>
+    
+
+    <div class="footer">Generated by generate_a_share_four_strategies_dashboard.py</div>
+  </div>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

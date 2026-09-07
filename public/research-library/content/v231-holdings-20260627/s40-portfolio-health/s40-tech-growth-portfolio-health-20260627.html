@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S40 Tech Growth 持仓体检 - 2026-06-27</title>
+<style>
+    :root { --bg:#f6f7f9; --ink:#15171a; --muted:#667085; --line:#d9dee7; --card:#fff; --red:#c43d3d; --green:#16845f; }
+    * { box-sizing:border-box; } body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif; color:var(--ink); background:var(--bg); }
+    header { padding:28px 34px 18px; background:#111827; color:white; } h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; } header p { margin:4px 0; color:#d5d8df; }
+    main { padding:24px 34px 44px; max-width:1480px; margin:0 auto; } .panel,.stock-card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; margin-bottom:18px; box-shadow:0 1px 2px rgba(16,24,40,.04); }
+    .grid4 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; } .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fafbfc; } .metric b { display:block; font-size:13px; color:var(--muted); margin-bottom:6px; } .metric span { font-size:22px; font-weight:750; }
+    .note { color:var(--muted); font-size:13px; line-height:1.6; } table { width:100%; border-collapse:collapse; font-size:13px; } th,td { border-bottom:1px solid var(--line); padding:10px 8px; text-align:left; vertical-align:top; } th { color:#475467; background:#f2f4f7; position:sticky; top:0; z-index:1; } small { color:var(--muted); display:block; margin-top:2px; }
+    .excellent,.score.excellent { background:#0f766e; } .good,.score.good { background:#2563eb; } .watch,.score.watch { background:#b7791f; } .risk,.score.risk { background:#c05621; } .bad,.score.bad { background:#b42318; }
+    .excellent-text { color:#0f766e; } .good-text { color:#2563eb; } .watch-text { color:#b7791f; } .risk-text { color:#c05621; } .bad-text { color:#b42318; }
+    .mini { color:white; border-radius:999px; padding:3px 7px; display:inline-block; min-width:36px; text-align:center; font-weight:700; } .score { width:64px; height:64px; border-radius:12px; color:white; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; }
+    .bar { height:9px; background:#edf0f5; border-radius:99px; overflow:hidden; margin:12px 0 14px; } .bar span { display:block; height:100%; } .stock-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; } .stock-head h3 { margin:0 0 4px; font-size:22px; } .stock-head h3 span { color:var(--muted); font-size:14px; margin-left:8px; } .stock-head p { margin:0; color:var(--muted); }
+    .quote-row,.fin-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin:10px 0; } .fin-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } .quote-row div,.fin-grid div { border:1px solid var(--line); background:#fbfcfe; border-radius:8px; padding:10px; } .quote-row b,.fin-grid b { display:block; color:var(--muted); font-size:12px; margin-bottom:5px; } .quote-row span,.fin-grid span { font-weight:700; }
+    .verdict { padding:10px 12px; background:#fff7ed; border-left:4px solid #f59e0b; border-radius:6px; line-height:1.6; } .s40-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .s40-grid div { border:1px solid var(--line); border-radius:8px; padding:12px; } .s40-grid b { color:#344054; } .s40-grid p { margin:6px 0 0; color:#475467; line-height:1.55; } .two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; } h2 { margin:0 0 12px; font-size:22px; } h4 { margin:0 0 8px; } ul { margin:0; padding-left:18px; line-height:1.65; } .action { margin-top:12px; padding:12px; background:#eef4ff; border:1px solid #c7d7fe; border-radius:8px; line-height:1.7; } .pos { color:var(--green); } .neg { color:var(--red); } .tagline { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0; } .tag { border:1px solid var(--line); border-radius:999px; padding:6px 10px; background:#fff; color:#344054; } .warn { background:#fff1f3; border-color:#ffd1d8; } .ok { background:#ecfdf3; border-color:#abefc6; }
+    @media (max-width:1000px) { .grid4,.quote-row,.fin-grid,.s40-grid,.two-col { grid-template-columns:1fr; } main,header { padding-left:16px; padding-right:16px; } table { font-size:12px; } }
+    </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>S40 Tech Growth 持仓体检报告</h1>
+  <p>日期：2026-06-27 · 数据窗口：2026-06-26 收盘/盘后行情 · 框架：真赛道 + 真技术 + 真客户 + 真财务 + 真龙头 + 真估值 + 真能力圈</p>
+  <p>说明：A股财务以最近四个单季度趋势为主；港股因披露口径不同，以东方财富港股财务指标/最新年度或TTM指标辅助判断。</p>
+</header>
+<main>
+  <section class="panel">
+    <h2>一、组合总诊断</h2>
+    <div class="grid4">
+      <div class="metric"><b>持仓数量</b><span>11只</span></div>
+      <div class="metric"><b>S40平均分</b><span>77.1</span></div>
+      <div class="metric"><b>核心候选</b><span>2只</span></div>
+      <div class="metric"><b>需要压缩/观察</b><span>2只</span></div>
+    </div>
+    <p class="verdict"><b>一句话结论：</b>你的组合不是“假科技”为主，主体是真AI硬件、半导体设备/材料、电子材料和工业科技；真正的问题不是科技含量，而是估值重构后高位拥挤，部分股票的当期财务没有跟上叙事。</p>
+    <div class="tagline">
+      <span class="tag ok">可作为核心：宁德时代-H、新易盛</span>
+      <span class="tag warn">估值高压：新易盛、绿的谐波、生益科技、澜起科技、英维克、三环集团、中微公司、联瑞新材</span>
+      <span class="tag warn">财务/订单需验证：绿的谐波、英维克、联瑞新材、四方达</span>
+    </div>
+    <p class="note">组合层面：高科技暴露集中，尤其 AI算力硬件、半导体、电子材料、液冷/机器人相关方向高度同涨同跌。S40给出的核心动作是“保留真龙头，压缩题材化和估值无法被财务解释的仓位”。</p>
+  </section>
+
+  <section class="panel">
+    <h2>二、S40横向评分总表</h2>
+    <div style="overflow:auto; max-height:760px;">
+      <table>
+        <thead><tr><th>股票</th><th>细分赛道</th><th>总分</th><th>真赛道</th><th>真技术</th><th>真客户</th><th>真财务</th><th>真龙头</th><th>真估值</th><th>能力圈</th><th>价</th><th>PE/PB</th><th>浮盈亏</th><th>结论</th></tr></thead>
+        <tbody>
+            <tr>
+              <td><b>宁德时代-H</b><br><small>03750 · 港股</small></td>
+              <td>动力/储能电池平台</td>
+              <td><b class="excellent-text">85.8</b><br><small>A 核心真科技</small></td>
+              <td><span class="mini excellent">86</span><small>真赛道</small></td><td><span class="mini excellent">88</span><small>真技术</small></td><td><span class="mini excellent">90</span><small>真客户</small></td><td><span class="mini excellent">88</span><small>真财务</small></td><td><span class="mini excellent">96</span><small>真龙头</small></td><td><span class="mini watch">70</span><small>真估值</small></td><td><span class="mini good">80</span><small>能力圈</small></td>
+              <td>680.5</td>
+              <td>39.39 / 7.1</td>
+              <td class="pos">2,050<br><small>3.1%</small></td>
+              <td>全球硬科技龙头，基本面硬；短期受新能源周期和港股风险偏好压制</td>
+            </tr>
+            <tr>
+              <td><b>新易盛</b><br><small>300502 · A股-创业板</small></td>
+              <td>AI数据中心光模块 / 高速光收发器</td>
+              <td><b class="good-text">84.1</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini excellent">95</span><small>真赛道</small></td><td><span class="mini excellent">86</span><small>真技术</small></td><td><span class="mini excellent">86</span><small>真客户</small></td><td><span class="mini excellent">94</span><small>真财务</small></td><td><span class="mini excellent">90</span><small>真龙头</small></td><td><span class="mini bad">52</span><small>真估值</small></td><td><span class="mini good">82</span><small>能力圈</small></td>
+              <td>566.0</td>
+              <td>73.48 / 40.65</td>
+              <td class="neg">-75,621<br><small>-16.0%</small></td>
+              <td>核心真科技，但高估值高波动，只等价格/趋势触发</td>
+            </tr>
+            <tr>
+              <td><b>中微公司</b><br><small>688012 · A股-科创板</small></td>
+              <td>半导体刻蚀/薄膜沉积设备</td>
+              <td><b class="good-text">83.8</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini excellent">92</span><small>真赛道</small></td><td><span class="mini excellent">94</span><small>真技术</small></td><td><span class="mini excellent">88</span><small>真客户</small></td><td><span class="mini excellent">86</span><small>真财务</small></td><td><span class="mini excellent">94</span><small>真龙头</small></td><td><span class="mini bad">48</span><small>真估值</small></td><td><span class="mini excellent">86</span><small>能力圈</small></td>
+              <td>413.0</td>
+              <td>143.39 / 15.17</td>
+              <td class="pos">6,600<br><small>8.7%</small></td>
+              <td>国产半导体设备真龙头，基本面强，最大问题是估值和周期位置</td>
+            </tr>
+            <tr>
+              <td><b>澜起科技</b><br><small>688008 · A股-科创板</small></td>
+              <td>DDR5内存接口 / CXL / 互连芯片</td>
+              <td><b class="good-text">83.6</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini excellent">90</span><small>真赛道</small></td><td><span class="mini excellent">92</span><small>真技术</small></td><td><span class="mini good">82</span><small>真客户</small></td><td><span class="mini excellent">90</span><small>真财务</small></td><td><span class="mini excellent">90</span><small>真龙头</small></td><td><span class="mini bad">55</span><small>真估值</small></td><td><span class="mini good">84</span><small>能力圈</small></td>
+              <td>261.82</td>
+              <td>125.11 / 15.35</td>
+              <td class="neg">-236<br><small>-0.4%</small></td>
+              <td>真技术+真利润，存储/AI服务器互连核心，但估值偏高</td>
+            </tr>
+            <tr>
+              <td><b>阿里巴巴-W</b><br><small>09988 · 港股</small></td>
+              <td>云计算 / AI云 / 平台互联网</td>
+              <td><b class="good-text">82.0</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini watch">72</span><small>真赛道</small></td><td><span class="mini watch">76</span><small>真技术</small></td><td><span class="mini excellent">92</span><small>真客户</small></td><td><span class="mini good">82</span><small>真财务</small></td><td><span class="mini excellent">92</span><small>真龙头</small></td><td><span class="mini good">82</span><small>真估值</small></td><td><span class="mini good">78</span><small>能力圈</small></td>
+              <td>89.5</td>
+              <td>14.65 / 1.43</td>
+              <td class="neg">-42,300<br><small>-44.1%</small></td>
+              <td>低估值现金流型科技平台，不是高弹性硬件股</td>
+            </tr>
+            <tr>
+              <td><b>生益科技</b><br><small>600183 · A股-主板</small></td>
+              <td>高频高速覆铜板 CCL / PCB上游材料</td>
+              <td><b class="good-text">80.1</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini excellent">88</span><small>真赛道</small></td><td><span class="mini good">80</span><small>真技术</small></td><td><span class="mini good">82</span><small>真客户</small></td><td><span class="mini excellent">88</span><small>真财务</small></td><td><span class="mini excellent">88</span><small>真龙头</small></td><td><span class="mini bad">50</span><small>真估值</small></td><td><span class="mini good">84</span><small>能力圈</small></td>
+              <td>178.5</td>
+              <td>110.37 / 27.13</td>
+              <td class="pos">20,150<br><small>29.2%</small></td>
+              <td>AI服务器PCB材料卖铲人，财务兑现强，但估值不便宜</td>
+            </tr>
+            <tr>
+              <td><b>三环集团</b><br><small>300408 · A股-创业板</small></td>
+              <td>电子陶瓷 / MLCC / 陶瓷材料平台</td>
+              <td><b class="good-text">79.7</b><br><small>B+ 强观察/核心候选</small></td>
+              <td><span class="mini good">84</span><small>真赛道</small></td><td><span class="mini good">84</span><small>真技术</small></td><td><span class="mini good">82</span><small>真客户</small></td><td><span class="mini excellent">86</span><small>真财务</small></td><td><span class="mini excellent">86</span><small>真龙头</small></td><td><span class="mini bad">52</span><small>真估值</small></td><td><span class="mini good">84</span><small>能力圈</small></td>
+              <td>160.05</td>
+              <td>106.63 / 14.24</td>
+              <td class="neg">-190<br><small>-0.6%</small></td>
+              <td>材料平台型真科技，财务质量好，但高估值需要业绩继续跟上</td>
+            </tr>
+            <tr>
+              <td><b>联瑞新材</b><br><small>688300 · A股-科创板</small></td>
+              <td>球形硅微粉/氧化铝 / 高端填料</td>
+              <td><b class="watch-text">72.7</b><br><small>B 观察仓</small></td>
+              <td><span class="mini excellent">86</span><small>真赛道</small></td><td><span class="mini good">80</span><small>真技术</small></td><td><span class="mini watch">76</span><small>真客户</small></td><td><span class="mini watch">70</span><small>真财务</small></td><td><span class="mini good">82</span><small>真龙头</small></td><td><span class="mini bad">38</span><small>真估值</small></td><td><span class="mini good">84</span><small>能力圈</small></td>
+              <td>265.56</td>
+              <td>212.87 / 38.72</td>
+              <td class="pos">3,712<br><small>7.5%</small></td>
+              <td>卖铲人逻辑成立，但估值重构已明显启动，等待业绩追赶</td>
+            </tr>
+            <tr>
+              <td><b>绿的谐波</b><br><small>688017 · A股-科创板</small></td>
+              <td>机器人精密传动 / 谐波减速器</td>
+              <td><b class="watch-text">68.8</b><br><small>B 观察仓</small></td>
+              <td><span class="mini good">82</span><small>真赛道</small></td><td><span class="mini excellent">88</span><small>真技术</small></td><td><span class="mini risk">66</span><small>真客户</small></td><td><span class="mini risk">62</span><small>真财务</small></td><td><span class="mini good">80</span><small>真龙头</small></td><td><span class="mini bad">35</span><small>真估值</small></td><td><span class="mini watch">72</span><small>能力圈</small></td>
+              <td>369.46</td>
+              <td>495.3 / 18.98</td>
+              <td class="pos">19,784<br><small>15.5%</small></td>
+              <td>真技术强，但订单兑现和估值支撑不足，偏观察/交易仓</td>
+            </tr>
+            <tr>
+              <td><b>英维克</b><br><small>002837 · A股-主板</small></td>
+              <td>数据中心液冷 / 热管理</td>
+              <td><b class="risk-text">65.1</b><br><small>C 卫星/题材仓</small></td>
+              <td><span class="mini excellent">86</span><small>真赛道</small></td><td><span class="mini watch">74</span><small>真技术</small></td><td><span class="mini watch">76</span><small>真客户</small></td><td><span class="mini bad">45</span><small>真财务</small></td><td><span class="mini good">78</span><small>真龙头</small></td><td><span class="mini bad">35</span><small>真估值</small></td><td><span class="mini watch">76</span><small>能力圈</small></td>
+              <td>82.57</td>
+              <td>218.05 / 31.93</td>
+              <td class="pos">1,602<br><small>3.3%</small></td>
+              <td>赛道强于当期财务，暂按观察/主题仓处理</td>
+            </tr>
+            <tr>
+              <td><b>四方达</b><br><small>300179 · A股-创业板</small></td>
+              <td>超硬材料 / 金刚石工具与热管理叙事</td>
+              <td><b class="risk-text">62.7</b><br><small>C 卫星/题材仓</small></td>
+              <td><span class="mini good">78</span><small>真赛道</small></td><td><span class="mini watch">74</span><small>真技术</small></td><td><span class="mini risk">62</span><small>真客户</small></td><td><span class="mini risk">66</span><small>真财务</small></td><td><span class="mini risk">62</span><small>真龙头</small></td><td><span class="mini bad">30</span><small>真估值</small></td><td><span class="mini watch">68</span><small>能力圈</small></td>
+              <td>57.38</td>
+              <td>273.37 / 24.75</td>
+              <td class="neg">-648<br><small>-2.7%</small></td>
+              <td>真材料公司，但AI热管理叙事证明度不足，偏卫星仓</td>
+            </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>三、仓位处理优先级</h2>
+    <div class="two-col">
+      <div><h4>保留为核心观察</h4><ul><li>中微公司、澜起科技、新易盛：真技术、真利润、真赛道都较强，但统一问题是估值不低，不能无触发追高。</li><li>宁德时代-H、生益科技、三环集团：更偏硬科技平台/材料卖铲人，财务验证比题材更硬。</li></ul></div>
+      <div><h4>优先压缩或只做观察</h4><ul><li>英维克：赛道强，但最新季度利润和现金流没有跟上收入，需等待修复。</li><li>四方达：材料真实，但AI热管理映射仍需订单/收入占比证明，卫星仓更合适。</li><li>绿的谐波、联瑞新材：逻辑不差，但估值已经对未来放量给了较高价格，等待业绩追赶。</li></ul></div>
+    </div>
+  </section>
+
+  
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>宁德时代-H <span>03750</span></h3><p>港股 · 动力/储能电池平台</p></div>
+                <div class="score excellent">85.8</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>680.5</span></div>
+                <div><b>当日涨跌</b><span>-5.0%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">2,050 / 3.1%</span></div>
+                <div><b>PE/PB</b><span>39.39 / 7.1</span></div>
+                <div><b>总市值</b><span>1485.5335亿</span></div>
+              </div>
+              <div class="bar"><span class="excellent" style="width:85.8%"></span></div>
+              <p class="verdict"><b>结论：</b>全球硬科技龙头，基本面硬；短期受新能源周期和港股风险偏好压制</p>
+              
+    <div class="fin-grid">
+      <div><b>最新报告期</b><span>2025-12-31</span></div>
+      <div><b>营业收入</b><span>4237.02亿 / YoY 17.0%</span></div>
+      <div><b>归母/净利润</b><span>722.01亿 / YoY 42.3%</span></div>
+      <div><b>毛利率/净利率</b><span>26.3% / 18.1%</span></div>
+      <div><b>ROE/ROIC</b><span>24.7% / 13.5%</span></div>
+      <div><b>OCF/收入</b><span>31.4%</span></div>
+      <div><b>资产负债率</b><span>61.9%</span></div>
+      <div><b>PE/PB</b><span>39.39 / 7.1</span></div>
+    </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>动力/储能电池平台。判断：86分，新能源硬科技全球龙头。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 88；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 90；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 88；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 96；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 70；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 80；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>动力与储能电池全球龙头，客户和规模优势明确。</li><li>2025年收入、净利、ROE仍处高质量区间。</li><li>港股估值相对A股龙头常有折价/流动性因素。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>电池价格周期、海外政策、产业链竞争和资本开支回报仍是压力。</li><li>H股新股阶段和港股流动性会放大波动。</li><li>主要风险来自行业周期和估值波动</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>作为稳态工业科技核心可观察持有。；若电池链价格战恶化或ROE下行，降低估值假设。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>新易盛 <span>300502</span></h3><p>A股-创业板 · AI数据中心光模块 / 高速光收发器</p></div>
+                <div class="score good">84.1</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>566.0</span></div>
+                <div><b>当日涨跌</b><span>-7.3%</span></div>
+                <div><b>持仓盈亏</b><span class="neg">-75,621 / -16.0%</span></div>
+                <div><b>PE/PB</b><span>73.48 / 40.65</span></div>
+                <div><b>总市值</b><span>7099.02亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:84.1%"></span></div>
+              <p class="verdict"><b>结论：</b>核心真科技，但高估值高波动，只等价格/趋势触发</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>83.38亿 / YoY 105.8%</span></div>
+          <div><b>Q归母净利</b><span>27.80亿 / YoY 76.8%</span></div>
+          <div><b>TTM收入</b><span>291.28亿 / YoY 151.4%</span></div>
+          <div><b>TTM归母净利</b><span>107.40亿 / YoY 162.9%</span></div>
+          <div><b>毛利率/净利率</b><span>49.2% / 33.3%</span></div>
+          <div><b>ROE/现金流</b><span>14.5% / 每股OCF 0.6882</span></div>
+          <div><b>资产负债率</b><span>31.0%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>AI数据中心光模块 / 高速光收发器。判断：95分，算力硬件出口链高弹性核心。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 86；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 86；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 94；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 90；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 52；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 82；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>2026Q1收入和归母净利继续高增，TTM利润池兑现强。</li><li>高端光模块直接受益AI数据中心资本开支，商业化路径清晰。</li><li>客户集中和海外AI资本开支周期是最大外部变量。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>估值已经按高成长定价，若订单或毛利率低于预期，杀估值会很快。</li><li>单一AI硬件周期暴露高，组合层面不宜继续无触发加仓。</li><li>PB&gt;10，估值重构后波动大</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>继续持有核心弹性仓；只有回到合理支撑且大盘宽度修复时才考虑加。；若海外AI硬件/光模块链连续走弱，或MA16失守，应先降新增仓位。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>中微公司 <span>688012</span></h3><p>A股-科创板 · 半导体刻蚀/薄膜沉积设备</p></div>
+                <div class="score good">83.8</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>413.0</span></div>
+                <div><b>当日涨跌</b><span>3.5%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">6,600 / 8.7%</span></div>
+                <div><b>PE/PB</b><span>143.39 / 15.17</span></div>
+                <div><b>总市值</b><span>3869.7亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:83.8%"></span></div>
+              <p class="verdict"><b>结论：</b>国产半导体设备真龙头，基本面强，最大问题是估值和周期位置</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>29.15亿 / YoY 34.1%</span></div>
+          <div><b>Q归母净利</b><span>9.30亿 / YoY 197.2%</span></div>
+          <div><b>TTM收入</b><span>131.26亿 / YoY 36.3%</span></div>
+          <div><b>TTM归母净利</b><span>27.29亿 / YoY 62.5%</span></div>
+          <div><b>毛利率/净利率</b><span>39.9% / 31.5%</span></div>
+          <div><b>ROE/现金流</b><span>4.0% / 每股OCF -0.2535</span></div>
+          <div><b>资产负债率</b><span>22.2%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>半导体刻蚀/薄膜沉积设备。判断：92分，国产半导体设备核心龙头。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 94；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 88；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 86；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 94；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 48；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 86；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>刻蚀/薄膜沉积设备是半导体设备国产化核心环节。</li><li>2026Q1利润增速极强，规模和技术地位突出。</li><li>客户验证和国产替代逻辑清晰。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>半导体设备订单节奏强周期，估值偏高。</li><li>经营现金流当期为负，需要观察回款和订单质量。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li><li>现金流/回款需跟踪</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>可作为高质量科技核心，但只接受回调或趋势确认。；若设备订单/回款走弱，应降低估值倍数。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>澜起科技 <span>688008</span></h3><p>A股-科创板 · DDR5内存接口 / CXL / 互连芯片</p></div>
+                <div class="score good">83.6</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>261.82</span></div>
+                <div><b>当日涨跌</b><span>-6.2%</span></div>
+                <div><b>持仓盈亏</b><span class="neg">-236 / -0.4%</span></div>
+                <div><b>PE/PB</b><span>125.11 / 15.35</span></div>
+                <div><b>总市值</b><span>3001.57亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:83.6%"></span></div>
+              <p class="verdict"><b>结论：</b>真技术+真利润，存储/AI服务器互连核心，但估值偏高</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>14.61亿 / YoY 19.5%</span></div>
+          <div><b>Q归母净利</b><span>8.47亿 / YoY 61.3%</span></div>
+          <div><b>TTM收入</b><span>56.95亿 / YoY 38.1%</span></div>
+          <div><b>TTM归母净利</b><span>25.58亿 / YoY 49.2%</span></div>
+          <div><b>毛利率/净利率</b><span>69.8% / 56.8%</span></div>
+          <div><b>ROE/现金流</b><span>5.4% / 每股OCF 0.5127</span></div>
+          <div><b>资产负债率</b><span>4.2%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>DDR5内存接口 / CXL / 互连芯片。判断：90分，AI服务器内存链高壁垒芯片。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 92；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 82；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 90；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 90；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 55；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 84；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>DDR5内存接口芯片和CXL方向具备高技术门槛。</li><li>2026Q1毛利率、净利率、ROE质量很强。</li><li>受益服务器内存升级与国产存储链景气。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>估值对成长连续性要求高。</li><li>芯片周期、库存和大客户节奏会影响利润弹性。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>适合作为高质量芯片核心，但需价格触发。；若DDR5/CXL订单兑现低于预期，估值安全边际会下降。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>阿里巴巴-W <span>09988</span></h3><p>港股 · 云计算 / AI云 / 平台互联网</p></div>
+                <div class="score good">82.0</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>89.5</span></div>
+                <div><b>当日涨跌</b><span>-5.8%</span></div>
+                <div><b>持仓盈亏</b><span class="neg">-42,300 / -44.1%</span></div>
+                <div><b>PE/PB</b><span>14.65 / 1.43</span></div>
+                <div><b>总市值</b><span>17189.4404亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:82.0%"></span></div>
+              <p class="verdict"><b>结论：</b>低估值现金流型科技平台，不是高弹性硬件股</p>
+              
+    <div class="fin-grid">
+      <div><b>最新报告期</b><span>2026-03-31</span></div>
+      <div><b>营业收入</b><span>10236.70亿 / YoY 2.7%</span></div>
+      <div><b>归母/净利润</b><span>1035.92亿 / YoY -20.4%</span></div>
+      <div><b>毛利率/净利率</b><span>39.8% / 10.0%</span></div>
+      <div><b>ROE/ROIC</b><span>9.9% / 6.3%</span></div>
+      <div><b>OCF/收入</b><span>7.4%</span></div>
+      <div><b>资产负债率</b><span>41.0%</span></div>
+      <div><b>PE/PB</b><span>14.65 / 1.43</span></div>
+    </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>云计算 / AI云 / 平台互联网。判断：72分，现金流型科技平台。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 76；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 92；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 82；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 92；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 82；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 78；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>电商、云、AI云基础设施具备真实收入和现金流。</li><li>估值相对硬科技成长股低，但成长弹性弱于AI硬件。</li><li>利润波动更多来自投资、费用、竞争和监管周期。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>平台经济竞争和云业务利润率恢复速度是关键。</li><li>不应按CPO/半导体那种高弹性估值看待。</li><li>主要风险来自行业周期和估值波动</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>适合作为组合里的低估值科技底仓/均衡器。；若云收入和AI商业化继续低于预期，则只是价值修复而非成长重估。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>生益科技 <span>600183</span></h3><p>A股-主板 · 高频高速覆铜板 CCL / PCB上游材料</p></div>
+                <div class="score good">80.1</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>178.5</span></div>
+                <div><b>当日涨跌</b><span>-4.7%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">20,150 / 29.2%</span></div>
+                <div><b>PE/PB</b><span>110.37 / 27.13</span></div>
+                <div><b>总市值</b><span>4274.19亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:80.1%"></span></div>
+              <p class="verdict"><b>结论：</b>AI服务器PCB材料卖铲人，财务兑现强，但估值不便宜</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>81.41亿 / YoY 45.1%</span></div>
+          <div><b>Q归母净利</b><span>11.58亿 / YoY 105.5%</span></div>
+          <div><b>TTM收入</b><span>309.61亿 / YoY 43.5%</span></div>
+          <div><b>TTM归母净利</b><span>39.28亿 / YoY 105.7%</span></div>
+          <div><b>毛利率/净利率</b><span>28.1% / 16.4%</span></div>
+          <div><b>ROE/现金流</b><span>6.7% / 每股OCF 0.2353</span></div>
+          <div><b>资产负债率</b><span>44.0%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>高频高速覆铜板 CCL / PCB上游材料。判断：88分，AI服务器PCB材料卖铲人。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 80；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 82；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 88；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 88；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 50；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 84；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>CCL是高频高速PCB上游核心材料，AI服务器需求提升材料等级。</li><li>2026Q1收入/利润高增，毛利率和净利率改善明显。</li><li>属于更偏“材料卖铲人”的硬业绩方向。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>估值已重估，若下游PCB/服务器订单放缓会回撤。</li><li>周期性材料股仍要看价格、产能和库存。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>可列核心观察/持有；不追高。；若利润增速能连续两个季度超过收入增速，S40权重可上调。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>三环集团 <span>300408</span></h3><p>A股-创业板 · 电子陶瓷 / MLCC / 陶瓷材料平台</p></div>
+                <div class="score good">79.7</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>160.05</span></div>
+                <div><b>当日涨跌</b><span>-2.2%</span></div>
+                <div><b>持仓盈亏</b><span class="neg">-190 / -0.6%</span></div>
+                <div><b>PE/PB</b><span>106.63 / 14.24</span></div>
+                <div><b>总市值</b><span>2992.62亿</span></div>
+              </div>
+              <div class="bar"><span class="good" style="width:79.7%"></span></div>
+              <p class="verdict"><b>结论：</b>材料平台型真科技，财务质量好，但高估值需要业绩继续跟上</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>26.81亿 / YoY 46.3%</span></div>
+          <div><b>Q归母净利</b><span>7.91亿 / YoY 48.5%</span></div>
+          <div><b>TTM收入</b><span>98.55亿 / YoY 28.9%</span></div>
+          <div><b>TTM归母净利</b><span>28.77亿 / YoY 25.6%</span></div>
+          <div><b>毛利率/净利率</b><span>43.5% / 29.5%</span></div>
+          <div><b>ROE/现金流</b><span>3.6% / 每股OCF 0.0818</span></div>
+          <div><b>资产负债率</b><span>17.1%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>电子陶瓷 / MLCC / 陶瓷材料平台。判断：84分，AI硬件高端电子材料平台。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 84；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 82；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 86；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 86；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 52；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 84；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>电子陶瓷/MLCC/材料平台具备工艺积累和客户认证壁垒。</li><li>2026Q1收入和利润同步增长，净利率较高。</li><li>资产负债率低，财务稳健。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>估值不低，需要AI/高端电子材料持续放量。</li><li>材料平台业务线多，需要确认AI相关增量占比。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>适合列入核心观察，不适合追高加。；若MLCC/陶瓷材料景气持续且利润率稳定，可维持高分。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>联瑞新材 <span>688300</span></h3><p>A股-科创板 · 球形硅微粉/氧化铝 / 高端填料</p></div>
+                <div class="score watch">72.7</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>265.56</span></div>
+                <div><b>当日涨跌</b><span>-1.6%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">3,712 / 7.5%</span></div>
+                <div><b>PE/PB</b><span>212.87 / 38.72</span></div>
+                <div><b>总市值</b><span>641.25亿</span></div>
+              </div>
+              <div class="bar"><span class="watch" style="width:72.7%"></span></div>
+              <p class="verdict"><b>结论：</b>卖铲人逻辑成立，但估值重构已明显启动，等待业绩追赶</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>2.94亿 / YoY 23.2%</span></div>
+          <div><b>Q归母净利</b><span>0.72亿 / YoY 13.6%</span></div>
+          <div><b>TTM收入</b><span>11.71亿 / YoY 17.5%</span></div>
+          <div><b>TTM归母净利</b><span>3.01亿 / YoY 14.7%</span></div>
+          <div><b>毛利率/净利率</b><span>40.0% / 24.4%</span></div>
+          <div><b>ROE/现金流</b><span>4.1% / 每股OCF -0.0051</span></div>
+          <div><b>资产负债率</b><span>37.2%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>球形硅微粉/氧化铝 / 高端填料。判断：86分，PCB/封装/电子材料卖铲人。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 80；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 76；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 70；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 82；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 38；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 84；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>球形硅微粉/氧化铝用于高端覆铜板、封装和电子材料，属于上游卖铲。</li><li>2026Q1收入增长，但利润增速和现金流没有同步强化。</li><li>高毛利仍在，但估值已经较高。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>如果AI高端材料收入占比和利润弹性披露不够，容易从重估转为回撤。</li><li>资产负债率同比上升，现金流弱，需要盯应收/库存。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li><li>现金流/回款需跟踪</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>保留观察仓；不把它当低位未启动。；下一步重点看Q2收入结构、毛利率和经营现金流。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>绿的谐波 <span>688017</span></h3><p>A股-科创板 · 机器人精密传动 / 谐波减速器</p></div>
+                <div class="score watch">68.8</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>369.46</span></div>
+                <div><b>当日涨跌</b><span>-5.5%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">19,784 / 15.5%</span></div>
+                <div><b>PE/PB</b><span>495.3 / 18.98</span></div>
+                <div><b>总市值</b><span>677.33亿</span></div>
+              </div>
+              <div class="bar"><span class="watch" style="width:68.8%"></span></div>
+              <p class="verdict"><b>结论：</b>真技术强，但订单兑现和估值支撑不足，偏观察/交易仓</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>1.40亿 / YoY 43.0%</span></div>
+          <div><b>Q归母净利</b><span>0.33亿 / YoY 61.2%</span></div>
+          <div><b>TTM收入</b><span>6.13亿 / YoY 51.9%</span></div>
+          <div><b>TTM归母净利</b><span>1.37亿 / YoY 142.9%</span></div>
+          <div><b>毛利率/净利率</b><span>33.6% / 23.5%</span></div>
+          <div><b>ROE/现金流</b><span>0.9% / 每股OCF 0.0294</span></div>
+          <div><b>资产负债率</b><span>9.4%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>机器人精密传动 / 谐波减速器。判断：82分，物理AI执行器核心零部件。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 88；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 66；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 62；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 80；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 35；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 72；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>谐波减速器属于机器人执行器关键零部件，壁垒较明确。</li><li>2026Q1收入和利润恢复增长，但绝对利润体量仍偏小。</li><li>当前估值对人形机器人放量预期要求很高。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>机器人量产节奏若慢，估值缺少当期利润保护。</li><li>ROE和现金流不算强，不适合作为重仓基本面核心。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li><li>叙事兑现度需要订单证明</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>保留观察仓，等大客户/订单/产能利用率信号。；若板块退潮且估值仍高，优先压缩题材仓。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>英维克 <span>002837</span></h3><p>A股-主板 · 数据中心液冷 / 热管理</p></div>
+                <div class="score risk">65.1</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>82.57</span></div>
+                <div><b>当日涨跌</b><span>-5.1%</span></div>
+                <div><b>持仓盈亏</b><span class="pos">1,602 / 3.3%</span></div>
+                <div><b>PE/PB</b><span>218.05 / 31.93</span></div>
+                <div><b>总市值</b><span>933.42亿</span></div>
+              </div>
+              <div class="bar"><span class="risk" style="width:65.1%"></span></div>
+              <p class="verdict"><b>结论：</b>赛道强于当期财务，暂按观察/主题仓处理</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>11.75亿 / YoY 26.0%</span></div>
+          <div><b>Q归母净利</b><span>0.09亿 / YoY -82.0%</span></div>
+          <div><b>TTM收入</b><span>63.11亿 / YoY 32.1%</span></div>
+          <div><b>TTM归母净利</b><span>4.83亿 / YoY 10.0%</span></div>
+          <div><b>毛利率/净利率</b><span>24.3% / 1.2%</span></div>
+          <div><b>ROE/现金流</b><span>0.2% / 每股OCF -0.3953</span></div>
+          <div><b>资产负债率</b><span>55.1%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>数据中心液冷 / 热管理。判断：86分，AI数据中心散热基础设施。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 74；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 76；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 45；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 78；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 35；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 76；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>液冷是AI数据中心真实需求方向。</li><li>但2026Q1收入增长而归母净利大幅下滑，现金流为负。</li><li>估值对利润修复要求很高。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>收入增长未转化为利润，说明费用、价格或交付结构存在压力。</li><li>若后续季度仍不兑现利润，S40应降级。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li><li>现金流/回款需跟踪</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>不适合继续扩大仓位，等Q2/Q3利润修复。；若营收增长+毛利率改善+现金流转正同时出现，才恢复核心候选。</div>
+            </section>
+            <section class="stock-card">
+              <div class="stock-head">
+                <div><h3>四方达 <span>300179</span></h3><p>A股-创业板 · 超硬材料 / 金刚石工具与热管理叙事</p></div>
+                <div class="score risk">62.7</div>
+              </div>
+              <div class="quote-row">
+                <div><b>最新价</b><span>57.38</span></div>
+                <div><b>当日涨跌</b><span>-7.5%</span></div>
+                <div><b>持仓盈亏</b><span class="neg">-648 / -2.7%</span></div>
+                <div><b>PE/PB</b><span>273.37 / 24.75</span></div>
+                <div><b>总市值</b><span>214.59亿</span></div>
+              </div>
+              <div class="bar"><span class="risk" style="width:62.7%"></span></div>
+              <p class="verdict"><b>结论：</b>真材料公司，但AI热管理叙事证明度不足，偏卫星仓</p>
+              
+        <div class="fin-grid">
+          <div><b>最新报告期</b><span>2026-03-31</span></div>
+          <div><b>Q收入</b><span>1.84亿 / YoY 40.2%</span></div>
+          <div><b>Q归母净利</b><span>0.43亿 / YoY 25.7%</span></div>
+          <div><b>TTM收入</b><span>6.20亿 / YoY 18.0%</span></div>
+          <div><b>TTM归母净利</b><span>1.02亿 / YoY -17.9%</span></div>
+          <div><b>毛利率/净利率</b><span>46.8% / 18.9%</span></div>
+          <div><b>ROE/现金流</b><span>3.4% / 每股OCF 0.0684</span></div>
+          <div><b>资产负债率</b><span>38.0%</span></div>
+        </div>
+              <div class="s40-grid">
+                <div><b>真赛道</b><p>超硬材料 / 金刚石工具与热管理叙事。判断：78分，材料端高弹性题材卫星。</p></div>
+                <div><b>真技术</b><p>技术/工艺/认证壁垒评分 74；低分项通常来自商业化证明或产品边界。</p></div>
+                <div><b>真客户</b><p>客户/订单/需求可验证度 62；B2B硬科技重点看认证、设计导入和订单持续性。</p></div>
+                <div><b>真财务</b><p>财务兑现 66；重点看最近四个单季度收入、利润、毛利率、现金流是否同向。</p></div>
+                <div><b>真龙头</b><p>细分地位 62；按细分赛道龙头而不是泛科技概念判断。</p></div>
+                <div><b>真估值</b><p>估值安全边际 30；高PE/PB公司需要持续业绩兑现抵消估值压力。</p></div>
+                <div><b>真能力圈</b><p>能力圈清晰度 68；能否讲清产品、客户、竞争者、估值方法和证伪条件。</p></div>
+              </div>
+              <div class="two-col">
+                <div><h4>事实依据</h4><ul><li>超硬材料具备工艺门槛，2026Q1收入和利润增长。</li><li>但与AI液冷/热管理的利润链条仍需更硬订单证明。</li><li>当前估值对新叙事兑现要求非常高。</li></ul></div>
+                <div><h4>扣分/风险</h4><ul><li>若只是题材映射而非订单和利润，估值回撤风险大。</li><li>体量小、波动高，不应承担核心仓职能。</li><li>PE&gt;100，高估值敏感</li><li>PB&gt;10，估值重构后波动大</li><li>叙事兑现度需要订单证明</li></ul></div>
+              </div>
+              <div class="action"><b>动作建议：</b>仅适合作为小比例卫星观察。；若没有新客户/新订单/收入占比披露，S40不应加分。</div>
+            </section>
+
+  <section class="panel">
+    <h2>四、S40硬性结论</h2>
+    <ul>
+      <li><b>真假科技：</b>没有明显“纯蹭概念、无主营、无技术”的假科技；但英维克、四方达、绿的谐波、联瑞新材里有不同程度的“叙事跑在财务前面”。</li>
+      <li><b>最大组合风险：</b>不是某一家基本面突然崩，而是高估值科技同一时间杀估值，导致相关性接近1。</li>
+      <li><b>最硬财务组：</b>新易盛、澜起科技、中微公司、生益科技、三环集团、宁德时代-H。</li>
+      <li><b>最需要下一季验证：</b>英维克看利润修复和现金流；联瑞新材看高端材料收入占比和现金流；四方达看AI热管理订单证明；绿的谐波看机器人订单兑现。</li>
+      <li><b>操作纪律：</b>S40不直接给“马上买”。它给仓位质量排序：高分股可留核心，低估值/真财务可做底仓，高估值且财务未兑现的只能做卫星或等待触发。</li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>数据来源与限制</h2>
+    <p class="note">行情：腾讯行情接口 https://qt.gtimg.cn/q=sz300502,sh688017,hk03750,hk09988,sh600183,sh688008,sz002837,sz300408,sh688012,sh688300,sz300179。财务：AkShare 调用同花顺/东方财富财务摘要、东方财富港股财务指标。本文为S40框架体检，不构成收益保证；港股财务口径与A股单季度口径不完全一致，已在个股卡中标注。</p>
+  </section>
+</main>
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

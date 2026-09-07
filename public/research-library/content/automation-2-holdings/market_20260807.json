@@ -1,0 +1,422 @@
+{
+  "generated_utc": "2026-08-07T15:05:40.702144+00:00",
+  "quotes": {
+    "300502": [
+      {
+        "date": "2026-07-28",
+        "open": 460.0,
+        "close": 406.9,
+        "high": 469.99,
+        "low": 403.92,
+        "volume": 772843.0,
+        "amount": 334.25,
+        "pct": -17.13,
+        "turnover": 6.16
+      },
+      {
+        "date": "2026-07-29",
+        "open": 407.13,
+        "close": 421.2,
+        "high": 429.22,
+        "low": 393.5,
+        "volume": 650077.0,
+        "amount": 269.15,
+        "pct": 3.51,
+        "turnover": 5.18
+      },
+      {
+        "date": "2026-07-30",
+        "open": 410.21,
+        "close": 371.1,
+        "high": 414.02,
+        "low": 347.0,
+        "volume": 963230.0,
+        "amount": 361.31,
+        "pct": -11.89,
+        "turnover": 7.68
+      },
+      {
+        "date": "2026-07-31",
+        "open": 418.01,
+        "close": 396.01,
+        "high": 430.4,
+        "low": 395.88,
+        "volume": 749477.0,
+        "amount": 311.81,
+        "pct": 6.71,
+        "turnover": 5.98
+      },
+      {
+        "date": "2026-08-03",
+        "open": 389.96,
+        "close": 394.08,
+        "high": 405.0,
+        "low": 379.0,
+        "volume": 404709.0,
+        "amount": 158.85,
+        "pct": -0.49,
+        "turnover": 3.23
+      },
+      {
+        "date": "2026-08-04",
+        "open": 409.0,
+        "close": 448.0,
+        "high": 453.18,
+        "low": 409.0,
+        "volume": 692583.0,
+        "amount": 299.14,
+        "pct": 13.68,
+        "turnover": 5.52
+      },
+      {
+        "date": "2026-08-05",
+        "open": 400.0,
+        "close": 424.3,
+        "high": 438.36,
+        "low": 400.0,
+        "volume": 871013.0,
+        "amount": 364.01,
+        "pct": -5.29,
+        "turnover": 6.94
+      },
+      {
+        "date": "2026-08-06",
+        "open": 413.0,
+        "close": 421.87,
+        "high": 439.84,
+        "low": 397.09,
+        "volume": 514458.0,
+        "amount": 215.53,
+        "pct": -0.57,
+        "turnover": 4.1
+      }
+    ],
+    "688017": [
+      {
+        "date": "2026-07-28",
+        "open": 303.0,
+        "close": 293.03,
+        "high": 313.11,
+        "low": 291.12,
+        "volume": 79566.0,
+        "amount": 24.04,
+        "pct": -5.93,
+        "turnover": 4.34
+      },
+      {
+        "date": "2026-07-29",
+        "open": 294.69,
+        "close": 283.66,
+        "high": 303.0,
+        "low": 276.1,
+        "volume": 104829.0,
+        "amount": 29.97,
+        "pct": -3.2,
+        "turnover": 5.72
+      },
+      {
+        "date": "2026-07-30",
+        "open": 283.0,
+        "close": 261.0,
+        "high": 288.0,
+        "low": 256.2,
+        "volume": 121270.0,
+        "amount": 32.63,
+        "pct": -7.99,
+        "turnover": 6.61
+      },
+      {
+        "date": "2026-07-31",
+        "open": 287.98,
+        "close": 303.65,
+        "high": 312.94,
+        "low": 287.98,
+        "volume": 150735.0,
+        "amount": 45.24,
+        "pct": 16.34,
+        "turnover": 8.22
+      },
+      {
+        "date": "2026-08-03",
+        "open": 301.0,
+        "close": 311.95,
+        "high": 326.0,
+        "low": 300.68,
+        "volume": 159577.0,
+        "amount": 50.23,
+        "pct": 2.73,
+        "turnover": 8.7
+      },
+      {
+        "date": "2026-08-04",
+        "open": 314.31,
+        "close": 326.0,
+        "high": 327.49,
+        "low": 301.11,
+        "volume": 127765.0,
+        "amount": 40.58,
+        "pct": 4.5,
+        "turnover": 6.97
+      },
+      {
+        "date": "2026-08-05",
+        "open": 326.0,
+        "close": 340.54,
+        "high": 345.0,
+        "low": 323.06,
+        "volume": 139902.0,
+        "amount": 47.01,
+        "pct": 4.46,
+        "turnover": 7.63
+      },
+      {
+        "date": "2026-08-06",
+        "open": 334.15,
+        "close": 336.04,
+        "high": 343.58,
+        "low": 330.11,
+        "volume": 110326.0,
+        "amount": 37.16,
+        "pct": -1.32,
+        "turnover": 6.02
+      }
+    ],
+    "600183": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "688008": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "002837": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "688012": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "688300": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "002409": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "688097": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "09988.HK": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    },
+    "03750.HK": {
+      "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+    }
+  },
+  "yf": {
+    "QQQ": [
+      {
+        "date": "2026-07-31",
+        "close": 687.99
+      },
+      {
+        "date": "2026-08-03",
+        "close": 700.07
+      },
+      {
+        "date": "2026-08-04",
+        "close": 723.85
+      },
+      {
+        "date": "2026-08-05",
+        "close": 717.3
+      },
+      {
+        "date": "2026-08-06",
+        "close": 714.65
+      },
+      {
+        "date": "2026-08-07",
+        "close": 721.125
+      }
+    ],
+    "SOXX": [
+      {
+        "date": "2026-07-31",
+        "close": 504.89
+      },
+      {
+        "date": "2026-08-03",
+        "close": 507.68
+      },
+      {
+        "date": "2026-08-04",
+        "close": 542.21
+      },
+      {
+        "date": "2026-08-05",
+        "close": 530.7
+      },
+      {
+        "date": "2026-08-06",
+        "close": 532.52
+      },
+      {
+        "date": "2026-08-07",
+        "close": 538.665
+      }
+    ],
+    "SMH": [
+      {
+        "date": "2026-07-31",
+        "close": 540.53
+      },
+      {
+        "date": "2026-08-03",
+        "close": 545.46
+      },
+      {
+        "date": "2026-08-04",
+        "close": 575.71
+      },
+      {
+        "date": "2026-08-05",
+        "close": 569.7
+      },
+      {
+        "date": "2026-08-06",
+        "close": 571.48
+      },
+      {
+        "date": "2026-08-07",
+        "close": 579.055
+      }
+    ],
+    "BABA": [
+      {
+        "date": "2026-07-31",
+        "close": 122.25
+      },
+      {
+        "date": "2026-08-03",
+        "close": 127.3
+      },
+      {
+        "date": "2026-08-04",
+        "close": 128.99
+      },
+      {
+        "date": "2026-08-05",
+        "close": 128.53
+      },
+      {
+        "date": "2026-08-06",
+        "close": 126.81
+      },
+      {
+        "date": "2026-08-07",
+        "close": 127.48
+      }
+    ],
+    "^VIX": [
+      {
+        "date": "2026-07-31",
+        "close": 15.99
+      },
+      {
+        "date": "2026-08-03",
+        "close": 15.86
+      },
+      {
+        "date": "2026-08-04",
+        "close": 16.5
+      },
+      {
+        "date": "2026-08-05",
+        "close": 15.81
+      },
+      {
+        "date": "2026-08-06",
+        "close": 15.15
+      },
+      {
+        "date": "2026-08-07",
+        "close": 14.95
+      }
+    ],
+    "^TNX": [
+      {
+        "date": "2026-07-31",
+        "close": 4.745
+      },
+      {
+        "date": "2026-08-03",
+        "close": 4.686
+      },
+      {
+        "date": "2026-08-04",
+        "close": 4.627
+      },
+      {
+        "date": "2026-08-05",
+        "close": 4.617
+      },
+      {
+        "date": "2026-08-06",
+        "close": 4.67
+      },
+      {
+        "date": "2026-08-07",
+        "close": 4.647
+      }
+    ],
+    "DX-Y.NYB": [
+      {
+        "date": "2026-07-31",
+        "close": 99.8
+      },
+      {
+        "date": "2026-08-03",
+        "close": 99.96
+      },
+      {
+        "date": "2026-08-04",
+        "close": 99.89
+      },
+      {
+        "date": "2026-08-05",
+        "close": 99.69
+      },
+      {
+        "date": "2026-08-06",
+        "close": 99.97
+      },
+      {
+        "date": "2026-08-07",
+        "close": 99.635
+      }
+    ],
+    "CNY=X": [
+      {
+        "date": "2026-07-30",
+        "close": 6.755
+      },
+      {
+        "date": "2026-08-02",
+        "close": 6.7509
+      },
+      {
+        "date": "2026-08-03",
+        "close": 6.7523
+      },
+      {
+        "date": "2026-08-04",
+        "close": 6.7532
+      },
+      {
+        "date": "2026-08-05",
+        "close": 6.7497
+      },
+      {
+        "date": "2026-08-07",
+        "close": 6.7342
+      }
+    ]
+  }
+}

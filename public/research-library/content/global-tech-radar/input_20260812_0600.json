@@ -1,0 +1,417 @@
+{
+  "generated_at_beijing": "2026-08-12 06:00",
+  "run_label": "06:00 morning",
+  "headline": "Orange维持：Supermicro把AI服务器订单兑现为正式财报，但Intel加码发股和长端实际利率上行要求继续防守追高",
+  "top_conclusion": "2026-08-12早间雷达按06:00 morning补跑。三条驱动分开看：第一，全球AI CapEx仍是Expansion，Supermicro正式Q4确认净销售US$11.1bn、毛利率17.5%、过去一年新增订单超过US$60bn并给出FY2027收入US$65-72bn指引，NVIDIA的US$500bn+ AI基础设施融资平台继续强化AI工厂建设主线；第二，流动性从Tightening下调到Stress，Fed H.15 2026-08-11发布的最新2026-08-10数据中10Y升至4.72%、30Y升至5.25%、10Y TIPS升至2.43%、30Y TIPS升至3.00%，叠加Brent原油仍在US$88.91，说明高估值科技不能只看订单；第三，科技催化为Mixed，Supermicro是正反馈，Intel把普通股发行从US$15bn上修并定价到US$20bn是需求确认也是稀释确认。处理建议：继续只做AI服务器、液冷电力、光互连、先进封装、AI软件和商业航天卖铲人，但所有标的都必须通过订单、毛利率、自由现金流和融资稀释过滤。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "维持Orange但把流动性降到Stress：不追高纯AI叙事，只看订单已经落地、毛利率修复、现金流能撑住扩产的卖铲链。",
+    "positive": "最大正反馈是Supermicro正式确认FY2026 Q4净销售US$11.1bn、毛利率17.5%、过去一年新增订单超过US$60bn、FY2027收入指引US$65-72bn。",
+    "risk": "最大压制项是Fed H.15长端和实际利率重新抬升，Intel发行从US$15bn上修到US$20bn，AI CapEx越强，融资稀释和折现率过滤越硬。",
+    "next": "下一步只盯美国CPI、Fed H.15/H.4.1、Intel发行交割、NVIDIA融资平台真实项目、Supermicro订单转收入和毛利率持续性。"
+  },
+  "top_changes": [
+    {
+      "title": "Supermicro正式Q4确认AI服务器链订单和利润率正反馈",
+      "fact": "Supermicro 2026-08-11正式发布FY2026 Q4及全年未经审计业绩：Q4净销售US$11.1bn，毛利率17.5%，净利润US$1.178bn，非GAAP EPS US$1.70；公司称过去一年新增数百个企业及其他客户，新增订单超过US$60bn，并带着纪录 backlog 进入FY2027；FY2027收入指引US$65.0-72.0bn。",
+      "impact": "利好AI服务器整机、GPU集群集成、液冷、电源、机柜、交换网络、PCB/高速互连和数据中心工程链；但仍要跟踪订单转收入、客户集中、出口合规调查和毛利率可持续性。",
+      "confidence": "High",
+      "source": "Supermicro IR",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx"
+    },
+    {
+      "title": "Intel发行从US$15bn上修并定价到US$20bn",
+      "fact": "Intel 2026-08-11宣布定价此前普通股发行：以每股US$95发行210,526,315股，发行规模从此前US$15bn上修到US$20bn，预计2026-08-12交割，净募集约US$19.7bn，资金可用于一般公司用途，包括CapEx和营运资金。",
+      "impact": "确认AI compute、先进封装、外部晶圆和purpose-built silicon仍需要巨额资本；同时也确认股权稀释、融资成本和投资回报率是半导体制造链的硬约束。",
+      "confidence": "High",
+      "source": "Intel IR",
+      "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+    },
+    {
+      "title": "Fed H.15长端与实际利率上行，流动性模块下调为Stress",
+      "fact": "Fed H.15 2026-08-11发布的最新2026-08-10数据：EFFR 3.63%，2Y 4.25%，5Y 4.41%，10Y 4.72%，20Y 5.25%，30Y 5.25%，10Y TIPS 2.43%，30Y TIPS 3.00%。H.4.1仍停留在2026-08-06发布的2026-08-05周数据，准备金周均US$2.993349tn。",
+      "impact": "长端和实际利率再次抬升，直接压制长久期科技估值。即使AI订单很强，也必须优先筛现金流、毛利率和融资结构。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15 / H.4.1",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "AP确认美股继续从纪录高位回落，油价维持高位",
+      "fact": "AP报道2026-08-11美股小幅回落：S&P 500 -0.3%至7,728.20，Dow -0.3%至53,791.85，Nasdaq -0.6%至26,445.45；Brent原油上涨1.4%至US$88.91，盘中在US$87-90之间波动。",
+      "impact": "市场没有否定AI CapEx，但正在同时交易油价、通胀和高利率压力。科技链短线应避免高估值无现金流环节。",
+      "confidence": "Medium",
+      "source": "AP",
+      "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-e5e8f3360f8d30714778761e3a483347"
+    },
+    {
+      "title": "NVIDIA US$500bn+融资平台继续定义AI工厂大方向，但仍待项目落地验证",
+      "fact": "NVIDIA 2026-08-10官方宣布与Apollo、BlackRock、Blackstone、Brookfield、Goldman Sachs和KKR建立AI compute基础设施融资平台，目标随时间动员超过US$500bn第三方资本。",
+      "impact": "这是AI基础设施长期正反馈，但目前仍是融资平台和框架性资本动员，下一层验证必须看真实项目、客户承诺、融资结构、设备采购和投资回报率。",
+      "confidence": "High",
+      "source": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。Supermicro把上一轮待验证的AI服务器订单和毛利率变成正式财报确认；NVIDIA融资平台继续把AI工厂建设推向金融资本参与阶段；Intel US$20bn发股说明半导体制造链资本强度继续上行。结论不是无脑看多，而是AI基础设施扩张还在，但必须更严格做融资和现金流过滤。",
+    "items": [
+      {
+        "entity": "Supermicro",
+        "signal": "FY2026 Q4净销售US$11.1bn，毛利率17.5%，非GAAP毛利率17.6%，净利润US$1.178bn，Q4经营现金流US$747mn，Q4资本支出和投资US$25mn；过去一年新增订单超过US$60bn，FY2027收入指引US$65.0-72.0bn。",
+        "direction": "上修",
+        "impact": "AI服务器、GPU集群集成、液冷、电源、机柜、交换网络、PCB/高速互连和数据中心工程链获得订单和利润率验证。",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx"
+      },
+      {
+        "entity": "NVIDIA / Apollo / BlackRock / Blackstone / Brookfield / Goldman Sachs / KKR",
+        "signal": "NVIDIA宣布AI compute基础设施融资平台，目标动员超过US$500bn第三方资本，用于AI基础设施建设。",
+        "direction": "上修",
+        "impact": "AI GPU、AI服务器、先进封装、交换芯片、光互连、数据中心电力、液冷、机柜和工程服务受益；同时需跟踪客户信用、租赁结构和项目ROI。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital"
+      },
+      {
+        "entity": "Intel",
+        "signal": "普通股发行从此前US$15bn上修到US$20bn，定价每股US$95，净募集约US$19.7bn；资金可用于CapEx和营运资金。",
+        "direction": "上修但稀释",
+        "impact": "先进制程、先进封装、外部晶圆、服务器CPU/ASIC和AI compute供应链受益；但股权稀释和资本回报不确定性上升。",
+        "confidence": "High",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q4 Microsoft Cloud revenue US$59.3bn、同比+27%；Commercial RPO同比+84%至US$678bn；Azure及其他云服务+43%；Q4物业设备新增US$35.802bn。",
+        "direction": "上修",
+        "impact": "AI服务器、网络、存储、电力和冷却需求仍由云收入和RPO吸收。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+      },
+      {
+        "entity": "Amazon",
+        "signal": "10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn；但10-Q未直接确认媒体所称US$220bn全年CapEx。",
+        "direction": "上修",
+        "impact": "AWS、AI芯片/GPU/HBM、数据中心电力、液冷、网络和服务器链继续受益；US$220bn仍按未见官方确认处理。",
+        "confidence": "High",
+        "source": "Amazon Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+      },
+      {
+        "entity": "Meta",
+        "signal": "10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。",
+        "direction": "上修",
+        "impact": "AI服务器、光通信、交换机、电力、冷却和数据中心建设受益；租赁、折旧、债务和FCF压力是估值过滤器。",
+        "confidence": "High",
+        "source": "Meta Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+      },
+      {
+        "entity": "AMD",
+        "signal": "Q2 revenue US$11.536bn、同比+50%；Data Center revenue US$6.702bn、同比+107%；MI350进入客户部署，Helios rack-scale AI平台计划2026年下半年出货。",
+        "direction": "上修",
+        "impact": "AI GPU、HBM、服务器CPU、整机ODM、液冷、电源、机柜、高速互连和数据中心部署链受益。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "entity": "SpaceX",
+        "signal": "Q2 2026收入约US$7.814bn、capex约US$18.369bn，其中AI capex约US$15.828bn；backlog约US$47.5bn，cash and marketable securities约US$100.384bn，debt约US$38.433bn。",
+        "direction": "上修但高消耗",
+        "impact": "商业航天卖铲链和AI基础设施链同时受益，包括卫星制造、发射服务、通信载荷、地面终端、测控、热控、电源、AI服务器、GPU/网络和液冷。",
+        "confidence": "High",
+        "source": "SpaceX SEC 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块下调为Stress。关键不是政策口号，而是价格：H.15显示10Y、30Y和实际利率重新抬升，Brent原油仍高，CPI尚未公布。H.4.1准备金上周有修复，H.10美元指数此前回落，但不足以抵消长端和TIPS压力。",
+    "items": [
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-11发布，最新2026-08-10数据：EFFR 3.63%，2Y 4.25%，5Y 4.41%，10Y 4.72%，20Y 5.25%，30Y 5.25%，10Y TIPS 2.43%，30Y TIPS 3.00%。",
+        "direction": "压力",
+        "impact": "长端和实际利率同步上行，对高估值科技成长资产是直接折现率压力。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "最新可用仍为2026-08-06发布的2026-08-05周数据：准备金周均US$2.993349tn，周增US$8.779bn；TGA周均US$907.324bn，周降US$3.452bn；ON RRP周均US$342.725bn，周降US$1.222bn。",
+        "direction": "边际缓和",
+        "impact": "系统流动性边际改善，但尚未抵消长端实际利率上行，不能定义为Easing。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "Fed H.10 / Dollar",
+        "signal": "2026-08-10发布，最新2026-08-07数据：Broad dollar index 119.0649，人民币6.7474，日元157.54，欧元1.1559。",
+        "direction": "中性偏缓",
+        "impact": "美元边际回落对非美科技链有帮助，但在10Y/30Y/TIPS高位下不是主要矛盾。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "Oil / AP market variables",
+        "signal": "AP报道2026-08-11 Brent原油上涨1.4%至US$88.91，盘中在US$87-90之间波动；S&P 500 -0.3%，Nasdaq -0.6%。",
+        "direction": "压力",
+        "impact": "油价高位会强化通胀和利率不确定性，高估值科技链需要降低追价。",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-e5e8f3360f8d30714778761e3a483347"
+      },
+      {
+        "entity": "BOE / ECB / BOJ recent stance",
+        "signal": "BOE 2026-07会议维持Bank Rate 3.75%，且3名委员投票加息至4%；ECB 2026-07-23维持三大利率不变并强调能源价格冲击的不确定性；BOJ 2026-07-31维持无担保隔夜拆借利率约1.0%。",
+        "direction": "中性偏紧",
+        "impact": "非美主要央行也没有提供新的宽松顺风，全球科技估值仍主要受美国长端和实际利率牵引。",
+        "confidence": "High",
+        "source": "BOE / ECB / BOJ official sources",
+        "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/july-2026"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化维持Mixed。Supermicro正式Q4是AI服务器链正反馈，NVIDIA融资平台是长期正反馈；Intel US$20bn发股、油价高位和长端实际利率上行则提醒市场会继续按融资稀释、现金流和ROI过滤科技资产。",
+    "items": [
+      {
+        "event": "Supermicro FY2026 Q4正式业绩和FY2027强指引",
+        "affected_chain": "AI服务器、GPU集群、液冷、电源、机柜、网络交换、PCB/高速互连",
+        "direction": "利好",
+        "winners": "有真实订单、交付能力、毛利率修复和经营现金流验证的AI服务器卖铲链",
+        "losers": "订单无法转收入、客户集中、合规调查未落地、毛利率不可持续的中游环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx"
+      },
+      {
+        "event": "Intel US$20bn普通股发行定价",
+        "affected_chain": "先进制程、先进封装、外部晶圆、AI compute、服务器CPU/ASIC",
+        "direction": "分化",
+        "winners": "资本投入能换来客户承诺、先进封装订单、代工利用率和毛利率修复的环节",
+        "losers": "高CapEx但回报不清、股权稀释严重、现金流承压的制造资产",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+      },
+      {
+        "event": "NVIDIA AI compute基础设施融资平台",
+        "affected_chain": "AI GPU、AI服务器、先进封装、交换芯片、光互连、数据中心电力、液冷、机柜",
+        "direction": "利好但需项目验证",
+        "winners": "直接承接AI基础设施建设的核心算力、服务器、网络、电力、冷却和工程卖铲环节",
+        "losers": "只有融资叙事、没有真实项目ROI和现金流验证的高估值资产",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital"
+      },
+      {
+        "event": "长端实际利率上行与油价高位",
+        "affected_chain": "高估值AI软件、半导体制造、亏损型科技、远期商业航天",
+        "direction": "利空",
+        "winners": "低估值、订单可见、自由现金流强、客户信用好的卖铲人",
+        "losers": "远期现金流、融资依赖、高估值且缺少收入兑现的科技资产",
+        "evidence": "官方数据 / 媒体市场数据",
+        "confidence": "High",
+        "source": "Fed H.15 / AP",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "event": "中国对美国相关无人机等两用物项出口管制",
+        "affected_chain": "无人机、传感器、导航、通信链、飞控、复合材料、商业航天两用环节",
+        "direction": "利空/合规风险",
+        "winners": "内需替代、合规完备、供应链自主可控环节可能受益于国产化逻辑",
+        "losers": "依赖对美出口、关键物项许可不确定、客户或收入暴露较高的无人机与两用供应链公司",
+        "evidence": "官方公告",
+        "confidence": "High",
+        "source": "MOFCOM",
+        "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI服务器和数据中心卖铲链",
+      "verified_direct": "无直接A/H公司订单映射；Supermicro和NVIDIA是海外官方证据，不能直接等同于A/H单家公司订单。",
+      "inferred": "AI服务器整机、液冷、电源、机柜、交换机、光模块/光互连、PCB/高速连接器、数据中心工程和运维是主要推断受益方向。",
+      "risk": "必须看是否被直接客户认证、是否有订单公告、毛利率是否修复、是否受出口管制和客户集中影响。"
+    },
+    {
+      "theme": "先进封装和半导体制造",
+      "verified_direct": "Intel官方US$20bn发股是海外一手证据；无直接A/H公司映射。",
+      "inferred": "先进封装、外部晶圆、服务器CPU/ASIC、AI compute silicon、ABF/基板、HBM配套和半导体设备材料具备景气观察价值。",
+      "risk": "资本开支越强，稀释、折旧、良率、客户承诺和ROI越重要。"
+    },
+    {
+      "theme": "AI软件卖铲链",
+      "verified_direct": "Cloudflare、Atlassian、Twilio为海外官方验证样本；无直接A/H公司映射。",
+      "inferred": "网络安全、边缘云、企业协作、开发者工具、通信API、客户数据平台和企业AI工作流可作为AI硬件CapEx扩散方向。",
+      "risk": "必须看ARR/RPO、客户留存、利润率和free cash flow，不能只看AI概念。"
+    },
+    {
+      "theme": "商业航天卖铲链",
+      "verified_direct": "无直接A/H公司映射；SpaceX官方文件只验证海外商业航天和AI基础设施高投入。",
+      "inferred": "卫星制造、通信载荷、地面终端、测控系统、发射配套、热控材料、精密制造、电源管理和复合材料是更偏卖铲方向。",
+      "risk": "高CapEx、亏损、融资、出口管制和客户认证会压制兑现速度。"
+    },
+    {
+      "theme": "无人机与两用物项管制链",
+      "verified_direct": "商务部公告是政策层面的直接证据，但未直接指向A/H单家公司订单变化。",
+      "inferred": "无人机整机、传感器、导航、通信链、飞控、复合材料和两用航天零部件需要按出口许可、客户结构和内需替代分层。",
+      "risk": "政策管制既可能强化国产替代，也可能压制外销收入；不能简单当作利好。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "美国CPI与Fed H.15下一日数据",
+      "why": "当前06:00补跑时CPI尚未公布；若油价冲击传导到通胀预期或TIPS继续上行，Liquidity会维持Stress。"
+    },
+    {
+      "item": "Fed H.4.1下一次更新",
+      "why": "确认准备金修复是否延续，还是长端实际利率压力和TGA/RRP变化重新收紧系统流动性。"
+    },
+    {
+      "item": "Intel US$20bn发行交割和资金用途",
+      "why": "确认2026-08-12交割、净募集、超额配售、CapEx投向、稀释比例和是否改善信用/资产负债表。"
+    },
+    {
+      "item": "Supermicro订单转收入和毛利率持续性",
+      "why": "重点验证US$60bn+新订单、record backlog、FY2027 US$65-72bn收入指引能否转化为收入和稳定毛利率。"
+    },
+    {
+      "item": "NVIDIA AI融资平台真实项目",
+      "why": "确认US$500bn+第三方资本是可执行项目、贷款/租赁/股权结构，还是框架性资本动员。"
+    },
+    {
+      "item": "Amazon正式CapEx口径",
+      "why": "10-Q确认H1现金CapEx US$96.3bn，但媒体所称US$220bn全年CapEx未见10-Q直接确认。"
+    },
+    {
+      "item": "SpaceX CapEx现金流效率",
+      "why": "跟踪AI capex、commercial-space backlog、debt、loss、cash、Starlink/AI revenue、供应商和CapEx-to-cash-flow效率。"
+    },
+    {
+      "item": "商务部无人机等两用物项出口管制后续",
+      "why": "跟踪许可证、实体名单、执行细则、公司公告和对无人机/商业航天供应链订单的影响。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Supermicro Announces Fourth Quarter and Full Fiscal Year 2026 Financial Results",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Intel Announces Upsize and Pricing of $20 Billion Common Stock Offering",
+      "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-06"
+    },
+    {
+      "title": "Federal Reserve H.10 Foreign Exchange Rates",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-10"
+    },
+    {
+      "title": "How major US stock indexes fared Tuesday 8/11/2026",
+      "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-e5e8f3360f8d30714778761e3a483347",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "NVIDIA Partners With Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-10"
+    },
+    {
+      "title": "Bank Rate maintained at 3.75% - July 2026 Monetary Policy Summary",
+      "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/july-2026",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "ECB Monetary policy decisions",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "BOJ Statement on Monetary Policy",
+      "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260731a.pdf",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Amazon Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "Microsoft FY2026 Q4 Earnings Release",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "used_for": "CapEx",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Meta Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "AMD Reports Second Quarter 2026 Financial Results",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "SpaceX Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+      "used_for": "CapEx / Commercial space",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "MOFCOM announcement on export controls for US-related drone and dual-use items",
+      "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html",
+      "used_for": "Tech catalyst / Export control",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "Cloudflare Announces Second Quarter 2026 Financial Results",
+      "url": "https://cloudflare.net/news/news-details/2026/Cloudflare-Announces-Second-Quarter-2026-Financial-Results/default.aspx",
+      "used_for": "Tech catalyst / AI software",
+      "published_at": "2026-08-06"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+backup_root=/data2/backups/dify-postgres
+container_name=dify17-db-1
+lock_file=/run/bzsj-dify-postgres-backup.lock
+
+exec 9>"$lock_file"
+flock -n 9 || exit 0
+
+mountpoint -q /data2
+if [ "$(docker inspect -f '{{.State.Status}}' "$container_name" 2>/dev/null || echo missing)" != running ]; then
+    logger -p daemon.notice -t dify-backup "Skipped Dify PostgreSQL backup because ${container_name} is not running"
+    exit 0
+fi
+install -d -m 0700 "$backup_root"
+
+backup_stamp="$(date +%Y%m%d-%H%M%S)"
+partial_file="$backup_root/dify-postgres-${backup_stamp}.dump.partial"
+final_file="$backup_root/dify-postgres-${backup_stamp}.dump"
+checksum_file="$final_file.sha256"
+
+umask 077
+trap 'rm -f -- "$partial_file"' EXIT
+
+docker exec "$container_name" sh -lc \
+    'exec nice -n 10 pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc --no-owner --no-privileges' \
+    > "$partial_file"
+
+test -s "$partial_file"
+mv "$partial_file" "$final_file"
+sha256sum "$final_file" > "$checksum_file"
+trap - EXIT
+
+# Keep approximately five weekly recovery points.
+find "$backup_root" -maxdepth 1 -type f \
+    \( -name 'dify-postgres-*.dump' -o -name 'dify-postgres-*.dump.sha256' \) \
+    -mtime +35 -delete
+
+logger -p daemon.notice -t dify-backup \
+    "Dify PostgreSQL backup completed: $(basename "$final_file") ($(du -h "$final_file" | awk '{print $1}'))"

@@ -1,0 +1,20 @@
+{
+  "QQQ": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/QQQ?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  },
+  "SOXX": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/SOXX?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  },
+  "SMH": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/SMH?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  },
+  "BABA": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/BABA?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  },
+  "^TNX": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/%5ETNX?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  },
+  "DX-Y.NYB": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/DX-Y.NYB?range=10d&interval=1d (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))\"))"
+  }
+}

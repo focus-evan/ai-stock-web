@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>05 Dify两周暂停实验｜112.124.24.71</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">112.124.24.71 优化方案</a><span>/</span><strong>Dify暂停实验</strong></div><div>已于2026-08-31 17:07恢复</div></div>
+  <header class="hero green"><div class="eyebrow">CHAPTER 05 · PAUSE EXPERIMENT</div><h1>Dify 1.7.1 暂停实验记录</h1><p>实验因发现业务影响提前结束；全部11个容器、自动重启策略和公网入口均已恢复。</p><div class="tags"><span>实验已结束</span><span>删除0个资源</span><span>13/13容器运行</span><span>恢复验收通过</span></div></header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 优化前情况</a><a href="02-manual-cleanup-guide.html">02 清理操作</a><a href="03-after-cleanup.html">03 优化后情况</a><a href="04-data-disk-activation.html">04 ESSD数据盘</a><a class="active" href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status"><span class="pill green">已恢复</span><div><strong>暂停时间：2026-08-31 14:39；恢复时间：2026-08-31 17:07。</strong> 因部分业务不可用提前结束实验；当前Dify running=11、existing=11，restart=always。</div></div>
+
+  <section>
+    <h2>实验目标与边界</h2>
+    <div class="grid two">
+      <div class="callout good"><strong>结果：</strong>真实停服确认仍有部分业务依赖Dify，因此不再继续两周观察，立即执行恢复。</div>
+      <div class="callout warn"><strong>边界：</strong>不删除容器、镜像、卷、Compose、PostgreSQL、Weaviate、插件目录或5.7 GB恢复备份；不自动恢复，必须由用户决定。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>暂停前证据</h2>
+    <div class="table-wrap"><table><thead><tr><th>项目</th><th>暂停前</th><th>说明</th></tr></thead><tbody>
+      <tr><td>Dify Compose项目</td><td>11个容器全部running</td><td>项目标签 <code>dify17</code>，Compose文件保留。</td></tr>
+      <tr><td>restart policy</td><td>11个全部always</td><td>暂停前清单已归档。</td></tr>
+      <tr><td>最近15分钟Nginx日志</td><td>26行</td><td>证明入口曾有少量请求，不能直接删除。</td></tr>
+      <tr><td>最近15分钟API日志</td><td>0行</td><td>暂无明显API活动。</td></tr>
+      <tr><td>最近15分钟worker日志</td><td>5行</td><td>存在少量后台活动。</td></tr>
+      <tr><td>app/S5000环境变量名</td><td>未发现DIFY/WORKFLOW键</td><td>不是“绝对无依赖”证明，因此仍需真实观察。</td></tr>
+      <tr><td>数据库恢复点</td><td>5.7 GB</td><td>SHA-256与pg_restore目录验证通过。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>暂停方式</h2>
+    <ol><li>保存11个容器ID、镜像、启动时间、网络和原restart policy。</li><li>将restart policy从 <code>always</code> 改为 <code>no</code>，防止Docker daemon重启后意外恢复。</li><li>按入口与应用、worker、基础组件、PostgreSQL顺序执行60秒优雅停止。</li><li>停止后验证11个容器全部 <code>exited/no</code>，同时仍可被 <code>docker start</code> 恢复。</li></ol>
+    <div class="table-wrap"><table><thead><tr><th>暂停容器</th><th>当前状态</th></tr></thead><tbody>
+      <tr><td>dify17-nginx-1、dify17-web-1、dify17-api-1</td><td>exited / restart=no</td></tr>
+      <tr><td>dify17-worker-1、dify17-worker_beat-1</td><td>exited / restart=no</td></tr>
+      <tr><td>dify17-plugin_daemon-1、dify17-sandbox-1、dify17-ssrf_proxy-1</td><td>exited / restart=no</td></tr>
+      <tr><td>dify17-weaviate-1、dify17-redis-1、dify17-db-1</td><td>exited / restart=no</td></tr>
+    </tbody></table></div>
+    <div class="callout good"><strong>保留数据：</strong><code>/dify/dify1.7.1/dify/docker/volumes</code> 约24 GiB；Dify PostgreSQL备份位于 <code>/data2/backups/dify-postgres</code>。</div>
+  </section>
+
+  <section>
+    <h2>两周监控内容</h2>
+    <p class="section-note">暂停期间每10分钟运行；恢复后该临时cron已移除，脚本保留供审计和复用。</p>
+    <div class="table-wrap"><table><thead><tr><th>检查</th><th>当前结果</th><th>异常动作</th></tr></thead><tbody>
+      <tr><td>Dify容器数</td><td>暂停时0/11；恢复后11/11</td><td>恢复验收通过。</td></tr>
+      <tr><td>app_api_1 health</td><td>1 / HTTP 200</td><td>失败时daemon.err。</td></tr>
+      <tr><td>s5000-api-ha health</td><td>1 / HTTP 200</td><td>失败时daemon.err。</td></tr>
+      <tr><td>app近期硬连接错误</td><td>0</td><td>Connection refused/timeout等首次出现时告警。</td></tr>
+      <tr><td>S5000近期硬连接错误</td><td>0</td><td>Connection refused/timeout等首次出现时告警。</td></tr>
+      <tr><td>系统盘与/data2</td><td>48% / 3%</td><td>达到85%或/data2丢失时告警。</td></tr>
+    </tbody></table></div>
+    <div class="command"><div class="command-label">查看当前恢复状态</div><button class="copy-btn">复制</button><pre>/usr/local/sbin/dify17-pause-status.sh --report
+journalctl -t dify17-pause --since '24 hours ago' --no-pager
+docker ps -a --filter label=com.docker.compose.project=dify17 \
+  --format '{{.Names}}|{{.Status}}'</pre></div>
+    <p>监控脚本：<a href="files/dify17-pause-status.sh.txt">dify17-pause-status.sh</a></p>
+  </section>
+
+  <section>
+    <h2>业务验证结果</h2>
+    <ul class="checklist"><li>S5000、app API常规健康检查持续为200。</li><li>依赖“热门股、推荐视频、细分行业、股票主题”等旧工作流的功能没有出现失败。</li><li>管理端、用户端没有出现工作流调用失败、连接拒绝或超时。</li><li>业务日志没有新增指向112.124.24.71 Dify入口的硬连接错误。</li><li>用户反馈、定时任务和异步worker结果没有异常。</li></ul>
+    <div class="callout warn"><strong>实际结果：</strong>用户确认部分服务不可用，立即触发恢复；没有删除或修改Dify数据。</div>
+  </section>
+
+  <section>
+    <h2>已执行的一键恢复</h2>
+    <div class="command"><div class="command-label">服务器root执行</div><button class="copy-btn">复制</button><pre>/usr/local/sbin/dify17-resume.sh</pre></div>
+    <p>恢复脚本已经执行，完成以下动作：</p>
+    <ol><li>确认11个原容器仍完整存在。</li><li>将restart policy恢复为 <code>always</code>。</li><li>先启动PostgreSQL、Redis、Weaviate等依赖，再启动API、worker、web和Nginx。</li><li>等待11个容器running以及DB/Redis/sandbox healthy。</li><li>验证Dify API容器内 <code>/health=200</code>，然后把实验mode改为running。</li></ol>
+    <p>恢复脚本：<a href="files/dify17-resume.sh.txt">dify17-resume.sh</a></p>
+  </section>
+
+  <section>
+    <h2>最终状态与归档</h2>
+    <ul><li>恢复时间：<strong>2026-08-31 17:07（Asia/Shanghai）</strong>。</li><li>原计划2026-09-14复核已不再需要；未发现已激活的自动化任务。</li><li>服务器归档：<code>/data2/archive/dify17-pause-20260831-1445</code>。</li><li>归档包括暂停前后容器清单、网络、restart policy、日志计数、Compose哈希、恢复脚本和恢复后验收。</li></ul>
+  </section>
+
+  <div class="next-prev"><a href="04-data-disk-activation.html">← 上一章：ESSD数据盘</a><a href="index.html">返回文档集入口 →</a></div>
+  <div class="footer">Dify 1.7.1暂停实验 · 因业务影响提前结束 · 已完整恢复</div>
+</main>
+<script>
+  function fallbackCopy(text){var textarea=document.createElement('textarea');textarea.value=text;textarea.style.position='fixed';textarea.style.opacity='0';document.body.appendChild(textarea);textarea.select();document.execCommand('copy');textarea.remove();}
+  document.querySelectorAll('.copy-btn').forEach(function(button){button.addEventListener('click',function(){var text=button.parentElement.querySelector('pre').innerText;var copied=navigator.clipboard&&window.isSecureContext?navigator.clipboard.writeText(text).catch(function(){fallbackCopy(text);}):Promise.resolve(fallbackCopy(text));copied.then(function(){var old=button.textContent;button.textContent='已复制';setTimeout(function(){button.textContent=old;},1200);});});});
+</script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

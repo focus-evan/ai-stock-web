@@ -1,0 +1,83 @@
+{
+  "run_time": "2026年8月16日 15:48:36 +08:00",
+  "window_start": "2026-08-10 00:00 +08:00",
+  "window_end": "2026-08-16 15:48 +08:00",
+  "formal_hits": [
+    {
+      "name": "腾讯控股",
+      "code": "00700",
+      "date": "2026-08-12",
+      "title": "ANNOUNCEMENT OF THE RESULTS FOR THE THREE AND SIX MONTHS ENDED 30 JUNE 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0812/2026081200296.pdf",
+      "source": "HKEX"
+    },
+    {
+      "name": "上纬新材",
+      "code": "688585",
+      "date": "2026-08-15",
+      "title": "2026年半年度报告摘要",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475866.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "上纬新材",
+      "code": "688585",
+      "date": "2026-08-15",
+      "title": "2026年半年度报告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475850.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台2026年半年度报告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475868.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台2026年半年度报告摘要",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475860.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "摩尔线程",
+      "code": "688795",
+      "date": "2026-08-10",
+      "title": "摩尔线程2026年半年度报告摘要",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-10/1225465348.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "摩尔线程",
+      "code": "688795",
+      "date": "2026-08-10",
+      "title": "摩尔线程2026年半年度报告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-10/1225465335.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "related_updates": [
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台关于召开2026年半年度业绩说明会的公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475856.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 58,
+    "cninfo_watchlist_rows": 77,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260816.html"
+  ]
+}

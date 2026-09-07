@@ -1,0 +1,147 @@
+{
+  "asof": "2026-06-28",
+  "quote_window": "2026-06-26 收盘",
+  "quote": {
+    "price": 163.91,
+    "change_pct": 10.38,
+    "turnover": 13.54,
+    "pe": 761.19,
+    "pb": 10.85,
+    "mcap_yi": 232.7,
+    "ret_june": 43.59,
+    "ret_10d": 37.69,
+    "ret_6m": 83.45
+  },
+  "financials": [
+    {
+      "period": "2026Q1",
+      "revenue": 222757165.09,
+      "revenue_yoy": 165.58,
+      "net_profit": 13527145.24,
+      "net_yoy": 87.65,
+      "deduct_profit": 13201901.56,
+      "deduct_yoy": 101.25,
+      "gross_margin": 28.58,
+      "net_margin": 6.06,
+      "ocf_per_share": -0.2439,
+      "roe": 0.62,
+      "debt_ratio": 28.61,
+      "note": "收入和利润显著恢复，但公告说明主要受衡所华威并表及订单规模增长影响；经营现金流为负。"
+    },
+    {
+      "period": "2025Q4",
+      "revenue": 178810587.26,
+      "revenue_yoy": 94.39,
+      "net_profit": 4201710.44,
+      "net_yoy": -18.36,
+      "deduct_profit": 932240.92,
+      "deduct_yoy": 98.43,
+      "gross_margin": 27.42,
+      "net_margin": 2.32,
+      "ocf_per_share": 0.0999,
+      "roe": 0.3,
+      "debt_ratio": 31.17,
+      "note": "收入已改善，但净利率很薄，扣非利润体量仍小。"
+    },
+    {
+      "period": "2025Q3",
+      "revenue": 100169338.73,
+      "revenue_yoy": 18.78,
+      "net_profit": 6275888.24,
+      "net_yoy": -37.38,
+      "deduct_profit": 6056019.38,
+      "deduct_yoy": -38.81,
+      "gross_margin": 25.74,
+      "net_margin": 6.21,
+      "ocf_per_share": 0.0139,
+      "roe": 0.59,
+      "debt_ratio": 28.07,
+      "note": "收入恢复但利润同比仍下滑，经营质量未形成连续验证。"
+    },
+    {
+      "period": "2025Q2",
+      "revenue": 95201506.5,
+      "revenue_yoy": 14.82,
+      "net_profit": 6565756.9,
+      "net_yoy": -45.84,
+      "deduct_profit": 6139317.61,
+      "deduct_yoy": -43.72,
+      "gross_margin": 27.72,
+      "net_margin": 6.84,
+      "ocf_per_share": -0.0048,
+      "roe": 0.63,
+      "debt_ratio": 28.62,
+      "note": "利润同比下降，仍处于传统业务修复与新业务导入阶段。"
+    }
+  ],
+  "segments": [
+    [
+      "半导体材料",
+      "4.58亿",
+      "26.63%",
+      "+38.28%",
+      "公司总收入主体，受衡所华威并表和销售订单增加影响。"
+    ],
+    [
+      "环氧塑封材料",
+      "4.28亿",
+      "26.35%",
+      "+35.61%",
+      "主业，占主营收入约93.6%，也是国产替代和先进封装重估的基础。"
+    ],
+    [
+      "胶黏剂",
+      "2781万",
+      "31.09%",
+      "+83.29%",
+      "规模仍小，但与FC底填胶、液体塑封料等先进封装材料协同。"
+    ],
+    [
+      "清润模材料",
+      "161万",
+      "25.50%",
+      "新增",
+      "新产品，当前收入贡献较小。"
+    ]
+  ],
+  "s5_score": 51,
+  "final_score": 72,
+  "label": "观察池 / 事件驱动 / 先进封装材料重估候选",
+  "sources": [
+    [
+      "华海诚科2025年年度报告",
+      "https://static.cninfo.com.cn/finalpage/2026-03-18/1225014871.PDF",
+      "业务结构、产品、客户、风险、衡所华威整合与先进封装材料证据"
+    ],
+    [
+      "华海诚科2026年第一季度报告",
+      "https://static.cninfo.com.cn/finalpage/2026-04-28/1225206588.PDF",
+      "2026Q1收入、利润、现金流和并表原因"
+    ],
+    [
+      "股东减持股份计划公告",
+      "https://static.cninfo.com.cn/finalpage/2026-05-25/1225328071.PDF",
+      "华天科技拟减持不超过2.40%股份"
+    ],
+    [
+      "股东询价转让结果报告书",
+      "https://static.cninfo.com.cn/finalpage/2026-05-15/1225305871.PDF",
+      "德裕丰询价转让405.30万股，实际控制人一致行动人持股变化"
+    ],
+    [
+      "华海定转开始转股公告",
+      "https://static.cninfo.com.cn/finalpage/2026-06-16/1225371533.PDF",
+      "定向可转债自2026-06-22起可转股，关注潜在摊薄与筹码扰动"
+    ],
+    [
+      "Sumitomo Bakelite EMC产品页",
+      "https://www.sumibe.co.jp/english/product/it-materials/epoxy/sumikon-eme/",
+      "海外环氧塑封料对标与行业领导者参照"
+    ],
+    [
+      "腾讯证券行情接口",
+      "https://qt.gtimg.cn/q=sh688535",
+      "2026-06-26收盘行情、PE、PB、市值、换手率"
+    ]
+  ]
+}

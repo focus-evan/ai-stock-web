@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>研究报告总入口</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe3ef;
+      --blue: #1f5fbf;
+      --red: #df1f2d;
+      --green: #16803b;
+      --amber: #a96800;
+      --slate: #334155;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+    }
+
+    main {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 18px clamp(16px, 1.6vw, 34px) 54px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111827, #26364f);
+      color: #fff;
+      border-radius: 10px;
+      padding: 28px 30px;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+    }
+
+    h1, h2, h3 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: 30px; line-height: 1.25; }
+    h2 { font-size: 20px; margin-bottom: 12px; }
+    h3 { font-size: 16px; line-height: 1.35; }
+    p { margin: 8px 0 0; }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #d8e2f0;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.2;
+      color: #111827;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 168px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fbfdff;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card:hover {
+      border-color: #9bbcf5;
+      box-shadow: 0 8px 22px rgba(31, 95, 191, 0.09);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .path {
+      color: #64748b;
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+      font-size: 12px;
+      word-break: break-all;
+      margin-top: 10px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.blue { color: var(--blue); background: #eef5ff; border: 1px solid #c9dcff; }
+    .tag.red { color: var(--red); background: #fff0f1; border: 1px solid #ffc7cd; }
+    .tag.green { color: var(--green); background: #edf9f1; border: 1px solid #bfe8cb; }
+    .tag.amber { color: var(--amber); background: #fff7e6; border: 1px solid #ffe0a3; }
+    .tag.gray { color: var(--slate); background: #eef2f7; border: 1px solid #d7dee9; }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th { background: #eef2f8; color: #111827; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+
+    a { color: #1d4ed8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .grid, .summary { grid-template-columns: 1fr; }
+      main { padding: 20px 14px 38px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=ai-stock-strategy-optimization-20260905&amp;view=reports">战法优化验收</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main>
+  <header>
+    <h1>研究报告总入口</h1>
+    <div class="meta">
+      <span>更新时间：2026-09-05 北京时间</span>
+      <span>位置：D:\Evan\html</span>
+      <span>用途：链接到各报告文件夹的主 HTML</span>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="summary">
+      <div class="metric"><strong>16</strong><span>已收录一级入口</span></div>
+      <div class="metric"><strong>8</strong><span>自动化 / 雷达类（原统计）</span></div>
+      <div class="metric"><strong>4</strong><span>研究 / 个股 / 持仓类（原统计）</span></div>
+      <div class="metric"><strong>1</strong><span>Skill / 方法论展示入口</span></div>
+      <div class="metric"><strong>2</strong><span>服务器运维文档集</span></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>常用入口</h2>
+    <div class="grid">
+      <a class="card" href="../ai-stock-strategy-audit-20260905/index.html"><h3>AI-Stock 战法质量与交易效果审计</h3><p>14类战法、推荐跟进与18个模拟组合：胜率、收益口径、异常成交、数据质量与优化优先级。</p><div class="tag-row"><span class="tag blue">战法评估</span><span class="tag amber">2026-09-05</span></div><div class="path">ai-stock-strategy-audit-20260905/index.html</div></a>
+
+      <a class="card" href="../theme-ignition-v231/latest.html">
+        <h3>每日热门叙事 + V2.3.1</h3>
+        <p>盘前热门叙事、点火1.2核心受益标的、V2.3.1与S五维分析。</p>
+        <div class="tag-row"><span class="tag red">叙事雷达</span><span class="tag blue">V2.3.1</span></div>
+        <div class="path">theme-ignition-v231/latest.html</div>
+      </a>
+
+      <a class="card" href="../automation-2-holdings/latest.html">
+        <h3>当前持仓利多利空晨报</h3>
+        <p>根据持仓扫描早间利多、利空、风险级别和重点关注个股。</p>
+        <div class="tag-row"><span class="tag red">持仓风险</span><span class="tag amber">晨报</span></div>
+        <div class="path">automation-2-holdings/latest.html</div>
+      </a>
+
+      <a class="card" href="../a-share-macro-radar/latest.html">
+        <h3>A股大盘情绪预警</h3>
+        <p>宏观、大盘宽度、资金风险偏好和交易日仓位总阀门。</p>
+        <div class="tag-row"><span class="tag amber">宏观雷达</span><span class="tag gray">S0-S7</span></div>
+        <div class="path">a-share-macro-radar/latest.html</div>
+      </a>
+
+      <a class="card" href="../cffex-citic-backtest/latest.html">
+        <h3>中信期货席位次日效应回测</h3>
+        <p>检验中信期货IF/IH/IC/IM公开席位加空后，对应A股指数次日是否更容易上涨。</p>
+        <div class="tag-row"><span class="tag amber">股指期货</span><span class="tag blue">统计回测</span></div>
+        <div class="path">cffex-citic-backtest/latest.html</div>
+      </a>
+
+      <a class="card" href="../ai-hardware-materials-beneficiaries/index.html">
+        <h3>AI硬件材料受益公司地图</h3>
+        <p>AI PCB、MLCC、玻璃基板、HBM外溢、半导体材料、先进封装胶材、纯硅材料。</p>
+        <div class="tag-row"><span class="tag blue">材料链</span><span class="tag green">卖铲人</span></div>
+        <div class="path">ai-hardware-materials-beneficiaries/index.html</div>
+      </a>
+
+      <a class="card" href="../stock-reports/index.html">
+        <h3>个股深度报告</h3>
+        <p>V2.3.1、S40、历史单股报告、估值数据和重估扫描数据的集中入口。</p>
+        <div class="tag-row"><span class="tag blue">个股</span><span class="tag green">深度报告</span></div>
+        <div class="path">stock-reports/index.html</div>
+      </a>
+
+      <a class="card" href="../v231-holdings-20260627/index.html">
+        <h3>V2.3.1持仓体检</h3>
+        <p>持仓分项报告、框架核心逻辑、组合诊断和相关历史输出。</p>
+        <div class="tag-row"><span class="tag blue">持仓</span><span class="tag green">V2.3.1</span></div>
+        <div class="path">v231-holdings-20260627/index.html</div>
+      </a>
+
+      <a class="card" href="../skill-list/index.html">
+        <h3>Skill / 方法论展示</h3>
+        <p>集中收录内容创作 Skill、方法论说明与逻辑展示 HTML。</p>
+        <div class="tag-row"><span class="tag blue">Skill</span><span class="tag amber">方法论</span></div>
+        <div class="path">skill-list/index.html</div>
+      </a>
+
+      <a class="card" href="../skill-list/s-teacher-mind-methodology-20260901/creation.html">
+        <h3>S老师内容创作深度方法</h3>
+        <p>从热点选题、问题树和产业投研，走到八步创作流程、脚本架构、虎头、IP塑造与发布质量门。</p>
+        <div class="tag-row"><span class="tag blue">S老师</span><span class="tag amber">内容创作</span></div>
+        <div class="path">skill-list/s-teacher-mind-methodology-20260901/creation.html</div>
+      </a>
+
+      <a class="card" href="../server-cleanup-114.55.219.63-20260831/index.html">
+        <h3>114.55.219.63 服务器清理方案</h3>
+        <p>完整文档集：清理前情况、可手动逐步执行的操作手册、清理后状态与验收基线。</p>
+        <div class="tag-row"><span class="tag red">服务器运维</span><span class="tag green">已验证</span></div>
+        <div class="path">server-cleanup-114.55.219.63-20260831/index.html</div>
+      </a>
+
+      <a class="card" href="../server-cleanup-112.124.24.71-20260831/index.html">
+        <h3>112.124.24.71 服务器优化方案</h3>
+        <p>旧 Dify 1.7.1 生产机清理、ESSD启用、数据库备份，以及Dify暂停影响验证和完整恢复记录。</p>
+        <div class="tag-row"><span class="tag red">服务器运维</span><span class="tag green">已验证</span></div>
+        <div class="path">server-cleanup-112.124.24.71-20260831/index.html</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>全部一级文件夹</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>文件夹</th>
+          <th>主 HTML</th>
+          <th>内容说明</th>
+          <th>类型</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr><td>ai-stock-strategy-audit-20260905</td><td><a href="../ai-stock-strategy-audit-20260905/index.html">index.html</a></td><td>AI-Stock战法、推荐跟进与模拟交易质量深度审计。</td><td><span class="tag blue">系统研究</span></td></tr>
+
+        <tr>
+          <td>ai-hardware-materials-beneficiaries</td>
+          <td><a href="../ai-hardware-materials-beneficiaries/index.html">index.html</a></td>
+          <td>AI硬件材料与半导体材料A股核心受益公司地图。</td>
+          <td><span class="tag blue">材料研究</span></td>
+        </tr>
+        <tr>
+          <td>a-share-four-strategies</td>
+          <td><a href="../a-share-four-strategies/latest.html">latest.html</a></td>
+          <td>A股四类短线策略与候选池输出。</td>
+          <td><span class="tag amber">短线策略</span></td>
+        </tr>
+        <tr>
+          <td>a-share-macro-radar</td>
+          <td><a href="../a-share-macro-radar/latest.html">latest.html</a></td>
+          <td>每日A股宏观情绪、仓位总阀门和大盘风险预警。</td>
+          <td><span class="tag red">宏观雷达</span></td>
+        </tr>
+        <tr>
+          <td>a-share-macro-radar-20260703</td>
+          <td><a href="../a-share-macro-radar-20260703/index.html">index.html</a></td>
+          <td>2026-07-03宏观雷达HTML样例/归档。</td>
+          <td><span class="tag gray">归档</span></td>
+        </tr>
+        <tr>
+          <td>automation-2-holdings</td>
+          <td><a href="../automation-2-holdings/latest.html">latest.html</a></td>
+          <td>持仓利多利空与风险判断晨报。</td>
+          <td><span class="tag red">持仓监控</span></td>
+        </tr>
+        <tr>
+          <td>cffex-citic-backtest</td>
+          <td><a href="../cffex-citic-backtest/latest.html">latest.html</a></td>
+          <td>中信期货IF/IH/IC/IM公开席位变化与对应指数次日效应回测。</td>
+          <td><span class="tag amber">期指回测</span></td>
+        </tr>
+        <tr>
+          <td>global-tech-radar</td>
+          <td><a href="../global-tech-radar/latest.html">latest.html</a></td>
+          <td>全球科技资本开支、流动性和科技催化雷达。</td>
+          <td><span class="tag blue">全球科技</span></td>
+        </tr>
+        <tr>
+          <td>quarterly-disclosure-monitor</td>
+          <td><a href="../quarterly-disclosure-monitor/index.html">index.html</a></td>
+          <td>A/H股公告、季报/中报披露监控。</td>
+          <td><span class="tag green">公告监控</span></td>
+        </tr>
+        <tr>
+          <td>semiconductor-equipment-v231-s40</td>
+          <td><a href="../semiconductor-equipment-v231-s40/latest.html">latest.html</a></td>
+          <td>半导体设备公司V2.3.1 + S量化五维 + S40深度比较。</td>
+          <td><span class="tag blue">半导体设备</span></td>
+        </tr>
+        <tr>
+          <td>server-cleanup-114.55.219.63-20260831</td>
+          <td><a href="../server-cleanup-114.55.219.63-20260831/index.html">index.html</a></td>
+          <td>服务器清理前后对比、可手动逐步执行的详细操作手册和最终服务验收。</td>
+          <td><span class="tag red">服务器运维</span></td>
+        </tr>
+        <tr>
+          <td>server-cleanup-112.124.24.71-20260831</td>
+          <td><a href="../server-cleanup-112.124.24.71-20260831/index.html">index.html</a></td>
+          <td>旧 Dify 1.7.1 生产机优化、ESSD启用、数据库备份、暂停影响验证与完整恢复。</td>
+          <td><span class="tag red">服务器运维</span></td>
+        </tr>
+        <tr>
+          <td>skill-list</td>
+          <td><a href="../skill-list/index.html">index.html</a></td>
+          <td>内容创作Skill、方法论与逻辑展示HTML的分类入口。</td>
+          <td><span class="tag amber">Skill展示</span></td>
+        </tr>
+        <tr>
+          <td>stock-reports</td>
+          <td><a href="../stock-reports/index.html">index.html</a></td>
+          <td>单股深度报告、历史V2.3.1报告和估值数据入口。</td>
+          <td><span class="tag green">个股报告</span></td>
+        </tr>
+        <tr>
+          <td>theme-ignition-v231</td>
+          <td><a href="../theme-ignition-v231/latest.html">latest.html</a></td>
+          <td>热门叙事点火1.2、核心受益标的和V2.3.1筛选。</td>
+          <td><span class="tag red">题材雷达</span></td>
+        </tr>
+        <tr>
+          <td>v231-holdings-20260627</td>
+          <td><a href="../v231-holdings-20260627/index.html">index.html</a></td>
+          <td>持仓V2.3.1体检、公司分项HTML和框架核心逻辑。</td>
+          <td><span class="tag blue">持仓体检</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    打开方式：双击本文件，或在浏览器中访问 file:///D:/Evan/html/index.html
+  </footer>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

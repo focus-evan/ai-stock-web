@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>114.55.219.63 服务器清理方案文档集</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-114.55.219.63-20260831&amp;view=reports">管理服务器清理</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar">
+    <div class="crumbs"><a href="../index.html">总入口</a><span>/</span><strong>服务器清理方案</strong></div>
+    <div>文档集版本：2026-08-31</div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">SERVER CLEANUP PLAYBOOK</div>
+    <h1>114.55.219.63 服务器清理方案</h1>
+    <p>一个完整的运维文档集：先理解清理前风险，再按可核验、可回滚的步骤手动操作，最后对照清理后的服务器状态验收。</p>
+    <div class="tags"><span>Alibaba Cloud Linux</span><span>Docker / Nginx / Tomcat</span><span>业务服务零重启</span><span>文件优先审计</span></div>
+  </header>
+
+  <nav class="doc-nav" aria-label="文档集导航">
+    <a class="active" href="index.html">文档集入口</a>
+    <a href="01-before-cleanup.html">01 清理前情况</a>
+    <a href="02-manual-cleanup-guide.html">02 手动操作手册</a>
+    <a href="03-after-cleanup.html">03 清理后情况</a>
+  </nav>
+
+  <div class="status">
+    <span class="pill green">已执行验证</span>
+    <div><strong>本方案已在 2026-08-31 实际执行并完成验收。</strong> 系统盘由 100% 降至 35%，数据盘由 41% 降至 15%；Docker、Nginx、Tomcat、MySQL、Redis 均保持正常。</div>
+  </div>
+
+  <section>
+    <h2>推荐阅读顺序</h2>
+    <p class="section-note">这不是三个散落页面，而是一条完整的“现状 → 操作 → 验收”路径。</p>
+    <div class="grid three">
+      <a class="card" href="01-before-cleanup.html">
+        <span class="pill red">第 1 章</span>
+        <h3>清理前服务器情况</h3>
+        <p>查看系统盘满载、Docker 缓存、停用容器日志、journal 和数据盘大日志的原始占用。</p>
+        <div class="go">先理解风险与边界 →</div>
+      </a>
+      <a class="card" href="02-manual-cleanup-guide.html">
+        <span class="pill blue">第 2 章 · 核心</span>
+        <h3>可手动执行的详细操作手册</h3>
+        <p>逐步给出前置检查、备份、命令、预期输出、停止条件、回滚方式和最终验收。</p>
+        <div class="go">按步骤开始操作 →</div>
+      </a>
+      <a class="card" href="03-after-cleanup.html">
+        <span class="pill green">第 3 章</span>
+        <h3>清理后当前服务器状况</h3>
+        <p>核对磁盘、内存、服务、端口、日志策略和保留的观察项，形成交接基线。</p>
+        <div class="go">查看最终结果 →</div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>本次治理摘要</h2>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘</div><div class="value good">100% → 35%</div><div class="track"><div class="fill green" style="width:35%"></div></div><div class="sub">恢复 75 GiB 可用空间</div></div>
+      <div class="card metric"><div class="label">数据盘</div><div class="value good">41% → 15%</div><div class="track"><div class="fill green" style="width:15%"></div></div><div class="sub">日志压缩后可用 401 GiB</div></div>
+      <div class="card metric"><div class="label">构建缓存</div><div class="value blue">释放 60.13 GB</div><div class="track"><div class="fill" style="width:85%"></div></div><div class="sub">保留约 10 GB 热缓存</div></div>
+      <div class="card metric"><div class="label">服务验收</div><div class="value good">全部通过</div><div class="track"><div class="fill green" style="width:100%"></div></div><div class="sub">业务容器与 Java/MySQL/Redis 未重启</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>适用边界</h2>
+    <div class="grid two">
+      <div class="callout good"><strong>适合：</strong>需要在不停止正常业务的前提下，处理 Docker 构建缓存、停用容器日志、journal、未引用镜像以及 Nginx/Tomcat/stock 日志增长。</div>
+      <div class="callout warn"><strong>不要盲目照抄：</strong>手册内的容器名、目录和阈值来自本服务器。换服务器前必须重新核验挂载点、容器状态、日志句柄与可回滚备份。</div>
+    </div>
+  </section>
+
+  <div class="next-prev">
+    <a href="../index.html">← 返回 D:\Evan\html 总入口</a>
+    <a href="01-before-cleanup.html">开始阅读：清理前情况 →</a>
+  </div>
+  <div class="footer">文档集目录：D:\Evan\html\server-cleanup-114.55.219.63-20260831</div>
+</main>
+
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

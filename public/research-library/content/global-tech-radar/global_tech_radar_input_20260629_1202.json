@@ -1,0 +1,319 @@
+{
+  "generated_at_beijing": "2026-06-29 12:02",
+  "run_label": "12:00 noon",
+  "headline": "CapEx 扩张未降温，流动性仍限制科技估值弹性",
+  "top_conclusion": "本次雷达维持 Orange：微软、Meta 等大厂 AI/data-center CapEx 仍处扩张区间，OpenAI/Broadcom Jalapeño 与 Micron/Broadcom/NVIDIA 继续验证 AI 硬件链；但 Fed 未转向宽松、PCE 偏热且美债收益率仍在高位，高估值科技资产不宜只按基本面催化追高。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Bullish"
+  },
+  "top_changes": [
+    {
+      "title": "OpenAI/Broadcom Jalapeño 推理 ASIC 进入明确路线",
+      "fact": "OpenAI 官方披露与 Broadcom 合作的首款定制 AI 推理芯片 Jalapeño，目标是提升服务 ChatGPT 等大规模推理负载的算力效率。",
+      "impact": "强化 AI ASIC、先进封装、高速网络、电力、液冷和整机集成链条的中期需求，同时提示 GPU 单一路径面临长期分流。",
+      "confidence": "High",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+    },
+    {
+      "title": "微软与 Meta 高强度 CapEx 信号仍是主线",
+      "fact": "滚动核对微软 FY26 Q3 与 Meta Q1 2026 官方材料，仍未见 AI/data-center CapEx 下修；Meta 已把 2026 CapEx 指引上调至 1250-1450 亿美元。",
+      "impact": "AI 数据中心、服务器 ODM、GPU/ASIC、网络、光互连、供电、液冷和工程建设链条继续获得需求支撑。",
+      "confidence": "High",
+      "source": "Microsoft / Meta IR",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+    },
+    {
+      "title": "Fed 未给宽松确认，5 月 PCE 仍偏热",
+      "fact": "FOMC 2026-06-17 维持联邦基金目标区间 3.50%-3.75%；BEA 2026-06-26 披露 5 月 PCE 环比 +0.4%、核心 PCE 环比 +0.3%。",
+      "impact": "AI 基本面强不等于科技估值自动扩张，长久期科技资产仍受实际利率、美元和风险偏好约束。",
+      "confidence": "High",
+      "source": "Federal Reserve / BEA",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+    },
+    {
+      "title": "供应链交叉验证仍偏正面",
+      "fact": "Micron FY2026 Q3 继续强调 HBM 和数据中心 SSD，Broadcom FY2026 Q2 继续验证 AI 半导体/网络需求，NVIDIA Spectrum-X Photonics 延伸 AI 工厂网络路线。",
+      "impact": "HBM、数据中心 SSD、ASIC、交换网络、CPO/硅光、PCB/CCL、先进封装和服务器电力链继续具备景气支撑。",
+      "confidence": "High",
+      "source": "Micron / Broadcom / NVIDIA",
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-third-quarter-fiscal-2026"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx 模块维持 Expansion。微软与 Meta 的官方材料继续显示高强度 AI/data-center 投入，Alphabet、Amazon 本次未见官方下修；OpenAI/Broadcom 的推理 ASIC 路线和供应链公司业绩继续做正向交叉验证。",
+    "items": [
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q3 官方材料显示 AI 与云基础设施仍是资本开支核心；滚动记忆记录 Q3 CapEx 319 亿美元、FY26 Q4 预计超 400 亿美元。",
+        "direction": "持平",
+        "impact": "AI 数据中心、服务器、GPU/ASIC、交换网络、电力、液冷、建筑工程链条需求继续扩张。",
+        "confidence": "High",
+        "source": "Microsoft Investor Relations",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Q1 2026 官方业绩材料将 2026 年 CapEx 指引上调至 1250-1450 亿美元，核心用途仍是 AI 基础设施。",
+        "direction": "上修",
+        "impact": "AI 服务器 ODM、GPU/ASIC 计算、光模块/CPO、交换、电力与液冷需求继续受益。",
+        "confidence": "High",
+        "source": "Meta Investor Relations",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Alphabet",
+        "signal": "投资者材料仍把技术基础设施和 AI 能力建设列为资本投入重点；本次未见官方 AI/data-center CapEx 下修。",
+        "direction": "持平",
+        "impact": "TPU、服务器、数据中心电力/散热、网络设备和云基础设施链条保持支撑。",
+        "confidence": "Medium",
+        "source": "Alphabet Investor Relations",
+        "url": "https://abc.xyz/investor/"
+      },
+      {
+        "entity": "Amazon",
+        "signal": "季度结果页面和 AWS/AI 基础设施披露未显示本次官方削减 AI/data-center 支出。",
+        "direction": "持平",
+        "impact": "云资本开支、Trainium/NVIDIA 容量、服务器、电力与数据中心工程链保持需求可见度。",
+        "confidence": "Medium",
+        "source": "Amazon Investor Relations",
+        "url": "https://ir.aboutamazon.com/quarterly-results/default.aspx"
+      },
+      {
+        "entity": "OpenAI / Broadcom",
+        "signal": "OpenAI 官方披露 Jalapeño 定制推理 ASIC，并与 Broadcom 合作推进算力基础设施。",
+        "direction": "上修",
+        "impact": "AI ASIC、先进封装、以太网网络、电力、液冷和整机集成需求的中期确定性增强。",
+        "confidence": "High",
+        "source": "OpenAI",
+        "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块维持 Tightening。Fed 没有给出明确宽松确认，PCE 仍偏热，ECB 6 月加息、BOE 按兵不动，美债收益率仍在高位；因此 AI 基本面强势与估值端压力并存。",
+    "items": [
+      {
+        "entity": "Federal Reserve / FOMC",
+        "signal": "2026-06-17 维持联邦基金目标区间 3.50%-3.75%，政策仍依赖通胀与就业数据。",
+        "direction": "压力",
+        "impact": "不支持科技成长股估值无风险扩张，AI 主线仍需业绩兑现消化估值。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+      },
+      {
+        "entity": "U.S. PCE inflation",
+        "signal": "BEA 2026-06-26 披露 5 月 PCE 环比 +0.4%，核心 PCE 环比 +0.3%。",
+        "direction": "压力",
+        "impact": "削弱短期快速降息逻辑，高久期科技估值端仍受抑制。",
+        "confidence": "High",
+        "source": "U.S. Bureau of Economic Analysis",
+        "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026"
+      },
+      {
+        "entity": "U.S. 10Y Treasury yield",
+        "signal": "盘中市场报价仍处约 4.38% 高位附近，未形成对长久期科技资产的明确顺风。",
+        "direction": "压力",
+        "impact": "估值扩张受限，偏向选择有订单/收入兑现的硬件链，而不是纯概念扩散。",
+        "confidence": "Medium",
+        "source": "MarketWatch",
+        "url": "https://www.marketwatch.com/investing/bond/tmubmusd10y"
+      },
+      {
+        "entity": "European Central Bank",
+        "signal": "2026-06-11 ECB 将三大关键利率上调 25bp。",
+        "direction": "收紧",
+        "impact": "全球资金成本上行压力未解除，对成长股估值是负面背景。",
+        "confidence": "High",
+        "source": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~37f9ac2a7f.en.html"
+      },
+      {
+        "entity": "Bank of England",
+        "signal": "2026-06-18 BOE 将 Bank Rate 维持在 3.75%。",
+        "direction": "中性",
+        "impact": "不是新增宽松，全球成长风格仍缺少明确流动性顺风。",
+        "confidence": "High",
+        "source": "Bank of England",
+        "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/june-2026"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化维持 Bullish，且主要来自公司官方材料；但 A/H 映射继续要求订单、客户认证或收入贡献，不能把海外 CapEx 自动等同为本土个股兑现。",
+    "items": [
+      {
+        "event": "OpenAI/Broadcom Jalapeño 推理 ASIC",
+        "affected_chain": "AI ASIC / 数据中心 / 电力 / 网络 / 液冷",
+        "direction": "利好",
+        "winners": "ASIC 设计、先进封装、以太网网络、数据中心电力、液冷、服务器 ODM",
+        "losers": "单一 GPU 依赖度过高且缺少客户绑定的环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "OpenAI",
+        "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+      },
+      {
+        "event": "Micron FY2026 Q3 验证 HBM 与数据中心 SSD 需求",
+        "affected_chain": "HBM / DDR5 / 数据中心 SSD / AI 服务器存储",
+        "direction": "利好",
+        "winners": "存储、封测、先进封装、服务器存储供应链",
+        "losers": "传统消费电子存储弱势环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Micron Investor Relations",
+        "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-third-quarter-fiscal-2026"
+      },
+      {
+        "event": "Broadcom FY2026 Q2 AI 半导体与网络需求继续强",
+        "affected_chain": "AI ASIC / 交换芯片 / 以太网网络 / 先进封装",
+        "direction": "利好",
+        "winners": "ASIC 设计、网络芯片、高速 PCB/CCL、封装测试、服务器网络",
+        "losers": "缺少 AI 数据中心客户验证的弱算力概念",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Broadcom Investor Relations",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial-results"
+      },
+      {
+        "event": "NVIDIA Spectrum-X Photonics 延伸 AI 工厂网络路线",
+        "affected_chain": "CPO / 硅光 / 光模块 / 高速互连",
+        "direction": "利好",
+        "winners": "硅光、CPO、光模块、交换、800G/1.6T 互连方向",
+        "losers": "低速光通信与传统网络库存链",
+        "evidence": "官方确认",
+        "confidence": "Medium",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-nvidia-spectrum-x-photonics-to-revolutionize-ai-factory-networking"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI 服务器 ODM / 整机 / 机柜",
+      "verified_direct": "未见本次新增官方材料直接披露 A/H 公司新增订单；工业富联等仍需以公司公告、客户验证、收入贡献为准。",
+      "inferred": "微软/Meta CapEx 高强度与 OpenAI/Broadcom ASIC 路线对 AI 服务器、交换机、机柜、电源和液冷链条偏正面。",
+      "risk": "客户保密、寄售模式、毛利率、库存和估值预期可能削弱收益兑现。"
+    },
+    {
+      "theme": "HBM / 存储 / 封测",
+      "verified_direct": "未见本次官方材料直接披露 A/H 公司新增订单。",
+      "inferred": "Micron HBM 与数据中心 SSD 强势对存储设备、封测、材料和服务器存储链形成景气推断。",
+      "risk": "A/H 映射必须回到客户认证、份额、收入贡献和毛利率，不能只看主题相关。"
+    },
+    {
+      "theme": "CPO / 光模块 / 高速互连",
+      "verified_direct": "未见本次 NVIDIA 官方材料直接点名 A/H 光模块公司。",
+      "inferred": "Spectrum-X Photonics 和 AI 工厂网络扩容利好高速光模块、硅光、交换与 PCB/CCL。",
+      "risk": "需要继续验证 800G/1.6T 出货、客户结构和价格/良率。"
+    },
+    {
+      "theme": "数据中心电力 / 液冷 / UPS",
+      "verified_direct": "未见本次材料直接确认 A/H 新订单。",
+      "inferred": "Jalapeño 推理 ASIC、10GW 级算力扩张叙事和 hyperscaler CapEx 扩张提高电力、散热、UPS、配电和工程需求。",
+      "risk": "区域电网、交付周期、海外认证和项目落地节奏决定兑现度。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "核实 Alphabet 与 Amazon 下一批财报是否跟随上修 AI/data-center CapEx",
+      "why": "这是 CapEx 模块能否继续维持 Expansion 的核心证据。"
+    },
+    {
+      "item": "跟踪美国就业、CPI、10Y/实际利率和 DXY",
+      "why": "只有通胀和利率压力缓和，Liquidity 才可能从 Tightening 调回 Neutral。"
+    },
+    {
+      "item": "验证 OpenAI/Broadcom Jalapeño 供应链分工和量产节奏",
+      "why": "ASIC 是大级别催化，但 A/H 映射必须依赖订单、客户认证或收入披露。"
+    },
+    {
+      "item": "跟踪 NVIDIA CPO/硅光伙伴与量产节奏",
+      "why": "CPO 与 1.6T 互连可能成为下一轮 AI 数据中心硬件扩散主线。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "OpenAI: Building our first AI chip with Broadcom",
+      "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/",
+      "used_for": "Tech catalyst / CapEx cross-check",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "Microsoft FY2026 Q3 Earnings",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Meta Reports First Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Alphabet Investor Relations",
+      "url": "https://abc.xyz/investor/",
+      "used_for": "CapEx",
+      "published_at": "2026 Q1 materials"
+    },
+    {
+      "title": "Amazon Quarterly Results",
+      "url": "https://ir.aboutamazon.com/quarterly-results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026 Q1 materials"
+    },
+    {
+      "title": "Federal Reserve FOMC Statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-17"
+    },
+    {
+      "title": "BEA Personal Income and Outlays, May 2026",
+      "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-26"
+    },
+    {
+      "title": "MarketWatch: 10 Year Treasury Note",
+      "url": "https://www.marketwatch.com/investing/bond/tmubmusd10y",
+      "used_for": "Liquidity market variable",
+      "published_at": "2026-06-29 intraday"
+    },
+    {
+      "title": "ECB Monetary Policy Decision",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~37f9ac2a7f.en.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-11"
+    },
+    {
+      "title": "Bank of England June 2026 Monetary Policy Summary",
+      "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/june-2026",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-18"
+    },
+    {
+      "title": "Micron FY2026 Q3 Results",
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-third-quarter-fiscal-2026",
+      "used_for": "Tech catalyst / CapEx cross-check",
+      "published_at": "2026-06-24"
+    },
+    {
+      "title": "Broadcom FY2026 Q2 Results",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial-results",
+      "used_for": "Tech catalyst / CapEx cross-check",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "NVIDIA Spectrum-X Photonics",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-nvidia-spectrum-x-photonics-to-revolutionize-ai-factory-networking",
+      "used_for": "Tech catalyst",
+      "published_at": "2026"
+    }
+  ]
+}

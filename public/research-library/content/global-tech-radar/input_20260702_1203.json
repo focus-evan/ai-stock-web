@@ -1,0 +1,358 @@
+{
+  "generated_at_beijing": "2026-07-02 12:03",
+  "run_label": "12:00 noon",
+  "headline": "AI CapEx 仍强，但非农前美债收益率与出口合规风险继续压制追高空间",
+  "top_conclusion": "本次总闸门维持 Orange：超大云厂商与 Oracle/Broadcom/NVIDIA 链条仍指向 AI 数据中心扩张；但 Fed 维持 3.50%-3.75%、10Y 美债在 4.4% 以上、7月2日晚间非农待公布，叠加 Supermicro/Taiwan 出口合规调查，科技链只能沿官方订单和业绩兑现筛选，不适合单纯追主题。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Mixed"
+  },
+  "top_changes": [
+    {
+      "title": "非农发布前，美债收益率仍压制科技估值",
+      "fact": "BLS 日程显示 2026年6月就业报告将在美国东部时间 2026-07-02 08:30 发布；截至北京时间 12:03 尚未公布。Fed H.15 显示 6月30日 10Y 美债为 4.44%，MarketWatch 报道 7月1日盘中约 4.46%。",
+      "impact": "AI 硬件基本面强，但长久期科技资产折现率仍高；晚间非农若偏强，流动性闸门难以转松。",
+      "confidence": "High",
+      "source": "BLS / Federal Reserve H.15 / MarketWatch",
+      "url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    {
+      "title": "Meta 外售 AI 算力报道提高 CapEx 变现想象",
+      "fact": "Business Insider 报道 Meta 计划推出云计算业务、出售富余 AI compute；Meta 官方 Q1 已将 2026 CapEx 指引上修至 1250亿-1450亿美元，本次未见官方下修。",
+      "impact": "若后续官方确认，Meta 的 AI 基建从内部投入扩展到外部云收入，有利于服务器、网络、电源、液冷与光互连需求，但目前仍需等待公司正式确认。",
+      "confidence": "Medium",
+      "source": "Business Insider / Meta IR",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"
+    },
+    {
+      "title": "Supermicro 合规事件继续扩大",
+      "fact": "Tom's Hardware 报道台湾检方在 NVIDIA AI 芯片疑似走私调查中搜查 Supermicro 台湾办公室及两家供应链伙伴，涉及九处地点、六人被传唤；未见 Supermicro 官方确认财务影响。",
+      "impact": "AI 服务器链条短期不能只按需求利好处理，出口合规、客户审计和分销路径会成为估值折价变量。",
+      "confidence": "Medium",
+      "source": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/taiwan-raids-super-micro-and-two-supply-chain-partners-in-widening-nvidia-smuggling-probe"
+    },
+    {
+      "title": "Broadcom 与 Oracle 继续验证 AI 基建需求",
+      "fact": "Broadcom FY2026 Q2 官方披露 AI 半导体收入 108亿美元、同比增长 143%，并预计 Q3 AI 半导体收入 160亿美元、同比增长超过 200%；Oracle FY2026 Q4 官方披露 RPO 6380亿美元，OCI 收入同比增长 93%。",
+      "impact": "AI ASIC、AI networking、先进封装、PCB/CCL、光互连、服务器与数据中心机电需求仍有官方验证，但 Oracle 负自由现金流提示融资和兑现节奏需要跟踪。",
+      "confidence": "High",
+      "source": "Broadcom IR / Oracle IR",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial"
+    }
+  ],
+  "capex": {
+    "verdict": "Expansion：本轮未发现 Microsoft、Alphabet、Meta、Amazon、Oracle 对 AI/数据中心 CapEx 的官方下修；Meta 外售算力报道、Oracle RPO、Broadcom AI 半导体与 NVIDIA Rubin 量产继续验证需求。",
+    "items": [
+      {
+        "entity": "Microsoft",
+        "signal": "FY2026 Q3 官方材料仍显示 AI 与云为核心增长驱动；前序跟踪的高强度 AI/data-center 投资本轮未见官方下修。",
+        "direction": "持平",
+        "impact": "Azure 算力、服务器、网络、电力、液冷与光模块需求维持。",
+        "confidence": "Medium",
+        "source": "Microsoft Investor Relations",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q3/performance"
+      },
+      {
+        "entity": "Alphabet",
+        "signal": "2026 Q1 earnings call 披露 Q1 CapEx 357亿美元，绝大多数投向支持 AI 机会的技术基础设施，约 60% 为服务器、40% 为数据中心和网络设备。",
+        "direction": "持平",
+        "impact": "TPU/服务器、数据中心网络、光互连、供电与散热链条保持高景气。",
+        "confidence": "High",
+        "source": "Alphabet Investor Relations",
+        "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Meta Q1 官方将 2026 CapEx 指引上修至 1250亿-1450亿美元；Business Insider 报道 Meta 计划出售富余 AI compute，本次未见公司正式公告确认该云业务。",
+        "direction": "上修后持平",
+        "impact": "若外售算力落地，AI 集群投入从成本中心向可变现云资源过渡，利好服务器、网络、光互连、电源和液冷。",
+        "confidence": "Medium",
+        "source": "Meta Investor Relations / Business Insider",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Amazon / AWS",
+        "signal": "Amazon Q1 2026 官方披露过去12个月自由现金流降至 12亿美元，主要受物业设备采购增加影响，AI 投资仍是核心变量；本轮未见官方下修。",
+        "direction": "持平",
+        "impact": "AWS AI 基础设施、Trainium/NVIDIA 容量、数据中心机电和服务器投入仍强，但现金流消耗需要跟踪。",
+        "confidence": "High",
+        "source": "Amazon Investor Relations",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx"
+      },
+      {
+        "entity": "Oracle",
+        "signal": "FY2026 Q4 RPO 升至 6380亿美元，Q4 OCI 收入同比增长 93%；FY2026 自由现金流为 -237亿美元。",
+        "direction": "持平",
+        "impact": "AI 云数据中心需求强，但 RPO 兑现、融资成本与现金流修复是持续性约束。",
+        "confidence": "High",
+        "source": "Oracle Investor Relations",
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+      },
+      {
+        "entity": "Broadcom",
+        "signal": "FY2026 Q2 AI 半导体收入 108亿美元，同比增长 143%；Q3 预计 160亿美元，同比增长超过 200%。",
+        "direction": "增强",
+        "impact": "定制 AI ASIC、AI networking、交换芯片、先进封装、高速 PCB/CCL 与光互连为确定性较强方向。",
+        "confidence": "High",
+        "source": "Broadcom Investor Relations",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial"
+      },
+      {
+        "entity": "NVIDIA",
+        "signal": "官方新闻显示 Vera Rubin 平台进入全量产爬坡，供应链生态制造 Rubin 系统；Spectrum-X Ethernet Photonics/CPO 纳入平台。",
+        "direction": "增强",
+        "impact": "GPU、HBM、CPO/光模块、液冷、服务器整机、交换和 AI 工厂电力链维持中期催化。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Tightening：Fed 未转松，10Y/实际利率仍处压力区，且 2026-07-02 晚间非农尚未公布；当前流动性不能作为高估值科技的顺风。",
+    "items": [
+      {
+        "entity": "Fed / FOMC",
+        "signal": "2026-06-17 FOMC 维持联邦基金目标区间 3.50%-3.75%，声明称通胀仍高于 2% 目标。",
+        "direction": "收紧",
+        "impact": "未给高估值科技提供降息弹性，估值仍依赖盈利兑现。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+      },
+      {
+        "entity": "US 10Y Treasury",
+        "signal": "Fed H.15 显示 2026-06-30 10Y 美债 4.44%；MarketWatch 报道 7月1日 10Y 收益率约 4.46%，就业报告前继续上行。",
+        "direction": "压力",
+        "impact": "对 AI 软件、高估值半导体设备和未盈利科技资产构成估值折现压力。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15 / MarketWatch",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "US real rates",
+        "signal": "Fed H.15 显示 2026-06-30 10Y TIPS 为 2.20%，仍处偏高区间。",
+        "direction": "压力",
+        "impact": "实际利率未松，AI 主题扩散到高估值股票的空间受限。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "US labor",
+        "signal": "BLS 日程显示 2026年6月非农将在 2026-07-02 08:30 ET 发布；北京时间本轮报告时尚未公布。5月非农新增 17.2万人、失业率 4.3%。",
+        "direction": "待验证",
+        "impact": "晚间数据是下一次调整流动性闸门的关键；强就业会强化 Tightening，明显走弱才可能改善估值压力。",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/news.release/empsit.nr0.htm"
+      },
+      {
+        "entity": "ADP private payroll",
+        "signal": "MarketWatch 报道 ADP 显示 2026年6月美国私营部门增加 9.8万个岗位，为三个月最低，但仍属劳动力温和降温而非失速。",
+        "direction": "中性",
+        "impact": "对降息预期有边际帮助，但不足以覆盖高收益率和 Fed 通胀表态。",
+        "confidence": "Medium",
+        "source": "MarketWatch / ADP",
+        "url": "https://www.marketwatch.com/story/businesses-add-98-000-new-jobs-in-june-adp-says-154835d8"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Mixed：AI ASIC、NVIDIA Rubin/CPO、Oracle RPO 与 Meta 算力商业化报道偏利好；Supermicro/Taiwan 调查使 AI 服务器合规风险继续升温。",
+    "items": [
+      {
+        "event": "Meta 被报道计划出售富余 AI compute",
+        "affected_chain": "云计算、AI 服务器、数据中心网络、电力、液冷、光互连",
+        "direction": "利好",
+        "winners": "进入 Meta AI 基建供应链的服务器、网络、机电、光互连与数据中心配套方向",
+        "losers": "只有内部 ROI 叙事、缺少外部收入验证的高估值 AI 基建标的",
+        "evidence": "媒体报道；官方 CapEx 指引已确认但外售算力尚未见官方确认",
+        "confidence": "Medium",
+        "source": "Business Insider / Meta IR",
+        "url": "https://www.businessinsider.com/meta-stock-cloud-computing-ai-compute-tech-stocks-data-centers-2026-7"
+      },
+      {
+        "event": "Broadcom AI 半导体收入和 Q3 指引大幅增长",
+        "affected_chain": "AI ASIC、AI networking、交换芯片、先进封装、PCB/CCL、光互连",
+        "direction": "利好",
+        "winners": "定制 ASIC、以太网交换、CPO/光模块、高速 PCB/CCL、AI 服务器配套",
+        "losers": "未进入核心客户供应链或只有概念映射的公司",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Broadcom Investor Relations",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial"
+      },
+      {
+        "event": "NVIDIA Vera Rubin 进入全量产爬坡",
+        "affected_chain": "GPU、HBM、CPO/光模块、交换网络、液冷、服务器整机",
+        "direction": "利好",
+        "winners": "NVIDIA 核心生态、HBM、光互连、液冷、服务器 ODM、AI 工厂电力链",
+        "losers": "无法跟上平台代际和功耗密度要求的旧平台供应商",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory"
+      },
+      {
+        "event": "Supermicro 台湾办公室及两家供应链伙伴遭搜查",
+        "affected_chain": "AI 服务器、NVIDIA GPU 流通、出口合规",
+        "direction": "利空",
+        "winners": "合规透明、客户审计通过率高的服务器供应商可能相对受益",
+        "losers": "灰色出口、分销合规不清晰、客户集中敏感地区的服务器链条",
+        "evidence": "可信媒体报道；未见公司确认财务影响",
+        "confidence": "Medium",
+        "source": "Tom's Hardware",
+        "url": "https://www.tomshardware.com/tech-industry/taiwan-raids-super-micro-and-two-supply-chain-partners-in-widening-nvidia-smuggling-probe"
+      },
+      {
+        "event": "Oracle OCI/RPO 强但自由现金流为负",
+        "affected_chain": "云计算、数据中心、服务器、供电、液冷",
+        "direction": "中性",
+        "winners": "能参与 OCI 扩建并有交付能力的数据中心硬件与机电链",
+        "losers": "依赖 RPO 叙事但缺少交付验证、现金流压力传导下议价弱的供应商",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Oracle Investor Relations",
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "已验证直接相关",
+      "verified_direct": "本轮未见 A/H 上市公司官方公告直接确认获得 Meta 外售算力、Broadcom AI ASIC、NVIDIA Vera Rubin、Oracle OCI 的新增订单；写无直接映射。",
+      "inferred": "无直接映射。",
+      "risk": "不能把全球 AI CapEx 自动等同于 A/H 公司业绩，必须等待订单、客户认证、收入占比或公告验证。"
+    },
+    {
+      "theme": "推断受益：高速互连与网络",
+      "verified_direct": "无。",
+      "inferred": "CPO/光模块、交换芯片配套、高速 PCB/CCL、连接器方向受 Broadcom/NVIDIA 网络升级推断支撑。",
+      "risk": "推断链条弹性高但估值也高；若 10Y/实际利率继续上行，主题溢价可能被压缩。"
+    },
+    {
+      "theme": "推断受益：AI服务器与数据中心机电",
+      "verified_direct": "无。",
+      "inferred": "液冷、UPS/电源、配电、服务器 ODM、数据中心建设材料仍受云厂商 CapEx 扩张支撑。",
+      "risk": "Supermicro 事件提示出口合规、客户审计和交付合法性是服务器链条的关键折价因素。"
+    },
+    {
+      "theme": "推断受压",
+      "verified_direct": "无。",
+      "inferred": "高估值但未兑现订单的 AI 概念股、灰色出口相关服务器链、现金流弱且靠 RPO 叙事扩张的公司受压。",
+      "risk": "需区分产业利好和公司利润兑现，不能用主题替代财务验证。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "2026-07-02 美国非农、失业率、工资数据",
+      "why": "北京时间晚间公布，是决定 Liquidity 是否继续 Tightening 的首要变量。"
+    },
+    {
+      "item": "10Y 美债、10Y TIPS、DXY 是否继续上行",
+      "why": "决定 AI 硬件强基本面能否外溢到科技股估值。"
+    },
+    {
+      "item": "Meta 是否正式确认外售 AI compute/cloud 业务",
+      "why": "若官方确认，会改善高 CapEx 的 ROI 叙事；若未确认，只能按媒体线索处理。"
+    },
+    {
+      "item": "Supermicro/Taiwan 调查是否出现官方处罚、客户订单变化或财务影响",
+      "why": "目前是事件性风险，若坐实会影响 AI 服务器合规链估值。"
+    },
+    {
+      "item": "A/H 公司是否披露与 Broadcom/NVIDIA/Oracle/Meta/微软/Alphabet/Amazon 的直接订单或客户验证",
+      "why": "只有直接验证才能从推断映射升级为可跟踪公司结论。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Federal Reserve issues FOMC statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-17"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "BLS Schedule of Releases for the Employment Situation",
+      "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+      "used_for": "Liquidity",
+      "published_at": "current schedule"
+    },
+    {
+      "title": "BLS Employment Situation Summary - May 2026",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-05"
+    },
+    {
+      "title": "MarketWatch: 10-year yield edges up ahead of jobs report",
+      "url": "https://www.marketwatch.com/livecoverage/stock-market-today-dow-s-p-500-nasdaq-rally-warsh-ecb-forum/card/investors-sell-10-year-treasury-yield-edges-up-ahead-of-jobs-report-7bFIDAY6AUOEebljSrle",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "Meta Reports First Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx/Tech catalyst",
+      "published_at": "2026-04-30"
+    },
+    {
+      "title": "Business Insider: Meta stock spikes on plan to sell excess AI compute",
+      "url": "https://www.businessinsider.com/meta-stock-cloud-computing-ai-compute-tech-stocks-data-centers-2026-7",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "Alphabet 2026 Q1 Earnings Call",
+      "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-23"
+    },
+    {
+      "title": "Amazon Q1 2026 Results",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Oracle Record Q4 and FY2026 Results",
+      "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx",
+      "used_for": "CapEx/Tech catalyst",
+      "published_at": "2026-06-10"
+    },
+    {
+      "title": "Broadcom FY2026 Q2 Results",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial",
+      "used_for": "CapEx/Tech catalyst",
+      "published_at": "2026-06-05"
+    },
+    {
+      "title": "NVIDIA Vera Rubin Ramps Into Full Production",
+      "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory",
+      "used_for": "CapEx/Tech catalyst",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "Tom's Hardware: Taiwan raids Supermicro and partners",
+      "url": "https://www.tomshardware.com/tech-industry/taiwan-raids-super-micro-and-two-supply-chain-partners-in-widening-nvidia-smuggling-probe",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "MarketWatch: Businesses added 98,000 jobs in June, ADP says",
+      "url": "https://www.marketwatch.com/story/businesses-add-98-000-new-jobs-in-june-adp-says-154835d8",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-01"
+    }
+  ]
+}

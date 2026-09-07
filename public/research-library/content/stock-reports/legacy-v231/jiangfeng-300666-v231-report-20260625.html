@@ -1,0 +1,716 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>江丰电子 300666｜V2.3.1 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --ink: #1f2528;
+      --muted: #64717a;
+      --line: #d7dee3;
+      --panel: #ffffff;
+      --accent: #0f6973;
+      --accent-2: #9a5b12;
+      --danger: #9b2c2c;
+      --good: #1f7a46;
+      --soft: #edf6f7;
+      --warn: #fff5e6;
+      --risk: #fff0f0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 28px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.45fr 0.9fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-main,
+    .score-card,
+    section,
+    .source-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .hero-main { padding: 28px; }
+
+    .kicker {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .verdict {
+      margin-top: 22px;
+      padding: 18px;
+      background: var(--soft);
+      border-left: 5px solid var(--accent);
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .score-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .score {
+      font-size: 58px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .score small {
+      font-size: 22px;
+      color: var(--muted);
+    }
+
+    .label {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    section {
+      padding: 24px;
+      margin-top: 18px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 16px;
+    }
+
+    p { margin: 8px 0; }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fff;
+    }
+
+    .mini .name {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .mini .value {
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .good { color: var(--good); }
+    .warn { color: var(--accent-2); }
+    .danger { color: var(--danger); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf2f4;
+      font-weight: 700;
+    }
+
+    .risk-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--risk);
+      border: 1px solid #f1c5c5;
+    }
+
+    .warn-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--warn);
+      border: 1px solid #efd2a1;
+    }
+
+    .ok-box {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid #cbe0e2;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: #e5ebee;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .source-box {
+      margin-top: 18px;
+      padding: 18px 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { font-size: 28px; }
+
+      .page { padding: 22px 16px 44px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <div class="hero">
+      <div class="hero-main">
+        <div class="kicker">V2.3.1 五层六维｜江丰电子 300666</div>
+        <h1>半导体靶材真龙头，但当前价格已经很贵</h1>
+        <div class="subtitle">报告日期：2026-06-25｜框架：风险门 → 四季度财务 → S五维 → 六维评分 → 利润池与执行条件</div>
+        <div class="verdict">
+          结论：江丰电子是A股半导体材料里少数“产业地位、客户验证、财务增长”同时较硬的公司，靶材和半导体精密零部件构成清晰双主线；但6月以来股价快速重估，动态PE约165倍、PB约13倍，当前更像“核心龙头高位观察”，不是舒服买点。
+        </div>
+        <div class="tag-row">
+          <span class="tag">高纯溅射靶材</span>
+          <span class="tag">半导体精密零部件</span>
+          <span class="tag">先进制程</span>
+          <span class="tag">存储/晶圆厂卖铲人</span>
+          <span class="tag">估值高位</span>
+        </div>
+      </div>
+      <div class="score-card">
+        <div>
+          <div class="score">76<small>/100</small></div>
+          <div class="label">标签：核心材料龙头，高位观察</div>
+          <p class="subtitle">公司质量给高分，交易赔率扣大分。不是因为公司差，而是价格太抢跑。</p>
+        </div>
+        <div class="grid-2">
+          <div class="mini">
+            <div class="name">6/25 收盘价</div>
+            <div class="value">330.00 元</div>
+          </div>
+          <div class="mini">
+            <div class="name">对应总市值</div>
+            <div class="value">约911 亿</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>一、风险门先行</h2>
+      <div class="grid-3">
+        <div class="risk-box">
+          <h3>估值风险：很高</h3>
+          <p>6/25收盘330元，动态PE约165倍，PB约13倍。按近四季度扣非净利约3.94亿元测算，扣非口径PE约231倍。</p>
+        </div>
+        <div class="warn-box">
+          <h3>交易拥挤：很高</h3>
+          <p>公司6月9日至6月11日连续三个交易日收盘涨幅偏离值累计超过30%，已发布异常波动公告。6/25成交额约82.9亿元，换手率约11.6%。</p>
+        </div>
+        <div class="warn-box">
+          <h3>融资与摊薄：中等</h3>
+          <p>公司6月披露向特定对象发行股票上市相关公告，并完成工商变更。融资有利于扩产，但短期也带来股本摊薄和估值消化压力。</p>
+        </div>
+      </div>
+      <p><strong>一票否决：</strong>暂无ST、退市、重大违法类一票否决。硬风险主要是高估值、异常波动、股东质押、增发摊薄、凯德石英整合，以及Q1非经常性损益占比偏高。</p>
+    </section>
+
+    <section>
+      <h2>二、公司基本面</h2>
+      <div class="grid-2">
+        <div class="ok-box">
+          <h3>靶材主业：真正卡位晶圆制造</h3>
+          <p>江丰电子聚焦超高纯金属溅射靶材，产品覆盖铝、钛、钽、铜等先端靶材。半年度报告披露，公司已成为台积电、中芯国际、SK海力士、联华电子等全球知名芯片制造企业的核心供应商。</p>
+        </div>
+        <div class="ok-box">
+          <h3>第二曲线：精密零部件放量</h3>
+          <p>半导体精密零部件已成为公司第二增长曲线，覆盖金属和非金属类零部件，服务芯片制造商和半导体装备制造商。2025年精密零部件收入10.84亿元，同比增长22.24%。</p>
+        </div>
+      </div>
+      <h3>利润池判断</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>利润池</th>
+            <th>江丰电子位置</th>
+            <th>验证程度</th>
+            <th>V2.3.1判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>晶圆制造PVD靶材</td>
+            <td>核心耗材，先进制程、成熟制程和特色工艺均覆盖</td>
+            <td>强验证</td>
+            <td>真卖铲人。需求与晶圆厂产能、先进制程、存储景气高度相关。</td>
+          </tr>
+          <tr>
+            <td>高纯钽/铜等先进靶材</td>
+            <td>用于更先进金属互连和阻挡层工艺，壁垒更高</td>
+            <td>强验证</td>
+            <td>决定护城河上限，是江丰区别于普通材料公司的关键。</td>
+          </tr>
+          <tr>
+            <td>半导体精密零部件</td>
+            <td>第二增长曲线，品类横向扩张</td>
+            <td>中强验证</td>
+            <td>可以提升单客户价值量，但毛利率、资本开支和交付质量要继续跟踪。</td>
+          </tr>
+          <tr>
+            <td>凯德石英协同</td>
+            <td>拟取得/推进控制权，补强石英零部件</td>
+            <td>事件验证中</td>
+            <td>重估加分项，但整合效果和并表贡献尚需财报验证。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>三、最近四个单季度财务验证</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>单季度</th>
+            <th>营收</th>
+            <th>归母净利</th>
+            <th>扣非净利</th>
+            <th>毛利率</th>
+            <th>净利率</th>
+            <th>经营现金流</th>
+            <th>观察点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026Q1</td>
+            <td>13.06亿，同比+30.49%</td>
+            <td class="good">2.10亿，同比+33.42%</td>
+            <td class="good">1.25亿，同比+37.07%</td>
+            <td>32.86%</td>
+            <td>16.07%</td>
+            <td class="good">+1.86亿</td>
+            <td>收入、扣非、现金流同步改善，但非经常性损益0.84亿，占归母比例偏高。</td>
+          </tr>
+          <tr>
+            <td>2025Q4</td>
+            <td>13.13亿</td>
+            <td>0.99亿</td>
+            <td>0.68亿</td>
+            <td class="warn">22.76%</td>
+            <td>7.52%</td>
+            <td class="good">+1.00亿</td>
+            <td>收入创新高，但单季毛利率和净利率回落，需要看是否为产品结构/费用阶段性影响。</td>
+          </tr>
+          <tr>
+            <td>2025Q3</td>
+            <td>11.96亿</td>
+            <td>1.48亿</td>
+            <td>1.17亿</td>
+            <td>27.55%</td>
+            <td>12.38%</td>
+            <td class="good">+0.91亿</td>
+            <td>收入继续放大，投资收益、公允价值变动对利润有一定影响。</td>
+          </tr>
+          <tr>
+            <td>2025Q2</td>
+            <td>10.94亿</td>
+            <td>0.95亿</td>
+            <td>0.84亿</td>
+            <td>27.29%</td>
+            <td>8.72%</td>
+            <td class="good">+2.18亿</td>
+            <td>现金流修复明显，说明收入增长不是完全靠赊销堆出来。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="ok-box">
+        <strong>财务结论：</strong>江丰电子的经营数据是“真科技”级别：近四个季度收入台阶上行，2026Q1收入、扣非和经营现金流同步改善。扣分点不是没有业绩，而是当前估值已经要求未来继续高增长、毛利率修复、零部件放量全部兑现。
+      </div>
+    </section>
+
+    <section>
+      <h2>四、S五维量化校验</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>评分</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>成长性</td>
+            <td>17 / 20</td>
+            <td>2025收入46.04亿、归母5.00亿，2026Q1收入和扣非继续增长，二阶趋势较强。</td>
+          </tr>
+          <tr>
+            <td>盈利性</td>
+            <td>15 / 20</td>
+            <td>靶材壁垒高，Q1毛利率32.86%；但Q4毛利率回落，精密零部件放量后的整体毛利率要继续验证。</td>
+          </tr>
+          <tr>
+            <td>经营规模</td>
+            <td>16 / 20</td>
+            <td>46亿收入、5亿归母净利，在A股半导体材料里规模和产业地位都较强。</td>
+          </tr>
+          <tr>
+            <td>资产效率</td>
+            <td>14 / 20</td>
+            <td>2025加权ROE约10%，2026Q1加权ROE 4.13%；扩产期仍需大量资本开支。</td>
+          </tr>
+          <tr>
+            <td>市值/估值</td>
+            <td>3 / 20</td>
+            <td>总市值约911亿，动态PE约165倍，扣非TTM口径更贵，估值项严重拖累。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mini">
+        <div class="name">S五维总分</div>
+        <div class="value warn">65 / 100</div>
+        <div class="bar"><span style="width:65%"></span></div>
+        <p>经营世界足够硬，但资本世界定价太激进。它是“好公司高价格”，不是“便宜好公司”。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>五、V2.3.1 六维评分</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>评分</th>
+            <th>理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>行业</td>
+            <td>92</td>
+            <td>晶圆制造、先进制程、存储景气和国产替代共同支撑，靶材是前道制造核心耗材。</td>
+          </tr>
+          <tr>
+            <td>核心竞争力</td>
+            <td>90</td>
+            <td>客户认证、纯度控制、工艺稳定性、规模供货和全球化服务构成强护城河。</td>
+          </tr>
+          <tr>
+            <td>财务质量</td>
+            <td>78</td>
+            <td>收入、扣非和现金流改善，但Q1非经常性损益占比、财务费用和借款上升需要扣分。</td>
+          </tr>
+          <tr>
+            <td>估值赔率</td>
+            <td>22</td>
+            <td>价格已按“全球靶材龙头+零部件第二曲线+存储靶材涨价”打满预期。</td>
+          </tr>
+          <tr>
+            <td>催化/影子逻辑</td>
+            <td>88</td>
+            <td>存储涨价、晶圆厂扩产、先进制程、靶材国产替代、凯德石英整合均可形成催化。</td>
+          </tr>
+          <tr>
+            <td>治理/流动性</td>
+            <td>72</td>
+            <td>流动性极强，但高换手、质押、增发摊薄和异常波动公告带来交易层面风险。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mini">
+        <div class="name">六维综合</div>
+        <div class="value good">76 / 100</div>
+        <div class="bar"><span style="width:76%"></span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>六、V2.3.1 修正项</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>判断</th>
+            <th>对评分影响</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>利润池位置</td>
+            <td>靶材是晶圆制造持续耗材，先进制程价值量更高，客户粘性强。</td>
+            <td class="good">+10</td>
+          </tr>
+          <tr>
+            <td>影子股逻辑</td>
+            <td>可映射台积电、中芯国际、SK海力士、存储扩产、先进封装/晶圆制造景气。</td>
+            <td class="good">+8</td>
+          </tr>
+          <tr>
+            <td>估值重构</td>
+            <td>从“国产靶材公司”重估为“全球半导体材料龙头+零部件平台”逻辑成立，但已大幅体现。</td>
+            <td class="warn">+3</td>
+          </tr>
+          <tr>
+            <td>客户集中折扣</td>
+            <td>大客户认证是护城河，但也意味着客户议价、验证周期和订单节奏会影响利润率。</td>
+            <td class="warn">-2</td>
+          </tr>
+          <tr>
+            <td>二阶增长</td>
+            <td>2026Q1收入、扣非、现金流同步向上，属于正二阶。</td>
+            <td class="good">+5</td>
+          </tr>
+          <tr>
+            <td>相对强弱</td>
+            <td>近期明显强于半导体材料板块，但异常波动后追高胜率下降。</td>
+            <td class="warn">0</td>
+          </tr>
+          <tr>
+            <td>组合暴露</td>
+            <td>若与中微公司、澜起科技、联瑞新材、生益科技等一起配置，会进一步提高半导体/AI硬件拥挤度。</td>
+            <td class="danger">-4</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>七、核心跟踪变量</h2>
+      <div class="grid-3">
+        <div class="mini">
+          <div class="name">第一优先级</div>
+          <div class="value">Q2扣非</div>
+          <p>必须确认Q1不是非经常性损益拉高。看扣非净利、毛利率、现金流是否继续改善。</p>
+        </div>
+        <div class="mini">
+          <div class="name">第二优先级</div>
+          <div class="value">靶材价格</div>
+          <p>市场在交易靶材涨价和国产替代。公司公告或客户订单比传闻更重要。</p>
+        </div>
+        <div class="mini">
+          <div class="name">第三优先级</div>
+          <div class="value">凯德并表</div>
+          <p>整合是否顺利、是否增厚零部件收入和利润，是估值重构能否继续的关键。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>八、执行条件</h2>
+      <div class="grid-2">
+        <div class="ok-box">
+          <h3>持有条件</h3>
+          <ul>
+            <li>已持有者可观察持有，但要用移动止盈保护利润。</li>
+            <li>Q2扣非继续增长，毛利率维持30%附近或改善。</li>
+            <li>板块仍在半导体材料/存储扩产主线中，且未出现放量破位。</li>
+          </ul>
+        </div>
+        <div class="warn-box">
+          <h3>买入/加仓条件</h3>
+          <ul>
+            <li>当前330元附近不适合追高。</li>
+            <li>第一买点是大幅回撤后缩量企稳；第二买点是Q2扣非、毛利率和订单同时超预期。</li>
+            <li>若没有基本面增量，只靠靶材涨价传闻，不能作为加仓依据。</li>
+          </ul>
+        </div>
+        <div class="warn-box">
+          <h3>减仓条件</h3>
+          <ul>
+            <li>高位放量滞涨，或单日成交额继续放大但价格无法新高。</li>
+            <li>半导体材料主线退潮，资金从高位核心转向低位补涨。</li>
+            <li>Q2财报显示收入增长但扣非、毛利率或现金流低于预期。</li>
+          </ul>
+        </div>
+        <div class="risk-box">
+          <h3>卖出/回避条件</h3>
+          <ul>
+            <li>跌破强趋势位后不能快速收回，说明高位筹码开始松动。</li>
+            <li>出现新增大额减持、质押风险、并购整合不及预期。</li>
+            <li>市场证伪靶材涨价或先进制程订单扩张逻辑。</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>模型动作：</strong>江丰电子适合放在“半导体材料核心观察池”，不是此刻无脑买入。若你想配置，更合理的是等分歧和财报验证，而不是在异常波动后的高估值位置追。</p>
+    </section>
+
+    <div class="source-box">
+      <strong>资料来源：</strong>
+      <ul>
+        <li><a href="https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?CompanyCode=80185213&amp;gather=1&amp;id=12096894">江丰电子2025年年度报告（新浪公告镜像）</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-29/1225228116.PDF">江丰电子2026年第一季度报告</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2025-08-26/1224570108.PDF">江丰电子2025年半年度报告</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2025-10-28/1224743725.PDF">江丰电子2025年第三季度报告</a></li>
+        <li><a href="https://paper.cnstock.com/html/2026-06/12/content_2230668.htm">江丰电子股票交易异常波动公告</a></li>
+        <li><a href="https://www.stcn.com/article/detail/3752848.html">证券时报：江丰电子2025年净利润同比增长24.7%</a></li>
+        <li><a href="https://www.news.cn/finance/20250910/de96b2949d754d5aa55bbaeed9729cb9/c.html">新华网：江丰电子二十年坚守以创新锻造内“芯”</a></li>
+        <li><a href="https://qt.gtimg.cn/q=sz300666">腾讯行情接口：300666实时行情快照</a></li>
+      </ul>
+    </div>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

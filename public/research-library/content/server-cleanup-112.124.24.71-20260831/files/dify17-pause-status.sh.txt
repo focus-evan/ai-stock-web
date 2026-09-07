@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -u
+
+pause_state_dir=/var/lib/dify17-pause
+alert_state_dir="$pause_state_dir/alerts"
+monitor_lock=/run/dify17-pause-status.lock
+
+exec 9>"$monitor_lock"
+flock -n 9 || exit 0
+
+install -d -m 0700 "$alert_state_dir"
+
+mode="$(cat "$pause_state_dir/mode" 2>/dev/null || echo unknown)"
+
+emit_transition() {
+    alert_key="$1"
+    is_active="$2"
+    severity="$3"
+    message="$4"
+    marker_file="$alert_state_dir/${alert_key}.alert"
+
+    if [ "$is_active" = "1" ]; then
+        if [ ! -f "$marker_file" ]; then
+            logger -p "daemon.${severity}" -t dify17-pause "$message"
+            : > "$marker_file"
+        fi
+    elif [ -f "$marker_file" ]; then
+        logger -p daemon.notice -t dify17-pause "RECOVERED: $message"
+        rm -f -- "$marker_file"
+    fi
+}
+
+dify_running="$(docker ps --filter label=com.docker.compose.project=dify17 -q | wc -l)"
+dify_existing="$(docker ps -a --filter label=com.docker.compose.project=dify17 -q | wc -l)"
+app_status="$(docker inspect -f '{{.State.Status}}' app_api_1 2>/dev/null || echo missing)"
+s5000_status="$(docker inspect -f '{{.State.Status}}' s5000-api-ha 2>/dev/null || echo missing)"
+
+app_health=0
+s5000_health=0
+if [ "$app_status" = running ] && docker exec app_api_1 python -c \
+    'import urllib.request; assert urllib.request.urlopen("http://127.0.0.1:8000/health", timeout=5).status == 200' \
+    >/dev/null 2>&1; then
+    app_health=1
+fi
+if [ "$s5000_status" = running ] && docker exec s5000-api-ha python -c \
+    'import urllib.request; assert urllib.request.urlopen("http://127.0.0.1:8000/health", timeout=5).status == 200' \
+    >/dev/null 2>&1; then
+    s5000_health=1
+fi
+
+if [ "$mode" = paused ]; then
+    if [ "$dify_running" -eq 0 ] && [ "$dify_existing" -eq 11 ]; then
+        emit_transition dify-state 0 warning "Dify pause state is correct"
+    else
+        emit_transition dify-state 1 warning "Dify pause drift: running=${dify_running}, existing=${dify_existing}, expected 0/11"
+    fi
+elif [ "$mode" = running ]; then
+    if [ "$dify_running" -eq 11 ] && [ "$dify_existing" -eq 11 ]; then
+        emit_transition dify-state 0 warning "Dify running state is correct"
+    else
+        emit_transition dify-state 1 warning "Dify resume drift: running=${dify_running}, existing=${dify_existing}, expected 11/11"
+    fi
+else
+    emit_transition dify-mode 1 err "Dify pause mode is missing or unknown"
+fi
+
+if [ "$app_health" -eq 1 ]; then
+    emit_transition app-api 0 err "app_api_1 health check passed"
+else
+    emit_transition app-api 1 err "app_api_1 health check failed during Dify pause experiment"
+fi
+
+if [ "$s5000_health" -eq 1 ]; then
+    emit_transition s5000-api 0 err "s5000-api-ha health check passed"
+else
+    emit_transition s5000-api 1 err "s5000-api-ha health check failed during Dify pause experiment"
+fi
+
+hard_error_pattern='Connection refused|ConnectTimeout|ReadTimeout|connection reset|No route to host|112\.124\.24\.71.*(fail|error|refused|timeout)'
+app_error_count="$(timeout 15 docker logs --since 11m --tail 2000 app_api_1 2>&1 | grep -Eic "$hard_error_pattern" || true)"
+s5000_error_count="$(timeout 15 docker logs --since 11m --tail 2000 s5000-api-ha 2>&1 | grep -Eic "$hard_error_pattern" || true)"
+
+if [ "$app_error_count" -gt 0 ]; then
+    emit_transition app-api-log 1 warning "app_api_1 recent hard connection errors=${app_error_count} during Dify pause"
+else
+    emit_transition app-api-log 0 warning "app_api_1 recent hard connection errors cleared"
+fi
+
+if [ "$s5000_error_count" -gt 0 ]; then
+    emit_transition s5000-api-log 1 warning "s5000-api-ha recent hard connection errors=${s5000_error_count} during Dify pause"
+else
+    emit_transition s5000-api-log 0 warning "s5000-api-ha recent hard connection errors cleared"
+fi
+
+if [ "${1:-}" = "--report" ]; then
+    printf 'mode=%s dify_running=%s dify_existing=%s app_health=%s s5000_health=%s app_hard_errors=%s s5000_hard_errors=%s\n' \
+        "$mode" "$dify_running" "$dify_existing" "$app_health" "$s5000_health" "$app_error_count" "$s5000_error_count"
+fi

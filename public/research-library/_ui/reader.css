@@ -1,0 +1,34 @@
+html[data-library-page]{scroll-padding-top:68px!important}
+html[data-library-page] .rl-reader-toolbar{position:sticky!important;top:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;gap:14px!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;min-height:53px!important;margin:0!important;padding:9px max(16px,env(safe-area-inset-left))!important;background:#f7faf7f5!important;backdrop-filter:blur(12px);border:0!important;border-bottom:1px solid #d7e3d9!important;border-radius:0!important;color:#234b36!important;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif!important;box-shadow:none!important;overflow:visible!important}
+html[data-library-page] .rl-reader-toolbar a{color:#315c43!important;text-decoration:none!important;font-weight:500!important;margin:0!important;padding:8px 0!important;background:transparent!important;font-size:13px!important;line-height:1.5!important;white-space:nowrap!important;border:0!important;display:block!important}
+html[data-library-page] .rl-reader-toolbar .rl-reader-collection{margin-right:auto!important;overflow:hidden!important;text-overflow:ellipsis!important;min-width:0!important}
+html[data-library-page] .rl-reader-toolbar button{font:12px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif!important;min-height:35px!important;padding:7px 10px!important;white-space:nowrap!important;border:1px solid #d5e3d8!important;border-radius:6px!important;color:#315c43!important;background:white!important;cursor:pointer!important;box-shadow:none!important;width:auto!important;margin:0!important}
+html[data-library-page] .rl-reader-toolbar button[aria-pressed=true]{background:#315c43!important;color:white!important}
+html[data-library-page] .rl-reader-toolbar a:focus-visible,html[data-library-page] .rl-reader-toolbar button:focus-visible,html[data-library-page] .rl-table-scroll:focus-visible{outline:3px solid #69a681!important;outline-offset:2px!important}
+html[data-library-page] .rl-table-scroll{box-sizing:border-box!important;max-width:100%!important;width:100%!important;min-width:0!important;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:12px 0!important}
+html[data-library-page] [data-library-unavailable]{text-decoration:underline dotted!important;text-underline-offset:4px}
+html[data-library-page] .rl-source-note{position:fixed!important;bottom:max(20px,env(safe-area-inset-bottom))!important;left:50%!important;transform:translateX(-50%)!important;z-index:2147483001!important;width:max-content!important;max-width:calc(100% - 32px)!important;margin:0!important;padding:13px 19px!important;border-radius:10px!important;background:#233e2f!important;color:white!important;font:14px/1.7 -apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif!important;box-shadow:0 8px 30px #0002!important}
+html[data-library-large] body p,html[data-library-large] body li{font-size:19px!important;line-height:1.95!important}
+@media(max-width:768px){
+ html[data-library-page],html[data-library-page] body{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;overflow-x:clip!important}
+ html[data-library-page] body{font-size:15px!important;line-height:1.85!important}
+ html[data-library-page] body *{box-sizing:border-box;min-width:0}
+ html[data-library-page] body>main,html[data-library-page] body>.layout,html[data-library-page] body>.shell,html[data-library-page] body>.container,html[data-library-page] body>.wrap,html[data-library-page] body>.wrapper{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:18px 14px 36px!important}
+ html[data-library-page] .layout,html[data-library-page] .shell,html[data-library-page] .rl-stack{grid-template-columns:minmax(0,1fr)!important;gap:15px!important;max-width:100%!important;min-width:0!important}
+ html[data-library-page] body .sidebar,html[data-library-page] body aside{position:static!important;inset:auto!important;height:auto!important;max-height:none!important;width:100%!important;max-width:100%!important;margin:0 0 16px!important;padding:12px!important}
+ html[data-library-page] body main,html[data-library-page] body section,html[data-library-page] body article{max-width:100%!important;min-width:0!important}
+ html[data-library-page] .hero,html[data-library-page] main>header,html[data-library-page] .section,html[data-library-page] .panel{padding:20px 16px!important;border-radius:12px!important;max-width:100%!important}
+ html[data-library-page] h1{font-size:clamp(25px,7vw,31px)!important;line-height:1.4!important;overflow-wrap:anywhere}
+ html[data-library-page] h2{font-size:22px!important;line-height:1.5!important;overflow-wrap:anywhere}
+ html[data-library-page] h3{font-size:18px!important;line-height:1.6!important;overflow-wrap:anywhere}
+ html[data-library-page] p,html[data-library-page] li,html[data-library-page] a{overflow-wrap:anywhere}
+ html[data-library-page] img,html[data-library-page] video,html[data-library-page] svg,html[data-library-page] canvas{max-width:100%!important;height:auto}
+ html[data-library-page] pre{max-width:100%!important;overflow:auto!important;white-space:pre-wrap!important;overflow-wrap:anywhere}
+ html[data-library-page] .rl-table-scroll table{min-width:100%!important;width:max-content!important;max-width:none!important;table-layout:auto!important}
+ html[data-library-page] .rl-table-scroll th,html[data-library-page] .rl-table-scroll td{max-width:320px!important;min-width:90px!important;padding:10px!important;font-size:13px!important;line-height:1.8!important;overflow-wrap:anywhere;white-space:normal}
+ html[data-library-page] .rl-reader-toolbar{gap:9px!important;min-height:55px!important;padding:8px 12px!important;flex-wrap:nowrap!important}
+ html[data-library-page] .rl-reader-toolbar .rl-reader-collection{display:none!important}
+ html[data-library-page] .rl-reader-toolbar .rl-reader-home{margin-right:auto!important;font-size:13px!important;flex-shrink:0!important}
+ html[data-library-page] .rl-reader-toolbar button{font-size:11px!important;padding:7px 9px!important;min-height:37px!important}
+}
+@media print{html[data-library-page] .rl-reader-toolbar,html[data-library-page] .rl-source-note{display:none!important}html[data-library-page] .rl-table-scroll{overflow:visible!important}}

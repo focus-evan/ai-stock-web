@@ -1,0 +1,476 @@
+{
+  "generated_at_beijing": "2026-08-03 06:00",
+  "run_label": "06:00 morning",
+  "headline": "Orange维持：AI CapEx有收入锚，但周末未见Amazon/Apple关键文件确认，长端利率仍压估值",
+  "top_conclusion": "本轮晨间雷达维持Orange。周末没有新的大型官方财报或FOMC更新改变主线：Amazon和Microsoft仍是AI CapEx收入闭环的正反馈，Apple官方强收入与市场下跌共同提示端侧AI和消费电子链会被AI数据中心争夺组件扰动；流动性仍为Stress，Fed H.15 7月31日更新显示10Y 4.68%、30Y 5.21%、10Y TIPS实际利率2.41%，长端并未真正回落。关键待验证项没有消失：未见Amazon 10-Q/正式电话会文字稿确认媒体所称US$220bn 2026 CapEx，也未见Apple 10-Q细化内存/先进节点约束。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "维持Orange：只做分层筛选，不做全面追涨；优先看收入、RPO、订单、电力约束能互相验证的AI卖铲人。",
+    "positive": "Amazon/Microsoft仍是最强正反馈：AWS +37%、AI/芯片各超US$25bn run rate，Azure +43%、commercial RPO US$678bn。",
+    "risk": "Fed长端没有松：H.15最新10Y 4.68%、30Y 5.21%、10Y TIPS实际利率2.41%；Amazon US$220bn CapEx与Apple供应链约束仍缺官方文件细节。",
+    "next": "下一步只盯Amazon 10-Q/电话会文字稿、Apple 10-Q、Fed H.15/H.10新周更新、Microsoft/Meta 10-K/10-Q承诺。"
+  },
+  "top_changes": [
+    {
+      "title": "周末未见关键新官方文件，Orange不升级",
+      "fact": "截至北京时间2026-08-03 06:00，本轮检索未见Amazon 10-Q或正式电话会文字稿确认媒体所称2026 CapEx约US$220bn，也未见Apple 10-Q细化内存/先进节点供应约束；现有官方基础仍是Amazon Q2新闻稿和Apple Q3新闻稿。",
+      "impact": "AI CapEx主线仍强，但关键上修口径和供应链压力仍需官方文件落地，不能把Orange升为Green。",
+      "confidence": "Medium",
+      "source": "Company IR / SEC filing watch",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "title": "Fed官方长端仍高，流动性Stress未解除",
+      "fact": "Fed H.15 7月31日发布的7月30日数据：EFFR 3.63%，2Y 4.24%，10Y 4.68%，20Y 5.21%，30Y 5.21%，10Y TIPS实际利率2.41%，30Y TIPS 3.00%。",
+      "impact": "长端和实际利率仍压制长久期科技资产；PCE降温没有立刻转化为估值端顺风。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "Amazon仍是AI CapEx正反馈，但FCF过滤器仍在",
+      "fact": "Amazon Q2官方披露net sales US$200.6bn、+20%；AWS sales US$42.2bn、+37%；AWS operating income US$16.6bn；AI business和chips business各自超过US$25bn annual run rate；TTM FCF为- US$7.6bn，因PPE购买同比增加US$66.1bn且主要反映AI投资。",
+      "impact": "利好AI服务器、HBM、网络、电力和冷却，但负FCF说明市场会继续区分有收入闭环和仅有CapEx扩张的公司。",
+      "confidence": "High",
+      "source": "Amazon IR",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/"
+    },
+    {
+      "title": "Apple官方强收入确认，但市场仍担心组件被AI挤占",
+      "fact": "Apple官方披露FY26 Q3 revenue US$109.4bn、+16%，iPhone revenue US$53.0bn、+16%，Services revenue US$31.0bn、+12%，EPS US$2.02、+19%。AP此前报道Apple周五下跌7.4%，市场担心AI需求挤占内存和先进制程供应。",
+      "impact": "端侧AI/消费电子不是弱需求，但AI数据中心争夺高端组件会让上游和终端链分化。",
+      "confidence": "High",
+      "source": "Apple Newsroom / AP",
+      "url": "https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/"
+    },
+    {
+      "title": "Microsoft仍是AI收入/RPO闭环样板",
+      "fact": "Microsoft FY26 Q4官方披露收入US$90.0bn、+18%，Microsoft Cloud US$59.3bn、+27%，commercial RPO +84%至US$678bn，Azure and other cloud services revenue +43%，Q4 additions to property and equipment US$35.802bn。",
+      "impact": "证明AI CapEx可以通过云收入和RPO被消化，是AI卖铲人从Red修复到Orange的核心锚。",
+      "confidence": "High",
+      "source": "Microsoft IR",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。Amazon/Microsoft继续提供AI云收入、RPO和基础设施需求确认；NVIDIA/SK、NAVER/Brookfield、AMD/Anthropic、GE Vernova继续支撑AI工厂、电力和HBM链。但周末未见Amazon 10-Q/正式电话会文字稿确认US$220bn CapEx媒体口径，也未见Apple 10-Q细化供应链压力，因此不升级为Green。",
+    "items": [
+      {
+        "entity": "Amazon",
+        "signal": "Q2 net sales US$200.6bn、+20%；AWS US$42.2bn、+37%；AWS operating income US$16.6bn；AI business和chips business各自超过US$25bn annual run rate；TTM FCF -US$7.6bn，PPE购买同比增加US$66.1bn且主要反映AI投资。",
+        "direction": "上修",
+        "impact": "AWS AI、Trainium/自研芯片、GPU/HBM、AI服务器、数据中心电力、冷却和网络需求继续扩张。",
+        "confidence": "High",
+        "source": "Amazon IR",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/"
+      },
+      {
+        "entity": "Amazon 2026 CapEx口径",
+        "signal": "AP等媒体称Amazon将2026资本开支计划上调至约US$220bn；截至本次运行，未见Amazon 10-Q或正式电话会文字稿确认该具体数字。",
+        "direction": "待验证",
+        "impact": "若官方文件确认，将抬高AI服务器、内存、网络、电力与数据中心工程年度需求；未确认前不作为官方上修。",
+        "confidence": "Medium",
+        "source": "AP / pending official filing transcript",
+        "url": "https://apnews.com/article/b4ce02b4666a35b8975823c5c22072ee"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q4 revenue US$90.0bn、+18%；Microsoft Cloud US$59.3bn、+27%；commercial RPO +84%至US$678bn；Azure and other cloud services +43%；Q4 additions to property and equipment US$35.802bn，FY26为US$115.948bn。",
+        "direction": "上修",
+        "impact": "云AI收入、RPO和CapEx同步扩张，利好GPU/HBM、光模块、交换网络、液冷、电源、服务器ODM和数据中心工程。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Q2 revenue US$60.80bn、+28%；CapEx含融资租赁本金US$31.08bn；FCF仅US$784mn；2026 CapEx指引US$130-145bn。",
+        "direction": "上修",
+        "impact": "对供应链是订单利好，对平台估值是现金流压力；后续重点看AI ROI、租赁和购买承诺。",
+        "confidence": "High",
+        "source": "Meta IR",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Apple",
+        "signal": "FY26 Q3 revenue US$109.4bn、+16%；iPhone US$53.0bn、+16%；Services US$31.0bn、+12%；EPS US$2.02、+19%。Apple不是本轮数据中心CapEx主驱动，但供应链和端侧AI节奏影响消费电子链。",
+        "direction": "持平",
+        "impact": "端侧AI、iPhone/Mac链和服务收入稳定；AI抢占内存/先进节点产能可能压制消费电子供应节奏。",
+        "confidence": "High",
+        "source": "Apple Newsroom",
+        "url": "https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/"
+      },
+      {
+        "entity": "NVIDIA / SK Group / SK hynix",
+        "signal": "NVIDIA官方披露与SK Group扩大战略合作，涉及US$500bn+ AI/industrial transformation、2GW DSX AI Factory、HBM4和第六代10nm级DRAM合作；多项为LOI/forward-looking。",
+        "direction": "持平",
+        "impact": "HBM4、先进封装、AI工厂、电力、液冷和韩国主权AI基础设施继续受益。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory"
+      },
+      {
+        "entity": "NAVER Cloud / NVIDIA / Brookfield",
+        "signal": "官方披露韩国AI工厂从约55MW扩展到200MW，并表达1GW意向；NVIDIA计划投资US$1bn，Brookfield term sheet最高US$9bn。",
+        "direction": "持平",
+        "impact": "主权AI、数据中心融资、电力并网、冷却和机房工程继续成为卖铲人方向。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea"
+      },
+      {
+        "entity": "AMD / Anthropic / Helios",
+        "signal": "Anthropic最高2GW AMD Instinct MI450部署与AMD Helios rack-scale方案仍是前期确认的正反馈；本轮未见新增官方订单金额。",
+        "direction": "持平",
+        "impact": "GPU、HBM4、机柜级网络、电源、液冷、ODM服务器维持需求锚。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era"
+      },
+      {
+        "entity": "GE Vernova",
+        "signal": "Q2订单US$24.2bn、organic +88%；backlog环比+US$13.0bn；YTD数据中心订单超过US$5bn。",
+        "direction": "持平",
+        "impact": "AI CapEx向燃机、电气化、变压器、储能、UPS和电力工程外溢，电力卖铲人继续优先。",
+        "confidence": "High",
+        "source": "GE Vernova IR",
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Liquidity模块仍为Stress。FOMC未加息和PCE降温提供缓和，但三票支持加息、长端收益率高位、TGA吸收流动性和强美元未确认改善，说明科技资产还没有真正流动性顺风。",
+    "items": [
+      {
+        "entity": "FOMC 2026-07-29",
+        "signal": "维持联邦基金目标区间3.50%-3.75%；9-3表决，3名委员支持加息25bp；声明称通胀仍高于2%目标，部分来自能源等供应冲击。",
+        "direction": "压力",
+        "impact": "未加息缓和风险，但三票加息和通胀表述限制科技估值修复空间。",
+        "confidence": "High",
+        "source": "Federal Reserve FOMC",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm"
+      },
+      {
+        "entity": "Fed H.15",
+        "signal": "7月31日发布的7月30日数据：EFFR 3.63%，2Y 4.24%，10Y 4.68%，20Y 5.21%，30Y 5.21%，10Y TIPS实际利率2.41%，30Y TIPS 3.00%。",
+        "direction": "压力",
+        "impact": "长端和实际利率仍高，贴现率继续压制高估值AI硬件链。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "7月30日H.4.1显示截至7月29日储备余额US$2.984570tn，周环比- US$77.579bn，同比- US$362.844bn；TGA升至US$910.776bn，周环比+US$81.153bn。",
+        "direction": "压力",
+        "impact": "银行体系流动性继续被TGA吸收，高估值科技仍需要业绩兑现对冲资金面压力。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "BEA PCE",
+        "signal": "6月PCE价格指数环比-0.1%、同比+3.7%；核心PCE环比+0.1%、同比+3.3%。",
+        "direction": "中性偏宽松",
+        "impact": "通胀边际降温，但核心PCE仍明显高于Fed目标，不足以支撑Green。",
+        "confidence": "High",
+        "source": "BEA",
+        "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026"
+      },
+      {
+        "entity": "BEA GDP",
+        "signal": "Q2 real GDP advance为1.5%，低于Q1的2.1%；real final sales to private domestic purchasers +3.9%；GDP purchases price index +5.7%。",
+        "direction": "中性",
+        "impact": "增长放缓但私人需求仍强，Fed难以快速转松；AI设备和软件投资仍是增长支撑。",
+        "confidence": "High",
+        "source": "BEA",
+        "url": "https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026"
+      },
+      {
+        "entity": "Fed H.10 / Dollar",
+        "signal": "H.10最近一周数据显示Broad美元指数7月24日为120.7105，人民币6.7719，日元163.7100；周末未见新更新。",
+        "direction": "压力",
+        "impact": "强美元环境尚未确认改善，全球科技风险偏好扩散仍受限。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "US jobless claims",
+        "signal": "DOL 7月30日发布：截至7月25日初请197,000，周环比+9,000；四周均值202,750；截至7月18日续请1,782,000，周环比-7,000。",
+        "direction": "中性",
+        "impact": "就业未明显恶化，不能给Fed快速宽松提供足够理由；初请小升也减轻过热压力。",
+        "confidence": "High",
+        "source": "US Department of Labor",
+        "url": "https://www.dol.gov/ui/data.pdf"
+      },
+      {
+        "entity": "Market rates / Oil",
+        "signal": "AP报道周五10Y市场收益率约4.71，Brent升至US$89.47，WTI升至US$85.74。",
+        "direction": "压力",
+        "impact": "油价和长端利率回升会压缩AI高估值反弹空间。",
+        "confidence": "Medium",
+        "source": "Associated Press",
+        "url": "https://apnews.com/article/stock-markets-rates-korea-ai-oil-e31b3a442bcb957a53f1823ef21e73e8"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Tech catalysts模块为Mixed。Amazon/Microsoft增强AI基础设施正反馈，Apple和Meta提示供应链与现金流负反馈，市场仍按兑现质量分层。",
+    "items": [
+      {
+        "event": "Amazon AI基础设施正反馈延续",
+        "affected_chain": "AWS、AI芯片、服务器、HBM、数据中心电力、冷却",
+        "direction": "利好",
+        "winners": "能绑定AWS/云AI/自研芯片/数据中心电力的卖铲人",
+        "losers": "FCF承压且没有收入闭环的数据中心项目",
+        "evidence": "官方确认 + 媒体市场反应",
+        "confidence": "High",
+        "source": "Amazon IR / AP",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/"
+      },
+      {
+        "event": "Apple强业绩但供应链压力待确认",
+        "affected_chain": "消费电子、端侧AI、内存、先进制程、iPhone/Mac供应链",
+        "direction": "中性",
+        "winners": "iPhone/Mac强需求、服务收入、端侧AI硬件升级链",
+        "losers": "受内存/先进节点供给约束、成本转嫁弱的消费电子供应链",
+        "evidence": "官方确认 + 媒体市场反应",
+        "confidence": "High",
+        "source": "Apple Newsroom / AP",
+        "url": "https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/"
+      },
+      {
+        "event": "Microsoft继续证明AI收入/RPO闭环",
+        "affected_chain": "云、AI服务器、GPU/HBM、光模块、交换网络、液冷、电源",
+        "direction": "利好",
+        "winners": "Azure和高RPO相关AI基础设施卖铲人",
+        "losers": "没有收入闭环、只靠远期TAM估值的高beta硬件",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+      },
+      {
+        "event": "Meta AI CapEx吞噬现金流仍是反面样本",
+        "affected_chain": "AI数据中心、广告AI、GPU/服务器、融资租赁",
+        "direction": "利空",
+        "winners": "现金流和订单转换更清晰的云厂商、数据中心电力卖铲人",
+        "losers": "只提高CapEx但AI变现路径不够清晰的平台型公司",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Meta IR",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "event": "NVIDIA/SK与NAVER/Brookfield继续强化AI工厂",
+        "affected_chain": "AI工厂、HBM4、DRAM、先进封装、电力、液冷、数据中心融资",
+        "direction": "利好",
+        "winners": "HBM、先进封装、电力设备、并网工程、数据中心运营和长期资本",
+        "losers": "无法拿到长期供电和低成本资本的数据中心项目",
+        "evidence": "官方确认，但部分为LOI/term sheet/forward-looking",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory"
+      },
+      {
+        "event": "OpenAI/NVIDIA超大额融资传闻",
+        "affected_chain": "GPU、数据中心、电力、AI融资",
+        "direction": "中性",
+        "winners": "若官方确认，GPU/HBM/电力链权重上升",
+        "losers": "若融资闭环不清，AI CapEx泡沫担忧会加重",
+        "evidence": "媒体报道，未见官方确认",
+        "confidence": "Low",
+        "source": "Financial media reports",
+        "url": "https://www.wsj.com/"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI服务器/液冷/电源/高速网络",
+      "verified_direct": "无直接A/H公司订单确认；全球层面Microsoft、Amazon、AMD、NVIDIA和GE Vernova给出需求锚。",
+      "inferred": "偏利好AI服务器ODM、液冷、机柜电源、高速连接器、PCB/CCL、光模块和交换网络；优先看有海外客户或订单公告的环节。",
+      "risk": "Orange不是Green，没有订单和业绩确认的纯概念映射容易被长端利率和FCF压力反噬。"
+    },
+    {
+      "theme": "HBM/先进封装/存储",
+      "verified_direct": "NVIDIA/SK hynix HBM4合作为官方确认；Amazon和Microsoft云增长强化AI内存需求。",
+      "inferred": "国产存储、材料设备、先进封装、测试和HBM配套有情绪映射。",
+      "risk": "Apple供应链压力仍需10-Q或电话会确认；不能把AI组件紧张泛化为所有存储公司利好。"
+    },
+    {
+      "theme": "数据中心电力卖铲人",
+      "verified_direct": "GE Vernova官方数据中心订单YTD超过US$5bn；Amazon/Microsoft/NVIDIA项目继续确认数据中心电力瓶颈。",
+      "inferred": "利好燃机、变压器、输配电、UPS、储能、能源工程、电气化系统和自备电源。",
+      "risk": "A/H映射仍要等客户、订单、产能、海外收入或业绩说明会确认；无直接映射的个股只做观察。"
+    },
+    {
+      "theme": "端侧AI/消费电子",
+      "verified_direct": "Apple官方披露iPhone和服务收入强，但供应链压力仍缺10-Q细化。",
+      "inferred": "端侧AI、iPhone/Mac链、服务收入稳定；AI数据中心抢先进组件可能增加消费电子链不确定性。",
+      "risk": "Apple不是本轮AI数据中心CapEx主驱动，更多是消费电子链稳定器和供应链约束观察口。"
+    },
+    {
+      "theme": "高CapEx/弱FCF压力",
+      "verified_direct": "Meta官方FCF仅US$784mn、CapEx US$31.08bn；Amazon官方TTM FCF为- US$7.6bn。",
+      "inferred": "优先选择现金流、订单、RPO、云收入能互相验证的卖铲人；回避只讲远期TAM且融资依赖加大的链条。",
+      "risk": "如果下周Fed长端收益率不降，AI高CapEx公司会继续被资金严格分层。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "Amazon 10-Q和电话会文字稿",
+      "why": "确认2026 CapEx是否正式上修至US$220bn，以及AI/内存/数据中心支出和FCF修复路径。"
+    },
+    {
+      "item": "Apple 10-Q与供应链表述",
+      "why": "核实内存/先进节点约束、端侧AI节奏、下一财季收入指引和毛利压力。"
+    },
+    {
+      "item": "Fed H.15/H.10本周更新",
+      "why": "确认PCE降温后10Y、30Y、实际利率和美元是否真正回落。"
+    },
+    {
+      "item": "Meta 10-Q和租赁/购买承诺",
+      "why": "拆分AI数据中心租赁、服务器采购、Reality Labs和现金流承压程度。"
+    },
+    {
+      "item": "Microsoft 10-K/电话会CapEx guidance",
+      "why": "确认FY27 CapEx增长节奏、Azure capacity constraint、RPO转收入速度和折旧压力。"
+    },
+    {
+      "item": "NVIDIA/SK、NAVER/Brookfield项目执行",
+      "why": "区分LOI/term sheet/意向与真实订单、MW/GW交付、收入确认和供应商份额。"
+    },
+    {
+      "item": "OpenAI/NVIDIA融资报道",
+      "why": "当前仍未见官方确认；若官方确认，将改变AI数据中心融资和电力链权重。"
+    },
+    {
+      "item": "Supermicro FY2026 Q4正式结果和Intel 10-Q",
+      "why": "确认AI服务器需求、毛利、现金转换、调查风险和foundry现金流。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Federal Reserve - H.15 Selected Interest Rates, July 31 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Amazon.com Announces Second Quarter Results",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Apple Reports Third Quarter Results",
+      "url": "https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Associated Press - Stocks finish higher as Amazon jumps and Apple sinks",
+      "url": "https://apnews.com/article/stock-markets-rates-korea-ai-oil-e31b3a442bcb957a53f1823ef21e73e8",
+      "used_for": "Market reaction / Liquidity / Tech catalyst",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Microsoft FY26 Q4 Earnings Release",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Meta Reports Second Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Federal Reserve - FOMC Statement, July 29 2026",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Federal Reserve - H.4.1 Factors Affecting Reserve Balances, July 30 2026",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Federal Reserve - H.10 Foreign Exchange Rates, July 27 2026",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-27"
+    },
+    {
+      "title": "BEA - Personal Income and Outlays, June 2026",
+      "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "BEA - GDP Advance Estimate, 2nd Quarter 2026",
+      "url": "https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "US Department of Labor - Unemployment Insurance Weekly Claims",
+      "url": "https://www.dol.gov/ui/data.pdf",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Associated Press - Amazon boosts AI and technology spending",
+      "url": "https://apnews.com/article/b4ce02b4666a35b8975823c5c22072ee",
+      "used_for": "CapEx / Media cross-check",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "NVIDIA - SK Group and NVIDIA expand strategic partnership",
+      "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-25"
+    },
+    {
+      "title": "NVIDIA - NAVER Cloud, NVIDIA and Brookfield build AI infrastructure in Korea",
+      "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-25"
+    },
+    {
+      "title": "AMD - AAI 2026 Helios rackscale solutions",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "GE Vernova - Q2 2026 financial results",
+      "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "SEC EDGAR filing search",
+      "url": "https://www.sec.gov/edgar/search/",
+      "used_for": "Watchlist / official filing check",
+      "published_at": "current"
+    },
+    {
+      "title": "Financial media reports on OpenAI/NVIDIA financing",
+      "url": "https://www.wsj.com/",
+      "used_for": "Tech catalyst / unverified watch",
+      "published_at": "2026-07-28"
+    }
+  ]
+}

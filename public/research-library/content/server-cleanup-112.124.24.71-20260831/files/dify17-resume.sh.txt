@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+pause_state_dir=/var/lib/dify17-pause
+pause_dir=/data2/archive/dify17-pause-20260831-1445
+
+expected_containers=(
+    dify17-db-1
+    dify17-redis-1
+    dify17-weaviate-1
+    dify17-sandbox-1
+    dify17-ssrf_proxy-1
+    dify17-plugin_daemon-1
+    dify17-api-1
+    dify17-worker-1
+    dify17-worker_beat-1
+    dify17-web-1
+    dify17-nginx-1
+)
+
+test -d "$pause_dir"
+install -d -m 0700 "$pause_state_dir"
+
+for container_name in "${expected_containers[@]}"; do
+    docker inspect "$container_name" >/dev/null
+done
+
+# Restore the original restart policy before starting the preserved containers.
+for container_name in "${expected_containers[@]}"; do
+    docker update --restart=always "$container_name" >/dev/null
+done
+
+# Start stateful dependencies first, then application services, then the edge proxy.
+for container_name in "${expected_containers[@]}"; do
+    docker start "$container_name" >/dev/null
+done
+
+deadline=$((SECONDS + 180))
+while [ "$SECONDS" -lt "$deadline" ]; do
+    running_count="$(docker ps --filter label=com.docker.compose.project=dify17 -q | wc -l)"
+    healthy_count=0
+    for health_name in dify17-db-1 dify17-redis-1 dify17-sandbox-1; do
+        if [ "$(docker inspect -f '{{.State.Health.Status}}' "$health_name" 2>/dev/null || true)" = healthy ]; then
+            healthy_count=$((healthy_count + 1))
+        fi
+    done
+    if [ "$running_count" -eq 11 ] && [ "$healthy_count" -eq 3 ]; then
+        break
+    fi
+    sleep 5
+done
+
+test "$(docker ps --filter label=com.docker.compose.project=dify17 -q | wc -l)" -eq 11
+for health_name in dify17-db-1 dify17-redis-1 dify17-sandbox-1; do
+    test "$(docker inspect -f '{{.State.Health.Status}}' "$health_name")" = healthy
+done
+
+docker exec dify17-api-1 python -c \
+    'import urllib.request; assert urllib.request.urlopen("http://127.0.0.1:5001/health", timeout=5).status == 200'
+
+printf 'running\n' > "$pause_state_dir/mode"
+date --iso-8601=seconds > "$pause_dir/resumed-at.txt"
+docker ps --filter label=com.docker.compose.project=dify17 \
+    --format '{{.ID}}|{{.Names}}|{{.Status}}' | sort > "$pause_dir/containers.after-resume.txt"
+
+logger -p daemon.notice -t dify17-pause "Dify 1.7.1 resumed successfully: 11 containers running"
+echo "Dify 1.7.1 resumed: 11 containers running, core health checks passed."
+

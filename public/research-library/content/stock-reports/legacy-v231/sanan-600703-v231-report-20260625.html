@@ -1,0 +1,740 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>三安光电 600703｜V2.3.1 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9dee7;
+      --red: #b42318;
+      --orange: #b54708;
+      --green: #067647;
+      --blue: #175cd3;
+      --slate: #344054;
+      --chip: #eef4ff;
+      --warn: #fff4e5;
+      --danger: #fff1f0;
+      --ok: #ecfdf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.58;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #101828 0%, #243b53 52%, #265d73 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 18px 45px rgba(16, 24, 40, .16);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: rgba(255,255,255,.78);
+      font-size: 15px;
+    }
+
+    .scorebox {
+      min-width: 210px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: right;
+    }
+
+    .scorebox .score {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .scorebox .label {
+      margin-top: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .hero-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .hero-metric {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .metric-title {
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+    }
+
+    .metric-value {
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: 720;
+    }
+
+    .section {
+      margin-top: 22px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 26px rgba(16, 24, 40, .05);
+    }
+
+    .section h2 {
+      font-size: 21px;
+      margin-bottom: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .muted { color: var(--muted); }
+    .red { color: var(--red); }
+    .orange { color: var(--orange); }
+    .green { color: var(--green); }
+    .blue { color: var(--blue); }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: var(--chip);
+      color: #1849a9;
+      border: 1px solid #c7d7fe;
+    }
+
+    .tag.warn {
+      background: var(--warn);
+      color: var(--orange);
+      border-color: #fedf89;
+    }
+
+    .tag.danger {
+      background: var(--danger);
+      color: var(--red);
+      border-color: #fecdca;
+    }
+
+    .tag.ok {
+      background: var(--ok);
+      color: var(--green);
+      border-color: #abefc6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f2f4f7;
+      color: #344054;
+      font-weight: 680;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .num { text-align: right; white-space: nowrap; }
+
+    .callout {
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .callout.danger {
+      background: var(--danger);
+      border-color: #fecdca;
+    }
+
+    .callout.warn {
+      background: var(--warn);
+      border-color: #fedf89;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .progress {
+      height: 9px;
+      background: #eaecf0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 7px;
+    }
+
+    .bar { height: 100%; background: #175cd3; border-radius: 999px; }
+    .bar.orange { background: #dc6803; }
+    .bar.red { background: #d92d20; }
+    .bar.green { background: #039855; }
+
+    .factor {
+      display: grid;
+      grid-template-columns: 120px 1fr 48px;
+      gap: 12px;
+      align-items: center;
+      margin: 12px 0;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 5px 0; }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 860px) {
+      .hero-grid, .cards, .grid-2 { grid-template-columns: 1fr; }
+      .scorebox { text-align: left; }
+      .section { padding: 18px; }
+      table { font-size: 13px; }
+      th, td { padding: 9px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>三安光电 600703｜V2.3.1 深度分析</h1>
+          <div class="subtitle">报告日期：2026-06-25｜框架：风险门 → 四季度财务 → S五维 → 六维评分 → 利润池与执行条件</div>
+          <div class="tag-row">
+            <span class="tag danger">交易异常波动</span>
+            <span class="tag danger">治理风险折价</span>
+            <span class="tag warn">扣非利润未验证</span>
+            <span class="tag">化合物半导体</span>
+            <span class="tag">SiC / GaN / Mini LED</span>
+          </div>
+        </div>
+        <div class="scorebox">
+          <div class="score">61</div>
+          <div class="label">综合评分 / 100<br>标签：事件驱动 + 观察池</div>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-metric">
+          <div class="metric-title">6月25日收盘价</div>
+          <div class="metric-value">21.67 元</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">总市值</div>
+          <div class="metric-value">约 1081 亿</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">PE(TTM)</div>
+          <div class="metric-value">亏损口径失真</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">PB</div>
+          <div class="metric-value">约 3.10 倍</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一、核心结论</h2>
+      <div class="callout danger">
+        <strong>模型结论：</strong>三安光电不是“假科技”，但目前也不是 V2.3.1 里的硬核核心仓。它的产业卡位强，资产和技术平台重，具备化合物半导体重估想象力；但最近四个季度扣非利润没有验证，且控股股东冻结、破产重整申请、实控人留置、连续异常波动公告共同构成明显治理和交易风险。
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3 class="green">成立的逻辑</h3>
+          <ul>
+            <li>公司是国内少数覆盖 LED、Mini/Micro LED、GaAs、GaN、SiC 等化合物半导体平台的重资产龙头。</li>
+            <li>SiC、GaN、射频、滤波器等方向具备更高利润池潜力，若拖累收窄会触发估值重构。</li>
+            <li>当前市场交易的不只是 LED 周期，而是“第三代半导体平台资产重估”。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="orange">不成立的地方</h3>
+          <ul>
+            <li>2026Q1 扣非净利为 -1.79 亿元，经营数据尚未支撑高强度上涨。</li>
+            <li>2025Q2 至 2026Q1 连续四个单季度扣非均为负，说明主业利润转正未完成。</li>
+            <li>股价短期连续异动，公告明确提示短期涨幅大、市盈率高和二级市场交易风险。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="red">最大风险</h3>
+          <ul>
+            <li>公司实控人留置，控股股东和间接控股股东股份多次轮候冻结，且债权人已申请破产重整。</li>
+            <li>若重整被法院受理，可能影响股权结构和控制权。</li>
+            <li>高位资金把治理危机解读为“控制权重估”，但这类交易反身性很强。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>二、风险门：先扣分，再谈题材</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>风险项</th>
+            <th>证据</th>
+            <th>V2.3.1处理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>交易异常波动</td>
+            <td>2026-06-22 至 2026-06-24 连续三个交易日收盘价涨幅偏离值累计达到20%。此前 2026-06-15 至 2026-06-17 也触发异常波动。</td>
+            <td><span class="red">高位交易风险上调</span>，不允许用题材热度直接升级为核心仓。</td>
+          </tr>
+          <tr>
+            <td>治理和控制权风险</td>
+            <td>公告披露实控人林秀成被留置；控股股东三安电子和间接控股股东三安集团持股被多次轮候冻结、部分司法拍卖；债权人申请破产重整。</td>
+            <td><span class="red">治理/流动性维度大幅扣分</span>，必须设置仓位上限。</td>
+          </tr>
+          <tr>
+            <td>基本面未同步</td>
+            <td>2026Q1 营收同比 -32.59%，归母净利同比 -68.15%，扣非净利同比 -339.68%。</td>
+            <td><span class="orange">只能按事件驱动/困境反转观察</span>，不能按高确定成长股估值。</td>
+          </tr>
+          <tr>
+            <td>估值压力</td>
+            <td>6月25日总市值约1081亿元，PE(TTM)亏损口径下失真，PB约3.10倍；公告亦提示市盈率较高。</td>
+            <td><span class="orange">赔率依赖Q2/Q3扭亏验证</span>，否则容易估值回撤。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>三、最近四个单季度财务验证</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>单季度</th>
+            <th class="num">营收</th>
+            <th class="num">营收同比</th>
+            <th class="num">归母净利</th>
+            <th class="num">扣非净利</th>
+            <th class="num">毛利率</th>
+            <th class="num">净利率</th>
+            <th class="num">经营现金流</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026Q1</td>
+            <td class="num">29.07亿</td>
+            <td class="num red">-32.6%</td>
+            <td class="num">0.67亿</td>
+            <td class="num red">-1.79亿</td>
+            <td class="num">18.5%</td>
+            <td class="num">2.3%</td>
+            <td class="num">3.59亿</td>
+            <td>扣除贵金属废料后收入同比增长2.85%，但扣非亏损，尚非利润拐点。</td>
+          </tr>
+          <tr>
+            <td>2025Q4</td>
+            <td class="num">41.32亿</td>
+            <td class="num">-2.8%</td>
+            <td class="num red">-4.42亿</td>
+            <td class="num red">-4.99亿</td>
+            <td class="num">8.4%</td>
+            <td class="num red">-10.7%</td>
+            <td class="num">2.21亿</td>
+            <td>亏损最重，拖累来自主业和减值/费用压力。</td>
+          </tr>
+          <tr>
+            <td>2025Q3</td>
+            <td class="num">48.30亿</td>
+            <td class="num green">+15.7%</td>
+            <td class="num red">-0.88亿</td>
+            <td class="num red">-2.29亿</td>
+            <td class="num">10.8%</td>
+            <td class="num red">-1.8%</td>
+            <td class="num">7.15亿</td>
+            <td>收入扩张但利润未兑现，低质量增长特征明显。</td>
+          </tr>
+          <tr>
+            <td>2025Q2</td>
+            <td class="num">46.75亿</td>
+            <td class="num green">+13.4%</td>
+            <td class="num red">-0.35亿</td>
+            <td class="num red">-1.75亿</td>
+            <td class="num">14.1%</td>
+            <td class="num red">-0.8%</td>
+            <td class="num">3.48亿</td>
+            <td>经营现金流仍为正，但扣非亏损延续。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout warn">
+        <strong>财务结论：</strong>四季度数据不支持“核心成长仓”定性。公司当前是产业资产较强、利润表待验证的反转票。V2.3.1里，只有看到扣非连续转正、SiC/滤波器拖累明显收窄，才可以从“事件驱动”升级为“成长配置”。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>四、S五维量化校验</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>五维评分</h3>
+          <div class="factor">
+            <div>成长性</div>
+            <div><div class="progress"><div class="bar red" style="width:40%"></div></div></div>
+            <div>8/20</div>
+          </div>
+          <div class="factor">
+            <div>盈利性</div>
+            <div><div class="progress"><div class="bar red" style="width:30%"></div></div></div>
+            <div>6/20</div>
+          </div>
+          <div class="factor">
+            <div>经营规模</div>
+            <div><div class="progress"><div class="bar green" style="width:80%"></div></div></div>
+            <div>16/20</div>
+          </div>
+          <div class="factor">
+            <div>资产效率</div>
+            <div><div class="progress"><div class="bar red" style="width:20%"></div></div></div>
+            <div>4/20</div>
+          </div>
+          <div class="factor">
+            <div>市值估值</div>
+            <div><div class="progress"><div class="bar orange" style="width:30%"></div></div></div>
+            <div>6/20</div>
+          </div>
+          <div class="callout danger">
+            <strong>S五维总分：40 / 100。</strong>经营世界目前没有支撑资本世界强定价，短线行情主要由叙事、控制权预期和化合物半导体重估驱动。
+          </div>
+        </div>
+        <div class="card">
+          <h3>五维解释</h3>
+          <ul>
+            <li><strong>成长性：</strong>扣除贵金属废料口径收入仅小幅增长，主业没有出现爆发式增长证据。</li>
+            <li><strong>盈利性：</strong>毛利率有所改善，但扣非亏损说明高端产品尚未覆盖新业务投入和费用压力。</li>
+            <li><strong>经营规模：</strong>2025年营收约179.49亿，资产约582.56亿，规模和产业地位确实强。</li>
+            <li><strong>资产效率：</strong>2025年加权ROE为-0.99%，扣非ROE为-2.32%，重资产效率偏弱。</li>
+            <li><strong>估值：</strong>当前约千亿市值对亏损利润表要求很高，必须依赖未来利润释放。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>五、V2.3.1 六维评分</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th class="num">分数</th>
+            <th>核心判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>行业面</td>
+            <td class="num">78</td>
+            <td>化合物半导体、SiC/GaN、Mini/Micro LED、光电芯片方向长期空间大，但部分下游仍处于导入和放量阶段。</td>
+          </tr>
+          <tr>
+            <td>核心竞争力</td>
+            <td class="num">72</td>
+            <td>平台型资产强，覆盖材料、外延、芯片和多个化合物半导体方向，但当前利润释放不充分。</td>
+          </tr>
+          <tr>
+            <td>财务质量</td>
+            <td class="num red">42</td>
+            <td>最近四个季度扣非均为负，2025年归母亏损、扣非亏损扩大，是最大硬伤。</td>
+          </tr>
+          <tr>
+            <td>估值赔率</td>
+            <td class="num orange">45</td>
+            <td>估值已在交易反转和控制权预期；若Q2未改善，赔率会明显恶化。</td>
+          </tr>
+          <tr>
+            <td>催化/影子逻辑</td>
+            <td class="num">70</td>
+            <td>SiC、GaN、射频滤波器、Mini/Micro LED、控制权变化预期都能形成催化，但很多尚未进入利润验证。</td>
+          </tr>
+          <tr>
+            <td>治理/流动性</td>
+            <td class="num red">35</td>
+            <td>流动性很好，但治理风险显著：实控人留置、控股股东冻结和重整申请必须折价。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>六、利润池拆解</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>利润池</th>
+            <th>卡位</th>
+            <th>当前问题</th>
+            <th>模型判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>高端LED / Mini LED / Micro LED</td>
+            <td>传统优势业务，规模和客户基础强。</td>
+            <td>LED周期属性仍在，价格和毛利恢复需要持续验证。</td>
+            <td>现金流底盘，能托底但难单独撑起千亿重估。</td>
+          </tr>
+          <tr>
+            <td>GaAs / GaN 射频与滤波器</td>
+            <td>技术门槛较高，国产替代空间存在。</td>
+            <td>Q1公告明确提到滤波器业务改善循序渐进，对利润仍有拖累。</td>
+            <td>高弹性期权，必须等订单和毛利改善。</td>
+          </tr>
+          <tr>
+            <td>SiC 功率半导体</td>
+            <td>湖南三安承载第三代半导体核心叙事。</td>
+            <td>Q1公告同样提到湖南三安碳化硅业务仍拖累利润。</td>
+            <td>最重要重估引擎，但当前还不是利润引擎。</td>
+          </tr>
+          <tr>
+            <td>光通信 / 光电芯片潜在映射</td>
+            <td>公司拥有化合物半导体平台和光电子基础。</td>
+            <td>公开财报没有给出足够颗粒度证明AI光通信已成为核心利润来源。</td>
+            <td>只能作为加分项，不能进入核心利润评分。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <strong>利润池结论：</strong>三安的“卡位”比当前利润更强。市场买的是未来利润池迁移，但V2.3.1要求先等至少一个季度扣非转正，最好连续两个季度，才说明利润池真的开始流向公司。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>七、三种情景推演</h2>
+      <div class="cards">
+        <div class="card">
+          <h3 class="green">乐观情景</h3>
+          <p>Q2扣非扭亏，SiC/滤波器拖累显著收窄，控股股东重整没有导致失控性抛压，市场确认公司从“治理危机”转向“控制权/资产重估”。</p>
+          <p><strong>模型动作：</strong>从观察池升级为成长配置。</p>
+        </div>
+        <div class="card">
+          <h3 class="orange">中性情景</h3>
+          <p>收入恢复但扣非仍微亏，治理风险未恶化，股价高位震荡。市场继续给主题估值，但资金分歧加大。</p>
+          <p><strong>模型动作：</strong>维持事件驱动，低仓位跟踪。</p>
+        </div>
+        <div class="card">
+          <h3 class="red">悲观情景</h3>
+          <p>Q2扣非继续亏损，重整/冻结/拍卖带来控制权不确定性，异常波动后放量滞涨或跌破关键支撑。</p>
+          <p><strong>模型动作：</strong>降级为题材交易，优先风控。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>八、执行条件</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>动作</th>
+            <th>触发条件</th>
+            <th>原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>观察 / 持有</td>
+            <td>股价不放量跌破近期启动位，且没有新增控制权或冻结恶化公告。</td>
+            <td>题材强度仍在，但财务未验证，只能低仓位观察。</td>
+          </tr>
+          <tr>
+            <td>加仓</td>
+            <td>Q2扣非转正，或公司明确披露SiC/滤波器业务亏损收窄、订单和毛利改善，同时股价回撤后重新放量转强。</td>
+            <td>必须等利润表或订单证据，不能只追异常波动后的情绪。</td>
+          </tr>
+          <tr>
+            <td>减仓</td>
+            <td>冲高放量滞涨、再次异常波动后公告无实质利好、或跌破5日/10日均线后反抽失败。</td>
+            <td>当前主要是事件驱动，资金踩踏风险高。</td>
+          </tr>
+          <tr>
+            <td>卖出 / 回避</td>
+            <td>重整被正式受理且控制权不确定性扩大，或Q2扣非继续大额亏损，或公告出现新增司法/担保/资金风险。</td>
+            <td>治理风险与财务风险共振时，V2.3.1不允许硬扛。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout warn">
+        <strong>仓位建议：</strong>不适合作为组合核心仓。适合作为“化合物半导体重估 + 困境反转”的小仓事件观察位，等待Q2财报验证。若已有仓位，优先把它当作高波动题材仓管理。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>九、复盘清单</h2>
+      <ul>
+        <li><strong>第一优先级：</strong>2026中报，重点看扣非净利是否转正，Q2毛利率是否继续改善。</li>
+        <li><strong>第二优先级：</strong>SiC、滤波器、射频业务是否出现“亏损收窄或规模交付”的明确披露。</li>
+        <li><strong>第三优先级：</strong>控股股东破产重整申请是否被受理，是否影响控制权和股权结构。</li>
+        <li><strong>第四优先级：</strong>异常波动后是否继续放量上攻，还是高位滞涨后资金退潮。</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>资料来源</h2>
+      <ul>
+        <li><a href="https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260424/2f694359de584ba0b9266049bc382b7a.PDF">三安光电2025年年度报告</a></li>
+        <li><a href="https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260424/cb92875fd73a4a1293151a66338c7cfe.PDF">三安光电2026年第一季度报告</a></li>
+        <li><a href="https://paper.cnstock.com/html/2026-06/25/content_2235030.htm">三安光电2026-06-25股票交易异常波动公告及担保公告</a></li>
+        <li><a href="https://paper.cnstock.com/html/2026-06/18/content_2232942.htm">三安光电2026-06-18股票交易异常波动公告</a></li>
+        <li>行情和估值：腾讯行情接口，抓取时间约 2026-06-25 16:14 北京时间。</li>
+      </ul>
+      <div class="footer">本报告仅为研究分析，不构成收益承诺或投资建议。V2.3.1评分用于比较逻辑强弱，最终仓位还需要结合个人风险承受能力和组合暴露。</div>
+    </section>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -u
+
+guard_state_dir=/var/lib/bzsj-resource-guard
+mkdir -p "$guard_state_dir"
+chmod 0700 "$guard_state_dir"
+
+root_used_pct="$(df -P / | awk 'NR==2 {gsub(/%/, "", $5); print $5}')"
+mem_total_kb="$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)"
+mem_available_kb="$(awk '/^MemAvailable:/ {print $2}' /proc/meminfo)"
+mem_available_pct=$((mem_available_kb * 100 / mem_total_kb))
+
+if mountpoint -q /data2; then
+    data2_mounted=1
+    data2_used_pct="$(df -P /data2 | awk 'NR==2 {gsub(/%/, "", $5); print $5}')"
+else
+    data2_mounted=0
+    data2_used_pct=100
+fi
+
+emit_transition() {
+    alert_key="$1"
+    is_active="$2"
+    severity="$3"
+    message="$4"
+    marker_file="$guard_state_dir/${alert_key}.alert"
+
+    if [ "$is_active" = "1" ]; then
+        if [ ! -f "$marker_file" ]; then
+            logger -p "daemon.${severity}" -t resource-guard "$message"
+            : > "$marker_file"
+        fi
+    elif [ -f "$marker_file" ]; then
+        logger -p daemon.notice -t resource-guard "RECOVERED: $message"
+        rm -f -- "$marker_file"
+    fi
+}
+
+if [ "$root_used_pct" -ge 85 ]; then
+    emit_transition root-disk 1 warning "root filesystem usage is ${root_used_pct}% (threshold 85%)"
+else
+    emit_transition root-disk 0 warning "root filesystem usage is ${root_used_pct}% (threshold 85%)"
+fi
+
+if [ "$mem_available_pct" -le 10 ]; then
+    emit_transition memory 1 warning "available memory is ${mem_available_pct}% (threshold 10%)"
+else
+    emit_transition memory 0 warning "available memory is ${mem_available_pct}% (threshold 10%)"
+fi
+
+if [ "$data2_mounted" = "1" ]; then
+    emit_transition data2-mount 0 err "/data2 mount is present"
+else
+    emit_transition data2-mount 1 err "/data2 mount is missing"
+fi
+
+if [ "$data2_used_pct" -ge 85 ]; then
+    emit_transition data2-disk 1 warning "/data2 filesystem usage is ${data2_used_pct}% (threshold 85%)"
+else
+    emit_transition data2-disk 0 warning "/data2 filesystem usage is ${data2_used_pct}% (threshold 85%)"
+fi
+
+largest_log_bytes=0
+largest_log_name=none
+
+for container_id in $(docker ps -q); do
+    container_name="$(docker inspect -f '{{.Name}}' "$container_id" | sed 's#^/##')"
+    log_path="$(docker inspect -f '{{.LogPath}}' "$container_id")"
+    [ -f "$log_path" ] || continue
+    log_bytes="$(stat -c '%s' "$log_path")"
+
+    if [ "$log_bytes" -gt "$largest_log_bytes" ]; then
+        largest_log_bytes="$log_bytes"
+        largest_log_name="$container_name"
+    fi
+
+    if [ "$log_bytes" -ge 524288000 ]; then
+        log_human="$(du -h "$log_path" | awk '{print $1}')"
+        emit_transition "docker-${container_id}" 1 warning "Docker JSON log exceeds 500 MiB: ${container_name} (${log_human})"
+    else
+        emit_transition "docker-${container_id}" 0 warning "Docker JSON log for ${container_name} is below 500 MiB"
+    fi
+done
+
+if [ "${1:-}" = "--report" ]; then
+    printf 'root_used_pct=%s data2_mounted=%s data2_used_pct=%s mem_available_pct=%s largest_docker_log=%s largest_docker_log_bytes=%s\n' \
+        "$root_used_pct" "$data2_mounted" "$data2_used_pct" "$mem_available_pct" "$largest_log_name" "$largest_log_bytes"
+fi

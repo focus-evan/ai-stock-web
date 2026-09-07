@@ -1,0 +1,25 @@
+{
+  "checked_local_references": 60,
+  "errors": [],
+  "tests": {
+    "passed": 19,
+    "files": [
+      "test_unified_llm_router.py",
+      "test_unified_llm_compat_clients.py",
+      "test_llm_model_observability.py"
+    ],
+    "not_collected": {
+      "test_parallel_tool_execution.py": "local hypothesis dependency missing"
+    }
+  },
+  "generated_at": "2026-09-07T15:29:39",
+  "browser_check": {
+    "viewport": "1280x720",
+    "horizontal_overflow": false,
+    "console_errors": 0,
+    "toc_navigation": "passed",
+    "evidence_filter": "passed; searches full text including hashes",
+    "return_navigation": "passed after fixing sidebar scrolling",
+    "mobile_viewport_tested": false
+  }
+}

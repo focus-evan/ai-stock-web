@@ -1,0 +1,103 @@
+{
+  "timestamp": "20260819153218",
+  "quotes": {
+    "600127": {
+      "code": "600127",
+      "name": "金健米业",
+      "close": 7.82,
+      "previous_close": 7.11,
+      "open": 7.82,
+      "quote_time": "20260819153208",
+      "change_pct": 9.99,
+      "high": 7.82,
+      "low": 7.82,
+      "turnover_pct": 4.56,
+      "amount_wan": 22890.0,
+      "source": "Tencent quote backup"
+    },
+    "600313": {
+      "code": "600313",
+      "name": "农发种业",
+      "close": 7.13,
+      "previous_close": 6.78,
+      "open": 7.46,
+      "quote_time": "20260819153207",
+      "change_pct": 5.16,
+      "high": 7.46,
+      "low": 7.02,
+      "turnover_pct": 21.11,
+      "amount_wan": 166090.0,
+      "source": "Tencent quote backup"
+    },
+    "603395": {
+      "code": "603395",
+      "name": "红四方",
+      "close": 29.0,
+      "previous_close": 26.36,
+      "open": 29.0,
+      "quote_time": "20260819153153",
+      "change_pct": 10.02,
+      "high": 29.0,
+      "low": 28.01,
+      "turnover_pct": 18.11,
+      "amount_wan": 34077.0,
+      "source": "Tencent quote backup"
+    },
+    "000735": {
+      "code": "000735",
+      "name": "罗牛山",
+      "close": 5.87,
+      "previous_close": 6.18,
+      "open": 6.15,
+      "quote_time": "20260819153218",
+      "change_pct": -5.02,
+      "high": 6.47,
+      "low": 5.82,
+      "turnover_pct": 16.73,
+      "amount_wan": 117669.0,
+      "source": "Tencent quote backup"
+    },
+    "600613": {
+      "code": "600613",
+      "name": "神奇制药",
+      "close": 7.78,
+      "previous_close": 7.76,
+      "open": 8.19,
+      "quote_time": "20260819153159",
+      "change_pct": 0.26,
+      "high": 8.54,
+      "low": 7.38,
+      "turnover_pct": 33.91,
+      "amount_wan": 132260.0,
+      "source": "Tencent quote backup"
+    },
+    "000815": {
+      "code": "000815",
+      "name": "美利云",
+      "close": 16.08,
+      "previous_close": 17.87,
+      "open": 16.64,
+      "quote_time": "20260819153218",
+      "change_pct": -10.02,
+      "high": 16.91,
+      "low": 16.08,
+      "turnover_pct": 12.5,
+      "amount_wan": 142532.0,
+      "source": "Tencent quote backup"
+    },
+    "002156": {
+      "code": "002156",
+      "name": "通富微电",
+      "close": 63.59,
+      "previous_close": 70.66,
+      "open": 69.0,
+      "quote_time": "20260819153206",
+      "change_pct": -10.01,
+      "high": 69.89,
+      "low": 63.59,
+      "turnover_pct": 9.88,
+      "amount_wan": 989470.0,
+      "source": "Tencent quote backup"
+    }
+  }
+}

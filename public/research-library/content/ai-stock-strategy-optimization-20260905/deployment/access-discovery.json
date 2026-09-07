@@ -1,0 +1,171 @@
+{
+  "resource_discovery": [
+    {
+      "region": "cn-qingdao",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-beijing",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-zhangjiakou",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-huhehaote",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-wulanchabu",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-hangzhou",
+      "count": 6,
+      "matches": []
+    },
+    {
+      "region": "cn-shanghai",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-nanjing",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-shenzhen",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-heyuan",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-guangzhou",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-fuzhou",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-wuhan-lr",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-zhongwei",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-chengdu",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "cn-hongkong",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-northeast-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-northeast-2",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-8",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-3",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-6",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-5",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "ap-southeast-7",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "us-east-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "us-west-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "na-south-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "sa-east-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "eu-west-1",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "eu-west-2",
+      "count": 0,
+      "matches": []
+    },
+    {
+      "region": "me-east-1",
+      "status": "unavailable"
+    },
+    {
+      "region": "eu-central-1",
+      "count": 0,
+      "matches": []
+    }
+  ],
+  "public_readonly_checks": {
+    "/api/health": {
+      "error": "ConnectionError"
+    },
+    "/api/system/branch": {
+      "error": "ConnectionError"
+    }
+  }
+}

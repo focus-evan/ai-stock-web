@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-08-30 15:46:47",
+  "production_cutoff": "2026-08-30 15:42:40",
+  "supported_companies": 2201,
+  "audit_counts": {
+    "B_行业与主营一致": 825,
+    "A_主营直接支持": 1206,
+    "D_确认需修正": 12,
+    "C_需人工复核": 134,
+    "B_人工复核支持": 17,
+    "B_官方披露支持": 7
+  },
+  "confirmed_corrections": 12,
+  "manual_review_queue": 146,
+  "high_priority_review_queue": 5,
+  "ah_conflicts": [
+    "兆易创新：A股高端芯片/H股存储芯片",
+    "龙源电力：A股风电/H股光伏"
+  ],
+  "audit_sha256": "b858e9bb2ecbc5061287d5a89e2e44130bffd616ea5d9672419172aaaa7e2918",
+  "note": "只读核对，未修改生产数据。D为确认需修正；C为证据边界不足，不直接判错。"
+}

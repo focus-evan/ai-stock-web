@@ -1,0 +1,373 @@
+[
+  {
+    "id": "E01",
+    "path": "api/main.py",
+    "ranges": [
+      [
+        4248,
+        4255
+      ],
+      [
+        4266,
+        4293
+      ],
+      [
+        3461,
+        3481
+      ]
+    ],
+    "sha256": "06c8ea5bed9c1dbb4b462b07d3eaf9d8b54850853109fcd033fd3019c388820e"
+  },
+  {
+    "id": "E02",
+    "path": "api/training/repository.py",
+    "ranges": [
+      [
+        312,
+        339
+      ]
+    ],
+    "sha256": "a848e5085148e2ae82d87264bb7c529499e112bcdd37098c2cddfa6778752f55"
+  },
+  {
+    "id": "E02",
+    "path": "api/training/routes.py",
+    "ranges": [
+      [
+        407,
+        445
+      ]
+    ],
+    "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95"
+  },
+  {
+    "id": "E03",
+    "path": "api/training/routes.py",
+    "ranges": [
+      [
+        462,
+        498
+      ],
+      [
+        500,
+        528
+      ],
+      [
+        586,
+        590
+      ],
+      [
+        618,
+        632
+      ]
+    ],
+    "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95"
+  },
+  {
+    "id": "E04",
+    "path": "api/main.py",
+    "ranges": [
+      [
+        3806,
+        3817
+      ]
+    ],
+    "sha256": "06c8ea5bed9c1dbb4b462b07d3eaf9d8b54850853109fcd033fd3019c388820e"
+  },
+  {
+    "id": "E04",
+    "path": "api/database/repository.py",
+    "ranges": [
+      [
+        762,
+        801
+      ],
+      [
+        813,
+        848
+      ]
+    ],
+    "sha256": "26e1f7e021749f81ad3ad2a1ba41b4e70fdd0ad35db6e9634bade4a05508857f"
+  },
+  {
+    "id": "E05",
+    "path": "api/main.py",
+    "ranges": [
+      [
+        3847,
+        3859
+      ],
+      [
+        3886,
+        3927
+      ]
+    ],
+    "sha256": "06c8ea5bed9c1dbb4b462b07d3eaf9d8b54850853109fcd033fd3019c388820e"
+  },
+  {
+    "id": "E05",
+    "path": "api/training/routes.py",
+    "ranges": [
+      [
+        180,
+        223
+      ],
+      [
+        227,
+        243
+      ],
+      [
+        727,
+        731
+      ]
+    ],
+    "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95"
+  },
+  {
+    "id": "E06",
+    "path": "api/multi_collection_rag.py",
+    "ranges": [
+      [
+        30,
+        39
+      ],
+      [
+        64,
+        84
+      ],
+      [
+        290,
+        329
+      ]
+    ],
+    "sha256": "112dedffb60b9b9a29161b2f1f66a71c3a595008c283adaba6b6504661b28cff"
+  },
+  {
+    "id": "E07",
+    "path": "api/llm/llm_router.py",
+    "ranges": [
+      [
+        78,
+        99
+      ],
+      [
+        418,
+        456
+      ],
+      [
+        580,
+        599
+      ]
+    ],
+    "sha256": "2275f796f1f8b5918880f761b7909447e4cca8ba48831530e12e64702703c9db"
+  },
+  {
+    "id": "E08",
+    "path": "api/langgraph_agent.py",
+    "ranges": [
+      [
+        31,
+        35
+      ],
+      [
+        143,
+        167
+      ],
+      [
+        234,
+        254
+      ]
+    ],
+    "sha256": "ce5eeda98311f689ad0e6c18efe6988b013d05a549b9e14d3c8981fcc322ded9"
+  },
+  {
+    "id": "E08",
+    "path": "api/strategy/step_executor.py",
+    "ranges": [
+      [
+        281,
+        292
+      ]
+    ],
+    "sha256": "cd49cff0809919379e64c8cbe288a958d1bee461d687db75e9e13df9c800da59"
+  },
+  {
+    "id": "E09",
+    "path": "api/xueba_mode_agent.py",
+    "ranges": [
+      [
+        33,
+        40
+      ],
+      [
+        148,
+        172
+      ],
+      [
+        533,
+        555
+      ]
+    ],
+    "sha256": "959273614f8aa2f0645a4521c47210f99929b48c1273388ac40d96ad3466b899"
+  },
+  {
+    "id": "E09",
+    "path": "api/college_asset_allocation.py",
+    "ranges": [
+      [
+        1050,
+        1063
+      ]
+    ],
+    "sha256": "83de7a5cb253fa268d2e1cb9c7cb487a3e80e9c0029904242f4e6b83f24bf0cf"
+  },
+  {
+    "id": "E10",
+    "path": "api/wiki_graph.py",
+    "ranges": [
+      [
+        84,
+        109
+      ],
+      [
+        142,
+        150
+      ],
+      [
+        190,
+        213
+      ]
+    ],
+    "sha256": "6d1c006e58ee04a7e796cc471ba6aaf7a602f33d5fb37c27ab69265f9f4fbb55"
+  },
+  {
+    "id": "E11",
+    "path": "api/training/models.py",
+    "ranges": [
+      [
+        9,
+        60
+      ]
+    ],
+    "sha256": "8a309c76b88cee38b2aaff52128f8f322d678a16f735f2af62a91d38cd10f486"
+  },
+  {
+    "id": "E11",
+    "path": "api/training/repository.py",
+    "ranges": [
+      [
+        353,
+        377
+      ]
+    ],
+    "sha256": "a848e5085148e2ae82d87264bb7c529499e112bcdd37098c2cddfa6778752f55"
+  },
+  {
+    "id": "E12",
+    "path": "api/training/routes.py",
+    "ranges": [
+      [
+        540,
+        564
+      ],
+      [
+        568,
+        583
+      ]
+    ],
+    "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95"
+  },
+  {
+    "id": "E12",
+    "path": "api/task_manager.py",
+    "ranges": [
+      [
+        69,
+        86
+      ]
+    ],
+    "sha256": "9dc1ba3231adeb3db1f7ca283d6a176bdf400a7ad127c0843ceba1150879059e"
+  },
+  {
+    "id": "E13",
+    "path": "api/college_s5_pk.py",
+    "ranges": [
+      [
+        1893,
+        1905
+      ],
+      [
+        2000,
+        2012
+      ]
+    ],
+    "sha256": "35a8b8cd84e6a2445796dcf37d1160a969cb82abf0fe006788b010eff1269473"
+  },
+  {
+    "id": "E14",
+    "path": "api/wiki/wiki_index_manager.py",
+    "ranges": [
+      [
+        20,
+        24
+      ],
+      [
+        62,
+        77
+      ]
+    ],
+    "sha256": "85ca50816064d841ff18a6e8e2f194f1ed7629414e7bbf561751a053e9803507"
+  },
+  {
+    "id": "E14",
+    "path": "api/wiki/wiki_ingest_service.py",
+    "ranges": [
+      [
+        26,
+        30
+      ]
+    ],
+    "sha256": "584e3bed3c90d81504b4654ed7be0de736305f5589096d75ddea2b771f9114ef"
+  },
+  {
+    "id": "E14",
+    "path": "api/wiki/wiki_page_builder.py",
+    "ranges": [
+      [
+        195,
+        216
+      ]
+    ],
+    "sha256": "f4e3a4004d9c336ad05ad152a5e1533e2994bc564cdf55981b120d8782c4fe21"
+  },
+  {
+    "id": "E15",
+    "path": "api/college_mabu_summary.py",
+    "ranges": [
+      [
+        1239,
+        1269
+      ]
+    ],
+    "sha256": "94b54aa3433adb4dd486554cc2d2736a56c3fe36bc6f5c27ba0b026e4377fb7d"
+  },
+  {
+    "id": "E16",
+    "path": "api/training/routes.py",
+    "ranges": [
+      [
+        31,
+        47
+      ],
+      [
+        325,
+        339
+      ],
+      [
+        407,
+        416
+      ]
+    ],
+    "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95"
+  }
+]

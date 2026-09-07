@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A股四战法统一总览</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffdf8;
+      --ink: #1d2a31;
+      --muted: #62727d;
+      --line: #d7cbb8;
+      --accent: #b85c38;
+      --accent-soft: #f2dfd4;
+      --shadow: 0 18px 40px rgba(53, 37, 19, 0.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #f8e6cf 0, transparent 30%),
+        linear-gradient(180deg, #f5f0e8 0%, #efe8dc 100%);
+    }
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #fff8ed 0%, #fffdf8 65%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #6c2f18;
+      font-size: 13px;
+    }
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .overview-card {
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 253, 248, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(74, 58, 38, 0.08);
+    }
+    .overview-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .overview-time {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .framework {
+      margin-top: 28px;
+      background: rgba(255, 253, 248, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 16px 36px rgba(74, 58, 38, 0.08);
+    }
+    .framework-head {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .framework h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .panel {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid #eadfce;
+      border-radius: 16px;
+      background: #fffdfa;
+    }
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+    .path {
+      color: var(--muted);
+      font-size: 12px;
+      word-break: break-all;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.55;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    }
+    .run-card {
+      padding: 14px;
+      border: 1px solid #eee2d0;
+      border-radius: 14px;
+      background: #fffaf2;
+      margin-top: 12px;
+    }
+    .run-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .run-name {
+      font-weight: 700;
+    }
+    .run-time {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 28px; }
+      .framework h2 { font-size: 20px; }
+      .wrap { padding: 16px 12px 28px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="wrap">
+    <header class="hero">
+      <h1>A股四战法统一总览</h1>
+      <p>统一汇总 养家、Kobe92、北京炒家、A股龙头战法 的共享记忆与最近运行结果。默认入口看 <code>latest.html</code>，历史快照进入 <code>archive</code>。</p>
+      <div class="meta">
+        <span class="pill">生成时间：2026-07-01 16:44:44 +0800</span>
+        <span class="pill">目录：D:\Evan\Codes\reports\a-share-four-strategies</span>
+        <span class="pill">归档文件：a_share_four_strategies_20260701_164444.html</span>
+      </div>
+    </header>
+    <nav class="overview">
+        <a class="overview-card" href="#yangjia">
+          <div class="overview-title">养家情绪周期</div>
+          <div class="overview-time">2026-07-01 15:33:40 CST</div>
+        </a>
+        
+        <a class="overview-card" href="#kobe92">
+          <div class="overview-title">Kobe92 周期切换</div>
+          <div class="overview-time">2026-07-01 15:24:54 +08:00</div>
+        </a>
+        
+        <a class="overview-card" href="#beijing-chaogu">
+          <div class="overview-title">北京炒家首板</div>
+          <div class="overview-time">2026-07-01 15:31 CST</div>
+        </a>
+        
+        <a class="overview-card" href="#leader">
+          <div class="overview-title">A股龙头战法（陈小群）</div>
+          <div class="overview-time">2026-06-26 10:14:03 +08:00</div>
+        </a>
+        </nav>
+    
+    <section class="framework" id="yangjia">
+      <div class="framework-head">
+        <h2>养家情绪周期</h2>
+        <span class="pill">共享记忆时间：2026-07-01 15:33:40 CST</span>
+      </div>
+      <div class="path">共享记忆：C:\Users\bzsj_\.codex\automations\yangjia-emotion-cycle-memory.md</div>
+      <div class="panel">
+        <h3>最新共享摘要</h3>
+        <pre>- 2026-07-01 15:33:40 CST | 情绪: 分歧震荡（广度强赚钱，科技高位亏钱回流） | 主线: 大金融/券商, 医药/海南海药, 电子特气/氟化工 | 收盘跟踪: 水晶光电与格科微升级留队，多氟多保留但只等分歧确认，彩虹股份与TCL科技保留观察，莱宝高科降级，联得装备淘汰 | 明日前瞻: 华安证券/海南海药/金宏气体/长江证券/空仓席位 | 风险门: Orange | 下个检查点: 2026-07-02 08:50 CST，重点看券商是否继续带量、海南海药是否给分歧承接、金宏气体能否非一致高开仍守强、水晶光电若继续一字则只看不追 | 耗时约7分钟</pre>
+      </div>
+      <div class="panel">
+        <h3>近期运行</h3>
+        
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">yangjia-08-50-emotion-plan</span>
+                <span class="run-time">2026-06-22 09:55:58 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\yangjia-08-50-emotion-plan\memory.md</div>
+              <pre>- 2026-06-22 09:55:58 CST: 首次运行，实际为延后补跑 08:50 盘前计划。情绪判断为`亏钱扩散`，允许策略为`观察/不出手`。主线按强弱排为：1) 油气/航运安全链 2) 固态电池/高端铜箔 3) PCB/算力上游。五股雷达：山东墨龙/准油股份/诺德股份/逸豪新材 + 1 个空仓席位；无上一轮养家候选可跟踪。风险门为`Red`，下个检查点固定为 2026-06-22 10:05 CST，重点看油气高标是否超预期承接、诺德是否回封、PCB 分支是否有放量转强。当前运行耗时约 7 分钟。
+- 2026-06-23 10:03:00 CST: 延后补跑 08:50 盘前计划。昨收三大指数强修复、涨停 134 家对跌停 4 家，前一交易日涨停溢价均值约 +4.27%，但高位拥挤明显，情绪定为`分歧震荡`，允许策略为`只做确认，不做追高`。主线按强弱排为：1) 小金属/工业金属/新材料 2) AI硬件上游（光通信/元件/通信设备/液冷）3) 航空装备/军工新材料。五股雷达：旭光电子/艾华集团/东方锆业/中瓷电子/空仓席位；前序跟踪为旭光、东方锆业延续，艾华高换手高风险，中瓷电子继续观察。风险门为`Orange`，下个检查点固定为 2026-06-23 10:05 CST，重点看高标是否从一字/烂板转成可交易承接。当前运行耗时约 16 分钟。
+- 2026-06-24 10:20:27 CST: 延后补跑 08:50 盘前计划。基于 2026-06-23 收盘结构，沪指/深成指/创业板指分别下跌 1.37%/3.17%/3.84%，两市成交额约 3.44 万亿元，涨停 96 家、跌停 39 家，昨日涨停股次日涨跌幅均值约 +1.30%，说明指数弱但局部赚钱效应未完全熄火，情绪定为`分歧震荡（08:50补跑，低一档置信）`，允许策略为`只做确认，不做追高`。主线按强弱排为：1) 券商/金融科技 2) 医药补涨 3) 磷化工/化工原料。五股雷达：东方锆业/长江证券/海欣股份/三孚股份/银之杰；前序跟踪为东方锆业、三孚股份、长江证券、海欣股份仍留池，但四者隔夜均叠加异动公告或高位拥挤风险，空仓席位改为银之杰弹性观察位。风险门为`Orange`，下个检查点合同上仍是 2026-06-24 10:05 CST，但本次运行已晚于该时点，需要以后续开盘实际承接另行确认。当前运行耗时约 6 分钟。
+- 2026-06-25 07:47:08 CST: 正常盘前运行。基于 2026-06-24 收盘结构，沪指/深成指/创业板指分别上涨 0.11%/1.24%/1.41%，两市成交额约 3.28 万亿元，涨停 98 家、跌停 12 家，昨日涨停股次日涨跌幅均值约 +0.68%，说明前排赚钱效应仍在但整体扩散一般，情绪定为`分歧震荡（偏赚钱扩散）`，允许策略为`只做分歧确认，不做一致追高`。主线按强弱排为：1) 半导体/元件/通信设备 2) 化工原料/锆链 3) 医药补涨。五股雷达：东方锆业/三孚股份/长裕集团/海南海药/空仓席位；前序跟踪为东方锆业、三孚、长裕、海南海药继续保留，但东方锆业已有异常波动公告、三孚股份有风险提示公告、长裕集团有短线回调风险提示，因此今天默认先等换手，不抢竞价顶板。风险门为`Orange`，下个检查点固定为 2026-06-25 10:05 CST，重点看东方锆业是否非一字且给回封、三孚是否分歧承接、海南海药是否延续医药补涨、长裕若继续一致加速则放弃。当前运行耗时约 12 分钟。
+- 2026-06-25 10:13:40 CST | 情绪: 分歧震荡（08:50补跑，降一档置信） | 主线: 半导体/元件/通信设备, 化工原料/电子化学/锆链, 医药补涨 | 五股雷达: 东方锆业/三孚股份/海南海药/西陇科学/空仓席位 | 前序跟踪: 东方锆业偏强但分歧大，三孚与海南海药冲高回落，长龄液压延续强势但更像情绪加速，西陇仅保留观察 | 风险门: Orange | 下个检查点: 2026-06-25 10:05 CST（本次已过时点，需按开盘承接规则回看） | 耗时约8分钟
+- 2026-06-26 10:09:33 CST: 延后补跑 08:50 盘前计划。基于 2026-06-25 收盘结构，上证指数/深证成指/创业板指分别收于 4120.28 / 16344.08 / 4371.99，成交额约 3.59 万亿元；涨停池 86 家、跌停池 17 家，昨日涨停股次日涨跌幅均值约 +2.49%，说明前排赚钱效应仍在，但广度明显偏弱，情绪定为`分歧震荡（08:50补跑，局部赚钱、广度偏弱）`，允许策略为`只做确认，不做一致追高`。主线按强弱排为：1) 半导体/封测/先进封装 2) 元件/PCB/军工电子 3) 算力硬件/存储芯片。五股雷达：长电科技/超声电子/航锦科技/火炬电子/空仓席位；前序跟踪为长电、航锦、超声延续强势保留，东方锆业降级为旧龙观察位，巨潮检索未见上述核心候选在 6月25日晚至6月26日晨新增官方公告。风险门为`Orange`，下个检查点固定为 2026-06-26 10:05 CST，重点看长电与超声是否给换手后再过昨高、航锦与火炬是否非一字并能回封确认；若半导体核心集体开板转弱，则今天转为不买。当前运行耗时约 8 分钟。
+- 2026-06-29 10:26:40 CST: 08:50 盘前计划补跑。基于 2026-06-26 收盘结构，近4600只个股下跌、约60涨停对30跌停、连板晋级率约25%、百股跌超9%，而玻璃基板/PCB/先进封装仍有逆势活口，情绪定为分歧震荡（偏亏钱扩散，补跑且10:05已过，低一档置信），允许策略为只观察/只等确认。主线按强弱排为：1) PCB/先进封装/玻璃基板 2) 半导体材料/设备 3) 显示材料/TGV链。五股雷达：广合科技/莱宝高科/宏和科技/超声电子/空仓席位；前序跟踪为超声电子、广合科技、莱宝高科周五逆势涨停留队，但周末超声电子发布澄清类公告、广合科技与宏和科技披露异动公告，今天只保留确认观察，不做竞价追高。风险门为Orange，下个检查点固定为2026-06-29 10:05 CST，重点看广合能否站回220.88、莱宝能否回封15.62、宏和/超声是否给换手承接；当前运行耗时约10分钟。
+- 2026-07-01 10:24:59 CST: 延后补跑 08:50 盘前计划。基于 2026-06-30 收盘结构，上证指数/深证成指/创业板指分别收于 4094.40 / 16205.56 / 4342.71，全市场成交额约 3.29 万亿元，涨停约 170-172 家、连板股 19 只但晋级率仅 11.11%，说明赚钱效应扩散到首板和趋势科技股，但高度接力仍弱，情绪定为`分歧震荡（08:50补跑，因实际运行已晚于开盘降一档置信）`，允许策略为`只等确认，不做一致追高`。主线按强弱排为：1) 半导体/设备材料 2) 光学光电/显示/TGV 3) 机器人/消费电子设备。五股雷达：水晶光电/莱宝高科/彩虹股份/TCL科技/空仓席位；前序跟踪为水晶光电维持前排核心但高位拥挤，莱宝高科与彩虹股份隔夜均新增异动/风险提示公告，联得装备因 20CM 高波动与无新增官方催化降级移出核心池。风险门为`Orange`，下个检查点固定为 2026-07-01 10:05 CST（本次已晚于该时点，需按盘中实际承接回看），重点看水晶是否非一字并给放量承接、莱宝/彩虹能否弱转强回封、TCL科技能否继续带动板块扩散；若核心分时走弱或风险提示股集体掉队，则继续空仓。当前运行耗时约 8 分钟。</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">yangjia-10-05-emotion-confirmation</span>
+                <span class="run-time">2026-06-29 10:19:22 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\yangjia-10-05-emotion-confirmation\memory.md</div>
+              <pre>2026-06-29 10:19:22 CST | 用 2026-06-26 15:25 收盘雷达作连续起点（未见今日 08:50 计划写入）完成 10:05 早盘确认。结论：分歧震荡偏亏钱，允许策略为只观察/只等确认；主线切到医药、化工材料、半导体支线，旧 PCB/光电高位股明显补跌。五股雷达：海南海药、广生堂、莱宝高科、广合科技、空仓席位。前序跟踪：超声电子跌停淘汰，广合科技与莱宝高科仅保留观察。风险门：Orange。下一检查点：2026-06-29 15:25 CST。运行时长约 12 分钟。
+- 2026-07-01 10:27:30 CST | 已完成 10:05 情绪确认：分歧震荡偏赚钱扩散，允许策略为只做核心回封/轻仓试错，不追一字加速。主线看光学光电/半导体，其次氟化工。五股雷达：002273 水晶光电、002407 多氟多、688728 格科微、600707 彩虹股份、空仓席位。风险门 Orange。下个检查点 2026-07-01 15:25 CST。运行约 6 分钟。</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">yangjia-15-25-close-review</span>
+                <span class="run-time">2026-07-01 15:33:40 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\yangjia-15-25-close-review\memory.md</div>
+              <pre>- 2026-07-01 15:33:40 CST
+  - 结论: 情绪为分歧震荡，广度很强但高位科技午后明显回落；全市场超4300股上涨、逾200股涨停、沪深两市成交额约3.66万亿，沪指 +0.44%，深成指 -0.53%，创业板指 -1.89%。
+  - 今日续接: 按 10:27 池 水晶光电/多氟多/格科微/彩虹股份/空仓席位 复盘，并补跟前序 莱宝高科/联得装备/TCL科技。
+  - 收盘判定: 水晶光电一字涨停但无买点，格科微20CM封板升级留队；多氟多继续涨停但成交过大，仅保留分歧确认；彩虹股份、TCL科技保留观察；莱宝高科降级；联得装备淘汰。
+  - 明日初选: 华安证券、海南海药、金宏气体、长江证券、空仓席位。
+  - 风险门: Orange，高低切非常明显；若明早券商、医药、电子特气三条线任一前排集体高开低走，则直接降回 只观察。
+  - 下个检查点: 2026-07-02 08:50 CST。
+  - 本轮耗时: 约 7 分钟。</pre>
+            </article>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="kobe92">
+      <div class="framework-head">
+        <h2>Kobe92 周期切换</h2>
+        <span class="pill">共享记忆时间：2026-07-01 15:24:54 +08:00</span>
+      </div>
+      <div class="path">共享记忆：C:\Users\bzsj_\.codex\automations\kobe92-cycle-speculation-memory.md</div>
+      <div class="panel">
+        <h3>最新共享摘要</h3>
+        <pre>- 2026-07-01 15:24:54 +08:00 | 周期阶段: 高位震荡 | 选定模式: 补涨 | 收盘复盘跟进: 半导体前排补涨与锆系旧题材回流都能赚钱, 但容量中军与中位分化显著扩大; 688432有研硅自10:26触发价45.49到收盘45.80仅+0.68%但全天强势封靠近高位, 保留前排锚定; 300671富满微自10:26触发价95.90到收盘91.74回撤-4.34%, 午后炸板回落降级; 603986兆易创新自10:26触发价833.00到收盘772.01回撤-7.32%, 容量中军负反馈确认淘汰; 002167东方锆业与600667太极实业双双涨停, 旧题材回流只按补涨支线保留; 003043华亚智能未完成3板确认但收盘106.00较10:25观察价100.09仍+5.90%, 仅留观察; 002129TCL中环与600584长电科技继续不做中位。 | 明日初选雷达: 688432有研硅(分歧介入), 300671富满微(补涨观察), 600667太极实业(补涨观察), 002167东方锆业(补涨观察), 空仓席位 | 风险门: Orange, 7月1日上证4112.45(+0.44%)但深成指-0.53%创业板-1.89%, 涨停152跌停6, 昨日涨停池141只显示赚钱效应仍集中前排且容量股负反馈明显。 | 下个检查点: 2026-07-02 08:45 北京时间, 先看有研硅是否给分歧承接而非一致加速, 富满微能否弱转强修复, 太极实业/东方锆业能否带出同题材二梯队, 否则继续空仓席位优先。</pre>
+      </div>
+      <div class="panel">
+        <h3>近期运行</h3>
+        
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">kobe92-08-45-cycle-plan</span>
+                <span class="run-time">2026-06-29 10:16:40 +08:00</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\kobe92-08-45-cycle-plan\memory.md</div>
+              <pre>- Built the delayed 2026-07-01 pre-open Kobe92 cycle plan from the 2026-06-30 close, overnight public catalysts, prior-pick follow-up, and official risk notices; excluded 07-01 intraday moves to preserve the 08:45 cadence.
+- Verdict: 低位震荡, mode=切换; 半导体设备/硅片/存储 still leads, 机器人 is only a repair branch, and old resource names stay as one-day repair unless re-confirmed.
+- Radar: 003043 / 603986 / 688432 / 空仓席位 / 空仓席位.
+- Runtime: ~10 min.</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">kobe92-10-15-cycle-confirmation</span>
+                <span class="run-time">2026-07-01 10:26:55 +08:00</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\kobe92-10-15-cycle-confirmation\memory.md</div>
+              <pre>- 本轮运行时长: 约4分钟。
+2026-07-01 10:26:55 +08:00
+- 结论: 高位震荡，今日按补涨处理，资金继续围绕半导体前排扩散，旧资源回流只当支线。
+- 主线: 功率/模拟半导体涨价扩散，半导体材料/先进封装前排延续，锆系涨价回流。
+- 雷达: 688432有研硅、300671富满微、603986兆易创新、002167东方锆业、空仓席位。
+- 风险: Orange，指数红但同花顺口径上涨790下跌4676、涨停73跌停44，赚钱效应仍集中前排。
+- 下一检查点: 2026-07-01 15:20 北京时间。
+- 本轮运行时长: 约8分钟。</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">kobe92-15-20-cycle-review</span>
+                <span class="run-time">2026-06-29 15:29:27 +08:00</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\kobe92-15-20-cycle-review\memory.md</div>
+              <pre>﻿# Kobe92 15:20 Cycle Review Automation Memory
+- 2026-06-29 15:29:27 +08:00 | 运行总结: 完成 92科比 15:20 收盘复盘, 结论为高位震荡下半导体前排抱团有效但中位与旧题材继续亏钱; 次日模式维持补涨, 核心保留 603986兆易创新 与 688432有研硅, 600667太极实业仅后排观察, 600584长电科技降为不做中位; 风险门 Orange, 下个检查点 2026-06-30 08:45 北京时间。 | 当前运行时长: 约 11 分钟
+- 2026-06-29 15:36:00 +08:00 | 追加说明: 用户要求把次日买卖触发改成直接价格区间; 已细化为有研硅、兆易创新、太极实业、TCL中环、长电科技的买入区/减仓区/止损区。 | 当前运行时长: 约 13 分钟
+- 2026-06-29 15:42:00 +08:00 | 追加说明: 已按非交易时段改写为 2026-06-30 次日操作指南, 区分可做核心、条件触发、明确不做, 便于开盘前直接执行。 | 当前运行时长: 约 19 分钟
+- 2026-06-30 15:32:22 +08:00 | 运行总结: 完成 92科比 15:20 收盘复盘; 结论从昨日高位震荡修复进一步切到低位震荡下的切换强化, 明日只保留 003043华亚智能、603986兆易创新、002167东方锆业 三个观察位, 其余继续空仓席位优先; 风险门 Orange, 下个检查点 2026-07-01 08:45 北京时间。 | 当前运行时长: 约 11 分钟
+- 2026-07-01 15:24:54 +08:00 | 运行总结: 完成 92科比 15:20 收盘复盘; 结论为高位震荡下前排补涨赚钱但容量中军与中位股负反馈加剧, 明日仅保留 688432有研硅、300671富满微、600667太极实业、002167东方锆业 四个条件席位, 其余继续空仓席位优先; 风险门 Orange, 下个检查点 2026-07-02 08:45 北京时间。 | 当前运行时长: 约 13 分钟</pre>
+            </article>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="beijing-chaogu">
+      <div class="framework-head">
+        <h2>北京炒家首板</h2>
+        <span class="pill">共享记忆时间：2026-07-01 15:31 CST</span>
+      </div>
+      <div class="path">共享记忆：C:\Users\bzsj_\.codex\automations\beijing-chaogu-first-board-memory.md</div>
+      <div class="panel">
+        <h3>最新共享摘要</h3>
+        <pre>## 2026-07-01 15:31 CST
+- Runtime: about 7 minutes.
+- Sources used: AkShare 当日 stock_zt_pool_em / stock_zt_pool_zbgc_em / stock_zt_pool_previous_em / stock_zh_index_spot_sina。
+- Board climate: 可打首板，但明日只做前排硬封 / 中军 / 强换手套利，不接午后分歧扩大的弱回封与尾板弱转强。
+- Strong sectors: 1) 化工新材料（化学制品+塑料+化学原料） 2) 信创/IT服务 3) 券商，军工电子只保留最强中军。
+- Close-review follow-up: 002326 永太科技、603859 能科科技、600909 华安证券、600845 宝信软件、000733 振华科技全部零炸封住收盘，进入明日套利观察；000510 新金路 1炸后掉出涨停，直接淘汰。昨日前序票里 002273 水晶光电晋级2板继续强势旁观，002396 星网锐捷2板4炸仅降级旁观，600707 彩虹股份/002106 莱宝高科弱修复，300545 联得装备继续淘汰。
+- Tomorrow next-day套利观察 list: 002326 永太科技、603859 能科科技、000733 振华科技、600909 华安证券、600845 宝信软件。
+- Risk gate: Orange。收盘涨停 152、首板 128、炸板 74，炸板占比约 32.74%；昨日涨停今均值约 +3.13%、中位数约 +2.87%。情绪强，但午后分歧明显放大，明早若前排两只以上低于预期竞价，直接缩到只观察。
+- Next checkpoint: 2026-07-02 10:35 CST，先看 002326/603859/000733 是否给出高开 2%-5% 且开盘承接不弱；600909/600845 若板块不共振则只观察不买。</pre>
+      </div>
+      <div class="panel">
+        <h3>近期运行</h3>
+        
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">beijing-chaogu-10-35-first-board-radar</span>
+                <span class="run-time">2026-07-01 14:20 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\beijing-chaogu-10-35-first-board-radar\memory.md</div>
+              <pre>- Runtime: about 9 minutes.
+- Data snapshot: direct Eastmoney via AkShare stock_zt_pool_em(date=20260701) / stock_zt_pool_zbgc_em(date=20260701) / stock_zt_pool_previous_em(date=20260701) plus Eastmoney push2 spot rankings at about 10:36 CST.
+- Decision: board climate 可打首板，但只打前排; allowed board type 秒拉排板 / 回封 / 换手 / 中军；20cm 只小仓.
+- Strong sectors: 1) 化工新材料 2) 信创/IT服务 3) 券商/金融科技.
+- Radar: 002326 永太科技, 600909 华安证券, 603859 能科科技, 600845 宝信软件, 000510 新金路.
+- Prior follow-up: 水晶光电 keep; 星网锐捷 downgrade-watch; 彩虹股份 downgrade; 莱宝高科 and 联得装备 eliminate.
+- Risk gate: Yellow; 94 涨停 / 75 首板 / 32 炸板; yesterday-board premium mean +2.97%, median +1.86%.
+- Next checkpoint: 2026-07-01 14:20 CST. If two or more active names open and reseal weakly, stop adding new slots.</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">beijing-chaogu-14-20-seal-quality-check</span>
+                <span class="run-time">2026-07-01 14:27 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\beijing-chaogu-14-20-seal-quality-check\memory.md</div>
+              <pre>2026-07-01 14:27 CST
+- Runtime: about 6 minutes.
+- Read the shared Beijing-Chaogu first-board memory, refreshed today's 14:20 snapshot with direct AkShare Eastmoney/Sina interfaces, and rechecked the 10:37 first-board pool.
+- Tape stayed tradable but tightened into an Orange gate: around 152 limit-ups, 129 first boards, 73 broken boards, and yesterday-limit mean/median near +2.81% / +2.12%.
+- Morning radar recheck: 002326 永太科技, 600909 华安证券, 603859 能科科技, and 600845 宝信软件 all remained zero-blast sealed boards; 000510 新金路 failed after its 10:11 seal and was removed from active slots.
+- Replacement logic: only 000733 振华科技 qualified as a non-tail zero-blast mid-core replacement; no 14:30+ late board was allowed into the pool.
+- Prior-session carry check: 002273 水晶光电 upgraded to a hard 2-board keeper; 002396 星网锐捷 stayed 2-board but with 3 blasts and was downgraded to observation; 600707 彩虹股份 / 002106 莱宝高科 / 300545 联得装备 were removed.
+- Next checkpoint: 2026-07-01 15:25 CST, keep only names that still carry a strong close seal and drop any late weakening IT-service seat to observation or empty slot.</pre>
+            </article>
+            
+
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">beijing-chaogu-15-25-first-board-review</span>
+                <span class="run-time">2026-07-02 10:35 CST</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\beijing-chaogu-15-25-first-board-review\memory.md</div>
+              <pre>- Runtime: about 7 minutes.
+- Sources used: AkShare 当日 stock_zt_pool_em / stock_zt_pool_zbgc_em / stock_zt_pool_previous_em / stock_zh_index_spot_sina。
+- Board climate: 可打首板，但明日只做前排硬封 / 中军 / 强换手套利，不接午后分歧扩大的弱回封与尾板弱转强。
+- Strong sectors: 1) 化工新材料（化学制品+塑料+化学原料） 2) 信创/IT服务 3) 券商，军工电子只保留最强中军。
+- Close-review follow-up: 002326 永太科技、603859 能科科技、600909 华安证券、600845 宝信软件、000733 振华科技全部零炸封住收盘，进入明日套利观察；000510 新金路 1炸后掉出涨停，直接淘汰。昨日前序票里 002273 水晶光电晋级2板继续强势旁观，002396 星网锐捷2板4炸仅降级旁观，600707 彩虹股份/002106 莱宝高科弱修复，300545 联得装备继续淘汰。
+- Tomorrow next-day套利观察 list: 002326 永太科技、603859 能科科技、000733 振华科技、600909 华安证券、600845 宝信软件。
+- Risk gate: Orange。收盘涨停 152、首板 128、炸板 74，炸板占比约 32.74%；昨日涨停今均值约 +3.13%、中位数约 +2.87%。情绪强，但午后分歧明显放大，明早若前排两只以上低于预期竞价，直接缩到只观察。
+- Next checkpoint: 2026-07-02 10:35 CST，先看 002326/603859/000733 是否给出高开 2%-5% 且开盘承接不弱；600909/600845 若板块不共振则只观察不买。</pre>
+            </article>
+            
+      </div>
+    </section>
+    
+
+    <section class="framework" id="leader">
+      <div class="framework-head">
+        <h2>A股龙头战法（陈小群）</h2>
+        <span class="pill">共享记忆时间：2026-06-26 10:14:03 +08:00</span>
+      </div>
+      <div class="path">共享记忆：C:\Users\bzsj_\.codex\automations\a\memory.md</div>
+      <div class="panel">
+        <h3>最新共享摘要</h3>
+        <pre>## 2026-07-01 10:28 +08 ??????</pre>
+      </div>
+      <div class="panel">
+        <h3>近期运行</h3>
+        
+            <article class="run-card">
+              <div class="run-head">
+                <span class="run-name">a</span>
+                <span class="run-time">2026-06-26 10:14:03 +08:00</span>
+              </div>
+              <div class="path">C:\Users\bzsj_\.codex\automations\a\memory.md</div>
+              <pre>- ?????mixed???? +0.56%????? +0.33%?????? -0.19%??? 92??? 1?????? 141 ??????? +3.60%????? +3.05%????? 3 ? 3 ??2 ? 19 ??
+- ?????1) ???/????/??? 2) ???/???? 3) AR??/?????????????????????????
+- ?? 5 ???002407 ????600378 ?????688728 ????002273 ?????002167 ?????
+- ??????000100 TCL???????688728 ????????002273 ?????????688233 ??????????????002407 ???????????
+- ??????????????????????????????????????????????
+- ??????2026-07-01 11:15 ???????????/?????????????????????/?????????????????????????????????????
+- ??????? 2026-07-01 ????????????????????????????????????? mixed ???? risk-on???????????????????? AR ??????? exactly 5 ??????? 5 ??????
+- ???????? 13 ??????? 2026-07-01 10:28:21 +0800??</pre>
+            </article>
+            
+      </div>
+    </section>
+    
+    <div class="footer">Generated by generate_a_share_four_strategies_dashboard.py</div>
+  </div>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

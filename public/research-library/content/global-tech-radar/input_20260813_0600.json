@@ -1,0 +1,405 @@
+{
+  "generated_at_beijing": "2026-08-13 06:00",
+  "run_label": "06:00 morning",
+  "headline": "Orange维持：CPI缓和给AI链降一点折现率压力，Cisco与Nebius把AI卖铲从服务器扩到网络和云",
+  "top_conclusion": "2026-08-13早间雷达为06:00 morning延迟执行。三条驱动分开看：第一，全球AI CapEx仍是Expansion，Cisco官方披露FY2026 AI infrastructure订单US$9.3bn、FY2027预计AI基础设施收入US$7.5bn，Nebius官方Q2显示集团收入US$582.3mn、AI cloud收入US$575mn、ARR US$3.0bn、2026客户预付款预期超过US$9bn，叠加CoreWeave、Supermicro、Lumentum的订单/backlog/光互连指引，AI基础设施链继续从GPU服务器扩散到AI云、网络、光互连和电力资源；第二，流动性从Stress缓和到Tightening，BLS官方7月CPI为环比+0.1%、同比+3.4%，核心CPI环比+0.2%、同比+2.5%，AP记录10Y收益率回落到约4.68%，但Fed H.15官方最新10Y 4.70%、30Y 5.24%、10Y TIPS 2.43%、30Y TIPS 3.00%仍高，不能写成Easing；第三，科技催化维持Bullish，但这是订单兑现型Bullish，不是无差别追高。处理建议：优先看AI云、AI服务器、AI网络、光互连、液冷电力、先进封装和商业航天卖铲人，回避只靠故事、融资依赖重、现金流弱的远期科技资产。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Bullish"
+  },
+  "focus_summary": {
+    "action": "维持Orange：CPI缓和后可以从Stress防守降到Tightening观察，但只做订单、backlog、毛利率和现金流兑现的AI卖铲链。",
+    "positive": "最大正反馈是Cisco AI基础设施订单US$9.3bn、Nebius AI cloud收入US$575mn/ARR US$3.0bn、CoreWeave/Supermicro/Lumentum继续验证AI云+服务器+光互连。",
+    "risk": "最大压制项是Fed H.15仍显示10Y 4.70%、30Y 5.24%、10Y TIPS 2.43%、30Y TIPS 3.00%，高利率下融资成本和稀释仍会筛掉弱资产。",
+    "next": "下一步只盯Fed H.15/H.4.1是否确认利率继续回落、Intel发行是否交割、Cisco/Nebius/CoreWeave订单能否转收入、NVIDIA融资平台真实项目。"
+  },
+  "top_changes": [
+    {
+      "title": "BLS 7月CPI温和，流动性从Stress缓和到Tightening",
+      "fact": "BLS 2026-08-12发布7月CPI：CPI-U环比季调+0.1%，6月为-0.4%；同比+3.4%，低于6月3.5%。核心CPI环比+0.2%，同比+2.5%，低于6月2.6%；能源环比-1.5%，但同比仍+14.7%。",
+      "impact": "通胀压力边际缓和，降低进一步加息紧迫性，对AI和高估值科技是折现率缓和；但同比通胀和实际利率仍高，只能从Stress降到Tightening，不能升级Easing。",
+      "confidence": "High",
+      "source": "BLS CPI",
+      "url": "https://www.bls.gov/news.release/archives/cpi_08122026.htm"
+    },
+    {
+      "title": "Cisco官方确认AI网络订单进入百亿美元级观察区",
+      "fact": "Cisco 2026-08-12发布FY2026 Q4/FY2026业绩：Q4收入US$17.3bn，同比+18%；Q4 AI infrastructure订单US$4bn，FY2026 AI infrastructure订单合计US$9.3bn；FY2026已交付约US$4bn相关收入，FY2027预计AI infrastructure收入US$7.5bn。",
+      "impact": "利好AI数据中心网络、交换机、路由器、Silicon One/ASIC、800G/1.6T光互连、安全网络和企业AI基础设施；但毛利率和AI硬件成本仍需要跟踪。",
+      "confidence": "High",
+      "source": "Cisco IR",
+      "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx"
+    },
+    {
+      "title": "Nebius官方Q2把AI云卖铲再推一层：收入、ARR和预付款同步放大",
+      "fact": "Nebius 2026-08-12发布Q2结果及股东信：集团收入US$582.3mn，同比+454%；Nebius AI cloud收入US$575mn，同比+514%；ARR达到US$3.0bn；AI cloud adjusted EBITDA margin 50%；预计2026客户预付款超过US$9bn，当前2026 contracted power guidance为5GW。",
+      "impact": "利好AI云、GPU集群、电力资源、液冷、网络、存储和数据中心建设；客户预付款可缓解CapEx压力，但重资产扩张仍要看融资成本、交付和客户集中。",
+      "confidence": "High",
+      "source": "Nebius IR / shareholder letter",
+      "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results"
+    },
+    {
+      "title": "AP记录AI股反弹和10Y收益率回落，市场从利率压力转向业绩兑现",
+      "fact": "AP报道2026-08-12美股接近纪录高位：S&P 500 +0.3%至7,748.50，Nasdaq +0.5%至26,588.49，Dow小跌约21点；Supermicro约+19%，CoreWeave约+19.3%，Nvidia约+3%；10Y Treasury yield约4.68%，低于前日约4.70%。",
+      "impact": "市场开始奖励AI链正式业绩和CPI缓和，但涨幅集中在已交付订单/收入的卖铲环节；高估值、亏损和融资依赖资产仍要防波动。",
+      "confidence": "Medium",
+      "source": "AP",
+      "url": "https://apnews.com/article/stocks-markets-rates-trump-iran-chips-db541ced9f928f993bd3a17958a3deaa"
+    },
+    {
+      "title": "Fed H.15仍不允许把流动性写成Easing",
+      "fact": "Fed H.15 2026-08-12发布/2026-08-11数据：EFFR 3.63%，2Y 4.22%，5Y 4.39%，10Y 4.70%，20Y 5.25%，30Y 5.24%，10Y TIPS 2.43%，30Y TIPS 3.00%。",
+      "impact": "名义长端和实际利率绝对水平仍高，AI CapEx越强越要看融资成本、股权稀释、客户预付款和自由现金流。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。过去24小时新增确认点从服务器和光互连扩展到AI网络与AI云：Cisco确认AI infrastructure订单和FY2027收入目标，Nebius确认AI cloud收入、ARR、客户预付款与5GW电力目标。结论是AI基础设施仍在扩张，但更像重资产竞赛，必须用融资成本、客户预付款、毛利率、现金流和交付节奏过滤。",
+    "items": [
+      {
+        "entity": "Cisco",
+        "signal": "FY2026 Q4收入US$17.3bn，同比+18%；Q4 AI infrastructure订单US$4bn，FY2026合计US$9.3bn；FY2026交付约US$4bn相关收入，FY2027预计US$7.5bn。",
+        "direction": "上修",
+        "impact": "AI数据中心网络、交换机、路由器、Silicon One/ASIC、800G/1.6T光互连、安全网络和企业AI基础设施受益。",
+        "confidence": "High",
+        "source": "Cisco IR",
+        "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx"
+      },
+      {
+        "entity": "Nebius",
+        "signal": "Q2集团收入US$582.3mn，同比+454%；AI cloud收入US$575mn，同比+514%；ARR US$3.0bn；AI cloud adjusted EBITDA margin 50%；预计2026客户预付款超过US$9bn，contracted power guidance 5GW。",
+        "direction": "上修",
+        "impact": "AI云、GPU集群、电力资源、液冷、网络、存储和数据中心建设链受益；客户预付款可缓解资本开支压力。",
+        "confidence": "High",
+        "source": "Nebius IR / shareholder letter",
+        "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "entity": "CoreWeave",
+        "signal": "Q2收入US$2.575bn，adjusted EBITDA US$1.510bn，revenue backlog约US$104bn；早Q3新增超过US$25bn净客户承诺；active power 1.5GW，contracted power约3.7GW。",
+        "direction": "上修",
+        "impact": "AI云、GPU集群、数据中心电力、液冷、网络、存储和工程链受益；净亏损和利息费用仍是约束。",
+        "confidence": "High",
+        "source": "CoreWeave IR",
+        "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Supermicro",
+        "signal": "FY2026 Q4净销售US$11.1bn，毛利率17.5%，经营现金流US$747mn；过去一年新增订单超过US$60bn，FY2027收入指引US$65.0-72.0bn。",
+        "direction": "上修",
+        "impact": "AI服务器、GPU集群、液冷、电源、机柜、交换网络、PCB/高速互连和数据中心工程链获得订单验证。",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx"
+      },
+      {
+        "entity": "Lumentum",
+        "signal": "FY2026 Q4收入US$1.0063bn，同比+109.3%，非GAAP毛利率50.4%；FY2027 Q1收入指引US$1.225-1.275bn，AI demand推动1.6T、OCS、CPO lasers和ELS modules。",
+        "direction": "上修",
+        "impact": "数据中心光模块、1.6T、OCS、CPO激光器、NPO和高速光互连链受益。",
+        "confidence": "High",
+        "source": "Lumentum IR",
+        "url": "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx"
+      },
+      {
+        "entity": "NVIDIA / AI infrastructure finance platform",
+        "signal": "NVIDIA宣布与Apollo、BlackRock、Blackstone、Brookfield、Goldman Sachs和KKR建立AI compute基础设施融资平台，目标动员超过US$500bn第三方资本。",
+        "direction": "上修",
+        "impact": "AI GPU、AI服务器、先进封装、交换芯片、光互连、电力、液冷、机柜和工程服务受益；需跟踪真实项目和循环融资风险。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital"
+      },
+      {
+        "entity": "Intel",
+        "signal": "普通股发行上修至US$20bn，净募集约US$19.7bn，资金可用于CapEx和营运资金；本轮未见官方关闭公告。",
+        "direction": "上修但稀释",
+        "impact": "先进制程、先进封装、外部晶圆、服务器CPU/ASIC和AI compute供应链受益；股权稀释和资本回报不确定性上升。",
+        "confidence": "High",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+      },
+      {
+        "entity": "Amazon / Microsoft / Meta",
+        "signal": "延续上一轮已验证口径：Amazon H1现金CapEx US$96.3bn；Microsoft Commercial RPO同比+84%至US$678bn且Azure +43%；Meta 2026全年CapEx预期US$130-145bn。",
+        "direction": "持平偏强",
+        "impact": "大型云厂商仍支撑AI服务器、GPU/HBM、网络、电力、液冷和数据中心工程需求。",
+        "confidence": "High",
+        "source": "Company filings / IR",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块从Stress缓和到Tightening。BLS CPI温和、AP记录10Y收益率回落，确实降低加息压力；但Fed H.15官方长端和TIPS仍处高位，H.4.1仍未更新到CPI后。因此这不是宽松确认，只是压力缓和。",
+    "items": [
+      {
+        "entity": "BLS CPI",
+        "signal": "7月CPI-U环比季调+0.1%，同比+3.4%；核心CPI环比+0.2%，同比+2.5%；能源环比-1.5%但同比+14.7%。",
+        "direction": "宽松观察",
+        "impact": "通胀边际缓和，有利于科技估值从Stress修复到Tightening；但仍未到Easing。",
+        "confidence": "High",
+        "source": "BLS CPI",
+        "url": "https://www.bls.gov/news.release/archives/cpi_08122026.htm"
+      },
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-12发布/2026-08-11数据：EFFR 3.63%，2Y 4.22%，5Y 4.39%，10Y 4.70%，20Y 5.25%，30Y 5.24%，10Y TIPS 2.43%，30Y TIPS 3.00%。",
+        "direction": "收紧仍在",
+        "impact": "长端和实际利率绝对水平仍高，科技成长股估值仍需要订单和现金流支撑。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "AP market yields",
+        "signal": "AP报道CPI后10Y Treasury yield约4.68%，低于前日约4.70%；S&P 500 +0.3%，Nasdaq +0.5%。",
+        "direction": "压力缓和",
+        "impact": "市场端开始交易通胀缓和和AI财报，但仍是高利率环境下的反弹。",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/stocks-markets-rates-trump-iran-chips-db541ced9f928f993bd3a17958a3deaa"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "最新可用仍为2026-08-06发布的2026-08-05周数据：准备金周均US$2.993349tn，周增US$8.779bn；TGA周均US$907.324bn，周降US$3.452bn；ON RRP周均US$342.725bn，周降US$1.222bn。",
+        "direction": "边际缓和但待更新",
+        "impact": "系统流动性边际改善，但尚未更新到CPI后，不能独立支持Easing判断。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "PBOC open-market operation",
+        "signal": "本轮未抓到PBOC 2026-08-13官方公开市场业务原文；不纳入核心流动性判断。",
+        "direction": "待验证",
+        "impact": "中国端如有新增流动性脉冲，留待午间/下一轮用官方公告确认。",
+        "confidence": "Low",
+        "source": "PBOC watch",
+        "url": "https://www.pbc.gov.cn/"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化维持Bullish。新增Cisco和Nebius让AI卖铲链从服务器/光互连扩到网络和AI云，和CoreWeave、Supermicro、Lumentum互相印证。风险是这条链越来越重资产，融资成本、客户预付款、利息费用和股权稀释会成为估值分水岭。",
+    "items": [
+      {
+        "event": "Cisco AI infrastructure orders",
+        "affected_chain": "AI数据中心网络、交换机、路由器、ASIC、光互连、安全网络",
+        "direction": "利好",
+        "winners": "有AI数据中心网络订单、交换芯片/光互连能力和安全网络软件收入的卖铲链",
+        "losers": "无法进入 hyperscaler AI networking 供应链、毛利率被AI硬件成本压缩的网络设备环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Cisco IR",
+        "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx"
+      },
+      {
+        "event": "Nebius AI cloud Q2 results",
+        "affected_chain": "AI云、GPU集群、电力、液冷、网络、存储、数据中心建设",
+        "direction": "利好但重资产过滤",
+        "winners": "有客户预付款、电力资源、GPU部署能力和正向AI cloud EBITDA的AI云平台及供应链",
+        "losers": "融资成本过高、客户集中、订单无法转收入的neocloud平台",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Nebius IR",
+        "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "event": "CoreWeave / Supermicro / Lumentum财报链继续共振",
+        "affected_chain": "AI云、AI服务器、液冷电力、1.6T/OCS/CPO、PCB/高速互连",
+        "direction": "利好",
+        "winners": "订单/backlog/收入/毛利率已经兑现的AI基础设施卖铲链",
+        "losers": "只有AI叙事、没有客户承诺、交付和现金流的中游或边缘资产",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "CoreWeave / Supermicro / Lumentum IR",
+        "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "event": "Intel US$20bn普通股发行",
+        "affected_chain": "先进制程、先进封装、外部晶圆、AI compute、服务器CPU/ASIC",
+        "direction": "分化",
+        "winners": "资本投入能换来客户承诺、先进封装订单、代工利用率和毛利率修复的环节",
+        "losers": "高CapEx但回报不清、股权稀释严重、现金流承压的制造资产",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common"
+      },
+      {
+        "event": "Anthropic/Riot AI算力租赁传闻",
+        "affected_chain": "AI数据中心、电力、矿场改造、HPC租赁",
+        "direction": "待验证",
+        "winners": "若官方确认，可能利好有电力和机房资源的HPC数据中心运营商",
+        "losers": "未披露客户名称、合同条款和资本投入要求的矿场转型叙事",
+        "evidence": "媒体报道，未见Anthropic/Riot官方确认客户名",
+        "confidence": "Low",
+        "source": "w.media / market watch",
+        "url": "https://w.media/anthropic-signs-us-9-1-billion-computing-deal-with-riot-platforms/"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI网络与光互连卖铲链",
+      "verified_direct": "无直接A/H公司订单映射；Cisco和Lumentum为海外官方证据。",
+      "inferred": "交换机、路由器、网络ASIC、800G/1.6T光模块、CPO/NPO、激光器、连接器、高速PCB和数据中心安全网络是主要推断受益方向。",
+      "risk": "A/H映射必须看客户认证、量产节点、海外限制、毛利率和估值预期，不能把海外订单直接映射为国内公司订单。"
+    },
+    {
+      "theme": "AI云和数据中心卖铲链",
+      "verified_direct": "无直接A/H公司映射；Nebius、CoreWeave、NVIDIA为海外官方证据。",
+      "inferred": "AI云、GPU/HBM、服务器整机、液冷、电源、机柜、数据中心工程、电力资源和运维是主要推断受益方向。",
+      "risk": "重资产平台要看客户预付款、利息费用、负债、交付和客户集中；供应链公司要看真实订单和回款。"
+    },
+    {
+      "theme": "AI服务器和液冷电力",
+      "verified_direct": "无直接A/H公司订单映射；Supermicro官方结果只验证海外AI服务器链景气。",
+      "inferred": "AI服务器整机、GPU集群、液冷、电源、机柜、交换网络、PCB/高速连接器、数据中心工程和运维可重点观察。",
+      "risk": "客户集中、出口管制、审查事项、毛利率持续性和订单转收入节奏是主要边界。"
+    },
+    {
+      "theme": "先进封装和半导体制造",
+      "verified_direct": "Intel官方US$20bn发股是海外一手证据；无直接A/H公司映射。",
+      "inferred": "先进封装、外部晶圆、服务器CPU/ASIC、AI compute silicon、ABF/基板、HBM配套和半导体设备材料具备景气观察价值。",
+      "risk": "资本开支越强，稀释、折旧、良率、客户承诺和ROI越重要。"
+    },
+    {
+      "theme": "商业航天卖铲链",
+      "verified_direct": "无直接A/H公司映射；SpaceX官方文件只验证海外商业航天和AI基础设施高投入。",
+      "inferred": "卫星制造、通信载荷、地面终端、测控系统、发射配套、热控材料、精密制造、电源管理和复合材料是更偏卖铲方向。",
+      "risk": "高CapEx、亏损、融资、出口管制和客户认证会压制兑现速度。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "Fed H.15/H.4.1下一次更新",
+      "why": "确认CPI后长端和TIPS是否继续回落，准备金修复是否延续。"
+    },
+    {
+      "item": "Cisco AI infrastructure订单转收入",
+      "why": "验证FY2026 US$9.3bn订单和FY2027 US$7.5bn收入目标能否兑现，并观察毛利率是否受AI硬件成本压缩。"
+    },
+    {
+      "item": "Nebius客户预付款和5GW电力目标",
+      "why": "确认超过US$9bn客户预付款、5GW contracted power guidance、50% AI cloud EBITDA margin能否支撑重资产扩张。"
+    },
+    {
+      "item": "CoreWeave backlog转换和融资成本",
+      "why": "US$104bn backlog和早Q3超过US$25bn新承诺很强，但净亏损和利息费用高，需要看交付、客户集中和资本成本。"
+    },
+    {
+      "item": "Lumentum 1.6T/OCS/CPO/NPO兑现",
+      "why": "Q1 FY2027指引强，需要验证光互连需求是否能持续超过估值预期。"
+    },
+    {
+      "item": "Intel US$20bn发行交割",
+      "why": "本轮未见官方关闭公告；继续确认交割、超额配售、稀释、CapEx投向和信用/ROI影响。"
+    },
+    {
+      "item": "Supermicro订单转收入和出口控制审查",
+      "why": "重点验证US$60bn+新订单、record backlog、FY2027 US$65-72bn指引、毛利率持续性、客户集中和独立审查。"
+    },
+    {
+      "item": "NVIDIA AI融资平台真实项目",
+      "why": "确认US$500bn+第三方资本是可执行项目、贷款/租赁/股权结构，还是框架性资本动员。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Consumer Price Index News Release - July 2026",
+      "url": "https://www.bls.gov/news.release/archives/cpi_08122026.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-06"
+    },
+    {
+      "title": "Wall Street rises near a record as AI stocks climb and worries about inflation ease a bit",
+      "url": "https://apnews.com/article/stocks-markets-rates-trump-iran-chips-db541ced9f928f993bd3a17958a3deaa",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Cisco Reports Fourth Quarter and Fiscal Year 2026 Earnings",
+      "url": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Nebius reports second quarter 2026 financial results",
+      "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "Nebius Group Letter to shareholders Q2 2026",
+      "url": "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf?cache-buster=2026-08-12T11%3A54%3A46.695Z",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    },
+    {
+      "title": "CoreWeave Reports Strong Second Quarter 2026 Results",
+      "url": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Lumentum Announces Fourth Quarter and Full Fiscal Year 2026 Results",
+      "url": "https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Supermicro Announces Fourth Quarter and Full Fiscal Year 2026 Financial Results",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "Intel Announces Upsize and Pricing of $20 Billion Common Stock Offering",
+      "url": "https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-11"
+    },
+    {
+      "title": "NVIDIA Partners With Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-10"
+    },
+    {
+      "title": "Amazon Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "Microsoft FY2026 Q4 Earnings Release",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "used_for": "CapEx",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Meta Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    }
+  ]
+}

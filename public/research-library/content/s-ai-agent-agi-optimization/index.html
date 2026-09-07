@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>s-ai-agent AGI 优化方向｜让每次判断更接近 S 老师</title>
+  <style>
+    :root{--bg:#f5f4ef;--paper:#fff;--ink:#1c3035;--muted:#637475;--green:#176954;--dark:#153c38;--line:#dce3dc;--amber:#a4632d}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.85}
+    a{color:var(--green);text-underline-offset:4px}a:hover{color:var(--amber)}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:15px max(24px,calc((100vw - 1200px)/2));border-bottom:1px solid var(--line);font-size:13px;background:#fff}
+    .top a{text-decoration:none}.top span{color:var(--muted)}
+    header{background:var(--dark);color:#fff;padding:48px max(24px,calc((100vw - 1200px)/2)) 42px}
+    .eyebrow{font-size:12px;letter-spacing:.12em;color:#b8d8c9}h1{font-size:clamp(28px,3.5vw,43px);line-height:1.4;margin:14px 0 18px;font-weight:650}
+    .intro{font-size:18px;max-width:970px;color:#deebe4}.intro strong{color:#fff}
+    .header-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.header-links a{border:1px solid #7a9c8e;border-radius:6px;padding:6px 14px;color:#e6f0e8;text-decoration:none;font-size:13px}
+    main{max-width:1248px;margin:0 auto;padding:30px 24px 60px;min-width:0}
+    nav{display:flex;gap:8px 24px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:0 0 20px;font-size:14px}
+    nav a{text-decoration:none}section{margin-top:35px}h2{font-size:24px;line-height:1.5;margin:0 0 17px;color:#164e40}h3{font-size:18px;line-height:1.6;margin:0 0 7px}p{margin:11px 0}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#fff;margin:20px 0}
+    table{border-collapse:collapse;width:100%;min-width:660px;font-size:14px}th,td{text-align:left;vertical-align:top;padding:15px 18px;border-bottom:1px solid var(--line)}th{background:#e9efe7;color:#285446}td:first-child{font-weight:650;white-space:nowrap}tbody tr:last-child td{border-bottom:0}
+    .note{padding:15px 20px;background:#f1ede2;border-left:3px solid #a87935;color:#66513a;font-size:14px}
+    .steps{list-style:none;counter-reset:steps;padding:0;margin:0;border-top:1px solid var(--line)}
+    .steps li{counter-increment:steps;display:grid;grid-template-columns:52px minmax(0,1fr);gap:18px;border-bottom:1px solid var(--line);padding:24px 0}
+    .steps li:before{content:counter(steps,decimal-leading-zero);font-size:28px;font-weight:650;color:#7b9687;line-height:1.5}.steps p{margin:0;color:#445c60}
+    .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:20px 0;color:#285e4c;font-size:14px}.flow b{font-weight:600}.flow span{color:#9aab9c}
+    .priority{padding:25px 28px;background:#e9efe5;border:1px solid #c8d5c4;border-radius:9px}.priority ol{margin:12px 0;padding-left:23px}.priority li{padding:4px 0}.priority p:last-child{margin-bottom:0}
+    .verification{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--line);border-radius:9px;margin:20px 0;overflow:hidden}.verification div{padding:20px 24px;border-right:1px solid var(--line)}.verification div:last-child{border:0}.verification b{display:block;font-size:28px;line-height:1.35;color:#245c49}.verification span{font-size:13px;color:var(--muted)}
+    .resources{display:flex;gap:12px 24px;flex-wrap:wrap;margin-top:20px}footer{padding:22px 24px;text-align:center;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+    code{background:#e7ece5;border-radius:4px;padding:2px 5px;font:12px Consolas,monospace;overflow-wrap:anywhere}
+    a:focus-visible{outline:3px solid #ad7534;outline-offset:4px}
+    @media(max-width:660px){header{padding:30px 20px}.top{padding:13px 20px}.intro{font-size:16px}main{padding:24px 18px 40px}h2{font-size:21px}.steps li{grid-template-columns:36px minmax(0,1fr);gap:12px}.steps li:before{font-size:23px}.priority{padding:18px 20px}.verification div{padding:14px 12px}.verification b{font-size:24px}.verification span{font-size:11px}th,td{padding:12px 14px}.flow{padding:15px}}
+    @media print{body{background:#fff}.top,nav,.header-links{display:none}header{background:#fff;color:#153c38;padding:0}.intro,.intro strong,.eyebrow{color:#244c3e}main{padding:15px 0}.table-wrap{overflow:visible}table{min-width:0;font-size:11px}h2,h3{break-after:avoid}tr,.steps li{break-inside:avoid}footer{padding:10px}}
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=s-ai-agent-agi-optimization&amp;view=reports">S老师决策体系优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="top"><a href="../index.html">← 研究报告总入口</a><span>审查结论版 · 2026-09-07</span></div>
+  <header>
+    <div class="eyebrow">S-AI-AGENT / AGI 优化方向</div>
+    <h1>让每次决策和回答，<br>更接近 S 老师</h1>
+    <p class="intro">当前最需要补齐的是一套所有入口共用、能够验证和持续纠偏的<strong>“S 老师决策体系”</strong>。它要学会 S 老师如何抓问题、选方法、判断证据、作出取舍，以及何时改变结论。</p>
+    <div class="header-links"><a href="../s-ai-agent-s-teacher-audit-20260907/index.html">阅读完整审查报告 ↗</a><a href="../s-ai-agent-s-teacher-audit-20260907/source-evidence.html">查看代码证据 ↗</a></div>
+  </header>
+  <main>
+    <nav aria-label="页面导航"><a href="#problems">优先处理的问题</a><a href="#optimization">六项优化方向</a><a href="#priority">第一批投入建议</a><a href="#verification">审查与验证范围</a></nav>
+    <section id="problems">
+      <h2>最值得先处理的五个问题</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th scope="col">问题</th><th scope="col">审查发现</th><th scope="col">影响</th></tr></thead>
+        <tbody>
+          <tr><td>回答对象错位</td><td>默认演示分支会把部分 S40、马步小结请求映射到固定公司。</td><td>问甲公司，可能返回乙公司的报告。</td></tr>
+          <tr><td>训练样例污染</td><td>1 星、未评分的 AI 回答也会进入学习示例。</td><td>训练可能强化错误。</td></tr>
+          <tr><td>训练与正式问答不一致</td><td>两者使用不同的检索、上下文和提示词路径。</td><td>训练页改善未必传递到用户端。</td></tr>
+          <tr><td>任务记忆混用</td><td>通用历史按用户和问题类型取最近五轮，没有按当前会话隔离。</td><td>同一用户的不同研究任务可能串台。</td></tr>
+          <tr><td>检索排序失衡</td><td>时间加分可能让新但不相关的内容压过旧的核心方法。</td><td>回答追着新观点走，遗漏真正适用的原则。</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">前两项已用隔离样例验证。<strong>线上实际影响仍取决于生效开关、数据库内容和运行版本</strong>，不能直接等同于所有用户都在遇到这些问题。</p>
+      <p>完整报告还分析了训练版本发布、历史课堂背景硬编码、模型降级能力、Wiki 来源治理、评测体系和后台学习生效状态等问题。</p>
+    </section>
+    <section id="optimization">
+      <h2>从 AGI 能力建设出发，按顺序推进六项优化</h2>
+      <ol class="steps">
+        <li><div><h3>把 S 老师的原则与历史观点分开</h3><p>长期保留能力圈、安全边际、资金纪律；市场判断则附带日期、条件和更新依据。</p></div></li>
+        <li><div><h3>建立共同决策引擎</h3><p>所有入口共用“理解任务 → 选择方法 → 收集证据 → 权衡与反证 → 形成结论”。语音、卡片和报告只改变表达形式。</p></div></li>
+        <li><div><h3>把方法论变成可执行规则</h3><p>明确每种方法何时使用、需要什么信息、什么情况下不能下结论。让系统学会为什么这样判断，而不只是记住过去的答案。</p></div></li>
+        <li><div><h3>建立真正的任务记忆</h3><p>记住研究对象、用户约束、已核实事实、被推翻的假设和未完成问题。用户纠正信息后，相关结论必须随之更新。</p></div></li>
+        <li><div><h3>先检查判断，再润色表达</h3><p>核对公司、日期、财务口径、数字与来源；保留不确定性和改变结论的条件，防止口语化过程把限定条件删掉。</p></div></li>
+        <li><div><h3>重建受控学习与评测</h3><p>保存 S 老师的原答修改、修改理由和适用条件；经过审核、固定案例评测和版本发布后再生效。评测结合程序检查、模型辅助评审与 S 老师盲评，同时检查回答和实际结果。<a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener noreferrer">评估方法参考</a></p></div></li>
+      </ol>
+      <div class="flow" aria-label="共同决策流程"><b>理解任务</b><span>→</span><b>选择方法</b><span>→</span><b>收集证据</b><span>→</span><b>权衡与反证</b><span>→</span><b>形成结论</b><span>→</span><b>按场景表达</b></div>
+    </section>
+    <section id="priority" class="priority">
+      <h2>第一批投入建议</h2>
+      <ol><li><strong>修复回答错位，以及错误样例进入训练的问题。</strong></li><li><strong>统一训练入口和正式用户入口的判断流程。</strong></li><li><strong>建立由 S 老师确认的案例基准。</strong></li></ol>
+      <p>有了这个基础，后续增加知识、升级模型或微调，才能证明投入确实带来了改善。</p>
+    </section>
+    <section id="verification">
+      <h2>审查与验证范围</h2>
+      <div class="verification"><div><b>147</b><span>远程分支 API 文件清点</span></div><div><b>12</b><span>完整报告中的核心发现</span></div><div><b>19</b><span>已有路由与记录测试通过</span></div></div>
+      <p>本轮深入审查了核心链路，没有修改业务代码或部署。审查基线为 2026-09-07 核验的远程 <code>origin/prod</code> 分支，提交 <code>54d3e9f</code>。</p>
+      <p>当前尚未进行真实回答的 S 老师盲评，因此没有给出主观的“相似度分数”。已有功能测试通过，也不等于回答已经接近 S 老师。</p>
+      <div class="resources"><a href="../s-ai-agent-s-teacher-audit-20260907/index.html">完整审查报告与实施路线</a><a href="../s-ai-agent-s-teacher-audit-20260907/source-evidence.html">代码证据快照</a><a href="../s-ai-agent-s-teacher-audit-20260907/audit-data.json">统计与隔离验证结果</a><a href="../index.html">返回研究报告总入口</a></div>
+    </section>
+  </main>
+  <footer>s-ai-agent · S 老师决策一致性优化说明 · 2026-09-07<br>本地 HTML 文档，可从总入口直接阅读。</footer>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

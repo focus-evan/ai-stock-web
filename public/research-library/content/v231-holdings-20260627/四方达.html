@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>四方达 - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>四方达 V2.3.1 深度分析</h1>
+  <p>A股-创业板 · 300179 · 超硬材料 / 金刚石材料 / 热管理映射 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>题材交易 / 卫星观察</b><br>公司是真材料公司，但AI热管理叙事的收入和利润证据不足。只能按卫星仓处理。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">62</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>57.38</span></div>
+      <div class="card"><b>PE / PB</b><span>273.37 / 24.75</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="neg">-648 / -2.7%</span></div>
+      <div class="card"><b>市值/换手</b><span>214.59亿 / 16.9%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>无一票否决；但AI热管理映射未充分财务化，估值相对同类偏高。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">9</span></td></tr>
+      <tr><td>海外对标</td><td>Element Six、Sumitomo、II-VI/Coherent等金刚石和热管理材料体系</td></tr>
+      <tr><td>替代阶段</td><td>能力/材料叙事阶段，AI热管理利润兑现不足</td></tr>
+      <tr><td>结论</td><td>金刚石热管理具备潜在卡位，但四方达当前更确定的是超硬材料业务，AI热管理仍需订单、客户和收入占比证明。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>C</b></td></tr>
+      <tr><td>国内竞争对手</td><td>沃尔德、力量钻石、黄河旋风、中兵红箭、美畅股份、岱勒新材</td></tr>
+      <tr><td>海外竞争对手</td><td>Element Six、Sumitomo、Coherent相关材料体系</td></tr>
+      <tr><td>我有你没有</td><td>超硬材料工艺和存量客户。</td></tr>
+      <tr><td>你有我更强</td><td>相比纯概念公司，有真实材料业务和利润。</td></tr>
+      <tr><td>我弱于你</td><td>AI热管理关键产品、客户认证和收入占比不够清晰；同类竞争者也有材料能力。</td></tr>
+      <tr><td>财务/客户验证</td><td>2026Q1收入利润增长，但估值对新叙事兑现要求高。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>单季度</small></td><td>1.84亿<small>40.2%</small></td><td>0.43亿<small>25.7%</small></td><td>0.40亿<small>28.2%</small></td><td>46.8%</td><td>18.9%</td><td>0.0684</td><td>3.4%</td></tr><tr><td>2025-12-31<small>单季度</small></td><td>1.59亿<small>26.5%</small></td><td>0.34亿<small>42.2%</small></td><td>0.11亿<small>2.4%</small></td><td>54.3%</td><td>12.5%</td><td>0.0495</td><td>2.7%</td></tr><tr><td>2025-09-30<small>单季度</small></td><td>1.47亿<small>8.3%</small></td><td>0.06亿<small>-79.5%</small></td><td>0.02亿<small>-93.5%</small></td><td>15.1%</td><td>-10.5%</td><td>-0.0695</td><td>0.6%</td></tr><tr><td>2025-06-30<small>单季度</small></td><td>1.29亿<small>-2.4%</small></td><td>0.19亿<small>-46.2%</small></td><td>0.07亿<small>-78.3%</small></td><td>45.5%</td><td>-1.3%</td><td>0.0296</td><td>1.6%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">13</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">13</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">7</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">10</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">4</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill mid">75</span></td></tr><tr><td>核心竞争力</td><td><span class="pill watch">62</span></td></tr><tr><td>财务质量</td><td><span class="pill watch">64</span></td></tr><tr><td>估值与赔率</td><td><span class="pill bad">38</span></td></tr><tr><td>催化/影子</td><td><span class="pill good">80</span></td></tr><tr><td>治理/流动性</td><td><span class="pill mid">72</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>超硬材料利润池真实，但是否切入AI散热高端利润池仍未充分验证。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>超硬材料利润池真实，但是否切入AI散热高端利润池仍未充分验证。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>金刚石热管理具备潜在卡位，但四方达当前更确定的是超硬材料业务，AI热管理仍需订单、客户和收入占比证明。</td></tr>
+      <tr><td>竞争对手护城河</td><td>2026Q1收入利润增长，但估值对新叙事兑现要求高。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：超硬材料/金刚石热管理映射。PE判断：<b>略贵</b>；PB判断：<b>极贵</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>四方达</td><td>273.37</td><td>24.75</td><td>214.59亿</td></tr><tr><td>沃尔德</td><td>209.9</td><td>10.67</td><td>213.59亿</td></tr><tr><td>力量钻石</td><td>194.33</td><td>4.82</td><td>188.24亿</td></tr><tr><td>黄河旋风</td><td>-27.31</td><td>51.79</td><td>212.5亿</td></tr><tr><td>中兵红箭</td><td>125.97</td><td>2.74</td><td>283.8亿</td></tr><tr><td>美畅股份</td><td>40.27</td><td>2.51</td><td>104.12亿</td></tr><tr><td>岱勒新材</td><td>-55.99</td><td>11.49</td><td>60.4亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>AI热管理叙事可能先行于收入。</li><li>相对同类估值偏高。</li><li>小市值高波动，容易受题材退潮影响。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>仅适合小仓观察，不适合作为核心仓。</td></tr>
+      <tr><td>加仓</td><td>必须看到新客户/订单/收入占比披露。</td></tr>
+      <tr><td>减仓</td><td>题材热度退潮或跌破趋势时优先处理。</td></tr>
+      <tr><td>失效</td><td>AI热管理证据迟迟不落地。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：同花顺/东方财富财务摘要(AkShare)；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "db": "evan_main",
+    "db_now": "2026-09-05 10:39:03",
+    "time_zone": "Asia/Shanghai",
+    "version": "8.0.36"
+  },
+  "tables": {
+    "portfolio_config": {
+      "rows": 18,
+      "sha256": "2c8724e437f2f994633820e6dce82c199ee08fc8b1926240d6a3320c423d57cd",
+      "bytes": 6002
+    },
+    "portfolio_daily_summary": {
+      "rows": 1545,
+      "sha256": "fc62f8c11eeb499f6fc661a6e4d4d1480467b6a830f507c861eba5f3b65d63e4",
+      "bytes": 493977
+    },
+    "portfolio_follow_recommendation": {
+      "rows": 462,
+      "sha256": "e3843d6e7e2477a5855d575b6ffa1a879b9d088eb5a5f39c6b0368218a046db4",
+      "bytes": 890208
+    },
+    "portfolio_position": {
+      "rows": 496,
+      "sha256": "b10d2505a4e7bebd87a1e501361df0f22e53173bf4dad72f859c1ea7877773d8",
+      "bytes": 148856
+    },
+    "portfolio_review": {
+      "rows": 1240,
+      "sha256": "b51f50aa7344a0bc1f8392d54ed608b74d707934a50ba804fede6278bbe42bf1",
+      "bytes": 5970111
+    },
+    "portfolio_trade": {
+      "rows": 1556,
+      "sha256": "b1805ea9bed5bb3e2f8df6644755be6369e77e7ca47c9a50ceaa479268ecff89",
+      "bytes": 713411
+    },
+    "skill_tactics_run_ledger": {
+      "rows": 60,
+      "sha256": "7bdfbe817f0e474037ae4bfed4f21af9fb82852906446b317dec90575e022d66",
+      "bytes": 254849
+    },
+    "skill_tactics_signal_ledger": {
+      "rows": 295,
+      "sha256": "7455c0f9046bd953ce2ca20b9de9156b70c7da994206faae17f2ebc950d299a1",
+      "bytes": 909130
+    },
+    "strategy_evolution_run": {
+      "rows": 322,
+      "sha256": "c466cc181beaf7d7753d669910ebeb6799a5c83cdd12194f22e3fb7b9d05ebc0",
+      "bytes": 3452380
+    },
+    "strategy_evolution_state": {
+      "rows": 14,
+      "sha256": "841c64c47a3f77c431aaff81f0071254e38aa00eca69229376150259cb7005a0",
+      "bytes": 48058
+    },
+    "strategy_follow": {
+      "rows": 4045,
+      "sha256": "21540b3d86dfe9294bf8e2b9ac9291aa18c1ccf27adfa16875a9d52b580074c4",
+      "bytes": 7443964
+    },
+    "strategy_follow_snapshot": {
+      "rows": 30593,
+      "sha256": "50616da998c2e108ca7805016f6551fb4ef659e53f4bcd2422ffe107b7a703f0",
+      "bytes": 5767050
+    },
+    "strategy_performance_track": {
+      "rows": 2411,
+      "sha256": "e9acec720e8785427f6e776cbfa00d07bd2ffe788e8a9a585d59f752d421f467",
+      "bytes": 2116471
+    },
+    "strategy_recommendation_cache": {
+      "rows": 2363,
+      "sha256": "02b5f08de1b90c17db2373b9f64b45b008585aee97503744d3974d54156dbc4b",
+      "bytes": 47753906
+    }
+  }
+}

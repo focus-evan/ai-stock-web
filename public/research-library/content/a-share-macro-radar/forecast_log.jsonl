@@ -1,0 +1,22 @@
+{"event":"prediction","prediction_date":"2026-08-13","warning":"黄色","radar_score":58.4,"state":"S3","position_ceiling":"40%-50%","theme_trade":"0 before confirmation","source":"report_20260813_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-13","result":"部分命中","false_positive":false,"false_negative":false,"note":"观察不追高符合次日回落风险，但颜色对高位回落严重度不足"}
+{"event":"prediction","prediction_date":"2026-08-14","warning":"橙色","radar_score":52.4,"state":"S6","position_ceiling":"40%-50%","theme_trade":"0","source":"report_20260814_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-14","result":"未命中","false_positive":true,"false_negative":false,"note":"实际指数温和修复，预警偏重"}
+{"event":"prediction","prediction_date":"2026-08-17","warning":"橙色","radar_score":49.3,"state":"S3","position_ceiling":"40%-50%","theme_trade":"0","source":"report_20260817_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-17","result":"未命中","false_positive":true,"false_negative":false,"note":"实际四大指数强修复，方向偏谨慎"}
+{"event":"prediction","prediction_date":"2026-08-18","warning":"黄色","radar_score":58.9,"state":"S3","position_ceiling":"40%-50%","theme_trade":"0 before confirmation","source":"report_20260818_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-18","result":"命中","false_positive":false,"false_negative":false,"note":"实际指数分化且多数个股下跌，观察不追高有效"}
+{"event":"prediction","prediction_date":"2026-08-19","warning":"橙色；高位成长红色","radar_score":48.5,"state":"S6","position_ceiling":"35%-45%","theme_trade":"0","source":"report_20260819_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-19","result":"部分命中","false_positive":false,"false_negative":true,"note":"高位成长红色与题材0命中；总颜色和仓位低估实际红色S7严重度"}
+{"event":"prediction","prediction_date":"2026-08-21","warning":"橙色","radar_score":49.5,"state":"S3","position_ceiling":"35%-45%","theme_trade":"0","algorithm_version":"v1.0-daily-review","source":"report_20260821_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-21","result":"部分命中","false_positive":true,"false_negative":false,"note":"反弹观察与仓位合理；橙色和题材0对当日正向修复略重"}
+{"event":"prediction","prediction_date":"2026-08-25","warning":"红色","radar_score":37.3,"state":"S7","position_ceiling":"20%-35%","theme_trade":"0","algorithm_version":"v1.0-daily-review","source":"report_20260825_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-25","result":"部分命中","false_positive":true,"false_negative":false,"note":"高位成长风险有效；约4008股上涨，全市场红色与20%-35%仓位偏重"}
+{"event":"calibration","effective_date":"2026-08-26","from_version":"v1.0-daily-review","to_version":"v1.1-soft-red-confirmation","change":"未触发硬规则时，全市场红色需负涨停溢价、流动性踩踏、主要指数破MA60恶化或海外半导体跌约3%-5%至少一项确认；否则最高橙色，高位成长可单独红色","evidence":"连续两个滚动5日窗口整体假阳性均3/5","rollback":"未来5个已完成预测出现严重漏报>=2次"}
+{"event":"prediction","prediction_date":"2026-08-26","warning":"黄色","radar_score":53.4,"state":"S3","position_ceiling":"40%-50%","theme_trade":"0 before confirmation; <=2% after dual confirmation","algorithm_version":"v1.1-soft-red-confirmation","source":"report_20260826_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-26","result":"命中","false_positive":false,"false_negative":false,"note":"四大指数全涨但成交缩量、炸板率上升；黄色修复等待确认符合实际，v1.1首日有效"}
+{"event":"prediction","prediction_date":"2026-08-27","warning":"黄色","radar_score":57.8,"state":"S3","position_ceiling":"45%-55%","theme_trade":"0 before confirmation; <=3% after dual confirmation","algorithm_version":"v1.1-soft-red-confirmation","source":"report_20260827_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-27","result":"部分命中","false_positive":false,"false_negative":true,"note":"修复延续方向正确；实际科创50+3.77%且成交放量，低估S4进攻强度与仓位上限"}
+{"event":"prediction","prediction_date":"2026-08-28","warning":"黄色","radar_score":67.1,"state":"S4","position_ceiling":"60%-70%","theme_trade":"0 before confirmation; <=5% after dual confirmation","algorithm_version":"v1.1-soft-red-confirmation","source":"report_20260828_0600.html","immutable":true}
+{"event":"review","prediction_date":"2026-08-28","result":"部分命中","false_positive":false,"false_negative":false,"position_error":true,"note":"防一致高开和不追高有效；实际双创冲高回落，但S4与60%-70%仓位偏进攻，不属系统性风险漏报"}
+{"event":"prediction","prediction_date":"2026-08-31","warning":"橙色","radar_score":52.4,"state":"S6","position_ceiling":"40%-50%","theme_trade":"0","algorithm_version":"v1.1-soft-red-confirmation","source":"report_20260831_0600.html","immutable":true}

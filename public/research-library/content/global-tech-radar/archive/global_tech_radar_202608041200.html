@@ -1,0 +1,588 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-04 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange维持：Palantir把AI软件催化从待验证推到官方确认，但Fed长端/实际利率仍压住全面转绿</h1>
+      <p class="subtitle">2026-08-04午间雷达维持Orange，但三模块出现分化：CapEx仍为Expansion，流动性仍为Stress，科技催化从早间的Mixed上修为Bullish。最重要的新变化是Palantir官方SEC Exhibit 99.1落地，Q2 revenue US$1.935bn、同比+93%，US commercial revenue US$764mn、同比+149%，US revenue US$1.573bn、同比+115%，Q2 TCV US$3.373bn、同比+49%，US commercial TCV US$2.132bn、同比+153%，RDV US$6.238bn、同比+124%，GAAP operating margin 47%，adjusted free cash flow margin 63%，并把FY2026 revenue guidance上修到约US$8.150-8.158bn。这把早间“AI软件催化待验证”更新为官方强催化，说明AI CapEx正在向企业AI软件/数据平台收入扩散。限制项没有消失：Fed H.15最新官方数据仍是10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%，贴现率仍紧；Fed H.10美元指数回落提供边际缓和，但不足以抵消长端压力。因此处理上仍是Orange：看AI卖铲与AI软件的收入/RPO/现金流闭环，不追只靠估值和媒体口径的CapEx headline。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-04 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange维持：Palantir把AI软件催化从待验证推到官方确认，但Fed长端/实际利率仍压住全面转绿</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持Orange：午间新增重点是AI软件官方确认，可以把卖铲链从硬件/电力/服务器扩展到企业AI软件，但仍只看收入、TCV/RPO、现金流和正式文件。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈是Palantir官方Q2：收入US$1.935bn同比+93%，US commercial +149%，TCV US$3.373bn，RDV US$6.238bn，adjusted FCF margin 63%，FY收入指引上修。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项仍是Fed H.15：10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%；美元边际缓和未足以解除长端估值闸门。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步盯AMD盘后、Supermicro正式Q4、Amazon电话会/管理层是否确认US$220bn、Fed H.15是否确认周一收益率回落。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-green">Bullish</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Palantir官方落地，AI软件催化从待验证升级为强催化</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Palantir SEC Exhibit 99.1披露Q2 revenue US$1.935bn、同比+93%；US commercial revenue US$764mn、同比+149%；US revenue US$1.573bn、同比+115%；Q2 TCV US$3.373bn、同比+49%；US commercial TCV US$2.132bn、同比+153%；RDV US$6.238bn、同比+124%。</p>
+              <p><strong>影响：</strong>AI链条从GPU/服务器/电力扩散到企业AI软件、数据平台和模型运营；科技催化模块上修为Bullish，但仍要求合同、RPO/TCV、利润率和现金流共同验证。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir SEC Exhibit 99.1</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Palantir现金流和指引同步上修，软件端不是单纯情绪交易</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Palantir Q2 GAAP operating income US$912mn、margin 47%，adjusted free cash flow US$1.220bn、margin 63%；公司把FY2026 revenue guidance上修至US$8.150-8.158bn，把US commercial revenue outlook上修至超过US$3.424bn、同比至少+134%，adjusted free cash flow guidance上修至US$4.5-4.7bn。</p>
+              <p><strong>影响：</strong>对AI软件/数据平台的正反馈质量高于单纯订单传闻；但估值若已充分反映高速增长，后续必须盯净留存、客户扩张和现金流持续性。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir SEC Exhibit 99.1</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Fed H.10美元边际缓和，但H.15长端仍是硬约束</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.10当前页显示最新周度美元数据回落：Broad dollar index约119.7034，人民币约6.7509，日元约159.1600；但Fed H.15 2026-08-03发布/2026-07-31数据仍显示10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%。</p>
+              <p><strong>影响：</strong>美元回落对成长资产有边际帮助，但实际利率和长端未松，流动性模块仍维持Stress；科技反弹需要盈利兑现支撑。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10 / H.15</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>隔夜市场风险偏好继续支持AI链，但仍是市场信号</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>AP报道周一S&amp;P 500 +1.5%、Nasdaq +2.1%、Dow +1.3%并创纪录，10Y市场收益率约4.68，油价约-4.7%；Amazon和AI相关资产获市场奖励。</p>
+              <p><strong>影响：</strong>短线风险偏好对AI硬件、云、AI软件有支撑；但需等待Fed官方收益率数据确认，不能因为单日反弹升级总闸门。</p>
+              <p class="source-line"><a href="https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa">AP market report</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Supermicro强订单仍是AI服务器链验证点，但正式Q4尚未落地</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Supermicro官方初步业务更新称FY2026 Q4收入预计接近US$11.0-12.5bn指引低端，非GAAP毛利率预计15%-17%，创纪录订单积压，Q4新订单超过US$60bn；正式FY2026 Q4仍待8月11日公布。</p>
+              <p><strong>影响：</strong>AI服务器、液冷、电源、机柜、PCB/高速互连仍有订单验证；但初步数据、收入低端、客户集中度和交付节奏仍是执行过滤器。</p>
+              <p class="source-line"><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro IR</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Amazon</td>
+              <td>10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn，AWS物业设备净额US$263.750bn；10-Q正文未直接确认媒体所称US$220bn全年CapEx。</td>
+              <td>上修</td>
+              <td>AI服务器、GPU/ASIC、HBM、网络交换、数据中心电力、液冷和工程建设继续受益；US$220bn仍需正式管理层确认。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q4 Microsoft Cloud收入US$59.3bn、同比+27%，Commercial RPO同比+84%至US$678bn，Azure及其他云服务+43%，Q4物业设备新增US$35.802bn。</td>
+              <td>上修</td>
+              <td>AI CapEx有云收入和RPO吸收，是卖铲链收入闭环锚。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，H1购买物业设备US$49.113bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。</td>
+              <td>上修</td>
+              <td>利好AI服务器、光通信、交换机、电力、冷却和数据中心建设；租赁、债务、折旧和FCF压力仍压估值弹性。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro</td>
+              <td>初步业务更新称FY2026 Q4新订单超过US$60bn，非GAAP毛利率预计15%-17%，但收入预计接近US$11.0-12.5bn指引低端，正式Q4仍待公布。</td>
+              <td>待验证</td>
+              <td>AI服务器、液冷、电源、机柜、高速互连订单强；需看正式财报、客户集中度和交付能力。</td>
+              <td>High</td>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple / Intel supply chain</td>
+              <td>Apple 10-Q确认先进半导体、NAND、DRAM和AI算力供给约束；Intel 10-Q显示DCAI服务器销量同比+9%，主要受hyperscaler需求推动，并称服务器需求超过可用供给、基板/内存/关键组件短缺可能延续到明年。</td>
+              <td>上修</td>
+              <td>存储、先进封装、基板、服务器CPU/ASIC和高端组件供需偏紧；整机和终端链要看成本转嫁能力。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple / Intel Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Palantir as AI software demand proof</td>
+              <td>Q2 revenue US$1.935bn、同比+93%，TCV US$3.373bn、RDV US$6.238bn，FY revenue guidance US$8.150-8.158bn。</td>
+              <td>上修</td>
+              <td>说明AI CapEx不只停在硬件投入，开始更明确转化为企业AI软件和数据平台收入。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir SEC Exhibit 99.1</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Fed H.15</td>
+              <td>2026-08-03发布/2026-07-31数据：EFFR 3.63%，2Y 4.31%，10Y 4.75%，20Y 5.28%，30Y 5.27%，10Y TIPS 2.47%，30Y TIPS 3.03%。</td>
+              <td>压力</td>
+              <td>长端和实际利率仍高，高估值AI/软件需要盈利、TCV/RPO和现金流兑现抵消贴现率。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Dollar</td>
+              <td>H.10当前页显示Broad dollar index约119.7034，人民币约6.7509，日元约159.1600，较前期美元压力有所缓和。</td>
+              <td>宽松观察</td>
+              <td>美元回落对成长资产和非美科技链估值有边际帮助，但需要与长端利率同步下行才可降低压力级别。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>US market yields / oil</td>
+              <td>AP报道周一10Y市场收益率约4.68，低于周五约4.75；油价约-4.7%，风险偏好修复。</td>
+              <td>宽松观察</td>
+              <td>若下一次H.15确认收益率回落，Orange压力可下降；当前仍是市场信号。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa">AP market report</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>2026-07-30发布/7月29日数据：准备金余额US$2.984570tn，周降US$77.579bn、同比降US$362.844bn；TGA US$910.776bn，周增US$81.153bn。</td>
+              <td>压力</td>
+              <td>准备金下降和TGA上升说明系统流动性没有给高β科技明确顺风。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>FOMC</td>
+              <td>7月29日FOMC维持3.50%-3.75%目标区间，但投票9-3，Hammack、Kashkari、Logan倾向加息25bp，通胀仍高于2%目标。</td>
+              <td>压力</td>
+              <td>政策语言仍不宽松，科技估值弹性需要等待实际利率回落或盈利兑现。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve FOMC</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Palantir Q2官方结果</td>
+              <td>企业AI软件、数据平台、模型运营、政府/商业AI部署</td>
+              <td>利好</td>
+              <td>有合同、TCV/RPO、净留存、利润率和现金流验证的AI软件平台</td>
+              <td>AI标签重但缺少真实客户扩张、现金流或续约证明的软件公司</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir SEC Exhibit 99.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro初步订单更新</td>
+              <td>AI服务器、液冷、电源、机柜、PCB/高速互连、GPU集群</td>
+              <td>利好但待正式财报</td>
+              <td>AI服务器整机、液冷、电源、机柜、高速互连、上游零部件</td>
+              <td>交付能力不足、毛利率不可持续或客户集中度过高的中游环节</td>
+              <td>官方初步业务更新</td>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon AWS/AI CapEx交易仍强</td>
+              <td>AWS、AI芯片、HBM、AI服务器、网络、电力、液冷</td>
+              <td>利好但待管理层确认全年CapEx口径</td>
+              <td>GPU/ASIC、HBM、AI服务器、交换/光模块、电力设备、液冷、云服务</td>
+              <td>没有收入闭环、只依赖融资和估值重估的AI资产</td>
+              <td>官方10-Q + 媒体市场反应</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple供给约束仍在</td>
+              <td>先进半导体、NAND、DRAM、端侧AI、云AI算力</td>
+              <td>分化</td>
+              <td>存储、先进制程、封装、AI算力和高端组件供应商</td>
+              <td>成本转嫁能力弱的终端整机和模组环节</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>AMD盘后待验证</td>
+              <td>AI GPU、MI系列、服务器CPU、HBM、OEM/ODM</td>
+              <td>待验证</td>
+              <td>若AI GPU收入、订单和毛利率兑现，利好GPU、HBM、服务器、散热和电源链</td>
+              <td>若指引低于AI CapEx预期，可能压制二线AI硬件和高估值服务器链</td>
+              <td>待官方披露</td>
+              <td><a href="https://ir.amd.com/">AMD IR watch</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI软件与数据平台</td>
+              <td>无直接A/H公司映射；Palantir是海外官方源，不能自动映射到A/H个股。</td>
+              <td>优先看有真实合同、政企客户、TCV/RPO、续约率、毛利率和经营现金流验证的企业AI软件卖铲人。</td>
+              <td>不要用历史股票涨跌筛选；没有正式合同和收入确认的AI应用只作为观察。</td>
+            </tr>
+            
+            <tr>
+              <td>AI服务器与整机ODM</td>
+              <td>无直接映射；Supermicro、Amazon、Meta、Microsoft均为海外来源。</td>
+              <td>只看当下订单、客户认证、排产、液冷方案、GPU/ASIC配套和现金流质量能验证的卖铲人。</td>
+              <td>概念标签不等于订单；正式财报、客户集中度和交付能力是硬过滤。</td>
+            </tr>
+            
+            <tr>
+              <td>液冷、电源、机柜与数据中心工程</td>
+              <td>Supermicro订单、Amazon/Meta/Microsoft资产新增和租赁义务共同验证数据中心扩张。</td>
+              <td>液冷、UPS、电源、机柜、配电、变压器、数据中心工程更接近CapEx卖铲环节。</td>
+              <td>需区分框架协议、订单、交付和收入确认；项目周期和毛利率不可忽视。</td>
+            </tr>
+            
+            <tr>
+              <td>HBM/DRAM/NAND与存储链</td>
+              <td>Apple 10-Q直接确认NAND、DRAM短缺和成本上升，Intel 10-Q确认内存和关键组件短缺。</td>
+              <td>HBM、DRAM/NAND、存储测试、材料和封装配套仍是供需偏紧方向。</td>
+              <td>周期涨价和库存博弈可能提前反映，需用合同价、出货和毛利率验证。</td>
+            </tr>
+            
+            <tr>
+              <td>先进封装、基板、PCB/CCL和高速互连</td>
+              <td>Intel官方提到基板和关键组件短缺；Supermicro订单验证AI服务器高速互连需求。</td>
+              <td>低损耗CCL、高层板、载板、高速连接器、光模块和交换链仍是卖铲重点。</td>
+              <td>技术代际和客户认证壁垒高，低端产能不能简单映射。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>AMD盘后结果</strong><span>验证MI系列AI GPU、数据中心收入、毛利率和订单能否承接Palantir/Supermicro/云厂商的AI需求。</span></li><li><strong>Fed H.15下一次更新</strong><span>确认周一市场收益率回落是否进入官方数据；若10Y、30Y和TIPS实质下行，Orange压力才可能下降。</span></li><li><strong>Amazon正式电话会文字稿/管理层后续</strong><span>确认或否定US$220bn全年CapEx媒体口径，并拆清现金CapEx、租赁、OpenAI/Anthropic投资和AWS收入吸收路径。</span></li><li><strong>Supermicro FY2026 Q4正式结果</strong><span>初步订单和毛利率很强，但收入接近指引低端、数据未经审计，需看正式财报、客户集中度、交付和审计风险。</span></li><li><strong>Palantir后续文件和电话会</strong><span>确认客户数、净留存、合同结构、RPO/TCV转收入节奏、利润率和现金流持续性。</span></li><li><strong>Apple供应链与端侧AI节奏</strong><span>先进半导体、NAND、DRAM和AI算力约束已官方确认，需看毛利率、新品节奏和上游订单。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir Q2 2026 results, SEC Exhibit 99.1</a></td>
+              <td>Tech catalyst / AI software / cash flow</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity / yields / real rates</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10 Foreign Exchange Rates</a></td>
+              <td>Liquidity / dollar</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity / reserves / TGA</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">FOMC statement</a></td>
+              <td>Liquidity / policy</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa">AP market report</a></td>
+              <td>Market risk appetite / yields / oil</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / AWS assets / AI financing</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon Q2 2026 earnings release</a></td>
+              <td>CapEx / AWS growth</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft FY26 Q4 earnings release</a></td>
+              <td>CapEx / cloud revenue / RPO</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / lease obligations</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q for quarter ended June 27, 2026</a></td>
+              <td>Supply-chain risk / tech catalyst</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm">Intel Form 10-Q for quarter ended June 27, 2026</a></td>
+              <td>Server demand / supply constraints</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro FY2026 Q4 preliminary business update</a></td>
+              <td>AI server orders / tech catalyst</td>
+              <td>2026-07-21</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/">AMD Investor Relations</a></td>
+              <td>Next catalyst watch</td>
+              <td>2026-08-04</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

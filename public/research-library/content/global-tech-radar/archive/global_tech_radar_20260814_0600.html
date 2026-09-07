@@ -1,0 +1,578 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-14 06:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange：PPI缓和给科技估值喘息，但 Fed 流动性仍偏紧；AI 卖铲链继续有业绩确认</h1>
+      <p class="subtitle">本轮为 2026-08-14 10:00 北京时间执行的 06:00 延迟早间版。结论先放前面：总闸门维持 Orange。AI CapEx 是 Expansion，应用材料、联想、腾讯、鸿海继续给出设备、服务器、云与算力采购确认；但 Fed H.4.1 显示准备金下降、TGA 上升，长端和实际利率仍高，流动性不能按 Easing 处理。操作上不追高拥挤科技，只保留能被订单、利润率、现金流继续验证的 AI 卖铲方向。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-14 06:00</span>
+        <span class="badge gate-neutral">06:00 morning</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange：PPI缓和给科技估值喘息，但 Fed 流动性仍偏紧；AI 卖铲链继续有业绩确认</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>总闸门 Orange：不把 PPI 缓和直接等同于流动性宽松；高位科技不追，只做有订单、利润率和现金流确认的 AI 卖铲链。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈来自 AI 卖铲确认扩散：应用材料设备强指引、联想 ISG/AI 收入高增、腾讯 AI 算力预付款、鸿海 AI rack 出货上行。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项仍是 Fed 流动性：H.4.1 准备金周降约 493 亿美元、TGA 周增约 566 亿美元，长端和实际利率仍压估值。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步只盯 Fed H.15/H.4.1、PCE/就业、Intel 200 亿美元融资是否正式关闭，以及 AI 服务器/设备订单能否继续转利润和现金流。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-green">Bullish</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>PPI 缓和，但 H.4.1 仍显示流动性偏紧</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>BLS 8 月 13 日发布的 7 月 PPI 显示 final demand 环比持平、同比 +4.7%；Fed H.15 对应 8 月 12 日数据仍显示 10Y 4.68%、30Y 5.24%、10Y TIPS 2.42%、30Y TIPS 2.99%。Fed H.4.1 显示准备金平均约 2.944 万亿美元、周降约 493 亿美元；TGA 平均约 9639.5 亿美元、周增约 566 亿美元。</p>
+              <p><strong>影响：</strong>通胀数据给降息预期一点缓冲，但准备金下降叠加 TGA 上升，使科技估值仍受流动性约束；维持 Orange 而不是 Green。</p>
+              <p class="source-line"><a href="https://www.bls.gov/news.release/ppi.nr0.htm" target="_blank" rel="noreferrer">BLS / Federal Reserve</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>联想 Q1：AI 收入与 ISG 利润确认服务器链景气</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>联想 FY2026/27 Q1 收入 269 亿美元，同比 +43%；调整后净利润 11 亿美元，同比 +176%。AI 相关收入 93 亿美元，同比 +60%，占集团收入 35%；ISG 收入 85 亿美元，同比 +98%，经营利润 7.77 亿美元、经营利润率 9.1%。</p>
+              <p><strong>影响：</strong>AI 服务器从订单故事进入收入和利润验证，强化服务器 ODM/OEM、液冷、电源、连接器、PCB 与光模块的卖铲链条。</p>
+              <p class="source-line"><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>应用材料 Q3：半导体设备需求与先进封装/HBM 逻辑增强</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Applied Materials 8 月 13 日发布 Q3 FY2026：收入 91.15 亿美元，同比 +25%；GAAP 毛利率 50.3%，non-GAAP 毛利率 50.4%；GAAP EPS 3.17 美元，non-GAAP EPS 3.50 美元；经营现金流 30.4 亿美元，并给出 Q4 FY2026 收入 102.5 亿美元正负 5 亿美元指引。</p>
+              <p><strong>影响：</strong>设备端继续验证 AI 带来的 DRAM/HBM、foundry-logic 与先进封装投资，利好半导体设备、材料、先进封装与工艺控制方向。</p>
+              <p class="source-line"><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>腾讯 Q2：AI 采购压低 FCF，但确认云与模型算力投入</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>腾讯 Q2 收入 2048 亿元人民币，同比 +11%；毛利 1184 亿元，同比 +13%；non-IFRS 净利润 706 亿元，同比 +9%。经营现金流 527 亿元，但资本开支付款 593 亿元，叠加内容和租赁付款后自由现金流为 -138 亿元；公司说明若剔除算力采购预付款，自由现金流为 376 亿元，并提到 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 与云需求。</p>
+              <p><strong>影响：</strong>腾讯确认 AI 算力仍在投入期，利好 GPU/ASIC、服务器、IDC、网络与云基础设施，但现金流压力也提醒市场区分真实需求和资本化压力。</p>
+              <p class="source-line"><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>鸿海/Foxconn：AI rack 出货上行，服务器 ODM 链再获确认</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>鸿海 8 月 12 日发布 Q2：收入 2.53 万亿新台币，同比 +41%；毛利 1545 亿新台币，同比 +36%；经营利润 948 亿新台币，同比 +68%；归母净利 600 亿新台币，同比 +35%；EPS 4.27 新台币。Cloud and Networking Products 占比 51%，并披露 AI rack shipment 环比高双位数增长、2026 年 AI rack shipment 预期翻倍以上。</p>
+              <p><strong>影响：</strong>AI 服务器需求继续外溢到 ODM、机柜、散热、电源、连接器、线束与高速传输，卖铲链确认度上升。</p>
+              <p class="source-line"><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn IR</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Lenovo</td>
+              <td>FY2026/27 Q1 收入 269 亿美元，同比 +43%；AI 相关收入 93 亿美元，同比 +60%；ISG 收入 85 亿美元，同比 +98%，经营利润率 9.1%。</td>
+              <td>上修/强化</td>
+              <td>AI 服务器、HPC、液冷、电源、连接器、PCB、光模块与 ODM/OEM 链条受益。</td>
+              <td>High</td>
+              <td><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Applied Materials</td>
+              <td>Q3 FY2026 收入 91.15 亿美元，同比 +25%；non-GAAP 毛利率 50.4%；Q4 收入指引 102.5 亿美元正负 5 亿美元。</td>
+              <td>上修/强化</td>
+              <td>先进制程、DRAM/HBM、先进封装、设备材料与工艺控制受益。</td>
+              <td>High</td>
+              <td><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Tencent</td>
+              <td>Q2 资本开支付款 593 亿元人民币，剔除算力采购预付款后 FCF 为 376 亿元；公司继续指向 Hunyuan、办公/代码助手、微信 AI 和云需求。</td>
+              <td>强投入但需现金流验证</td>
+              <td>GPU/ASIC、AI 服务器、IDC、云基础设施和网络设备受益；现金流压力需要跟踪。</td>
+              <td>High</td>
+              <td><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Hon Hai / Foxconn</td>
+              <td>Q2 收入 2.53 万亿新台币，同比 +41%；Cloud and Networking Products 占比 51%；AI rack shipment 环比高双位数增长，2026 年预计翻倍以上。</td>
+              <td>强化</td>
+              <td>AI 服务器 ODM、机柜、散热、电源、连接器、线束和高速传输链条受益。</td>
+              <td>High</td>
+              <td><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Cisco</td>
+              <td>FY2026 AI infrastructure 订单 93 亿美元，约 40 亿美元已交付；公司预计 FY2027 AI infrastructure 收入 75 亿美元。</td>
+              <td>强化</td>
+              <td>AI 网络、交换机、ASIC、800G/1.6T 光模块与数据中心网络链继续受益。</td>
+              <td>High</td>
+              <td><a href="https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx" target="_blank" rel="noreferrer">Cisco IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Nebius / CoreWeave / Supermicro / Lumentum</td>
+              <td>Nebius AI cloud 收入高增且 2026 预付款超过 90 亿美元；CoreWeave backlog 约 1040 亿美元；Supermicro FY2027 收入指引 650-720 亿美元；Lumentum Q4 收入 10.063 亿美元。</td>
+              <td>强但拥挤</td>
+              <td>AI 云、GPU 租赁、服务器、光模块、CPO/OCS 与电力容量链条仍强；估值和融资成本需警惕。</td>
+              <td>High</td>
+              <td><a href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx" target="_blank" rel="noreferrer">Company IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel</td>
+              <td>公司已公告 200 亿美元普通股发行定价和扩大发行规模，但本轮未见官方 closing release。</td>
+              <td>待验证</td>
+              <td>若完成，将改善资产负债表与 CapEx 空间；但稀释、投资回报和先进制程兑现仍待核实。</td>
+              <td>Medium</td>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common" target="_blank" rel="noreferrer">Intel IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>BLS PPI</td>
+              <td>7 月 PPI final demand 环比持平、同比 +4.7%；final demand services +0.2%，goods -0.7%；剔除食品、能源和贸易服务后环比 +0.4%、同比 +4.7%。</td>
+              <td>边际缓和</td>
+              <td>缓和加息/更高利率压力，但不足以单独确认宽松交易。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/ppi.nr0.htm" target="_blank" rel="noreferrer">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.15</td>
+              <td>2026-08-12：EFFR 3.63%，2Y 4.20%，5Y 4.38%，10Y 4.68%，20Y 5.24%，30Y 5.24%，10Y TIPS 2.42%，30Y TIPS 2.99%。</td>
+              <td>估值压制</td>
+              <td>长端与实际利率仍高，限制 AI/成长股估值扩张空间。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank" rel="noreferrer">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>截至 2026-08-12 周：准备金平均约 2.944 万亿美元，周降约 493 亿美元；TGA 平均约 9639.5 亿美元，周增约 566 亿美元；ON RRP 平均约 3509 亿美元，周增约 82 亿美元。</td>
+              <td>收紧</td>
+              <td>准备金下降与 TGA 上升抵消 PPI 利好，是总闸门维持 Orange 的核心压制。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noreferrer">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>US market reaction</td>
+              <td>AP 报道 8 月 13 日 S&amp;P 500 +0.7% 至 7,798.99，Nasdaq +0.8% 至 26,803.03，10Y Treasury 约 4.65%，PPI 缓和支撑风险偏好。</td>
+              <td>短线风险偏好回升</td>
+              <td>利好科技交易弹性，但仍需服从真实流动性与盈利验证。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/3a23f22469cd0e0062f711096906525c" target="_blank" rel="noreferrer">AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>PBOC / China liquidity</td>
+              <td>新华社报道央行 8 月 14 日将开展 10000 亿元 6 个月买断式逆回购，8 月到期量同为 10000 亿元；另据央行公告口径，8 月 14 日及 17-19 日临时隔夜正、逆回购每日操作量不超过 6000 亿元。</td>
+              <td>稳定对冲</td>
+              <td>有助于稳定国内资金面，但更像等量滚动和短端平滑，不能替代美元流动性改善。</td>
+              <td>Medium</td>
+              <td><a href="https://www.xinhuanet.com/20260813/77521d4b52ad4854951d2a9ae454c6d9/c.html" target="_blank" rel="noreferrer">Xinhua / PBOC announcement via 21st Century Business Herald</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Lenovo AI revenue and ISG surge</td>
+              <td>AI 服务器、HPC、液冷、电源、连接器、PCB、ODM/OEM</td>
+              <td>利好</td>
+              <td>能把 AI 服务器订单转成收入和利润的供应链。</td>
+              <td>缺订单、缺利润率或仅靠概念映射的高估值标的。</td>
+              <td>官方确认</td>
+              <td><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Applied Materials Q3 beat and Q4 guide</td>
+              <td>半导体设备、HBM/DRAM、先进封装、工艺控制</td>
+              <td>利好</td>
+              <td>设备、材料、检测计量、先进封装与 HBM 资本开支链。</td>
+              <td>订单周期下行或客户扩产延后的环节。</td>
+              <td>官方确认</td>
+              <td><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Tencent AI compute procurement</td>
+              <td>GPU/ASIC、AI 服务器、云、IDC、网络设备</td>
+              <td>利好但需现金流验证</td>
+              <td>真实参与大模型训练/推理和云算力交付的上游硬件与云基础设施。</td>
+              <td>算力采购回报不清晰、现金流压力无法缓释的方向。</td>
+              <td>官方确认</td>
+              <td><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Hon Hai / Foxconn AI rack shipment growth</td>
+              <td>AI 服务器 ODM、机柜、散热、电源、连接器、线束</td>
+              <td>利好</td>
+              <td>能进入 AI rack 批量交付的 ODM 和关键零部件。</td>
+              <td>传统低端服务器或消费电子订单占比过高的供应链。</td>
+              <td>官方确认</td>
+              <td><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA AI infrastructure financing platform</td>
+              <td>AI 数据中心融资、GPU 集群、云租赁、电力容量</td>
+              <td>中性偏利好</td>
+              <td>拿到真实项目、长约客户和低成本资本的 AI 基建平台。</td>
+              <td>依赖循环融资、租赁回款不确定或负债成本过高的平台。</td>
+              <td>官方确认但项目落地需跟踪</td>
+              <td><a href="https://nvidianews.nvidia.com/news/ai-infrastructure-financing-platform" target="_blank" rel="noreferrer">NVIDIA</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI 服务器/ODM/液冷/电源</td>
+              <td>本轮仅验证联想、鸿海/Foxconn、腾讯等官方事实；A/H 具体公司映射多为产业链推断。</td>
+              <td>关注有服务器、液冷、电源、连接器、PCB、线束、机柜批量订单和利润率验证的供应链。</td>
+              <td>不要把全球客户订单直接映射为 A/H 公司订单，除非公司公告或客户认证明确披露。</td>
+            </tr>
+            
+            <tr>
+              <td>半导体设备/先进封装/HBM</td>
+              <td>应用材料官方确认 AI 需求驱动设备与产能投资，但未直接确认 A/H 上市公司订单。</td>
+              <td>设备、材料、检测计量、先进封装、HBM 配套材料和封测链条受益概率提高。</td>
+              <td>估值已交易预期的环节要等订单、收入和毛利率再确认。</td>
+            </tr>
+            
+            <tr>
+              <td>光模块/CPO/OCS/高速网络</td>
+              <td>Cisco、Lumentum 等海外公司此前已确认 AI 网络与 1.6T/OCS/CPO 需求；本轮未新增 A/H 直接订单。</td>
+              <td>800G/1.6T 光模块、交换芯片、高速连接与数据中心网络仍是卖铲链核心方向。</td>
+              <td>若云厂 CapEx 延后或融资成本上升，订单节奏可能波动。</td>
+            </tr>
+            
+            <tr>
+              <td>云算力/IDC/电力容量</td>
+              <td>腾讯披露 AI 相关预付款和算力采购，Nebius/CoreWeave 等海外云平台订单和 backlog 仍强。</td>
+              <td>IDC、电力容量、变配电、液冷和云基础设施方向受益。</td>
+              <td>自由现金流、客户长约质量和电力交付周期是下一阶段主要验证点。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>Fed H.15/H.4.1 下一次更新</strong><span>若长端/实际利率回落且准备金修复，流动性才可能从 Tightening 转向 Neutral/Easing watch。</span></li><li><strong>PCE、就业和美债供给</strong><span>区分降息预期带来的估值修复，和宏观降温导致的盈利下修风险。</span></li><li><strong>Intel 200 亿美元发行 closing release</strong><span>本轮未见官方关闭确认；需要核实最终规模、稀释、资金用途和先进制程 ROI。</span></li><li><strong>联想/鸿海 AI 服务器订单转收入、利润率和现金流</strong><span>这是判断 AI 卖铲链能否继续扩散的核心验证点。</span></li><li><strong>应用材料先进封装/HBM/DRAM 订单延续性</strong><span>设备链已强，后续要看订单持续性和客户扩产节奏是否兑现。</span></li><li><strong>腾讯 AI 算力采购回报</strong><span>需要观察 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 与云需求能否转化为收入和现金流恢复。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/ppi.nr0.htm" target="_blank" rel="noreferrer">BLS Producer Price Index News Release</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank" rel="noreferrer">Federal Reserve H.15</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noreferrer">Federal Reserve H.4.1</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/3a23f22469cd0e0062f711096906525c" target="_blank" rel="noreferrer">AP market report</a></td>
+              <td>Liquidity / market reaction</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo Investor Relations</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials Q3 FY2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent Q2 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn Q2 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-12</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx" target="_blank" rel="noreferrer">Cisco FY2026 Q4 results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-12</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/ai-infrastructure-financing-platform" target="_blank" rel="noreferrer">NVIDIA AI infrastructure financing platform</a></td>
+              <td>Tech catalyst / financing risk</td>
+              <td>2026-08-10</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.xinhuanet.com/20260813/77521d4b52ad4854951d2a9ae454c6d9/c.html" target="_blank" rel="noreferrer">Xinhua PBOC reverse repo report</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common" target="_blank" rel="noreferrer">Intel common stock offering pricing</a></td>
+              <td>CapEx / watch item</td>
+              <td>2026-08-10</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

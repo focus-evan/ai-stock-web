@@ -19,10 +19,13 @@
 		"#*": "./*"
 	},
 	"scripts": {
-		"dev": "vite --host",
-		"build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
+		"dev": "node scripts/prepare-research-library.mjs && vite --host",
+		"build": "node scripts/build.mjs",
 		"preview": "vite preview",
 		"typecheck": "tsc --noEmit",
+		"research:sync": "node scripts/sync-research-library.mjs",
+		"research:test": "node --test scripts/check-research-library.mjs",
+		"research:verify": "node scripts/verify-research-library.mjs",
 		"analyzer": "vite-bundle-visualizer --output analyzer/stats.html",
 		"eslint-config-inspector": "eslint-config-inspector",
 		"lint": "eslint .",
@@ -89,6 +92,7 @@
 		"@types/react-dom": "^18.3.1",
 		"@vitejs/plugin-react": "^5.1.2",
 		"autoprefixer": "^10.4.21",
+		"cheerio": "1.0.0",
 		"circular-dependency-scanner": "^3.0.1",
 		"clsx": "^2.1.1",
 		"code-inspector-plugin": "^0.20.6",

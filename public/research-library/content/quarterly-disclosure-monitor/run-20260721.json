@@ -1,0 +1,76 @@
+{
+  "run_time": "2026年7月21日 11:02:36 +08:00",
+  "window_start": "2026-07-15 00:00 +08:00",
+  "window_end": "2026-07-21 11:02 +08:00",
+  "formal_hits": [],
+  "related_updates": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "date": "2026-07-20",
+      "title": "2026年半年度业绩预告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-20/1225431444.pdf",
+      "source": "CNINFO"
+    },
+    {
+      "name": "五粮液",
+      "code": "000858",
+      "date": "2026-07-15",
+      "title": "2026年半年度业绩预告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-15/1225423626.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "摩尔线程",
+      "code": "688795",
+      "date": "2026-07-17",
+      "title": "摩尔线程2026年半年度业绩预告的自愿性披露公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-17/1225428969.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "天孚通信",
+      "code": "300394",
+      "date": "2026-07-18",
+      "title": "2026年半年度业绩预告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-18/1225431394.pdf",
+      "source": "CNINFO"
+    },
+    {
+      "name": "光迅科技",
+      "code": "002281",
+      "date": "2026-07-15",
+      "title": "武汉光迅科技股份有限公司2026年半年度业绩预告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-15/1225423258.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "东山精密",
+      "code": "002384",
+      "date": "2026-07-15",
+      "title": "2026年半年度业绩预告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-15/1225423264.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "长飞光纤光缆",
+      "code": "601869",
+      "date": "2026-07-15",
+      "title": "长飞光纤光缆股份有限公司2026年半年度业绩预增公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-15/1225423222.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 22,
+    "cninfo_watchlist_rows": 26,
+    "cninfo_orgids_resolved": 22,
+    "errors": [
+      "HKEX 1c: fetch failed"
+    ]
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260721.html"
+  ]
+}

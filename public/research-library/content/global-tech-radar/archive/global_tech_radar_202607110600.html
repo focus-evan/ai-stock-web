@@ -1,0 +1,649 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-07-11 06:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>???????Meta??AI??????CapEx??????????</h1>
+      <p class="subtitle">???? Orange???AI/data-center CapEx???????Meta????91???AI?????????????AI?????????????FRED/H.15??10Y????4.5%???10Y??????2.31%???Amazon?????AI??????????????????????????????AI CapEx????????????????????????????</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-07-11 06:00</span>
+        <span class="badge gate-neutral">06:00 morning</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>???????Meta??AI??????CapEx??????????</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>??????????????????????????????????????????????????</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>AI/data-center CapEx???????Meta???AI?????Micron HBM/SSD?Broadcom ASIC/networking?Bloom/Brookfield AI????????????????</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>FRED????7?9?10Y??4.54%?10Y????2.31%?Amazon 250????????AI?????????CapEx???????????</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>??????7?11-13???/?????Amazon???????TSMC 6????7?16?Q2????Supermicro???Meta Alberta???????</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>10Y?????????????????2.31%</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>FRED DGS10??2026-07-09??10Y Treasury constant maturity?4.54%???7?8?4.56%????7?6?4.48%?FRED DFII10??2026-07-09 10Y TIPS?????2.31%??7?8????</p>
+              <p><strong>影响：</strong>??????????????????????AI?????????????Liquidity??Tightening?</p>
+              <p class="source-line"><a href="https://fred.stlouisfed.org/series/DGS10">FRED / Federal Reserve H.15</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Meta???AI????????CapEx?????</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>AP??Meta?????91???????Alberta Sturgeon County???????AI????????????????????932MW????????????????????</p>
+              <p><strong>影响：</strong>??AI???????????????????????????????/??????????????????A/H?????</p>
+              <p class="source-line"><a href="https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa">AP</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Amazon??????AI CapEx???</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>MarketWatch??Amazon??????250?????AI??????????????AI?????????????Amazon IR/SEC?????????????????</p>
+              <p><strong>影响：</strong>???AI CapEx??????????????????????????????????ROI?????????</p>
+              <p class="source-line"><a href="https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353">MarketWatch / Amazon IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>TSMC Q2???AI/HPC????????</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>TSMC??2026 monthly revenue??????1-5????????1,961,804????????+30.0%?6???????Q2????7?16?????7?6-15?????Q2 revenue guidance?390-402????</p>
+              <p><strong>影响：</strong>TSMC??AI/HPC??????????????????????????6?/Q2??????????</p>
+              <p class="source-line"><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC Investor Relations</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>??AI/data-center CapEx??????????????</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>????Microsoft?Meta?Alphabet?Amazon?Oracle?Broadcom?Micron?Bloom/Brookfield??????AI/data-center CapEx???Supermicro 7?1???????????????????????????????????</p>
+              <p><strong>影响：</strong>CapEx????Expansion????????Mixed?????????????????????</p>
+              <p class="source-line"><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Company IR cross-check / Supermicro</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q3?????????AI??ARR??370????????123%????1GW????????????</td>
+              <td>????</td>
+              <td>??GPU/CPU??????????????????????????????????</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>Meta Q1 2026??CapEx???1250-1450????AP??Meta??????Alberta????91?????AI???????AI compute/cloud???Meta?????</td>
+              <td>???????</td>
+              <td>??AI???????????????????????????????/??/?????????????</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa">Meta IR / AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>Alphabet</td>
+              <td>Alphabet Q1 2026?????Q1 CapEx?357??????????AI???technical infrastructure?Google Cloud backlog?4620?????????????</td>
+              <td>????</td>
+              <td>??TPU/GPU??????????????????????????????????</td>
+              <td>High</td>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon / AWS</td>
+              <td>Amazon Q1 2026??????AWS?????+28%?376????TTM???????????AI??property and equipment????????????250????????</td>
+              <td>???????????</td>
+              <td>AWS AI????????????????????????ROI???????????</td>
+              <td>Medium</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon IR / MarketWatch</a></td>
+            </tr>
+            
+            <tr>
+              <td>Oracle</td>
+              <td>FY2026 Q4 RPO?6380??????+363%?OCI Q4??58??????+93%?FY2026 free cash flow?-237????</td>
+              <td>????</td>
+              <td>??AI cloud/data-center??????RPO????CapEx????????????????</td>
+              <td>High</td>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Broadcom</td>
+              <td>FY2026 Q2????AI semiconductor revenue?108??????+143%?Q3 AI semiconductor revenue???160????????+200%?</td>
+              <td>????</td>
+              <td>????AI accelerator?AI networking??????????????PCB/CCL???</td>
+              <td>High</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Micron</td>
+              <td>FY2026 Q3??414.6?????????253.9????????????183????HBM4?????????????Q4?????500?????10????</td>
+              <td>???</td>
+              <td>??HBM?????SSD?????????????????????????????</td>
+              <td>High</td>
+              <td><a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter">Micron Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>TSMC</td>
+              <td>2026 monthly revenue??????1-5?????+30.0%?6??????Q2????7?16?????390-402????????</td>
+              <td>?????</td>
+              <td>AI/HPC????????CoWoS/??????????????6????Q2????</td>
+              <td>High</td>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Bloom Energy / Brookfield</td>
+              <td>2026-06-30????AI infrastructure power projects?????50??????250????????????????MW/GW??????????</td>
+              <td>??????</td>
+              <td>?AI CapEx?????????????????????????UPS?????????</td>
+              <td>High</td>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Federal Reserve policy rate / FOMC minutes</td>
+              <td>2026-06-17 FOMC??????????3.50%-3.75%?Fed?2026-07-08??6?16-17?FOMC???</td>
+              <td>??</td>
+              <td>??????????????????????????????</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260708a.htm">Federal Reserve</a></td>
+            </tr>
+            
+            <tr>
+              <td>US 10Y Treasury</td>
+              <td>FRED DGS10??2026-07-09?4.54%?7?8?4.56%?7?7?4.55%?7?6?4.48%?</td>
+              <td>??</td>
+              <td>4.5%??????????AI/?????????</td>
+              <td>High</td>
+              <td><a href="https://fred.stlouisfed.org/series/DGS10">FRED / Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>US 10Y real yield</td>
+              <td>FRED DFII10??2026-07-09?2.31%??7?8??????7?7?2.30%?7?6?2.24%?</td>
+              <td>??</td>
+              <td>???????????????????????</td>
+              <td>High</td>
+              <td><a href="https://fred.stlouisfed.org/series/DFII10">FRED / Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>AI-linked corporate debt</td>
+              <td>MarketWatch??Amazon????250?????AI???????????????????????</td>
+              <td>??</td>
+              <td>????????AI CapEx??????????CapEx???????????</td>
+              <td>Medium</td>
+              <td><a href="https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353">MarketWatch</a></td>
+            </tr>
+            
+            <tr>
+              <td>Nominal Broad U.S. Dollar Index</td>
+              <td>FRED DTWEXBGS????????2026-07-02?120.6902?????????7?13??</td>
+              <td>??/???</td>
+              <td>???????????10Y??????????????</td>
+              <td>High</td>
+              <td><a href="https://fred.stlouisfed.org/series/DTWEXBGS">FRED</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Meta Canada AI data center</td>
+              <td>AI????/??/??/??/??</td>
+              <td>????????</td>
+              <td>?????????/?????????/??????????????</td>
+              <td>????time-to-power???/??????????????</td>
+              <td>AP??????????Meta??????</td>
+              <td><a href="https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa">AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>FRED/H.15 yields remain high</td>
+              <td>AI CapEx/???/??/?????</td>
+              <td>??</td>
+              <td>????????????????????????</td>
+              <td>??????????????????????AI??????</td>
+              <td>????</td>
+              <td><a href="https://fred.stlouisfed.org/series/DGS10">FRED / H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon $25B bond financing and AI-related debt pressure</td>
+              <td>Hyperscaler debt/AI data centers/?????</td>
+              <td>????</td>
+              <td>???????????????????????????</td>
+              <td>??????????????AI CapEx??</td>
+              <td>???? + Amazon IR???????</td>
+              <td><a href="https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353">MarketWatch / Amazon IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>TSMC Q2 result watch</td>
+              <td>AI/HPC??/????/CoWoS/????</td>
+              <td>?????</td>
+              <td>?Q2????????AI/HPC????????????????????????PCB/CCL??</td>
+              <td>????????????????????</td>
+              <td>????/????????</td>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Micron FY2026 Q3 record results and HBM4 shipments</td>
+              <td>HBM/???DRAM/????SSD/????/????</td>
+              <td>??</td>
+              <td>HBM?????SSD??????????????????AI??????</td>
+              <td>???AI????????????????????????</td>
+              <td>????</td>
+              <td><a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter">Micron IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro Taiwan Business Update remains unresolved</td>
+              <td>AI???/GPU??/????/????</td>
+              <td>??</td>
+              <td>???????????????????????????</td>
+              <td>??????????????????????/????</td>
+              <td>??????7?1?????????????????</td>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI CapEx??????????</td>
+              <td>???A/H?????</td>
+              <td>?????????????????????/??/??/???/PCB/???????????????????????????</td>
+              <td>10Y????????????????????????</td>
+            </tr>
+            
+            <tr>
+              <td>AI?????????</td>
+              <td>?A/H???Meta??????Bloom/Brookfield?????????????????</td>
+              <td>????????????????UPS???/??????????????????</td>
+              <td>??????????????A/H?????????AI?????????</td>
+            </tr>
+            
+            <tr>
+              <td>HBM/AI??????</td>
+              <td>?A/H???Micron Q3?Micron-Ford?????????????????</td>
+              <td>HBM????????????????DRAM/eSSD???????????????</td>
+              <td>Micron??????A/H????????????????????????</td>
+            </tr>
+            
+            <tr>
+              <td>TSMC AI/HPC???????</td>
+              <td>?A/H???TSMC?????????</td>
+              <td>?TSMC Q2????????AI/HPC????????????????????????????PCB/CCL?</td>
+              <td>6??????????????????????7?16?????</td>
+            </tr>
+            
+            <tr>
+              <td>AI???????</td>
+              <td>?A/H???Supermicro?????????</td>
+              <td>????????????????????????/PCB/???/??/?????????</td>
+              <td>???Supermicro?????????A/H?????????????????????</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>2026-07-13 H.15/FRED 10Y?10Y TIPS???????????</strong><span>??10Y??????4.5%?????????????2.3%???</span></li><li><strong>Amazon????????????AI????????</strong><span>??AI CapEx??????????????????</span></li><li><strong>TSMC 6?????2026-07-16 Q2???</strong><span>??AI/HPC??????CoWoS?CapEx tone???????????</span></li><li><strong>Meta Alberta AI????????</strong><span>?????????/???????????????????</span></li><li><strong>Supermicro/Taiwan????????????????????????????</strong><span>??AI????????????????????</span></li><li><strong>Bloom/Brookfield 250???????????hyperscaler????????MW/GW???????</strong><span>????????????????????????</span></li><li><strong>AMD Advancing AI 2026?????2026-07-23?</strong><span>??AMD AI??????????????AI????????????????</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://fred.stlouisfed.org/series/DGS10">FRED DGS10 10-Year Treasury Constant Maturity</a></td>
+              <td>Liquidity</td>
+              <td>updated 2026-07-10; latest observation 2026-07-09</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://fred.stlouisfed.org/series/DFII10">FRED DFII10 10-Year TIPS Constant Maturity</a></td>
+              <td>Liquidity</td>
+              <td>updated 2026-07-10; latest observation 2026-07-09</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://fred.stlouisfed.org/series/DTWEXBGS">FRED DTWEXBGS Nominal Broad U.S. Dollar Index</a></td>
+              <td>Liquidity</td>
+              <td>updated 2026-07-06; latest observation 2026-07-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260708a.htm">FOMC Minutes June 16-17, 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-08</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa">AP - Meta plans billions for first AI data center in Canada</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-08</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353">MarketWatch - AI-related debt sells off as Amazon looks to borrow another $25 billion</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-07-07</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon.com Announces First Quarter Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/monthly-revenue/2026">TSMC 2026 Monthly Revenue</a></td>
+              <td>CapEx vendor cross-check</td>
+              <td>checked 2026-07-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC 2026 Q2 Quarterly Results</a></td>
+              <td>Tech catalyst / Watchlist</td>
+              <td>checked 2026-07-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.amd.com/en/newsroom/press-releases/2026-4-28-amd-announces-advancing-ai-2026-.html">AMD Announces Advancing AI 2026</a></td>
+              <td>Tech catalyst / Watchlist</td>
+              <td>2026-04-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter">Micron Technology Reports Record Results for Fiscal Q3 2026</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Brookfield and Bloom Energy Expand AI Infrastructure Partnership to $25 Billion</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro Taiwan Business Update</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-07-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft FY26 Q3 Earnings Conference Call</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx">Meta Reports First Quarter 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet 2026 Q1 Earnings Call</a></td>
+              <td>CapEx</td>
+              <td>2026-04-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle Announces Record Q4 and FY 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-06-10</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom FY2026 Q2 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-03</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

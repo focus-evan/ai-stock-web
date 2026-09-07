@@ -1,0 +1,77 @@
+{
+  "timestamp": "20260819143251",
+  "quotes": {
+    "600403": {
+      "code": "600403",
+      "name": "大有能源",
+      "latest": 6.82,
+      "previous_close": 6.2,
+      "open": 6.42,
+      "quote_time": "20260819143250",
+      "change_pct": 10.0,
+      "high": 6.82,
+      "low": 6.33,
+      "source": "Tencent quote backup"
+    },
+    "601011": {
+      "code": "601011",
+      "name": "宝泰隆",
+      "latest": 3.04,
+      "previous_close": 2.76,
+      "open": 2.99,
+      "quote_time": "20260819143250",
+      "change_pct": 10.14,
+      "high": 3.04,
+      "low": 2.96,
+      "source": "Tencent quote backup"
+    },
+    "002900": {
+      "code": "002900",
+      "name": "哈三联",
+      "latest": 15.63,
+      "previous_close": 14.21,
+      "open": 14.3,
+      "quote_time": "20260819143251",
+      "change_pct": 9.99,
+      "high": 15.63,
+      "low": 14.21,
+      "source": "Tencent quote backup"
+    },
+    "000736": {
+      "code": "000736",
+      "name": "中交发展",
+      "latest": 4.9,
+      "previous_close": 4.45,
+      "open": 4.62,
+      "quote_time": "20260819143248",
+      "change_pct": 10.11,
+      "high": 4.9,
+      "low": 4.57,
+      "source": "Tencent quote backup"
+    },
+    "002165": {
+      "code": "002165",
+      "name": "红宝丽",
+      "latest": 7.37,
+      "previous_close": 7.0,
+      "open": 7.01,
+      "quote_time": "20260819143251",
+      "change_pct": 5.29,
+      "high": 7.69,
+      "low": 6.76,
+      "source": "Tencent quote backup"
+    },
+    "600206": {
+      "code": "600206",
+      "name": "有研新材",
+      "latest": 57.09,
+      "previous_close": 57.72,
+      "open": 56.11,
+      "quote_time": "20260819143251",
+      "change_pct": -1.09,
+      "high": 60.06,
+      "low": 54.15,
+      "source": "Tencent quote backup"
+    }
+  }
+}

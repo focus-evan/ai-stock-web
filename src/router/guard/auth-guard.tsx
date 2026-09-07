@@ -5,6 +5,8 @@ import { setupLoading } from "#src/plugins/loading";
 import { exception403Path, exception404Path, exception500Path, loginPath } from "#src/router/extra-info";
 import { accessRoutes, whiteRouteNames } from "#src/router/routes";
 import { isSendRoutingRequest } from "#src/router/routes/config";
+import researchCenterRoutes from "#src/router/routes/modules/research-center";
+import { ensureResearchCenterRoute } from "#src/router/utils/ensure-research-center-route";
 import { generateRoutesFromBackend } from "#src/router/utils/generate-routes-from-backend";
 import { generateRoutesByFrontend } from "#src/router/utils/generate-routes-from-frontend";
 import { useAccessStore } from "#src/store/access";
@@ -81,7 +83,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
 				const results = await Promise.allSettled(promises);
 				const [userInfoResult, routeResult] = results;
-				const routes = [];
+				let routes = [];
 				const latestRoles = [];
 
 				console.warn("[auth-guard] enableBackendAccess:", enableBackendAccess, "isSendRoutingRequest:", isSendRoutingRequest);
@@ -118,6 +120,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
 				if (!enableBackendAccess) {
 					routes.push(...generateRoutesByFrontend(accessRoutes, latestRoles));
 				}
+
+				routes = ensureResearchCenterRoute(routes, researchCenterRoutes);
 
 				console.warn("[auth-guard] Final routes count:", routes.length);
 				const uniqueRoutes = removeDuplicateRoutes(routes);

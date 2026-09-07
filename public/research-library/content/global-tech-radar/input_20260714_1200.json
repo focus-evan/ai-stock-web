@@ -1,0 +1,466 @@
+{
+  "generated_at_beijing": "2026-07-14 12:00",
+  "run_label": "12:00 noon",
+  "headline": "TSMC六月创高验证AI需求，但10Y与实际利率仍压估值",
+  "focus_summary": {
+    "action": "继续不追高；科技链只保留订单、现金流、客户验证和交付瓶颈明确的方向，高估值、重融资、纯远期叙事继续降权。",
+    "positive": "TSMC官方6月营收NT$442,680m、同比+67.9%，上半年NT$2,404,484m、同比+35.6%，叠加Meta数据中心、Micron HBM/SSD、Broadcom ASIC/networking，AI硬件需求仍强。",
+    "risk": "FRED/H.15最新显示7月10日10Y美债4.56%、10Y实际利率2.32%，美元指数120.5046；CPI今晚待发，Amazon债务融资和AI CapEx ROI压力仍压制估值。",
+    "next": "下一步看7月14日20:30北京的美国CPI、7月16日TSMC Q2电话会、Amazon债券最终条款、Meta项目官方文件、Supermicro调查是否升级。"
+  },
+  "top_conclusion": "本轮维持 Orange：TSMC 6月官方月营收创高，直接强化AI/HPC、先进制程和先进封装需求验证；全球大厂AI/data-center CapEx仍未见官方下修。但FRED/H.15最新值显示10Y回到4.56%、10Y实际利率升至2.32%，美元指数仍在120以上，美国6月CPI将在北京时间今晚发布，流动性仍不是科技估值顺风。结论是CapEx主线仍强，但只做订单和现金流验证，不追高纯远期叙事。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Mixed"
+  },
+  "top_changes": [
+    {
+      "title": "TSMC 6月营收官方补齐并创高",
+      "fact": "TSMC官方2026 monthly revenue页面显示6月合并净营收NT$442,680m、同比+67.9%；2026年1-6月合计NT$2,404,484m、同比+35.6%。据月度数据计算，Q2营收约NT$1,270,381m，高于公司此前390-402亿美元收入指引区间对应的市场预期附近。",
+      "impact": "这是AI/HPC、先进制程、CoWoS/先进封装和高端半导体材料链的强验证；CapEx供应链需求端继续偏强。",
+      "confidence": "High",
+      "source": "TSMC Investor Relations",
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2026"
+    },
+    {
+      "title": "10Y与实际利率再次偏紧，美元仅边际缓和",
+      "fact": "FRED DGS10显示2026-07-10美国10Y Treasury constant maturity为4.56%，较7月9日4.54%回升；DFII10显示10Y TIPS实际利率为2.32%，较7月9日2.31%上行；DTWEXBGS显示7月10日名义广义美元指数120.5046，较7月9日120.7530回落。",
+      "impact": "美元回落给非美链条一点缓冲，但10Y和实际利率继续高位，对AI、半导体、软件等长久期资产仍是估值压制。",
+      "confidence": "High",
+      "source": "FRED / Federal Reserve H.15 / H.10",
+      "url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+      "title": "美国6月CPI在本轮12:00仍未发布",
+      "fact": "BLS官方日程显示June 2026 CPI将在2026-07-14 08:30 AM ET发布，对应北京时间2026-07-14 20:30；本轮12:00运行时尚未发布。",
+      "impact": "CPI将决定利率压力能否缓和；若核心通胀高于预期，科技高估值和AI债务融资链条可能继续承压。",
+      "confidence": "High",
+      "source": "U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    {
+      "title": "Big Tech AI CapEx市场预期继续上修，但非官方指引",
+      "fact": "MarketWatch/Investor's Business Daily报道Morgan Stanley上调大型云厂商AI数据中心CapEx估计，称Meta、Amazon等支出仍将快速扩大；同时WSJ/BI报道Meta Louisiana Hyperion项目成本可能升至超过500亿美元、算力规模达5GW。这些均为媒体/分析师口径，未等同于公司正式CapEx指引。",
+      "impact": "正面是AI算力、电力、液冷、光互连、PCB/CCL和工程交付需求继续扩散；负面是融资、折旧、用电和ROI压力同步放大。",
+      "confidence": "Medium",
+      "source": "MarketWatch / IBD / WSJ / Business Insider",
+      "url": "https://www.marketwatch.com/story/meta-and-amazon-are-leading-a-trillion-dollar-big-tech-spending-spree-17a8156d"
+    },
+    {
+      "title": "未见主要AI/data-center CapEx官方下修，Supermicro风险未解除",
+      "fact": "本轮未见Microsoft、Meta、Alphabet、Amazon、Oracle、Broadcom、Micron、Bloom/Brookfield等官方源发布AI/data-center CapEx下修；Supermicro 7月1日台湾业务更新仍是最新官方合规基准，未见处罚、订单取消或财务影响确认。",
+      "impact": "CapEx模块维持Expansion，但Tech catalysts仍为Mixed：强需求、融资成本、CPI风险、AI服务器合规风险并存。",
+      "confidence": "Medium",
+      "source": "Company IR cross-check / Supermicro",
+      "url": "https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01"
+    }
+  ],
+  "capex": {
+    "verdict": "Expansion：TSMC 6月与上半年官方营收补齐后，AI/HPC和先进封装需求验证明显增强；主要hyperscaler未见官方下修AI/data-center CapEx。但Meta/Amazon等高强度投入越来越依赖电力、融资、折旧和ROI验证，不能把CapEx强度简单等同于股价顺风。",
+    "items": [
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q3官方材料仍是基准：AI业务ARR超过370亿美元，同比增长123%；新增约1GW容量，本轮未见官方下修。",
+        "direction": "持平偏强",
+        "impact": "支撑GPU/CPU、数据中心、网络、存储、电力和液冷需求；继续关注折旧和融资租赁压力。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Meta Q1 2026官方CapEx指引为1250-1450亿美元；AP报道加拿大Alberta AI数据中心投资超过91亿美元；WSJ/BI报道Louisiana Hyperion项目可能升至超过500亿美元、5GW。后两者为媒体口径，待公司项目文件细化。",
+        "direction": "上修后继续扩张",
+        "impact": "利好AI服务器、光模块、液冷、电力设备、现场电源、数据中心工程；但电力、环保、融资和折旧约束同时上升。",
+        "confidence": "Medium",
+        "source": "Meta IR / AP / WSJ / Business Insider",
+        "url": "https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa"
+      },
+      {
+        "entity": "Alphabet",
+        "signal": "Alphabet Q1 2026电话会披露Q1 CapEx为357亿美元，多数用于支持AI机会的technical infrastructure；Google Cloud backlog为4620亿美元。本轮未见官方下修。",
+        "direction": "持平偏强",
+        "impact": "强化TPU/GPU、服务器、数据中心、网络设备与电力链需求；市场仍审视自由现金流消耗。",
+        "confidence": "High",
+        "source": "Alphabet Investor Relations",
+        "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx"
+      },
+      {
+        "entity": "Amazon / AWS",
+        "signal": "Amazon Q1 2026官方结果显示AWS销售额同比+28%至376亿美元，TTM自由现金流下降主要反映AI相关property and equipment购买增加；市场继续关注约250亿美元债券融资最终条款和用途。",
+        "direction": "持平偏强但融资压力上升",
+        "impact": "AWS AI基建需求仍强，但债务融资和信用利差压力提高市场对ROI、现金流和折旧的要求。",
+        "confidence": "Medium",
+        "source": "Amazon IR / MarketWatch",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx"
+      },
+      {
+        "entity": "Oracle",
+        "signal": "FY2026 Q4 RPO达6380亿美元，同比+363%；OCI Q4收入58亿美元，同比+93%；FY2026 free cash flow为-237亿美元。",
+        "direction": "持平偏强",
+        "impact": "验证AI cloud/data-center订单需求；但RPO转收入、CapEx融资、自由现金流恢复仍是跟踪点。",
+        "confidence": "High",
+        "source": "Oracle Investor Relations",
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+      },
+      {
+        "entity": "Broadcom",
+        "signal": "FY2026 Q2官方披露AI semiconductor revenue为108亿美元，同比+143%；Q3 AI semiconductor revenue指引为160亿美元，同比超过+200%。",
+        "direction": "持平偏强",
+        "impact": "强化定制AI accelerator、AI networking、以太网交换、先进封装和高速PCB/CCL需求。",
+        "confidence": "High",
+        "source": "Broadcom Investor Relations",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial"
+      },
+      {
+        "entity": "Micron",
+        "signal": "FY2026 Q3营收414.6亿美元，经营现金流253.9亿美元，调整后自由现金流183亿美元；HBM4已在领先客户平台高量出货，Q4营收指引为500亿美元上下10亿美元。",
+        "direction": "强验证",
+        "impact": "验证HBM、数据中心SSD、服务器内存、车载高可靠存储、先进封装和高端材料需求强度。",
+        "confidence": "High",
+        "source": "Micron Investor Relations",
+        "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter"
+      },
+      {
+        "entity": "TSMC",
+        "signal": "官方月营收显示2026年6月合并净营收NT$442,680m、同比+67.9%；1-6月合计NT$2,404,484m、同比+35.6%；Q2电话会定于7月16日。",
+        "direction": "强验证",
+        "impact": "AI/HPC晶圆、先进制程、CoWoS/先进封装、设备、材料、基板和高端PCB/CCL需求获得强交叉验证。",
+        "confidence": "High",
+        "source": "TSMC IR",
+        "url": "https://investor.tsmc.com/english/monthly-revenue/2026"
+      },
+      {
+        "entity": "Bloom Energy / Brookfield",
+        "signal": "2026-06-30官方宣布AI infrastructure power projects融资框架从50亿美元扩大到250亿美元；本轮未见首批客户、地点、MW/GW规模和交付节奏披露。",
+        "direction": "上修后待落地",
+        "impact": "把AI CapEx正面扩展到电力基础设施、现场供电、燃料电池、配电、UPS、液冷和工程交付。",
+        "confidence": "High",
+        "source": "Bloom Energy IR",
+        "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Tightening：10Y美债7月10日回到4.56%，10Y实际利率升至2.32%，美元指数虽从7月8日高点回落到120.5046，但不足以抵消利率压力；美国6月CPI将在北京时间7月14日20:30发布，是下一次流动性判定的核心变量。",
+    "items": [
+      {
+        "entity": "Federal Reserve policy rate / FOMC minutes",
+        "signal": "2026-06-17 FOMC维持联邦基金目标区间3.50%-3.75%；Fed于2026-07-08发布6月16-17日FOMC纪要。",
+        "direction": "压力",
+        "impact": "政策利率仍高，通胀与潜在再加息风险仍压制长久期科技资产。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260708a.htm"
+      },
+      {
+        "entity": "US 10Y Treasury",
+        "signal": "FRED DGS10显示2026-07-10为4.56%，7月9日4.54%、7月8日4.56%、7月7日4.55%。",
+        "direction": "压力",
+        "impact": "4.5%以上的长端利率继续压制AI/半导体高估值扩张。",
+        "confidence": "High",
+        "source": "FRED / Federal Reserve H.15",
+        "url": "https://fred.stlouisfed.org/series/DGS10"
+      },
+      {
+        "entity": "US 10Y real yield",
+        "signal": "FRED DFII10显示2026-07-10为2.32%，高于7月9日2.31%和7月7日2.30%。",
+        "direction": "压力",
+        "impact": "实际利率上行比名义利率更直接压制长久期成长估值，科技高beta不能放松风险阀。",
+        "confidence": "High",
+        "source": "FRED / Federal Reserve H.15",
+        "url": "https://fred.stlouisfed.org/series/DFII10"
+      },
+      {
+        "entity": "Nominal Broad U.S. Dollar Index",
+        "signal": "FRED DTWEXBGS显示2026-07-10为120.5046，低于7月9日120.7530和7月8日121.1307。",
+        "direction": "边际缓和",
+        "impact": "美元回落对非美科技链有边际缓冲，但必须与10Y和实际利率同步下行才可改善整体Liquidity。",
+        "confidence": "High",
+        "source": "FRED / Federal Reserve H.10",
+        "url": "https://fred.stlouisfed.org/series/DTWEXBGS"
+      },
+      {
+        "entity": "US CPI schedule",
+        "signal": "BLS日程显示June 2026 CPI将于2026-07-14 08:30 ET发布；本轮北京时间12:00尚未发布。",
+        "direction": "待验证",
+        "impact": "若CPI高于预期，将强化Tightening；若明显降温，可能给高估值科技提供短线估值缓冲。",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+      },
+      {
+        "entity": "AI-linked corporate debt",
+        "signal": "MarketWatch此前报道Amazon约250亿美元债券融资引发AI相关债务压力，最终条款和信用利差仍需跟踪。",
+        "direction": "压力",
+        "impact": "信用市场继续交易AI CapEx融资压力；高债务、高CapEx、弱现金流科技链受压。",
+        "confidence": "Medium",
+        "source": "MarketWatch / Amazon IR",
+        "url": "https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Mixed：TSMC官方6月营收、Micron、Broadcom和Meta数据中心媒体线索继续给AI硬件/电力链正反馈；但10Y/实际利率高位、CPI待发布、Amazon债务融资、Supermicro合规风险使催化不能升为Bullish。",
+    "items": [
+      {
+        "event": "TSMC June revenue record",
+        "affected_chain": "AI/HPC晶圆/先进制程/CoWoS/先进封装/材料/设备",
+        "direction": "利好",
+        "winners": "先进封装、CoWoS、半导体设备、先进材料、基板、高端PCB/CCL、AI/HPC供应链",
+        "losers": "未进入先进制程或AI/HPC供应链的低端通用环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "TSMC IR",
+        "url": "https://investor.tsmc.com/english/monthly-revenue/2026"
+      },
+      {
+        "event": "Meta Canada and Louisiana AI data-center expansion",
+        "affected_chain": "AI数据中心/电力/冷却/配电/工程",
+        "direction": "利好但待官方细节",
+        "winners": "现场电源、燃气电厂/电力基础设施、液冷/干冷、配电、服务器与网络设备",
+        "losers": "无法解决time-to-power、环保/水电约束或融资成本压力的项目",
+        "evidence": "媒体报道，需继续核实Meta官方项目文件",
+        "confidence": "Medium",
+        "source": "AP / WSJ / Business Insider",
+        "url": "https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa"
+      },
+      {
+        "event": "Big Tech AI CapEx estimate revisions",
+        "affected_chain": "Hyperscaler CapEx/AI服务器/电力/光互连/HBM/PCB",
+        "direction": "中性偏利好",
+        "winners": "有订单和产能瓶颈的AI硬件、电力、液冷、HBM、光模块、ASIC、先进封装链条",
+        "losers": "不能证明ROI、缺现金流、依赖外部融资的远期CapEx叙事",
+        "evidence": "分析师/媒体报道，非公司正式指引",
+        "confidence": "Medium",
+        "source": "MarketWatch / IBD",
+        "url": "https://www.marketwatch.com/story/meta-and-amazon-are-leading-a-trillion-dollar-big-tech-spending-spree-17a8156d"
+      },
+      {
+        "event": "US CPI pending",
+        "affected_chain": "AI/半导体/软件/高估值成长",
+        "direction": "待验证",
+        "winners": "若CPI降温，长久期高质量科技可能获得估值修复窗口",
+        "losers": "若CPI偏热，高估值、高融资依赖AI链条继续受压",
+        "evidence": "官方发布时间确认，结果未发布",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+      },
+      {
+        "event": "Amazon $25B bond financing and AI-related debt pressure",
+        "affected_chain": "Hyperscaler debt/AI data centers/云资本开支",
+        "direction": "风险提示",
+        "winners": "能锁定订单、预付款、客户合同或强现金流的基础设施供应链",
+        "losers": "依赖持续债务融资和估值扩张的AI CapEx链条",
+        "evidence": "媒体报道 + Amazon IR待最终文件核实",
+        "confidence": "Medium",
+        "source": "MarketWatch / Amazon IR",
+        "url": "https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353"
+      },
+      {
+        "event": "Supermicro Taiwan Business Update remains unresolved",
+        "affected_chain": "AI服务器/GPU整机/渠道合规/出口管制",
+        "direction": "利空",
+        "winners": "合规可追溯供应链、客户穿透清晰的服务器和数据中心交付商",
+        "losers": "存在转运、客户穿透不足、出口合规薄弱的服务器/渠道环节",
+        "evidence": "官方更新仍是7月1日基准，本轮未见处罚或财务影响确认",
+        "confidence": "High",
+        "source": "Supermicro",
+        "url": "https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "TSMC AI/HPC与先进封装验证",
+      "verified_direct": "无A/H公司在TSMC月营收页面中被直接点名。",
+      "inferred": "推断受益方向包括先进封装、CoWoS、半导体设备、材料、基板、光互连、高端PCB/CCL、AI/HPC服务器供应链。",
+      "risk": "月营收强不等于A/H订单落地；需等A/H公司公告、客户认证或收入贡献披露。"
+    },
+    {
+      "theme": "AI CapEx强需求但高利率压估值",
+      "verified_direct": "无直接A/H公司映射。",
+      "inferred": "现金流强、订单已验证、客户穿透清晰的服务器/电源/液冷/光模块/PCB/材料方向相对占优；纯概念、高融资依赖和高久期标的受压。",
+      "risk": "10Y和实际利率高位时，强基本面也可能被估值收缩抵消。"
+    },
+    {
+      "theme": "AI数据中心电力与冷却",
+      "verified_direct": "无A/H公司被Meta项目或Bloom/Brookfield官方材料直接点名为新增订单受益方。",
+      "inferred": "推断受益方向包括现场电源、配电、UPS、液冷/干冷、温控、工程交付和电力基础设施。",
+      "risk": "不能把海外项目金额直接映射成A/H个股订单，只能作为AI电力瓶颈主题验证。"
+    },
+    {
+      "theme": "HBM/AI数据中心存储",
+      "verified_direct": "无A/H公司被Micron Q3或Micron-Ford官方材料直接点名为新增订单受益方。",
+      "inferred": "HBM材料、先进封装、测试设备、服务器DRAM/eSSD链条、存储控制与高端电子材料。",
+      "risk": "Micron强验证不等于A/H订单落地；需等公司公告、客户认证或收入贡献披露。"
+    },
+    {
+      "theme": "AI服务器出口合规",
+      "verified_direct": "无A/H公司被Supermicro官方材料直接点名。",
+      "inferred": "客户穿透清晰、合规可追溯、出口管控流程强的服务器/PCB/光模块/液冷/电源企业相对占优。",
+      "risk": "不得将Supermicro调查直接映射到任一A/H个股；等待交易所公告、客户认证或订单披露。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "2026-07-14 20:30 Beijing / 08:30 ET 美国June CPI",
+      "why": "决定利率和实际利率能否缓和；若偏热，Orange可能向Red靠近。"
+    },
+    {
+      "item": "2026-07-14 H.15/FRED 10Y、10Y TIPS实际利率和美元指数后续更新",
+      "why": "确认10Y是否继续在4.5%以上、实际利率是否继续上行。"
+    },
+    {
+      "item": "TSMC 2026-07-16 Q2电话会",
+      "why": "验证AI/HPC、先进封装、CoWoS、2nm/3nm需求和2026 CapEx tone。"
+    },
+    {
+      "item": "Amazon债券发行最终条款、用途和AI相关债券利差反应",
+      "why": "确认AI CapEx融资压力是否继续影响信用和股权估值。"
+    },
+    {
+      "item": "Meta Alberta / Louisiana AI数据中心官方细节",
+      "why": "核实项目金额、电力、冷却方案、交付周期、供应商和监管约束。"
+    },
+    {
+      "item": "Supermicro/Taiwan调查是否出现正式起诉、罚款、订单延迟、客户变化或财务影响",
+      "why": "这是AI服务器合规噪音转向基本面冲击的关键分界。"
+    },
+    {
+      "item": "AMD Advancing AI 2026（官方日期2026-07-23）",
+      "why": "验证AMD AI加速器、开放生态、客户伙伴和AI服务器链条是否出现新增官方催化。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "TSMC 2026 Monthly Revenue",
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2026",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "checked 2026-07-14"
+    },
+    {
+      "title": "FRED DGS10 10-Year Treasury Constant Maturity",
+      "url": "https://fred.stlouisfed.org/series/DGS10",
+      "used_for": "Liquidity",
+      "published_at": "updated 2026-07-13; latest observation 2026-07-10"
+    },
+    {
+      "title": "FRED DFII10 10-Year TIPS Constant Maturity",
+      "url": "https://fred.stlouisfed.org/series/DFII10",
+      "used_for": "Liquidity",
+      "published_at": "updated 2026-07-13; latest observation 2026-07-10"
+    },
+    {
+      "title": "FRED DTWEXBGS Nominal Broad U.S. Dollar Index",
+      "url": "https://fred.stlouisfed.org/series/DTWEXBGS",
+      "used_for": "Liquidity",
+      "published_at": "updated 2026-07-13; latest observation 2026-07-10"
+    },
+    {
+      "title": "BLS CPI Release Schedule",
+      "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+      "used_for": "Liquidity / Watchlist",
+      "published_at": "checked 2026-07-14"
+    },
+    {
+      "title": "FOMC Minutes June 16-17, 2026",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260708a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-08"
+    },
+    {
+      "title": "AP - Meta plans billions for first AI data center in Canada",
+      "url": "https://apnews.com/article/922a7d15ab730ec53b934269fc00a0fa",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-08"
+    },
+    {
+      "title": "WSJ - Meta Lifts Cost of Louisiana Data Center to $50 Billion",
+      "url": "https://www.wsj.com/tech/meta-lifts-cost-of-louisiana-data-center-to-50-billion-02b2eb25",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-14"
+    },
+    {
+      "title": "Business Insider - Meta expands AI data center Louisiana",
+      "url": "https://www.businessinsider.com/meta-expands-ai-data-center-louisiana-50k-teacher-bonuses-2026-7",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-14"
+    },
+    {
+      "title": "MarketWatch - Meta and Amazon Big Tech spending spree",
+      "url": "https://www.marketwatch.com/story/meta-and-amazon-are-leading-a-trillion-dollar-big-tech-spending-spree-17a8156d",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-14"
+    },
+    {
+      "title": "MarketWatch - AI-related debt sells off as Amazon looks to borrow another $25 billion",
+      "url": "https://www.marketwatch.com/story/ai-related-debt-sells-off-sharply-as-amazon-borrows-another-25-billion-46928353",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-07-07"
+    },
+    {
+      "title": "Amazon.com Announces First Quarter Results",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Micron Technology Reports Record Results for Fiscal Q3 2026",
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-24"
+    },
+    {
+      "title": "Brookfield and Bloom Energy Expand AI Infrastructure Partnership to $25 Billion",
+      "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-30"
+    },
+    {
+      "title": "Supermicro Taiwan Business Update",
+      "url": "https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "Microsoft FY26 Q3 Earnings Conference Call",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Meta Reports First Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Alphabet 2026 Q1 Earnings Call",
+      "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-24"
+    },
+    {
+      "title": "Oracle Announces Record Q4 and FY 2026 Results",
+      "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-06-10"
+    },
+    {
+      "title": "Broadcom FY2026 Q2 Results",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-03"
+    },
+    {
+      "title": "AMD Announces Advancing AI 2026",
+      "url": "https://www.amd.com/en/newsroom/press-releases/2026-4-28-amd-announces-advancing-ai-2026-.html",
+      "used_for": "Tech catalyst / Watchlist",
+      "published_at": "2026-04-28"
+    }
+  ]
+}

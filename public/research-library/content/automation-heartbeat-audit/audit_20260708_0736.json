@@ -1,0 +1,13 @@
+﻿{
+  "run_time": "2026-07-08 07:36 +08:00",
+  "missed_heartbeats": ["a-06"],
+  "ok_heartbeats": ["codex-obsidian"],
+  "a06_result": {
+    "warning": "红色",
+    "state": "S7 退潮确认",
+    "radar_score": 39,
+    "latest_html": "D:\\Evan\\Codes\\reports\\a-share-macro-radar\\latest.html",
+    "archive_html": "D:\\Evan\\Codes\\reports\\a-share-macro-radar\\report_20260708_0600.html"
+  },
+  "audit_html": "D:\\Evan\\Codes\\reports\\automation-heartbeat-audit\\latest.html"
+}

@@ -1,0 +1,20 @@
+{
+  "executed_at": "2026-08-30 16:01:12",
+  "rows": 15,
+  "removed_policy_tags": 6,
+  "retagged": 9,
+  "overview": {
+    "active": 8111,
+    "supported": 2195,
+    "missing_pair": 5916,
+    "partial": 0
+  },
+  "catalog_count_mismatch": 0,
+  "backup_table": "bak_ai_company_tag_correction_20260830_160017",
+  "result_sha256": "99e2f54540390d30be52ccaaba4939176a09301c2b7471abf5607e8a9dc33eb4",
+  "production_api_deep_huafa": {
+    "national_filter_total": 0,
+    "other_filter_total": 1
+  },
+  "code_changes": 0
+}

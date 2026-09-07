@@ -1,0 +1,1039 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="stylesheet" href="styles.css"><title>s-ai-agent｜代码证据快照</title><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head><body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=s-ai-agent-s-teacher-audit-20260907&amp;view=reports">S老师决策一致性审查</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav><div class="topbar"><a href="../index.html">← 研究报告总入口</a><span>2026.09.07 / 架构与行为审查</span><button id="print" type="button">打印 / 保存 PDF</button></div><div class="layout"><aside><div class="label">证据索引</div><nav><a href="#E01">E01 · 演示开关与固定对象路由</a><a href="#E02">E02 · 训练样例选取与正例块编译</a><a href="#E03">E03 · 多模板直接写入与五星知识回流</a><a href="#E04">E04 · 通用历史按用户而非会话选取</a><a href="#E05">E05 · 正式与训练路径的差异</a><a href="#E06">E06 · 日期加分、全局排序与片段截断</a><a href="#E07">E07 · 模型路由能力、降级与实际模型记录</a><a href="#E08">E08 · Agent 循环与验证描述的实际边界</a><a href="#E09">E09 · 课程时间、市场背景和语音示例常量</a><a href="#E10">E10 · Wiki 图的文档链接和一跳扩展</a><a href="#E11">E11 · 训练反馈结构与统计口径</a><a href="#E12">E12 · 后台索引与进程任务状态</a><a href="#E13">E13 · 值得保留的 S5 可比性与缺失值检查</a><a href="#E14">E14 · 本地文件知识管理与长文处理</a><a href="#E15">E15 · 值得保留的马步小结事实与推断规则</a><a href="#E16">E16 · 训练接口的局部权限审查证据</a></nav><div class="downloads"><a href="index.html">← 返回审查报告</a></div></aside><main><h1>代码证据快照</h1><p>以下内容来自已核验的远程提交 <code>54d3e9fce57182b807d9eae0573928842b7631ed</code>。行号是该提交的行号，可能与本地工作区不同。</p><p class="note">这页证明代码路径存在，不证明线上正在启用对应开关。统计为本地文件清点；复现使用隔离函数与假数据。凭据字段和无关账号已隐藏。</p><label for="evidence-search">筛选证据</label><input id="evidence-search" class="search" placeholder="搜索：训练 / 日期 / 记忆 / 模型…" type="search"><section class="evidence" id="E01"><h2>E01 · 演示开关与固定对象路由</h2><h3>api/main.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 06c8ea5bed9c1dbb…</small><pre><code><span class="line"> 4248</span>  def is_mabu_summary_demo_enabled() -&gt; bool:
+<span class="line"> 4249</span>      """
+<span class="line"> 4250</span>      方法说明：判断是否启用马步小结演示报告回填。
+<span class="line"> 4251</span>      参数说明：无参数。
+<span class="line"> 4252</span>      返回说明：启用时返回 True，否则返回 False。
+<span class="line"> 4253</span>      """
+<span class="line"> 4254</span>      return os.getenv("MABU_SUMMARY_FORCE_DEMO_REPORT", "true").lower() in {"1", "true", "yes"}
+<span class="line"> 4255</span>  
+<span class="line">      …</span>
+<span class="line"> 4266</span>  def is_mabu_summary_demo_request(question: str) -&gt; bool:
+<span class="line"> 4267</span>      """
+<span class="line"> 4268</span>      Detect S40/Mabu report generation requests that should reuse the demo report.
+<span class="line"> 4269</span>      """
+<span class="line"> 4270</span>      if not is_mabu_summary_demo_enabled():
+<span class="line"> 4271</span>          return False
+<span class="line"> 4272</span>      normalized = normalize_mabu_summary_cache_text(question)
+<span class="line"> 4273</span>      demo_markers = (
+<span class="line"> 4274</span>          "绿的谐波",
+<span class="line"> 4275</span>          "688017",
+<span class="line"> 4276</span>          "S40",
+<span class="line"> 4277</span>          "公司价值评估",
+<span class="line"> 4278</span>          "AI研判",
+<span class="line"> 4279</span>          "马步小结",
+<span class="line"> 4280</span>          "研判报告",
+<span class="line"> 4281</span>      )
+<span class="line"> 4282</span>      return any(marker in normalized for marker in demo_markers)
+<span class="line"> 4283</span>  
+<span class="line"> 4284</span>  
+<span class="line"> 4285</span>  def get_mabu_summary_cache_subject(question: str) -&gt; str:
+<span class="line"> 4286</span>      """
+<span class="line"> 4287</span>      Build a stable demo cache subject. The current live demo uses 绿的谐波 only,
+<span class="line"> 4288</span>      so all wording variants for that company should share one cached report.
+<span class="line"> 4289</span>      """
+<span class="line"> 4290</span>      normalized = normalize_mabu_summary_cache_text(question)
+<span class="line"> 4291</span>      if is_mabu_summary_demo_request(normalized):
+<span class="line"> 4292</span>          return MABU_SUMMARY_DEMO_SUBJECT
+<span class="line"> 4293</span>      return normalized
+<span class="line">      …</span>
+<span class="line"> 3461</span>      early_demo_payload = await get_mabu_summary_demo_payload(
+<span class="line"> 3462</span>          question=request.question,
+<span class="line"> 3463</span>          model_name=llm_model,
+<span class="line"> 3464</span>          max_output_tokens=int(os.getenv("MABU_SUMMARY_ONLINE_MAX_TOKENS", "6500")),
+<span class="line"> 3465</span>          online_mode=True,
+<span class="line"> 3466</span>          request_id=request_id,
+<span class="line"> 3467</span>      )
+<span class="line"> 3468</span>      if early_demo_payload:
+<span class="line"> 3469</span>          logger.info(
+<span class="line"> 3470</span>              "Free style online returned early Mabu demo report",
+<span class="line"> 3471</span>              request_id=request_id,
+<span class="line"> 3472</span>              user_id=request.user_id,
+<span class="line"> 3473</span>              source=early_demo_payload.get("source"),
+<span class="line"> 3474</span>              source_user_id=early_demo_payload.get("source_user_id"),
+<span class="line"> 3475</span>          )
+<span class="line"> 3476</span>          return build_mabu_summary_cached_response(
+<span class="line"> 3477</span>              request=request,
+<span class="line"> 3478</span>              request_id=request_id,
+<span class="line"> 3479</span>              start_time=start_time,
+<span class="line"> 3480</span>              cached_payload=early_demo_payload,
+<span class="line"> 3481</span>          )</code></pre></section><section class="evidence" id="E02"><h2>E02 · 训练样例选取与正例块编译</h2><h3>api/training/repository.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 a848e5085148e2ae…</small><pre><code><span class="line">  312</span>      def get_all_recent_qa_for_compile(self, limit: int = 30) -&gt; List[Dict]:
+<span class="line">  313</span>          """
+<span class="line">  314</span>          Fetch all recent QA pairs for compilation into few-shot examples.
+<span class="line">  315</span>          - Prefers corrected_answer from feedback if S老师 provided one
+<span class="line">  316</span>          - Includes feedback comment as optional context
+<span class="line">  317</span>          - Returns in chronological order (oldest first)
+<span class="line">  318</span>          """
+<span class="line">  319</span>          with get_db_connection() as conn:
+<span class="line">  320</span>              with conn.cursor() as cur:
+<span class="line">  321</span>                  cur.execute(
+<span class="line">  322</span>                      """
+<span class="line">  323</span>                      SELECT q.id AS qa_id,
+<span class="line">  324</span>                             q.session_id,
+<span class="line">  325</span>                             q.question,
+<span class="line">  326</span>                             COALESCE(f.corrected_answer, q.answer) AS best_answer,
+<span class="line">  327</span>                             f.rating,
+<span class="line">  328</span>                             f.comment,
+<span class="line">  329</span>                             f.id AS fb_id
+<span class="line">  330</span>                      FROM wiki_training_qa q
+<span class="line">  331</span>                      LEFT JOIN wiki_training_feedback f ON f.qa_id = q.id
+<span class="line">  332</span>                      ORDER BY q.created_at DESC
+<span class="line">  333</span>                      LIMIT %s
+<span class="line">  334</span>                      """,
+<span class="line">  335</span>                      (limit,),
+<span class="line">  336</span>                  )
+<span class="line">  337</span>                  rows = cur.fetchall() or []
+<span class="line">  338</span>          # Return chronological order (oldest first, most natural for few-shot)
+<span class="line">  339</span>          return list(reversed(rows))</code></pre><h3>api/training/routes.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 bb11b46e39d92b45…</small><pre><code><span class="line">  407</span>  @router.post("/compile", summary="将所有训练对话编译为 few-shot，注入生产提示词")
+<span class="line">  408</span>  async def compile_examples(limit: int = Query(30, ge=5, le=100)):
+<span class="line">  409</span>      """
+<span class="line">  410</span>      将最近 limit 条训练对话（无论是否评分）合成为 few-shot 示例，
+<span class="line">  411</span>      注入到 training_master、free_style_online、cards_online、xueba_cards、xueba_voice
+<span class="line">  412</span>      五个提示词模板末尾。若 S老师提供了纠偏答案，优先使用纠偏答案。
+<span class="line">  413</span>      """
+<span class="line">  414</span>      records = repo.get_all_recent_qa_for_compile(limit=limit)
+<span class="line">  415</span>      if not records:
+<span class="line">  416</span>          return {"message": "暂无训练对话记录", "compiled_count": 0}
+<span class="line">  417</span>  
+<span class="line">  418</span>      # ── 构建 few-shot 块 ──────────────────────────────────────────────
+<span class="line">  419</span>      example_parts = []
+<span class="line">  420</span>      for r in records:
+<span class="line">  421</span>          question = (r.get("question") or "").strip()
+<span class="line">  422</span>          best_answer = (r.get("best_answer") or "").strip()
+<span class="line">  423</span>          comment = (r.get("comment") or "").strip()
+<span class="line">  424</span>          rating = r.get("rating")
+<span class="line">  425</span>  
+<span class="line">  426</span>          if not question or not best_answer:
+<span class="line">  427</span>              continue
+<span class="line">  428</span>  
+<span class="line">  429</span>          # 拼接示例头：有评分/纠偏时标注
+<span class="line">  430</span>          header = "训练对话"
+<span class="line">  431</span>          if rating:
+<span class="line">  432</span>              header += f"（S老师评分{rating}星）"
+<span class="line">  433</span>          if comment:
+<span class="line">  434</span>              header += f"【S老师点评：{comment}】"
+<span class="line">  435</span>  
+<span class="line">  436</span>          example_parts.append(f"{header}\n问：{question}\n答：{best_answer}")
+<span class="line">  437</span>  
+<span class="line">  438</span>      if not example_parts:
+<span class="line">  439</span>          return {"message": "对话记录为空，无法编译", "compiled_count": 0}
+<span class="line">  440</span>  
+<span class="line">  441</span>      examples_text = "\n\n".join(example_parts)
+<span class="line">  442</span>      fewshot_block = f"""
+<span class="line">  443</span>  
+<span class="line">  444</span>  【S老师训练示例 — 学习S老师的表达方式和思维框架，不要照搬内容，每次回答要新鲜自然】
+<span class="line">  445</span>  {examples_text}"""</code></pre></section><section class="evidence" id="E03"><h2>E03 · 多模板直接写入与五星知识回流</h2><h3>api/training/routes.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 bb11b46e39d92b45…</small><pre><code><span class="line">  462</span>      affected = []
+<span class="line">  463</span>      with get_db_connection() as conn:
+<span class="line">  464</span>          with conn.cursor() as cur:
+<span class="line">  465</span>              for tpl_key in ("training_master", "free_style_online", "cards_online", "xueba_cards", "xueba_voice"):
+<span class="line">  466</span>                  cur.execute(
+<span class="line">  467</span>                      "SELECT prompt_content FROM ai_prompt_templates WHERE template_key = %s",
+<span class="line">  468</span>                      (tpl_key,),
+<span class="line">  469</span>                  )
+<span class="line">  470</span>                  row = cur.fetchone()
+<span class="line">  471</span>  
+<span class="line">  472</span>                  if row:
+<span class="line">  473</span>                      current = row.get("prompt_content") or ""
+<span class="line">  474</span>                      # 截断旧训练块（如果存在）
+<span class="line">  475</span>                      if _BLOCK_MARKER in current:
+<span class="line">  476</span>                          current = current[: current.index(_BLOCK_MARKER)].rstrip()
+<span class="line">  477</span>                      new_prompt = current + fewshot_block
+<span class="line">  478</span>                      cur.execute(
+<span class="line">  479</span>                          "UPDATE ai_prompt_templates SET prompt_content = %s, updated_at = NOW() WHERE template_key = %s",
+<span class="line">  480</span>                          (new_prompt, tpl_key),
+<span class="line">  481</span>                      )
+<span class="line">  482</span>                      affected.append(tpl_key)
+<span class="line">  483</span>                  elif tpl_key in XUEBA_BASE_PROMPTS:
+<span class="line">  484</span>                      # xueba 模板在 DB 中不存在，以硬编码为基础 INSERT
+<span class="line">  485</span>                      # 必须填写所有 NOT NULL 字段：template_name、question_type、prompt_content
+<span class="line">  486</span>                      base = XUEBA_BASE_PROMPTS[tpl_key]
+<span class="line">  487</span>                      new_prompt = base + fewshot_block
+<span class="line">  488</span>                      tpl_name, q_type = XUEBA_TEMPLATE_META[tpl_key]
+<span class="line">  489</span>                      cur.execute(
+<span class="line">  490</span>                          """INSERT INTO ai_prompt_templates
+<span class="line">  491</span>                                 (template_key, template_name, question_type, prompt_content,
+<span class="line">  492</span>                                  is_active, version, priority, created_at, updated_at)
+<span class="line">  493</span>                             VALUES (%s, %s, %s, %s, 1, '1.0.0', 0, NOW(), NOW())""",
+<span class="line">  494</span>                          (tpl_key, tpl_name, q_type, new_prompt),
+<span class="line">  495</span>                      )
+<span class="line">  496</span>                      affected.append(tpl_key)
+<span class="line">  497</span>  
+<span class="line">  498</span>          conn.commit()
+<span class="line">      …</span>
+<span class="line">  500</span>      # ── Layer 4: 将 5星纠偏答案写回 wiki/topics，形成知识闭环 ────────────
+<span class="line">  501</span>      wiki_pages_created = []
+<span class="line">  502</span>      try:
+<span class="line">  503</span>          from api.wiki_graph import get_wiki_graph, WIKI_DIR
+<span class="line">  504</span>          from datetime import datetime as _dt
+<span class="line">  505</span>          today = _dt.now().strftime("%Y-%m-%d")
+<span class="line">  506</span>  
+<span class="line">  507</span>          five_star = [r for r in records if r.get("rating", 0) &gt;= 5 and r.get("best_answer")]
+<span class="line">  508</span>          for r in five_star:
+<span class="line">  509</span>              q_short = r["question"][:25].strip().replace("/", "_").replace(" ", "_")
+<span class="line">  510</span>              topic_key = f"training_{today.replace('-', '')}_{r['qa_id']}"
+<span class="line">  511</span>              file_path = WIKI_DIR / "topics" / f"{topic_key}.md"
+<span class="line">  512</span>  
+<span class="line">  513</span>              if not file_path.exists():
+<span class="line">  514</span>                  content = f"""---
+<span class="line">  515</span>  type: topic
+<span class="line">  516</span>  title: "训练标准答案·{q_short}"
+<span class="line">  517</span>  source: training_feedback
+<span class="line">  518</span>  qa_id: {r['qa_id']}
+<span class="line">  519</span>  rating: {r['rating']}
+<span class="line">  520</span>  session_id: {r.get('session_id', '')}
+<span class="line">  521</span>  last_updated: {today}
+<span class="line">  522</span>  evidence_count: 1
+<span class="line">  523</span>  tags: [training, five_star]
+<span class="line">  524</span>  ---
+<span class="line">  525</span>  
+<span class="line">  526</span>  ## 核心定义
+<span class="line">  527</span>  
+<span class="line">  528</span>  {r['best_answer']}
+<span class="line">      …</span>
+<span class="line">  586</span>  def _sync_embed_wiki_topics(file_names: List[str]):
+<span class="line">  587</span>      """
+<span class="line">  588</span>      同步执行 embed：将指定文件 upsert 到 Qdrant base 集合。
+<span class="line">  589</span>      5星训练反馈内容默认路由到 base 集合（通用知识）。
+<span class="line">  590</span>      """
+<span class="line">      …</span>
+<span class="line">  618</span>              text = file_path.read_text(encoding="utf-8")
+<span class="line">  619</span>              doc = _Doc(
+<span class="line">  620</span>                  text=text,
+<span class="line">  621</span>                  metadata={
+<span class="line">  622</span>                      "file_name": fname,
+<span class="line">  623</span>                      "file_path": str(file_path),
+<span class="line">  624</span>                      "collection": "base",
+<span class="line">  625</span>                      "source": "training_5star",
+<span class="line">  626</span>                  },
+<span class="line">  627</span>              )
+<span class="line">  628</span>              vector_store = _QVS(
+<span class="line">  629</span>                  client=client,
+<span class="line">  630</span>                  collection_name="base",
+<span class="line">  631</span>                  enable_hybrid=False,
+<span class="line">  632</span>                  text_key="_node_content",</code></pre></section><section class="evidence" id="E04"><h2>E04 · 通用历史按用户而非会话选取</h2><h3>api/main.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 06c8ea5bed9c1dbb…</small><pre><code><span class="line"> 3806</span>          # 2. 查询该用户最近的对话历史，作为上下文
+<span class="line"> 3807</span>          # 根据 online_mode 决定查询的 question_type
+<span class="line"> 3808</span>          history_question_type = template_key  # 使用与模板一致的 question_type
+<span class="line"> 3809</span>          recent_history_text = ""
+<span class="line"> 3810</span>          if request.user_id:
+<span class="line"> 3811</span>              chat_repo = ChatHistoryRepository()
+<span class="line"> 3812</span>              try:
+<span class="line"> 3813</span>                  recent_chats = chat_repo.get_recent_chats_by_user_and_type(
+<span class="line"> 3814</span>                      user_id=request.user_id,
+<span class="line"> 3815</span>                      question_type=history_question_type,
+<span class="line"> 3816</span>                      limit=5,
+<span class="line"> 3817</span>                  )</code></pre><h3>api/database/repository.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 26e1f7e021749f81…</small><pre><code><span class="line">  762</span>      def get_recent_chats_by_user_and_type(
+<span class="line">  763</span>          self,
+<span class="line">  764</span>          user_id: str,
+<span class="line">  765</span>          question_type: Optional[str] = None,
+<span class="line">  766</span>          limit: int = 5,
+<span class="line">  767</span>      ) -&gt; List["AiChatHistory"]:
+<span class="line">  768</span>          """
+<span class="line">  769</span>          获取指定用户最近的聊天记录（按创建时间倒序，限制条数）
+<span class="line">  770</span>          
+<span class="line">  771</span>          Args:
+<span class="line">  772</span>              user_id: 用户ID
+<span class="line">  773</span>              question_type: 问题类型（可选，不传则不按类型过滤）
+<span class="line">  774</span>              limit: 返回的最大记录数
+<span class="line">  775</span>              
+<span class="line">  776</span>          Returns:
+<span class="line">  777</span>              AiChatHistory 对象列表
+<span class="line">  778</span>          """
+<span class="line">  779</span>          try:
+<span class="line">  780</span>              from .models_updated import AiChatHistory
+<span class="line">  781</span>  
+<span class="line">  782</span>              with get_db_connection() as conn:
+<span class="line">  783</span>                  with conn.cursor() as cursor:
+<span class="line">  784</span>                      params: list[Any] = [user_id]
+<span class="line">  785</span>  
+<span class="line">  786</span>                      sql = """
+<span class="line">  787</span>                      SELECT * FROM ai_chat_history
+<span class="line">  788</span>                      WHERE user_id = %s
+<span class="line">  789</span>                      """
+<span class="line">  790</span>  
+<span class="line">  791</span>                      if question_type:
+<span class="line">  792</span>                          sql += " AND question_type = %s"
+<span class="line">  793</span>                          params.append(question_type)
+<span class="line">  794</span>  
+<span class="line">  795</span>                      sql += """
+<span class="line">  796</span>                      ORDER BY create_time DESC
+<span class="line">  797</span>                      LIMIT %s
+<span class="line">  798</span>                      """
+<span class="line">  799</span>                      params.append(limit)
+<span class="line">  800</span>  
+<span class="line">  801</span>                      cursor.execute(sql, tuple(params))
+<span class="line">      …</span>
+<span class="line">  813</span>      
+<span class="line">  814</span>      def get_recent_chats_by_session(
+<span class="line">  815</span>          self,
+<span class="line">  816</span>          user_id: str,
+<span class="line">  817</span>          session_id: str,
+<span class="line">  818</span>          question_type: Optional[str] = None,
+<span class="line">  819</span>          limit: int = 50,
+<span class="line">  820</span>      ) -&gt; List["AiChatHistory"]:
+<span class="line">  821</span>          """
+<span class="line">  822</span>          获取指定会话的最近聊天记录（按创建时间倒序，限制条数）
+<span class="line">  823</span>          
+<span class="line">  824</span>          Args:
+<span class="line">  825</span>              user_id: 用户ID
+<span class="line">  826</span>              session_id: 会话ID
+<span class="line">  827</span>              question_type: 问题类型（可选，不传则不按类型过滤）
+<span class="line">  828</span>              limit: 返回的最大记录数
+<span class="line">  829</span>              
+<span class="line">  830</span>          Returns:
+<span class="line">  831</span>              AiChatHistory 对象列表
+<span class="line">  832</span>          """
+<span class="line">  833</span>          try:
+<span class="line">  834</span>              from .models_updated import AiChatHistory
+<span class="line">  835</span>  
+<span class="line">  836</span>              with get_db_connection() as conn:
+<span class="line">  837</span>                  with conn.cursor() as cursor:
+<span class="line">  838</span>                      params: list[Any] = [user_id, session_id]
+<span class="line">  839</span>  
+<span class="line">  840</span>                      sql = """
+<span class="line">  841</span>                      SELECT * FROM ai_chat_history
+<span class="line">  842</span>                      WHERE user_id = %s AND session_id = %s
+<span class="line">  843</span>                      """
+<span class="line">  844</span>  
+<span class="line">  845</span>                      if question_type:
+<span class="line">  846</span>                          sql += " AND question_type = %s"
+<span class="line">  847</span>                          params.append(question_type)
+<span class="line">  848</span>  </code></pre></section><section class="evidence" id="E05"><h2>E05 · 正式与训练路径的差异</h2><h3>api/main.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 06c8ea5bed9c1dbb…</small><pre><code><span class="line"> 3847</span>          # 3. 多集合检索知识（base + 路由到的集合并行检索）
+<span class="line"> 3848</span>          from api.multi_collection_rag import multi_collection_retrieve
+<span class="line"> 3849</span>          
+<span class="line"> 3850</span>          knowledge, reference_docs, retrieval_duration_ms = await multi_collection_retrieve(
+<span class="line"> 3851</span>              question=request.question,
+<span class="line"> 3852</span>              rag_instance=rag,
+<span class="line"> 3853</span>              index_registry=index_registry,
+<span class="line"> 3854</span>              llm_agent_client=llm_agent_client,
+<span class="line"> 3855</span>              llm_model=llm_model,
+<span class="line"> 3856</span>              base_top_k=2,
+<span class="line"> 3857</span>              per_collection_top_k=3,
+<span class="line"> 3858</span>              request_id=request_id,
+<span class="line"> 3859</span>          )
+<span class="line">      …</span>
+<span class="line"> 3886</span>          full_prompt = f"""{prompt_content}{history_block}
+<span class="line"> 3887</span>  
+<span class="line"> 3888</span>  【用户说】
+<span class="line"> 3889</span>  {sanitized_question}
+<span class="line"> 3890</span>  
+<span class="line"> 3891</span>  【你脑子里的素材（不要告诉用户这些是素材）】
+<span class="line"> 3892</span>  {knowledge}
+<span class="line"> 3893</span>  
+<span class="line"> 3894</span>  现在用你自己的话回应用户，像跟老朋友聊天一样，别写成报告。"""
+<span class="line"> 3895</span>          
+<span class="line"> 3896</span>          # 6. 通过 llm-agent 调用大模型
+<span class="line"> 3897</span>          llm_start = time.time()
+<span class="line"> 3898</span>          
+<span class="line"> 3899</span>          # 检查 llm_agent_client 是否初始化
+<span class="line"> 3900</span>          if llm_agent_client is None:
+<span class="line"> 3901</span>              raise HTTPException(
+<span class="line"> 3902</span>                  status_code=503,
+<span class="line"> 3903</span>                  detail="LLM Agent client not initialized"
+<span class="line"> 3904</span>              )
+<span class="line"> 3905</span>          
+<span class="line"> 3906</span>          # 构建消息
+<span class="line"> 3907</span>          messages = [
+<span class="line"> 3908</span>              {"role": "user", "content": full_prompt}
+<span class="line"> 3909</span>          ]
+<span class="line"> 3910</span>          
+<span class="line"> 3911</span>          # 调用 llm-agent（根据 online_mode 配置决定是否启用 web_search）
+<span class="line"> 3912</span>          try:
+<span class="line"> 3913</span>              logger.info(
+<span class="line"> 3914</span>                  "Calling llm-agent",
+<span class="line"> 3915</span>                  request_id=request_id,
+<span class="line"> 3916</span>                  web_search=should_use_web_search,
+<span class="line"> 3917</span>                  is_online_mode=is_online_mode
+<span class="line"> 3918</span>              )
+<span class="line"> 3919</span>              
+<span class="line"> 3920</span>              response = await llm_agent_client.chat_completion(
+<span class="line"> 3921</span>                  messages=messages,
+<span class="line"> 3922</span>                  model=llm_model,
+<span class="line"> 3923</span>                  provider="openai",
+<span class="line"> 3924</span>                  temperature=0.7,
+<span class="line"> 3925</span>                  max_tokens=2000,
+<span class="line"> 3926</span>                  web_search=should_use_web_search  # 根据关键词检测结果启用联网搜索
+<span class="line"> 3927</span>              )</code></pre><h3>api/training/routes.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 bb11b46e39d92b45…</small><pre><code><span class="line">  180</span>      # ── 3. 获取训练专用提示词模板
+<span class="line">  181</span>      from api.database.repository import PromptRepository
+<span class="line">  182</span>      prompt_repo = PromptRepository()
+<span class="line">  183</span>  
+<span class="line">  184</span>      # 优先从 config 读取 key，然后从数据库获取模板
+<span class="line">  185</span>      from api.core.config import TRAINING_PROMPT_KEY
+<span class="line">  186</span>      template = prompt_repo.get_template_by_key(TRAINING_PROMPT_KEY)
+<span class="line">  187</span>      if not template:
+<span class="line">  188</span>          template = prompt_repo.get_template_by_key("training_master")
+<span class="line">  189</span>      system_prompt = template.prompt_content if template else _DEFAULT_TRAINING_PROMPT
+<span class="line">  190</span>  
+<span class="line">  191</span>      # ── 4. 构建多轮对话上下文
+<span class="line">  192</span>      history = repo.get_recent_qa(session_id, limit=5)  # 优化：从10减少到5，减少输入tokens
+<span class="line">  193</span>      history_messages = []
+<span class="line">  194</span>      for h in history:
+<span class="line">  195</span>          history_messages.append({"role": "user", "content": h["question"]})
+<span class="line">  196</span>          history_messages.append({"role": "assistant", "content": h["answer"]})
+<span class="line">  197</span>  
+<span class="line">  198</span>      # ── 5. WikiGraph 一跳扩展（补充关联概念）
+<span class="line">  199</span>      graph_context = ""
+<span class="line">  200</span>      if reference_docs:
+<span class="line">  201</span>          try:
+<span class="line">  202</span>              from api.wiki_graph import get_wiki_graph
+<span class="line">  203</span>              wiki_graph = get_wiki_graph()
+<span class="line">  204</span>              graph_context = wiki_graph.expand_from_docs(
+<span class="line">  205</span>                  reference_docs,
+<span class="line">  206</span>                  max_nodes=3,
+<span class="line">  207</span>                  max_chars_per_node=350,
+<span class="line">  208</span>              )
+<span class="line">  209</span>          except Exception as e:
+<span class="line">  210</span>              logger.debug("WikiGraph expansion skipped", error=str(e))
+<span class="line">  211</span>  
+<span class="line">  212</span>      # ── 6. 组装消息
+<span class="line">  213</span>      user_content = body.question
+<span class="line">  214</span>      if knowledge.strip():
+<span class="line">  215</span>          user_content += f"\n\n【参考知识（不要告诉用户这些是参考资料）】\n{knowledge}"
+<span class="line">  216</span>      if graph_context:
+<span class="line">  217</span>          user_content += f"\n\n【关联概念补充（辅助理解，不用直接引用）】\n{graph_context}"
+<span class="line">  218</span>  
+<span class="line">  219</span>      messages = [
+<span class="line">  220</span>          {"role": "system", "content": system_prompt},
+<span class="line">  221</span>          *history_messages,
+<span class="line">  222</span>          {"role": "user", "content": user_content},
+<span class="line">  223</span>      ]
+<span class="line">      …</span>
+<span class="line">  227</span>      prompt_tokens = 0
+<span class="line">  228</span>      completion_tokens = 0
+<span class="line">  229</span>      model_name = ""
+<span class="line">  230</span>  
+<span class="line">  231</span>      try:
+<span class="line">  232</span>          from .llm_client import get_training_llm_client
+<span class="line">  233</span>          training_client = get_training_llm_client()
+<span class="line">  234</span>          model_name = training_client.model
+<span class="line">  235</span>  
+<span class="line">  236</span>          resp = await training_client.chat(
+<span class="line">  237</span>              messages=messages,
+<span class="line">  238</span>              temperature=0.7,
+<span class="line">  239</span>              max_tokens=1500,  # 降低输出 token 上限，加快响应速度
+<span class="line">  240</span>          )
+<span class="line">  241</span>          model_name = resolve_actual_model(resp, training_client.model)
+<span class="line">  242</span>          answer = resp.get("choices", [{}])[0].get("message", {}).get("content", "")
+<span class="line">  243</span>          usage = resp.get("usage", {})
+<span class="line">      …</span>
+<span class="line">  727</span>      # 各 Tier 的固定集合与 top_k
+<span class="line">  728</span>      TIER1_COLS  = [("college", 6), ("class", 6)]
+<span class="line">  729</span>      TIER2_COLS  = [("realtime-video", 3)]
+<span class="line">  730</span>      TIER3_TOP_K = 2
+<span class="line">  731</span>      TIER3_EXCLUDE = {"college", "class", "realtime-video"}</code></pre></section><section class="evidence" id="E06"><h2>E06 · 日期加分、全局排序与片段截断</h2><h3>api/multi_collection_rag.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 112dedffb60b9b9a…</small><pre><code><span class="line">   30</span>  TIME_DECAY_HALF_LIFE_DAYS = 90
+<span class="line">   31</span>  # 实时内容（realtime-*）的半衰期更短，越新的内容优先级越高
+<span class="line">   32</span>  TIME_DECAY_HALF_LIFE_REALTIME = 30
+<span class="line">   33</span>  # 时间加成最大比例 (1.5 = 最新的 realtime 文档分数可额外加 1.5)
+<span class="line">   34</span>  TIME_BOOST_MAX = 1.0
+<span class="line">   35</span>  TIME_BOOST_MAX_REALTIME = 1.5
+<span class="line">   36</span>  # base 集合不做时间加权（简介类内容无时间衰减）
+<span class="line">   37</span>  TIME_BOOST_SKIP_COLLECTIONS = {"base"}
+<span class="line">   38</span>  # 使用更短半衰期的集合
+<span class="line">   39</span>  TIME_DECAY_REALTIME_COLLECTIONS = {"realtime-video", "realtime-common"}
+<span class="line">      …</span>
+<span class="line">   64</span>  def _compute_time_boost(doc_date: Optional[date], today: date, collection_name: str = "") -&gt; float:
+<span class="line">   65</span>      """
+<span class="line">   66</span>      计算时间新近度加成
+<span class="line">   67</span>  
+<span class="line">   68</span>      公式: boost = max_boost * 2^(-days_ago / half_life)
+<span class="line">   69</span>      - realtime 集合: 半衰期 30 天，最高加成 1.5
+<span class="line">   70</span>      - 其他集合:       半衰期 90 天，最高加成 1.0
+<span class="line">   71</span>      - 无日期:         boost = 0
+<span class="line">   72</span>      """
+<span class="line">   73</span>      if doc_date is None:
+<span class="line">   74</span>          return 0.0
+<span class="line">   75</span>  
+<span class="line">   76</span>      days_ago = max((today - doc_date).days, 0)
+<span class="line">   77</span>      if collection_name in TIME_DECAY_REALTIME_COLLECTIONS:
+<span class="line">   78</span>          half_life = TIME_DECAY_HALF_LIFE_REALTIME
+<span class="line">   79</span>          max_boost = TIME_BOOST_MAX_REALTIME
+<span class="line">   80</span>      else:
+<span class="line">   81</span>          half_life = TIME_DECAY_HALF_LIFE_DAYS
+<span class="line">   82</span>          max_boost = TIME_BOOST_MAX
+<span class="line">   83</span>      decay = math.pow(2, -days_ago / half_life)
+<span class="line">   84</span>      return max_boost * decay
+<span class="line">      …</span>
+<span class="line">  290</span>          for node in nodes:
+<span class="line">  291</span>              sim_score = node.score if hasattr(node, "score") else 0.0
+<span class="line">  292</span>              metadata = node.node.metadata if hasattr(node.node, "metadata") else {}
+<span class="line">  293</span>  
+<span class="line">  294</span>              # 提取日期：优先从 file_name/doc_id/file_path
+<span class="line">  295</span>              date_source = (
+<span class="line">  296</span>                  metadata.get("file_name")
+<span class="line">  297</span>                  or metadata.get("doc_id")
+<span class="line">  298</span>                  or metadata.get("file_path")
+<span class="line">  299</span>                  or ""
+<span class="line">  300</span>              )
+<span class="line">  301</span>              doc_date = _extract_doc_date(date_source)
+<span class="line">  302</span>  
+<span class="line">  303</span>              # 计算时间加成（realtime 集合用更短半衰期和更高上限）
+<span class="line">  304</span>              if col_name in TIME_BOOST_SKIP_COLLECTIONS:
+<span class="line">  305</span>                  time_boost = 0.0
+<span class="line">  306</span>              else:
+<span class="line">  307</span>                  time_boost = _compute_time_boost(doc_date, today, col_name)
+<span class="line">  308</span>  
+<span class="line">  309</span>              # 最终分数 = 语义相似度 + 时间新近度加成
+<span class="line">  310</span>              final_score = sim_score + time_boost
+<span class="line">  311</span>  
+<span class="line">  312</span>              all_nodes.append((col_name, node, sim_score, time_boost, final_score, doc_date))
+<span class="line">  313</span>  
+<span class="line">  314</span>      # 按 final_score 降序排序（越高越相关+越新）
+<span class="line">  315</span>      all_nodes.sort(key=lambda x: x[4], reverse=True)
+<span class="line">  316</span>  
+<span class="line">  317</span>      # ── 4. 格式化排序后的结果 ──
+<span class="line">  318</span>      # max_knowledge_nodes / max_node_chars 由调用方传入，生产默认 8/1600，训练可设小
+<span class="line">  319</span>      all_nodes = all_nodes[:max_knowledge_nodes]
+<span class="line">  320</span>  
+<span class="line">  321</span>      knowledge_parts = []
+<span class="line">  322</span>      reference_docs = []
+<span class="line">  323</span>  
+<span class="line">  324</span>      for idx, (col_name, node, sim_score, time_boost, final_score, doc_date) in enumerate(all_nodes, 1):
+<span class="line">  325</span>          content = node.node.get_content()
+<span class="line">  326</span>          # 截断过长内容
+<span class="line">  327</span>          if len(content) &gt; max_node_chars:
+<span class="line">  328</span>              content = content[:max_node_chars] + "……"
+<span class="line">  329</span>          label = collection_labels.get(col_name, col_name)</code></pre></section><section class="evidence" id="E07"><h2>E07 · 模型路由能力、降级与实际模型记录</h2><h3>api/llm/llm_router.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 2275f796f1f8b591…</small><pre><code><span class="line">   78</span>  class UnifiedLLMRouter:
+<span class="line">   79</span>      """Shared async/sync connection pools plus provider routing policy."""
+<span class="line">   80</span>  
+<span class="line">   81</span>      def __init__(
+<span class="line">   82</span>          self,
+<span class="line">   83</span>          *,
+<span class="line">   84</span>          max_connections: int = 64,
+<span class="line">   85</span>          max_keepalive_connections: int = 24,
+<span class="line">   86</span>          keepalive_expiry: float = 45.0,
+<span class="line">   87</span>          max_inflight: int = 48,
+<span class="line">   88</span>          circuit_failure_threshold: int = 2,
+<span class="line">   89</span>          circuit_cooldown_seconds: float = 45.0,
+<span class="line">   90</span>  [与审查无关的凭据字段已隐藏]
+<span class="line">   91</span>          default_routes: Optional[Sequence[LLMProviderRoute]] = None,
+<span class="line">   92</span>      ) -&gt; None:
+<span class="line">   93</span>          self.max_connections = max(1, max_connections)
+<span class="line">   94</span>          self.max_keepalive_connections = max(1, max_keepalive_connections)
+<span class="line">   95</span>          self.keepalive_expiry = max(5.0, keepalive_expiry)
+<span class="line">   96</span>          self.max_inflight = max(1, max_inflight)
+<span class="line">   97</span>          self.circuit_failure_threshold = max(1, circuit_failure_threshold)
+<span class="line">   98</span>          self.circuit_cooldown_seconds = max(1.0, circuit_cooldown_seconds)
+<span class="line">   99</span>  [与审查无关的凭据字段已隐藏]
+<span class="line">      …</span>
+<span class="line">  418</span>      ) -&gt; Dict[str, Any]:
+<span class="line">  419</span>          extras = dict(kwargs)
+<span class="line">  420</span>          extras.pop("provider", None)
+<span class="line">  421</span>          extras.pop("stream", None)
+<span class="line">  422</span>          if route.is_fallback:
+<span class="line">  423</span>              for key in ("reasoning", "response_format", "tools", "tool_choice", "include", "text"):
+<span class="line">  424</span>                  extras.pop(key, None)
+<span class="line">  425</span>          if route.protocol == "responses":
+<span class="line">  426</span>              response_format = extras.pop("response_format", None)
+<span class="line">  427</span>              payload: Dict[str, Any] = {
+<span class="line">  428</span>                  "model": route.model,
+<span class="line">  429</span>                  "input": UnifiedLLMRouter._messages_to_responses_input(messages),
+<span class="line">  430</span>                  "max_output_tokens": max_tokens,
+<span class="line">  431</span>              }
+<span class="line">  432</span>              if web_search:
+<span class="line">  433</span>                  payload["tools"] = [{"type": "web_search"}]
+<span class="line">  434</span>                  payload["include"] = ["web_search_call.action.sources"]
+<span class="line">  435</span>              if response_format == {"type": "json_object"}:
+<span class="line">  436</span>                  payload["text"] = {"format": {"type": "json_object"}}
+<span class="line">  437</span>              for key in ("reasoning", "instructions", "text", "tool_choice", "include", "tools"):
+<span class="line">  438</span>                  if key in extras:
+<span class="line">  439</span>                      payload[key] = extras[key]
+<span class="line">  440</span>              return payload
+<span class="line">  441</span>  
+<span class="line">  442</span>          payload = {
+<span class="line">  443</span>              "model": route.model,
+<span class="line">  444</span>              "messages": messages,
+<span class="line">  445</span>          }
+<span class="line">  446</span>          payload.update(extras)
+<span class="line">  447</span>          if route.name == "deepseek-official-fallback":
+<span class="line">  448</span>              thinking_mode = os.getenv("DEEPSEEK_FALLBACK_THINKING", "disabled").strip().lower()
+<span class="line">  449</span>              if thinking_mode not in {"enabled", "disabled"}:
+<span class="line">  450</span>                  thinking_mode = "disabled"
+<span class="line">  451</span>              payload["thinking"] = {"type": thinking_mode}
+<span class="line">  452</span>          if web_search and not route.name.startswith("dashscope"):
+<span class="line">  453</span>              payload["web_search"] = True
+<span class="line">  454</span>          model_lower = route.model.lower()
+<span class="line">  455</span>          if not any(model_lower.startswith(prefix) for prefix in _NO_TEMPERATURE_MODELS):
+<span class="line">  456</span>              payload["temperature"] = temperature
+<span class="line">      …</span>
+<span class="line">  580</span>                      actual_model = resolve_actual_model(result, route.model)
+<span class="line">  581</span>                      result["model"] = actual_model
+<span class="line">  582</span>                      if required_response_model and actual_model != required_response_model:
+<span class="line">  583</span>                          raise RuntimeError(
+<span class="line">  584</span>                              "LLM response model mismatch: "
+<span class="line">  585</span>                              f"required={required_response_model}, actual={actual_model or 'missing'}"
+<span class="line">  586</span>                          )
+<span class="line">  587</span>                      rejection = response_validator(result) if response_validator else None
+<span class="line">  588</span>                      if rejection:
+<span class="line">  589</span>                          raise RuntimeError(f"business response rejected: {rejection}")
+<span class="line">  590</span>                      self._record_success(route)
+<span class="line">  591</span>                      logger.info(
+<span class="line">  592</span>                          "Unified LLM route succeeded",
+<span class="line">  593</span>                          model=actual_model,
+<span class="line">  594</span>                          route=route.name,
+<span class="line">  595</span>                          requested_model=model,
+<span class="line">  596</span>                          actual_model=actual_model,
+<span class="line">  597</span>                          fallback=route.is_fallback,
+<span class="line">  598</span>                          elapsed_ms=round((time.monotonic() - started_at) * 1000),
+<span class="line">  599</span>                      )</code></pre></section><section class="evidence" id="E08"><h2>E08 · Agent 循环与验证描述的实际边界</h2><h3>api/langgraph_agent.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 ce5eeda98311f689…</small><pre><code><span class="line">   31</span>  class AgentState(TypedDict):
+<span class="line">   32</span>      """Agent state definition"""
+<span class="line">   33</span>      messages: Annotated[Sequence[BaseMessage], operator.add]
+<span class="line">   34</span>      chat_history: str
+<span class="line">   35</span>  
+<span class="line">      …</span>
+<span class="line">  143</span>                          import api.main as main_module
+<span class="line">  144</span>                          if hasattr(main_module, 'rag_search_with_sufficiency_check'):
+<span class="line">  145</span>                              sufficiency_result = main_module.rag_search_with_sufficiency_check(tool_input, top_k=3)
+<span class="line">  146</span>                          else:
+<span class="line">  147</span>                              # 降级：直接调用工具
+<span class="line">  148</span>                              sufficiency_result = {
+<span class="line">  149</span>                                  "knowledge": tool.func(tool_input),
+<span class="line">  150</span>                                  "is_sufficient": True,
+<span class="line">  151</span>                                  "confidence": 0.8,
+<span class="line">  152</span>                                  "reason": "充分性检查不可用，使用默认行为"
+<span class="line">  153</span>                              }
+<span class="line">  154</span>                      except Exception:
+<span class="line">  155</span>                          sufficiency_result = {
+<span class="line">  156</span>                              "knowledge": tool.func(tool_input),
+<span class="line">  157</span>                              "is_sufficient": True,
+<span class="line">  158</span>                              "confidence": 0.8,
+<span class="line">  159</span>                              "reason": "充分性检查不可用，使用默认行为"
+<span class="line">  160</span>                          }
+<span class="line">  161</span>  
+<span class="line">  162</span>                      observation = sufficiency_result["knowledge"]
+<span class="line">  163</span>                      is_sufficient = sufficiency_result["is_sufficient"]
+<span class="line">  164</span>                      confidence = sufficiency_result["confidence"]
+<span class="line">  165</span>                      reason = sufficiency_result["reason"]
+<span class="line">  166</span>  
+<span class="line">  167</span>                      logger.info(
+<span class="line">      …</span>
+<span class="line">  234</span>  
+<span class="line">  235</span>      workflow = StateGraph(AgentState)
+<span class="line">  236</span>  
+<span class="line">  237</span>      workflow.add_node("agent", call_model)
+<span class="line">  238</span>      workflow.add_node("tools", custom_tool_node)
+<span class="line">  239</span>  
+<span class="line">  240</span>      workflow.set_entry_point("agent")
+<span class="line">  241</span>  
+<span class="line">  242</span>      workflow.add_conditional_edges(
+<span class="line">  243</span>          "agent",
+<span class="line">  244</span>          should_continue,
+<span class="line">  245</span>          {
+<span class="line">  246</span>              "tools": "tools",
+<span class="line">  247</span>              END: END
+<span class="line">  248</span>          }
+<span class="line">  249</span>      )
+<span class="line">  250</span>  
+<span class="line">  251</span>      workflow.add_edge("tools", "agent")
+<span class="line">  252</span>  
+<span class="line">  253</span>      app = workflow.compile()
+<span class="line">  254</span>  </code></pre><h3>api/strategy/step_executor.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 cd49cff080991937…</small><pre><code><span class="line">  281</span>      async def _execute_validate(
+<span class="line">  282</span>          self,
+<span class="line">  283</span>          step: PromptStep,
+<span class="line">  284</span>          context: ExecutionContext
+<span class="line">  285</span>      ) -&gt; Dict[str, Any]:
+<span class="line">  286</span>          """执行验证步骤"""
+<span class="line">  287</span>          # 返回验证规则
+<span class="line">  288</span>          return {
+<span class="line">  289</span>              "step_type": "validate",
+<span class="line">  290</span>              "instructions": step.instructions,
+<span class="line">  291</span>              "validation_rules": step.input_variables
+<span class="line">  292</span>          }</code></pre></section><section class="evidence" id="E09"><h2>E09 · 课程时间、市场背景和语音示例常量</h2><h3>api/xueba_mode_agent.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 959273614f8aa2f0…</small><pre><code><span class="line">   33</span>  # ==================== 课程基准日期 ====================
+<span class="line">   34</span>  
+<span class="line">   35</span>  COURSE_BASE_DATE = date(2026, 4, 30)   # 第 00 天
+<span class="line">   36</span>  COURSE_PERIOD_MAP = {
+<span class="line">   37</span>      "早上": ["早上", "上午", "早晨", "早课"],
+<span class="line">   38</span>      "下午": ["下午", "午后", "下午课"],
+<span class="line">   39</span>      "晚上": ["晚上", "晚课", "夜课", "晚间"],
+<span class="line">   40</span>  }
+<span class="line">      …</span>
+<span class="line">  148</span>  第五条，总字数控制在三百字以内，根据问题类型选择口语表达顺序，各段之间自然衔接，不加任何标题：
+<span class="line">  149</span>  
+<span class="line">  150</span>    【通用投资知识问题】：
+<span class="line">  151</span>    先用一句话说出核心结论；
+<span class="line">  152</span>    再用三到四句话说清楚这是什么、为什么、怎么做；
+<span class="line">  153</span>    然后说出本次课程里最重要的两三个关键点，每个关键点一句话；
+<span class="line">  154</span>    最后用一句口诀或类比帮助记住核心。
+<span class="line">  155</span>  
+<span class="line">  156</span>    【公司或估值问题】（当用户问的是某个具体公司、个股能不能买、公司估值怎么样时）：
+<span class="line">  157</span>    先从赛道角度说，这家公司处于什么赛道，赛道的成长速度和景气度如何，有没有国家政策或国际层面的明确利好；
+<span class="line">  158</span>    再从公司本身说，公司的核心竞争力是什么，护城河来自哪里，创始人或管理层的背景和执行力怎么样；
+<span class="line">  159</span>    最后从估值角度说，当前滚动市盈率处于什么水平，和赛道内同类公司比是偏贵还是偏低，综合来看是否具备买入的性价比，给出明确判断。
+<span class="line">  160</span>  
+<span class="line">  161</span>  第六条，禁止以"根据您的问题"、"好的"、"当然"等废话开头，直接说内容。
+<span class="line">  162</span>  
+<span class="line">  163</span>  第七条，只回答投资相关内容。职责范围是：投资理念、选股方法、赛道判断、仓位管理、估值分析、市场研判等。如果用户问的是纪律、打卡、签到、考勤、课堂规则等非投资内容，直接口语回复：这个问题不在我的答疑范围内，我只负责投资相关内容。
+<span class="line">  164</span>  
+<span class="line">  165</span>  第八条，不捏造知识库中不存在的内容。
+<span class="line">  166</span>  
+<span class="line">  167</span>  【示例对比】
+<span class="line">  168</span>  错误：**是什么**：安全边际是买入价低于内在价值的幅度。
+<span class="line">  169</span>  正确：安全边际呢，简单说就是你买入的价格，要比这家公司实际值的钱低一些，这个差值就是你的保护垫。
+<span class="line">  170</span>  
+<span class="line">  171</span>  错误：- 好价格标准：PE低于20倍
+<span class="line">  172</span>  正确：判断价格好不好，有一个参考，就是市盈率最好低于二十倍。"""
+<span class="line">      …</span>
+<span class="line">  533</span>          # 解析时间上下文（今天下午 → "黄埔22期01天下午"）
+<span class="line">  534</span>          doc_prefix = _parse_time_context(q)
+<span class="line">  535</span>          if doc_prefix:
+<span class="line">  536</span>              logger.info("Xueba mode: time context detected", prefix=doc_prefix)
+<span class="line">  537</span>  
+<span class="line">  538</span>          college_context, class_context = await _retrieve_xueba_knowledge(
+<span class="line">  539</span>              q, top_k=5, doc_prefix=doc_prefix,
+<span class="line">  540</span>          )
+<span class="line">  541</span>  
+<span class="line">  542</span>          # 构建时间提示（让 LLM 知道检索范围）
+<span class="line">  543</span>          time_hint = ""
+<span class="line">  544</span>          if doc_prefix:
+<span class="line">  545</span>              today = date.today()
+<span class="line">  546</span>              day_offset = (today - COURSE_BASE_DATE).days
+<span class="line">  547</span>              time_hint = f"\n\n【检索范围提示】已按「{doc_prefix}」定位本次课程内容，当前为第{day_offset:02d}天（{today.strftime('%Y年%m月%d日')}）。"
+<span class="line">  548</span>  
+<span class="line">  549</span>          is_voice = output_mode == "voice"
+<span class="line">  550</span>          is_company = _is_company_question(q)
+<span class="line">  551</span>  
+<span class="line">  552</span>          if is_voice:
+<span class="line">  553</span>              framework_hint = (
+<span class="line">  554</span>                  "问题涉及具体公司或估值，请使用【公司或估值问题】口语框架：赛道→公司→估值三段自然衔接，最后给出明确买入性价比判断。"
+<span class="line">  555</span>                  if is_company else</code></pre><h3>api/college_asset_allocation.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 83de7a5cb253fa26…</small><pre><code><span class="line"> 1050</span>  SYSTEM_PROMPT = (
+<span class="line"> 1051</span>      "你是S老师黄埔线下课的AI助教，精通二级市场资产配置方法论。"
+<span class="line"> 1052</span>      "你需要严格按照S老师在黄埔课程中教授的标准来进行判断，"
+<span class="line"> 1053</span>      "包括好赛道、好公司、好价格的三好体系，以及仓位管理策略。\n"
+<span class="line"> 1054</span>      "当前时间背景：2026年，AI全产业链进入全面爆发期，投资框架遵循'算力层→框架层→模型层→应用层'四层逻辑，"
+<span class="line"> 1055</span>      "A股侧重硬件供应链与垂直应用，港股侧重平台生态与大模型独角兽。\n"
+<span class="line"> 1056</span>      "请基于提供的课程知识上下文和上述2026年市场框架做出判断，输出严格的JSON格式。"
+<span class="line"> 1057</span>  )
+<span class="line"> 1058</span>  
+<span class="line"> 1059</span>  # ==================== 本期标准答案表 ====================
+<span class="line"> 1060</span>  # 规则：有标准答案的股票直接按此表配置，无需 LLM 判断。
+<span class="line"> 1061</span>  # weight_pct 单位：占总资金(total_amount)的百分比。
+<span class="line"> 1062</span>  # is_boom_line 规则：消费/医药生物/新能源-汽车 = False，其他 = True。
+<span class="line"> 1063</span>  </code></pre></section><section class="evidence" id="E10"><h2>E10 · Wiki 图的文档链接和一跳扩展</h2><h3>api/wiki_graph.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 6d1c006e58ee04a7…</small><pre><code><span class="line">   84</span>      def _build(self):
+<span class="line">   85</span>          """Scan all wiki subdirs and parse [[wikilinks]]"""
+<span class="line">   86</span>          count = 0
+<span class="line">   87</span>          for subdir in ("topics", "entities", "sources"):
+<span class="line">   88</span>              dir_path = self._wiki_dir / subdir
+<span class="line">   89</span>              if not dir_path.exists():
+<span class="line">   90</span>                  continue
+<span class="line">   91</span>              for md_file in dir_path.glob("*.md"):
+<span class="line">   92</span>                  key = f"{subdir}/{md_file.stem}"
+<span class="line">   93</span>                  try:
+<span class="line">   94</span>                      text = md_file.read_text(encoding="utf-8")
+<span class="line">   95</span>                  except Exception:
+<span class="line">   96</span>                      continue
+<span class="line">   97</span>  
+<span class="line">   98</span>                  self._content[key] = text
+<span class="line">   99</span>                  self._summaries[key] = _extract_summary(text)
+<span class="line">  100</span>  
+<span class="line">  101</span>                  # Parse links
+<span class="line">  102</span>                  links: Set[str] = set()
+<span class="line">  103</span>                  for m in _WIKILINK_RE.finditer(text):
+<span class="line">  104</span>                      ref = m.group(1).strip()
+<span class="line">  105</span>                      if "/" not in ref:
+<span class="line">  106</span>                          # 裸 key，推断为同目录
+<span class="line">  107</span>                          ref = f"{subdir}/{ref}"
+<span class="line">  108</span>                      links.add(ref)
+<span class="line">  109</span>                  self._graph[key] = links
+<span class="line">      …</span>
+<span class="line">  142</span>      def expand_from_docs(
+<span class="line">  143</span>          self,
+<span class="line">  144</span>          reference_docs: List[dict],
+<span class="line">  145</span>          max_nodes: int = 4,
+<span class="line">  146</span>          max_chars_per_node: int = 400,
+<span class="line">  147</span>      ) -&gt; str:
+<span class="line">  148</span>          """
+<span class="line">  149</span>          根据 RAG 返回的 reference_docs，提取命中 topic key，
+<span class="line">  150</span>          做一跳图扩展，返回关联概念的摘要文本。
+<span class="line">      …</span>
+<span class="line">  190</span>          # 2. 一跳扩展，收集邻居（去重，排除已有的 seed）
+<span class="line">  191</span>          seen: Set[str] = set(seed_keys)
+<span class="line">  192</span>          expanded_keys: List[str] = []
+<span class="line">  193</span>  
+<span class="line">  194</span>          for seed in seed_keys:
+<span class="line">  195</span>              for nb in self.get_neighbors(seed):
+<span class="line">  196</span>                  if nb not in seen and self.key_exists(nb):
+<span class="line">  197</span>                      seen.add(nb)
+<span class="line">  198</span>                      expanded_keys.append(nb)
+<span class="line">  199</span>                      if len(expanded_keys) &gt;= max_nodes:
+<span class="line">  200</span>                          break
+<span class="line">  201</span>              if len(expanded_keys) &gt;= max_nodes:
+<span class="line">  202</span>                  break
+<span class="line">  203</span>  
+<span class="line">  204</span>          if not expanded_keys:
+<span class="line">  205</span>              return ""
+<span class="line">  206</span>  
+<span class="line">  207</span>          # 3. 格式化输出
+<span class="line">  208</span>          parts = []
+<span class="line">  209</span>          for key in expanded_keys:
+<span class="line">  210</span>              label = key.split("/", 1)[1] if "/" in key else key
+<span class="line">  211</span>              summary = self.get_summary(key)[:max_chars_per_node]
+<span class="line">  212</span>              if summary:
+<span class="line">  213</span>                  parts.append(f"【关联概念·{label}】\n{summary}")</code></pre></section><section class="evidence" id="E11"><h2>E11 · 训练反馈结构与统计口径</h2><h3>api/training/models.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 8a309c76b88cee38…</small><pre><code><span class="line">    9</span>  class TrainingSession:
+<span class="line">   10</span>      id: Optional[int] = None
+<span class="line">   11</span>      title: str = "训练会话"
+<span class="line">   12</span>      description: Optional[str] = None
+<span class="line">   13</span>      status: str = "active"
+<span class="line">   14</span>      qa_count: int = 0
+<span class="line">   15</span>      avg_rating: Optional[float] = None
+<span class="line">   16</span>      created_at: Optional[datetime] = None
+<span class="line">   17</span>      updated_at: Optional[datetime] = None
+<span class="line">   18</span>  
+<span class="line">   19</span>  
+<span class="line">   20</span>  @dataclass
+<span class="line">   21</span>  class TrainingQA:
+<span class="line">   22</span>      id: Optional[int] = None
+<span class="line">   23</span>      session_id: int = 0
+<span class="line">   24</span>      question: str = ""
+<span class="line">   25</span>      answer: str = ""
+<span class="line">   26</span>      answer_format: Optional[str] = None
+<span class="line">   27</span>      cards_answer: Optional[List[Dict]] = None
+<span class="line">   28</span>      sources_used: List[Dict] = field(default_factory=list)
+<span class="line">   29</span>      collections_hit: List[str] = field(default_factory=list)
+<span class="line">   30</span>      prompt_tokens: int = 0
+<span class="line">   31</span>      completion_tokens: int = 0
+<span class="line">   32</span>      response_time_ms: int = 0
+<span class="line">   33</span>      model_name: Optional[str] = None
+<span class="line">   34</span>      created_at: Optional[datetime] = None
+<span class="line">   35</span>      # Joined from feedback:
+<span class="line">   36</span>      feedback_rating: Optional[int] = None
+<span class="line">   37</span>      feedback_comment: Optional[str] = None
+<span class="line">   38</span>      feedback_corrected: Optional[str] = None
+<span class="line">   39</span>      feedback_quick_tags: Optional[List[str]] = None
+<span class="line">   40</span>      feedback_is_used: Optional[bool] = None
+<span class="line">   41</span>  
+<span class="line">   42</span>  
+<span class="line">   43</span>  @dataclass
+<span class="line">   44</span>  class TrainingFeedback:
+<span class="line">   45</span>      id: Optional[int] = None
+<span class="line">   46</span>      qa_id: int = 0
+<span class="line">   47</span>      rating: int = 3
+<span class="line">   48</span>      comment: Optional[str] = None
+<span class="line">   49</span>      quick_tags: Optional[List[str]] = None
+<span class="line">   50</span>      corrected_answer: Optional[str] = None
+<span class="line">   51</span>      is_used_as_example: bool = False
+<span class="line">   52</span>      created_at: Optional[datetime] = None
+<span class="line">   53</span>      updated_at: Optional[datetime] = None</code></pre><h3>api/training/repository.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 a848e5085148e2ae…</small><pre><code><span class="line">  353</span>      def get_training_stats(self) -&gt; Dict:
+<span class="line">  354</span>          with get_db_connection() as conn:
+<span class="line">  355</span>              with conn.cursor() as cur:
+<span class="line">  356</span>                  cur.execute("SELECT COUNT(*) AS total_sessions FROM wiki_training_session")
+<span class="line">  357</span>                  total_sessions = cur.fetchone()["total_sessions"]
+<span class="line">  358</span>                  cur.execute("SELECT COUNT(*) AS total_qa FROM wiki_training_qa")
+<span class="line">  359</span>                  total_qa = cur.fetchone()["total_qa"]
+<span class="line">  360</span>                  cur.execute("SELECT AVG(rating) AS avg_rating FROM wiki_training_feedback")
+<span class="line">  361</span>                  avg_rating = cur.fetchone()["avg_rating"] or 0
+<span class="line">  362</span>                  cur.execute(
+<span class="line">  363</span>                      "SELECT COUNT(*) AS compiled FROM wiki_training_feedback WHERE is_used_as_example = 1"
+<span class="line">  364</span>                  )
+<span class="line">  365</span>                  compiled = cur.fetchone()["compiled"]
+<span class="line">  366</span>                  cur.execute(
+<span class="line">  367</span>                      "SELECT COUNT(*) AS compilable FROM wiki_training_feedback WHERE rating &gt;= 4 AND is_used_as_example = 0"
+<span class="line">  368</span>                  )
+<span class="line">  369</span>                  compilable = cur.fetchone()["compilable"]
+<span class="line">  370</span>          return {
+<span class="line">  371</span>              "total_sessions": total_sessions,
+<span class="line">  372</span>              "total_qa": total_qa,
+<span class="line">  373</span>              "avg_rating": round(float(avg_rating), 2) if avg_rating else 0,
+<span class="line">  374</span>              "compiled_count": compiled,
+<span class="line">  375</span>              "compilable_count": compilable,
+<span class="line">  376</span>          }
+<span class="line">  377</span>  </code></pre></section><section class="evidence" id="E12"><h2>E12 · 后台索引与进程任务状态</h2><h3>api/training/routes.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 bb11b46e39d92b45…</small><pre><code><span class="line">  540</span>                  file_path.write_text(content, encoding="utf-8")
+<span class="line">  541</span>                  wiki_pages_created.append(str(file_path.name))
+<span class="line">  542</span>  
+<span class="line">  543</span>          if wiki_pages_created:
+<span class="line">  544</span>              # 刷新内存 WikiGraph
+<span class="line">  545</span>              get_wiki_graph().rebuild()
+<span class="line">  546</span>              logger.info(
+<span class="line">  547</span>                  "Compile: wiki topics written back",
+<span class="line">  548</span>                  count=len(wiki_pages_created),
+<span class="line">  549</span>                  files=wiki_pages_created,
+<span class="line">  550</span>              )
+<span class="line">  551</span>              # ── 自动 re-embed：后台线程将新 topic 写入 Qdrant ────────────────
+<span class="line">  552</span>              # 使用 asyncio.create_task 避免阻塞 compile 接口响应
+<span class="line">  553</span>              import asyncio as _asyncio
+<span class="line">  554</span>              _asyncio.create_task(_bg_embed_wiki_topics(wiki_pages_created))
+<span class="line">  555</span>      except Exception as e:
+<span class="line">  556</span>          logger.warning("Compile: wiki write-back failed (non-fatal)", error=str(e))
+<span class="line">  557</span>  
+<span class="line">  558</span>      return {
+<span class="line">  559</span>          "message": f"成功编译 {len(example_parts)} 条训练对话，已注入提示词",
+<span class="line">  560</span>          "compiled_count": len(example_parts),
+<span class="line">  561</span>          "total_qa_fetched": len(records),
+<span class="line">  562</span>          "affected_templates": affected,
+<span class="line">  563</span>          "wiki_topics_created": wiki_pages_created,
+<span class="line">  564</span>          "re_embed_triggered": len(wiki_pages_created) &gt; 0,
+<span class="line">      …</span>
+<span class="line">  568</span>  async def _bg_embed_wiki_topics(file_names: List[str]):
+<span class="line">  569</span>      """
+<span class="line">  570</span>      后台任务：将新写入的 wiki/topics/*.md 文件 re-embed 到 Qdrant。
+<span class="line">  571</span>      在 compile 接口返回后异步执行，不影响响应时间。
+<span class="line">  572</span>      """
+<span class="line">  573</span>      import asyncio
+<span class="line">  574</span>      from pathlib import Path as _Path
+<span class="line">  575</span>  
+<span class="line">  576</span>      logger.info("BG embed: starting", files=file_names)
+<span class="line">  577</span>      try:
+<span class="line">  578</span>          # 用线程池执行同步的 embed 操作，避免阻塞事件循环
+<span class="line">  579</span>          loop = asyncio.get_event_loop()
+<span class="line">  580</span>          await loop.run_in_executor(None, _sync_embed_wiki_topics, file_names)
+<span class="line">  581</span>          logger.info("BG embed: completed", count=len(file_names))
+<span class="line">  582</span>      except Exception as e:
+<span class="line">  583</span>          logger.error("BG embed: failed", error=str(e))</code></pre><h3>api/task_manager.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 9dc1ba3231adeb3d…</small><pre><code><span class="line">   69</span>              return
+<span class="line">   70</span>          self._tasks: Dict[str, TaskInfo] = {}
+<span class="line">   71</span>          self._initialized = True
+<span class="line">   72</span>          logger.info("TaskManager initialized")
+<span class="line">   73</span>      
+<span class="line">   74</span>      def create_task(self, task_type: str, metadata: Optional[Dict[str, Any]] = None) -&gt; str:
+<span class="line">   75</span>          """
+<span class="line">   76</span>          创建新任务
+<span class="line">   77</span>          
+<span class="line">   78</span>          Args:
+<span class="line">   79</span>              task_type: 任务类型，如 'file_upload'
+<span class="line">   80</span>              metadata: 任务元数据
+<span class="line">   81</span>              
+<span class="line">   82</span>          Returns:
+<span class="line">   83</span>              task_id: 任务ID
+<span class="line">   84</span>          """
+<span class="line">   85</span>          task_id = str(uuid.uuid4())
+<span class="line">   86</span>          task_info = TaskInfo(task_id=task_id, task_type=task_type, metadata=metadata)</code></pre></section><section class="evidence" id="E13"><h2>E13 · 值得保留的 S5 可比性与缺失值检查</h2><h3>api/college_s5_pk.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 35a8b8cd84e6a244…</small><pre><code><span class="line"> 1893</span>      warnings = []
+<span class="line"> 1894</span>      if not comparison_period:
+<span class="line"> 1895</span>          warnings.append("参评公司没有共同季度，核心指标暂不评分。")
+<span class="line"> 1896</span>      elif any(period != comparison_period for period in latest_period_by_company.values()):
+<span class="line"> 1897</span>          warnings.append(
+<span class="line"> 1898</span>              f"各公司最新披露期不同，评分已统一回退到共同季度 {comparison_period}。"
+<span class="line"> 1899</span>          )
+<span class="line"> 1900</span>      return {
+<span class="line"> 1901</span>          "comparison_period": comparison_period,
+<span class="line"> 1902</span>          "comparison_basis": "latest_common_quarter",
+<span class="line"> 1903</span>          "latest_period_by_company": latest_period_by_company,
+<span class="line"> 1904</span>          "warnings": warnings,
+<span class="line"> 1905</span>      }
+<span class="line">      …</span>
+<span class="line"> 2000</span>  ) -&gt; Dict[str, Any]:
+<span class="line"> 2001</span>      completeness = (
+<span class="line"> 2002</span>          companies[0].get("score_completeness", {}) if companies else {}
+<span class="line"> 2003</span>      )
+<span class="line"> 2004</span>      missing_metrics = completeness.get("missing_metrics") or []
+<span class="line"> 2005</span>      warnings = list(comparison.get("warnings") or [])
+<span class="line"> 2006</span>      if missing_metrics:
+<span class="line"> 2007</span>          warnings.append(
+<span class="line"> 2008</span>              "以下指标未覆盖全部参评公司，未计入评分："
+<span class="line"> 2009</span>              + "、".join(METRIC_LABELS.get(metric, metric) for metric in missing_metrics)
+<span class="line"> 2010</span>              + "。"
+<span class="line"> 2011</span>          )
+<span class="line"> 2012</span>      if companies and companies[0].get("score_status") != "ready":</code></pre></section><section class="evidence" id="E14"><h2>E14 · 本地文件知识管理与长文处理</h2><h3>api/wiki/wiki_index_manager.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 85ca50816064d841…</small><pre><code><span class="line">   20</span>  _index_lock = Lock()
+<span class="line">   21</span>  _log_lock   = Lock()
+<span class="line">   22</span>  
+<span class="line">   23</span>  
+<span class="line">   24</span>  class WikiIndexManager:
+<span class="line">      …</span>
+<span class="line">   62</span>          page_type_dir, page_name = parts
+<span class="line">   63</span>          file_path = self.wiki_dir / page_type_dir / f"{page_name}.md"
+<span class="line">   64</span>          file_path.parent.mkdir(parents=True, exist_ok=True)
+<span class="line">   65</span>          file_path.write_text(content, encoding="utf-8")
+<span class="line">   66</span>          logger.info("Wiki page file written", path=str(file_path))
+<span class="line">   67</span>  
+<span class="line">   68</span>      def read_page_file(self, page_key: str) -&gt; Optional[str]:
+<span class="line">   69</span>          """读取对应 Markdown 文件内容"""
+<span class="line">   70</span>          parts = page_key.split("/", 1)
+<span class="line">   71</span>          if len(parts) != 2:
+<span class="line">   72</span>              return None
+<span class="line">   73</span>          page_type_dir, page_name = parts
+<span class="line">   74</span>          file_path = self.wiki_dir / page_type_dir / f"{page_name}.md"
+<span class="line">   75</span>          if not file_path.exists():
+<span class="line">   76</span>              return None
+<span class="line">   77</span>          return file_path.read_text(encoding="utf-8")</code></pre><h3>api/wiki/wiki_ingest_service.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 584e3bed3c90d815…</small><pre><code><span class="line">   26</span>  # Ingest 配置
+<span class="line">   27</span>  INGEST_DELAY_SECONDS = 2          # 每篇文档间隔
+<span class="line">   28</span>  MAX_TEXT_LENGTH = 15000            # 发给 LLM 的最大文本长度
+<span class="line">   29</span>  LLM_MODEL = "gpt-5.4"             # 用于 Ingest 编译的模型
+<span class="line">   30</span>  LLM_TEMPERATURE = 0.1             # 低温度保证结构化输出稳定</code></pre><h3>api/wiki/wiki_page_builder.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 f4e3a4004d9c336a…</small><pre><code><span class="line">  195</span>      def build_ingest_prompt(
+<span class="line">  196</span>          source_name:     str,
+<span class="line">  197</span>          raw_text:        str,
+<span class="line">  198</span>          existing_index:  str = "",
+<span class="line">  199</span>          existing_topics: Optional[List[str]] = None,
+<span class="line">  200</span>          max_text_length: int = 6000,
+<span class="line">  201</span>      ) -&gt; str:
+<span class="line">  202</span>          """
+<span class="line">  203</span>          生成 Ingest 时调用 LLM 的 Prompt
+<span class="line">  204</span>  
+<span class="line">  205</span>          LLM 的任务：读原始资料 → 输出结构化的 Wiki 更新指令（JSON）
+<span class="line">  206</span>  
+<span class="line">  207</span>          Returns:
+<span class="line">  208</span>              用于 LLM chat_completion 的 user prompt 字符串
+<span class="line">  209</span>          """
+<span class="line">  210</span>          # 截断过长的原始文本
+<span class="line">  211</span>          display_text = raw_text[:max_text_length]
+<span class="line">  212</span>          if len(raw_text) &gt; max_text_length:
+<span class="line">  213</span>              display_text += f"\n\n[...原文已截断，共 {len(raw_text)} 字符...]"
+<span class="line">  214</span>  
+<span class="line">  215</span>          existing_topics_str = "、".join(existing_topics or []) or "（暂无）"
+<span class="line">  216</span>  </code></pre></section><section class="evidence" id="E15"><h2>E15 · 值得保留的马步小结事实与推断规则</h2><h3>api/college_mabu_summary.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 94b54aa3433adb4d…</small><pre><code><span class="line"> 1239</span>      system_prompt = """你是“马步小结”写作教练。你要基于文献和学员选择，生成一份可以交付的小结文档。
+<span class="line"> 1240</span>  
+<span class="line"> 1241</span>  必须遵守：
+<span class="line"> 1242</span>  - 以科技成长版 S40 为底层框架，但输出要简洁，不要机械列 40 条。
+<span class="line"> 1243</span>  - 结论必须是：买入、观察、淘汰 三选一；如果证据不足，优先给“观察”或“淘汰”，不要硬给买入。
+<span class="line"> 1244</span>  - 必须包含并按顺序输出这些一级标题：
+<span class="line"> 1245</span>    # 马步小结：{口令}
+<span class="line"> 1246</span>    ## 投资决策：买入/观察/淘汰（三选一，只写最终真实结论，不要保留斜杠占位）
+<span class="line"> 1247</span>    ## 行业面
+<span class="line"> 1248</span>    ## 公司面
+<span class="line"> 1249</span>    ## 估值面
+<span class="line"> 1250</span>    ## 风险与验证
+<span class="line"> 1251</span>  - 如果投资决策是“观察”，必须额外输出：
+<span class="line"> 1252</span>    ## 观察什么
+<span class="line"> 1253</span>  - 在“投资决策”标题下面第一行必须写：**结论：买入/观察/淘汰**，并写清楚理由。
+<span class="line"> 1254</span>  - 投资决策必须写清楚理由。
+<span class="line"> 1255</span>  - 行业面必须写：主营细分赛道、天花板百亿/千亿/万亿级判断、增速/成长来源、竞争格局。
+<span class="line"> 1256</span>  - 公司面必须写：主营业务证据、卡脖子/国产替代、竞争对手、我有你没有、你有我更强、对手比我强。
+<span class="line"> 1257</span>  - 估值面必须写：当前估值是否透支、等待的价格/业绩/订单触发。
+<span class="line"> 1258</span>  - 严格区分“文献事实”和“推断”。证据不足时明确说“文献未充分证明”。
+<span class="line"> 1259</span>  - 只输出 Markdown，不输出 JSON。
+<span class="line"> 1260</span>  """
+<span class="line"> 1261</span>      user_prompt = f"""口令：{command_word}
+<span class="line"> 1262</span>  
+<span class="line"> 1263</span>  学员选择：
+<span class="line"> 1264</span>  {answers_text}
+<span class="line"> 1265</span>  
+<span class="line"> 1266</span>  相关文献：
+<span class="line"> 1267</span>  {context}
+<span class="line"> 1268</span>  """
+<span class="line"> 1269</span>      raw = await _call_llm(</code></pre></section><section class="evidence" id="E16"><h2>E16 · 训练接口的局部权限审查证据</h2><h3>api/training/routes.py</h3><small>远程提交 54d3e9fce571 · 文件 SHA-256 bb11b46e39d92b45…</small><pre><code><span class="line">   31</span>  router = APIRouter(prefix="/training", tags=["Training"])
+<span class="line">   32</span>  repo = TrainingRepository()
+<span class="line">   33</span>  
+<span class="line">   34</span>  
+<span class="line">   35</span>  # ──────────────────────────── Pydantic Schemas ────────────────────────────
+<span class="line">   36</span>  
+<span class="line">   37</span>  class AskRequest(BaseModel):
+<span class="line">   38</span>      session_id: int = Field(0, description="训练会话 ID（0 = 自动创建/复用）")
+<span class="line">   39</span>      question: str = Field(..., description="提问内容")
+<span class="line">   40</span>  
+<span class="line">   41</span>  
+<span class="line">   42</span>  class FeedbackRequest(BaseModel):
+<span class="line">   43</span>      qa_id: int = Field(..., description="训练问答 ID")
+<span class="line">   44</span>      rating: int = Field(..., ge=1, le=5, description="评分 1-5")
+<span class="line">   45</span>      comment: Optional[str] = Field(None, description="文字点评")
+<span class="line">   46</span>      quick_tags: Optional[List[str]] = Field(None, description="快捷标签")
+<span class="line">   47</span>      corrected_answer: Optional[str] = Field(None, description="S老师给出的标准答案")
+<span class="line">      …</span>
+<span class="line">  325</span>  @router.post("/feedback", summary="提交 S 老师对某次问答的评分与纠偏")
+<span class="line">  326</span>  async def submit_feedback(body: FeedbackRequest):
+<span class="line">  327</span>      qa = repo.get_qa(body.qa_id)
+<span class="line">  328</span>      if not qa:
+<span class="line">  329</span>          raise HTTPException(status_code=404, detail="QA 记录不存在")
+<span class="line">  330</span>  
+<span class="line">  331</span>      fb = TrainingFeedback(
+<span class="line">  332</span>          qa_id=body.qa_id,
+<span class="line">  333</span>          rating=body.rating,
+<span class="line">  334</span>          comment=body.comment,
+<span class="line">  335</span>          quick_tags=body.quick_tags,
+<span class="line">  336</span>          corrected_answer=body.corrected_answer,
+<span class="line">  337</span>      )
+<span class="line">  338</span>      fb_id = repo.upsert_feedback(fb)
+<span class="line">  339</span>      return {"feedback_id": fb_id, "message": "反馈已保存"}
+<span class="line">      …</span>
+<span class="line">  407</span>  @router.post("/compile", summary="将所有训练对话编译为 few-shot，注入生产提示词")
+<span class="line">  408</span>  async def compile_examples(limit: int = Query(30, ge=5, le=100)):
+<span class="line">  409</span>      """
+<span class="line">  410</span>      将最近 limit 条训练对话（无论是否评分）合成为 few-shot 示例，
+<span class="line">  411</span>      注入到 training_master、free_style_online、cards_online、xueba_cards、xueba_voice
+<span class="line">  412</span>      五个提示词模板末尾。若 S老师提供了纠偏答案，优先使用纠偏答案。
+<span class="line">  413</span>      """
+<span class="line">  414</span>      records = repo.get_all_recent_qa_for_compile(limit=limit)
+<span class="line">  415</span>      if not records:
+<span class="line">  416</span>          return {"message": "暂无训练对话记录", "compiled_count": 0}</code></pre></section></main></div><footer>审查基线：origin/prod 54d3e9f · 2026-09-07 · 本地报告 / 无外部资源依赖<br>代码中存在的能力与线上生效状态分别判断。S 老师一致性尚需真实案例盲评。</footer><script>document.querySelector('#evidence-search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();document.querySelectorAll('.evidence').forEach(s=>s.hidden=!s.textContent.toLowerCase().includes(q));});document.querySelector('#print').addEventListener('click',()=>window.print());</script><script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

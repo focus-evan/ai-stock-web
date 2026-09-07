@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>每日持仓利多利空监控 - 2026-07-14</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --ink: #1f2933;
+      --muted: #64748b;
+      --red: #c62828;
+      --red-bg: #fff1f0;
+      --orange: #c46a00;
+      --orange-bg: #fff7e6;
+      --yellow: #8a6d00;
+      --yellow-bg: #fffbe6;
+      --green: #177245;
+      --line: #d9dee8;
+      --card: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: var(--ink); background: var(--bg); }
+    header { background: #101827; color: white; padding: 22px 28px; }
+    header h1 { margin: 0 0 8px; font-size: 26px; letter-spacing: 0; }
+    header p { margin: 0; color: #cbd5e1; }
+    main { max-width: 1360px; margin: 0 auto; padding: 22px; }
+    .grid { display: grid; gap: 16px; }
+    .top { grid-template-columns: 1.15fr 0.85fr; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+    .warning { border-left: 8px solid var(--red); background: var(--red-bg); }
+    .gate { border-left: 8px solid var(--orange); background: var(--orange-bg); }
+    h2 { margin: 0 0 12px; font-size: 20px; }
+    .big { font-size: 28px; font-weight: 700; color: var(--red); margin: 4px 0 10px; }
+    .gate-text { font-size: 20px; font-weight: 700; color: #7c3f00; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+    .card { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+    .card-title { font-weight: 700; font-size: 17px; margin-bottom: 8px; }
+    .redline { border-top: 5px solid var(--red); }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; line-height: 1.45; }
+    th { background: #eef2f7; text-align: left; color: #334155; white-space: nowrap; }
+    td span { color: var(--muted); font-size: 12px; }
+    tr.red { background: var(--red-bg); }
+    tr.orange { background: var(--orange-bg); }
+    tr.yellow { background: var(--yellow-bg); }
+    .pill { display: inline-block; padding: 3px 8px; border-radius: 999px; color: white; font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+    .pill.red { background: var(--red); }
+    .pill.orange { background: var(--orange); }
+    .pill.yellow { background: var(--yellow); }
+    .plan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .plan .panel { min-height: 130px; }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin: 6px 0; }
+    a { color: #155eaa; text-decoration: none; }
+    footer { color: var(--muted); font-size: 13px; padding: 10px 0 0; }
+    @media (max-width: 980px) {
+      .top, .cards, .plan { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=automation-2-holdings&amp;view=reports">持仓晨报</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <h1>每日持仓利多利空监控</h1>
+    <p>截至北京时间 2026-07-14 06:00；A/H 股使用 2026-07-13 收盘，隔夜美股使用 2026-07-13 收盘。</p>
+  </header>
+  <main>
+    <section class="grid top">
+      <div class="panel warning">
+        <h2>今日高危预警</h2>
+        <div class="big">红色预警：高贝塔科技仓位防守优先</div>
+        <p>触发因素：7 月 13 日 A 股科技持仓普遍下杀，生益科技、联瑞新材、联得装备接近或达到跌停；隔夜 Nasdaq 下跌、费城半导体指数大跌，且美债收益率上行，对 AI、半导体、CPO、机器人等高估值成长方向形成传导压力。</p>
+      </div>
+      <div class="panel gate">
+        <h2>总阀门</h2>
+        <p class="gate-text">总阀门：不加仓、不追反弹；优先防守，弱修复或低开破位时降低高贝塔科技/题材仓位。</p>
+        <p>今天不把普通波动误判为基本面崩坏，但必须先处理交易层面的踩踏和外盘传导。只有核心持仓缩量止跌并收回关键位，才从防守切回修复持有。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>需要重点注意的 3 只股票</h2>
+      <div class="cards"><div class="card redline"><div class="card-title">生益科技</div><p>7/13 跌停并跌破成本，PCB/AI 硬件高位回撤需要先防守。</p></div>
+<div class="card redline"><div class="card-title">联瑞新材</div><p>接近跌停且远低于成本，可转债风险提示叠加半导体外盘压力。</p></div>
+<div class="card redline"><div class="card-title">联得装备</div><p>单日 -10.89%、5 日 -22.06%，题材流动性退潮特征最明显。</p></div></div>
+    </section>
+
+    <section class="panel">
+      <h2>持仓明细表</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>股票</th>
+            <th>持仓</th>
+            <th>最新收盘</th>
+            <th>短期涨跌</th>
+            <th>最新利多</th>
+            <th>最新利空</th>
+            <th>级别/判断</th>
+            <th>今日关注位或操作提示</th>
+          </tr>
+        </thead>
+        <tbody><tr class="orange">
+<td><strong>新易盛</strong><br><span>300502.SZ</span></td>
+<td>1060股；老仓760股参考成本约544.6，新增300股成本待补</td>
+<td>512.50<br><span>-2.02%</span></td>
+<td>3日 +0.33%<br>5日 +1.11%</td>
+<td>AI 光模块主线仍有产业景气支撑；未见 7/13 截止前重大新增公司利空。</td>
+<td>7/13 收盘仍低于老仓成本，隔夜美股 AI/半导体下跌对 CPO/光模块估值形成传导压力。</td>
+<td><span class="pill orange">橙色</span><br>中性偏弱</td>
+<td>不追高；若反抽不能重新站稳 523-545 区间，新增仓优先做防守。</td>
+</tr>
+<tr class="orange">
+<td><strong>绿的谐波</strong><br><span>688017.SH</span></td>
+<td>400股，成本320</td>
+<td>379.51<br><span>-6.29%</span></td>
+<td>3日 -2.89%<br>5日 -16.36%</td>
+<td>机器人长期叙事仍在，股价仍高于持仓成本。</td>
+<td>前期已发布风险提示/问询回复及募投延期，近期从高位快速回落，量能仍大。</td>
+<td><span class="pill orange">橙色</span><br>中性偏弱</td>
+<td>不加仓；若机器人板块早盘修复失败，按高位题材股处理做 T 或降仓。</td>
+</tr>
+<tr class="red">
+<td><strong>生益科技</strong><br><span>600183.SH</span></td>
+<td>500股，成本138.2</td>
+<td>134.45<br><span>-10.00%</span></td>
+<td>3日 -7.57%<br>5日 -12.85%</td>
+<td>PCB/服务器链中期逻辑未被公告层面证伪。</td>
+<td>7/13 跌停并跌破成本，成交额放大；前期减持窗口和科技高位回撤共同压制。</td>
+<td><span class="pill red">红色</span><br>利空</td>
+<td>重点防守；若开盘不能快速收回 138.2 成本线，先控制仓位，不做补跌加仓。</td>
+</tr>
+<tr class="orange">
+<td><strong>澜起科技</strong><br><span>688008.SH</span></td>
+<td>200股，成本263</td>
+<td>252.79<br><span>-5.70%</span></td>
+<td>3日 +2.28%<br>5日 -5.91%</td>
+<td>内存接口/AI 服务器链基本面关注度仍高。</td>
+<td>7/13 跌回成本下方，隔夜半导体大跌增加次日低开压力。</td>
+<td><span class="pill orange">橙色</span><br>中性偏弱</td>
+<td>观察 250-263 修复；不能收回 263 前不加仓。</td>
+</tr>
+<tr class="orange">
+<td><strong>英维克</strong><br><span>002837.SZ</span></td>
+<td>300股，成本74.8</td>
+<td>66.98<br><span>-8.92%</span></td>
+<td>3日 -7.13%<br>5日 -9.56%</td>
+<td>液冷/数据中心温控仍有产业需求线索。</td>
+<td>已明显跌破成本，7/13 大跌且高估值成长风格承压。</td>
+<td><span class="pill orange">橙色</span><br>利空</td>
+<td>不补仓；先看 66-70 能否止跌，弱反弹优先降风险。</td>
+</tr>
+<tr class="orange">
+<td><strong>中微公司</strong><br><span>688012.SH</span></td>
+<td>200股，成本380</td>
+<td>408.60<br><span>-5.96%</span></td>
+<td>3日 -3.40%<br>5日 -2.71%</td>
+<td>仍高于成本；国产半导体设备中长期主线未变。</td>
+<td>前期高位波动大，隔夜 SOX 大跌，半导体设备估值弹性受压。</td>
+<td><span class="pill orange">橙色</span><br>中性</td>
+<td>守 400 附近；若跌破且半导体无承接，先做仓位防守。</td>
+</tr>
+<tr class="red">
+<td><strong>联瑞新材</strong><br><span>688300.SH</span></td>
+<td>200股，成本247</td>
+<td>165.70<br><span>-9.54%</span></td>
+<td>3日 -8.99%<br>5日 -13.70%</td>
+<td>先进封装/高端填料叙事仍有行业催化。</td>
+<td>7/13 接近跌停且远低于成本；7/13 继续发布可转债投资者适当性风险提示。</td>
+<td><span class="pill red">红色</span><br>利空</td>
+<td>重点防守；若 164-166 区间失守，避免摊低，等缩量止跌。</td>
+</tr>
+<tr class="orange">
+<td><strong>雅克科技</strong><br><span>002409.SZ</span></td>
+<td>300股，成本待补</td>
+<td>189.02<br><span>-8.76%</span></td>
+<td>3日 -0.52%<br>5日 +1.38%</td>
+<td>电子材料方向仍在半导体材料主线内。</td>
+<td>保留 7/2 异动公告风险提示，7/13 大跌且融资余额处在高分位，筹码波动风险高。</td>
+<td><span class="pill orange">橙色</span><br>中性偏弱</td>
+<td>只做防守 T；弱转强失败则减，不追 200 上方反抽。</td>
+</tr>
+<tr class="red">
+<td><strong>联得装备</strong><br><span>300545.SZ</span></td>
+<td>200股，成本待补</td>
+<td>28.80<br><span>-10.89%</span></td>
+<td>3日 -12.62%<br>5日 -22.06%</td>
+<td>显示/半导体设备应用拓展仍是可观察方向。</td>
+<td>7/13 跌幅超过 10%，5 日跌幅超过 20%，题材退潮和流动性压力明显。</td>
+<td><span class="pill red">红色</span><br>利空</td>
+<td>列入重点风险；若不能快速收回 30，避免补仓，优先控制损失扩大。</td>
+</tr>
+<tr class="yellow">
+<td><strong>紫光国微</strong><br><span>002049.SZ</span></td>
+<td>100股，成本待补</td>
+<td>81.74<br><span>-4.77%</span></td>
+<td>3日 -2.12%<br>5日 -1.75%</td>
+<td>特种芯片/安全芯片基本盘仍有关注度。</td>
+<td>7/10 披露回购股份注销及减资通知后，7/13 股东户数增加信息显示筹码分散压力。</td>
+<td><span class="pill yellow">黄色</span><br>中性</td>
+<td>观察 80 支撑；不作为今日优先加仓方向。</td>
+</tr>
+<tr class="yellow">
+<td><strong>阿里巴巴-W</strong><br><span>9988.HK</span></td>
+<td>6手/600股，成本160</td>
+<td>110.70<br><span>+0.45%</span></td>
+<td>3日 +2.98%<br>5日 +15.37%</td>
+<td>港股连续修复，ADR/港股前期买盘改善；股息/回购仍提供情绪支撑。</td>
+<td>仍远低于持仓成本，电商/云估值修复尚未转化为成本线修复。</td>
+<td><span class="pill yellow">黄色</span><br>中性偏多</td>
+<td>持有观察，不追涨；先看 110 是否转为支撑。</td>
+</tr>
+<tr class="orange">
+<td><strong>宁德时代-H</strong><br><span>3750.HK</span></td>
+<td>1手/100股，成本660</td>
+<td>603.00<br><span>+2.73%</span></td>
+<td>3日 -3.98%<br>5日 -9.73%</td>
+<td>7/13 从 7/10 大跌后反弹，龙头基本面地位未见新增公告层面恶化。</td>
+<td>仍低于 660 成本，7/10 放量大跌后的修复力度不足；港股高价新股波动仍大。</td>
+<td><span class="pill orange">橙色</span><br>中性偏弱</td>
+<td>看 600 得失；跌破 600 后先防守，不做摊低。</td>
+</tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>风险预案</h2>
+      <div class="plan">
+        <div class="panel"><h2>开盘弱</h2><p>先看红色个股是否继续放量破位。生益科技、联瑞新材、联得装备若不能快速收回关键位，不做摊低。</p></div>
+        <div class="panel"><h2>冲高回落</h2><p>高贝塔科技股以做 T 和降风险为主，尤其是半导体材料、设备、PCB、机器人相关仓位。</p></div>
+        <div class="panel"><h2>强修复</h2><p>只在板块广度修复、核心票放量收回成本/压力位后转为持有观察，不因单票反弹追高。</p></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>来源与数据缺口</h2>
+      <ul><li><a href="https://push2his.eastmoney.com/">东方财富 push2his A/H 股 K 线</a>：用于 2026-07-13 A/H 收盘、涨跌幅、3/5 日累计涨跌测算。</li>
+<li><a href="https://apnews.com/article/84784dd049267a58ac547d8a1c7fcd02">AP: How major US stock indexes fared Monday 7/13/2026</a>：隔夜美股三大指数、Nasdaq 下跌和 AI/芯片下跌背景。</li>
+<li><a href="https://indexes.nasdaqomx.com/Index/Overview/SOX">Nasdaq SOX overview</a>：费城半导体指数 2026-07-13 收盘下跌约 4.75%。</li>
+<li><a href="https://quote.eastmoney.com/kcb/688300.html">东方财富联瑞新材公告页</a>：7/13 可转债投资者适当性风险提示。</li>
+<li><a href="https://m.10jqka.com.cn/sn/20260701/58746135.shtml">同花顺雅克科技异动公告摘录</a>：保留 7/2 股票交易异常波动及二级市场风险提示。</li>
+<li><a href="https://data.eastmoney.com/notice/">东方财富/新浪个股公告页</a>：用于核对其他持仓未见重大新增公告。</li></ul>
+      <p>数据缺口：未能逐条拉取全部交易所 PDF 原文；公告层面以可检索公开公告页和主流财经公告索引核验。若未列出实质事项，按“未见重大新增利多/利空”处理。</p>
+    </section>
+    <footer>生成时间：2026-07-14T06:00:00+08:00；记忆路径：C:\Users\bzsj_\.codex\automations\automation-2\memory.md</footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

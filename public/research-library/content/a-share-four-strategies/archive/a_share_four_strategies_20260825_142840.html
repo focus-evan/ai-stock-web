@@ -1,0 +1,3547 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A股四战法统一总览</title>
+  <style>
+    :root {
+      --bg: #f7efe7;
+      --bg-soft: #fffaf5;
+      --paper: rgba(255, 252, 248, 0.92);
+      --paper-strong: rgba(255, 255, 255, 0.96);
+      --line: rgba(182, 79, 61, 0.12);
+      --red: #b64f3d;
+      --red-deep: #7f3229;
+      --text: #2e2623;
+      --muted: #7f716a;
+      --shadow: 0 22px 50px rgba(123, 63, 48, 0.10);
+      --shadow-soft: 0 12px 28px rgba(123, 63, 48, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(216, 133, 109, 0.28), transparent 28%),
+        radial-gradient(circle at top right, rgba(234, 192, 170, 0.34), transparent 24%),
+        linear-gradient(180deg, #fbf4ec 0%, #f7efe7 42%, #f4ebe2 100%);
+    }
+    .wrap {
+      width: min(1480px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    .hero {
+      padding: 34px 36px 30px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,247,241,0.96));
+      border: 1px solid rgba(182, 79, 61, 0.09);
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--red-deep);
+    }
+    .hero-copy {
+      max-width: 900px;
+      margin: 14px 0 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .hero-meta, .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .hero-pill, .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 247, 240, 0.92);
+      border: 1px solid var(--line);
+      color: var(--red-deep);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .hero-stat {
+      min-width: 160px;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(255, 251, 246, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+    .hero-stat-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .overview-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      min-height: 250px;
+      padding: 24px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(202, 73, 55, 0.10), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,249,244,0.92));
+      border: 1px solid rgba(190, 79, 61, 0.16);
+      box-shadow: 0 24px 70px rgba(130, 62, 45, 0.12);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .overview-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 20px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(182, 79, 61, 0.34), transparent);
+    }
+    .overview-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(182, 79, 61, 0.28);
+      box-shadow: 0 30px 88px rgba(130, 62, 45, 0.16);
+    }
+    .overview-top, .history-head, .panel-head, .framework-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .overview-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--red-deep);
+      letter-spacing: -0.02em;
+    }
+    .overview-subtitle, .framework-copy, .subtle, .path-line, .muted-note, .meta-path {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .overview-subtitle {
+      margin: 10px 0 0;
+      font-size: 13px;
+      min-height: 0;
+    }
+    .overview-body {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overview-kicker,
+    .overview-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #b05a49;
+    }
+    .overview-kicker {
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .overview-verdict {
+      min-height: 0;
+      font-size: 21px;
+      font-weight: 850;
+      line-height: 1.34;
+      color: #4b2a24;
+      letter-spacing: -0.03em;
+    }
+    .logic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .logic-row {
+      min-height: 64px;
+      padding: 10px 11px;
+      border-radius: 16px;
+      background: rgba(255, 250, 246, 0.86);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .logic-row span {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #a25a4b;
+    }
+    .logic-row strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+      line-height: 1.35;
+      color: #412922;
+    }
+    .overview-section {
+      margin-top: 16px;
+      padding: 14px 0 0;
+      border-top: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .overview-section-radar {
+      margin-top: 12px;
+    }
+    .overview-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .overview-chip,
+    .overview-muted {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: #7b463b;
+      background: rgba(255, 243, 236, 0.88);
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      white-space: normal;
+    }
+    .overview-chip-stock {
+      color: #9b3e32;
+      background: rgba(202, 73, 55, 0.08);
+      border-color: rgba(202, 73, 55, 0.18);
+      font-weight: 700;
+    }
+    .overview-muted {
+      color: var(--muted);
+      background: rgba(255,255,255,0.62);
+    }
+    .overview-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .overview-link {
+      color: var(--red);
+      font-weight: 600;
+    }
+    .overview-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .overview-actions a {
+      text-decoration: none;
+    }
+    .overview-link-core {
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #8d3429;
+      background: rgba(202, 73, 55, 0.08);
+      border: 1px solid rgba(202, 73, 55, 0.14);
+    }
+    .framework {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 32px;
+      background: rgba(255, 252, 248, 0.82);
+      border: 1px solid rgba(182, 79, 61, 0.09);
+      box-shadow: var(--shadow-soft);
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #8f7e75;
+    }
+    h2, h3 {
+      margin: 0;
+      color: var(--red-deep);
+    }
+    h2 {
+      margin-top: 10px;
+      font-size: clamp(28px, 2.8vw, 42px);
+      line-height: 1.12;
+    }
+    .framework-copy {
+      margin: 10px 0 0;
+      max-width: 780px;
+      font-size: 15px;
+    }
+    .simple-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 24px;
+      background: rgba(255, 250, 246, 0.72);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .simple-summary-card {
+      min-height: 112px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .simple-summary-label {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: #a25a4b;
+    }
+    .simple-summary-value {
+      margin-top: 9px;
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 850;
+      color: #412922;
+    }
+    .simple-next {
+      grid-column: 1 / -1;
+      padding: 10px 12px 0;
+      color: #806f66;
+      line-height: 1.55;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .audit-card {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .audit-card.audit-warn {
+      border-color: rgba(202, 73, 55, 0.34);
+      background: linear-gradient(135deg, rgba(255, 238, 230, 0.95), rgba(255, 250, 245, 0.78));
+    }
+    .audit-title {
+      font-weight: 800;
+      color: var(--red);
+      letter-spacing: 0.04em;
+    }
+    .audit-copy {
+      margin-top: 6px;
+      color: #6d5b52;
+      line-height: 1.7;
+    }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 14px;
+      margin-top: 10px;
+      color: var(--ink);
+      font-size: 12px;
+    }
+    .overlap-audit-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .overlap-audit-row {
+      padding: 9px 11px;
+      border-radius: 14px;
+      border: 1px solid rgba(182, 79, 61, 0.14);
+      background: rgba(255, 255, 255, 0.66);
+      color: #5d4740;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+    .audit-path {
+      color: var(--muted);
+      word-break: break-all;
+    }
+    .framework-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      min-width: 280px;
+    }
+    .meta-path {
+      max-width: 420px;
+      font-size: 12px;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .panel {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 24px;
+      background: var(--paper);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .soft-panel {
+      background: rgba(255,255,255,0.84);
+    }
+    .action-board {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255,252,248,0.92), rgba(255,245,239,0.88));
+      border: 1px solid rgba(182, 79, 61, 0.10);
+      box-shadow: var(--shadow-soft);
+    }
+    .decision-hero {
+      margin-top: 18px;
+      padding: 22px 24px 20px;
+      border-radius: 28px;
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,247,241,0.94));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .decision-buy {
+      background: linear-gradient(135deg, rgba(255,250,246,0.98), rgba(255,236,228,0.96));
+      border-color: rgba(182, 79, 61, 0.22);
+    }
+    .decision-wait {
+      background: linear-gradient(135deg, rgba(255,252,248,0.98), rgba(255,243,235,0.96));
+      border-color: rgba(182, 79, 61, 0.18);
+    }
+    .decision-avoid {
+      background: linear-gradient(135deg, rgba(255,248,245,0.98), rgba(252,232,227,0.96));
+      border-color: rgba(182, 79, 61, 0.20);
+    }
+    .decision-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9f6c61;
+    }
+    .decision-value {
+      margin-top: 8px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--red-deep);
+    }
+    .decision-note {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #7d6e66;
+    }
+    .signal-spotlight {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 16px;
+    }
+    .signal-spotlight-copy {
+      padding: 22px 22px 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .signal-spotlight-copy h3 {
+      margin-top: 10px;
+      font-size: clamp(24px, 2.2vw, 34px);
+      line-height: 1.1;
+    }
+    .overlap-panel {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overlap-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .overlap-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .overlap-card {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .overlap-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .overlap-name {
+      margin-top: 3px;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #402824;
+    }
+    .overlap-score {
+      min-height: 28px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: rgba(193, 69, 43, 0.12);
+      color: #8e392c;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .overlap-frameworks {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #75675f;
+    }
+    .action-detail-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .signal-grid-compact {
+      grid-template-columns: 1fr;
+    }
+    .avoid-shell {
+      margin-top: 12px;
+    }
+    .avoid-list {
+      display: grid;
+      gap: 8px;
+    }
+    .avoid-rule {
+      padding: 18px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.14);
+      background: linear-gradient(135deg, rgba(255, 247, 242, 0.96), rgba(255, 255, 255, 0.78));
+      color: #6d5b52;
+      line-height: 1.7;
+    }
+    .avoid-rule b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--red);
+      font-size: 16px;
+    }
+    .avoid-rule span {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+    .avoid-row {
+      display: grid;
+      grid-template-columns: minmax(160px, 0.9fr) minmax(180px, 1.35fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 250, 247, 0.62);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: none;
+    }
+    .avoid-main {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      min-width: 0;
+    }
+    .avoid-code {
+      flex: none;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: rgba(160, 75, 58, 0.76);
+    }
+    .avoid-main strong {
+      min-width: 0;
+      font-size: 15px;
+      line-height: 1.35;
+      color: #51342e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .avoid-reason {
+      min-width: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #8a756b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .avoid-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8a473a;
+      background: rgba(122, 56, 44, 0.08);
+      white-space: nowrap;
+    }
+    .timing-notice {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(182, 79, 61, 0.18);
+      background: rgba(255, 248, 244, 0.92);
+      color: #5e4038;
+    }
+    .timing-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #843729;
+    }
+    .timing-body {
+      margin-top: 4px;
+      color: #826b62;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .timing-afterclose {
+      border-color: rgba(202, 73, 55, 0.34);
+      background: #fff2ee;
+    }
+    .timing-intraday {
+      border-color: rgba(22, 128, 83, 0.30);
+      background: #f0fbf5;
+    }
+    .timing-intraday .timing-title {
+      color: #186b45;
+    }
+    .timing-preopen {
+      border-color: rgba(190, 122, 38, 0.28);
+      background: #fff8e8;
+    }
+    .execution-focus {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(202, 73, 55, 0.10), transparent 38%),
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,244,238,0.86));
+      border: 1px solid rgba(182, 79, 61, 0.14);
+    }
+    .execution-focus-empty {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #7d665d;
+    }
+    .execution-focus-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .exec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .exec-card {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(182, 79, 61, 0.12);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 10px 26px rgba(123, 63, 48, 0.06);
+    }
+    .exec-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .exec-code {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #b15a47;
+    }
+    .exec-name {
+      margin-top: 4px;
+      font-size: 24px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #3f2823;
+    }
+    .exec-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .exec-noqueue .exec-badge {
+      color: #fff8f3;
+      background: linear-gradient(135deg, #a7372a, #cf6048);
+      box-shadow: 0 8px 22px rgba(177, 59, 44, 0.24);
+    }
+    .exec-board .exec-badge {
+      color: #8f3d2f;
+      background: rgba(238, 187, 145, 0.55);
+      border: 1px solid rgba(190, 91, 57, 0.16);
+    }
+    .exec-watch .exec-badge {
+      color: #8d584b;
+      background: rgba(249, 231, 220, 0.8);
+    }
+    .exec-avoid {
+      opacity: 0.82;
+      background: rgba(255,250,247,0.62);
+    }
+    .exec-avoid .exec-badge {
+      color: #8a473a;
+      background: rgba(122, 56, 44, 0.09);
+    }
+    .exec-method {
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 800;
+      color: #50342d;
+    }
+    .exec-price {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 239, 230, 0.76);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .exec-price span,
+    .exec-invalid span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #a46a5b;
+    }
+    .exec-price b {
+      font-size: 22px;
+      line-height: 1.18;
+      color: var(--red-deep);
+    }
+    .exec-invalid {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #7c6a62;
+    }
+    .signal-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+      box-shadow: 0 10px 24px rgba(123, 63, 48, 0.06);
+    }
+    .signal-watch {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,249,245,0.93));
+    }
+    .signal-buy {
+      background: linear-gradient(180deg, rgba(255,250,247,0.98), rgba(255,240,232,0.94));
+      border-color: rgba(182, 79, 61, 0.20);
+    }
+    .signal-avoid {
+      background: linear-gradient(180deg, rgba(255,248,246,0.96), rgba(251,237,232,0.92));
+      border-color: rgba(182, 79, 61, 0.16);
+    }
+    .signal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .stock-code {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #b35a47;
+    }
+    .stock-name {
+      margin-top: 4px;
+      font-size: 28px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #402824;
+    }
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .action-watch {
+      background: rgba(250, 225, 212, 0.9);
+      color: #9c533f;
+    }
+    .action-buy {
+      background: rgba(193, 69, 43, 0.14);
+      color: #8e392c;
+    }
+    .action-avoid {
+      background: rgba(122, 56, 44, 0.10);
+      color: #7c3e32;
+    }
+    .signal-headline {
+      margin-top: 14px;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 700;
+      color: #43312d;
+    }
+    .signal-reason {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.82;
+      color: #75675f;
+      overflow-wrap: anywhere;
+    }
+    .signal-exec {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255, 247, 241, 0.84);
+      border: 1px solid rgba(182, 79, 61, 0.12);
+    }
+    .signal-exec div {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .signal-exec span {
+      font-size: 12px;
+      color: #a58a7f;
+      font-weight: 700;
+    }
+    .signal-exec b {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--red-deep);
+    }
+    .data-strip {
+      margin-top: 16px;
+      padding-top: 4px;
+    }
+    .strategy-tabs {
+      margin-top: 22px;
+      padding: 10px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 250, 247, 0.78), rgba(255, 245, 239, 0.58));
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .tab-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .tab-bar {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .tab-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #8a6e64;
+      cursor: pointer;
+      transition: background .16s ease, color .16s ease, box-shadow .16s ease;
+      user-select: none;
+    }
+    .tab-button:hover {
+      color: var(--red-deep);
+      background: rgba(202, 73, 55, 0.06);
+    }
+    .tab-content {
+      display: none;
+    }
+    .strategy-tabs .panel {
+      margin-top: 12px;
+      box-shadow: none;
+    }
+    .strategy-tabs .strategy-actions,
+    .strategy-tabs .strategy-performance {
+      margin-top: 12px;
+    }
+    .strategy-tabs input[id$="-recommendations"]:checked ~ .tab-bar .tab-recommend,
+    .strategy-tabs input[id$="-tracking"]:checked ~ .tab-bar .tab-track {
+      color: #8f3328;
+      background: linear-gradient(180deg, rgba(255, 238, 230, 0.96), rgba(246, 215, 203, 0.92));
+      box-shadow: 0 8px 20px rgba(137, 62, 44, 0.12);
+    }
+    .strategy-tabs input[id$="-recommendations"]:checked ~ .tab-content-recommend,
+    .strategy-tabs input[id$="-tracking"]:checked ~ .tab-content-track {
+      display: block;
+    }
+    .strategy-actions,
+    .strategy-performance {
+      margin-top: 20px;
+    }
+    .strategy-action-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .inner-panel {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      background: rgba(255,255,255,0.82);
+    }
+    .watch-panel {
+      margin-top: 14px;
+    }
+    .tracking-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .tracking-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 1.2fr) repeat(5, minmax(100px, 0.8fr));
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      box-shadow: 0 10px 22px rgba(123, 63, 48, 0.035);
+    }
+    .tracking-stock {
+      min-width: 0;
+    }
+    .tracking-name {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #43312d;
+    }
+    .tracking-metric {
+      min-width: 0;
+      line-height: 1.35;
+    }
+    .tracking-metric span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: #9b877d;
+    }
+    .tracking-metric b {
+      display: block;
+      font-size: 17px;
+      color: #4a3d36;
+      white-space: nowrap;
+    }
+    .metric-current b {
+      font-size: 22px;
+      color: var(--red-deep);
+    }
+    .metric-drawdown b {
+      color: #7d6259;
+    }
+    .tracking-date b {
+      color: #75675f;
+      font-size: 15px;
+    }
+    .fact-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px dashed rgba(182, 79, 61, 0.10);
+      color: #4a3d36;
+      line-height: 1.7;
+    }
+    .fact-line:first-of-type {
+      margin-top: 12px;
+    }
+    .perf-panel {
+      margin-top: 20px;
+    }
+    .operation-trigger-entry {
+      margin-top: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(182, 79, 61, 0.14);
+      background: linear-gradient(180deg, rgba(255, 252, 248, 0.95), rgba(255, 246, 240, 0.86));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+      overflow: hidden;
+    }
+    .operation-trigger-entry[open] {
+      box-shadow: 0 12px 30px rgba(123, 63, 48, 0.07), inset 0 1px 0 rgba(255,255,255,0.78);
+    }
+    .operation-trigger-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .operation-trigger-summary::-webkit-details-marker {
+      display: none;
+    }
+    .operation-trigger-summary h4 {
+      margin: 5px 0 0;
+      font-size: 22px;
+      color: var(--red-deep);
+    }
+    .operation-trigger-summary p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .trigger-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 280px;
+    }
+    .trigger-stat {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .trigger-stat-buy {
+      color: #8f3328;
+      background: rgba(202, 73, 55, 0.12);
+      border: 1px solid rgba(202, 73, 55, 0.20);
+    }
+    .trigger-stat-watch {
+      color: #8c5b24;
+      background: rgba(236, 176, 82, 0.16);
+      border: 1px solid rgba(205, 139, 42, 0.20);
+    }
+    .trigger-stat-avoid {
+      color: #775d54;
+      background: rgba(122, 56, 44, 0.08);
+      border: 1px solid rgba(122, 56, 44, 0.12);
+    }
+    .operation-trigger-body {
+      padding: 0 20px 20px;
+      border-top: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .trigger-meta {
+      margin-top: 14px;
+      color: #8f5f53;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .trigger-warning {
+      margin-top: 10px;
+      padding: 11px 13px;
+      border-radius: 14px;
+      color: #8d3b2f;
+      background: rgba(202, 73, 55, 0.08);
+      border: 1px solid rgba(202, 73, 55, 0.16);
+      line-height: 1.6;
+    }
+    .operation-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .timeline-step {
+      min-height: 118px;
+      padding: 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(182, 79, 61, 0.10);
+    }
+    .timeline-time {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--red-deep);
+    }
+    .timeline-title {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: 850;
+      color: #4e332d;
+    }
+    .timeline-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #806f66;
+    }
+    .trigger-table-wrap {
+      margin-top: 16px;
+    }
+    .trigger-table {
+      min-width: 1180px;
+    }
+    .trigger-table th:nth-child(1),
+    .trigger-table td:nth-child(1) {
+      width: 150px;
+    }
+    .trigger-table th:nth-child(2),
+    .trigger-table td:nth-child(2) {
+      width: 150px;
+    }
+    .trigger-stock-code {
+      color: #b35a47;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+    .trigger-stock-name {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #3f2823;
+    }
+    .trigger-stock-theme {
+      margin-top: 5px;
+      color: #88766d;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .trigger-action {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .trigger-action-buy {
+      color: #8f3328;
+      background: rgba(202, 73, 55, 0.12);
+      border: 1px solid rgba(202, 73, 55, 0.20);
+    }
+    .trigger-action-watch {
+      color: #8a5a23;
+      background: rgba(236, 176, 82, 0.15);
+      border: 1px solid rgba(205, 139, 42, 0.18);
+    }
+    .trigger-action-avoid {
+      color: #73554b;
+      background: rgba(122, 56, 44, 0.08);
+      border: 1px solid rgba(122, 56, 44, 0.13);
+    }
+    .follow-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+    .follow-action-follow {
+      color: #8f241d;
+      background: rgba(220, 38, 38, 0.13);
+      border: 1px solid rgba(220, 38, 38, 0.22);
+    }
+    .follow-action-trigger,
+    .follow-action-preopen,
+    .follow-action-afterclose {
+      color: #8a4f14;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .follow-action-downgraded {
+      color: #6f5a52;
+      background: rgba(122, 56, 44, 0.08);
+      border: 1px solid rgba(122, 56, 44, 0.16);
+    }
+    .follow-action-avoid {
+      color: #6f5a52;
+      background: rgba(122, 56, 44, 0.08);
+      border: 1px solid rgba(122, 56, 44, 0.13);
+    }
+    .follow-note,
+    .trigger-rule {
+      margin-top: 7px;
+      color: #806f66;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+    .trigger-row-buy td {
+      background: rgba(255, 244, 238, 0.56);
+    }
+    .trigger-follow-follow td {
+      background: rgba(255, 241, 240, 0.70);
+    }
+    .trigger-follow-afterclose td,
+    .trigger-follow-preopen td,
+    .trigger-follow-trigger td {
+      background: rgba(255, 248, 232, 0.62);
+    }
+    .trigger-row-avoid td {
+      color: #7a625a;
+      background: rgba(250, 246, 243, 0.58);
+    }
+    .trigger-state {
+      margin-top: 6px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      color: #8d3b2f;
+      background: rgba(202, 73, 55, 0.08);
+      line-height: 1.45;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .table-wrap {
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 920px;
+      font-size: 14px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(182, 79, 61, 0.08);
+      line-height: 1.75;
+      color: #433630;
+    }
+    .compare-table th {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8f7e75;
+      background: rgba(255,247,241,0.92);
+      position: sticky;
+      top: 0;
+    }
+    .compare-table td:first-child {
+      font-weight: 700;
+      color: var(--red-deep);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .metric {
+      min-height: 126px;
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .metric-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #8f7e75;
+    }
+    .metric-value {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.78;
+      color: #3c302b;
+      overflow-wrap: anywhere;
+    }
+    .reason-grid {
+      align-items: stretch;
+    }
+    .reason-card {
+      min-height: 136px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(202, 73, 55, 0.08), transparent 38%),
+        rgba(255, 255, 255, 0.92);
+      border-color: rgba(182, 79, 61, 0.12);
+    }
+    .reason-main {
+      margin-top: 12px;
+      color: var(--red-deep);
+      font-size: 20px;
+      font-weight: 850;
+      line-height: 1.42;
+      letter-spacing: -0.03em;
+    }
+    .reason-sub {
+      margin-top: 10px;
+      color: #827067;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .history-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .history-item {
+      padding: 16px 16px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .history-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .history-title {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #4f2d26;
+    }
+    .history-copy {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.78;
+      color: #564943;
+      overflow-wrap: anywhere;
+    }
+    .history-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .chip, .risk-pill {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .chip {
+      background: rgba(249, 239, 232, 0.94);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      color: #8d5548;
+    }
+    .risk-pill {
+      background: rgba(243, 237, 231, 0.92);
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      color: #7a6b63;
+      white-space: nowrap;
+    }
+    .risk-red { background: rgba(214, 82, 64, 0.12); color: #a33628; }
+    .risk-orange { background: rgba(230, 150, 63, 0.14); color: #b2601d; }
+    .risk-yellow { background: rgba(214, 177, 80, 0.16); color: #9b6f0f; }
+    .risk-neutral { background: rgba(156, 155, 151, 0.12); color: #6c655e; }
+    .run-card {
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(182, 79, 61, 0.08);
+      background: rgba(255,255,255,0.88);
+    }
+    .run-card[open] {
+      background: rgba(255,255,255,0.96);
+      box-shadow: var(--shadow-soft);
+    }
+    .run-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .run-summary::-webkit-details-marker { display: none; }
+    .run-left {
+      display: flex;
+      gap: 14px;
+      min-width: 0;
+    }
+    .run-index {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f3d9d0, #fff5ef);
+      color: var(--red-deep);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .run-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #4f2d26;
+    }
+    .run-lead {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .run-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .run-time {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .run-body {
+      padding: 0 18px 18px;
+      border-top: 1px solid rgba(182, 79, 61, 0.08);
+    }
+    .mini-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+    pre {
+      margin: 12px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #4b403a;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .footer {
+      margin-top: 26px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    @media (max-width: 1200px) {
+      .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-spotlight,
+      .action-detail-grid,
+      .signal-grid,
+      .strategy-action-grid,
+      .simple-summary { grid-template-columns: 1fr; }
+      .operation-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .history-list { grid-template-columns: 1fr; }
+      .framework-head { flex-direction: column; }
+      .framework-side { align-items: flex-start; min-width: 0; }
+      .meta-path { text-align: left; }
+      .decision-value { font-size: 40px; }
+      .stock-name { font-size: 24px; }
+      .operation-trigger-summary { align-items: flex-start; flex-direction: column; }
+      .trigger-stats { justify-content: flex-start; min-width: 0; }
+    }
+    @media (max-width: 720px) {
+      .wrap { width: min(100vw - 20px, 1480px); padding-top: 14px; }
+      .hero { padding: 24px 20px; border-radius: 26px; }
+      .overview { grid-template-columns: 1fr; }
+      .logic-grid { grid-template-columns: 1fr; }
+      .metrics-grid, .mini-grid { grid-template-columns: 1fr; }
+      .simple-summary { padding: 10px; border-radius: 20px; }
+      .simple-summary-card { min-height: auto; padding: 14px; }
+      .framework { padding: 20px 16px; border-radius: 24px; }
+      .run-summary { flex-direction: column; }
+      .run-right { align-items: flex-start; }
+      .action-board { padding: 20px 16px; border-radius: 24px; }
+      .decision-value { font-size: 32px; }
+      .exec-grid { grid-template-columns: 1fr; }
+      .execution-focus-head { flex-direction: column; }
+      .exec-top { flex-direction: column; }
+      .exec-badge { align-self: flex-start; }
+      .signal-card { padding: 16px; }
+      .signal-head { flex-direction: column; }
+      .action-tag { align-self: flex-start; }
+      .operation-trigger-summary { padding: 16px; }
+      .operation-trigger-body { padding: 0 16px 16px; }
+      .operation-timeline { grid-template-columns: 1fr; }
+      .trigger-table { min-width: 980px; }
+      .tracking-row { grid-template-columns: 1fr 1fr; }
+      .tracking-stock { grid-column: 1 / -1; }
+      .avoid-row {
+        grid-template-columns: 1fr auto;
+        gap: 6px 10px;
+      }
+      .avoid-reason {
+        grid-column: 1 / -1;
+        white-space: normal;
+      }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="wrap">
+    <header class="hero">
+      <h1>A股四战法统一总览</h1>
+    </header>
+
+    <nav class="overview">
+      
+    <article class="overview-card" id="yangjia-card">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">养家情绪周期</div>
+          <p class="overview-subtitle">从赚钱效应与亏钱效应出发，看次日是否允许出手。</p>
+        </div>
+        <span class="risk-pill risk-yellow">Yellow</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">结论</div>
+        <div class="overview-verdict">赚钱扩散</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">动作：明确可买</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">买 600127金健米业</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-08-25 10:10:17 +08:00</span>
+        <span class="overview-actions">
+          <a class="overview-link" href="#yangjia">查看详情</a>
+          <a class="overview-link overview-link-core" href="../yangjia-core-logic.html">核心逻辑</a>
+        </span>
+      </div>
+    </article>
+    
+
+    <article class="overview-card" id="kobe92-card">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">Kobe92 周期切换</div>
+          <p class="overview-subtitle">先判周期，再看龙头、补涨与切换，不做中位情绪幻觉。</p>
+        </div>
+        <span class="risk-pill risk-orange">Orange</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">结论</div>
+        <div class="overview-verdict">低位震荡</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">动作：无直接买 / 等触发</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">无直接买</span><span class="overview-chip overview-chip-stock">看换手 300765石药创新</span><span class="overview-chip overview-chip-stock">看承接 300142沃森生物</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-08-21 08:47:14 +08:00</span>
+        <span class="overview-actions">
+          <a class="overview-link" href="#kobe92">查看详情</a>
+          <a class="overview-link overview-link-core" href="../kobe92-core-logic.html">核心逻辑</a>
+        </span>
+      </div>
+    </article>
+    
+
+    <article class="overview-card" id="beijing-chaogu-card">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">北京炒家首板</div>
+          <p class="overview-subtitle">只做前排首板、回封与换手，重视封板质量和次日套利窗口。</p>
+        </div>
+        <span class="risk-pill risk-red">Red</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">结论</div>
+        <div class="overview-verdict">不开新仓</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">动作：无直接买 / 等触发</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">无直接买</span><span class="overview-chip overview-chip-stock">002837英维克</span><span class="overview-chip overview-chip-stock">002081金螳螂</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-08-25 14:22:08 +08:00</span>
+        <span class="overview-actions">
+          <a class="overview-link" href="#beijing-chaogu">查看详情</a>
+          <a class="overview-link overview-link-core" href="../beijing-core-logic.html">核心逻辑</a>
+        </span>
+      </div>
+    </article>
+    
+
+    <article class="overview-card" id="leader-card">
+      <div class="overview-top">
+        <div>
+          <div class="overview-title">陈小群龙头战法</div>
+          <p class="overview-subtitle">偏情绪合力与龙头辨识度，只保留真正能带队的前排席位。</p>
+        </div>
+        <span class="risk-pill risk-orange">Orange</span>
+      </div>
+      <div class="overview-body">
+        <div class="overview-kicker">结论</div>
+        <div class="overview-verdict">risk-on</div>
+      </div>
+      <div class="overview-section">
+        <div class="overview-label">动作：无直接买 / 等触发</div>
+        <div class="overview-chips"><span class="overview-chip overview-chip-stock">无直接买</span><span class="overview-chip overview-chip-stock">等分歧 002041登海种业</span><span class="overview-chip overview-chip-stock">等分歧 600127金健米业</span></div>
+      </div>
+      <div class="overview-footer">
+        <span>2026-08-25 10:12:30 +08:00</span>
+        <span class="overview-actions">
+          <a class="overview-link" href="#leader">查看详情</a>
+          <a class="overview-link overview-link-core" href="../leader-core-logic.html">核心逻辑</a>
+        </span>
+      </div>
+    </article>
+    
+    </nav>
+
+    
+    <section class="action-board">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Execution</div>
+          <h2>今日统一操作面板</h2>
+        </div>
+        <span class="meta-pill">2026-08-25 14:22:08 +08:00（四战法最新合成）</span>
+      </div>
+      <div class="decision-hero decision-avoid">
+        <div class="decision-label">今日结论</div>
+        <div class="decision-value">直接执行指南未更新到最新检查点；按四战法最新记录：无直接买，空仓/只观察价格触发优先。</div>
+        <div class="decision-note">先看结论，再看主攻票，最后看备选与禁买。</div>
+      </div>
+      <div class="signal-spotlight">
+        <div class="signal-spotlight-copy">
+          <div class="metric-label">主攻 / 首选观察位</div>
+          <h3>今天最重要的一只</h3>
+          <div class="overlap-panel">
+            <div class="overlap-label">最新同步观察位</div>
+            <div class="overlap-list">
+              <div class="empty">当前没有唯一主攻票；候选股统一放在下方“备选与触发”。</div>
+            </div>
+          </div>
+        </div>
+        
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">观察位</div>
+          <div class="stock-name">空仓席位；当前无</div>
+        </div>
+        <span class="action-tag action-watch">主攻</span>
+      </div>
+      <div class="signal-headline">空仓席位</div>
+      <div class="signal-reason">当前无直接买，等待封板、回封或价格触发后再看。</div>
+      
+    </article>
+    
+      </div>
+      <div class="action-detail-grid">
+        <div class="panel soft-panel">
+          <div class="panel-head">
+            <h3>备选与触发</h3>
+            <span class="subtle">只保留可执行观察位</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002041</div>
+          <div class="stock-name">登海种业</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">等触发</div>
+      <div class="signal-reason">命中：养家情绪周期 / 陈小群龙头战法</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>按价格/承接触发，半路或分歧确认</b></div>
+          <div><span>触发区间</span><b>看结构触发</b></div>
+          <div><span>失效</span><b>未触发价格/承接条件即不买</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600371</div>
+          <div class="stock-name">万向德农</div>
+        </div>
+        <span class="action-tag action-watch">备选</span>
+      </div>
+      <div class="signal-headline">等触发</div>
+      <div class="signal-reason">命中：养家情绪周期</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>没触发就不买，等下一检查点</b></div>
+          <div><span>触发区间</span><b>看结构触发</b></div>
+          <div><span>失效</span><b>等待下一检查点确认</b></div>
+        </div>
+        
+    </article>
+    
+          </div>
+        </div>
+        <div class="panel soft-panel">
+          <div class="panel-head">
+            <h3>明确不买</h3>
+            <span class="subtle">避免把精力浪费在错误位置</span>
+          </div>
+          <div class="avoid-shell">
+            
+        <div class="avoid-rule">
+          <b>统一禁买规则</b>
+          <span>未触发前统一不买：左侧观察位未满足价格触发、回封确认、板块联动前，一律不买；旧指南中的昨日主攻票不再作为今日首页依据。</span>
+        </div>
+        
+          </div>
+          <div class="data-strip">
+            <div class="fact-line"><b>Cutoff</b><span>四战法最新：2026-08-25 14:22:08 +08:00；直接执行指南最新仍为 2026-08-25 10:47:16 +08:00</span></div>
+            <div class="fact-line"><b>耗时</b><span>生成器自动同步：任一子战法更新晚于直接指南时，首页按当天子战法集合重算。</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <section class="panel perf-panel">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Performance</div>
+          <h3>四战法近期收益对比（动态）</h3>
+        </div>
+        <span class="meta-pill">2026-08-25 14:22:08 +08:00（动态收益跟踪）</span>
+      </div>
+      
+    <details class="operation-trigger-entry" open="">
+      <summary class="operation-trigger-summary">
+        <div>
+          <div class="eyebrow">Trigger Entry</div>
+          <h4>四战法收益触发入口</h4>
+          <p>点开看完整操作时间线、买入价/触发条件、失效条件，以及每个信号来自哪个战法。只有“可跟投”才是盘中可执行信号。</p>
+        </div>
+        <div class="trigger-stats">
+          <span class="trigger-stat trigger-stat-buy">可跟投 0</span>
+          <span class="trigger-stat trigger-stat-watch">等触发 3</span>
+          <span class="trigger-stat trigger-stat-avoid">不买/失效 8</span>
+        </div>
+      </summary>
+      <div class="operation-trigger-body">
+        <div class="trigger-meta">最新信号时间：2026-08-25 14:22:08 +08:00</div>
+        <div class="trigger-warning">提示：统一执行指南时间可能落后，盘中触发以本入口表格为准。四战法最新：2026-08-25 14:22:08 +08:00；直接执行指南最新仍为 2026-08-25 10:47:16 +08:00</div>
+        <div class="operation-timeline">
+        <div class="timeline-step">
+          <div class="timeline-time">08:45</div>
+          <div class="timeline-title">Kobe92盘前</div>
+          <div class="timeline-desc">只定周期和候选，不直接跟投；等10:15确认低位/补涨/切换。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">08:50</div>
+          <div class="timeline-title">养家盘前</div>
+          <div class="timeline-desc">只定情绪门和候选，不直接跟投；等10:05确认赚钱效应。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">10:05</div>
+          <div class="timeline-title">养家/陈小群确认</div>
+          <div class="timeline-desc">第一跟投窗口：确认主线、情绪宽度、龙头辨识度和触发价。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">10:15</div>
+          <div class="timeline-title">Kobe92确认</div>
+          <div class="timeline-desc">周期跟投窗口：只做周期匹配的龙头、补涨或切换，排除中位。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">10:35</div>
+          <div class="timeline-title">北京炒家首板</div>
+          <div class="timeline-desc">首板跟投窗口：只看前排排板、回封、换手，不做后排。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">10:45</div>
+          <div class="timeline-title">四战法统一执行</div>
+          <div class="timeline-desc">把各战法信号压缩成可跟投、只等触发、禁买。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">14:20</div>
+          <div class="timeline-title">封板质量复核</div>
+          <div class="timeline-desc">只验收已触发标的，慎开新仓；两只炸板则停止新增。</div>
+        </div>
+        
+        <div class="timeline-step">
+          <div class="timeline-time">15:20/15:25</div>
+          <div class="timeline-title">收盘复盘</div>
+          <div class="timeline-desc">盘后不跟投，只生成次日竞价/回封/弱转强条件。</div>
+        </div>
+        </div>
+        <div class="table-wrap trigger-table-wrap">
+          <table class="compare-table trigger-table">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>股票</th>
+                <th>跟投状态</th>
+                <th>买入价/触发条件</th>
+                <th>战法买法</th>
+                <th>失效条件</th>
+                <th>来源战法</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr class="trigger-row-watch trigger-follow-trigger">
+                  <td>2026-08-25 10:12:30 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002041</div>
+                    <div class="trigger-stock-name">登海种业</div>
+                    <div class="trigger-stock-theme">种植业</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-trigger">只等触发</span>
+                    <div class="follow-note">还不是买点；只有触发价、量能和战法条件同时满足才动手。</div>
+                  </td>
+                  <td>打开11.21后充分换手、守10.70并回封11.21；农业前排仍&gt;=6</td>
+                  <td>
+                    <b>首次分歧回封，当前0；确认后&lt;=0.003/10</b>
+                    <div class="trigger-rule">陈小群：只跟龙头辨识度成立后的分歧承接/回封。</div>
+                    
+                  </td>
+                  <td>开板无承接、跌破10.70或农业缩容</td>
+                  <td>陈小群龙头战法 · 最新等触发</td>
+                </tr>
+                
+
+                <tr class="trigger-row-watch trigger-follow-trigger">
+                  <td>2026-08-25 10:10:17 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002041</div>
+                    <div class="trigger-stock-name">登海种业</div>
+                    <div class="trigger-stock-theme">种植业</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-trigger">只等触发</span>
+                    <div class="follow-note">还不是买点；只有触发价、量能和战法条件同时满足才动手。</div>
+                  </td>
+                  <td>打开11.21后充分换手并回封，封单&gt;=2.5亿元、种植业仍&gt;=3板位</td>
+                  <td>
+                    <b>首次分歧回封，当前0；确认后&lt;=0.003/10</b>
+                    <div class="trigger-rule">养家：只跟10:05情绪确认后的弱转强/承接/回封。</div>
+                    
+                  </td>
+                  <td>一字加速、开板无承接、封单&lt;1.5亿元或种植业缩容</td>
+                  <td>养家情绪周期 · 最新等触发</td>
+                </tr>
+                
+
+                <tr class="trigger-row-watch trigger-follow-trigger">
+                  <td>2026-08-25 10:10:17 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">600371</div>
+                    <div class="trigger-stock-name">万向德农</div>
+                    <div class="trigger-stock-theme">种植业</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-trigger">只等触发</span>
+                    <div class="follow-note">还不是买点；只有触发价、量能和战法条件同时满足才动手。</div>
+                  </td>
+                  <td>打开8.67后成交&gt;=2亿元并强回封，种植业仍&gt;=3板位</td>
+                  <td>
+                    <b>容量与回封确认，当前0；确认后&lt;=0.002/10</b>
+                    <div class="trigger-rule">养家：只跟10:05情绪确认后的弱转强/承接/回封。</div>
+                    
+                  </td>
+                  <td>开板无承接、封单&lt;1亿元或流动性不足</td>
+                  <td>养家情绪周期 · 最新等触发</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 14:22:08 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">000566</div>
+                    <div class="trigger-stock-name">海南海药</div>
+                    <div class="trigger-stock-theme">化学制药</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">北京炒家：只跟首板前排的排板、回封、换手确认。</div>
+                    
+                  </td>
+                  <td>封单2.56亿元&lt;3亿元失效门</td>
+                  <td>北京炒家首板 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 14:22:08 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002081</div>
+                    <div class="trigger-stock-name">金螳螂</div>
+                    <div class="trigger-stock-theme">装修装饰</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">北京炒家：只跟首板前排的排板、回封、换手确认。</div>
+                    
+                  </td>
+                  <td>封单2.79亿元&lt;4亿元失效门或开板</td>
+                  <td>北京炒家首板 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 14:22:08 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002837</div>
+                    <div class="trigger-stock-name">英维克</div>
+                    <div class="trigger-stock-theme">专用设备</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效新买触发</td>
+                  <td>
+                    <b>停止新增，不追回封，空仓/已有仓只控风险</b>
+                    <div class="trigger-rule">北京炒家：只跟首板前排的排板、回封、换手确认。</div>
+                    
+                  </td>
+                  <td>10:35开板失效已触发；再开板或封单&lt;7亿元继续恶化</td>
+                  <td>北京炒家首板 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 14:22:08 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">600127</div>
+                    <div class="trigger-stock-name">金健米业</div>
+                    <div class="trigger-stock-theme">农产品加工</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">北京炒家：只跟首板前排的排板、回封、换手确认。</div>
+                    
+                  </td>
+                  <td>六次炸板且未封板</td>
+                  <td>北京炒家首板 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 14:22:08 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">603395</div>
+                    <div class="trigger-stock-name">红四方</div>
+                    <div class="trigger-stock-theme">农化制品</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">北京炒家：只跟首板前排的排板、回封、换手确认。</div>
+                    
+                  </td>
+                  <td>封单0.91亿元&lt;1亿元失效门或农化分化</td>
+                  <td>北京炒家首板 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 10:12:30 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002412</div>
+                    <div class="trigger-stock-name">汉森制药</div>
+                    <div class="trigger-stock-theme">中药/医药</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>当前12.33；只作五板高度锚，不给当日新买触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">陈小群：只跟龙头辨识度成立后的分歧承接/回封。</div>
+                    
+                  </td>
+                  <td>开板弱回封、跌破11.60、异动风险升级或医药批量掉队</td>
+                  <td>陈小群龙头战法 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 10:12:30 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">003040</div>
+                    <div class="trigger-stock-name">楚天龙</div>
+                    <div class="trigger-stock-theme">通信设备</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>当前15.48；无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">陈小群：只跟龙头辨识度成立后的分歧承接/回封。</div>
+                    
+                  </td>
+                  <td>开板、通信掉队或跌破14.70</td>
+                  <td>陈小群龙头战法 · 最新不买</td>
+                </tr>
+                
+
+                <tr class="trigger-row-avoid trigger-follow-avoid">
+                  <td>2026-08-25 10:10:17 +08:00</td>
+                  <td>
+                    <div class="trigger-stock-code">002437</div>
+                    <div class="trigger-stock-name">誉衡药业</div>
+                    <div class="trigger-stock-theme">化学制药</div>
+                  </td>
+                  <td>
+                    <span class="follow-action follow-action-avoid">不买</span>
+                    <div class="follow-note">信号已失效、被淘汰或战法不支持，不能跟投。</div>
+                  </td>
+                  <td>无当日有效触发</td>
+                  <td>
+                    <b>不开仓</b>
+                    <div class="trigger-rule">养家：只跟10:05情绪确认后的弱转强/承接/回封。</div>
+                    
+                  </td>
+                  <td>弱回封、跌破4.20或医药继续弱于农业</td>
+                  <td>养家情绪周期 · 最新不买</td>
+                </tr>
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+    
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>战法</th>
+              <th>样本</th>
+              <th>平均最大涨幅</th>
+              <th>平均最新收益</th>
+              <th>平均最大回撤</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>北京炒家首板</td>
+              <td>5只</td>
+              <td>+13.68%</td>
+              <td>+2.99%</td>
+              <td>-15.57%</td>
+              <td>动态样本来自本战法近期明确买/可买/触发样本；最大收益样本 002265建设工业，最大回撤样本 001389广合科技。</td>
+            </tr>
+            
+
+            <tr>
+              <td>陈小群龙头战法</td>
+              <td>5只</td>
+              <td>+17.66%</td>
+              <td>+0.14%</td>
+              <td>-20.20%</td>
+              <td>动态样本来自本战法近期明确买/可买/触发样本；最大收益样本 001258立新能源，最大回撤样本 002156通富微电。</td>
+            </tr>
+            
+
+            <tr>
+              <td>Kobe92 周期切换</td>
+              <td>2只</td>
+              <td>+11.64%</td>
+              <td>-19.13%</td>
+              <td>-49.12%</td>
+              <td>动态样本来自本战法近期明确买/可买/触发样本；最大收益样本 688432有研硅，最大回撤样本 688432有研硅。</td>
+            </tr>
+            
+
+            <tr>
+              <td>养家情绪周期</td>
+              <td>4只</td>
+              <td>+1.61%</td>
+              <td>-26.70%</td>
+              <td>-32.69%</td>
+              <td>动态样本来自本战法近期明确买/可买/触发样本；最大收益样本 000566海南海药，最大回撤样本 688106金宏气体。</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+
+    
+    <section class="framework" id="yangjia">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>养家情绪周期</h2>
+          <p class="framework-copy">从赚钱效应与亏钱效应出发，看次日是否允许出手。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-08-25 10:10:17 +08:00</span>
+        </div>
+      </div>
+
+      
+    <div class="simple-summary">
+      
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">当前结论</div>
+          <div class="simple-summary-value">[HTML_DATA] framework: yangjia-emotion-cycle timestamp: 2026-08-25 10:10:17 +08:00 ch…</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">关注方向</div>
+          <div class="simple-summary-value">种植业/农产品加工 / 农化制品 / 医药高度但非最强扩散</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">操作动作</div>
+          <div class="simple-summary-value">可买/已触发：600127 金健米业</div>
+        </div>
+        
+      <div class="simple-next">下一次检查：等待下一次自动任务</div>
+    </div>
+    
+
+      
+    <section class="strategy-tabs" aria-label="养家情绪周期 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-yangjia" id="yangjia-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-yangjia" id="yangjia-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="yangjia-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="yangjia-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-08-25 10:10:17 +08:00</span>
+      </div>
+      
+      <div class="timing-notice timing-intraday">
+        <div class="timing-title">盘中确认版：具备跟投前提</div>
+        <div class="timing-body">只有当前价格仍在触发区间内，且失效条件没有出现，才具备小仓试错意义；过点、炸板或承接失败就不买。</div>
+      </div>
+    
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-board">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600127</div>
+                  <div class="exec-name">金健米业</div>
+                </div>
+                <span class="exec-badge">需要板上确认</span>
+              </div>
+              <div class="exec-method">涨停回封排板，不扫板，&lt;=0.003/10轻仓试错</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>当前/涨停价9.31；10:10封单5.96亿元、农业涨停7只且不再炸板</b></div>
+              <div class="exec-invalid"><span>失效</span>开板、封单&lt;3亿元、登海种业开板无承接或破板率&gt;25%</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002041</div>
+                  <div class="exec-name">登海种业</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧回封，当前0；确认后&lt;=0.003/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开11.21后充分换手并回封，封单&gt;=2.5亿元、种植业仍&gt;=3板位</b></div>
+              <div class="exec-invalid"><span>失效</span>一字加速、开板无承接、封单&lt;1.5亿元或种植业缩容</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">603395</div>
+                  <div class="exec-name">红四方</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧承接，当前0；确认后&lt;=0.002/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开28.55后回踩分时均线不破再回封，封单&gt;=1.5亿元</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破27.70、弱回封或农化少于3板位</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600371</div>
+                  <div class="exec-name">万向德农</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">容量与回封确认，当前0；确认后&lt;=0.002/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开8.67后成交&gt;=2亿元并强回封，种植业仍&gt;=3板位</b></div>
+              <div class="exec-invalid"><span>失效</span>开板无承接、封单&lt;1亿元或流动性不足</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>可跟投或条件触发</h3>
+            <span class="subtle">先看上方信号时效</span>
+          </div>
+          <div class="signal-grid">
+            
+    <article class="signal-card signal-buy">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600127</div>
+          <div class="stock-name">金健米业</div>
+        </div>
+        <span class="action-tag action-buy">买</span>
+      </div>
+      <div class="signal-headline">看承接</div>
+      <div class="signal-reason">一次炸板后回封、强封单和农业扩散同时成立；触发：当前/涨停价9.31；10:10封单5.96亿元、农业涨停7只且不再炸板；失效：开板、封单&lt;3亿元、登海种业开板无承接或破板率&gt;25%</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>涨停回封排板，不扫板，&lt;=0.003/10轻仓试错</b></div>
+          <div><span>触发区间</span><b>当前/涨停价9.31；10:10封单5.96亿元、农业涨停7只且不再炸板</b></div>
+          <div><span>失效</span><b>开板、封单&lt;3亿元、登海种业开板无承接或破板率&gt;25%</b></div>
+        </div>
+        
+    </article>
+    
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002437</span>
+                <strong>誉衡药业</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>等触发观察</h3>
+          <span class="subtle">未触发就是不买</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002041</div>
+          <div class="stock-name">登海种业</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看承接</div>
+      <div class="signal-reason">二板辨识度最高但当前没有分歧入口；触发：打开11.21后充分换手并回封，封单&gt;=2.5亿元、种植业仍&gt;=3板位；失效：一字加速、开板无承接、封单&lt;1.5亿元或种植业缩容</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧回封，当前0；确认后&lt;=0.003/10</b></div>
+          <div><span>触发区间</span><b>打开11.21后充分换手并回封，封单&gt;=2.5亿元、种植业仍&gt;=3板位</b></div>
+          <div><span>失效</span><b>一字加速、开板无承接、封单&lt;1.5亿元或种植业缩容</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">603395</div>
+          <div class="stock-name">红四方</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看换手</div>
+      <div class="signal-reason">农化低位前排且换手充分，但一致性已高；触发：打开28.55后回踩分时均线不破再回封，封单&gt;=1.5亿元；失效：跌破27.70、弱回封或农化少于3板位</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧承接，当前0；确认后&lt;=0.002/10</b></div>
+          <div><span>触发区间</span><b>打开28.55后回踩分时均线不破再回封，封单&gt;=1.5亿元</b></div>
+          <div><span>失效</span><b>跌破27.70、弱回封或农化少于3板位</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600371</div>
+          <div class="stock-name">万向德农</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看承接</div>
+      <div class="signal-reason">题材正宗但当前成交容量偏小；触发：打开8.67后成交&gt;=2亿元并强回封，种植业仍&gt;=3板位；失效：开板无承接、封单&lt;1亿元或流动性不足</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>容量与回封确认，当前0；确认后&lt;=0.002/10</b></div>
+          <div><span>触发区间</span><b>打开8.67后成交&gt;=2亿元并强回封，种植业仍&gt;=3板位</b></div>
+          <div><span>失效</span><b>开板无承接、封单&lt;1亿元或流动性不足</b></div>
+        </div>
+        
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">仅跟踪本战法历史中明确标记为买/可买/触发买点的样本；只观察和不买不入样本。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">600909</div>
+                <div class="tracking-name">华安证券</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-31.11%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-37.28%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000566</div>
+                <div class="tracking-name">海南海药</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-17.72%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+6.46%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-29.70%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">688106</div>
+                <div class="tracking-name">金宏气体</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-43.34%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-46.77%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000783</div>
+                <div class="tracking-name">长江证券</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-14.63%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-17.01%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+    </section>
+    
+
+    <section class="framework" id="kobe92">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>Kobe92 周期切换</h2>
+          <p class="framework-copy">先判周期，再看龙头、补涨与切换，不做中位情绪幻觉。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-08-21 08:47:14 +08:00</span>
+        </div>
+      </div>
+
+      
+    <div class="simple-summary">
+      
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">当前结论</div>
+          <div class="simple-summary-value">[HTML_DATA] framework: kobe92-cycle-speculation timestamp: 2026-08-21 08:47:14 +08:00…</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">关注方向</div>
+          <div class="simple-summary-value">mRNA肿瘤疫苗/生物制品首爆 / 创新药/医药服务扩散 / 农业四板旧周期风险锚</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">操作动作</div>
+          <div class="simple-summary-value">只等触发：300765 石药创新 / 300142 沃森生物 / 688185 康希诺</div>
+        </div>
+        
+      <div class="simple-next">下一次检查：等待下一次自动任务</div>
+    </div>
+    
+
+      
+    <section class="strategy-tabs" aria-label="Kobe92 周期切换 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-kobe92" id="kobe92-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-kobe92" id="kobe92-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="kobe92-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="kobe92-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-08-21 08:47:14 +08:00</span>
+      </div>
+      
+      <div class="timing-notice timing-preopen">
+        <div class="timing-title">盘前计划版：不是直接买点</div>
+        <div class="timing-body">盘前只给候选和触发条件，开盘后还要看竞价、量能、主线延续和分时承接，不能按名单直接扫。</div>
+      </div>
+    
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">300765</div>
+                  <div class="exec-name">石药创新</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">10:15首次分歧承接，当前0；确认后&lt;=0.005/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>守49.19重回51.78、确认价&lt;=52.82且医药前排&gt;=10</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破49.19、弱回封或医药首爆兑现</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">300142</div>
+                  <div class="exec-name">沃森生物</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">一字打开后的换手弱转强，当前0；确认后&lt;=0.003/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>守14.36重回15.12、确认价&lt;=15.42</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破14.36、开板无承接或直接20CM加速</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">688185</div>
+                  <div class="exec-name">康希诺</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧回封，当前0；确认后&lt;=0.003/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>守61.21重回64.43、确认价&lt;=65.72</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破61.21、薄封失效或分支孤立</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>可跟投或条件触发</h3>
+            <span class="subtle">先看上方信号时效</span>
+          </div>
+          <div class="signal-grid">
+            <div class="empty">本战法当前没有明确买入票；只看下方观察位的触发条件，未触发就是不买。</div>
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">600127</span>
+                <strong>金健米业</strong>
+              </div>
+              <div class="avoid-reason">不做中位</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>等触发观察</h3>
+          <span class="subtle">未触发就是不买</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">300765</div>
+          <div class="stock-name">石药创新</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看换手</div>
+      <div class="signal-reason">首板成交32.28亿元且有换手，适合观察新周期切换而非盘前追高；触发：守49.19重回51.78、确认价&lt;=52.82且医药前排&gt;=10；失效：跌破49.19、弱回封或医药首爆兑现</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>10:15首次分歧承接，当前0；确认后&lt;=0.005/10</b></div>
+          <div><span>触发区间</span><b>守49.19重回51.78、确认价&lt;=52.82且医药前排&gt;=10</b></div>
+          <div><span>失效</span><b>跌破49.19、弱回封或医药首爆兑现</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">300142</div>
+          <div class="stock-name">沃森生物</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看承接</div>
+      <div class="signal-reason">直接映射与封单强，但一字首板没有低风险入口；触发：守14.36重回15.12、确认价&lt;=15.42；失效：跌破14.36、开板无承接或直接20CM加速</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>一字打开后的换手弱转强，当前0；确认后&lt;=0.003/10</b></div>
+          <div><span>触发区间</span><b>守14.36重回15.12、确认价&lt;=15.42</b></div>
+          <div><span>失效</span><b>跌破14.36、开板无承接或直接20CM加速</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">688185</div>
+          <div class="stock-name">康希诺</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">看换手</div>
+      <div class="signal-reason">题材与公告共振，但公告不能单独替代换手确认；触发：守61.21重回64.43、确认价&lt;=65.72；失效：跌破61.21、薄封失效或分支孤立</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧回封，当前0；确认后&lt;=0.003/10</b></div>
+          <div><span>触发区间</span><b>守61.21重回64.43、确认价&lt;=65.72</b></div>
+          <div><span>失效</span><b>跌破61.21、薄封失效或分支孤立</b></div>
+        </div>
+        
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">仅跟踪本战法历史中明确标记为买/可买/触发买点的样本；只观察和不买不入样本。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">688432</div>
+                <div class="tracking-name">有研硅</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-0.68%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+23.28%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-52.86%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002167</div>
+                <div class="tracking-name">东方锆业</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-02</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-37.58%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+0.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-45.37%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+    </section>
+    
+
+    <section class="framework" id="beijing-chaogu">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>北京炒家首板</h2>
+          <p class="framework-copy">只做前排首板、回封与换手，重视封板质量和次日套利窗口。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-08-25 14:22:08 +08:00</span>
+        </div>
+      </div>
+
+      
+    <div class="simple-summary">
+      
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">当前结论</div>
+          <div class="simple-summary-value">[HTML_DATA] framework: beijing-chaogu-first-board timestamp: 2026-08-25 14:22:08 +08:…</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">关注方向</div>
+          <div class="simple-summary-value">通用设备/农化/装修装饰/包装印刷 / 种植/汽车零部/通信设备 / 专用设备</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">操作动作</div>
+          <div class="simple-summary-value">当前不买，回避：002837 英维克 / 002081 金螳螂 / 000566 海南海药</div>
+        </div>
+        
+      <div class="simple-next">下一次检查：等待下一次自动任务</div>
+    </div>
+    
+
+      
+    <section class="strategy-tabs" aria-label="北京炒家首板 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-beijing-chaogu" id="beijing-chaogu-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-beijing-chaogu" id="beijing-chaogu-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="beijing-chaogu-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="beijing-chaogu-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-08-25 14:22:08 +08:00</span>
+      </div>
+      
+      <div class="timing-notice timing-intraday">
+        <div class="timing-title">盘中确认版：具备跟投前提</div>
+        <div class="timing-body">只有当前价格仍在触发区间内，且失效条件没有出现，才具备小仓试错意义；过点、炸板或承接失败就不买。</div>
+      </div>
+    
+      <div class="execution-focus execution-focus-empty"><b>执行方式</b><span>当前没有可执行候选，空仓优先。</span></div>
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>可跟投或条件触发</h3>
+            <span class="subtle">先看上方信号时效</span>
+          </div>
+          <div class="signal-grid">
+            <div class="empty">本战法当前没有明确买入票；只看下方观察位的触发条件，未触发就是不买。</div>
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002837</span>
+                <strong>英维克</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002081</span>
+                <strong>金螳螂</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">000566</span>
+                <strong>海南海药</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">603395</span>
+                <strong>红四方</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">600127</span>
+                <strong>金健米业</strong>
+              </div>
+              <div class="avoid-reason">淘汰</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>等触发观察</h3>
+          <span class="subtle">未触发就是不买</span>
+        </div>
+        <div class="signal-grid">
+          <div class="empty">暂无额外观察股。</div>
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">仅跟踪本战法历史中明确标记为买/可买/触发买点的样本；只观察和不买不入样本。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">603067</div>
+                <div class="tracking-name">振华股份</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+6.84%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+20.03%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-13.95%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">001389</div>
+                <div class="tracking-name">广合科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-9.32%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+3.17%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-21.56%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">603127</div>
+                <div class="tracking-name">昭衍新药</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+0.10%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+12.15%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-19.42%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002265</div>
+                <div class="tracking-name">建设工业</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+11.35%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+25.69%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-12.33%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002987</div>
+                <div class="tracking-name">京北方</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+5.97%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+7.35%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-10.61%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+    </section>
+    
+
+    <section class="framework" id="leader">
+      <div class="framework-head">
+        <div>
+          <div class="eyebrow">Framework</div>
+          <h2>陈小群龙头战法</h2>
+          <p class="framework-copy">偏情绪合力与龙头辨识度，只保留真正能带队的前排席位。</p>
+        </div>
+        <div class="framework-side">
+          <span class="meta-pill">更新于 2026-08-25 10:12:30 +08:00</span>
+        </div>
+      </div>
+
+      
+    <div class="simple-summary">
+      
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">当前结论</div>
+          <div class="simple-summary-value">[HTML_DATA] framework: a-share-leader-tactics timestamp: 2026-08-25 10:12:30 +08:00 c…</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">关注方向</div>
+          <div class="simple-summary-value">种植业/农产品加工与农化扩散 / 医药高度接力 / 通信设备高度支线</div>
+        </div>
+        
+        <div class="simple-summary-card">
+          <div class="simple-summary-label">操作动作</div>
+          <div class="simple-summary-value">只等触发：002041 登海种业 / 600127 金健米业 / 603395 红四方</div>
+        </div>
+        
+      <div class="simple-next">下一次检查：等待下一次自动任务</div>
+    </div>
+    
+
+      
+    <section class="strategy-tabs" aria-label="陈小群龙头战法 股票推荐与跟进">
+      <input class="tab-radio" type="radio" name="tabs-leader" id="leader-recommendations" checked="">
+      <input class="tab-radio" type="radio" name="tabs-leader" id="leader-tracking">
+      <div class="tab-bar" role="tablist">
+        <label class="tab-button tab-recommend" for="leader-recommendations" role="tab">股票推荐</label>
+        <label class="tab-button tab-track" for="leader-tracking" role="tab">持续跟进 / 收益图</label>
+      </div>
+      <div class="tab-content tab-content-recommend">
+        
+    <section class="panel strategy-actions">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Actions</div>
+          <h3>本战法买与不买</h3>
+        </div>
+        <span class="meta-pill">2026-08-25 10:12:30 +08:00</span>
+      </div>
+      
+      <div class="timing-notice timing-intraday">
+        <div class="timing-title">盘中确认版：具备跟投前提</div>
+        <div class="timing-body">只有当前价格仍在触发区间内，且失效条件没有出现，才具备小仓试错意义；过点、炸板或承接失败就不买。</div>
+      </div>
+    
+      
+    <div class="execution-focus">
+      <div class="execution-focus-head">
+        <div>
+          <div class="eyebrow">Execution Focus</div>
+          <h3>怎么操作 / 是否排板</h3>
+        </div>
+        <span class="subtle">优先看这里，再看下方明细</span>
+      </div>
+      <div class="exec-grid">
+        
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">002041</div>
+                  <div class="exec-name">登海种业</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧回封，当前0；确认后&lt;=0.003/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开11.21后充分换手、守10.70并回封11.21；农业前排仍&gt;=6</b></div>
+              <div class="exec-invalid"><span>失效</span>开板无承接、跌破10.70或农业缩容</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">600127</div>
+                  <div class="exec-name">金健米业</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧回封，当前0；确认后&lt;=0.002/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开9.31后承接不破8.95并强回封，登海仍封板</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破8.95、弱回封或登海开板无承接</div>
+            </article>
+            
+            <article class="exec-card exec-watch">
+              <div class="exec-top">
+                <div>
+                  <div class="exec-code">603395</div>
+                  <div class="exec-name">红四方</div>
+                </div>
+                <span class="exec-badge">等触发</span>
+              </div>
+              <div class="exec-method">首次分歧承接，当前0；确认后&lt;=0.002/10</div>
+              <div class="exec-price"><span>买入/触发区间</span><b>打开28.55后守27.70并回封，农化仍&gt;=3板位</b></div>
+              <div class="exec-invalid"><span>失效</span>跌破27.70、农化分化或弱回封</div>
+            </article>
+            
+      </div>
+    </div>
+    
+      <div class="strategy-action-grid">
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>可跟投或条件触发</h3>
+            <span class="subtle">先看上方信号时效</span>
+          </div>
+          <div class="signal-grid">
+            <div class="empty">本战法当前没有明确买入票；只看下方观察位的触发条件，未触发就是不买。</div>
+          </div>
+        </div>
+        <div class="soft-panel inner-panel">
+          <div class="panel-head">
+            <h3>不该买</h3>
+            <span class="subtle">淘汰 / 回避 / 只观察不买</span>
+          </div>
+          <div class="avoid-shell">
+            <div class="avoid-list">
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">002412</span>
+                <strong>汉森制药</strong>
+              </div>
+              <div class="avoid-reason">不追高</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            
+            <div class="avoid-row">
+              <div class="avoid-main">
+                <span class="avoid-code">003040</span>
+                <strong>楚天龙</strong>
+              </div>
+              <div class="avoid-reason">不追高</div>
+              <span class="avoid-tag">不买</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel soft-panel watch-panel">
+        <div class="panel-head">
+          <h3>等触发观察</h3>
+          <span class="subtle">未触发就是不买</span>
+        </div>
+        <div class="signal-grid">
+          
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">002041</div>
+          <div class="stock-name">登海种业</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">等分歧</div>
+      <div class="signal-reason">主线正宗度和合力成立，但当前没有首次分歧入口；触发：打开11.21后充分换手、守10.70并回封11.21；农业前排仍&gt;=6；失效：开板无承接、跌破10.70或农业缩容</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧回封，当前0；确认后&lt;=0.003/10</b></div>
+          <div><span>触发区间</span><b>打开11.21后充分换手、守10.70并回封11.21；农业前排仍&gt;=6</b></div>
+          <div><span>失效</span><b>开板无承接、跌破10.70或农业缩容</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">600127</div>
+          <div class="stock-name">金健米业</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">等分歧</div>
+      <div class="signal-reason">农业合力成立但题材龙地位低于登海，不追认其他战法买点；触发：打开9.31后承接不破8.95并强回封，登海仍封板；失效：跌破8.95、弱回封或登海开板无承接</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧回封，当前0；确认后&lt;=0.002/10</b></div>
+          <div><span>触发区间</span><b>打开9.31后承接不破8.95并强回封，登海仍封板</b></div>
+          <div><span>失效</span><b>跌破8.95、弱回封或登海开板无承接</b></div>
+        </div>
+        
+    </article>
+    
+    <article class="signal-card signal-watch">
+      <div class="signal-head">
+        <div>
+          <div class="stock-code">603395</div>
+          <div class="stock-name">红四方</div>
+        </div>
+        <span class="action-tag action-watch">只观察</span>
+      </div>
+      <div class="signal-headline">等分歧</div>
+      <div class="signal-reason">农化分支正宗但辨识度低于农业主龙；触发：打开28.55后守27.70并回封，农化仍&gt;=3板位；失效：跌破27.70、农化分化或弱回封</div>
+      
+        <div class="signal-exec">
+          <div><span>怎么做</span><b>首次分歧承接，当前0；确认后&lt;=0.002/10</b></div>
+          <div><span>触发区间</span><b>打开28.55后守27.70并回封，农化仍&gt;=3板位</b></div>
+          <div><span>失效</span><b>跌破27.70、农化分化或弱回封</b></div>
+        </div>
+        
+    </article>
+    
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="tab-content tab-content-track">
+        
+    <section class="panel strategy-performance">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Tracking</div>
+          <h3>推荐买入票收益跟踪</h3>
+        </div>
+        <span class="subtle">仅跟踪本战法历史中明确标记为买/可买/触发买点的样本；只观察和不买不入样本。</span>
+      </div>
+      <div class="tracking-list">
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">001258</div>
+                <div class="tracking-name">立新能源</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-22</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+12.17%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+44.69%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-24.54%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">000815</div>
+                <div class="tracking-name">美利云</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-23</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-5.86%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+6.93%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-22.21%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">002156</div>
+                <div class="tracking-name">通富微电</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-23</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>-12.37%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+9.81%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-33.04%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">603722</div>
+                <div class="tracking-name">阿科力</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-28</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+3.17%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+9.00%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-8.16%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            
+            <article class="tracking-row">
+              <div class="tracking-stock">
+                <div class="stock-code">001389</div>
+                <div class="tracking-name">广合科技</div>
+              </div>
+              <div class="tracking-metric">
+                <span>推荐起点</span>
+                <b>2026-07-29</b>
+              </div>
+              <div class="tracking-metric metric-current">
+                <span>当前涨幅</span>
+                <b>+3.60%</b>
+              </div>
+              <div class="tracking-metric">
+                <span>最大涨幅</span>
+                <b>+17.86%</b>
+              </div>
+              <div class="tracking-metric metric-drawdown">
+                <span>最大回撤</span>
+                <b>-13.06%</b>
+              </div>
+              <div class="tracking-metric tracking-date">
+                <span>最新日期</span>
+                <b>2026-08-25</b>
+              </div>
+            </article>
+            </div>
+    </section>
+    
+      </div>
+    </section>
+    
+    </section>
+    
+
+    <div class="footer">Generated by generate_a_share_four_strategies_dashboard.py</div>
+  </div>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

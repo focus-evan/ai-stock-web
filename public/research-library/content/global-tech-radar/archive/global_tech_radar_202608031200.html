@@ -1,0 +1,589 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-03 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange维持：官方文件落地后，AI CapEx更强，但长端利率、供应链挤压和循环融资风险仍压制全面转绿</h1>
+      <p class="subtitle">本轮午间雷达维持Orange。与06:00相比，关键变化不是“没有文件”，而是Amazon、Apple、Meta、Intel的SEC文件已经落地：Amazon 10-Q正式确认H1现金资本开支US$96.3bn、AWS H1物业设备净新增US$90.120bn，并继续预期技术基础设施和履约网络投资在2026增加，但10-Q正文未直接写出媒体所称US$220bn全年CapEx；同时Amazon披露OpenAI与Anthropic大额投资和Anthropic公允价值上调，使AI需求更强、也让循环融资/纸面收益成为估值过滤器。Apple 10-Q把早前媒体担心的先进半导体、NAND、DRAM与AI算力供给约束正式写入风险因素，说明端侧AI和消费电子链并非弱需求，而是被数据中心AI抢组件。Meta 10-Q继续确认2026 CapEx约US$130-145bn与未开始租赁义务约US$278.99bn，Intel 10-Q确认DCAI受hyperscaler需求推动但服务器、存储、基板等供应仍紧。流动性仍是硬闸门：Fed H.15最新10Y 4.68%、30Y 5.21%、10Y TIPS 2.41%，H.4.1准备金周降US$77.579bn，尚不能给高估值科技全面放行。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-03 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange维持：官方文件落地后，AI CapEx更强，但长端利率、供应链挤压和循环融资风险仍压制全面转绿</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持Orange观察：优先看能同时被收入、RPO、订单、资产新增和供给瓶颈验证的AI卖铲人；避免只按CapEx headline追高。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈来自官方文件落地：Amazon H1现金CapEx US$96.3bn、AWS H1物业设备净新增US$90.120bn；Microsoft Azure +43%、RPO US$678bn；Meta 2026 CapEx指引US$130-145bn。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项是三重闸门：Fed长端仍高，Apple确认先进半导体/NAND/DRAM/AI算力供应约束，Amazon/Meta披露的大额AI投资与融资安排提高循环融资和现金流审查强度。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步只盯：Amazon是否在正式电话会/后续沟通确认US$220bn全年CapEx，Fed H.15/H.10本周更新，美股周一开盘对AI循环融资与硬件短缺的定价。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Amazon 10-Q落地：CapEx强度被官方确认，但US$220bn仍未在10-Q正文直接确认</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Amazon 10-Q显示Q2现金资本开支US$53.1bn，H1现金资本开支US$96.3bn，主要投向技术基础设施且多数支持AWS业务增长；AWS物业设备净新增Q2为US$48.604bn、H1为US$90.120bn，AWS物业设备净额升至US$263.750bn。文件继续写明相关投资预计在2026增加，但未在正文直接确认媒体所称US$220bn全年CapEx。</p>
+              <p><strong>影响：</strong>AI服务器、GPU/ASIC、HBM、先进封装、网络、电力、液冷和数据中心工程需求继续扩张；但US$220bn仍按“媒体口径/待管理层正式确认”处理，不能当作完整官方指引。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Amazon AI投资链更激进：OpenAI/Anthropic资金安排把正反馈和循环融资风险同时放大</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Amazon 10-Q披露H1向OpenAI Series C Preferred Stock投资US$28.7bn，其中Q2投入US$13.7bn，且6月30日后又支付剩余US$21.3bn；Q2还投资Anthropic nonvoting preferred stock US$10.0bn，并因Anthropic融资相关可观察价格变化在Q2确认约US$50.5bn向上调整。</p>
+              <p><strong>影响：</strong>这增强AWS算力、Trainium/AI芯片、云服务和AI基础设施需求可见度，但利润增长里包含大额投资重估，市场会更严厉区分真实经营现金流与纸面收益。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Apple 10-Q正式确认供应链挤压：先进半导体、NAND、DRAM和AI算力供给受限</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Apple 10-Q在风险因素中写明，公司正经历由先进半导体、存储NAND、内存DRAM等供需失衡带来的供应约束和成本上升，并预计这些趋势会加剧；同时，行业云计算和AI基础设施需求大幅增加，导致算力供给受限、交期拉长和成本上升。</p>
+              <p><strong>影响：</strong>这把早前媒体层面的Apple供应链压力升级为官方风险披露：端侧AI并非简单弱需求，消费电子、存储、先进制程和云算力之间会出现抢产能和毛利率再分配。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Meta 10-Q确认CapEx和长期租赁义务：AI基础设施需求强，融资/现金流过滤器更重</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Meta 10-Q显示Q2 CapEx含融资租赁本金为US$31.08bn，H1购买物业设备US$49.113bn，2026全年CapEx预期约US$130-145bn；同时未开始的运营和融资租赁义务约US$278.99bn，涉及数据中心、托管和网络基础设施。</p>
+              <p><strong>影响：</strong>利好AI服务器、网络、光模块、电力、液冷和数据中心资产，但长期租赁、债务和折旧会成为高估值科技的现金流压力项。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Intel 10-Q确认hyperscaler拉动和供应约束，卖铲链景气仍有瓶颈</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Intel 10-Q显示DCAI收入增加主要由服务器收入上升推动，服务器ASP和销量均受益，服务器销量Q2同比增加9%，主要由hyperscaler需求推动；公司同时称服务器需求超过可用供给，并预计基板、内存和其他关键组件的行业短缺会持续到明年。</p>
+              <p><strong>影响：</strong>利好服务器CPU/ASIC、先进封装、基板、存储和供给紧缺环节，但也意味着下游交付节奏和成本压力会限制利润兑现速度。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm">Intel Form 10-Q</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Amazon</td>
+              <td>Q2现金资本开支US$53.1bn，H1现金资本开支US$96.3bn，主要反映技术基础设施投资且多数支持AWS增长；AWS H1物业设备净新增US$90.120bn，AWS物业设备净额US$263.750bn。</td>
+              <td>上修</td>
+              <td>直接支撑AI服务器、GPU/ASIC、HBM、网络交换、数据中心电力、液冷和工程建设。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon AI投资与云需求</td>
+              <td>Amazon H1投入OpenAI Series C Preferred Stock US$28.7bn，Q2投入Anthropic preferred stock US$10.0bn；Q2因Anthropic融资相关可观察价格变化确认约US$50.5bn向上调整。</td>
+              <td>上修</td>
+              <td>增强AWS、Trainium/AI芯片、算力融资和模型客户绑定，但也提高循环融资、纸面收益和现金流质量审查。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q4收入US$90.0bn，Microsoft Cloud收入US$59.3bn且同比+27%，Commercial RPO同比+84%至US$678bn，Azure及其他云服务收入+43%；Q4物业设备新增US$35.802bn，FY26物业设备新增US$115.948bn。</td>
+              <td>上修</td>
+              <td>证明AI CapEx能被云收入、RPO和Azure增长消化，是AI卖铲链最干净的需求锚之一。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>Q2 CapEx含融资租赁本金US$31.08bn，H1购买物业设备US$49.113bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn，涉及数据中心、托管和网络基础设施。</td>
+              <td>上修</td>
+              <td>利好AI服务器、光通信、交换机、电力、冷却和数据中心REIT/工程链，但长期租赁、债务和折旧会压估值弹性。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple</td>
+              <td>Q3 10-Q确认组件与AI算力供给约束：先进半导体、NAND、DRAM短缺和成本上升，AI/云基础设施需求导致算力供给受限、交期拉长、成本上升。</td>
+              <td>待验证</td>
+              <td>对端侧AI链是需求存在但交付受限；对存储、先进制程、算力服务、电源热管理是供需偏紧验证。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel</td>
+              <td>10-Q显示DCAI服务器收入增长，服务器销量Q2同比+9%主要由hyperscaler需求推动；服务器需求超过可用供给，关键组件短缺预计延续到明年。</td>
+              <td>上修</td>
+              <td>利好服务器CPU、ASIC、基板、内存和先进封装；但供应瓶颈限制交付与利润兑现。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm">Intel Form 10-Q</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>FOMC</td>
+              <td>2026-07-29 FOMC维持联邦基金目标区间3.50%-3.75%，但投票为9-3，Hammack、Kashkari、Logan倾向加息25bp；声明仍称通胀高于2%目标。</td>
+              <td>压力</td>
+              <td>不支持高估值科技全面扩张估值倍数；利好只能由收入/RPO/订单抵消贴现率压力。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve FOMC</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.15</td>
+              <td>最新发布日为2026-07-31，最新数据日为2026-07-30：EFFR 3.63%，2Y 4.23%，10Y 4.68%，20Y 5.22%，30Y 5.21%，10Y TIPS 2.41%，30Y TIPS 2.98%。</td>
+              <td>压力</td>
+              <td>长端和实际利率仍高，对长久期AI/软件估值形成硬约束；优先选择订单可见度强、现金流质量更高的卖铲环节。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>2026-07-30发布的7月29日数据：准备金余额US$2.984570tn，周降US$77.579bn、同比降US$362.844bn；TGA为US$910.776bn，周增US$81.153bn。</td>
+              <td>压力</td>
+              <td>银行体系准备金下降、财政账户吸收流动性，对高β科技风格不是顺风。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Dollar</td>
+              <td>H.10最新周度发布日为2026-07-27，7月24日广义美元指数120.7105，美元兑人民币6.7719、兑日元163.7100；截至午间未见周末新更新。</td>
+              <td>中性偏压力</td>
+              <td>美元未提供明显估值顺风，新兴市场科技映射仍需看本周H.10更新。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>BEA / PCE与GDP</td>
+              <td>6月PCE环比-0.1%、同比+3.7%，核心PCE环比+0.1%、同比+3.3%；Q2实际GDP初值+1.5%，但私人国内购买最终销售+3.9%，价格指数仍高。</td>
+              <td>中性</td>
+              <td>通胀缓和能削弱加息压力，但还没有转化为长端利率和实际利率下行，暂不能单独升级为Green。</td>
+              <td>High</td>
+              <td><a href="https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026">BEA</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Amazon官方披露OpenAI/Anthropic大额投资、AWS技术基础设施扩张和Anthropic重估收益</td>
+              <td>云算力、AI芯片、训练集群、HBM、网络、电力、液冷</td>
+              <td>利好但带风险</td>
+              <td>GPU/ASIC、HBM、先进封装、AI服务器、光模块/交换机、数据中心电力与冷却、云资源供给商</td>
+              <td>现金流薄弱、只讲AI融资但缺少收入闭环的平台；被大厂抢占先进节点/内存的终端厂商</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple官方确认组件与AI算力短缺风险</td>
+              <td>先进半导体、NAND、DRAM、端侧AI、云AI算力</td>
+              <td>分化</td>
+              <td>具备议价能力的存储、先进制程、封装、AI云算力和关键组件供应商</td>
+              <td>高端智能手机、PC、消费电子整机中缺少成本转嫁能力的环节</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta长期AI基础设施义务扩张</td>
+              <td>AI数据中心、服务器、网络、光模块、电力、液冷、建设工程</td>
+              <td>利好但压现金流</td>
+              <td>数据中心工程、电力设备、液冷、服务器、光通信、网络设备、AI基础设施租赁方</td>
+              <td>折旧、债务、租赁和FCF压力无法被广告AI收入覆盖的高估值平台</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel服务器与组件短缺披露</td>
+              <td>服务器CPU、DCAI、ASIC、基板、内存、先进封装</td>
+              <td>利好供给紧缺环节</td>
+              <td>服务器CPU/ASIC、基板、内存、先进封装、供给紧缺的上游材料和设备</td>
+              <td>交付被供给瓶颈卡住的整机与云客户，利润无法转嫁的中游环节</td>
+              <td>官方确认</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm">Intel Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft云收入/RPO继续验证AI投入回收路径</td>
+              <td>Azure、AI服务、数据中心、GPU/ASIC、存储、网络</td>
+              <td>利好</td>
+              <td>与微软生态绑定的AI基础设施、云软件、企业Copilot、数据中心硬件和电力链</td>
+              <td>只有CapEx投入、没有RPO/收入转化证据的同类资产</td>
+              <td>官方确认</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI服务器与整机ODM</td>
+              <td>无直接映射；本报告未使用历史股票表现，也不把海外CapEx自动等同于A股订单。</td>
+              <td>当下更应找能被海外大厂订单、服务器ASP、出货排产、GPU/ASIC配套和应收/存货质量验证的卖铲人。</td>
+              <td>若只是概念映射、没有客户/订单/产能/财务验证，不能列为核心受益。</td>
+            </tr>
+            
+            <tr>
+              <td>HBM/DRAM/NAND与存储材料</td>
+              <td>Apple和Intel文件均直接提到DRAM/NAND/内存等供给约束；但未直接点名A/H公司。</td>
+              <td>优先看存储涨价、HBM配套、先进封装材料、测试和设备端的真实订单与毛利改善。</td>
+              <td>周期涨价容易被库存和预期提前透支，必须跟踪合同价和下游交付。</td>
+            </tr>
+            
+            <tr>
+              <td>先进封装、基板、PCB/CCL</td>
+              <td>Intel披露基板、内存和关键组件短缺；Amazon/Meta/Microsoft CapEx扩张间接提高需求。</td>
+              <td>高层板、低损耗CCL、先进封装载板、服务器主板和高速互连材料是卖铲方向。</td>
+              <td>需要验证客户认证、产能利用率和ASP，不要只看“AI服务器”标签。</td>
+            </tr>
+            
+            <tr>
+              <td>数据中心电力、UPS、液冷与热管理</td>
+              <td>Amazon/Meta/Microsoft均披露或验证大量数据中心资产新增；Meta未开始租赁义务涉及数据中心和网络基础设施。</td>
+              <td>电力设备、UPS、变压器、液冷、机柜、电源管理和数据中心工程更接近卖铲人。</td>
+              <td>项目周期长，需区分框架协议、订单、出货和收入确认。</td>
+            </tr>
+            
+            <tr>
+              <td>光模块/CPO/交换机与网络设备</td>
+              <td>Amazon和Meta文件披露AWS/数据中心网络基础设施扩张，Microsoft RPO/Azure增长支撑网络升级需求。</td>
+              <td>800G/1.6T光模块、交换芯片、交换机、光器件和高速连接器需求仍强。</td>
+              <td>技术代际切换快，价格下降和大客户议价会压缩中低端环节。</td>
+            </tr>
+            
+            <tr>
+              <td>端侧AI与消费电子</td>
+              <td>Apple 10-Q官方确认产品组件和AI算力供给约束。</td>
+              <td>不是简单利空：若上游供给紧，存储和先进半导体卖铲环节更强；整机和模组端要看成本传导能力。</td>
+              <td>终端销量、毛利率和新品节奏需要在后续财报/供应链公告中验证。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>Amazon正式电话会文字稿/后续管理层确认</strong><span>确认或否定媒体所称US$220bn全年CapEx；拆清现金CapEx、租赁、AI投资、OpenAI/Anthropic融资安排与AWS收入消化路径。</span></li><li><strong>Fed H.15/H.10本周更新</strong><span>检查10Y、30Y、TIPS实际利率和美元是否从Stress转向缓和；这是Orange能否降级的硬闸门。</span></li><li><strong>美股周一开盘对AI循环融资和硬件短缺的反应</strong><span>观察市场是奖励Amazon/Meta/Microsoft的需求可见度，还是惩罚纸面收益、债务、租赁和FCF压力。</span></li><li><strong>Apple供应链后续沟通</strong><span>验证DRAM/NAND/先进半导体和AI算力约束是否影响iPhone/端侧AI节奏、毛利率和上游采购。</span></li><li><strong>Meta未开始租赁义务与数据中心项目进度</strong><span>US$278.99bn长期义务需要确认供应商、区域、电力、冷却和收入兑现时间。</span></li><li><strong>Intel供给瓶颈</strong><span>跟踪DCAI服务器、ASIC、基板、内存等短缺是否继续支持卖铲链价格和订单。</span></li><li><strong>Microsoft 10-K/电话会补充</strong><span>确认FY27 CapEx、Azure容量约束、RPO转化、折旧和OpenAI/Anthropic投资影响。</span></li><li><strong>NVIDIA/SK、NAVER/Brookfield、AMD/Anthropic项目执行</strong><span>继续区分LOI/term sheet/intent和真实订单、交付、收入确认。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / Tech catalyst / AI financing</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon Q2 2026 earnings release</a></td>
+              <td>CapEx / AWS growth</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm">Apple Form 10-Q for quarter ended June 27, 2026</a></td>
+              <td>Tech catalyst / supply-chain risk</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/">Apple Q3 FY2026 results release</a></td>
+              <td>Tech catalyst / earnings</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / Tech catalyst / lease obligations</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta Q2 2026 earnings release</a></td>
+              <td>CapEx / earnings</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm">Intel Form 10-Q for quarter ended June 27, 2026</a></td>
+              <td>Tech catalyst / semiconductor supply</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft FY26 Q4 earnings release</a></td>
+              <td>CapEx / cloud revenue / RPO</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity / yields / real rates</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity / reserves / TGA</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10 Foreign Exchange Rates</a></td>
+              <td>Liquidity / dollar</td>
+              <td>2026-07-27</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">FOMC statement</a></td>
+              <td>Liquidity / policy</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026">BEA Personal Income and Outlays, June 2026</a></td>
+              <td>Liquidity / inflation</td>
+              <td>2026-07-31</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

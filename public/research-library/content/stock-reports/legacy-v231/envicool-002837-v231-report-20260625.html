@@ -1,0 +1,741 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>英维克 002837｜V2.3.1 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9dee7;
+      --red: #b42318;
+      --orange: #b54708;
+      --green: #067647;
+      --blue: #175cd3;
+      --chip: #eef4ff;
+      --warn: #fff4e5;
+      --danger: #fff1f0;
+      --ok: #ecfdf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.58;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #102a43 0%, #155e75 54%, #0f766e 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 18px 45px rgba(16, 24, 40, .16);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: rgba(255,255,255,.78);
+      font-size: 15px;
+    }
+
+    .scorebox {
+      min-width: 210px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: right;
+    }
+
+    .scorebox .score {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .scorebox .label {
+      margin-top: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .hero-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .hero-metric {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .metric-title {
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+    }
+
+    .metric-value {
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: 720;
+    }
+
+    .section {
+      margin-top: 22px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 26px rgba(16, 24, 40, .05);
+    }
+
+    .section h2 {
+      font-size: 21px;
+      margin-bottom: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .muted { color: var(--muted); }
+    .red { color: var(--red); }
+    .orange { color: var(--orange); }
+    .green { color: var(--green); }
+    .blue { color: var(--blue); }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: var(--chip);
+      color: #1849a9;
+      border: 1px solid #c7d7fe;
+    }
+
+    .tag.warn {
+      background: var(--warn);
+      color: var(--orange);
+      border-color: #fedf89;
+    }
+
+    .tag.danger {
+      background: var(--danger);
+      color: var(--red);
+      border-color: #fecdca;
+    }
+
+    .tag.ok {
+      background: var(--ok);
+      color: var(--green);
+      border-color: #abefc6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f2f4f7;
+      color: #344054;
+      font-weight: 680;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .num { text-align: right; white-space: nowrap; }
+
+    .callout {
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .callout.danger {
+      background: var(--danger);
+      border-color: #fecdca;
+    }
+
+    .callout.warn {
+      background: var(--warn);
+      border-color: #fedf89;
+    }
+
+    .callout.ok {
+      background: var(--ok);
+      border-color: #abefc6;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .progress {
+      height: 9px;
+      background: #eaecf0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 7px;
+    }
+
+    .bar { height: 100%; background: #175cd3; border-radius: 999px; }
+    .bar.orange { background: #dc6803; }
+    .bar.red { background: #d92d20; }
+    .bar.green { background: #039855; }
+
+    .factor {
+      display: grid;
+      grid-template-columns: 120px 1fr 48px;
+      gap: 12px;
+      align-items: center;
+      margin: 12px 0;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 5px 0; }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 860px) {
+      .hero-grid, .cards, .grid-2 { grid-template-columns: 1fr; }
+      .scorebox { text-align: left; }
+      .section { padding: 18px; }
+      table { font-size: 13px; }
+      th, td { padding: 9px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>英维克 002837｜V2.3.1 深度分析</h1>
+          <div class="subtitle">报告日期：2026-06-25｜框架：风险门 → 四季度财务 → S五维 → 六维评分 → 利润池与执行条件</div>
+          <div class="tag-row">
+            <span class="tag ok">液冷核心卖铲人</span>
+            <span class="tag">AI算力温控</span>
+            <span class="tag">全链条液冷</span>
+            <span class="tag">储能温控</span>
+            <span class="tag warn">Q1利润率失速</span>
+            <span class="tag danger">估值偏高</span>
+          </div>
+        </div>
+        <div class="scorebox">
+          <div class="score">74</div>
+          <div class="label">综合评分 / 100<br>标签：成长配置，禁止追高</div>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-metric">
+          <div class="metric-title">6月25日收盘价</div>
+          <div class="metric-value">86.99 元</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">总市值</div>
+          <div class="metric-value">约 1109 亿</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">PE 动态</div>
+          <div class="metric-value">约 230 倍</div>
+        </div>
+        <div class="hero-metric">
+          <div class="metric-title">PB</div>
+          <div class="metric-value">约 33.6 倍</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一、核心结论</h2>
+      <div class="callout ok">
+        <strong>模型结论：</strong>英维克是当前A股液冷叙事里更接近“真卖铲人”的公司之一。它不是单一概念票，2025年营收、扣非利润、ROE、客户验证和全链条产品能力都能支撑产业逻辑；但2026Q1利润率和现金流明显走弱，且当前估值已经按液冷核心龙头给足溢价，因此结论是“成长配置，禁止追高”，不是无脑核心仓。
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3 class="green">为什么逻辑成立</h3>
+          <ul>
+            <li>2025年营收60.68亿元，同比增长32.23%；扣非归母净利5.04亿元，同比增长17.22%。</li>
+            <li>机房温控收入34.48亿元，占营收56.83%，同比增长41.28%，是AI算力温控的主承载。</li>
+            <li>冷板、快接头、Manifold、CDU、液冷工质、管路、冷源覆盖完整，利润池不止一个零部件。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="orange">为什么不能追高</h3>
+          <ul>
+            <li>2026Q1营收同比+26.03%，但归母净利同比-81.97%，扣非同比-87.10%。</li>
+            <li>Q1经营现金流为-3.86亿元，应收账款、坏账计提和存货压力需要继续跟踪。</li>
+            <li>当前总市值约1109亿元，动态PE约230倍，已经定价为液冷核心龙头。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="blue">最大看点</h3>
+          <ul>
+            <li>英特尔液冷生态验证、英伟达MGX生态、Google Deschutes 5 CDU等客户/平台映射提升确定性。</li>
+            <li>Q3起海外新客户和液冷放量节奏，是决定估值能否继续扩张的关键。</li>
+            <li>如果Q2利润修复，Q1会被市场视为阶段性扰动；若不修复，估值会承压。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>二、风险门</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>风险项</th>
+            <th>证据</th>
+            <th>V2.3.1处理</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>一季度增收不增利</td>
+            <td>2026Q1营收11.75亿元，同比+26.03%；归母净利865.76万元，同比-81.97%；扣非净利539.29万元，同比-87.10%。</td>
+            <td><span class="orange">财务质量降权</span>，不能只看液冷订单和收入增长。</td>
+          </tr>
+          <tr>
+            <td>现金流和应收压力</td>
+            <td>2026Q1经营现金流-3.86亿元；公司说明供应商款项到期支付、员工薪酬增加影响现金流，信用减值损失同比增加。</td>
+            <td><span class="orange">盈利质量打折</span>，等待Q2现金流和回款验证。</td>
+          </tr>
+          <tr>
+            <td>估值高</td>
+            <td>6月25日总市值约1109亿元，动态PE约230倍，PB约33.6倍。</td>
+            <td><span class="red">估值赔率扣分</span>，只适合回撤后验证式配置。</td>
+          </tr>
+          <tr>
+            <td>客户和订单颗粒度</td>
+            <td>公司有Intel、NVIDIA MGX生态、Google CDU等映射，但海外具体客户有保密要求，不能完全拆到订单规模。</td>
+            <td><span class="orange">催化加分，但不完全进入确定利润评分</span>。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>三、最近四个单季度财务验证</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>单季度</th>
+            <th class="num">营收</th>
+            <th class="num">营收同比</th>
+            <th class="num">归母净利</th>
+            <th class="num">扣非净利</th>
+            <th class="num">毛利率</th>
+            <th class="num">净利率</th>
+            <th class="num">经营现金流</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026Q1</td>
+            <td class="num">11.75亿</td>
+            <td class="num green">+26.0%</td>
+            <td class="num orange">0.09亿</td>
+            <td class="num orange">0.05亿</td>
+            <td class="num">24.3%</td>
+            <td class="num red">0.7%</td>
+            <td class="num red">-3.86亿</td>
+            <td>订单不差，但收入确认、费用、信用减值和现金流拖累明显。</td>
+          </tr>
+          <tr>
+            <td>2025Q4</td>
+            <td class="num">20.42亿</td>
+            <td class="num green">+18.9%</td>
+            <td class="num">1.23亿</td>
+            <td class="num">1.20亿</td>
+            <td class="num">28.9%</td>
+            <td class="num">6.0%</td>
+            <td class="num green">4.76亿</td>
+            <td>全年收官稳，现金流修复，是2025强验证季度。</td>
+          </tr>
+          <tr>
+            <td>2025Q3</td>
+            <td class="num">14.53亿</td>
+            <td class="num green">+25.3%</td>
+            <td class="num">1.83亿</td>
+            <td class="num">1.81亿</td>
+            <td class="num">29.4%</td>
+            <td class="num green">12.6%</td>
+            <td class="num orange">-0.85亿</td>
+            <td>利润质量高，但现金流为负，项目制交付占用资金。</td>
+          </tr>
+          <tr>
+            <td>2025Q2</td>
+            <td class="num">16.41亿</td>
+            <td class="num green">+69.7%</td>
+            <td class="num">1.68亿</td>
+            <td class="num">1.60亿</td>
+            <td class="num">26.0%</td>
+            <td class="num">10.2%</td>
+            <td class="num orange">-0.63亿</td>
+            <td>高增长季度，说明AI/数据中心温控景气能兑现到利润。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout warn">
+        <strong>财务结论：</strong>英维克不是“只有故事没有业绩”的票。2025Q2-Q4利润已验证，但2026Q1出现明显断档。V2.3.1给它“数据基本支持，但Q1瑕疵需要复核”的结论。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>四、S五维量化校验</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>五维评分</h3>
+          <div class="factor">
+            <div>成长性</div>
+            <div><div class="progress"><div class="bar green" style="width:70%"></div></div></div>
+            <div>14/20</div>
+          </div>
+          <div class="factor">
+            <div>盈利性</div>
+            <div><div class="progress"><div class="bar orange" style="width:55%"></div></div></div>
+            <div>11/20</div>
+          </div>
+          <div class="factor">
+            <div>经营规模</div>
+            <div><div class="progress"><div class="bar green" style="width:80%"></div></div></div>
+            <div>16/20</div>
+          </div>
+          <div class="factor">
+            <div>资产效率</div>
+            <div><div class="progress"><div class="bar orange" style="width:65%"></div></div></div>
+            <div>13/20</div>
+          </div>
+          <div class="factor">
+            <div>市值估值</div>
+            <div><div class="progress"><div class="bar red" style="width:25%"></div></div></div>
+            <div>5/20</div>
+          </div>
+          <div class="callout warn">
+            <strong>S五维总分：59 / 100。</strong>经营世界基本支撑液冷龙头叙事，但资本世界定价过满，估值项显著拖累总分。
+          </div>
+        </div>
+        <div class="card">
+          <h3>五维解释</h3>
+          <ul>
+            <li><strong>成长性：</strong>2025年营收+32.23%，机房温控+41.28%，但2026Q1利润二阶导转弱。</li>
+            <li><strong>盈利性：</strong>2025综合毛利率27.86%，海外毛利率52.64%，但Q1毛利率降至24.29%。</li>
+            <li><strong>经营规模：</strong>2025营收60.68亿元，已是温控/液冷赛道头部体量。</li>
+            <li><strong>资产效率：</strong>2025 ROE 16.58%较好，但应收、存货和现金流拖累质量。</li>
+            <li><strong>估值：</strong>PE和PB都处于高水位，要求Q2/Q3持续兑现。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>五、V2.3.1 六维评分</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th class="num">分数</th>
+            <th>核心判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>行业面</td>
+            <td class="num green">90</td>
+            <td>AI算力高热密度推动液冷从验证走向规模应用，冷板式液冷是当前主流路线。</td>
+          </tr>
+          <tr>
+            <td>核心竞争力</td>
+            <td class="num green">84</td>
+            <td>全链条液冷、客户验证、标准参与、国内外基地和产品矩阵构成较强护城河。</td>
+          </tr>
+          <tr>
+            <td>财务质量</td>
+            <td class="num orange">65</td>
+            <td>2025强，2026Q1弱；最大问题是利润率和经营现金流的季度波动。</td>
+          </tr>
+          <tr>
+            <td>估值赔率</td>
+            <td class="num red">38</td>
+            <td>当前已按液冷全球化龙头定价，安全边际不高。</td>
+          </tr>
+          <tr>
+            <td>催化/影子逻辑</td>
+            <td class="num green">86</td>
+            <td>Intel验证、NVIDIA MGX生态、Google CDU、海外AI数据中心需求，催化充足。</td>
+          </tr>
+          <tr>
+            <td>治理/流动性</td>
+            <td class="num">78</td>
+            <td>主板流动性强，治理风险明显低于三安；但股东质押、项目回款周期仍需跟踪。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>六、利润池拆解</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>利润池</th>
+            <th>卡位</th>
+            <th>优势</th>
+            <th>风险</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>数据中心 / 智算中心机房温控</td>
+            <td>2025收入34.48亿元，占营收56.83%。</td>
+            <td>需求来自AIDC、运营商、互联网和海外云厂；液冷渗透提升。</td>
+            <td>项目制交付导致收入确认和现金流波动。</td>
+          </tr>
+          <tr>
+            <td>服务器级液冷零部件</td>
+            <td>冷板、快接头、Manifold、CDU、工质等全链条。</td>
+            <td>不是单一部件，能吃更多价值量；适配CPU/GPU/ASIC/内存/SSD/光模块等热源。</td>
+            <td>客户保密，订单规模不透明，竞争者会增多。</td>
+          </tr>
+          <tr>
+            <td>储能温控</td>
+            <td>2025来自储能应用收入约17亿元，同比增长约14%。</td>
+            <td>品牌和客户基础强，水冷和全链条方案丰富。</td>
+            <td>2025增速已低于AI液冷，且机柜温控毛利率下滑。</td>
+          </tr>
+          <tr>
+            <td>海外高毛利业务</td>
+            <td>2025境外收入8.49亿元，占比14%。</td>
+            <td>境外毛利率52.64%，显著高于境内23.83%。</td>
+            <td>汇率、海外交付、认证周期和本地化服务成本会影响利润。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <strong>利润池结论：</strong>英维克的利润池质量高于普通温控设备商，核心在“系统级液冷卖铲人”。但由于估值已经把这部分优势提前资本化，后续不是看有没有液冷，而是看高毛利海外/服务器级液冷是否持续转成利润和现金流。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>七、三种情景推演</h2>
+      <div class="cards">
+        <div class="card">
+          <h3 class="green">乐观情景</h3>
+          <p>Q2利润率显著修复，海外AI液冷订单开始确认，信用减值压力收敛，经营现金流边际改善。</p>
+          <p><strong>模型动作：</strong>可从成长配置升级为核心观察仓，但仍要控制估值仓位。</p>
+        </div>
+        <div class="card">
+          <h3 class="orange">中性情景</h3>
+          <p>收入继续增长，利润率缓慢恢复，现金流仍受项目制影响，股价高位震荡。</p>
+          <p><strong>模型动作：</strong>维持成长配置，回撤低吸，不追涨。</p>
+        </div>
+        <div class="card">
+          <h3 class="red">悲观情景</h3>
+          <p>Q2继续增收不增利，信用减值/应收/存货压力扩大，海外订单不及预期，高估值开始杀估值。</p>
+          <p><strong>模型动作：</strong>降级为题材交易，优先减仓。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>八、执行条件</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>动作</th>
+            <th>触发条件</th>
+            <th>原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>持有</td>
+            <td>股价不放量跌破重要均线，且没有新增Q2业绩下修或大额坏账风险。</td>
+            <td>产业逻辑仍强，2025数据支撑基本面。</td>
+          </tr>
+          <tr>
+            <td>加仓</td>
+            <td>Q2归母/扣非利润明显修复，毛利率回到27%以上，或公司披露海外液冷订单确认加速；价格最好在回撤后重新转强。</td>
+            <td>必须先修复Q1的利润断档，再谈提高仓位。</td>
+          </tr>
+          <tr>
+            <td>减仓</td>
+            <td>冲高放量滞涨、连续大涨后液冷板块分歧、或估值高位但Q2兑现不足。</td>
+            <td>当前估值容错率低，错一点就容易杀估值。</td>
+          </tr>
+          <tr>
+            <td>卖出 / 回避</td>
+            <td>Q2继续出现利润率低、现金流大幅为负、信用减值扩大，或海外订单节奏明显低于预期。</td>
+            <td>这意味着液冷叙事没有如期变成高质量利润。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout warn">
+        <strong>仓位建议：</strong>英维克适合作为AI算力液冷的核心观察/成长配置仓，但不适合在连续大涨后扩大仓位。对你当前组合来说，它和新易盛、生益科技、联瑞新材同属AI硬件链，不能单独看好就忽视组合拥挤度。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>九、复盘清单</h2>
+      <ul>
+        <li><strong>第一优先级：</strong>2026中报，确认Q2利润率、扣非净利和经营现金流是否修复。</li>
+        <li><strong>第二优先级：</strong>海外AI液冷订单是否开始进入收入确认，尤其是CDU、冷板、快接头、Manifold等高价值环节。</li>
+        <li><strong>第三优先级：</strong>应收账款、信用减值和存货是否继续扩张。</li>
+        <li><strong>第四优先级：</strong>Intel/Google/NVIDIA生态催化后，股价是否放量突破还是冲高回落。</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>资料来源</h2>
+      <ul>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-21/1225131813.PDF">英维克2025年年度报告</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-21/1225131821.PDF">英维克2026年第一季度报告</a></li>
+        <li><a href="https://pdf.dfcfw.com/pdf/H2_AN202604211821395630_1.pdf">英维克2026-04-21投资者关系活动记录表</a></li>
+        <li><a href="https://www.stcn.com/article/detail/3977748.html">证券时报：英特尔联合英维克、嘉实多发布单相冷板液冷工质测试验证成果</a></li>
+        <li><a href="https://www.news.cn/finance/20260615/27d6a4c13b5b4614a294e6afc2585c46/c.html">新华网：液冷数据中心市场高景气报告</a></li>
+        <li>行情和估值：腾讯行情接口，抓取时间约 2026-06-25 16:14 北京时间。</li>
+      </ul>
+      <div class="footer">本报告仅为研究分析，不构成收益承诺或投资建议。V2.3.1评分用于比较逻辑强弱，最终仓位还需要结合个人风险承受能力和组合暴露。</div>
+    </section>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

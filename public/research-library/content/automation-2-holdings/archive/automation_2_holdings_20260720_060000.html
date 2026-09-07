@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>每日持仓利多利空监控 - 2026-07-20</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #18202a;
+      --muted: #627084;
+      --line: #d9e0e8;
+      --red: #b42318;
+      --red-bg: #fff0ee;
+      --orange: #b45309;
+      --orange-bg: #fff7ed;
+      --green: #067647;
+      --green-bg: #ecfdf3;
+      --blue: #175cd3;
+      --blue-bg: #eff6ff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; line-height: 1.55; }
+    header { background: #17212f; color: #fff; padding: 28px 32px; }
+    header h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }
+    header p { margin: 4px 0; color: #d4dbe6; }
+    main { padding: 24px 32px 40px; max-width: 1480px; margin: 0 auto; }
+    section { margin: 0 0 22px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+    .risk { border-left: 8px solid var(--red); background: var(--red-bg); }
+    .gate { border-left: 8px solid var(--orange); background: var(--orange-bg); }
+    .attention-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; min-height: 132px; }
+    .attention-card h3 { margin: 0 0 8px; font-size: 18px; }
+    h2 { margin: 0 0 12px; font-size: 20px; }
+    p { margin: 0 0 8px; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { border-bottom: 1px solid var(--line); padding: 11px 12px; vertical-align: top; text-align: left; font-size: 14px; }
+    th { background: #eef2f6; color: #263445; position: sticky; top: 0; z-index: 1; }
+    tr.bear td:first-child { border-left: 5px solid var(--red); }
+    tr.bull td:first-child { border-left: 5px solid var(--green); }
+    tr.neutral td:first-child { border-left: 5px solid var(--blue); }
+    small, span { color: var(--muted); }
+    .badge { display: inline-block; border-radius: 999px; padding: 3px 9px; font-weight: 700; white-space: nowrap; }
+    .badge-bear { color: var(--red); background: var(--red-bg); }
+    .badge-bull { color: var(--green); background: var(--green-bg); }
+    .badge-neutral { color: var(--blue); background: var(--blue-bg); }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 8px 0; }
+    a { color: #175cd3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .table-wrap { overflow-x: auto; border-radius: 8px; }
+    @media (max-width: 900px) {
+      header, main { padding-left: 16px; padding-right: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      th, td { min-width: 160px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=automation-2-holdings&amp;view=reports">持仓晨报</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <h1>每日持仓利多利空监控</h1>
+    <p>截至北京时间2026-07-20 06:00；行情采用2026-07-17 A/H收盘和2026-07-17美股收盘，排除2026-07-20盘中数据。</p>
+    <p>生成时间：2026-07-20T20:40:15+08:00</p>
+  </header>
+  <main>
+    <section class="panel risk">
+      <h2>今日高危预警：红色</h2>
+      <p>7月17日A股AI硬件、半导体材料/设备、机器人弹性仓普遍大跌；同日美股Nasdaq -1.4%，AI估值压力延续，SOX仍处技术熊市讨论中。今天先防守，不把业绩同比高增直接当作无条件加仓信号。</p>
+    </section>
+    <section class="panel gate">
+      <h2>总阀门</h2>
+      <p>总阀门：不加仓 / 不追高 / 先防守。业绩强的核心仓只做修复确认，跌破成本或关键位的高波动仓先控仓。</p>
+    </section>
+    <section>
+      <h2>需要重点注意的3只股票</h2>
+      <div class="grid">
+        <article class="attention-card">
+          <h3>新易盛</h3>
+          <p>H1预告强但7月17日单日-11.01%，业绩层面利多和交易层面踩踏并存，是今天最需要区分的核心仓。</p>
+        </article>
+        
+        <article class="attention-card">
+          <h3>澜起科技</h3>
+          <p>H1预增和回购提议同时出现，但韩国调查说明及连续大跌压制交易，事件不确定性最高。</p>
+        </article>
+        
+        <article class="attention-card">
+          <h3>绿的谐波</h3>
+          <p>7月17日单日-13.87%，接近320成本线；机器人题材退潮时最容易从浮盈变防守。</p>
+        </article>
+        </div>
+    </section>
+    <section>
+      <h2>持仓明细</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>股票 / 仓位</th>
+              <th>最新收盘</th>
+              <th>最新利多消息</th>
+              <th>最新利空消息</th>
+              <th>消息级别</th>
+              <th>综合判断</th>
+              <th>二季度/半年报预期差</th>
+              <th>今日关注位或操作提示</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr class="bull">
+          <td><strong>新易盛</strong><br><span>300502</span><br><small>1060股；原760股除权后综合参考成本约544.6，新增300股成本待补</small></td>
+          <td>2026-07-17<br><strong>482.88</strong><br><small>1日 -11.01% / 5日 -7.68%</small></td>
+          <td>2026H1业绩预告披露归母净利润70亿至80亿元，同比+77.56%至+102.93%；扣非69.81亿至79.81亿元，非经常性损益影响约0.19亿元，主营质量仍强。</td>
+          <td>7月17日收482.88，单日-11.01%，跌破旧参考成本；外围AI/芯片估值回撤，CPO高景气已高度明牌，开盘容易先兑现。</td>
+          <td>重大财报利多 + 交易红色风险</td>
+          <td><span class="badge badge-bull">中性偏利多</span></td>
+          <td><strong>仅业绩预告或快报</strong><br>超预期<br><small>公告日期2026-07-20，签署日2026-07-19；归母70亿至80亿元、扣非69.81亿至79.81亿元。IT之家转述市场一致预期约62亿至72亿元，预期差结论为超预期但需后续用券商/Wind一致预期复核。</small></td>
+          <td>不追高；若高开兑现先看482至500修复是否站稳，跌破452.96低点附近继续防守。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>绿的谐波</strong><br><span>688017</span><br><small>4手，成本320</small></td>
+          <td>2026-07-17<br><strong>326.1</strong><br><small>1日 -13.87% / 5日 -19.48%</small></td>
+          <td>机器人/精密传动方向仍有行业催化，7月17日收326.10仍略高于成本。</td>
+          <td>7月17日单日-13.87%，且此前已有异动/风险提示背景；若板块龙头继续退潮，题材估值弹性反噬更快。</td>
+          <td>交易红色风险</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>成本线附近不能加仓；若跌破320后不能快速收回，优先降波动。</td>
+        </tr>
+        
+        <tr class="neutral">
+          <td><strong>生益科技</strong><br><span>600183</span><br><small>5手，成本138.2</small></td>
+          <td>2026-07-17<br><strong>132.29</strong><br><small>1日 -10.0% / 5日 -11.45%</small></td>
+          <td>2026H1业绩预增公告预计归母净利润30.99亿至32.98亿元，同比+117%至+131%；扣非27.19亿至29.18亿元，同比+97%至+112%，AI算力PCB/覆铜板需求仍强。</td>
+          <td>7月17日收132.29，跌破成本；虽有业绩利多，但交易层面连续大幅波动，且此前拟处置联瑞转债对联瑞链条有扰动。</td>
+          <td>重大财报利多 + 交易红色风险</td>
+          <td><span class="badge badge-neutral">中性</span></td>
+          <td><strong>仅业绩预告或快报</strong><br>无可靠预期<br><small>公告日期2026-07-14；归母30.99亿至32.98亿元、扣非27.19亿至29.18亿元。未取得可验证一致预期，不能把同比高增直接写成超预期。</small></td>
+          <td>业绩不等于立刻修复；先看132至138.2成本区能否收回，不能收回就按弱修复处理。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>澜起科技</strong><br><span>688008</span><br><small>200股，成本263</small></td>
+          <td>2026-07-17<br><strong>183.6</strong><br><small>1日 -13.04% / 5日 -31.51%</small></td>
+          <td>公司预计2026H1归母净利润19亿至21亿元，同比+63.9%至+81.2%；董事长/CEO提议3亿至6亿元A股回购。</td>
+          <td>韩国办公室因潜在反垄断事项被现场搜查，公司称正配合且目前未被指控；交易上7月16日至17日连续重挫，7月17日收183.60，显著低于成本。</td>
+          <td>重大利多利空并存</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>仅业绩预告或快报</strong><br>无可靠预期<br><small>公告日期2026-07-17；营收约33.35亿元，同比+26.6%；归母19亿至21亿元，同比+63.9%至+81.2%；扣非12.5亿至14.5亿元，同比+14.5%至+32.9%。未取得可靠一致预期。</small></td>
+          <td>先按事件风险股处理；未回到200/211上方前不补仓，韩国调查进展是短期最大变量。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>英维克</strong><br><span>002837</span><br><small>300股，成本74.8</small></td>
+          <td>2026-07-17<br><strong>61.57</strong><br><small>1日 -9.27% / 5日 -16.28%</small></td>
+          <td>液冷/数据中心温控长期景气仍在，未见重大新增公司层面利空。</td>
+          <td>7月17日收61.57，明显低于成本，且5日回撤约-16.28%；AI基础设施链条整体退潮时弹性品种承压。</td>
+          <td>交易风险</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>不加仓摊低；先看61至66区间能否止跌，弱反抽优先降成本。</td>
+        </tr>
+        
+        <tr class="neutral">
+          <td><strong>中微公司</strong><br><span>688012</span><br><small>2手，成本380</small></td>
+          <td>2026-07-17<br><strong>350.69</strong><br><small>1日 -2.97% / 5日 -19.29%</small></td>
+          <td>半导体设备国产替代主线仍在，未见重大新增公司基本面利空。</td>
+          <td>7月17日收350.69，低于成本；海外半导体指数进入技术熊市的舆论压力，会压制设备估值。</td>
+          <td>行业/交易风险</td>
+          <td><span class="badge badge-bear">中性偏利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>380未收复前不转进攻；若350附近继续失守，按防守仓处理。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>联瑞新材</strong><br><span>688300</span><br><small>2手，成本247</small></td>
+          <td>2026-07-17<br><strong>141.0</strong><br><small>1日 -10.98% / 5日 -23.02%</small></td>
+          <td>AI高速材料链逻辑仍有景气支撑，未见重大新增经营层面利空。</td>
+          <td>7月17日收141.00，距成本较远；生益科技拟处置联瑞转债、联瑞转债转股窗口和连续大跌共同形成筹码/交易压力。</td>
+          <td>筹码 + 交易红色风险</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>不补仓；弱反弹优先降低波动，需等放量杀跌结束后再评估。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>雅克科技</strong><br><span>002409</span><br><small>3手，成本待补</small></td>
+          <td>2026-07-17<br><strong>145.0</strong><br><small>1日 -7.05% / 5日 -30.01%</small></td>
+          <td>半导体材料国产替代逻辑仍在，未见新的实质经营恶化公告。</td>
+          <td>7月17日收145.00，7月10至17累计约-30.01%；前期异动风险提示仍需保留，题材回撤期不适合硬扛弹性仓。</td>
+          <td>交易红色风险</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>成本未补充前按高波动仓管理；反抽不放量站回156/171前，不做新增。</td>
+        </tr>
+        
+        <tr class="bear">
+          <td><strong>博众精工</strong><br><span>688097</span><br><small>4手，成本62</small></td>
+          <td>2026-07-17<br><strong>44.86</strong><br><small>1日 -6.7% / 5日 -17.7%</small></td>
+          <td>机器人/自动化设备方向仍有产业催化，新增持仓后需先观察承接。</td>
+          <td>7月17日收44.86，显著低于62成本；未见新财报支撑前，短线交易风险大于基本面确认。</td>
+          <td>新增持仓交易风险</td>
+          <td><span class="badge badge-bear">利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式半年报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>新增仓先防守；若不能回到48至50，避免继续摊低。</td>
+        </tr>
+        
+        <tr class="neutral">
+          <td><strong>阿里巴巴-W</strong><br><span>09988.HK</span><br><small>6手，成本160</small></td>
+          <td>2026-07-17<br><strong>112.6</strong><br><small>1日 -3.68% / 5日 2.18%</small></td>
+          <td>最新官方季度业绩仍显示云外部商业化收入同比+40%、AI相关产品收入连续十一季度三位数增长；港股7月16日前有修复。</td>
+          <td>7月17日港股收112.60，仍远低于160成本；BABA ADR 7月17日-2.14%，港股互联网仍受外部风险偏好影响。</td>
+          <td>中性偏弱</td>
+          <td><span class="badge badge-bear">中性偏利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>最新官方业绩为2026-05-13披露的截至2026-03-31季度及FY2026结果；未见6月季度新业绩公告。</small></td>
+          <td>平台股只看修复，不加仓；116/120未站稳前仍是低位震荡。</td>
+        </tr>
+        
+        <tr class="neutral">
+          <td><strong>宁德时代-H</strong><br><span>03750.HK</span><br><small>1手，成本660</small></td>
+          <td>2026-07-17<br><strong>606.5</strong><br><small>1日 -2.33% / 5日 3.32%</small></td>
+          <td>新能源龙头基本面未见新增重大负面；7月13至16有阶段修复。</td>
+          <td>7月17日收606.50，低于660成本；港股新上市流动性和高位估值仍受风险偏好影响。</td>
+          <td>中性</td>
+          <td><span class="badge badge-bear">中性偏利空</span></td>
+          <td><strong>暂未披露</strong><br>暂未披露<br><small>未检索到可靠的2026H1正式中报、业绩预告或快报；预期差无法判断。</small></td>
+          <td>不补仓；先看600关口与621/637压力，不能收复则继续防守。</td>
+        </tr>
+        </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>风险预案</h2>
+      <p>开盘若AI/半导体继续低开，先看核心仓是否放量止跌，不用业绩预告去硬接下跌惯性。跌破成本线且不能快速收回的品种，优先降低波动；高开冲高但量能不足的品种，按兑现而非突破处理。</p>
+    </section>
+    <section class="panel">
+      <h2>来源 / 数据缺口</h2>
+      <ul><li><a href="https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?CompanyCode=80387271&amp;gather=1&amp;id=12453430">新易盛2026年半年度业绩预告</a><br><span>归母70亿至80亿元，扣非69.81亿至79.81亿元；IT之家页面转述一致预期62亿至72亿元，仅作可复核预期来源。</span></li><li><a href="https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12443753&amp;stockid=600183">生益科技2026年半年度业绩预增公告</a><br><span>归母30.99亿至32.98亿元，同比+117%至+131%。</span></li><li><a href="https://paper.cnstock.com/html/2026-07/17/content_2245364.htm">澜起科技2026年半年度业绩预增、回购提议及韩国调查说明</a><br><span>归母19亿至21亿元、扣非12.5亿至14.5亿元；回购提议3亿至6亿元；韩国调查仍处调查阶段。</span></li><li><a href="https://home.alibabagroup.com/zh-HK/document-1991237455038119936">阿里巴巴2026年3月份季度及FY2026业绩</a><br><span>云外部商业化收入同比+40%，AI相关产品收入连续十一季度三位数增长。</span></li><li><a href="https://apnews.com/article/5e44034ea86fa8d9c73184f3559e74a2">AP: 2026-07-17美股主要指数表现</a><br><span>S&amp;P 500 -1.0%，Nasdaq -1.4%，AI相关股票估值压力。</span></li><li><a href="https://www.investors.com/news/technology/chip-stocks-sox-index-bear-market-astera-labs/">Investors.com: SOX进入技术熊市</a><br><span>SOX较6月22日高点回撤超20%，7月17日收盘仍处技术熊市讨论中。</span></li><li><a href="https://push2his.eastmoney.com/">东方财富历史行情接口</a><br><span>用于A/H持仓截至2026-07-17收盘的最新价格、单日和阶段涨跌幅。</span></li></ul>
+      <h2 style="margin-top:18px;">数据缺口</h2>
+      <ul><li>除新易盛、生益科技、澜起科技外，其余当前持仓未检索到可靠2026H1正式半年报、业绩预告或快报。</li><li>多数个股缺少可验证的一致预期来源；未取得可靠预期时统一标注无可靠预期或暂未披露。</li><li>本报告严格使用06:00前可得信息；2026-07-20盘中价格未纳入判断。</li></ul>
+    </section>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

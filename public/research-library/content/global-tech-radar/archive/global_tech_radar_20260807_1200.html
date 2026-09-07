@@ -1,0 +1,630 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-07 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange维持：就业转弱和准备金修复缓和流动性压力，AI软件接力卖铲链，但仍不追高</h1>
+      <p class="subtitle">2026-08-07午间雷达按12:00 noon归档，执行时为北京时间23:06。总闸门维持Orange。较上一轮的核心变化有三条：第一，美国官方就业数据明显转弱，BLS披露7月非农就业减少2.3万人，5月和6月合计下修10.3万人，叠加Fed H.4.1显示准备金周均小幅修复，这使流动性模块从Stress降到Tightening观察；但Fed H.15最新官方数据仍显示10Y 4.63%、30Y 5.17%、10Y TIPS 2.41%，绝对水平仍高，所以不能升Green。第二，AI软件端出现更清晰的官方确认：Cloudflare、Atlassian、Twilio均披露高增长、RPO/ARR/现金流或指引上修，说明AI CapEx正继续从硬件和云扩散到安全、协作、通信、数据平台等软件卖铲层。第三，SpaceX官方高CapEx仍确认商业航天和AI基础设施需求，但AP报道显示市场对SpaceX、AMD等高预期资产仍在反复定价。处理建议：继续看卖铲链，不看纯题材；优先收入、订单、RPO/ARR、毛利率、现金流和交付节奏都能闭环的环节。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-07 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange维持：就业转弱和准备金修复缓和流动性压力，AI软件接力卖铲链，但仍不追高</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持Orange：流动性压力边际减轻，可以看强兑现卖铲链，但不能把弱就业和收益率回落直接当全面追高信号。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈是BLS弱就业+Fed H.4.1准备金修复降低利率压力，同时Cloudflare、Atlassian、Twilio把AI软件卖铲从叙事推进到收入/RPO/ARR/现金流。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项是Fed H.15的10Y、30Y和TIPS实际利率仍高，且SpaceX/AMD等高预期资产仍有估值和现金流过滤。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步只盯Fed H.15/H.4.1是否继续改善、SpaceX CapEx现金流效率、AMD 10-Q/电话会、Supermicro正式Q4、Amazon CapEx口径和出口管制执行细则。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-green">Bullish</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>美国就业官方数据转弱，降低加息压力但也提示需求冷却</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>BLS 2026-08-07发布的Employment Situation显示，7月非农就业减少2.3万人，失业率为4.1%；5月非农从+12.9万人下修至+6.3万人，6月从+5.7万人下修至+2.0万人，合计下修10.3万人。</p>
+              <p><strong>影响：</strong>利率压力边际下降，科技估值获得喘息；但就业转弱也意味着需求端有冷却风险，因此只利好有收入、现金流和订单验证的科技卖铲人。</p>
+              <p class="source-line"><a href="https://www.bls.gov/news.release/empsit.nr0.htm">U.S. Bureau of Labor Statistics</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Fed H.4.1准备金修复，流动性从Stress降到Tightening观察</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.4.1最新表显示，2026-08-05周均Reserve balances with Federal Reserve Banks为US$2.993349tn，较前周增加US$8.779bn；周三点位为US$3.002731tn。TGA周均US$907.324bn，较前周下降US$3.452bn；ON RRP周均US$342.725bn，较前周下降US$1.222bn。</p>
+              <p><strong>影响：</strong>准备金和TGA边际组合比上一轮友好，支持把Liquidity从Stress降为Tightening观察；但不是Easing，因为长端和实际利率仍高。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Fed H.15长端未继续明显下行，流动性仍不能升Green</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.15最新发布日为2026-08-06，最新数据行为2026-08-05：EFFR 3.63%，2Y 4.18%，10Y 4.63%，20Y 5.18%，30Y 5.17%，10Y TIPS 2.41%，30Y TIPS 2.96%。</p>
+              <p><strong>影响：</strong>2Y继续回落，但10Y和10Y TIPS没有突破性改善，长久期科技估值仍需要盈利和现金流兑现支撑。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>AI软件卖铲链出现官方接力：Cloudflare、Atlassian、Twilio同步验证</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Cloudflare Q2 revenue US$696.1mn、同比+36%，current RPO同比+35%，FY2026 revenue outlook上修至约US$2.864-2.870bn；Atlassian FY26 Q4 revenue US$1.766bn、同比+28%，Cloud revenue +31%，subscription ARR US$6.606bn、同比+23%，RPO US$4.817bn、同比+44%；Twilio Q2 revenue US$1.499bn、同比+22%，free cash flow US$352.6mn，并上修FY2026 revenue和free cash flow outlook。</p>
+              <p><strong>影响：</strong>AI CapEx继续从硬件、云和数据中心扩散到安全网络、协作平台、通信API、数据平台和企业AI工作流；软件端优先看RPO/ARR、客户留存、利润率和现金流。</p>
+              <p class="source-line"><a href="https://cloudflare.net/news/news-details/2026/Cloudflare-Announces-Second-Quarter-2026-Financial-Results/default.aspx">Cloudflare IR / Atlassian / Twilio</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>SpaceX高CapEx仍强，但市场继续按现金流效率过滤商业航天</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>SpaceX官方Q2文件继续确认高CapEx：Q2 revenue约US$7.814bn、net loss约US$541mn、capex约US$18.369bn、AI capex约US$15.828bn、backlog约US$47.5bn。AP后续报道显示，在超过9亿股内部股份解禁后，SpaceX股价一度反弹约6.1%，但高CapEx、亏损和解禁压力仍需观察。</p>
+              <p><strong>影响：</strong>商业航天卖铲链需求仍在，卫星制造、通信载荷、发射配套、地面终端、测控、电力热控和AI数据中心配套受益；但终端估值必须看CapEx转收入和现金流效率。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm">SpaceX SEC / AP</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>SpaceX</td>
+              <td>Q2 2026 revenue约US$7.814bn、capex约US$18.369bn，其中AI capex约US$15.828bn；backlog约US$47.5bn，cash and marketable securities约US$100.384bn，debt约US$38.433bn。</td>
+              <td>上修</td>
+              <td>商业航天卖铲链和AI基础设施链同时受益：卫星制造、发射服务、通信载荷、地面终端、测控、电力热控、AI服务器、GPU/网络、液冷和供配电。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm">SpaceX Q2 2026 Results / SEC 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>AMD</td>
+              <td>Q2 revenue US$11.536bn、同比+50%；Data Center revenue US$6.702bn、同比+107%；MI350进入客户部署，Helios rack-scale AI平台计划2026年下半年出货；Q3 revenue指引约US$13.0bn。</td>
+              <td>上修</td>
+              <td>AI GPU、HBM、服务器CPU、整机ODM、液冷、电源、机柜、高速互连和数据中心部署链受益。</td>
+              <td>High</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q4 Microsoft Cloud revenue US$59.3bn、同比+27%；Commercial RPO同比+84%至US$678bn；Azure及其他云服务+43%；Q4物业设备新增US$35.802bn。</td>
+              <td>上修</td>
+              <td>AI CapEx被云收入和RPO吸收，继续验证AI服务器、网络、存储、电力和冷却需求。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon</td>
+              <td>10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn；但10-Q未直接确认媒体所称US$220bn全年CapEx。</td>
+              <td>上修</td>
+              <td>AWS、AI芯片/GPU/HBM、数据中心电力、液冷、网络和服务器链继续受益；US$220bn仍按未见官方确认处理。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。</td>
+              <td>上修</td>
+              <td>AI服务器、光通信、交换机、电力、冷却和数据中心建设受益；租赁、折旧、债务和FCF压力是估值过滤器。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro</td>
+              <td>初步业务更新称FY2026 Q4新订单超过US$60bn，非GAAP毛利率预计15%-17%，但收入预计接近US$11.0-12.5bn指引低端，正式Q4仍待2026-08-11公布。</td>
+              <td>待验证</td>
+              <td>AI服务器、液冷、电源、机柜和高速互连订单强，但需要正式财报验证交付、毛利率、客户集中度和审计风险。</td>
+              <td>High</td>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Cloudflare / Atlassian / Twilio</td>
+              <td>三家公司最新官方结果均显示AI相关软件和云平台需求仍强，Cloudflare上修FY2026 revenue outlook，Atlassian RPO同比+44%，Twilio上修FY2026 revenue和free cash flow outlook。</td>
+              <td>上修</td>
+              <td>AI安全网络、协作平台、通信API、数据平台和企业AI工作流作为软件卖铲层开始接力硬件CapEx。</td>
+              <td>High</td>
+              <td><a href="https://www.businesswire.com/news/home/20260806933480/en/Atlassian-Announces-Fourth-Quarter-and-Fiscal-Year-2026-Results">Company IR / Business Wire</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>BLS Employment Situation</td>
+              <td>2026-08-07发布：7月非农就业减少2.3万人，失业率4.1%；5月和6月合计下修10.3万人。</td>
+              <td>宽松观察 / 增长压力</td>
+              <td>降低进一步加息压力，但也提示需求可能冷却；更利好现金流确定的科技卖铲人，而不是纯远期估值资产。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>2026-08-05周均准备金US$2.993349tn，周增US$8.779bn；周三点位US$3.002731tn。TGA周均US$907.324bn，周降US$3.452bn；ON RRP周均US$342.725bn，周降US$1.222bn。</td>
+              <td>压力缓和</td>
+              <td>准备金修复和TGA小降改善系统流动性边际，但同比仍弱，不能定义为Easing。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.15</td>
+              <td>2026-08-06发布/2026-08-05数据：EFFR 3.63%，2Y 4.18%，10Y 4.63%，20Y 5.18%，30Y 5.17%，10Y TIPS 2.41%，30Y TIPS 2.96%。</td>
+              <td>收紧仍在</td>
+              <td>2Y回落，但10Y和实际利率仍高，长久期科技估值仍受压制。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Dollar</td>
+              <td>H.10最新可用发布日为2026-08-03，Broad dollar index约119.7034，人民币约6.7509，日元约159.1600。</td>
+              <td>中性偏缓</td>
+              <td>美元较前期高位缓和，对非美科技链和成长估值有边际帮助，但不是独立买入信号。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>US market yields / equities</td>
+              <td>AP报道就业数据发布后，S&amp;P 500一度上涨约0.4%，Nasdaq上涨约1.1%，10Y市场收益率约4.60%。</td>
+              <td>宽松观察</td>
+              <td>市场按“弱就业压低利率”交易科技股，但若后续变成盈利下修，风险偏好会反转。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/9636095906bbb689a1f612bce9a07343">AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>PBOC open-market operations</td>
+              <td>财联社报道2026-08-07中国央行开展10亿元7天期逆回购，操作利率1.40%，因当日有1340亿元逆回购到期，实现净回笼约1330亿元；此前央行8月5日开展5000亿元买断式逆回购操作。</td>
+              <td>中性偏紧</td>
+              <td>中国端流动性不是单向放水，需要继续看资金利率和后续公开市场投放节奏。</td>
+              <td>Medium</td>
+              <td><a href="https://www.cls.cn/detail/2110384">财联社 / 新华社</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Cloudflare Q2官方结果</td>
+              <td>AI安全网络、边缘云、开发者平台、AI agent基础设施</td>
+              <td>利好</td>
+              <td>网络安全、边缘计算、AI应用流量治理、开发者平台和企业AI基础设施软件</td>
+              <td>缺少RPO、客户扩张和现金流验证的纯AI软件叙事公司</td>
+              <td>官方确认</td>
+              <td><a href="https://cloudflare.net/news/news-details/2026/Cloudflare-Announces-Second-Quarter-2026-Financial-Results/default.aspx">Cloudflare IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Atlassian FY26 Q4官方结果</td>
+              <td>企业协作、AI工作流、开发者工具、知识图谱</td>
+              <td>利好</td>
+              <td>RPO/ARR高增、具备平台迁移和AI工作流粘性的企业软件公司</td>
+              <td>席位增长慢、留存下降、AI功能不能变现的软件公司</td>
+              <td>官方/Business Wire</td>
+              <td><a href="https://www.businesswire.com/news/home/20260806933480/en/Atlassian-Announces-Fourth-Quarter-and-Fiscal-Year-2026-Results">Atlassian / Business Wire</a></td>
+            </tr>
+            
+            <tr>
+              <td>Twilio Q2官方结果</td>
+              <td>通信API、客户数据平台、AI客服、企业自动化</td>
+              <td>利好</td>
+              <td>收入增长、DBNE、non-GAAP利润和free cash flow同时改善的软件/通信API公司</td>
+              <td>增长靠补贴、现金流无法转正的SaaS公司</td>
+              <td>官方/Business Wire</td>
+              <td><a href="https://www.businesswire.com/news/home/20260806055209/en/Twilio-Announces-Second-Quarter-2026-Results">Twilio / Business Wire</a></td>
+            </tr>
+            
+            <tr>
+              <td>SpaceX高CapEx和股份解禁后的市场消化</td>
+              <td>商业航天、AI数据中心、卫星通信、发射服务、地面终端、测控、电力热控</td>
+              <td>利好但分化</td>
+              <td>卫星制造、通信载荷、地面终端、测控、发射配套、热控材料、AI服务器和液冷供配电</td>
+              <td>高CapEx、高债务、亏损扩大、收入转现金慢的商业航天终端资产</td>
+              <td>官方确认 / 媒体报道</td>
+              <td><a href="https://apnews.com/article/spacex-musk-shares-lockup-insiders-c75721ec2e43e5304a2184a9e6abae5e">SpaceX SEC / AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>中国对美国相关无人机等两用物项出口管制</td>
+              <td>无人机、传感器、导航、通信链、飞控、复合材料、商业航天两用环节</td>
+              <td>利空/合规风险</td>
+              <td>内需替代、合规完备、供应链自主可控环节可能受益于国产化逻辑</td>
+              <td>依赖对美出口、关键物项许可不确定、客户或收入暴露较高的无人机与两用供应链公司</td>
+              <td>官方公告</td>
+              <td><a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html">MOFCOM</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI软件卖铲链</td>
+              <td>Cloudflare、Atlassian、Twilio为海外官方验证样本；无直接A/H公司映射。</td>
+              <td>网络安全、边缘云、协作软件、开发者工具、通信API、客户数据平台、企业AI工作流和政企AI软件可作为AI硬件CapEx扩散方向。</td>
+              <td>必须看ARR/RPO、客户留存、利润率和free cash flow，不能只看AI概念。</td>
+            </tr>
+            
+            <tr>
+              <td>AI算力硬件卖铲链</td>
+              <td>无直接A/H公司映射；本报告不使用历史股价表现作为依据。</td>
+              <td>AI GPU/HBM、服务器CPU/ASIC、AI服务器整机、液冷、电源、机柜、高速互连、先进封装和高端PCB/基板仍是主线。</td>
+              <td>海外官方财报验证需求方向，不等于A股单家公司直接订单；需等公告、客户验证、订单和毛利率。</td>
+            </tr>
+            
+            <tr>
+              <td>商业航天卖铲链</td>
+              <td>无直接A/H公司映射；SpaceX官方文件只验证海外商业航天和AI基础设施需求，不等于A/H公司订单。</td>
+              <td>卫星制造、通信载荷、地面终端、测控系统、发射配套、热控材料、精密制造、电源管理和复合材料是更偏卖铲方向。</td>
+              <td>商业航天终端收入增长不等于利润改善；高CapEx、亏损、融资、出口管制和客户认证会压制兑现速度。</td>
+            </tr>
+            
+            <tr>
+              <td>数据中心电力与冷却</td>
+              <td>无直接A/H公司映射；只确认海外hyperscaler、SpaceX和AI硬件厂商CapEx方向。</td>
+              <td>UPS、配电、液冷、热管理、机柜、电源模块和数据中心工程服务受益于CapEx扩张。</td>
+              <td>流动性虽缓和但仍非宽松，折现率对高估值CapEx链仍是约束。</td>
+            </tr>
+            
+            <tr>
+              <td>无人机与两用物项管制链</td>
+              <td>商务部公告是政策层面的直接证据，但未直接指向A/H单家公司订单变化。</td>
+              <td>无人机整机、传感器、导航、通信链、飞控、复合材料和两用航天零部件需要按出口许可、客户结构和内需替代分层。</td>
+              <td>政策管制既可能强化国产替代，也可能压制外销收入；不能简单当作利好。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>Fed H.15下一行与H.4.1下一周数据</strong><span>确认10Y/30Y/TIPS是否继续下行，以及准备金修复是否可持续；决定Liquidity能否从Tightening向Easing观察推进。</span></li><li><strong>就业转弱后的盈利预期</strong><span>弱就业利好折现率，但若触发收入或利润下修，会反向压制科技风险偏好。</span></li><li><strong>SpaceX Q2官方文件继续拆解</strong><span>跟踪AI capex、commercial-space backlog、debt、loss、cash、Starlink/AI revenue、供应商和CapEx-to-cash-flow效率。</span></li><li><strong>AMD 10-Q与电话会细节</strong><span>核验MI350/Helios客户、订单可见度、HBM约束、gross margin和data-center收入转换。</span></li><li><strong>Supermicro FY2026 Q4正式结果</strong><span>验证初步披露的&gt;US$60bn新订单、收入确认、毛利率、交付能力、客户集中和审计风险。</span></li><li><strong>Amazon正式CapEx口径</strong><span>10-Q确认H1现金CapEx US$96.3bn，但媒体所称US$220bn全年CapEx未见10-Q直接确认。</span></li><li><strong>Cloudflare、Atlassian、Twilio后续指引</strong><span>确认AI软件卖铲能否持续转化为ARR/RPO、DBNE、margin和free cash flow。</span></li><li><strong>商务部无人机等两用物项出口管制后续</strong><span>跟踪许可证、实体名单、执行细则、公司公告和对无人机/商业航天供应链订单的影响。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">U.S. Bureau of Labor Statistics Employment Situation</a></td>
+              <td>Liquidity / Macro</td>
+              <td>2026-08-07</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10 Foreign Exchange Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/9636095906bbb689a1f612bce9a07343">AP market report after July jobs data</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-08-07</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://cloudflare.net/news/news-details/2026/Cloudflare-Announces-Second-Quarter-2026-Financial-Results/default.aspx">Cloudflare Announces Second Quarter 2026 Financial Results</a></td>
+              <td>Tech catalyst / AI software</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.businesswire.com/news/home/20260806933480/en/Atlassian-Announces-Fourth-Quarter-and-Fiscal-Year-2026-Results">Atlassian Announces Fourth Quarter and Fiscal Year 2026 Results</a></td>
+              <td>Tech catalyst / AI software</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.businesswire.com/news/home/20260806055209/en/Twilio-Announces-Second-Quarter-2026-Results">Twilio Announces Second Quarter 2026 Results</a></td>
+              <td>Tech catalyst / AI software</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm">SpaceX Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / Tech catalyst / Commercial space</td>
+              <td>2026-08-05</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/spacex-musk-shares-lockup-insiders-c75721ec2e43e5304a2184a9e6abae5e">SpaceX shares rise after lockup report</a></td>
+              <td>Tech catalyst / Commercial space</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html">MOFCOM announcement on export controls for US-related drone and dual-use items</a></td>
+              <td>Tech catalyst / Export control</td>
+              <td>2026-08-05</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results">AMD Reports Second Quarter 2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-05</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm">Palantir Q2 2026 SEC Exhibit 99.1</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-08-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx</td>
+              <td>2026-08-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft FY2026 Q4 Earnings Release</a></td>
+              <td>CapEx</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx</td>
+              <td>2026-08-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx">Supermicro FY2026 Q4 Preliminary Business Update</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.cls.cn/detail/2110384">PBOC open-market operation report via CLS</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-07</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

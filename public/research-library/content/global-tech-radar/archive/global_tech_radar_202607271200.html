@@ -1,0 +1,626 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-07-27 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Red未解除：AI CapEx继续扩张，但Fed实际利率升至2.43%、Nasdaq周跌2.1%，高估值科技仍先防守</h1>
+      <p class="subtitle">本轮维持Red。CapEx端仍是Expansion：AMD AAI 2026、Helios、Anthropic/OpenAI/Meta/Microsoft/Oracle生态，Alphabet Q2 CapEx与Cloud收入，Intel DCAI/Foundry修复，以及GE Vernova电力设备订单与backlog共同说明AI数据中心投资没有降温。压制项在流动性和市场价格：Fed H.15最新官方数据把10Y Treasury推到4.71%、10Y TIPS实际利率推到2.43%，H.4.1准备金仍低于去年同期，AP报道Nasdaq周跌2.1%、科技估值仍受Alphabet/Tesla和高CapEx现金流压力影响。周五Brent从102美元附近回落到96.78美元、收益率边际回落，但这只是压力缓和，不是转宽松确认；操作上继续只保留官方订单、现金流能承受、供应链兑现清楚的AI基础设施链，避免追高远期叙事。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-07-27 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-red">Red</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-red">Red</span> <span>Red未解除：AI CapEx继续扩张，但Fed实际利率升至2.43%、Nasdaq周跌2.1%，高估值科技仍先防守</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>继续防守优先：只参与官方客户、明确CapEx、真实订单/backlog、云AI收入、现金流可解释的强验证链；降低高估值、负FCF、重融资、油价/利率敏感和只靠发布会预期的方向。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈仍是AI基础设施真实扩张：AMD Helios/AAI 2026进入GW级rack-scale叙事，Alphabet Q2 CapEx 449.24亿美元，Intel DCAI +59%，GE Vernova订单242亿美元、backlog环比增130亿美元，说明算力、电力、网络、液冷、服务器和先进封装链仍有需求。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项是折现率与现金流纪律：Fed H.15 10Y升至4.71%、10Y TIPS实际利率升至2.43%；AP显示Nasdaq周跌2.1%，Alphabet/Tesla财报后的负FCF和高CapEx压力仍没消化完。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步看7月29日FOMC、7月31日PCE、Microsoft/Meta/Amazon/Apple本周财报、Fed H.15/H.10是否缓和，以及AMD/GE Vernova/Intel订单是否转化为具体供应商和交付节奏。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Fed官方实际利率继续上行，Stress未解除</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.15最新显示2026-07-23数据：effective fed funds 3.63%，2Y Treasury 4.37%，10Y Treasury 4.71%，10Y TIPS实际利率2.43%；H.4.1显示截至7月22日准备金余额3.062149万亿美元，同比少3001.28亿美元。</p>
+              <p><strong>影响：</strong>长端利率和实际利率继续压制长久期科技估值；即使AI CapEx强，也不支持无差别转Green或追高。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 / H.4.1</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>周五市场略修复，但Nasdaq全周仍下跌</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>AP报道2026-07-24美股收盘S&amp;P 500微涨不足0.1%，Dow +0.5%，Nasdaq -0.6%；全周S&amp;P 500 -0.6%、Dow -0.4%、Nasdaq -2.1%。Brent从此前102美元附近回落约4%至96.78美元，10Y收益率周五边际回落。</p>
+              <p><strong>影响：</strong>流动性压力有短线缓和，但科技风险偏好没有修复到可转Orange/Green；高估值AI链仍需要等待周内FOMC/PCE和巨头财报确认。</p>
+              <p class="source-line"><a href="https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b">Associated Press</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>强就业进一步削弱降息交易</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>美国劳工部2026-07-24公布，截至7月18日当周初请失业金人数18.7万人，较前值减少2.2万人，四周均值20.75万人；AP称这是1969年以来最低水平，并报道交易员对下周Fed加息的隐含概率约38%。</p>
+              <p><strong>影响：</strong>就业韧性让Fed更难转鸽，科技成长股的折现率压力仍在；FOMC前不宜把油价回落当作全面宽松。</p>
+              <p class="source-line"><a href="https://www.dol.gov/ui/data.pdf">U.S. Department of Labor / AP</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>AI数据中心电力链新增一手确认：GE Vernova订单与backlog上修</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>GE Vernova 2026-07-24官方Q2显示订单242亿美元，同比有机增长88%，backlog环比增加130亿美元；公司将2026自由现金流指引从65-75亿美元上修至115-125亿美元，并称gas backlog和slot reservations从100GW升至116GW，年底至少125GW。</p>
+              <p><strong>影响：</strong>AI数据中心从GPU/服务器扩散到电力卖铲人：燃机、电网设备、电气化、UPS、变压器、配电、并网和施工链继续受益。</p>
+              <p class="source-line"><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>政策端开始把AI数据中心电力成本显性化</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>White House 2026-07-25发布Ratepayer Protection Pledge，称超过200家公用事业、数据中心开发商和其他企业参与，覆盖约80%美国供电与2.63亿消费者，目标是让数据中心运营商承担新增发电、输电和本地基础设施成本，并点名部分Google、Oracle、Amazon、Meta相关电力安排。</p>
+              <p><strong>影响：</strong>中长期利好电力基础设施订单，但也说明AI数据中心CapEx的电力约束和成本分摊会被政策显性化，云厂商FCF/ROI验证门槛更高。</p>
+              <p class="source-line"><a href="https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/">White House</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>AMD / Helios / Advancing AI 2026</td>
+              <td>AMD在AAI 2026发布full-stack agentic AI portfolio和Helios rack-scale系统，披露OpenAI预计2026Q4开始上线Helios并在2027年加速部署，Meta正在验证EPYC平台并测试Helios racks，Anthropic、Microsoft、Oracle等也在生态中。</td>
+              <td>扩张/官方生态确认</td>
+              <td>利好AMD GPU、EPYC CPU、HBM4、先进封装、AI服务器、Pensando NIC/DPU、高速网络、电源、液冷和数据中心工程。</td>
+              <td>High</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>AMD / Anthropic</td>
+              <td>AMD官方披露Anthropic计划从2026年开始部署最高2GW的AMD Instinct MI450/MI455X系列GPU，双方将用Claude加速AMD软件和ROCm优化。</td>
+              <td>上修/官方客户确认</td>
+              <td>这是客户级GW需求确认，利好AMD GPU生态、HBM/封装、整机、网络、电源和液冷。</td>
+              <td>High</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Alphabet / Google Cloud</td>
+              <td>Q2 2026官方SEC披露：收入1197.96亿美元，同比+24%；Google Cloud收入247.68亿美元，同比+82%；Q2 purchases of property and equipment为449.24亿美元，YTD为805.98亿美元；Q2 FCF为-58.55亿美元。</td>
+              <td>CapEx扩张但FCF承压</td>
+              <td>利好云AI、TPU/ASIC、服务器、网络、电力、冷却和数据中心建设；负FCF提高估值纪律。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm">Alphabet SEC</a></td>
+            </tr>
+            
+            <tr>
+              <td>GE Vernova</td>
+              <td>Q2 2026订单242亿美元，同比有机增长88%，backlog环比增加130亿美元；2026自由现金流指引上修至115-125亿美元；gas backlog和slot reservations升至116GW，预计年底至少125GW。</td>
+              <td>上修/电力链一手确认</td>
+              <td>利好AI数据中心电力卖铲人：燃机、电气化、电网设备、变压器、UPS、配电、并网工程和施工链。</td>
+              <td>High</td>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel</td>
+              <td>Q2 2026官方财报：收入161亿美元同比+25%，Data Center and AI收入63亿美元同比+59%，Foundry收入58亿美元同比+31%；管理层称将增加设备、洁净室和substrates投资。</td>
+              <td>扩张/结构改善</td>
+              <td>利好服务器CPU、AI推理、先进封装、foundry、substrate、半导体设备和洁净室建设；但GAAP亏损和资产负债表仍需跟踪。</td>
+              <td>High</td>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results">Intel IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Tesla</td>
+              <td>Q2 2026官方更新：收入282.36亿美元，同比+26%；CapEx 57.89亿美元，同比+142%；FCF -10.92亿美元；现金和短投环比减少12亿美元至435.24亿美元；Texas onsite compute上半年MW口径翻倍。</td>
+              <td>高CapEx但现金流承压</td>
+              <td>机器人、自动驾驶、AI训练、储能和半导体制造有长期拉动，但短期压制高CapEx远期叙事和汽车链估值。</td>
+              <td>High</td>
+              <td><a href="https://ir.tesla.com/_flysystem/s3/sec/000162828026049213/tsla-20260722-gen.pdf">Tesla IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro</td>
+              <td>FY2026 Q4初步更新显示营收接近110-125亿美元指引低端，GAAP/non-GAAP gross margin预计15%-17%，截至6月30日积压订单创纪录，未来几个季度新订单超过600亿美元。</td>
+              <td>订单扩张但最终业绩待确认</td>
+              <td>利好AI服务器整机、GPU/ASIC平台、液冷、电源、线缆、PCB/CCL和高速网络；调查与最终Q4仍需验证。</td>
+              <td>High</td>
+              <td><a href="https://www.businesswire.com/news/home/20260721109492/en/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update">Supermicro / Business Wire</a></td>
+            </tr>
+            
+            <tr>
+              <td>TSMC / ASML</td>
+              <td>TSMC 2026资本预算上调至600-640亿美元；ASML Q2 2026将全年净销售展望上调至430-450亿欧元。</td>
+              <td>上修/设备链确认</td>
+              <td>利好先进制程、CoWoS/先进封装、EUV/DUV设备、材料、晶圆厂自动化和高端零部件。</td>
+              <td>High</td>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC IR / ASML IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Fed H.15 / US 10Y / real yield</td>
+              <td>2026-07-24发布的2026-07-23数据：effective fed funds 3.63%，2Y Treasury 4.37%，10Y Treasury 4.71%，10Y TIPS real yield 2.43%。</td>
+              <td>压力</td>
+              <td>实际利率继续上行，压缩长久期科技估值，尤其打击负FCF、高估值、高融资需求的AI方向。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1 / reserve balances</td>
+              <td>截至2026-07-22一周，Reserve balances with Federal Reserve Banks为3.062149万亿美元，较7月15日减少805.72亿美元，较2025年同期减少3001.28亿美元。</td>
+              <td>压力</td>
+              <td>准备金回落削弱短期美元流动性缓冲；AI CapEx融资成本和科技估值仍受压。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/h41.htm">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Broad dollar</td>
+              <td>Fed H.10最新周度数据截至7月17日，美元广义指数为120.5315，仍在120上方；人民币6.7760，日元162.43。</td>
+              <td>高位/收紧</td>
+              <td>美元高位压制非美流动性，A/H科技链映射需要折价处理。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>US labor market / DOL UI claims</td>
+              <td>截至2026-07-18当周初请失业金18.7万人，较前周减少2.2万人；四周均值20.75万人，续请179.6万人。</td>
+              <td>收紧/不利降息</td>
+              <td>就业韧性增加Fed维持高利率或再加息的空间，科技成长股折现率压力未解除。</td>
+              <td>High</td>
+              <td><a href="https://www.dol.gov/ui/data.pdf">U.S. Department of Labor</a></td>
+            </tr>
+            
+            <tr>
+              <td>ECB</td>
+              <td>2026-07-23维持deposit facility 2.25%、main refinancing operations 2.40%、marginal lending facility 2.65%不变，且APP/PEPP组合继续下降。</td>
+              <td>无宽松确认</td>
+              <td>欧洲没有提供新增流动性缓冲，全球科技估值仍主要受美元利率约束。</td>
+              <td>High</td>
+              <td><a href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html">European Central Bank</a></td>
+            </tr>
+            
+            <tr>
+              <td>Brent / market variables</td>
+              <td>AP报道7月24日Brent回落约4%至96.78美元，10Y收益率周五边际回落；但Nasdaq当日仍跌0.6%、全周跌2.1%。</td>
+              <td>压力缓和但未转宽松</td>
+              <td>油价回落降低短线通胀压力，但科技风险偏好仍未修复。</td>
+              <td>High</td>
+              <td><a href="https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b">Associated Press</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>AMD Helios/AAI 2026 official ecosystem expansion</td>
+              <td>AI GPU、HBM4、先进封装、AI服务器、网络、电源、液冷</td>
+              <td>利好</td>
+              <td>AMD生态、服务器OEM/ODM、高速网络、HBM/封装、电力与液冷、数据中心工程</td>
+              <td>仅靠单一GPU垄断预期且估值过满的方向；没有客户验证的AI替代链</td>
+              <td>官方确认</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>GE Vernova power backlog and guidance raise</td>
+              <td>燃机、电网设备、电气化、变压器、UPS、配电、并网工程</td>
+              <td>利好</td>
+              <td>数据中心电力卖铲人、燃机、变压器、开关设备、UPS、电网自动化、施工与并网服务</td>
+              <td>无法转嫁电力成本的云厂商和高耗能数据中心项目；低效率电源/散热方案</td>
+              <td>官方财报</td>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>White House Ratepayer Protection Pledge</td>
+              <td>AI数据中心、电力公用事业、输配电、发电、云CapEx</td>
+              <td>结构分化</td>
+              <td>电力基础设施、并网工程、发电设备、储能、用电效率与液冷优化方向</td>
+              <td>电力成本不可控、无长期PPA/自备电方案、FCF薄弱的数据中心运营商</td>
+              <td>政府官方发布，部分企业安排仍需公司公告验证</td>
+              <td><a href="https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/">White House</a></td>
+            </tr>
+            
+            <tr>
+              <td>Alphabet/Tesla negative FCF discipline</td>
+              <td>云AI、自动驾驶、机器人、储能、服务器、电力链</td>
+              <td>利好需求但利空估值纪律</td>
+              <td>有订单、有现金流、有供应链兑现的硬件和电力卖铲人</td>
+              <td>负FCF、高融资、高估值且只有远期故事的AI应用/平台/汽车链方向</td>
+              <td>官方财报 + 市场反应</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm">Alphabet SEC / Tesla IR / AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>FOMC/PCE/hyperscaler earnings cluster this week</td>
+              <td>全球科技估值、云CapEx、AI服务器、电力链、软件AI</td>
+              <td>待验证/高波动</td>
+              <td>若Microsoft/Meta/Amazon给出明确CapEx和ROI闭环，强验证链会受益</td>
+              <td>若FOMC/PCE偏鹰或巨头CapEx带来更多FCF压力，高估值AI链继续承压</td>
+              <td>官方日程/事件窗口，结论待发布</td>
+              <td><a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4.aspx">Microsoft IR / Meta IR / Amazon IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI服务器/液冷/电源/高速网络</td>
+              <td>无直接映射：本轮官方信息直接点名AMD、Alphabet、Tesla、Intel、GE Vernova、Meta、Supermicro等海外主体，未见A/H公司被官方列为供应商。</td>
+              <td>推断受益方向包括AI服务器ODM/OEM、高速PCB/CCL、连接器/线缆、电源、UPS、液冷、机房工程、光/电互联、交换机和数据中心电力设备。</td>
+              <td>只有A/H公司公告客户、订单、认证、出货或收入占比时才能升级为直接相关；否则只作为产业链方向。</td>
+            </tr>
+            
+            <tr>
+              <td>数据中心电力卖铲人</td>
+              <td>无直接A/H公司映射；GE Vernova和White House信息是海外电力链官方/政策确认。</td>
+              <td>推断受益方向包括变压器、开关设备、UPS、储能、燃机配套、电网自动化、配电、并网施工、液冷节能和电力运维。</td>
+              <td>电力链受益需要看国内/海外订单、认证、出口资质和毛利兑现；政策强调成本由运营商承担，也可能压缩云厂商FCF。</td>
+            </tr>
+            
+            <tr>
+              <td>HBM4/先进封装/半导体设备/substrate</td>
+              <td>无直接映射：AMD Helios、Intel投资和TSMC/ASML上修不能自动等同于A/H上市公司订单。</td>
+              <td>推断受益方向包括先进封装设备/材料、测试、HBM配套材料、基板、半导体设备零部件、晶圆厂自动化和洁净室工程。</td>
+              <td>出口管制、客户认证、国产替代进度、良率和估值拥挤度是主要边界。</td>
+            </tr>
+            
+            <tr>
+              <td>高CapEx现金流压力</td>
+              <td>无直接公司映射。</td>
+              <td>Alphabet和Tesla负FCF、高实际利率提醒A/H科技中重资产、重融资、无订单兑现的方向估值应降权。</td>
+              <td>若国内政策或流动性短期转强，情绪可反弹，但不能替代现金流和订单验证。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>2026-07-29 FOMC决定与发布会</strong><span>判断Fed是否确认加息/高利率更久；这是Red能否降回Orange的核心。</span></li><li><strong>2026-07-31 PCE通胀</strong><span>验证油价和关税/能源冲击是否进入核心通胀；若偏热，科技估值继续承压。</span></li><li><strong>Microsoft、Meta、Amazon、Apple本周财报</strong><span>核实hyperscaler CapEx、cloud backlog/RPO、AI收入、FCF和折旧压力；决定CapEx Expansion是否继续被市场买单。</span></li><li><strong>Fed H.15/H.10后续更新</strong><span>跟踪10Y、10Y TIPS实际利率和美元是否从Stress区间回落。</span></li><li><strong>AMD Helios订单转化</strong><span>确认OpenAI/Anthropic/Meta/Microsoft/Oracle/HUMAIN部署量、交付节奏、OEM/ODM供应商、电力和液冷需求。</span></li><li><strong>GE Vernova数据中心电力订单细节</strong><span>识别AI数据中心电力卖铲人的客户结构、GW/MW规模、交付周期和利润率。</span></li><li><strong>Intel 10-Q和foundry现金流</strong><span>确认新增设备、洁净室和substrate投资如何影响CapEx、债务、政府补贴和外部客户订单。</span></li><li><strong>Supermicro最终FY2026 Q4结果与调查进展</strong><span>验证初步订单、毛利率、现金转换、客户集中度和出口管制调查。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/h41.htm">Federal Reserve H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10 Foreign Exchange Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-20</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.dol.gov/ui/data.pdf">U.S. Department of Labor - Unemployment Insurance Weekly Claims</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b">AP - US stocks waver as oil prices ease and week closes mixed</a></td>
+              <td>Liquidity / market reaction</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova Reports Second Quarter 2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/">White House - Ratepayer Protection Pledge Secures American AI Dominance</a></td>
+              <td>Tech catalyst / policy</td>
+              <td>2026-07-25</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus">AMD and Anthropic Strategic Partnership to Deploy up to 2GW of AMD Instinct GPUs</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-22</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm">Alphabet Q2 2026 Results - SEC Exhibit 99.1</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-22</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.tesla.com/_flysystem/s3/sec/000162828026049213/tsla-20260722-gen.pdf">Tesla Q2 2026 Update / Form 8-K</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-22</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results">Intel Reports Second-Quarter 2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html">European Central Bank Monetary Policy Decisions</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.businesswire.com/news/home/20260721109492/en/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update">Supermicro Provides Fourth Quarter of Fiscal Year 2026 Preliminary Business Update</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-21</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4.aspx">Microsoft FY2026 Q4 Earnings Event</a></td>
+              <td>Watchlist</td>
+              <td>scheduled 2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-events/event-details/2026/Meta-Q2-2026-Earnings/default.aspx">Meta Q2 2026 Earnings Event</a></td>
+              <td>Watchlist</td>
+              <td>scheduled 2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon.com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx">Amazon Q2 2026 Earnings Event</a></td>
+              <td>Watchlist</td>
+              <td>scheduled 2026-07-30</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

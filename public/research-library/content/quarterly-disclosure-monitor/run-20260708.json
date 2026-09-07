@@ -1,0 +1,157 @@
+{
+  "run_time": "2026-07-08 11:10 +08:00",
+  "window_start": "2026-07-02 00:00 +08:00",
+  "window_end": "2026-07-08 11:10 +08:00",
+  "formal_hits": [],
+  "related_updates": [
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "date": "2026-07-06",
+      "title": "2025年年度权益分派实施公告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-07-06/1225410279.PDF",
+      "source": "CNINFO",
+      "class": "related"
+    }
+  ],
+  "excluded_examples": [
+    {
+      "name": "HENGRUI PHARMA",
+      "code": "01276",
+      "date": "2026-07-07",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701844.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "BABA-W",
+      "code": "09988",
+      "date": "2026-07-07",
+      "title": "Next Day Disclosure Return",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701438.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "BABA-W",
+      "code": "09988",
+      "date": "2026-07-07",
+      "title": "Monthly Return for Equity Issuer on Movements in Securities for the Month Ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701418.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "XIAOMI-W",
+      "code": "01810",
+      "date": "2026-07-07",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700719.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "TENCENT",
+      "code": "00700",
+      "date": "2026-07-07",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700630.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "MIXUE GROUP",
+      "code": "02097",
+      "date": "2026-07-07",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700502.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "GIGADEVICE",
+      "code": "03986",
+      "date": "2026-07-07",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities for the Month Ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700464.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-07",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700327.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "MEITUAN-W",
+      "code": "03690",
+      "date": "2026-07-06",
+      "title": "Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602039.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "GIGADEVICE",
+      "code": "03986",
+      "date": "2026-07-06",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070601790.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "GIGADEVICE",
+      "code": "03986",
+      "date": "2026-07-06",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070601780.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "TENCENT",
+      "code": "00700",
+      "date": "2026-07-06",
+      "title": "Next Day Disclosure Return - Changes in issued shares and share buybacks",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070601366.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 52,
+    "cninfo_watchlist_rows": 22,
+    "sse_szse_rows": 0,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "sources": [
+    "https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsdc_1.json",
+    "https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsde_1.json",
+    "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "https://query.sse.com.cn/security/stock/queryCompanyBulletin.do",
+    "https://www.szse.cn/api/disc/announcement/annIndex"
+  ],
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260708.html"
+  ]
+}

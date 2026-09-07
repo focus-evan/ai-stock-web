@@ -1,0 +1,608 @@
+{
+  "generated_at_beijing": "2026-07-19 12:00",
+  "run_label": "12:00 noon",
+  "headline": "周末无官方CapEx下修，但下周财报与利率会决定能不能追",
+  "focus_summary": {
+    "action": "维持不追高：AI硬件、电力、先进制程和高科技制造只看官方订单/CapEx/现金流验证；对涨幅过大、重融资、自由现金流承压和低成本模型冲击ROI的链条继续降权。",
+    "positive": "最大正反馈没有变：Meta 5GW/500亿美元级数据中心、TSMC 600-640亿美元CapEx上修、ASML 2026收入展望上调、Fed G.17高科技产出同比+11.0%仍在支撑AI硬件链。",
+    "risk": "最大压制项仍是高实际利率与估值拥挤：Fed H.15最新10Y为4.57%、10Y TIPS实际利率2.35%；AP报道7月17日Nasdaq -1.4%，Brent 88.10美元，AI赢家继续回撤。",
+    "next": "下周重点看7月20 H.15/H.10、7月22 Tesla/IBM、7月23 Alphabet/AMD/ECB；若财报确认CapEx强但现金流/利率不配合，Orange不会转绿。"
+  },
+  "top_conclusion": "本轮维持 Orange。周末未见主要hyperscaler或AI供应链官方发布AI/data-center CapEx下修，CapEx模块仍由Meta、TSMC、ASML和Fed G.17高科技产出支撑；但流动性没有改善到可以放开追高，H.15最新10Y和实际利率仍高，H.4.1只显示银行储备周度回升而不是全面宽松。科技催化继续Mixed：Kimi K3把低成本开放模型/推理效率讨论推到前台，Tesla官方共识表显示Q2自由现金流和全年CapEx压力，SpaceX Starship发射中止也提醒高科技硬件链的执行风险。结论还是那句小刻刀：做强验证，不做纯叙事。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Mixed"
+  },
+  "top_changes": [
+    {
+      "title": "周末官方源未见AI/data-center CapEx下修，CapEx强信号继续有效",
+      "fact": "本轮复核Meta、TSMC、ASML、Microsoft、Alphabet、Amazon、Oracle、Broadcom、Micron等官方源，未见新的AI/data-center CapEx下修。最新强验证仍是Meta Louisiana 5GW/超过500亿美元、TSMC 2026 CapEx上调至600-640亿美元、ASML 2026净销售展望上调至430-450亿欧元。",
+      "impact": "AI硬件、电力、先进制程、先进封装、半导体设备和数据中心工程仍是最强主线；但周末没有新的“再上修”事实，不能因为叙事热就扩大风险敞口。",
+      "confidence": "High",
+      "source": "Company IR cross-check",
+      "url": "https://about.fb.com/news/2026/07/teachers-local-businesses-win-as-meta-expands-louisiana-data-center/"
+    },
+    {
+      "title": "Fed H.4.1补充流动性视角：储备周度回升，但不是全面宽松",
+      "fact": "Federal Reserve H.4.1显示，截至2026-07-15一周，Reserve balances with Federal Reserve Banks平均值为3.1427万亿美元，较前一周增加438亿美元，但较上年同期减少2561亿美元；Fed资产项中securities held outright周均为6.459万亿美元，较前周增加90.8亿美元。",
+      "impact": "银行体系储备短线有缓冲，但不足以抵消10Y和实际利率高位；Liquidity仍按Tightening处理，而不是Easing。",
+      "confidence": "High",
+      "source": "Federal Reserve H.4.1",
+      "url": "https://www.federalreserve.gov/Releases/H41/Current/"
+    },
+    {
+      "title": "Tesla官方共识表把高CapEx/负自由现金流风险前置到下周财报",
+      "fact": "Tesla IR 7月17日发布Q2 2026 earnings consensus：Q2 total revenues均值约258.2亿美元，Q2 adjusted EBITDA均值约30.5亿美元，Q2 free cash flow均值约-32.5亿美元；2026全年CapEx共识均值约253.2亿美元，全年free cash flow均值约-74.2亿美元。",
+      "impact": "AI/机器人/储能/自动驾驶叙事需要现金流兑现；若下周财报只确认高CapEx和负FCF，会强化市场对“烧钱无回报”的惩罚。",
+      "confidence": "High",
+      "source": "Tesla Investor Relations",
+      "url": "https://ir.tesla.com/press-release/earnings-consensus-second-quarter-2026"
+    },
+    {
+      "title": "Kimi K3继续推动低成本开放模型竞赛，算力需求不是单向推演",
+      "fact": "Kimi官方材料显示Kimi K3为MoE架构、总参数2.8T、激活参数71B、1M上下文，完整权重计划在7月27日前发布；公司定价显示K3 API调用成本显著低于海外前沿闭源模型。",
+      "impact": "开放模型提升AI应用扩散，利好推理和agent生态；但也会提高市场对高CapEx ROI、模型效率和算力需求弹性的质疑，科技催化维持Mixed。",
+      "confidence": "Medium",
+      "source": "Kimi / Moonshot AI",
+      "url": "https://www.kimi.com/fr-fr/blog/kimi-k3"
+    },
+    {
+      "title": "SpaceX Starship发射中止与AI股回撤提醒：硬科技执行风险仍在",
+      "fact": "AP报道SpaceX Starship从Texas发射台起飞时因33台发动机中4台关闭而中止，计划最早下周一重试；同一篇报道显示SpaceX股价下跌约3.3%。AP另报7月17日S&P 500 -1.0%、Nasdaq -1.4%，AI赢家卖压加深，Brent升至88.10美元。",
+      "impact": "商业航天/卫星互联网和AI硬件都不是线性上行；高估值科技链需要把执行失败、油价、融资和交易拥挤纳入风险阀。",
+      "confidence": "Medium",
+      "source": "AP",
+      "url": "https://apnews.com/article/455927b93b0fdc5512a4567a53eb3228"
+    }
+  ],
+  "capex": {
+    "verdict": "Expansion：周末未见主要AI/data-center CapEx官方下修，前一轮的强正反馈继续主导。最强证据仍是Meta官方5GW/超过500亿美元Louisiana数据中心、TSMC上调2026 CapEx至600-640亿美元、ASML上调2026收入展望，以及Fed G.17高科技/半导体产出强。风险从“有没有需求”转向“融资、交付、电力和ROI能否跟上”。",
+    "items": [
+      {
+        "entity": "Meta",
+        "signal": "Meta Newsroom确认Richland Parish, Louisiana数据中心扩至5GW compute capacity，区域投资超过500亿美元，超过16亿美元合同已给当地企业，超过10亿美元投入地方基础设施；能源协议包括七座天然气发电厂、三套电网级电池、核电增容和购电。",
+        "direction": "上修/官方确认",
+        "impact": "强利好AI数据中心、电力、燃气发电、储能、配电、冷却、土建工程、服务器、网络和光互连；同时提高对电力许可、融资和折旧的要求。",
+        "confidence": "High",
+        "source": "Meta Newsroom",
+        "url": "https://about.fb.com/news/2026/07/teachers-local-businesses-win-as-meta-expands-louisiana-data-center/"
+      },
+      {
+        "entity": "TSMC",
+        "signal": "2Q26收入US$40.20bn，Q3收入指引US$44.6-45.8bn；2Q26 CapEx US$15.70bn，YTD US$26.80bn；2026资本预算上调至US$60-64bn，70%-80%投向先进制程、10%-20%投向先进封装/测试/光罩等。",
+        "direction": "上修",
+        "impact": "先进制程、EUV/DUV、CoWoS/先进封装、测试、HBM配套、AI/HPC基板、高端PCB/CCL和材料链受益最直接。",
+        "confidence": "High",
+        "source": "TSMC IR",
+        "url": "https://investor.tsmc.com/english/quarterly-results/2026/q2"
+      },
+      {
+        "entity": "TSMC AI/HPC platform",
+        "signal": "2Q26 HPC占收入66%，高于1Q26的61%；3nm占30%、5nm占33%、7nm占11%，先进技术合计77%。管理层称AI需求极强，客户和客户的客户信号强劲，agentic AI也带动CPU需求。",
+        "direction": "强验证",
+        "impact": "AI accelerator、CPU、先进逻辑、HBM companion chip、先进封装和电源管理IC均有需求验证。",
+        "confidence": "High",
+        "source": "TSMC Transcript",
+        "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/57b65edbfe6e480e74abe202be983ecbde79e934/TSMC%202Q26%20Transcript.pdf"
+      },
+      {
+        "entity": "ASML",
+        "signal": "Q2净销售€9.326bn、净利€2.918bn、毛利率54.0%；2026全年净销售展望上调至€43-45bn，毛利率54%-56%；计划2027年低NA EUV和DUV immersion产能各增加约30%。",
+        "direction": "上修",
+        "impact": "EUV/DUV、量测检测、光学、真空、精密控制、上游零部件和先进制程CapEx链条受益。",
+        "confidence": "High",
+        "source": "ASML Q2 2026 Results",
+        "url": "https://www.asml.com/en/investors/financial-results/q2-2026"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q3官方材料显示AI业务ARR超过US$37bn、同比+123%，新增约1GW容量，并仍计划两年内翻倍数据中心足迹；本轮未见官方下修。",
+        "direction": "持平偏强",
+        "impact": "Azure AI、GPU/CPU、数据中心、光互连、存储、电力与冷却继续有需求支撑；等待FY26 Q4/FY results确认2027 CapEx节奏。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+      },
+      {
+        "entity": "Alphabet",
+        "signal": "Q1 2026电话会披露CapEx为US$35.7bn，多数用于支持AI机会的technical infrastructure；Google Cloud backlog为US$462bn。本轮未见官方CapEx下修。",
+        "direction": "持平偏强",
+        "impact": "TPU/GPU、数据中心、网络、服务器和电力链条保持需求支撑；7月23日Q2财报是下周最重要hyperscaler验证点。",
+        "confidence": "High",
+        "source": "Alphabet IR",
+        "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx"
+      },
+      {
+        "entity": "Amazon / AWS",
+        "signal": "AWS Q1销售同比+28%至US$37.6bn；7月7日25bn美元债券融资用于一般公司用途，包括未来CapEx和偿还到期债务。",
+        "direction": "扩张但融资压力上升",
+        "impact": "AWS AI基础设施需求仍强，但债券供给和信用利差将抬高市场对ROI与现金流的审视。",
+        "confidence": "Medium",
+        "source": "Amazon IR / Reuters",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx"
+      },
+      {
+        "entity": "Oracle",
+        "signal": "FY2026 Q4 RPO达US$638bn，同比+363%；OCI Q4收入US$5.8bn，同比+93%；FY2026 free cash flow为-23.7bn。",
+        "direction": "订单强但现金流承压",
+        "impact": "AI云订单强，但资本开支融资、RPO转收入与自由现金流修复仍是关键约束。",
+        "confidence": "High",
+        "source": "Oracle IR",
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+      },
+      {
+        "entity": "Broadcom",
+        "signal": "FY2026 Q2 AI semiconductor revenue US$10.8bn，同比+143%；Q3 AI semiconductor revenue指引US$16.0bn，同比超过+200%。本轮未见下修。",
+        "direction": "强验证",
+        "impact": "定制ASIC、AI networking、交换芯片、先进封装、高速PCB/CCL持续受益。",
+        "confidence": "High",
+        "source": "Broadcom IR",
+        "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial"
+      },
+      {
+        "entity": "Micron",
+        "signal": "FY2026 Q3创纪录，HBM4已在领先客户平台高量出货，Q4收入指引US$50.0bn上下US$1.0bn。",
+        "direction": "强验证",
+        "impact": "HBM、数据中心SSD、服务器DRAM、先进封装和高端材料继续受益；但AI/内存交易拥挤后估值容错下降。",
+        "confidence": "High",
+        "source": "Micron IR",
+        "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter"
+      },
+      {
+        "entity": "Tesla",
+        "signal": "Tesla IR Q2 2026共识显示全年CapEx均值约US$25.3bn，Q2 free cash flow均值约-3.25bn，全年free cash flow均值约-7.42bn；Q2结果待7月22日验证。",
+        "direction": "高CapEx但现金流待验证",
+        "impact": "机器人、AI训练、储能和自动驾驶仍有CapEx/研发投入想象，但负FCF会提高市场对ROI和融资压力的要求。",
+        "confidence": "High",
+        "source": "Tesla IR",
+        "url": "https://ir.tesla.com/press-release/earnings-consensus-second-quarter-2026"
+      },
+      {
+        "entity": "Bloom Energy / Brookfield",
+        "signal": "AI infrastructure power partnership融资框架已扩大至US$25bn；本轮仍未见首批hyperscaler客户、项目地点、MW/GW规模和交付节奏的新增披露。",
+        "direction": "上修后待落地",
+        "impact": "AI电力基础设施、现场供电、燃料电池、配电、UPS、液冷和工程交付方向继续受益，但不能提前确认项目订单归属。",
+        "confidence": "High",
+        "source": "Bloom Energy IR",
+        "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Tightening：H.4.1显示银行储备周度回升，给短线资金面一点缓冲；但H.15 10Y和实际利率仍高，Dallas Fed Logan继续支持适度更高利率，油价上行又可能削弱CPI/PPI降温的持续性。流动性没有从Tightening切到Neutral的证据。",
+    "items": [
+      {
+        "entity": "Federal Reserve H.15",
+        "signal": "7月17日发布的H.15显示，7月16日10Y Treasury为4.57%，10Y TIPS实际利率为2.35%，effective fed funds为3.63%。",
+        "direction": "压力",
+        "impact": "官方利率从7月15日4.55%/2.32%回升，继续压制高估值AI和半导体。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Federal Reserve H.4.1 / bank reserves",
+        "signal": "截至2026-07-15一周，Reserve balances with Federal Reserve Banks平均值为3.1427万亿美元，较前一周增加438亿美元，但较上年同期减少2561亿美元。",
+        "direction": "短线缓冲但非全面宽松",
+        "impact": "储备周度回升降低资金面压力，但不能覆盖高实际利率对科技估值的压制。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/Releases/H41/Current/"
+      },
+      {
+        "entity": "Federal Reserve G.17",
+        "signal": "6月工业产出环比+0.1%、二季度年化+4.0%；制造业6月持平、二季度年化+4.7%；产能利用率76.1%，低于长期均值3.3个百分点。",
+        "direction": "中性偏压力",
+        "impact": "经济没有显著失速，给Fed继续保持限制性利率提供空间；但产能利用率偏低说明不是全面过热。",
+        "confidence": "High",
+        "source": "Federal Reserve G.17",
+        "url": "https://www.federalreserve.gov/releases/g17/current/default.htm"
+      },
+      {
+        "entity": "High-technology production",
+        "signal": "Fed G.17表2显示精选高科技行业6月环比+0.5%、同比+11.0%；半导体及相关电子元件环比+0.5%、同比+11.5%。",
+        "direction": "增长韧性",
+        "impact": "AI/半导体供给活动强，利好CapEx验证；但从流动性角度看，强投资也削弱快速宽松逻辑。",
+        "confidence": "High",
+        "source": "Federal Reserve G.17 Table 2",
+        "url": "https://www.federalreserve.gov/releases/g17/current/table2.htm"
+      },
+      {
+        "entity": "Dallas Fed Logan",
+        "signal": "Logan称目前认为适度更高利率更能平衡双重使命，并指出AI投资需求效应已出现，可能在芯片、建设、电力等领域带来非线性价格压力。",
+        "direction": "压力",
+        "impact": "削弱“通胀降温马上利好科技估值”的交易逻辑，AI强也可能推高r*和融资成本。",
+        "confidence": "High",
+        "source": "Dallas Fed",
+        "url": "https://www.dallasfed.org/news/speeches/logan/2026/lkl260716"
+      },
+      {
+        "entity": "US CPI / PPI",
+        "signal": "6月CPI-U环比-0.4%、同比+3.5%，核心CPI环比持平、同比+2.6%；6月PPI final demand环比-0.3%。",
+        "direction": "边际宽松",
+        "impact": "通胀数据给科技估值提供缓冲，但能源下跌因素可能被7月油价反弹逆转。",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/news.release/cpi.nr0.htm"
+      },
+      {
+        "entity": "Oil / geopolitical risk",
+        "signal": "AP报道7月17日Brent原油跳涨4.6%至88.10美元，原因是美伊冲突升级和Strait of Hormuz担忧。",
+        "direction": "压力",
+        "impact": "油价反弹会抵消6月CPI/PPI里的能源降温，对Fed宽松预期和科技估值都不友好。",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/stocks-markets-ai-iran-trump-rates-65449e9565fba441a617f9517e097f5a"
+      },
+      {
+        "entity": "ECB",
+        "signal": "ECB 6月11日把三大关键利率上调25bp，存款便利利率升至2.25%、主要再融资利率2.40%、边际贷款利率2.65%，APP/PEPP组合继续以可预测速度下降；下一次货币政策会议/发布会在7月23日。",
+        "direction": "压力",
+        "impact": "全球主要央行环境不是同步宽松，欧元区仍有能源和通胀风险，全球科技估值外部流动性支持有限。",
+        "confidence": "High",
+        "source": "ECB",
+        "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~4d41bd5e83.en.html"
+      },
+      {
+        "entity": "AI-linked corporate debt",
+        "signal": "Amazon 25bn美元债券融资后，AI相关投资级债供给仍是市场关注点；用途包括未来CapEx和偿还到期债务。",
+        "direction": "压力",
+        "impact": "融资渠道仍打开，但AI CapEx越强，信用市场越要求ROI、现金流和利差稳定。",
+        "confidence": "Medium",
+        "source": "Reuters / Investing.com",
+        "url": "https://www.investing.com/news/stock-market-news/amazon-aims-to-raise-25-billion-from-bond-sale-bloomberg-news-reports-4779326"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Mixed：硬件/电力CapEx仍是强利好，但周末新增更偏风险与验证节点：Tesla共识表显示高CapEx和负FCF压力，Kimi K3加强模型效率/算力ROI讨论，SpaceX Starship中止提醒高科技执行风险。下周财报会把叙事拉回现金流、订单和CapEx效率。",
+    "items": [
+      {
+        "event": "Meta Louisiana Hyperion official expansion",
+        "affected_chain": "AI数据中心/电力/储能/配电/冷却/网络",
+        "direction": "利好",
+        "winners": "数据中心工程、燃气发电、储能、核电增容、配电、UPS、液冷/温控、服务器、网络和光互连",
+        "losers": "无法解决电力许可、能耗、融资成本和建设周期的项目/供应链",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Meta Newsroom",
+        "url": "https://about.fb.com/news/2026/07/teachers-local-businesses-win-as-meta-expands-louisiana-data-center/"
+      },
+      {
+        "event": "TSMC and ASML official CapEx/guide upgrades",
+        "affected_chain": "AI晶圆/先进制程/EUV/DUV/CoWoS/先进封装/HBM配套",
+        "direction": "利好",
+        "winners": "先进制程、半导体设备、精密零部件、材料、先进封装、测试、高端PCB/CCL、HBM配套",
+        "losers": "未进入先进节点、AI/HPC或高端客户认证的低端通用环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "TSMC IR / ASML",
+        "url": "https://investor.tsmc.com/english/quarterly-results/2026/q2"
+      },
+      {
+        "event": "Tesla Q2 consensus highlights AI/robotics cash-flow test",
+        "affected_chain": "电动车/储能/AI训练/机器人/自动驾驶",
+        "direction": "风险提示",
+        "winners": "若储能、软件和自动驾驶收入兑现，电池、储能PCS、AI训练和机器人链条可获验证",
+        "losers": "若高CapEx和负FCF持续，重资本AI/机器人叙事估值受压",
+        "evidence": "官方共识表",
+        "confidence": "High",
+        "source": "Tesla IR",
+        "url": "https://ir.tesla.com/press-release/earnings-consensus-second-quarter-2026"
+      },
+      {
+        "event": "Kimi K3 open model launch",
+        "affected_chain": "AI模型/云推理/算力需求/应用软件",
+        "direction": "中性偏分化",
+        "winners": "低成本模型应用、agent应用、推理服务、国产/开源模型生态、能快速把模型能力产品化的软件公司",
+        "losers": "只依赖闭源模型溢价、没有数据/分发/工作流壁垒的软件公司；高CapEx但无法证明收入转化的算力叙事",
+        "evidence": "官方模型材料 + 媒体报道",
+        "confidence": "Medium",
+        "source": "Kimi / Moonshot AI",
+        "url": "https://www.kimi.com/fr-fr/blog/kimi-k3"
+      },
+      {
+        "event": "SpaceX Starship launch abort",
+        "affected_chain": "商业航天/卫星互联网/发射服务/航天供应链",
+        "direction": "风险提示",
+        "winners": "若重试成功，星链/卫星互联网和可复用火箭链条继续受益",
+        "losers": "发射失败或延迟会压制商业航天、卫星部署和航天供应链短线风险偏好",
+        "evidence": "可信媒体报道，未见公司完整技术复盘",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/455927b93b0fdc5512a4567a53eb3228"
+      },
+      {
+        "event": "AI stock sell-off while oil rises",
+        "affected_chain": "AI半导体/内存/设备/高估值成长",
+        "direction": "利空/风险提示",
+        "winners": "订单、现金流和客户穿透强的龙头供应链；估值更低且盈利兑现更快的环节",
+        "losers": "涨幅过大、估值依赖远期AI叙事、重融资且ROI未验证的AI股票",
+        "evidence": "可信财经媒体",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/stocks-markets-ai-iran-trump-rates-65449e9565fba441a617f9517e097f5a"
+      },
+      {
+        "event": "IBM preliminary Q2 warning remains unresolved",
+        "affected_chain": "传统软件/主机/服务器/存储/内存/网络安全",
+        "direction": "结构分化",
+        "winners": "AI服务器、存储、内存、HBM、网络安全和能证明AI ROI的基础设施供应商",
+        "losers": "传统软件、主机、执行节奏弱且大单延迟的企业IT供应商",
+        "evidence": "公司SEC文件/媒体解读，正式财报待7月22日确认",
+        "confidence": "Medium",
+        "source": "IBM SEC",
+        "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714xex991.htm"
+      },
+      {
+        "event": "Supermicro Taiwan investigation remains unresolved",
+        "affected_chain": "AI服务器/渠道/出口合规",
+        "direction": "风险提示",
+        "winners": "合规可追溯、客户穿透清晰、渠道透明的服务器与零部件供应商",
+        "losers": "出口合规薄弱、客户穿透不足、过度依赖灰色渠道的环节",
+        "evidence": "公司官方7月1日更新；本轮未见新增正式处罚或订单影响",
+        "confidence": "Medium",
+        "source": "Supermicro",
+        "url": "https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "Meta 5GW/500亿美元级AI数据中心",
+      "verified_direct": "无A/H公司在Meta Newsroom文章中被直接点名为新增订单受益方。",
+      "inferred": "电力设备、燃气发电配套、储能、配电、UPS、液冷/温控、数据中心工程、高速光互连、AI服务器和高端PCB/CCL方向相对受益。",
+      "risk": "不能把海外项目金额直接换算成A/H订单；必须等待公司公告、客户认证、出货数据或财报收入拆分。"
+    },
+    {
+      "theme": "TSMC/ASML上修与先进制程扩产",
+      "verified_direct": "无A/H公司在TSMC/ASML官方材料中被直接点名为新增订单受益方。",
+      "inferred": "先进封装、CoWoS配套、半导体设备零部件、材料、基板、高端PCB/CCL、AI服务器和电源管理IC方向相对受益。",
+      "risk": "这是产业链景气验证，不是个股订单；出口管制、设备交付和客户认证会造成分化。"
+    },
+    {
+      "theme": "Tesla高CapEx/负FCF压力",
+      "verified_direct": "无A/H公司在Tesla官方共识表中被直接点名。",
+      "inferred": "储能链、机器人链、自动驾驶链和AI训练供应链需要等待Tesla财报实际订单/CapEx/毛利率验证；若负FCF扩大，重资本AI叙事受压。",
+      "risk": "共识表不是公司指引；需以7月22日正式财报和管理层口径为准。"
+    },
+    {
+      "theme": "Kimi K3与开放模型竞争",
+      "verified_direct": "Kimi/Moonshot为中国AI模型公司；本报告不把其直接映射到上市A/H标的，除非公司公告明确股权、客户或收入关系。",
+      "inferred": "低成本模型应用、agent工具链、AI办公/代码/知识工作流、本土算力适配和推理服务方向受益；闭源模型溢价和缺乏场景壁垒的软件方向受压。",
+      "risk": "模型参数、能力和成本需等待完整技术报告、权重发布和第三方benchmark验证；不能把模型发布直接等同于算力需求下降。"
+    },
+    {
+      "theme": "SpaceX Starship发射中止",
+      "verified_direct": "无A/H公司被AP报道直接点名为供应链受益或受损方。",
+      "inferred": "商业航天、卫星互联网、星载通信、测控、发射服务和航天材料链短期只作为风险提示，不做直接个股映射。",
+      "risk": "SpaceX为海外私营公司，单次发射中止不能直接外推到A/H商业航天公司订单。"
+    },
+    {
+      "theme": "高实际利率与AI股票回撤",
+      "verified_direct": "无直接A/H公司映射。",
+      "inferred": "纯估值弹性、涨幅过大、远期订单不清晰的科技股受压；订单、现金流、客户穿透和供给瓶颈明确的硬件链更抗压。",
+      "risk": "如果下周PCE/PMI或央行口径显著转鸽，估值压力可能边际缓和；当前仍按高实际利率处理。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "2026-07-20 Fed H.15/H.10与美元指数更新",
+      "why": "确认周五市场10Y回落是否进入官方序列，及美元是否给非美科技链缓冲。"
+    },
+    {
+      "item": "2026-07-22 Tesla Q2正式财报",
+      "why": "验证共识表中的负自由现金流、高CapEx、储能交付、AI/机器人投入和自动驾驶收入口径。"
+    },
+    {
+      "item": "2026-07-22 IBM Q2正式财报",
+      "why": "确认初步预警是否变化，并判断企业IT预算迁移是单公司执行问题还是行业趋势。"
+    },
+    {
+      "item": "2026-07-23 Alphabet Q2财报",
+      "why": "这是下周最重要hyperscaler CapEx/RPO/AI monetization验证点。"
+    },
+    {
+      "item": "2026-07-23 AMD Advancing AI 2026",
+      "why": "验证MI系列、rack-scale、networking、软件生态和客户订单是否继续加强AI硬件链。"
+    },
+    {
+      "item": "2026-07-23 ECB货币政策会议与发布会",
+      "why": "判断欧元区是否继续因能源/通胀风险维持偏紧，对全球科技估值有外部影响。"
+    },
+    {
+      "item": "Meta Louisiana项目后续合同/供应商/电力许可披露",
+      "why": "5GW和500亿美元项目已官方确认，但供应链归属、交付节奏、能耗约束仍未穿透。"
+    },
+    {
+      "item": "Amazon及AI hyperscaler债券利差",
+      "why": "如果AI债务供给导致信用利差继续走阔，会削弱CapEx扩张对股权估值的正反馈。"
+    },
+    {
+      "item": "Supermicro/Taiwan调查",
+      "why": "等待是否出现正式起诉、罚款、订单延迟、客户变化或财务影响；目前仍不能把风险直接映射到A/H个股。"
+    },
+    {
+      "item": "Kimi K3完整技术报告和7月27日前权重发布",
+      "why": "需要第三方benchmark、推理成本和生态采用验证，才能判断对算力需求是增量扩散还是ROI压力。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Meta Newsroom - Teachers and Local Businesses Win as Meta Expands Louisiana Data Center",
+      "url": "https://about.fb.com/news/2026/07/teachers-local-businesses-win-as-meta-expands-louisiana-data-center/",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-13"
+    },
+    {
+      "title": "TSMC 2026 Q2 Quarterly Results",
+      "url": "https://investor.tsmc.com/english/quarterly-results/2026/q2",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-16"
+    },
+    {
+      "title": "ASML Q2 2026 Financial Results",
+      "url": "https://www.asml.com/en/investors/financial-results/q2-2026",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-15"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/Releases/H41/Current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-16"
+    },
+    {
+      "title": "Federal Reserve G.17 Industrial Production and Capacity Utilization",
+      "url": "https://www.federalreserve.gov/releases/g17/current/default.htm",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "Dallas Fed - Lorie Logan remarks on inflation, employment and monetary policy",
+      "url": "https://www.dallasfed.org/news/speeches/logan/2026/lkl260716",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-07-16"
+    },
+    {
+      "title": "BLS Consumer Price Index - June 2026",
+      "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-14"
+    },
+    {
+      "title": "BLS Producer Price Index - June 2026",
+      "url": "https://www.bls.gov/news.release/ppi.nr0.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-15"
+    },
+    {
+      "title": "AP - The sell-off for AI stars worsens, while oil prices keep jumping",
+      "url": "https://apnews.com/article/stocks-markets-ai-iran-trump-rates-65449e9565fba441a617f9517e097f5a",
+      "used_for": "Tech catalyst / Liquidity",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "AP - How major US stock indexes fared Friday 7/17/2026",
+      "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-5e44034ea86fa8d9c73184f3559e74a2",
+      "used_for": "Tech catalyst / market reaction",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "AP - SpaceX Starship launch aborted after four engines shut down",
+      "url": "https://apnews.com/article/455927b93b0fdc5512a4567a53eb3228",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-07-18"
+    },
+    {
+      "title": "Tesla Investor Relations - Earnings consensus second quarter 2026",
+      "url": "https://ir.tesla.com/press-release/earnings-consensus-second-quarter-2026",
+      "used_for": "CapEx / Tech catalyst / Watchlist",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "Kimi K3 Tech Blog - Open Frontier Intelligence",
+      "url": "https://www.kimi.com/fr-fr/blog/kimi-k3",
+      "used_for": "Tech catalyst",
+      "published_at": "checked 2026-07-19"
+    },
+    {
+      "title": "Moonshot AI official site",
+      "url": "https://www.moonshot.ai/",
+      "used_for": "Tech catalyst",
+      "published_at": "checked 2026-07-19"
+    },
+    {
+      "title": "Reuters via Investing.com - China's Moonshot unveils world's largest open AI model",
+      "url": "https://m.investing.com/news/stock-market-news/chinas-moonshot-unveils-worlds-largest-open-ai-model-closing-in-on-us-rivals-4797347?ampMode=1",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-07-17"
+    },
+    {
+      "title": "ECB Monetary policy decisions",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~4d41bd5e83.en.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-11"
+    },
+    {
+      "title": "ECB Governing Council calendar",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "used_for": "Liquidity / Watchlist",
+      "published_at": "checked 2026-07-19"
+    },
+    {
+      "title": "Microsoft FY26 Q3 Earnings",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Alphabet 2026 Q1 Earnings Call",
+      "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-24"
+    },
+    {
+      "title": "Amazon.com Announces First Quarter Results",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Oracle FY2026 Q4 Results",
+      "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-06-10"
+    },
+    {
+      "title": "Broadcom FY2026 Q2 Results",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-03"
+    },
+    {
+      "title": "Micron FY2026 Q3 Results",
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-24"
+    },
+    {
+      "title": "Bloom Energy and Brookfield AI Infrastructure Partnership",
+      "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-06-30"
+    },
+    {
+      "title": "IBM Investor Letter filed with SEC",
+      "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714xex991.htm",
+      "used_for": "Tech catalyst / Watchlist",
+      "published_at": "2026-07-14"
+    },
+    {
+      "title": "Supermicro Taiwan Business Update",
+      "url": "https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01",
+      "used_for": "Tech catalyst / Watchlist",
+      "published_at": "2026-07-01"
+    },
+    {
+      "title": "AMD Announces Advancing AI 2026",
+      "url": "https://www.amd.com/en/newsroom/press-releases/2026-4-28-amd-announces-advancing-ai-2026-.html",
+      "used_for": "Watchlist",
+      "published_at": "2026-04-28"
+    },
+    {
+      "title": "Alphabet Investor Relations - Q2 2026 earnings call listing",
+      "url": "https://alphabet2025ir.q4web.com/news-and-events/events-and-presentations/default.aspx",
+      "used_for": "Watchlist",
+      "published_at": "checked 2026-07-19"
+    }
+  ]
+}

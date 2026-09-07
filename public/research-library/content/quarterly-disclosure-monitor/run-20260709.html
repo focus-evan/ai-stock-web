@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>二季报 / 半年报披露监控 - 20260709</title>
+  <style>
+    :root { color-scheme: light; --bg:#f6f7f9; --panel:#ffffff; --text:#1f2937; --muted:#667085; --line:#d9dee7; --hit:#c1121f; --warn:#8a5a00; --ok:#146c43; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--text); font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif; line-height:1.55; }
+    main { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:28px 0 40px; } header { margin-bottom:18px; padding-bottom:16px; border-bottom:2px solid var(--line); }
+    h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; } h2 { margin:26px 0 10px; font-size:20px; letter-spacing:0; }
+    .meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:16px 0 0; } .meta div, section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; }
+    .label { display:block; color:var(--muted); font-size:12px; margin-bottom:4px; } .status { font-weight:700; color:var(--ok); } .hit-alert { color:var(--hit); font-weight:900; font-size:24px; }
+    .formal-title { color:var(--hit); font-weight:900; font-size:18px; } .empty { color:var(--muted); font-weight:700; } .no-hit { color:var(--hit); font-size:22px; font-weight:900; }
+    table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; } th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; font-size:14px; } th { background:#eef1f5; color:#344054; font-weight:700; white-space:nowrap; } tr:last-child td { border-bottom:0; }
+    a { color:#175cd3; text-decoration:none; } a:hover { text-decoration:underline; } .note { color:var(--muted); font-size:14px; } .warn { color:var(--warn); font-weight:700; } .code-list { word-break:break-all; } ul { margin:8px 0 0 20px; padding:0; }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=quarterly-disclosure-monitor&amp;view=reports">财报与公告追踪</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav><main>
+  <header>
+    <h1>二季报 / 半年报披露监控</h1>
+    <p class="note">监控 A/H 清单最近 7 天正式二季报、第二季度报告、半年报、半年度报告、中期报告、截至 6 月 30 日止六个月业绩公告、interim results / interim report / half-year report。</p>
+    <div class="meta">
+      <div><span class="label">运行时间</span><strong>2026-07-09 11:02 +08:00</strong></div>
+      <div><span class="label">监控窗口</span><strong>2026-07-03 00:00 +08:00 至 2026-07-09 11:02 +08:00（北京时间）</strong></div>
+      <div><span class="label">正式命中</span><span class="hit-alert">0</span></div>
+      <div><span class="label">财报相关但非正式</span><span class="status">1 条</span></div>
+    </div>
+  </header>
+  <section><h2>本次结论</h2><p class="no-hit">本窗口无正式二季报/半年报命中</p>
+    <ul>
+      <li><strong>HKEX：</strong>检查最近披露中文/英文 JSON 页 lcisehk7relsdc/e_1..20，按代码与 relTime 过滤；清单内窗口行 42 条，正式命中 0 条。</li>
+      <li><strong>CNINFO：</strong>使用 szse_stock.json 解析 A 股 orgId，并逐代码调用 hisAnnouncement/query；A 股窗口行 21 条，正式命中 0 条。</li>
+      <li><strong>SSE / SZSE：</strong>使用上交所 queryCompanyBulletin.do、深交所 annIndex 做正式公告交叉检查；窗口内正式命中 0 条。</li>
+      <li><strong>相关但非正式：</strong>标题含业绩、results、financial statements、dividend、利润分配等但不构成正式 Q2/H1 报告的更新 1 条。</li>
+    </ul>
+    <p class="code-list note">股票代码清单：02097、09992、01810、300750、03750、688017、688585、600276、01276、603259、02359、00700、09988、300308、300502、000858、01318、300896、03690、600519、688012、688981、00981、688795、688802、603986、03986、300394、688256、688498、688048、002281、002384、601869、06869。</p>
+  </section>
+  <section><h2>正式命中清单</h2><table><thead><tr><th>股票名称</th><th>股票代码</th><th>披露日期</th><th>公告标题</th><th>公告链接</th><th>是否属于清单内公司</th></tr></thead><tbody><tr><td colspan="6" class="empty">本窗口无正式二季报/半年报命中</td></tr></tbody></table></section>
+  <section><h2>未命中但有财报相关更新清单</h2><p class="note">仅列出标题与 financial statements / results / 业绩 / 分红等相关、但不属于正式二季报或半年报的公告。</p><table><thead><tr><th>股票名称</th><th>股票代码</th><th>披露日期</th><th>公告标题</th><th>公告链接</th><th>是否属于清单内公司</th></tr></thead><tbody><tr><td>绿的谐波</td><td>688017</td><td>2026-07-06</td><td>2025年年度权益分派实施公告</td><td><a href="http://static.cninfo.com.cn/finalpage/2026-07-06/1225410279.PDF">公告链接</a></td><td>是</td></tr></tbody></table></section>
+  <section><h2>排除样例</h2><p class="note">以下为窗口内清单公告中较容易误判为财报披露的样例，均未计入正式命中。</p><table><thead><tr><th>股票名称</th><th>股票代码</th><th>披露日期</th><th>公告标题</th><th>来源</th><th>链接</th><th>排除原因</th></tr></thead><tbody><tr><td>POP MART</td><td>09992</td><td>2026-07-08</td><td>GRANT OF AWARDS PURSUANT TO THE POST-IPO
+SHARE AWARD SCHEME</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0708/2026070800862.pdf">查看</a></td><td>非正式二季报/半年报披露</td></tr><tr><td>BABA-W</td><td>09988</td><td>2026-07-08</td><td>Next Day Disclosure Return</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0708/2026070800767.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>TENCENT</td><td>00700</td><td>2026-07-08</td><td>Next Day Disclosure Return - Changes in issued shares and share buybacks</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0708/2026070800629.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>HENGRUI PHARMA</td><td>01276</td><td>2026-07-07</td><td>An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701844.htm">查看</a></td><td>非正式二季报/半年报披露</td></tr><tr><td>BABA-W</td><td>09988</td><td>2026-07-07</td><td>Next Day Disclosure Return</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701438.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>BABA-W</td><td>09988</td><td>2026-07-07</td><td>Monthly Return for Equity Issuer on Movements in Securities for the Month Ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070701418.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>XIAOMI-W</td><td>01810</td><td>2026-07-07</td><td>Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700719.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>TENCENT</td><td>00700</td><td>2026-07-07</td><td>Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700630.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>MIXUE GROUP</td><td>02097</td><td>2026-07-07</td><td>Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700502.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>GIGADEVICE</td><td>03986</td><td>2026-07-07</td><td>Monthly Return of Equity Issuer on Movements in Securities for the Month Ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700464.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>YOFC</td><td>06869</td><td>2026-07-07</td><td>Monthly Return of Equity Issuer on Movements in Securities</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0707/2026070700327.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr><tr><td>MEITUAN-W</td><td>03690</td><td>2026-07-06</td><td>Monthly Return of Equity Issuer on Movements in Securities for the month ended 30 June 2026</td><td>HKEX</td><td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602039.pdf">查看</a></td><td>月报、治理、海外监管或其他非正式财报公告</td></tr></tbody></table></section>
+  <section><h2>A/H 合并判断说明</h2><p>A/H 两地上市公司按同一公司合并判断是否命中，但表格保留实际披露代码和链接。本轮重点合并组：宁德时代（300750 / 03750）；恒瑞医药（600276 / 01276）；药明康德（603259 / 02359）；中芯国际（688981 / 00981）；兆易创新（603986 / 03986）；长飞光纤光缆（601869 / 06869）。本轮未发现任一合并组通过另一上市地发布正式 Q2/H1 财报。</p></section>
+  <section><h2>检查源</h2><ul>
+    <li><a href="https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsdc_1.json">HKEX 中文最近披露 JSON</a></li>
+    <li><a href="https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsde_1.json">HKEX 英文最近披露 JSON</a></li>
+    <li><a href="http://www.cninfo.com.cn/new/hisAnnouncement/query">巨潮资讯 hisAnnouncement/query</a></li>
+    <li><a href="http://www.cninfo.com.cn/new/data/szse_stock.json">巨潮资讯代码 / orgId 映射</a></li>
+    <li><a href="https://query.sse.com.cn/security/stock/queryCompanyBulletin.do">上交所 queryCompanyBulletin.do</a></li>
+    <li><a href="https://www.szse.cn/api/disc/announcement/annIndex">深交所 annIndex</a></li>
+  </ul></section>
+  <section><h2>数据缺口和不确定性</h2><ul>
+    <li>HKEX 最近披露 JSON 覆盖最近窗口并按 relTime 过滤；如发行人 IR 页面发布早于 HKEX 披露或页面延迟，需在后续运行继续复核。</li>
+    <li>CNINFO、SSE、SZSE 程序化接口存在反爬和分页差异；本轮使用逐代码官方查询降低广义关键词噪声。</li>
+    <li>标题无法完整证明 PDF 内是否包含附带财务资料；正式命中仍以公告标题、披露类别和官方链接共同判断。</li>
+    <li>接口错误：无关键接口错误。 </li>
+  </ul></section>
+</main>
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

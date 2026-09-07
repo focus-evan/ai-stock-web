@@ -1,0 +1,108 @@
+{
+  "300502": {
+    "code": "300502",
+    "plate": "SZ",
+    "alias": "XYS",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=300502&maxNum=10')"
+    ]
+  },
+  "688017": {
+    "code": "688017",
+    "plate": "SH",
+    "alias": "LDXH",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=688017&maxNum=10')"
+    ]
+  },
+  "600183": {
+    "code": "600183",
+    "plate": "SH",
+    "alias": "SYKJ",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=600183&maxNum=10')"
+    ]
+  },
+  "688008": {
+    "code": "688008",
+    "plate": "SH",
+    "alias": "LQKJ",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=688008&maxNum=10')"
+    ]
+  },
+  "002837": {
+    "code": "002837",
+    "plate": "SZ",
+    "alias": "YWK",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=002837&maxNum=10')"
+    ]
+  },
+  "688012": {
+    "code": "688012",
+    "plate": "SH",
+    "alias": "ZWGS",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=688012&maxNum=10')"
+    ]
+  },
+  "688300": {
+    "code": "688300",
+    "plate": "SH",
+    "alias": "LRXC",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=688300&maxNum=10')"
+    ]
+  },
+  "002409": {
+    "code": "002409",
+    "plate": "SZ",
+    "alias": "YKKJ",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=002409&maxNum=10')"
+    ]
+  },
+  "688097": {
+    "code": "688097",
+    "plate": "SH",
+    "alias": "BZJG",
+    "top_search": null,
+    "announcements": [],
+    "errors": [
+      "HTTPError('500 Server Error: 500 for url: https://www.cninfo.com.cn/new/information/topSearch/query?keyWord=688097&maxNum=10')"
+    ]
+  },
+  "9988": {
+    "code": "9988",
+    "plate": "HK",
+    "alias": "BABA-W",
+    "top_search": null,
+    "announcements": [],
+    "errors": []
+  },
+  "3750": {
+    "code": "3750",
+    "plate": "HK",
+    "alias": "CATL-H",
+    "top_search": null,
+    "announcements": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "audited_at": "2026-09-07T15:21:24",
+  "source_ref": "origin/prod",
+  "source_commit": "54d3e9fce57182b807d9eae0573928842b7631ed",
+  "origin_dev_commit": "de385c8abeddc700b053b30a721f8cceb766ca81",
+  "workspace_commit": "b3b7304a460c02d4f9e191d441dd0c0191262fd3",
+  "scope": "remote prod branch source; local wiki; isolated function checks; no live service or database access",
+  "api_python_files": 147,
+  "test_python_files": 62,
+  "source_files": {
+    "api/main.py": {
+      "sha256": "06c8ea5bed9c1dbb4b462b07d3eaf9d8b54850853109fcd033fd3019c388820e",
+      "lines": 6296
+    },
+    "api/training/routes.py": {
+      "sha256": "bb11b46e39d92b45aec350b6e944994f734ce218fe9a8ef4e4109ed3299bab95",
+      "lines": 871
+    },
+    "api/training/repository.py": {
+      "sha256": "a848e5085148e2ae82d87264bb7c529499e112bcdd37098c2cddfa6778752f55",
+      "lines": 424
+    },
+    "api/multi_collection_rag.py": {
+      "sha256": "112dedffb60b9b9a29161b2f1f66a71c3a595008c283adaba6b6504661b28cff",
+      "lines": 362
+    },
+    "api/langgraph_agent.py": {
+      "sha256": "ce5eeda98311f689ad0e6c18efe6988b013d05a549b9e14d3c8981fcc322ded9",
+      "lines": 381
+    },
+    "api/wiki_graph.py": {
+      "sha256": "6d1c006e58ee04a7e796cc471ba6aaf7a602f33d5fb37c27ab69265f9f4fbb55",
+      "lines": 247
+    },
+    "api/xueba_mode_agent.py": {
+      "sha256": "959273614f8aa2f0645a4521c47210f99929b48c1273388ac40d96ad3466b899",
+      "lines": 632
+    },
+    "api/asset_allocation_agent.py": {
+      "sha256": "a98b4af151c37b2472da727e7c40cf7ce9cdcb425784880d7ecc5abec26eb672",
+      "lines": 1045
+    },
+    "api/college_asset_allocation.py": {
+      "sha256": "83de7a5cb253fa268d2e1cb9c7cb487a3e80e9c0029904242f4e6b83f24bf0cf",
+      "lines": 7561
+    },
+    "api/college_s5_pk.py": {
+      "sha256": "35a8b8cd84e6a2445796dcf37d1160a969cb82abf0fe006788b010eff1269473",
+      "lines": 2969
+    },
+    "api/college_mabu_summary.py": {
+      "sha256": "94b54aa3433adb4dd486554cc2d2736a56c3fe36bc6f5c27ba0b026e4377fb7d",
+      "lines": 1404
+    },
+    "api/database/repository.py": {
+      "sha256": "26e1f7e021749f81ad3ad2a1ba41b4e70fdd0ad35db6e9634bade4a05508857f",
+      "lines": 1799
+    },
+    "api/llm/llm_router.py": {
+      "sha256": "2275f796f1f8b5918880f761b7909447e4cca8ba48831530e12e64702703c9db",
+      "lines": 694
+    },
+    "api/llm_agent_client.py": {
+      "sha256": "77f5be27b0c4315fab48e8ef30a5f3bafa7f003b7642a857f56db137771bbe04",
+      "lines": 115
+    },
+    "api/training/llm_client.py": {
+      "sha256": "e1bf9bebffd6c19a15f05bc98c347edf77b8510a1f5b7b7c1e2f9c1eb7e7a9f4",
+      "lines": 276
+    },
+    "api/core/deps.py": {
+      "sha256": "23c38a7ca26273f18e03b7a9dd0e94b47d1be248a445cb3c1b31cf4557c47e1d",
+      "lines": 69
+    },
+    "api/core/lifecycle.py": {
+      "sha256": "3bd702caa124f4822837647fd61eda59534174af0f8180100c10f4814e189322",
+      "lines": 697
+    },
+    "api/redis_cache.py": {
+      "sha256": "25e75683f0c0b6602fde663a88ce29595337697448bcd11f31410fb89a42f81c",
+      "lines": 479
+    },
+    "api/strategy/step_executor.py": {
+      "sha256": "cd49cff0809919379e64c8cbe288a958d1bee461d687db75e9e13df9c800da59",
+      "lines": 310
+    },
+    "api/cards/dialogue_manager.py": {
+      "sha256": "9bbb179ec8e4621275afcca9ad5b16aa7e10be2081646d5c5cdf7646b0c1b8d6",
+      "lines": 256
+    },
+    "api/wiki/wiki_ingest_service.py": {
+      "sha256": "584e3bed3c90d81504b4654ed7be0de736305f5589096d75ddea2b771f9114ef",
+      "lines": 557
+    },
+    "api/wiki/wiki_index_manager.py": {
+      "sha256": "85ca50816064d841ff18a6e8e2f194f1ed7629414e7bbf561751a053e9803507",
+      "lines": 271
+    }
+  },
+  "demo_default_reproduction": [
+    {
+      "question": "请按S40分析贵州茅台",
+      "demo_trigger": true,
+      "cache_subject": "green_harmonic_demo"
+    },
+    {
+      "question": "请写宁德时代的公司价值评估",
+      "demo_trigger": true,
+      "cache_subject": "green_harmonic_demo"
+    },
+    {
+      "question": "请给腾讯做马步小结",
+      "demo_trigger": true,
+      "cache_subject": "green_harmonic_demo"
+    },
+    {
+      "question": "解释安全边际",
+      "demo_trigger": false,
+      "cache_subject": "解释安全边际"
+    }
+  ],
+  "retrieval_formula_reproduction": [
+    {
+      "label": "high_relevance_old_method",
+      "similarity": 0.9,
+      "doc_date": "2025-09-07",
+      "collection": "college",
+      "final_score": 0.96014
+    },
+    {
+      "label": "low_relevance_new_video",
+      "similarity": 0.2,
+      "doc_date": "2026-09-07",
+      "collection": "realtime-video",
+      "final_score": 1.7
+    },
+    {
+      "label": "future_dated_document",
+      "similarity": 0.2,
+      "doc_date": "2026-12-06",
+      "collection": "realtime-video",
+      "final_score": 1.7
+    }
+  ],
+  "training_selection_reproduction": {
+    "query_has_rating_filter": false,
+    "returned_ratings": [
+      1,
+      null
+    ],
+    "compiler_uses_this_method": true,
+    "query": "SELECT q.id AS qa_id, q.session_id, q.question, COALESCE(f.corrected_answer, q.answer) AS best_answer, f.rating, f.comment, f.id AS fb_id FROM wiki_training_qa q LEFT JOIN wiki_training_feedback f ON f.qa_id = q.id ORDER BY q.created_at DESC LIMIT %s",
+    "note": "Fake rows illustrate the selector contract; not evidence of actual database contents.",
+    "compiler_includes_one_star_answer": true,
+    "compiler_includes_unrated_answer": true
+  },
+  "chat_history_scope": {
+    "function": "get_recent_chats_by_user_and_type",
+    "parameters": [
+      "self",
+      "user_id",
+      "question_type",
+      "limit"
+    ],
+    "has_session_parameter": false
+  },
+  "local_wiki_inventory": {
+    "markdown_files": 1638,
+    "by_directory": {
+      "_root": 4,
+      "entities": 44,
+      "schema": 1,
+      "sources": 419,
+      "topics": 1169,
+      ".obsidian": 1
+    },
+    "topic_files": 1169,
+    "topic_frontmatter_key_presence": {
+      "evidence_count": 1169,
+      "aliases": 1169,
+      "last_updated": 1169
+    },
+    "exact_duplicate_title_groups": 75,
+    "duplicate_examples": {
+      "AI算力国产替代": [
+        "topics/aisuanli_guochandaiti.md",
+        "topics/aisuanli_guochantidai.md",
+        "topics/aisuanli_gupiao_tidai.md",
+        "topics/ai_suanli_guochandaiti.md",
+        "topics/ai_suanli_zichantihuati.md"
+      ],
+      "AI芯片": [
+        "topics/aixinpian.md",
+        "topics/aixinqianpian.md"
+      ],
+      "AI产业链": [
+        "topics/ai_chanelian.md",
+        "topics/ai_chanvelian.md"
+      ],
+      "AI算力基建": [
+        "topics/AI_suanli_jijian.md",
+        "topics/suanli_jijian.md"
+      ],
+      "半导体": [
+        "topics/bandaoti.md",
+        "topics/ban_dao_ti.md"
+      ],
+      "半导体设备": [
+        "topics/bandaotishebei.md",
+        "topics/bandaoti_shebei.md"
+      ],
+      "本金积累": [
+        "topics/benjinjilei.md",
+        "topics/benjin_ji lei.md",
+        "topics/benjin_jilei.md"
+      ],
+      "财富三因子": [
+        "topics/caifusan yinzi.md",
+        "topics/caifusan_yinzi.md"
+      ]
+    },
+    "note": "Local files only; key presence is not a semantic quality score and does not describe live Qdrant indexes."
+  },
+  "react_factory_api_call_sites_excluding_legacy_main": [],
+  "verification_assertions": {
+    "three_unrelated_company_questions_trigger_same_demo": true,
+    "new_weak_document_beats_old_relevant_document": true,
+    "future_document_gets_full_newness_boost": true,
+    "training_query_has_no_rating_filter": true,
+    "common_history_query_has_no_session_scope": true
+  }
+}

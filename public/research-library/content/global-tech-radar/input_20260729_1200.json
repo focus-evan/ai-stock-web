@@ -1,0 +1,449 @@
+{
+  "generated_at_beijing": "2026-07-29 12:00",
+  "run_label": "12:00 noon",
+  "headline": "Red延续但观察降级窗口：油价和名义10Y继续缓和，实际利率仍高，AI芯片卖压未消",
+  "top_conclusion": "本轮午间雷达维持Red：全球AI/数据中心CapEx并未断裂，NVIDIA与SK、NAVER/Brookfield、SSI的官方合作继续把AI工厂、HBM和算力基础设施往前推；但流动性仍不友好，Fed H.15最新官方数据中10Y TIPS实际利率升至2.44%，强美元仍在高位。市场端虽然油价和名义10Y回落，但7月28日Nasdaq继续跑输，Micron、AMD、Applied Materials跌幅较大，说明资金仍在审问AI硬件链的现金流、估值和融资成本。FOMC和Microsoft/Meta财报今晚才是降级Red的第一道门。",
+  "overall_gate": "Red",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "继续按Red管理仓位：不追AI芯片反抽，只保留有官方订单、CapEx、云收入或电力链兑现证据的卖铲环节。",
+    "positive": "NVIDIA/SK提出US$500bn+ AI与产业伙伴关系，NAVER/Brookfield AI工厂规划从55MW扩至200MW并有1GW意向，CapEx长线脉冲还在。",
+    "risk": "Fed官方10Y TIPS实际利率升至2.44%；Micron -8.9%、AMD -8.1%、Applied Materials -7.8%，AI硬件估值仍被资金压着问。",
+    "next": "今晚只盯FOMC、Microsoft和Meta：若无加息且云RPO/CapEx/FCF能互相解释，Red才有资格测试降到Orange。"
+  },
+  "top_changes": [
+    {
+      "title": "名义利率缓和，但实际利率没有松",
+      "fact": "Fed H.15 7月28日发布的7月27日数据：EFFR 3.63%，2Y美债4.28%，10Y美债4.65%，10Y TIPS实际利率2.44%；H.10最新Broad美元指数仍为120.7105。",
+      "impact": "名义10Y较前一日回落，但实际利率反而小幅上行，科技成长股估值压力仍在，不能把油价下跌直接解读为流动性转松。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15 / H.10",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "美股大盘稳住，AI芯片链继续被卖",
+      "fact": "AP报道7月28日S&P 500 +0.2%、Dow +1.0%、Nasdaq -0.2%；Micron -8.9%、AMD -8.1%、Applied Materials -7.8%。同日Brent跌至US$82.08，10Y市场收益率约4.60%，市场加息概率从近36%降至31.5%。",
+      "impact": "宏观尾部风险缓和，但半导体和AI硬件链仍承压，资金正在从高beta硬件转向现金流更确定的方向。",
+      "confidence": "High",
+      "source": "Associated Press",
+      "url": "https://apnews.com/article/a880057323bd065c325ad19b23de0cf3"
+    },
+    {
+      "title": "NVIDIA/SK把AI工厂和HBM需求再次做实",
+      "fact": "NVIDIA官方7月25日披露与SK Group扩大合作，双方提到US$500bn+ AI与产业转型计划、2GW DSX AI Factory，以及SK hynix围绕HBM4和第六代10nm级DRAM的深度合作；文件同时标注多项内容为letters of intent和forward-looking。",
+      "impact": "长线利好AI工厂、HBM4、先进封装、液冷、电力和数据中心工程，但不能把LOI直接等同于已确认收入。",
+      "confidence": "High",
+      "source": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory"
+    },
+    {
+      "title": "NAVER/Brookfield AI工厂强化主权AI与电力融资模型",
+      "fact": "NVIDIA官方披露NAVER Cloud、NVIDIA、Brookfield将韩国AI工厂从约55MW扩展至200MW，并表达进一步到1GW的意向；NVIDIA计划向NAVER Cloud投资US$1bn，Brookfield签署term sheet拟投资最高US$9bn。",
+      "impact": "主权AI和AI工厂的卖铲人从GPU扩展到电力、机房、冷却和长期资本，利好基础设施链，但执行节奏仍需跟踪。",
+      "confidence": "High",
+      "source": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea"
+    },
+    {
+      "title": "FOMC与Microsoft/Meta进入今晚验证窗口",
+      "fact": "Fed日历显示7月28-29日FOMC会议；Microsoft官方确认FY2026 Q4电话会在7月29日，Meta官方确认Q2 2026盘后发布。当前北京时间12:00尚未见两家公司正式结果。",
+      "impact": "今晚要验证的不是一句AI热度，而是CapEx、云RPO、AI收入、折旧和FCF能否闭环；这是Red能否降级的关键门。",
+      "confidence": "High",
+      "source": "Federal Reserve / Microsoft IR / Meta IR",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块仍为Expansion。官方源继续给出AI工厂、HBM、云基础设施和电力链扩张证据；但部分新项目为LOI、term sheet或forward-looking，需要和真实CapEx、RPO、订单收入、FCF一起验证。",
+    "items": [
+      {
+        "entity": "NVIDIA / SK Group / SK hynix",
+        "signal": "官方披露US$500bn+ AI与产业转型合作、2GW DSX AI Factory、SK hynix HBM4和6th Gen 10nm-class DRAM合作，多项内容为LOI或forward-looking。",
+        "direction": "上修",
+        "impact": "HBM4、先进封装、AI工厂、液冷、电力、光互连、韩国半导体和主权AI基础设施。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory"
+      },
+      {
+        "entity": "NAVER Cloud / NVIDIA / Brookfield",
+        "signal": "官方披露韩国AI工厂从约55MW扩展到200MW，并表达进一步到1GW意向；NVIDIA拟投资US$1bn，Brookfield term sheet最高US$9bn。",
+        "direction": "上修",
+        "impact": "GPU、机房、电力、冷却、运营资金和数据中心长期资本成为同一个CapEx闭环。",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea"
+      },
+      {
+        "entity": "NVIDIA / Safe Superintelligence",
+        "signal": "NVIDIA官方称与SSI建立长期战略伙伴关系，将投资SSI并提供NVIDIA Vera Rubin平台访问；未披露具体订单金额。",
+        "direction": "上修",
+        "impact": "利好下一代GPU、HBM、网络和训练集群需求，但金额和交付节奏待验证。",
+        "confidence": "Medium",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "官方确认FY2026 Q4业绩电话会在2026-07-29举行；截至本次北京时间12:00未见正式结果。",
+        "direction": "待验证",
+        "impact": "重点核实Azure AI、CapEx、RPO、折旧、FCF和管理层对AI回报周期的描述。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4"
+      },
+      {
+        "entity": "Meta",
+        "signal": "官方确认Q2 2026结果将在2026-07-29美股盘后发布，电话会同日1:30 p.m. PT / 4:30 p.m. ET。",
+        "direction": "待验证",
+        "impact": "重点核实AI基础设施CapEx、广告AI变现、折旧费用、Reality Labs消耗和FCF。",
+        "confidence": "High",
+        "source": "Meta IR",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-to-Announce-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Amazon",
+        "signal": "官方确认Q2 2026财报电话会将在2026-07-30 2:00 p.m. PT / 5:00 p.m. ET举行。",
+        "direction": "待验证",
+        "impact": "AWS增速、Trainium/ASIC投入、NVIDIA容量、property/equipment与租赁支出将决定AI CapEx可持续性。",
+        "confidence": "High",
+        "source": "Amazon IR",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx"
+      },
+      {
+        "entity": "Apple",
+        "signal": "Apple投资者电话会页面已开放；截至本次运行尚未见Q3 2026正式结果。",
+        "direction": "待验证",
+        "impact": "观察端侧AI、服务收入、设备周期和AI CapEx是否对半导体/消费电子链形成补充。",
+        "confidence": "Medium",
+        "source": "Apple Investor Relations",
+        "url": "https://www.apple.com/investor/earnings-call/"
+      },
+      {
+        "entity": "AMD / Anthropic / Helios",
+        "signal": "此前官方确认Anthropic计划部署最高2GW AMD Instinct MI450系列GPU；AMD AAI 2026披露Helios rack-scale方案，OpenAI/Anthropic/Meta/Microsoft/Oracle等生态信号仍是重要正反馈。",
+        "direction": "持平",
+        "impact": "GPU、HBM4、先进封装、机柜级网络、电源、液冷、ODM服务器需求保持扩张。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era"
+      },
+      {
+        "entity": "GE Vernova",
+        "signal": "Q2官方披露订单US$24.2bn、organic +88%，backlog环比+US$13.0bn；YTD数据中心订单超过US$5bn，超过2025全年总额两倍以上。",
+        "direction": "持平",
+        "impact": "AI CapEx外溢到燃机、电网、电气化、储能、UPS和电力工程，电力卖铲人继续强于纯概念映射。",
+        "confidence": "High",
+        "source": "GE Vernova IR",
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Liquidity模块维持Stress。油价和名义10Y连续缓和，给今晚FOMC留下转松想象；但Fed官方实际利率仍上行，美元维持高位，消费者信心回落又未必足以马上触发宽松。对科技资产来说，这仍是高贴现率环境。",
+    "items": [
+      {
+        "entity": "Fed H.15",
+        "signal": "7月28日发布的7月27日数据：EFFR 3.63%，2Y 4.28%，10Y 4.65%，20Y 5.15%，30Y 5.12%，10Y TIPS实际利率2.44%。",
+        "direction": "压力",
+        "impact": "名义10Y下降，但实际利率仍处高位且小幅上行，长久期科技估值没有获得真正宽松。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.10 / Dollar",
+        "signal": "H.10最新可见数据中Broad美元指数为120.7105，仍处高位；此前美元指数已连续多日高于120。",
+        "direction": "压力",
+        "impact": "强美元不利于全球风险资产扩散，也压制非美元科技资金的估值承受力。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "Market rates / Oil",
+        "signal": "AP报道7月28日10Y美债市场收益率降至约4.60%，Brent跌至US$82.08，WTI跌至US$79.17。",
+        "direction": "中性偏宽松",
+        "impact": "能源通胀压力短线缓和，是Red降级的必要条件之一，但还不是充分条件。",
+        "confidence": "Medium",
+        "source": "Associated Press",
+        "url": "https://apnews.com/article/a880057323bd065c325ad19b23de0cf3"
+      },
+      {
+        "entity": "FOMC",
+        "signal": "Fed官方日历显示FOMC会议为2026-07-28至2026-07-29；截至北京时间2026-07-29 12:00尚未发布本次决议。",
+        "direction": "待验证",
+        "impact": "如果不加息且发布会弱化通胀/油价压力，Red有降级窗口；若加息或维持鹰派，Red延续。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+      },
+      {
+        "entity": "Consumer confidence",
+        "signal": "The Conference Board报道7月Consumer Confidence Index降至90.8，6月修正值为94.0；Expectations Index降至80.1，低于通常提示未来衰退风险的80阈值附近。",
+        "direction": "中性偏宽松",
+        "impact": "增长预期走弱可能压低收益率，但如果同时打击科技需求预期，对高估值科技并非纯利好。",
+        "confidence": "Medium",
+        "source": "The Conference Board",
+        "url": "https://www.conference-board.org/topics/consumer-confidence"
+      },
+      {
+        "entity": "Fed H.4.1 / Reserve balances",
+        "signal": "7月23日H.4.1显示截至7月22日储备余额US$3.062149tn，周环比- US$80.572bn，同比- US$300.128bn；TGA周环比+US$73.405bn。",
+        "direction": "压力",
+        "impact": "银行体系流动性边际被吸收，高估值科技链仍需要更强业绩兑现对冲贴现率。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "PCE / GDP pending",
+        "signal": "PCE和GDP仍在本周后半段验证窗口，当前未见新官方结果。",
+        "direction": "待验证",
+        "impact": "决定通胀粘性和增长韧性，影响实际利率和科技估值闸门。",
+        "confidence": "High",
+        "source": "BEA / Federal Reserve watchlist",
+        "url": "https://www.bea.gov/"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Tech catalysts模块为Mixed。官方AI工厂和HBM合作非常强，但二级市场正在惩罚半导体高估值；未见官方确认的超大额AI融资传闻只能放在观察项，不能当作订单确认。",
+    "items": [
+      {
+        "event": "AI芯片链大跌",
+        "affected_chain": "存储、GPU、半导体设备、AI服务器",
+        "direction": "利空",
+        "winners": "短期偏现金流、防御和已兑现订单的基础设施卖铲环节",
+        "losers": "Micron、AMD、Applied Materials及同类高beta硬件映射",
+        "evidence": "媒体报道",
+        "confidence": "High",
+        "source": "Associated Press",
+        "url": "https://apnews.com/article/a880057323bd065c325ad19b23de0cf3"
+      },
+      {
+        "event": "NVIDIA/SK Group AI Factory与HBM合作",
+        "affected_chain": "AI工厂、HBM4、DRAM、先进封装、液冷、电力",
+        "direction": "利好",
+        "winners": "HBM、先进封装、AI机柜、电力和冷却工程",
+        "losers": "订单兑现慢、只靠主题弹性的高估值供应商",
+        "evidence": "官方确认，但部分为LOI/forward-looking",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory"
+      },
+      {
+        "event": "NAVER/Brookfield韩国AI工厂",
+        "affected_chain": "GPU、数据中心、电力、冷却、长期资本",
+        "direction": "利好",
+        "winners": "AI数据中心建设、并网、电气化、冷却、主权AI供应链",
+        "losers": "无法获得长期低成本资本的数据中心项目",
+        "evidence": "官方确认，但1GW仍为意向",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea"
+      },
+      {
+        "event": "NVIDIA/SSI长期合作",
+        "affected_chain": "Vera Rubin平台、HBM、网络、训练集群",
+        "direction": "利好",
+        "winners": "下一代GPU、HBM、InfiniBand/Ethernet、机柜级电力和冷却",
+        "losers": "无法跟上下一代训练集群功耗/互连要求的旧平台",
+        "evidence": "官方确认，但未披露金额",
+        "confidence": "Medium",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership"
+      },
+      {
+        "event": "OpenAI/NVIDIA超大额数据中心融资报道",
+        "affected_chain": "AI融资、数据中心、电力、GPU",
+        "direction": "中性",
+        "winners": "若后续官方确认，利好GPU、机房、电力和云资本开支链",
+        "losers": "若融资闭环不足，市场会反向惩罚高CapEx和弱FCF环节",
+        "evidence": "媒体报道，未见官方确认",
+        "confidence": "Low",
+        "source": "Financial media reports",
+        "url": "https://www.wsj.com/"
+      },
+      {
+        "event": "Microsoft/Meta/Amazon/Apple财报前验证",
+        "affected_chain": "云、AI服务器、消费电子、广告AI、软件",
+        "direction": "中性",
+        "winners": "能够同时证明AI收入、云RPO、CapEx和FCF闭环的链条",
+        "losers": "只上修CapEx但不能证明现金回收的链条",
+        "evidence": "官方财报日程",
+        "confidence": "High",
+        "source": "Company IR pages",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI服务器/液冷/电源/高速网络",
+      "verified_direct": "无直接A/H公司订单确认；全球层面有NVIDIA、AMD、Alphabet、GE Vernova等官方需求锚。",
+      "inferred": "偏利好AI服务器ODM、液冷、机柜电源、高速连接器、PCB/CCL、光模块和交换网络。",
+      "risk": "二级市场正在压AI硬件估值；没有订单公告的A/H映射只能作为推断，不作为已验证受益。"
+    },
+    {
+      "theme": "HBM/先进封装/存储",
+      "verified_direct": "SK hynix与NVIDIA围绕HBM4和新一代DRAM的合作为官方确认；未见A/H公司直接订单确认。",
+      "inferred": "国产存储、材料设备、先进封装、HBM配套和测试环节有情绪映射。",
+      "risk": "Micron大跌说明存储链短线并非单边利好，需区分长期AI需求和短期估值/竞争压力。"
+    },
+    {
+      "theme": "数据中心电力卖铲人",
+      "verified_direct": "GE Vernova官方数据中心订单YTD超过US$5bn；NVIDIA/NAVER/Brookfield把AI工厂规模和融资模型写入官方公告。",
+      "inferred": "利好燃机、变压器、输配电、UPS、储能、能源工程、电气化系统和自备电源。",
+      "risk": "A/H公司必须等待客户、订单、产能或业绩说明会确认；不能只靠全球叙事映射。"
+    },
+    {
+      "theme": "高CapEx/弱FCF压力",
+      "verified_direct": "Alphabet/Tesla上一轮已经显示市场更关注FCF；本轮Microsoft/Meta/Amazon/Apple尚未公布正式结果。",
+      "inferred": "现金流强、订单能兑现的卖铲人相对更稳；远期TAM叙事但缺收入闭环的方向受压。",
+      "risk": "若FOMC鸽派且巨头财报超预期，Red可降级；若CapEx与FCF矛盾扩大，压力延续。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "2026-07-29 FOMC声明和发布会",
+      "why": "判断是否加息、是否弱化通胀/油价担忧；这是Red能否降级的第一宏观条件。"
+    },
+    {
+      "item": "2026-07-29 Microsoft FY2026 Q4",
+      "why": "核实Azure AI、CapEx、云RPO、折旧、FCF和AI投资回报率描述。"
+    },
+    {
+      "item": "2026-07-29 Meta Q2 2026",
+      "why": "核实AI基础设施CapEx、广告AI收入、Reality Labs消耗、折旧和现金流。"
+    },
+    {
+      "item": "2026-07-30 Amazon和Apple",
+      "why": "核实AWS AI基础设施、Trainium/ASIC投入、Apple端侧AI/设备周期与现金流。"
+    },
+    {
+      "item": "2026-07-31 PCE及GDP",
+      "why": "确认通胀粘性和增长韧性，决定实际利率是否能真正下行。"
+    },
+    {
+      "item": "NVIDIA/SK、NAVER/Brookfield项目执行",
+      "why": "区分LOI/term sheet/意向与真实CapEx、设备订单、MW/GW交付和收入确认。"
+    },
+    {
+      "item": "OpenAI/NVIDIA超大额融资报道",
+      "why": "当前未见官方确认；若官方确认，将改变AI数据中心融资和电力链观察权重。"
+    },
+    {
+      "item": "Fed H.15/H.10下一次更新",
+      "why": "验证名义10Y回落是否转化为实际利率和美元同步缓和。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Federal Reserve - H.15 Selected Interest Rates, July 28 2026",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-28"
+    },
+    {
+      "title": "Federal Reserve - H.10 Foreign Exchange Rates",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity",
+      "published_at": "current"
+    },
+    {
+      "title": "Federal Reserve - FOMC calendars",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "used_for": "Liquidity / Watchlist",
+      "published_at": "current"
+    },
+    {
+      "title": "Federal Reserve - H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "Associated Press - Stocks tick higher as oil and Treasury yields fall",
+      "url": "https://apnews.com/article/a880057323bd065c325ad19b23de0cf3",
+      "used_for": "Liquidity / Tech catalyst",
+      "published_at": "2026-07-28"
+    },
+    {
+      "title": "The Conference Board - Consumer Confidence",
+      "url": "https://www.conference-board.org/topics/consumer-confidence",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-28"
+    },
+    {
+      "title": "NVIDIA - SK Group and NVIDIA expand strategic partnership",
+      "url": "https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-25"
+    },
+    {
+      "title": "NVIDIA - NAVER Cloud, NVIDIA and Brookfield build AI infrastructure in Korea",
+      "url": "https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-25"
+    },
+    {
+      "title": "NVIDIA - Safe Superintelligence and NVIDIA strategic partnership",
+      "url": "https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-28"
+    },
+    {
+      "title": "AMD - AAI 2026 Helios rackscale solutions",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "AMD and Anthropic - Strategic partnership up to 2GW",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-22"
+    },
+    {
+      "title": "GE Vernova - Q2 2026 financial results",
+      "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "Microsoft FY2026 Q4 earnings event",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "used_for": "Watchlist / CapEx",
+      "published_at": "scheduled 2026-07-29"
+    },
+    {
+      "title": "Meta - Q2 2026 results announcement",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-to-Announce-Second-Quarter-2026-Results/default.aspx",
+      "used_for": "Watchlist / CapEx",
+      "published_at": "scheduled 2026-07-29"
+    },
+    {
+      "title": "Amazon - Q2 2026 conference call announcement",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx",
+      "used_for": "Watchlist / CapEx",
+      "published_at": "scheduled 2026-07-30"
+    },
+    {
+      "title": "Apple investor earnings call page",
+      "url": "https://www.apple.com/investor/earnings-call/",
+      "used_for": "Watchlist",
+      "published_at": "current page"
+    },
+    {
+      "title": "Financial media reports on AI financing",
+      "url": "https://www.wsj.com/",
+      "used_for": "Tech catalyst / unverified watch",
+      "published_at": "2026-07-28"
+    }
+  ]
+}

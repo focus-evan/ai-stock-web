@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>02 手动操作手册｜112.124.24.71 服务器优化</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">112.124.24.71 优化方案</a><span>/</span><strong>手动操作手册</strong></div><div>适用主机：112.124.24.71</div></div>
+  <header class="hero amber"><div class="eyebrow">CHAPTER 02 · MANUAL RUNBOOK</div><h1>服务器优化：手动逐步操作手册</h1><p>围绕旧 Dify 1.7.1 生产平台，逐步完成引用核验、回收副本清理、Docker 缓存/镜像清理、日志限额、状态告警和最终验收。</p><div class="tags"><span>逐步操作</span><span>每步可停止</span><span>不删除运行容器</span><span>配置可回滚</span></div></header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 优化前情况</a><a class="active" href="02-manual-cleanup-guide.html">02 清理操作</a><a href="03-after-cleanup.html">03 优化后情况</a><a href="04-data-disk-activation.html">04 ESSD数据盘</a><a href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status amber"><span class="pill amber">重要</span><div><strong>这是已经执行成功的服务器专用手册，不应在当前状态下从头重复运行。</strong> 回收站、镜像和缓存已经清理；旧0.15.3版本删除与ESSD启用见第04章。</div></div>
+
+  <div class="manual-layout">
+    <aside class="toc"><strong>操作目录</strong><a href="#principles">安全原则</a><a href="#step-1">1. 登录确认</a><a href="#step-2">2. 采集基线</a><a href="#step-3">3. 核验运行引用</a><a href="#step-4">4. 证明回收副本重复</a><a href="#step-5">5. 创建回滚归档</a><a href="#step-6">6. 清理回收站</a><a href="#step-7">7. 清理构建缓存</a><a href="#step-8">8. 清理未引用镜像</a><a href="#step-9">9. 限制 journal</a><a href="#step-10">10. 设置 Docker 日志默认值</a><a href="#step-11">11. 安装资源守卫</a><a href="#step-12">12. 安装周维护任务</a><a href="#step-13">13. 最终验收</a><a href="#rollback">回滚说明</a></aside>
+    <div>
+      <section id="principles">
+        <h2>执行原则与停止条件</h2>
+        <ul class="checklist"><li>13 个容器全部处于运行状态，不执行 docker rm、docker stop 或 compose down。</li><li>不处理 <code>/dify/dify1.7.1/dify/docker/volumes</code>，这是当前生产数据库和插件数据。</li><li>不删除 <code>/home/dify15/dify-0.15.3-back</code>，只删除已证明重复的回收站副本。</li><li>不直接 truncate、rm、gzip 运行容器的 JSON 日志。</li><li>每个写操作前先保存原配置和清单；输出不符合预期时立即停止。</li><li>Docker 清理和压缩使用 nice/ionice，降低正常业务影响。</li></ul>
+        <div class="callout danger"><strong>禁止：</strong>不要运行 <code>docker system prune -a --volumes</code>，不要递归删除 <code>/var/lib/docker</code>，不要删除 Dify PostgreSQL/Weaviate/plugin_daemon 数据目录。</div>
+      </section>
+
+      <article class="step" id="step-1"><div class="step-number">1</div><h2>登录并确认服务器身份</h2><div class="impact">影响：只读。</div>
+        <div class="command"><div class="command-label">本地终端</div><button class="copy-btn">复制</button><pre>ssh -o BatchMode=yes root@112.124.24.71</pre></div>
+        <div class="command"><div class="command-label">服务器内</div><button class="copy-btn">复制</button><pre>hostname
+whoami
+date --iso-8601=seconds
+hostnamectl 2&gt;/dev/null || uname -a</pre></div>
+        <p>预期主机名：<code>iZbp179aeyuqchzky9cxkqZ</code>；用户 root；Debian 12。任一不符立即退出。</p>
+      </article>
+
+      <article class="step" id="step-2"><div class="step-number">2</div><h2>采集磁盘、内存、Docker 和 journal 基线</h2><div class="impact">影响：只读；du 限制在目标路径。</div>
+        <div class="command"><div class="command-label">基础资源</div><button class="copy-btn">复制</button><pre>free -h
+df -hT /
+df -ih /
+uptime
+journalctl --disk-usage</pre></div>
+        <div class="command"><div class="command-label">Docker</div><button class="copy-btn">复制</button><pre>docker system df
+docker ps -a --size --format '{{.Names}}|{{.Image}}|{{.Status}}|{{.Size}}'
+docker stats --no-stream --format '{{.Name}}|{{.MemUsage}}|{{.MemPerc}}'</pre></div>
+        <div class="command"><div class="command-label">目录占用</div><button class="copy-btn">复制</button><pre>timeout 60 du -x -B1 --max-depth=1 / 2&gt;/dev/null | sort -nr
+timeout 60 du -x -B1 --max-depth=1 /var/lib/docker 2&gt;/dev/null | sort -nr
+timeout 60 du -x -B1 --max-depth=3 /dify /home/dify15 /.Recycle_bin 2&gt;/dev/null | sort -nr | head -80</pre></div>
+        <p>本次基线：根盘 92%，Docker 镜像 33.18 GB、build cache 9.047 GB、回收站 12.55 GiB。</p>
+      </article>
+
+      <article class="step" id="step-3"><div class="step-number">3</div><h2>核验容器、Compose 和数据挂载</h2><div class="impact">影响：只读；用于划定绝对不能删除的目录。</div>
+        <div class="command"><div class="command-label">容器和挂载</div><button class="copy-btn">复制</button><pre>docker ps --format '{{.Names}}|{{.Ports}}|{{.Status}}'
+for container_id in $(docker ps -q); do
+  docker inspect -f '{{.Name}}|{{range .Mounts}}{{.Type}}:{{.Source}}=&gt;{{.Destination}};{{end}}' "$container_id"
+done</pre></div>
+        <div class="command"><div class="command-label">真实 build 活动</div><button class="copy-btn">复制</button><pre>ps -eo pid=,comm=,args= |
+  awk '$2 == "docker-buildx" || ($2 == "docker" &amp;&amp; $3 == "docker" &amp;&amp; $4 ~ /^build/) {print}'</pre></div>
+        <h4>停止条件</h4><ul><li>任何容器不为 running/healthy，先排障，不清理。</li><li>发现真实 active build，跳过第 7 步。</li><li>任何运行容器挂载的 Source 目录都不可删除。</li></ul>
+      </article>
+
+      <article class="step" id="step-4"><div class="step-number">4</div><h2>证明回收站大目录确实是重复副本</h2><div class="impact">影响：只读；只比较相对路径和文件大小，不读取数据库内容。</div>
+        <div class="command"><div class="command-label">文件数与清单哈希</div><button class="copy-btn">复制</button><pre>recycle_copy=/.Recycle_bin/_bt_home_bt_dify15_bt_dify-0.15.3_bt_docker_bt_volumes-11_t_1754278508.555811
+backup_copy=/home/dify15/dify-0.15.3-back/docker/volumes
+
+find "$recycle_copy" -type f | wc -l
+find "$backup_copy" -type f | wc -l
+find "$recycle_copy" -type f -printf '%P|%s\n' | sort | sha256sum
+find "$backup_copy" -type f -printf '%P|%s\n' | sort | sha256sum
+
+timeout 30 lsof +D /.Recycle_bin 2&gt;/dev/null | head
+findmnt -R /.Recycle_bin 2&gt;/dev/null || true
+find /.Recycle_bin -type f -printf '%TY-%Tm-%Td %TH:%TM|%p\n' | sort -r | head</pre></div>
+        <h4>本次通过条件</h4><p>两边均为 2467 个文件；清单 SHA-256 都为 <code>6a6704d8c51e...171f4</code>；无打开句柄、无挂载；最新文件为 2025-08-02。</p>
+      </article>
+
+      <article class="step" id="step-5"><div class="step-number">5</div><h2>创建回滚归档并保存清理前证据</h2><div class="impact">影响：仅创建约 1 MiB 的审计文件。</div>
+        <div class="command"><div class="command-label">使用新的、尚不存在的目录</div><button class="copy-btn">复制</button><pre>audit_dir=/var/backups/server-cleanup-112.124.24.71-manual-20260831-1200
+test "$(realpath -m "$audit_dir")" = "$audit_dir"
+test ! -e "$audit_dir" || { echo '归档目录已存在'; exit 1; }
+mkdir -m 0700 "$audit_dir"
+
+cp -a /etc/docker/daemon.json "$audit_dir/daemon.json.before"
+crontab -l &gt; "$audit_dir/root-crontab.before" 2&gt;/dev/null || true
+cp -a /usr/local/bin/kill-docker-daemon.sh "$audit_dir/kill-docker-daemon.sh.before"
+docker image ls --no-trunc &gt; "$audit_dir/docker-images.before.txt"
+docker ps -a --no-trunc --format '{{.ID}}|{{.Names}}|{{.Image}}|{{.Status}}|{{.Ports}}' &gt; "$audit_dir/docker-containers.before.txt"
+docker system df &gt; "$audit_dir/docker-system-df.before.txt"
+df -hT &gt; "$audit_dir/df.before.txt"
+free -h &gt; "$audit_dir/free.before.txt"
+find /.Recycle_bin -type f -printf '%P|%s|%TY-%Tm-%Td %TH:%TM:%TS\n' | sort &gt; "$audit_dir/recycle-files.before.txt"
+du -x -B1 --max-depth=2 /.Recycle_bin | sort -nr &gt; "$audit_dir/recycle-du.before.txt"
+
+ls -lah "$audit_dir"</pre></div>
+      </article>
+
+      <article class="step" id="step-6"><div class="step-number">6</div><h2>在多重路径保护下清理回收站</h2><div class="impact">影响：永久删除回收站内容；原始 0.15.3 备份保留在 /home/dify15。</div>
+        <div class="command"><div class="command-label">只允许删除 /.Recycle_bin 的一级子项</div><button class="copy-btn">复制</button><pre>set -euo pipefail
+recycle_root=/.Recycle_bin
+audit_dir=/var/backups/server-cleanup-112.124.24.71-manual-20260831-1200
+
+test "$(realpath "$recycle_root")" = "$recycle_root"
+test -d "$audit_dir"
+if timeout 30 lsof +D "$recycle_root" 2&gt;/dev/null | grep -q .; then
+  echo '回收站有打开文件'; exit 1
+fi
+if findmnt -R "$recycle_root" 2&gt;/dev/null | grep -q .; then
+  echo '回收站包含挂载'; exit 1
+fi
+
+mapfile -d '' recycle_entries &lt; &lt;(find "$recycle_root" -mindepth 1 -maxdepth 1 -print0)
+test "${#recycle_entries[@]}" -gt 0
+: &gt; "$audit_dir/recycle-top-level-deleted.txt"
+
+for recycle_entry in "${recycle_entries[@]}"; do
+  resolved_entry="$(realpath -m "$recycle_entry")"
+  case "$resolved_entry" in
+    "$recycle_root"/*) ;;
+    *) echo "异常目标：$resolved_entry"; exit 1 ;;
+  esac
+  printf '%s\n' "$resolved_entry" &gt;&gt; "$audit_dir/recycle-top-level-deleted.txt"
+done
+
+rm -rf -- "${recycle_entries[@]}"
+test -z "$(find "$recycle_root" -mindepth 1 -maxdepth 1 -print -quit)"
+du -sh "$recycle_root"
+df -h /</pre></div>
+        <p>本次结果：回收站约 12.55 GiB → 4 KiB；根盘 92% → 81%。</p>
+      </article>
+
+      <article class="step" id="step-7"><div class="step-number">7</div><h2>清理 Docker build cache，保留 5 GB</h2><div class="impact">影响：不影响已运行容器；后续构建可能重算缓存。</div>
+        <div class="command"><div class="command-label">无 active build 时执行</div><button class="copy-btn">复制</button><pre>active_build_pids="$(ps -eo pid=,comm=,args= | awk '$2 == "docker-buildx" || ($2 == "docker" &amp;&amp; $3 == "docker" &amp;&amp; $4 ~ /^build/) {print $1}')"
+test -z "$active_build_pids" || { echo "有 active build：$active_build_pids"; exit 1; }
+
+docker system df
+timeout 300 ionice -c3 nice -n 19 \
+  docker builder prune -af --filter until=24h --keep-storage 5GB
+docker system df
+df -h /</pre></div>
+        <p>注意：镜像删除后 Docker 可能重新计算部分层为 build cache，因此第 8 步后应再执行一次本步骤。本次两轮报告合计释放约 13.45 GB。</p>
+      </article>
+
+      <article class="step" id="step-8"><div class="step-number">8</div><h2>清理 30 天以上且未被容器引用的镜像</h2><div class="impact">影响：运行容器不受影响；被删镜像需要重新拉取或构建。</div>
+        <div class="command"><div class="command-label">保留最近 30 天回滚镜像</div><button class="copy-btn">复制</button><pre>audit_dir=/var/backups/server-cleanup-112.124.24.71-manual-20260831-1200
+docker image ls --no-trunc &gt; "$audit_dir/docker-images.before-prune.txt"
+timeout 300 ionice -c3 nice -n 19 docker image prune -af --filter until=720h
+docker system df
+docker ps --format '{{.Names}}|{{.Status}}'
+df -h /</pre></div>
+        <p>本次实际释放 13.96 GB；镜像 73 → 35，所有 S5000 最近30天镜像和11个运行镜像保留。</p>
+      </article>
+
+      <article class="step" id="step-9"><div class="step-number">9</div><h2>限制 systemd journal 到 1 GiB / 14 天</h2><div class="impact">影响：journald 重启；业务容器不重启；被 vacuum 的旧日志不可恢复。</div>
+        <div class="command"><div class="command-label">安装配置并收敛</div><button class="copy-btn">复制</button><pre>install -d -m 0755 /etc/systemd/journald.conf.d
+install -m 0644 /tmp/journald-99-resource-limits.conf \
+  /etc/systemd/journald.conf.d/99-resource-limits.conf
+
+systemctl restart systemd-journald.service
+systemctl is-active systemd-journald.service
+journalctl --rotate
+journalctl --vacuum-time=14d
+journalctl --vacuum-size=1G
+journalctl --disk-usage</pre></div>
+        <p>配置文件可从文档集下载：<a href="files/journald-99-resource-limits.conf.txt">journald-99-resource-limits.conf</a>。本次 journal 从 1.2 GiB 降至 49.6 MiB。</p>
+      </article>
+
+      <article class="step" id="step-10"><div class="step-number">10</div><h2>设置新建容器 JSON 日志默认上限</h2><div class="impact">影响：Docker daemon 只 reload，不 restart；已有容器参数不追溯变化。</div>
+        <div class="command"><div class="command-label">Docker 20.10 使用 jq 校验 JSON</div><button class="copy-btn">复制</button><pre>audit_dir=/var/backups/server-cleanup-112.124.24.71-manual-20260831-1200
+cp -a /etc/docker/daemon.json "$audit_dir/daemon.json.before-log-limit"
+
+jq '. + {"log-driver":"json-file","log-opts":{"max-size":"100m","max-file":"5"}}' \
+  /etc/docker/daemon.json &gt; /tmp/daemon.json.new
+jq empty /tmp/daemon.json.new
+
+install -m 0644 /tmp/daemon.json.new /etc/docker/daemon.json
+systemctl reload docker.service
+sleep 2
+systemctl is-active docker.service
+docker ps --format '{{.Names}}|{{.Status}}'
+journalctl -u docker.service --since '5 minutes ago' --no-pager | tail -30</pre></div>
+        <div class="callout warn"><strong>边界：</strong>当前 app_api_1 等历史 JSON 日志不会自动缩小。为了零中断，本次不重建容器、不直接截断；第11步负责状态告警。</div>
+      </article>
+
+      <article class="step" id="step-11"><div class="step-number">11</div><h2>安装状态型资源守卫</h2><div class="impact">影响：只读检查；仅在告警首次出现或恢复时写 journal，不重复刷屏。</div>
+        <div class="command"><div class="command-label">上传后安装</div><button class="copy-btn">复制</button><pre>bash -n /tmp/bzsj-resource-guard.sh
+install -m 0755 /tmp/bzsj-resource-guard.sh /usr/local/sbin/bzsj-resource-guard.sh
+/usr/local/sbin/bzsj-resource-guard.sh --report
+journalctl -t resource-guard --since '10 minutes ago' --no-pager</pre></div>
+        <p>脚本文件：<a href="files/bzsj-resource-guard.sh.txt">bzsj-resource-guard.sh</a>。阈值：根盘85%、可用内存10%、Docker JSON单文件500 MiB。</p>
+      </article>
+
+      <article class="step" id="step-12"><div class="step-number">12</div><h2>保留原安全 watchdog，追加周期维护</h2><div class="impact">影响：只增加两条任务；原每分钟反恶意 docker-daemon watchdog 完整保留。</div>
+        <div class="command"><div class="command-label">安装维护脚本并更新 crontab</div><button class="copy-btn">复制</button><pre>audit_dir=/var/backups/server-cleanup-112.124.24.71-manual-20260831-1200
+cp -a /usr/local/bin/kill-docker-daemon.sh "$audit_dir/kill-docker-daemon.sh.before"
+crontab -l &gt; "$audit_dir/root-crontab.before" 2&gt;/dev/null || true
+
+bash -n /tmp/bzsj-docker-maintenance.sh
+install -m 0755 /tmp/bzsj-docker-maintenance.sh /usr/local/sbin/bzsj-docker-maintenance.sh
+
+tmp_cron=/tmp/bzsj-root-crontab.new
+(crontab -l 2&gt;/dev/null || true) |
+  grep -vE 'bzsj-resource-guard\.sh|bzsj-docker-maintenance\.sh' &gt; "$tmp_cron" || true
+printf '%s\n' \
+  '*/10 * * * * /usr/local/sbin/bzsj-resource-guard.sh' \
+  '27 3 * * 0 flock -n /run/bzsj-docker-maintenance.lock ionice -c3 nice -n 19 /usr/local/sbin/bzsj-docker-maintenance.sh' \
+  &gt;&gt; "$tmp_cron"
+crontab "$tmp_cron"
+crontab -l</pre></div>
+        <p>维护脚本：<a href="files/bzsj-docker-maintenance.sh.txt">bzsj-docker-maintenance.sh</a>。有真实 active build 时自动跳过；否则保留5GB缓存并清理30天前未引用镜像。</p>
+      </article>
+
+      <article class="step" id="step-13"><div class="step-number">13</div><h2>最终验收：容器 ID、健康接口、资源与告警</h2><div class="impact">影响：只读。全部通过后才宣布完成。</div>
+        <div class="command"><div class="command-label">服务和容器</div><button class="copy-btn">复制</button><pre>for service_name in docker containerd cron systemd-journald; do
+  printf '%s=' "$service_name"
+  systemctl is-active "$service_name"
+done
+
+docker ps --format '{{.Names}}|{{.Status}}'
+docker ps -q | wc -l
+diff -u \
+  &lt;(cut -d'|' -f1,2 "$audit_dir/docker-containers.before.txt" | sort) \
+  &lt;(docker ps -a --no-trunc --format '{{.ID}}|{{.Names}}' | sort) || true</pre></div>
+        <div class="command"><div class="command-label">容器内和主机健康</div><button class="copy-btn">复制</button><pre>docker exec app_api_1 python -c 'import urllib.request; print(urllib.request.urlopen("http://127.0.0.1:8000/health",timeout=5).status)'
+docker exec s5000-api-ha python -c 'import urllib.request; print(urllib.request.urlopen("http://127.0.0.1:8000/health",timeout=5).status)'
+docker exec dify17-api-1 python -c 'import urllib.request; print(urllib.request.urlopen("http://127.0.0.1:5001/health",timeout=5).status)'
+curl -sS -m 5 -o /dev/null -w '%{http_code}\n' http://172.23.77.38:18080/health
+curl -sS -m 5 -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8000/health</pre></div>
+        <div class="command"><div class="command-label">资源和策略</div><button class="copy-btn">复制</button><pre>df -hT /
+df -ih /
+free -h
+docker system df
+journalctl --disk-usage
+/usr/local/sbin/bzsj-resource-guard.sh --report
+du -sh /.Recycle_bin /home/dify15/dify-0.15.3-back \
+  /dify/dify1.7.1/dify/docker/volumes</pre></div>
+        <h4>本次最终标准</h4><ul class="checklist"><li>根盘59%、可用约51 GiB、inode10%。</li><li>13个容器 ID 对比无差异；Redis/PostgreSQL/sandbox healthy。</li><li>app API、S5000 API、Dify API 容器内 health 均为200。</li><li>journal 49.6 MiB；Docker镜像12.02 GB；build cache4.926 GB。</li><li>旧备份13 GiB与活跃Dify数据23 GiB均保留。</li></ul>
+      </article>
+
+      <section id="rollback"><h2>配置回滚说明</h2><p class="section-note">配置可回滚；已删除的回收站、旧镜像和缓存不能原地恢复。</p>
+        <div class="table-wrap"><table><thead><tr><th>对象</th><th>回滚方法</th><th>限制</th></tr></thead><tbody>
+          <tr><td>daemon.json</td><td>恢复 <code>$audit_dir/daemon.json.before</code>，用 jq 校验后 <code>systemctl reload docker</code>。</td><td>不要 restart Docker；已删除镜像需重新拉取。</td></tr>
+          <tr><td>root crontab</td><td><code>crontab "$audit_dir/root-crontab.before"</code></td><td>会移除资源守卫与周维护。</td></tr>
+          <tr><td>journal 限额</td><td>删除 drop-in 并重启 journald。</td><td>已 vacuum 的历史日志不可恢复。</td></tr>
+          <tr><td>回收站</td><td>服务器归档保留完整文件清单和重复性证据。</td><td>内容本身已删除；原始 0.15.3 备份仍位于 /home/dify15。</td></tr>
+          <tr><td>镜像/缓存</td><td>从镜像仓库重新拉取或重新构建。</td><td>本地已清理层不可直接恢复。</td></tr>
+        </tbody></table></div>
+      </section>
+    </div>
+  </div>
+  <div class="next-prev"><a href="01-before-cleanup.html">← 上一章：优化前情况</a><a href="03-after-cleanup.html">下一章：优化后情况 →</a></div>
+  <div class="footer">手动运行手册 · 修改生产服务器前必须重新执行前置检查</div>
+</main>
+<script>
+  function fallbackCopy(text) { var textarea=document.createElement('textarea'); textarea.value=text; textarea.style.position='fixed'; textarea.style.opacity='0'; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); textarea.remove(); }
+  document.querySelectorAll('.copy-btn').forEach(function(button){ button.addEventListener('click',function(){ var text=button.parentElement.querySelector('pre').innerText; var copied=navigator.clipboard&&window.isSecureContext?navigator.clipboard.writeText(text).catch(function(){fallbackCopy(text);}):Promise.resolve(fallbackCopy(text)); copied.then(function(){var old=button.textContent;button.textContent='已复制';setTimeout(function(){button.textContent=old;},1200);});});});
+</script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

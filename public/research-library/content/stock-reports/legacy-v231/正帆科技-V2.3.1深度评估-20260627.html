@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>正帆科技 V2.3.1 深度评估</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;line-height:1.65;}
+header{background:#111827;color:white;padding:28px 36px 22px;}
+h1{margin:0;font-size:30px;letter-spacing:0;} header p{margin:8px 0 0;color:#d1d5db;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 56px;}
+section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:18px 0 8px;}
+.hero{display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:stretch;}
+.scorebox{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:16px;display:grid;grid-template-columns:108px 1fr;gap:14px;align-items:center;}
+.bigscore{width:96px;height:96px;border-radius:14px;background:#b45309;color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;}
+.tag{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;margin:0 6px 8px 0;}
+.verdict{border-left:4px solid #f59e0b;background:#fff7ed;border-radius:6px;padding:12px;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;}
+.card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:800;}
+table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;}
+small{display:block;color:#667085;margin-top:2px;} ul{margin:0;padding-left:18px;} li{margin:6px 0;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:3px 9px;font-weight:800;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.barrow{display:grid;grid-template-columns:116px 1fr 42px 1.3fr;gap:10px;align-items:center;margin:9px 0;} .barlabel{font-weight:700;} .bartrack{height:10px;background:#edf0f5;border-radius:999px;overflow:hidden;} .bar{height:100%;} .goodbar{background:#0f766e;} .midbar{background:#2563eb;} .watchbar{background:#b7791f;} .badbar{background:#b42318;} .barnum{font-weight:800;} .barnote{font-size:13px;color:#475467;}
+.risk{background:#fff1f3;border:1px solid #ffd1d8;color:#9f1239;border-radius:8px;padding:12px;} .ok{background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:8px;padding:12px;}
+.badrow td{background:#fff7f7;} .midrow td{background:#fffdf5;}
+a{color:#2563eb;text-decoration:none;} a:hover{text-decoration:underline;}
+@media(max-width:900px){main,header{padding-left:16px;padding-right:16px;} .hero,.grid,.twocol{grid-template-columns:1fr;} .barrow{grid-template-columns:1fr;gap:4px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>正帆科技 V2.3.1 深度评估</h1>
+  <p>688596.SH · 半导体工艺介质供应系统 / 电子特气 / 先进材料 / 设备零组件 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>核心结论</h2>
+      <p class="verdict"><b>结论：价值重估候选，但不是当前基本面核心仓。</b><br>
+      正帆科技的真正看点不是传统工程系统，而是从一次性CAPEX项目，向半导体OPEX、电子特气、前驱体/先进材料、设备零组件和运维服务迁移。这个重估逻辑成立，但当前财务还在补考：2026Q1收入恢复、订单改善，利润却转亏，毛利率和费用压力尚未被消化。</p>
+      <div>
+        <span class="tag">观察池</span><span class="tag">价值重估候选</span><span class="tag">半导体卖铲人</span><span class="tag">财务待验证</span>
+      </div>
+    </div>
+    <div class="scorebox">
+      <div class="bigscore">68</div>
+      <div>
+        <b>V2.3.1 综合评分</b>
+        <p>行业和催化够强，财务和估值拖后腿。适合纳入跟踪池，等待Q2/Q3利润、毛利率、订单结构验证。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>行情与估值快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>56.22</span></div>
+      <div class="card"><b>市值</b><span>165.36亿</span></div>
+      <div class="card"><b>PE / PB</b><span>216.78 / 4.6</span></div>
+      <div class="card"><b>6月以来 / 近10日</b><span>+47.6% / +18.6%</span></div>
+    </div>
+    <p class="risk">交易温度偏高：6月26日涨停，换手约 15.1%；5月公司已发布过异常波动公告，提示估值显著高于行业、Q1亏损和市场情绪过热风险。</p>
+  </section>
+
+  <section>
+    <h2>V2.3.1 风险门</h2>
+    <div class="twocol">
+      <div class="risk">
+        <b>暂不升级核心仓的原因</b>
+        <ul>
+          <li>2026Q1收入增长但归母净利润和扣非净利润均为负。</li>
+          <li>毛利率从历史更高水平下探到18%-22%区间，定价权和项目质量仍需恢复。</li>
+          <li>资产负债率接近68%，项目型业务叠加产能投入，费用和折旧压力较大。</li>
+          <li>近期高管减持和股价异动，降低短线交易舒适度。</li>
+        </ul>
+      </div>
+      <div class="ok">
+        <b>仍值得跟踪的原因</b>
+        <ul>
+          <li>2026Q1新签订单约12亿元，同比增长约58.6%，其中半导体订单约7.05亿元，同比增长约93.6%。</li>
+          <li>2025年半导体收入占比由50%提升至60%，OPEX业务占比由31%提升至42.3%。</li>
+          <li>电子特气、大宗气体和先进材料产能已初具规模，前驱体处在取证和产能释放前夜。</li>
+          <li>从工程系统向材料/运维/OPEX切换，具备估值模型改善的可能。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>业务重估地图</h2>
+    <table>
+      <thead><tr><th>业务层</th><th>原市场标签</th><th>新重估标签</th><th>证据阶段</th><th>关键判断</th></tr></thead>
+      <tbody>
+        <tr><td>高纯工艺介质供应系统</td><td>项目型工程/系统集成</td><td>晶圆厂扩产基础设施</td><td>订单修复</td><td>半导体CAPEX回暖时弹性明显，但毛利率受竞争和低毛利订单影响。</td></tr>
+        <tr><td>半导体设备零组件</td><td>设备配套零部件</td><td>国产设备供应链卖铲人</td><td>收入增长</td><td>Q1收入增长部分来自设备零组件改善，需看毛利修复。</td></tr>
+        <tr><td>电子特气 / 大宗气体</td><td>配套气体</td><td>OPEX持续耗材</td><td>产能爬坡</td><td>若导入客户并形成持续供货，估值质量会高于一次性工程。</td></tr>
+        <tr><td>前驱体 / 先进材料</td><td>新材料期权</td><td>半导体先进制程材料国产替代</td><td>取证/放量前</td><td>当前不能计入业绩锚，后续看许可证、客户认证、收入占比。</td></tr>
+        <tr><td>运维服务</td><td>售后服务</td><td>高黏性OPEX</td><td>结构提升</td><td>如果OPEX占比继续提升，收入稳定性和估值中枢有望改善。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table>
+      <thead><tr><th>单季度</th><th>营收 / 同比</th><th>归母净利 / 同比</th><th>扣非净利 / 同比</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th><th>负债率</th><th>结论</th></tr></thead>
+      <tbody><tr class="badrow"><td>2026-03-31</td><td>9.70亿<small>+43.4%</small></td><td>-2560万<small>-174.4%</small></td><td>-3984万<small>-261.7%</small></td><td>18.2%</td><td>-2.6%</td><td>-0.44</td><td>-0.7%</td><td>68.0%</td><td>收入修复但亏损，毛利率与费用压力未消化</td></tr><tr class="midrow"><td>2025-12-31</td><td>16.24亿<small>-17.5%</small></td><td>6500万<small>-66.9%</small></td><td>5876万<small>-67.2%</small></td><td>19.9%</td><td>4.2%</td><td>1.42</td><td>1.8%</td><td>68.2%</td><td>年末收入体量大，利润明显弱于历史</td></tr><tr class="badrow"><td>2025-09-30</td><td>12.75亿<small>-22.7%</small></td><td>-2294万<small>-110.1%</small></td><td>-3749万<small>-119.2%</small></td><td>18.0%</td><td>-1.9%</td><td>-0.10</td><td>-0.6%</td><td>67.9%</td><td>收入利润双承压，是财务低点</td></tr><tr class="midrow"><td>2025-06-30</td><td>13.40亿<small>+6.1%</small></td><td>5982万<small>-25.3%</small></td><td>3417万<small>-65.0%</small></td><td>22.3%</td><td>4.5%</td><td>-0.32</td><td>1.6%</td><td>62.8%</td><td>仍有利润，但扣非和现金流质量偏弱</td></tr></tbody>
+    </table>
+    <p class="verdict"><b>财务结论：</b>收入端已经出现修复信号，但利润端仍未验证。正帆科技要从“题材重估”切到“价值重估”，必须看到毛利率回升、净利润转正、经营现金流改善同时出现。</p>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <div class="barrow"><div class="barlabel">成长性</div><div class="bartrack"><div class="bar watchbar" style="width:64%;"></div></div><div class="barnum">64</div><div class="barnote">Q1收入+43.35%、新签订单改善，但2025全年收入下滑</div></div><div class="barrow"><div class="barlabel">盈利性</div><div class="bartrack"><div class="bar badbar" style="width:42%;"></div></div><div class="barnum">42</div><div class="barnote">毛利率18%-22%且净利率低，尚未体现材料/耗材重估质量</div></div><div class="barrow"><div class="barlabel">经营规模</div><div class="bartrack"><div class="bar midbar" style="width:72%;"></div></div><div class="barnum">72</div><div class="barnote">2025收入49.16亿，已经具备平台体量</div></div><div class="barrow"><div class="barlabel">资产效率</div><div class="bartrack"><div class="bar badbar" style="width:44%;"></div></div><div class="barnum">44</div><div class="barnote">ROE低，Q1为负，重资产和折旧压力明显</div></div><div class="barrow"><div class="barlabel">市值/估值</div><div class="bartrack"><div class="bar badbar" style="width:58%;"></div></div><div class="barnum">58</div><div class="barnote">市值约165亿，PB 4.6可解释，PE高且依赖利润修复</div></div>
+    <p><b>经营世界结论：</b>数据有瑕疵，收入与订单支持叙事，但利润、现金流和资产效率尚未支持核心持仓。<br>
+    <b>资本世界结论：</b>市场已经在提前交易利润修复和OPEX重估；若Q2/Q3未兑现，估值会反噬。</p>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <div class="barrow"><div class="barlabel">行业面</div><div class="bartrack"><div class="bar goodbar" style="width:82%;"></div></div><div class="barnum">82</div><div class="barnote">半导体CAPEX回暖，工艺介质/特气系统属于扩产基础设施</div></div><div class="barrow"><div class="barlabel">核心竞争力</div><div class="bartrack"><div class="bar midbar" style="width:72%;"></div></div><div class="barnum">72</div><div class="barnote">系统+材料+运维一体化有特色，但高毛利垄断证据不够</div></div><div class="barrow"><div class="barlabel">财务质量</div><div class="bartrack"><div class="bar badbar" style="width:48%;"></div></div><div class="barnum">48</div><div class="barnote">2026Q1亏损、毛利率下滑、现金流和负债率承压</div></div><div class="barrow"><div class="barlabel">估值与赔率</div><div class="bartrack"><div class="bar badbar" style="width:56%;"></div></div><div class="barnum">56</div><div class="barnote">PB不高但PE很高，当前买的是利润修复预期</div></div><div class="barrow"><div class="barlabel">催化/影子逻辑</div><div class="bartrack"><div class="bar goodbar" style="width:82%;"></div></div><div class="barnum">82</div><div class="barnote">半导体订单回暖、OPEX占比提升、电子特气/前驱体放量期权</div></div><div class="barrow"><div class="barlabel">治理/流动性</div><div class="bartrack"><div class="bar watchbar" style="width:63%;"></div></div><div class="barnum">63</div><div class="barnote">流动性好，但近期异常波动和高管减持降低交易舒适度</div></div>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table>
+      <tbody>
+        <tr><td>评分</td><td><span class="pill bad">14</span></td></tr>
+        <tr><td>卡位环节</td><td>高纯工艺介质供应系统、电子特气、前驱体/先进材料、半导体设备零组件。</td></tr>
+        <tr><td>海外对标</td><td>气体和工艺系统可参考 Linde、Air Liquide、MKS/Entegris 等海外工业气体、流体控制和半导体材料供应体系。</td></tr>
+        <tr><td>替代阶段</td><td>系统业务已收入化；电子特气和大宗气体处于导入放量；前驱体/先进材料仍处于取证和爬坡阶段。</td></tr>
+        <tr><td>估值影响</td><td>可给“国产替代观察溢价”，但暂不能给“核心卡脖子高溢价”。真正升级需要材料业务收入和利润颗粒度。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table>
+      <tbody>
+        <tr><td>护城河等级</td><td><b>B-</b></td></tr>
+        <tr><td>国内竞争对手</td><td>至纯科技、柏诚股份、亚翔集成、华特气体、金宏气体、中船特气、雅克科技、江丰电子等。</td></tr>
+        <tr><td>海外竞争对手</td><td>Linde、Air Liquide、MKS、Entegris、Merck电子材料体系等。</td></tr>
+        <tr><td>我有你没有</td><td>高纯系统交付、气体/先进材料、半导体零组件和现场服务的一体化组合。</td></tr>
+        <tr><td>你有我更强</td><td>相比纯洁净室/机电工程商，更贴近晶圆厂工艺介质和半导体OPEX；相比部分单一材料公司，客户现场入口更广。</td></tr>
+        <tr><td>我弱于你</td><td>相比安集科技、江丰电子、华特气体等纯材料公司，毛利率和利润质量不够硬；相比中微、北方，卡脖子层级更低。</td></tr>
+        <tr><td>财务验证</td><td>当前财务验证不足：毛利率承压、Q1亏损、ROE为负。护城河仍停留在业务结构和客户入口层，未充分反映为高利润率。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>同类估值位置</h2>
+    <table>
+      <thead><tr><th>公司</th><th>定位</th><th>市值亿</th><th>PE</th><th>PB</th><th>当日涨跌</th><th>换手</th></tr></thead>
+      <tbody><tr><td>正帆科技</td><td>工艺介质/特气系统</td><td>165</td><td>216.8</td><td>4.6</td><td>+20.0%</td><td>15.1%</td></tr><tr><td>至纯科技</td><td>高纯工艺系统/湿法设备</td><td>136</td><td>-16.3</td><td>3.9</td><td>+2.7%</td><td>21.3%</td></tr><tr><td>柏诚股份</td><td>洁净室/机电系统</td><td>201</td><td>104.9</td><td>6.7</td><td>+10.0%</td><td>7.1%</td></tr><tr><td>亚翔集成</td><td>洁净室/集成工程</td><td>557</td><td>52.6</td><td>25.6</td><td>+2.3%</td><td>6.6%</td></tr><tr><td>中微公司</td><td>刻蚀/薄膜设备</td><td>3913</td><td>143.4</td><td>15.2</td><td>+3.5%</td><td>3.4%</td></tr><tr><td>北方华创</td><td>平台型设备</td><td>5903</td><td>105.9</td><td>15.0</td><td>+1.9%</td><td>1.7%</td></tr><tr><td>华海清科</td><td>CMP设备</td><td>1304</td><td>118.8</td><td>17.2</td><td>+4.4%</td><td>2.8%</td></tr><tr><td>盛美上海</td><td>清洗/电镀设备</td><td>1998</td><td>159.3</td><td>14.5</td><td>+0.2%</td><td>1.9%</td></tr><tr><td>安集科技</td><td>CMP抛光液</td><td>624</td><td>75.9</td><td>13.9</td><td>+2.2%</td><td>5.1%</td></tr><tr><td>华特气体</td><td>电子特气</td><td>296</td><td>237.3</td><td>15.8</td><td>-7.9%</td><td>8.1%</td></tr><tr><td>江丰电子</td><td>靶材</td><td>979</td><td>177.4</td><td>14.0</td><td>+7.5%</td><td>12.3%</td></tr></tbody>
+    </table>
+    <p class="verdict"><b>估值判断：</b>正帆科技 PB 约4.6，在同类里不高；但 PE 约216.8，说明当期利润不足以解释价格。市场买的是“利润恢复 + 业务结构升级”，不是当前财务质量。</p>
+  </section>
+
+  <section>
+    <h2>三种情景</h2>
+    <table>
+      <thead><tr><th>情景</th><th>触发条件</th><th>模型动作</th></tr></thead>
+      <tbody>
+        <tr><td>乐观</td><td>Q2/Q3收入继续增长，毛利率回到20%以上，净利润转正；电子特气/前驱体披露客户导入或收入占比。</td><td>从观察池上调为成长配置，估值可按半导体OPEX卖铲人重估。</td></tr>
+        <tr><td>中性</td><td>订单继续改善，但毛利率仍承压，利润修复慢。</td><td>维持观察池，只适合分歧低吸和事件跟踪。</td></tr>
+        <tr><td>悲观</td><td>增收不增利延续，现金流弱，低毛利订单继续拖累，材料业务无颗粒度披露。</td><td>降级为题材交易，股价高位容易被估值杀。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table>
+      <tbody>
+        <tr><td>买入</td><td>不追涨停后高位。只等半导体材料设备主线未退潮、股价回踩不破关键支撑、换手降温后再小仓观察。</td></tr>
+        <tr><td>加仓</td><td>必须看到Q2/Q3利润转正、毛利率改善，或电子特气/前驱体客户导入和收入占比披露。</td></tr>
+        <tr><td>持有</td><td>若已经持有，核心观察不是每天涨跌，而是毛利率、净利率、现金流、半导体订单结构。</td></tr>
+        <tr><td>减仓</td><td>若继续高换手冲高但没有财务验证，或板块退潮、跌破涨停启动区，优先降事件仓。</td></tr>
+        <tr><td>失效</td><td>连续两个季度增收不增利，毛利率低于18%-19%且经营现金流未改善；材料业务长期没有订单/收入证明。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>最终结论</h2>
+    <p><b>正帆科技不是假科技，但也不是当前财务最硬的半导体材料设备股。</b>它的看点在“重估”：如果市场把它从工程系统公司重新定价为晶圆厂工艺介质/OPEX/电子材料平台，市值弹性是有的；但这条路必须用利润和现金流证明。当前最合理的定位是 <b>观察池 + 分歧低吸候选</b>，不是涨停后追高的核心仓。</p>
+  </section>
+
+  <section>
+    <h2>来源与限制</h2>
+    <ul><li><a href="https://big5.sse.com.cn/site/cht/www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-18/688596_20260418_YQFF.pdf" target="_blank">正帆科技2025年年度报告</a><small>年度经营、业务结构、风险和财务数据来源</small></li><li><a href="https://paper.cnstock.com/html/2026-04/18/content_2201481.htm" target="_blank">正帆科技2026年第一季度报告</a><small>2026Q1收入、利润和资产负债数据来源</small></li><li><a href="https://pdf.dfcfw.com/pdf/H2_AN202604211821376901_1.pdf" target="_blank">正帆科技2026-04-20投资者关系活动记录表</a><small>半导体/OPEX占比、2026Q1新签订单、电子特气与前驱体进展</small></li><li><a href="https://paper.cnstock.com/html/2026-06/23/content_2234058.htm" target="_blank">高级管理人员减持股份结果公告</a><small>郑鸿亮减持计划完成，交易风险观察项</small></li><li><a href="https://stockmc.xueqiu.com/202605/688596_20260515_S4KN.pdf" target="_blank">股票交易异常波动公告</a><small>公司提示短期波动、估值高于行业和Q1亏损风险</small></li></ul>
+    <p><small>行情和估值：腾讯行情接口；财务表：同花顺财务摘要接口（AkShare）并按单季度口径读取。本文为研究框架输出，不构成收益保证或个性化投资承诺。</small></p>
+  </section>
+</main>
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

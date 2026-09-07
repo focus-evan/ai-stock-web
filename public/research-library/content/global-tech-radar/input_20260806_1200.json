@@ -1,0 +1,386 @@
+{
+  "generated_at_beijing": "2026-08-06 12:00",
+  "run_label": "12:00 noon",
+  "headline": "Orange维持：SpaceX官方文件确认AI/商业航天高CapEx，但科技链从普涨转为执行力筛选",
+  "top_conclusion": "2026-08-06午间雷达维持Orange。较晨间最重要的更新是SpaceX官方Q2资料和SEC 10-Q已可验证：Q2 revenue约US$7.814bn、同比约+90%，net loss约US$541mn，capex约US$18.369bn，其中AI capex约US$15.828bn；这把商业航天和AI基础设施卖铲链从媒体线索推进到官方证据。但科技催化从Bullish降为Mixed：AP报道显示Nasdaq下跌约0.8%、SpaceX下跌约13.6%、AMD下跌约7%，市场正在惩罚高CapEx、高预期和现金流压力；Nvidia受益于SpaceX AI芯片需求仍表现强。流动性仍是Stress：Fed H.15最新官方数据维持10Y 4.63%、30Y 5.18%、10Y TIPS 2.40%，虽边际缓和但仍是高压区。处理建议不变：只看AI算力、服务器、液冷电力、光互连、AI软件和商业航天中的卖铲人，但必须用官方收入、订单、CapEx、毛利率、现金流和交付节奏过滤。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "维持Orange：可以继续看卖铲链，但午间重点从“AI强趋势”切到“官方CapEx能否转化成收入、毛利率和现金流”。",
+    "positive": "最大正反馈是SpaceX官方文件确认Q2 capex约US$18.369bn、AI capex约US$15.828bn，叠加AMD Data Center +107%和Palantir AI软件现金流高增。",
+    "risk": "最大压制项是高预期回撤：AP报道SpaceX、AMD、Nasdaq承压；Fed 10Y/30Y和TIPS实际利率仍高，估值端不能转绿。",
+    "next": "下一步只盯SpaceX官方明细消化、Fed H.4.1新数据、AMD 10-Q/电话会、Supermicro正式Q4、Amazon CapEx口径和中美无人机/高科技出口管制。"
+  },
+  "top_changes": [
+    {
+      "title": "SpaceX官方文件验证AI与商业航天CapEx强度",
+      "fact": "SpaceX Q2 2026官方结果显示revenue约US$7.814bn、同比约+90%，net loss约US$541mn；Q2 capex约US$18.369bn，其中AI capex约US$15.828bn；公司还披露AI revenue约US$2.561bn、backlog约US$47.5bn、cash and marketable securities约US$100.384bn、debt约US$38.433bn。",
+      "impact": "利好AI数据中心、电力液冷、服务器、GPU/网络，以及商业航天的卫星制造、发射、地面终端、测控、通信载荷和热控；但高CapEx和亏损使估值必须看现金流效率。",
+      "confidence": "High",
+      "source": "SpaceX Q2 2026 Results / SEC 10-Q",
+      "url": "https://s21.q4cdn.com/184289198/files/doc_financials/2026/q2/SpaceX-Reports-Second-Quarter-2026-Results.pdf"
+    },
+    {
+      "title": "科技市场反馈转弱：AI赢家仍在，但高预期资产被重新定价",
+      "fact": "AP报道周三S&P 500下跌约0.2%，Nasdaq下跌约0.8%，Dow上涨约0.5%；SpaceX下跌约13.6%，AMD下跌约7%，Nvidia上涨约3.4%，10Y市场收益率约4.61%。",
+      "impact": "科技链不再是普涨，市场奖励能直接承接AI CapEx的核心算力和供应商，同时惩罚高估值、高CapEx、利润或现金流不足的公司。",
+      "confidence": "Medium",
+      "source": "AP market report",
+      "url": "https://apnews.com/article/53179dc1c0148c5afeb47379b8f5b5c5"
+    },
+    {
+      "title": "Fed官方利率数据边际缓和，但流动性仍维持Stress",
+      "fact": "Fed H.15最新发布日为2026-08-05，最新数据行为2026-08-04：EFFR 3.63%，2Y 4.20%，10Y 4.63%，20Y 5.18%，30Y 5.18%，5Y TIPS 2.14%，10Y TIPS 2.40%，30Y TIPS 2.96%。",
+      "impact": "收益率回落给科技估值喘息，但实际利率仍高，尚不足以支持总闸门从Orange升到Green。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "中国商务部宣布对美国相关无人机等两用物项出口管制",
+      "fact": "商务部公告称，为维护国家安全和利益，将对美国相关实体的无人机等两用物项实施出口管制措施，涉及监管和供应链边界，需与后续许可证、执行细则和企业公告交叉验证。",
+      "impact": "无人机、传感器、导航、通信链、飞控、复合材料和商业航天相关两用供应链的外需和合规风险上升；不能把政策约束简单当作单边利好。",
+      "confidence": "High",
+      "source": "MOFCOM",
+      "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html"
+    },
+    {
+      "title": "AMD与Palantir官方结果继续支撑AI硬件+软件卖铲主线",
+      "fact": "AMD Q2 Data Center revenue US$6.702bn、同比+107%，MI350进入客户部署，Helios计划2026年下半年出货；Palantir Q2 revenue US$1.935bn、同比+93%，TCV US$3.373bn，adjusted free cash flow US$1.220bn。",
+      "impact": "AI CapEx仍从硬件、服务器、电力扩散到企业AI软件；但午间市场反馈要求投资判断从叙事强度切到订单、收入、现金流和估值承受力。",
+      "confidence": "High",
+      "source": "AMD IR / Palantir SEC",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。SpaceX官方文件补上了商业航天和AI基础设施的硬证据，AMD、Microsoft、Amazon、Meta、Supermicro仍共同指向AI/data-center扩张。但午间结论必须加入约束：CapEx扩张不是无风险利好，市场开始要求收入转换、订单可见度、毛利率、现金流和资产负债表共同验证。",
+    "items": [
+      {
+        "entity": "SpaceX",
+        "signal": "Q2 2026 revenue约US$7.814bn、同比约+90%；capex约US$18.369bn，其中AI capex约US$15.828bn；backlog约US$47.5bn，cash and marketable securities约US$100.384bn，debt约US$38.433bn。",
+        "direction": "上修",
+        "impact": "商业航天卖铲链和AI基础设施链同时受益：卫星制造、发射服务、通信载荷、地面终端、测控、电力热控、AI服务器、GPU/网络、液冷和供配电。",
+        "confidence": "High",
+        "source": "SpaceX Q2 2026 Results / SEC 10-Q",
+        "url": "https://s21.q4cdn.com/184289198/files/doc_financials/2026/q2/SpaceX-Reports-Second-Quarter-2026-Results.pdf"
+      },
+      {
+        "entity": "AMD",
+        "signal": "Q2 revenue US$11.536bn、同比+50%；Data Center revenue US$6.702bn、同比+107%；MI350进入客户部署，Helios rack-scale AI平台计划2026年下半年出货；Q3 revenue指引约US$13.0bn。",
+        "direction": "上修",
+        "impact": "AI GPU、HBM、服务器CPU、整机ODM、液冷、电源、机柜、高速互连和数据中心部署链受益。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q4 Microsoft Cloud revenue US$59.3bn、同比+27%；Commercial RPO同比+84%至US$678bn；Azure及其他云服务+43%；Q4物业设备新增US$35.802bn。",
+        "direction": "上修",
+        "impact": "AI CapEx被云收入和RPO吸收，继续验证AI服务器、网络、存储、电力和冷却需求。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+      },
+      {
+        "entity": "Amazon",
+        "signal": "10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn；但10-Q未直接确认媒体所称US$220bn全年CapEx。",
+        "direction": "上修",
+        "impact": "AWS、AI芯片/GPU/HBM、数据中心电力、液冷、网络和服务器链继续受益；US$220bn仍按未见官方确认处理。",
+        "confidence": "High",
+        "source": "Amazon Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+      },
+      {
+        "entity": "Meta",
+        "signal": "10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。",
+        "direction": "上修",
+        "impact": "AI服务器、光通信、交换机、电力、冷却和数据中心建设受益；租赁、折旧、债务和FCF压力是估值过滤器。",
+        "confidence": "High",
+        "source": "Meta Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+      },
+      {
+        "entity": "Supermicro",
+        "signal": "初步业务更新称FY2026 Q4新订单超过US$60bn，非GAAP毛利率预计15%-17%，但收入预计接近US$11.0-12.5bn指引低端，正式Q4仍待2026-08-11公布。",
+        "direction": "待验证",
+        "impact": "AI服务器、液冷、电源、机柜和高速互连订单强，但需要正式财报验证交付、毛利率、客户集中度和审计风险。",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx"
+      },
+      {
+        "entity": "Apple / Intel supply chain",
+        "signal": "Apple 10-Q确认先进半导体、NAND、DRAM和AI算力供给约束；Intel 10-Q显示DCAI服务器销量受hyperscaler需求推动，基板、内存和关键组件短缺可能延续。",
+        "direction": "上修",
+        "impact": "存储、先进封装、基板、服务器CPU/ASIC和高端组件供需偏紧；终端链需看成本转嫁能力。",
+        "confidence": "High",
+        "source": "Apple / Intel Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块维持Stress。Fed H.15显示长端和实际利率边际回落，但仍在高压区；AP市场收益率读数与Fed方向一致，却未改变高估值科技资产的折现压力。中国端午间资金面有央行公开市场净回笼报道，若后续持续，会对A/H成长估值形成额外约束。结论仍是：流动性给科技链一点喘息，但没有给全面追高的许可。",
+    "items": [
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-05发布/2026-08-04数据：EFFR 3.63%，2Y 4.20%，10Y 4.63%，20Y 5.18%，30Y 5.18%，5Y TIPS 2.14%，10Y TIPS 2.40%，30Y TIPS 2.96%。",
+        "direction": "压力缓和但未解除",
+        "impact": "收益率连续缓和对科技估值有边际帮助，但实际利率仍高，长久期科技资产仍需要盈利和现金流兑现支撑。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.10 / Dollar",
+        "signal": "H.10当前页最新发布日为2026-08-03，显示Broad dollar index约119.7034，人民币约6.7509，日元约159.1600。",
+        "direction": "宽松观察",
+        "impact": "美元仍较前期高位缓和，对非美科技链和成长估值有边际帮助，但需要与真实利率同步下行才足以降级流动性压力。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "最新可用H.4.1为2026-07-30发布/2026-07-29数据：准备金余额US$2.984570tn，周降US$77.579bn、同比降US$362.844bn；TGA周平均约US$910.776bn。",
+        "direction": "压力",
+        "impact": "准备金下降和TGA偏高说明系统流动性尚未转为顺风；需要下一份H.4.1确认是否修复。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "US market yields",
+        "signal": "AP报道周三10Y市场收益率约4.61%，低于周二约4.66%，与Fed H.15边际缓和方向一致。",
+        "direction": "宽松观察",
+        "impact": "若下一行H.15继续确认下行，Liquidity可从Stress转为Tightening观察；当前仍保持Stress。",
+        "confidence": "Medium",
+        "source": "AP market report",
+        "url": "https://apnews.com/article/53179dc1c0148c5afeb47379b8f5b5c5"
+      },
+      {
+        "entity": "PBOC open-market operations",
+        "signal": "财联社报道2026-08-06中国央行进行10亿元7天期逆回购操作，操作利率1.40%，因当日有2705亿元逆回购到期，净回笼约2695亿元。需以后续央行公告和资金利率验证。",
+        "direction": "中性偏紧",
+        "impact": "对A/H成长估值不是宽松顺风；若连续净回笼且资金利率上行，会压制高估值科技股。",
+        "confidence": "Medium",
+        "source": "财联社",
+        "url": "https://www.cls.cn/detail/2109793"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化模块从Bullish降为Mixed。官方CapEx和订单证据仍偏强，尤其是SpaceX、AMD、Palantir；但午间市场反馈和中美两用物项出口管制说明催化不再单边。真正可跟踪的是卖铲环节：算力芯片、服务器、液冷电力、光互连、AI软件、卫星制造、发射和地面终端；回避只靠远期故事、高CapEx但现金流弱的终端资产。",
+    "items": [
+      {
+        "event": "SpaceX Q2官方结果和SEC 10-Q",
+        "affected_chain": "商业航天、AI数据中心、卫星通信、发射服务、地面终端、测控、电力热控",
+        "direction": "利好但分化",
+        "winners": "AI服务器、GPU/网络、液冷供配电、卫星制造、通信载荷、地面终端、测控、发射配套和热控材料",
+        "losers": "高CapEx、高债务、亏损扩大、收入转现金慢的商业航天终端资产",
+        "evidence": "官方确认 / SEC filing",
+        "confidence": "High",
+        "source": "SpaceX Q2 2026 Results / SEC 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm"
+      },
+      {
+        "event": "AMD Q2官方结果和MI350/Helios推进",
+        "affected_chain": "AI GPU、HBM、服务器CPU、整机ODM、液冷、电源、高速互连",
+        "direction": "利好但高预期",
+        "winners": "有交付能力、毛利率韧性和客户订单验证的AI硬件卖铲环节",
+        "losers": "只有AI标签但缺少订单、交付和毛利率验证的二线硬件资产",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "event": "Palantir Q2官方结果",
+        "affected_chain": "企业AI软件、数据平台、模型运营、政企AI部署",
+        "direction": "利好",
+        "winners": "有TCV/RPO、客户扩张、利润率和自由现金流验证的AI软件平台",
+        "losers": "AI标签重但合同、收入和现金流不足的软件公司",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Palantir SEC Exhibit 99.1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+      },
+      {
+        "event": "中国对美国相关无人机等两用物项出口管制",
+        "affected_chain": "无人机、传感器、导航、通信链、飞控、复合材料、商业航天两用环节",
+        "direction": "利空/合规风险",
+        "winners": "内需替代、合规完备、供应链自主可控环节可能受益于国产化逻辑",
+        "losers": "依赖对美出口、关键物项许可不确定、客户或收入暴露较高的无人机与两用供应链公司",
+        "evidence": "官方公告",
+        "confidence": "High",
+        "source": "MOFCOM",
+        "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html"
+      },
+      {
+        "event": "Nvidia相对受益、AMD和SpaceX市场承压",
+        "affected_chain": "AI GPU、ASIC、AI服务器、数据中心网络、光互连",
+        "direction": "分化",
+        "winners": "直接承接大客户AI芯片需求且供需紧张的核心供应商",
+        "losers": "高预期、短期盈利承压或客户结构被重新定价的硬件公司",
+        "evidence": "媒体报道 / 市场反馈",
+        "confidence": "Medium",
+        "source": "AP market report",
+        "url": "https://apnews.com/article/53179dc1c0148c5afeb47379b8f5b5c5"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "商业航天卖铲链",
+      "verified_direct": "无直接A/H公司映射；SpaceX官方文件只验证海外商业航天和AI基础设施需求，不等于A/H公司订单。",
+      "inferred": "卫星制造、通信载荷、地面终端、测控系统、发射配套、热控材料、精密制造、电源管理和复合材料是更偏卖铲方向。",
+      "risk": "商业航天终端收入增长不等于利润改善；高CapEx、亏损、融资、出口管制和客户认证会压制兑现速度。"
+    },
+    {
+      "theme": "AI算力硬件卖铲链",
+      "verified_direct": "无直接A/H公司映射；不使用历史股价表现作为依据。",
+      "inferred": "AI GPU/HBM、服务器CPU/ASIC、AI服务器整机、液冷、电源、机柜、高速互连、先进封装和高端PCB/基板仍是主线。",
+      "risk": "海外官方财报验证需求方向，不等于A股单家公司直接订单；需等公告、客户验证、订单和毛利率。"
+    },
+    {
+      "theme": "数据中心电力与冷却",
+      "verified_direct": "无直接A/H公司映射；只确认海外hyperscaler、SpaceX和AI硬件厂商CapEx方向。",
+      "inferred": "UPS、配电、液冷、热管理、机柜、电源模块和数据中心工程服务受益于CapEx扩张。",
+      "risk": "若Fed长端和实际利率维持高位，高CapEx链条的估值弹性会被融资成本和折现率压制。"
+    },
+    {
+      "theme": "AI软件与企业数据平台",
+      "verified_direct": "Palantir为海外官方验证样本；无直接A/H公司映射。",
+      "inferred": "企业AI软件、数据平台、模型运营、政企AI部署和行业AI应用可以作为硬件CapEx向软件收入扩散的观察方向。",
+      "risk": "只看AI标签不够，必须看TCV/RPO、客户数、收入确认、利润率和自由现金流。"
+    },
+    {
+      "theme": "无人机与两用物项管制链",
+      "verified_direct": "商务部公告是政策层面的直接证据，但未直接指向A/H单家公司订单变化。",
+      "inferred": "无人机整机、传感器、导航、通信链、飞控、复合材料和两用航天零部件需要按出口许可、客户结构和内需替代分层。",
+      "risk": "政策管制既可能强化国产替代，也可能压制外销收入；不能简单当作利好。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "SpaceX Q2官方文件细读和市场消化",
+      "why": "确认AI capex、商业航天backlog、debt、loss、cash、Starlink/AI revenue、供应商和高CapEx对现金流的影响。"
+    },
+    {
+      "item": "Fed H.15下一行和H.4.1新发布",
+      "why": "若10Y、30Y、TIPS实际收益率继续下行且准备金修复，Liquidity才可能从Stress切到Tightening观察。"
+    },
+    {
+      "item": "AMD 10-Q与电话会细节",
+      "why": "核验MI350/Helios客户、订单可见度、HBM约束、gross margin和data-center收入转换。"
+    },
+    {
+      "item": "Supermicro FY2026 Q4正式结果",
+      "why": "验证初步披露的>US$60bn新订单、收入确认、毛利率、交付能力、客户集中和审计风险。"
+    },
+    {
+      "item": "Amazon正式CapEx口径",
+      "why": "10-Q确认H1现金CapEx US$96.3bn，但媒体所称US$220bn全年CapEx未见10-Q直接确认。"
+    },
+    {
+      "item": "商务部无人机等两用物项出口管制后续",
+      "why": "跟踪许可证、实体名单、执行细则、公司公告和对无人机/商业航天供应链的订单影响。"
+    },
+    {
+      "item": "光通信和高速互连链正式指引",
+      "why": "市场继续关注AI网络链，但需要区分真实订单、数据中心收入、800G/1.6T/CPO进度和预期过满风险。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SpaceX Reports Second Quarter 2026 Results",
+      "url": "https://s21.q4cdn.com/184289198/files/doc_financials/2026/q2/SpaceX-Reports-Second-Quarter-2026-Results.pdf",
+      "used_for": "CapEx / Tech catalyst / Commercial space",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "SpaceX Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+      "used_for": "CapEx / Tech catalyst / Commercial space",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "Federal Reserve H.10 Foreign Exchange Rates",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "AP market report on August 5, 2026",
+      "url": "https://apnews.com/article/53179dc1c0148c5afeb47379b8f5b5c5",
+      "used_for": "Tech catalyst / Liquidity",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "MOFCOM announcement on export controls for US-related drone and dual-use items",
+      "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_74835ca289b5463f9c36cb983b689dba.html",
+      "used_for": "Tech catalyst / Export control",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "AMD Reports Second Quarter 2026 Financial Results",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-05"
+    },
+    {
+      "title": "Palantir Q2 2026 SEC Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Amazon Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "Microsoft FY2026 Q4 Earnings Release",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "used_for": "CapEx",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Meta Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+      "used_for": "CapEx",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "Supermicro FY2026 Q4 Preliminary Business Update",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-01"
+    },
+    {
+      "title": "PBOC open-market operation report via CLS",
+      "url": "https://www.cls.cn/detail/2109793",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-06"
+    }
+  ]
+}

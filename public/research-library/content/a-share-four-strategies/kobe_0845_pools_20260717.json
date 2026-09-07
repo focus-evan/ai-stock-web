@@ -1,0 +1,30 @@
+﻿{
+    "limitup":  {
+                    "rc":  204,
+                    "rt":  1,
+                    "svr":  177618277,
+                    "lt":  2,
+                    "full":  1,
+                    "data":  null
+                },
+    "broken":  {
+                   "rc":  204,
+                   "rt":  1,
+                   "svr":  177618278,
+                   "lt":  2,
+                   "full":  1,
+                   "data":  null
+               },
+    "limitdown":  {
+                      "rc":  204,
+                      "rt":  1,
+                      "svr":  177618783,
+                      "lt":  2,
+                      "full":  1,
+                      "data":  null
+                  },
+    "yesterday":  {
+                      "error":  "远程服务器返回错误: (404) 未找到。",
+                      "url":  "https://push2ex.eastmoney.com/getTopicYesterdayZTPool?ut=7eea3edcaed734bea9cbfc24409ed989\u0026dpt=wz.ztzt\u0026Pageindex=0\u0026pagesize=10000\u0026sort=fbt:asc\u0026date=20260716"
+                  }
+}

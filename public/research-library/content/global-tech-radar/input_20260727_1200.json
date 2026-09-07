@@ -1,0 +1,420 @@
+{
+  "generated_at_beijing": "2026-07-27 12:00",
+  "run_label": "12:00 noon",
+  "headline": "Red未解除：AI CapEx继续扩张，但Fed实际利率升至2.43%、Nasdaq周跌2.1%，高估值科技仍先防守",
+  "top_conclusion": "本轮维持Red。CapEx端仍是Expansion：AMD AAI 2026、Helios、Anthropic/OpenAI/Meta/Microsoft/Oracle生态，Alphabet Q2 CapEx与Cloud收入，Intel DCAI/Foundry修复，以及GE Vernova电力设备订单与backlog共同说明AI数据中心投资没有降温。压制项在流动性和市场价格：Fed H.15最新官方数据把10Y Treasury推到4.71%、10Y TIPS实际利率推到2.43%，H.4.1准备金仍低于去年同期，AP报道Nasdaq周跌2.1%、科技估值仍受Alphabet/Tesla和高CapEx现金流压力影响。周五Brent从102美元附近回落到96.78美元、收益率边际回落，但这只是压力缓和，不是转宽松确认；操作上继续只保留官方订单、现金流能承受、供应链兑现清楚的AI基础设施链，避免追高远期叙事。",
+  "overall_gate": "Red",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "继续防守优先：只参与官方客户、明确CapEx、真实订单/backlog、云AI收入、现金流可解释的强验证链；降低高估值、负FCF、重融资、油价/利率敏感和只靠发布会预期的方向。",
+    "positive": "最大正反馈仍是AI基础设施真实扩张：AMD Helios/AAI 2026进入GW级rack-scale叙事，Alphabet Q2 CapEx 449.24亿美元，Intel DCAI +59%，GE Vernova订单242亿美元、backlog环比增130亿美元，说明算力、电力、网络、液冷、服务器和先进封装链仍有需求。",
+    "risk": "最大压制项是折现率与现金流纪律：Fed H.15 10Y升至4.71%、10Y TIPS实际利率升至2.43%；AP显示Nasdaq周跌2.1%，Alphabet/Tesla财报后的负FCF和高CapEx压力仍没消化完。",
+    "next": "下一步看7月29日FOMC、7月31日PCE、Microsoft/Meta/Amazon/Apple本周财报、Fed H.15/H.10是否缓和，以及AMD/GE Vernova/Intel订单是否转化为具体供应商和交付节奏。"
+  },
+  "top_changes": [
+    {
+      "title": "Fed官方实际利率继续上行，Stress未解除",
+      "fact": "Fed H.15最新显示2026-07-23数据：effective fed funds 3.63%，2Y Treasury 4.37%，10Y Treasury 4.71%，10Y TIPS实际利率2.43%；H.4.1显示截至7月22日准备金余额3.062149万亿美元，同比少3001.28亿美元。",
+      "impact": "长端利率和实际利率继续压制长久期科技估值；即使AI CapEx强，也不支持无差别转Green或追高。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15 / H.4.1",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "周五市场略修复，但Nasdaq全周仍下跌",
+      "fact": "AP报道2026-07-24美股收盘S&P 500微涨不足0.1%，Dow +0.5%，Nasdaq -0.6%；全周S&P 500 -0.6%、Dow -0.4%、Nasdaq -2.1%。Brent从此前102美元附近回落约4%至96.78美元，10Y收益率周五边际回落。",
+      "impact": "流动性压力有短线缓和，但科技风险偏好没有修复到可转Orange/Green；高估值AI链仍需要等待周内FOMC/PCE和巨头财报确认。",
+      "confidence": "High",
+      "source": "Associated Press",
+      "url": "https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b"
+    },
+    {
+      "title": "强就业进一步削弱降息交易",
+      "fact": "美国劳工部2026-07-24公布，截至7月18日当周初请失业金人数18.7万人，较前值减少2.2万人，四周均值20.75万人；AP称这是1969年以来最低水平，并报道交易员对下周Fed加息的隐含概率约38%。",
+      "impact": "就业韧性让Fed更难转鸽，科技成长股的折现率压力仍在；FOMC前不宜把油价回落当作全面宽松。",
+      "confidence": "High",
+      "source": "U.S. Department of Labor / AP",
+      "url": "https://www.dol.gov/ui/data.pdf"
+    },
+    {
+      "title": "AI数据中心电力链新增一手确认：GE Vernova订单与backlog上修",
+      "fact": "GE Vernova 2026-07-24官方Q2显示订单242亿美元，同比有机增长88%，backlog环比增加130亿美元；公司将2026自由现金流指引从65-75亿美元上修至115-125亿美元，并称gas backlog和slot reservations从100GW升至116GW，年底至少125GW。",
+      "impact": "AI数据中心从GPU/服务器扩散到电力卖铲人：燃机、电网设备、电气化、UPS、变压器、配电、并网和施工链继续受益。",
+      "confidence": "High",
+      "source": "GE Vernova IR",
+      "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
+    },
+    {
+      "title": "政策端开始把AI数据中心电力成本显性化",
+      "fact": "White House 2026-07-25发布Ratepayer Protection Pledge，称超过200家公用事业、数据中心开发商和其他企业参与，覆盖约80%美国供电与2.63亿消费者，目标是让数据中心运营商承担新增发电、输电和本地基础设施成本，并点名部分Google、Oracle、Amazon、Meta相关电力安排。",
+      "impact": "中长期利好电力基础设施订单，但也说明AI数据中心CapEx的电力约束和成本分摊会被政策显性化，云厂商FCF/ROI验证门槛更高。",
+      "confidence": "Medium",
+      "source": "White House",
+      "url": "https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。AMD AAI/Helios、Alphabet Q2、Intel DCAI/Foundry、Meta 5GW、TSMC/ASML上修、Supermicro订单与GE Vernova电力backlog共同确认AI基础设施投资仍在扩张。当前风险不是需求消失，而是市场要求CapEx必须有客户、现金流、融资成本和电力交付闭环。",
+    "items": [
+      {
+        "entity": "AMD / Helios / Advancing AI 2026",
+        "signal": "AMD在AAI 2026发布full-stack agentic AI portfolio和Helios rack-scale系统，披露OpenAI预计2026Q4开始上线Helios并在2027年加速部署，Meta正在验证EPYC平台并测试Helios racks，Anthropic、Microsoft、Oracle等也在生态中。",
+        "direction": "扩张/官方生态确认",
+        "impact": "利好AMD GPU、EPYC CPU、HBM4、先进封装、AI服务器、Pensando NIC/DPU、高速网络、电源、液冷和数据中心工程。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era"
+      },
+      {
+        "entity": "AMD / Anthropic",
+        "signal": "AMD官方披露Anthropic计划从2026年开始部署最高2GW的AMD Instinct MI450/MI455X系列GPU，双方将用Claude加速AMD软件和ROCm优化。",
+        "direction": "上修/官方客户确认",
+        "impact": "这是客户级GW需求确认，利好AMD GPU生态、HBM/封装、整机、网络、电源和液冷。",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus"
+      },
+      {
+        "entity": "Alphabet / Google Cloud",
+        "signal": "Q2 2026官方SEC披露：收入1197.96亿美元，同比+24%；Google Cloud收入247.68亿美元，同比+82%；Q2 purchases of property and equipment为449.24亿美元，YTD为805.98亿美元；Q2 FCF为-58.55亿美元。",
+        "direction": "CapEx扩张但FCF承压",
+        "impact": "利好云AI、TPU/ASIC、服务器、网络、电力、冷却和数据中心建设；负FCF提高估值纪律。",
+        "confidence": "High",
+        "source": "Alphabet SEC",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm"
+      },
+      {
+        "entity": "GE Vernova",
+        "signal": "Q2 2026订单242亿美元，同比有机增长88%，backlog环比增加130亿美元；2026自由现金流指引上修至115-125亿美元；gas backlog和slot reservations升至116GW，预计年底至少125GW。",
+        "direction": "上修/电力链一手确认",
+        "impact": "利好AI数据中心电力卖铲人：燃机、电气化、电网设备、变压器、UPS、配电、并网工程和施工链。",
+        "confidence": "High",
+        "source": "GE Vernova IR",
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
+      },
+      {
+        "entity": "Intel",
+        "signal": "Q2 2026官方财报：收入161亿美元同比+25%，Data Center and AI收入63亿美元同比+59%，Foundry收入58亿美元同比+31%；管理层称将增加设备、洁净室和substrates投资。",
+        "direction": "扩张/结构改善",
+        "impact": "利好服务器CPU、AI推理、先进封装、foundry、substrate、半导体设备和洁净室建设；但GAAP亏损和资产负债表仍需跟踪。",
+        "confidence": "High",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "entity": "Tesla",
+        "signal": "Q2 2026官方更新：收入282.36亿美元，同比+26%；CapEx 57.89亿美元，同比+142%；FCF -10.92亿美元；现金和短投环比减少12亿美元至435.24亿美元；Texas onsite compute上半年MW口径翻倍。",
+        "direction": "高CapEx但现金流承压",
+        "impact": "机器人、自动驾驶、AI训练、储能和半导体制造有长期拉动，但短期压制高CapEx远期叙事和汽车链估值。",
+        "confidence": "High",
+        "source": "Tesla IR",
+        "url": "https://ir.tesla.com/_flysystem/s3/sec/000162828026049213/tsla-20260722-gen.pdf"
+      },
+      {
+        "entity": "Supermicro",
+        "signal": "FY2026 Q4初步更新显示营收接近110-125亿美元指引低端，GAAP/non-GAAP gross margin预计15%-17%，截至6月30日积压订单创纪录，未来几个季度新订单超过600亿美元。",
+        "direction": "订单扩张但最终业绩待确认",
+        "impact": "利好AI服务器整机、GPU/ASIC平台、液冷、电源、线缆、PCB/CCL和高速网络；调查与最终Q4仍需验证。",
+        "confidence": "High",
+        "source": "Supermicro / Business Wire",
+        "url": "https://www.businesswire.com/news/home/20260721109492/en/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update"
+      },
+      {
+        "entity": "TSMC / ASML",
+        "signal": "TSMC 2026资本预算上调至600-640亿美元；ASML Q2 2026将全年净销售展望上调至430-450亿欧元。",
+        "direction": "上修/设备链确认",
+        "impact": "利好先进制程、CoWoS/先进封装、EUV/DUV设备、材料、晶圆厂自动化和高端零部件。",
+        "confidence": "High",
+        "source": "TSMC IR / ASML IR",
+        "url": "https://investor.tsmc.com/english/quarterly-results/2026/q2"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Liquidity模块维持Stress。官方数据仍偏硬：Fed H.15显示长端和实际利率再上行，H.4.1准备金同比显著回落，H.10美元仍在120上方；DOL初请低位强化就业韧性，AP显示Fed下周加息概率被重新定价。周五油价与收益率回落只能算压力缓和，不能算流动性转宽。",
+    "items": [
+      {
+        "entity": "Fed H.15 / US 10Y / real yield",
+        "signal": "2026-07-24发布的2026-07-23数据：effective fed funds 3.63%，2Y Treasury 4.37%，10Y Treasury 4.71%，10Y TIPS real yield 2.43%。",
+        "direction": "压力",
+        "impact": "实际利率继续上行，压缩长久期科技估值，尤其打击负FCF、高估值、高融资需求的AI方向。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.4.1 / reserve balances",
+        "signal": "截至2026-07-22一周，Reserve balances with Federal Reserve Banks为3.062149万亿美元，较7月15日减少805.72亿美元，较2025年同期减少3001.28亿美元。",
+        "direction": "压力",
+        "impact": "准备金回落削弱短期美元流动性缓冲；AI CapEx融资成本和科技估值仍受压。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/h41.htm"
+      },
+      {
+        "entity": "Fed H.10 / Broad dollar",
+        "signal": "Fed H.10最新周度数据截至7月17日，美元广义指数为120.5315，仍在120上方；人民币6.7760，日元162.43。",
+        "direction": "高位/收紧",
+        "impact": "美元高位压制非美流动性，A/H科技链映射需要折价处理。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "US labor market / DOL UI claims",
+        "signal": "截至2026-07-18当周初请失业金18.7万人，较前周减少2.2万人；四周均值20.75万人，续请179.6万人。",
+        "direction": "收紧/不利降息",
+        "impact": "就业韧性增加Fed维持高利率或再加息的空间，科技成长股折现率压力未解除。",
+        "confidence": "High",
+        "source": "U.S. Department of Labor",
+        "url": "https://www.dol.gov/ui/data.pdf"
+      },
+      {
+        "entity": "ECB",
+        "signal": "2026-07-23维持deposit facility 2.25%、main refinancing operations 2.40%、marginal lending facility 2.65%不变，且APP/PEPP组合继续下降。",
+        "direction": "无宽松确认",
+        "impact": "欧洲没有提供新增流动性缓冲，全球科技估值仍主要受美元利率约束。",
+        "confidence": "High",
+        "source": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html"
+      },
+      {
+        "entity": "Brent / market variables",
+        "signal": "AP报道7月24日Brent回落约4%至96.78美元，10Y收益率周五边际回落；但Nasdaq当日仍跌0.6%、全周跌2.1%。",
+        "direction": "压力缓和但未转宽松",
+        "impact": "油价回落降低短线通胀压力，但科技风险偏好仍未修复。",
+        "confidence": "High",
+        "source": "Associated Press",
+        "url": "https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Tech Catalysts模块为Mixed。正催化是AI算力和电力链订单更实：AMD Helios生态、Alphabet Cloud、Intel DCAI、GE Vernova电力backlog。负催化是市场对高CapEx/负FCF的估值惩罚仍在，政策端开始强调数据中心用电成本由运营商承担，FOMC/PCE和巨头财报前不能放松风险门槛。",
+    "items": [
+      {
+        "event": "AMD Helios/AAI 2026 official ecosystem expansion",
+        "affected_chain": "AI GPU、HBM4、先进封装、AI服务器、网络、电源、液冷",
+        "direction": "利好",
+        "winners": "AMD生态、服务器OEM/ODM、高速网络、HBM/封装、电力与液冷、数据中心工程",
+        "losers": "仅靠单一GPU垄断预期且估值过满的方向；没有客户验证的AI替代链",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "AMD IR",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era"
+      },
+      {
+        "event": "GE Vernova power backlog and guidance raise",
+        "affected_chain": "燃机、电网设备、电气化、变压器、UPS、配电、并网工程",
+        "direction": "利好",
+        "winners": "数据中心电力卖铲人、燃机、变压器、开关设备、UPS、电网自动化、施工与并网服务",
+        "losers": "无法转嫁电力成本的云厂商和高耗能数据中心项目；低效率电源/散热方案",
+        "evidence": "官方财报",
+        "confidence": "High",
+        "source": "GE Vernova IR",
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
+      },
+      {
+        "event": "White House Ratepayer Protection Pledge",
+        "affected_chain": "AI数据中心、电力公用事业、输配电、发电、云CapEx",
+        "direction": "结构分化",
+        "winners": "电力基础设施、并网工程、发电设备、储能、用电效率与液冷优化方向",
+        "losers": "电力成本不可控、无长期PPA/自备电方案、FCF薄弱的数据中心运营商",
+        "evidence": "政府官方发布，部分企业安排仍需公司公告验证",
+        "confidence": "Medium",
+        "source": "White House",
+        "url": "https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/"
+      },
+      {
+        "event": "Alphabet/Tesla negative FCF discipline",
+        "affected_chain": "云AI、自动驾驶、机器人、储能、服务器、电力链",
+        "direction": "利好需求但利空估值纪律",
+        "winners": "有订单、有现金流、有供应链兑现的硬件和电力卖铲人",
+        "losers": "负FCF、高融资、高估值且只有远期故事的AI应用/平台/汽车链方向",
+        "evidence": "官方财报 + 市场反应",
+        "confidence": "High",
+        "source": "Alphabet SEC / Tesla IR / AP",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm"
+      },
+      {
+        "event": "FOMC/PCE/hyperscaler earnings cluster this week",
+        "affected_chain": "全球科技估值、云CapEx、AI服务器、电力链、软件AI",
+        "direction": "待验证/高波动",
+        "winners": "若Microsoft/Meta/Amazon给出明确CapEx和ROI闭环，强验证链会受益",
+        "losers": "若FOMC/PCE偏鹰或巨头CapEx带来更多FCF压力，高估值AI链继续承压",
+        "evidence": "官方日程/事件窗口，结论待发布",
+        "confidence": "High",
+        "source": "Microsoft IR / Meta IR / Amazon IR",
+        "url": "https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4.aspx"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI服务器/液冷/电源/高速网络",
+      "verified_direct": "无直接映射：本轮官方信息直接点名AMD、Alphabet、Tesla、Intel、GE Vernova、Meta、Supermicro等海外主体，未见A/H公司被官方列为供应商。",
+      "inferred": "推断受益方向包括AI服务器ODM/OEM、高速PCB/CCL、连接器/线缆、电源、UPS、液冷、机房工程、光/电互联、交换机和数据中心电力设备。",
+      "risk": "只有A/H公司公告客户、订单、认证、出货或收入占比时才能升级为直接相关；否则只作为产业链方向。"
+    },
+    {
+      "theme": "数据中心电力卖铲人",
+      "verified_direct": "无直接A/H公司映射；GE Vernova和White House信息是海外电力链官方/政策确认。",
+      "inferred": "推断受益方向包括变压器、开关设备、UPS、储能、燃机配套、电网自动化、配电、并网施工、液冷节能和电力运维。",
+      "risk": "电力链受益需要看国内/海外订单、认证、出口资质和毛利兑现；政策强调成本由运营商承担，也可能压缩云厂商FCF。"
+    },
+    {
+      "theme": "HBM4/先进封装/半导体设备/substrate",
+      "verified_direct": "无直接映射：AMD Helios、Intel投资和TSMC/ASML上修不能自动等同于A/H上市公司订单。",
+      "inferred": "推断受益方向包括先进封装设备/材料、测试、HBM配套材料、基板、半导体设备零部件、晶圆厂自动化和洁净室工程。",
+      "risk": "出口管制、客户认证、国产替代进度、良率和估值拥挤度是主要边界。"
+    },
+    {
+      "theme": "高CapEx现金流压力",
+      "verified_direct": "无直接公司映射。",
+      "inferred": "Alphabet和Tesla负FCF、高实际利率提醒A/H科技中重资产、重融资、无订单兑现的方向估值应降权。",
+      "risk": "若国内政策或流动性短期转强，情绪可反弹，但不能替代现金流和订单验证。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "2026-07-29 FOMC决定与发布会",
+      "why": "判断Fed是否确认加息/高利率更久；这是Red能否降回Orange的核心。"
+    },
+    {
+      "item": "2026-07-31 PCE通胀",
+      "why": "验证油价和关税/能源冲击是否进入核心通胀；若偏热，科技估值继续承压。"
+    },
+    {
+      "item": "Microsoft、Meta、Amazon、Apple本周财报",
+      "why": "核实hyperscaler CapEx、cloud backlog/RPO、AI收入、FCF和折旧压力；决定CapEx Expansion是否继续被市场买单。"
+    },
+    {
+      "item": "Fed H.15/H.10后续更新",
+      "why": "跟踪10Y、10Y TIPS实际利率和美元是否从Stress区间回落。"
+    },
+    {
+      "item": "AMD Helios订单转化",
+      "why": "确认OpenAI/Anthropic/Meta/Microsoft/Oracle/HUMAIN部署量、交付节奏、OEM/ODM供应商、电力和液冷需求。"
+    },
+    {
+      "item": "GE Vernova数据中心电力订单细节",
+      "why": "识别AI数据中心电力卖铲人的客户结构、GW/MW规模、交付周期和利润率。"
+    },
+    {
+      "item": "Intel 10-Q和foundry现金流",
+      "why": "确认新增设备、洁净室和substrate投资如何影响CapEx、债务、政府补贴和外部客户订单。"
+    },
+    {
+      "item": "Supermicro最终FY2026 Q4结果与调查进展",
+      "why": "验证初步订单、毛利率、现金转换、客户集中度和出口管制调查。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/h41.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "Federal Reserve H.10 Foreign Exchange Rates",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-20"
+    },
+    {
+      "title": "U.S. Department of Labor - Unemployment Insurance Weekly Claims",
+      "url": "https://www.dol.gov/ui/data.pdf",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "AP - US stocks waver as oil prices ease and week closes mixed",
+      "url": "https://apnews.com/article/02d01b8f38ccd51f605c4414cdd4fa9b",
+      "used_for": "Liquidity / market reaction",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "GE Vernova Reports Second Quarter 2026 Financial Results",
+      "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-24"
+    },
+    {
+      "title": "White House - Ratepayer Protection Pledge Secures American AI Dominance",
+      "url": "https://www.whitehouse.gov/releases/2026/07/president-trumps-ratepayer-protection-pledge-secures-american-ai-dominance-protects-consumers/",
+      "used_for": "Tech catalyst / policy",
+      "published_at": "2026-07-25"
+    },
+    {
+      "title": "AMD AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "AMD and Anthropic Strategic Partnership to Deploy up to 2GW of AMD Instinct GPUs",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-22"
+    },
+    {
+      "title": "Alphabet Q2 2026 Results - SEC Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-22"
+    },
+    {
+      "title": "Tesla Q2 2026 Update / Form 8-K",
+      "url": "https://ir.tesla.com/_flysystem/s3/sec/000162828026049213/tsla-20260722-gen.pdf",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-22"
+    },
+    {
+      "title": "Intel Reports Second-Quarter 2026 Financial Results",
+      "url": "https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "European Central Bank Monetary Policy Decisions",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-07-23"
+    },
+    {
+      "title": "Supermicro Provides Fourth Quarter of Fiscal Year 2026 Preliminary Business Update",
+      "url": "https://www.businesswire.com/news/home/20260721109492/en/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-07-21"
+    },
+    {
+      "title": "Microsoft FY2026 Q4 Earnings Event",
+      "url": "https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4.aspx",
+      "used_for": "Watchlist",
+      "published_at": "scheduled 2026-07-29"
+    },
+    {
+      "title": "Meta Q2 2026 Earnings Event",
+      "url": "https://investor.atmeta.com/investor-events/event-details/2026/Meta-Q2-2026-Earnings/default.aspx",
+      "used_for": "Watchlist",
+      "published_at": "scheduled 2026-07-29"
+    },
+    {
+      "title": "Amazon Q2 2026 Earnings Event",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon.com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx",
+      "used_for": "Watchlist",
+      "published_at": "scheduled 2026-07-30"
+    }
+  ]
+}

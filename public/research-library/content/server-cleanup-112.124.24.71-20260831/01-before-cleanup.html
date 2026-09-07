@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>01 优化前服务器情况｜112.124.24.71</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">112.124.24.71 优化方案</a><span>/</span><strong>优化前情况</strong></div><div>快照：2026-08-31 11:38 CST</div></div>
+  <header class="hero red"><div class="eyebrow">CHAPTER 01 · BEFORE</div><h1>优化前服务器情况</h1><p>记录开始操作前的资源、运行容器、活跃 Dify 数据、重复回收副本和不能直接轮转的 Docker 日志。</p><div class="tags"><span>根盘 92%</span><span>13 个容器全部运行</span><span>Docker 约 50 GiB</span><span>旧平台生产数据</span></div></header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a class="active" href="01-before-cleanup.html">01 优化前情况</a><a href="02-manual-cleanup-guide.html">02 清理操作</a><a href="03-after-cleanup.html">03 优化后情况</a><a href="04-data-disk-activation.html">04 ESSD数据盘</a><a href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status red"><span class="pill red">高风险</span><div><strong>根分区使用率 92%，仅剩约 10.6 GiB。</strong> 当前13个容器全部运行，不能照搬“删除停用容器”的方案；必须只清理无引用镜像、缓存和确认重复的回收站副本。</div></div>
+
+  <section>
+    <h2>资源总览</h2><p class="section-note">内存和 CPU 正常，主要问题是根盘容量。</p>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘 /</div><div class="value danger">92%</div><div class="track"><div class="fill red" style="width:92%"></div></div><div class="sub">约 126 GiB，可用 10.6 GiB</div></div>
+      <div class="card metric"><div class="label">内存</div><div class="value good">约 17.9 GiB</div><div class="track"><div class="fill green" style="width:59%"></div></div><div class="sub">总计约 30 GiB，无 Swap</div></div>
+      <div class="card metric"><div class="label">CPU 负载</div><div class="value good">0.10 / 0.20 / 0.24</div><div class="track"><div class="fill green" style="width:8%"></div></div><div class="sub">8 vCPU，当前负载很低</div></div>
+      <div class="card metric"><div class="label">inode</div><div class="value good">20%</div><div class="track"><div class="fill green" style="width:20%"></div></div><div class="sub">不是小文件数量问题</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>根盘主要占用</h2>
+    <div class="table-wrap"><table><thead><tr><th>目录</th><th>占用</th><th>判断</th></tr></thead><tbody>
+      <tr><td><code>/var/lib/docker</code></td><td><strong>约 50.1 GiB</strong></td><td>镜像、构建缓存与运行容器日志。</td></tr>
+      <tr><td><code>/dify</code></td><td><strong>约 23.6 GiB</strong></td><td>Dify 1.7.1 活跃生产目录，主要是 PostgreSQL 数据，禁止删除。</td></tr>
+      <tr><td><code>/home/dify15</code></td><td>约 13.5 GiB</td><td>旧 Dify 0.15.3 原始备份，保留。</td></tr>
+      <tr><td><code>/.Recycle_bin</code></td><td><strong>约 12.55 GiB</strong></td><td>2025-08 前的回收副本，无打开句柄、无挂载；最大目录与原始备份文件清单一致。</td></tr>
+      <tr><td><code>/data</code></td><td>约 2.5 GiB</td><td>S5000 / s-ai-agent 模型与应用数据，运行容器正在引用。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Docker 占用与运行边界</h2>
+    <div class="grid two">
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>清理前</th><th>可回收</th></tr></thead><tbody>
+        <tr><td>镜像</td><td>73 个 / 33.18 GB</td><td><strong>27.87 GB</strong></td></tr>
+        <tr><td>Build cache</td><td>184 项 / 9.047 GB</td><td><strong>9.047 GB</strong></td></tr>
+        <tr><td>容器</td><td>13 个，全部 active</td><td>0</td></tr>
+        <tr><td>Local volumes</td><td>92 个 / 146.8 MB</td><td>仅 126.6 MB，不值得冒险处理</td></tr>
+      </tbody></table></div>
+      <div class="callout warn"><strong>活跃数据：</strong><code>/dify/dify1.7.1/dify/docker/volumes</code> 约 23 GiB，其中 PostgreSQL 约 22.98 GiB、plugin daemon 约 1.26 GiB、Weaviate 约 214 MiB。它们全部被运行容器挂载。</div>
+    </div>
+    <h3>最大的运行容器 JSON 日志</h3>
+    <div class="table-wrap"><table><thead><tr><th>容器</th><th>日志</th><th>处理边界</th></tr></thead><tbody>
+      <tr><td><code>app_api_1</code></td><td><strong>约 4.0 GiB</strong></td><td>运行中，不直接截断；设置状态告警。</td></tr>
+      <tr><td><code>dify17-api-1</code></td><td>约 1.01 GiB</td><td>运行中，不直接截断。</td></tr>
+      <tr><td><code>dify17-nginx-1</code></td><td>约 588 MiB</td><td>运行中，不直接截断。</td></tr>
+      <tr><td><code>dify17-sandbox-1</code></td><td>约 327 MiB</td><td>运行中，暂未超过告警阈值。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>回收站重复性证据</h2>
+    <ul><li>最大回收目录：12.33 GiB，来源名称指向旧 Dify 0.15.3 volumes。</li><li>与 <code>/home/dify15/dify-0.15.3-back/docker/volumes</code> 均包含 2467 个文件。</li><li>按“相对路径 + 文件大小”排序后的 SHA-256 均为 <code>6a6704d8c51e...171f4</code>。</li><li>回收站最新文件时间为 2025-08-02；无 lsof 打开句柄、无 findmnt 挂载。</li></ul>
+    <div class="callout good"><strong>结论：</strong>可以保留 `/home/dify15/dify-0.15.3-back` 原始备份，同时清理回收站重复副本；操作前仍需生成完整清单。</div>
+  </section>
+  <div class="next-prev"><a href="index.html">← 文档集入口</a><a href="02-manual-cleanup-guide.html">下一章：手动操作手册 →</a></div>
+  <div class="footer">优化前基线 · 112.124.24.71 · 2026-08-31</div>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

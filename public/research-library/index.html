@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="AI Stock 研究与知识库：每日雷达、个股研究、策略复盘、S老师方法论与系统文档。">
+  <title>研究与知识库 · AI Stock</title>
+  <link rel="stylesheet" href="_ui/catalog.css?v=a41842ebb51a">
+  <script type="module" src="_ui/catalog.js?v=935f85c9604d"></script>
+</head>
+<body>
+  <a class="skip-link" href="#results">跳到内容列表</a>
+  <div class="library-shell">
+    <header class="library-topbar">
+      <a class="brand" href="index.html" aria-label="研究与知识库首页"><span class="brand-mark" aria-hidden="true">研</span><span>AI STOCK <span class="brand-divider">/</span> KNOWLEDGE</span></a>
+      <a class="app-link" href="/home" target="_top">返回工作台 <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <section class="library-hero" aria-labelledby="page-title">
+        <div class="hero-copy"><div class="eyebrow">研究 · 记录 · 方法</div><h1 id="page-title">研究与知识库<span>把每一次研究，连成体系。</span></h1><p>从每日市场观察，到公司深度研究与方法沉淀。<br class="desktop-break">你的报告、历史复盘和参考资料，都在这里。</p></div>
+        <div class="library-stats" aria-label="内容统计" id="library-stats"><span>正在载入内容…</span></div>
+      </section>
+      <section class="discovery" aria-label="内容检索">
+        <label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="sr-only">搜索报告</span><input id="search" type="search" placeholder="搜索主题、公司或关键词…" autocomplete="off"><span class="search-hint">标题与正文摘要</span></label>
+        <div id="categories" class="category-list" aria-label="内容分类"></div>
+      </section>
+      <section class="content-section" aria-label="研究资料">
+        <div class="content-toolbar">
+          <div class="view-tabs" role="tablist" aria-label="浏览方式"><button type="button" role="tab" data-view="collections">专题入口</button><button type="button" role="tab" data-view="reports">全部报告</button><button type="button" role="tab" data-view="attachments">资料附件</button></div>
+          <label class="sort-label">排序 <select id="sort"><option value="recent">最近报告</option><option value="title">名称顺序</option></select></label>
+        </div>
+        <div class="result-context"><p id="result-count" aria-live="polite"></p><div class="result-options"><label id="archive-option"><input type="checkbox" id="archives" checked> 包含历史归档</label><button type="button" id="reset" hidden>清除筛选 ×</button></div></div>
+        <div id="collection-context"></div>
+        <div id="results" tabindex="-1"><div class="loading-state" role="status">正在整理你的知识库…</div></div>
+        <nav class="pagination" id="pagination" aria-label="列表分页"></nav>
+      </section>
+    </main>
+    <footer class="library-footer"><p>AI STOCK · 让研究可回看，让方法可积累。</p><div><span id="sync-date"></span><a href="content/index.html">查看原始目录</a></div></footer>
+  </div>
+  <noscript><p>请启用 JavaScript 以使用分类与搜索，或<a href="content/index.html">打开原始报告目录</a>。</p></noscript>
+</body>
+</html>

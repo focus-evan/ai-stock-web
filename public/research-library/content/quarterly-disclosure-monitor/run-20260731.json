@@ -1,0 +1,59 @@
+{
+  "run_time": "2026年7月31日 11:02:11 +08:00",
+  "window_start": "2026-07-25 00:00 +08:00",
+  "window_end": "2026-07-31 11:02 +08:00",
+  "formal_hits": [
+    {
+      "name": "宁德时代-H",
+      "code": "03750",
+      "date": "2026-07-26",
+      "title": "2026 INTERIM REPORT",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0726/2026072600031.pdf",
+      "source": "HKEX"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750",
+      "date": "2026-07-26",
+      "title": "INTERIM RESULTS ANNOUNCEMENT FOR THE SIX MONTHS ENDED JUNE 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0726/2026072600011.pdf",
+      "source": "HKEX"
+    },
+    {
+      "name": "宁德时代",
+      "code": "300750",
+      "date": "2026-07-25",
+      "title": "2026年半年度报告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441586.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "宁德时代",
+      "code": "300750",
+      "date": "2026-07-25",
+      "title": "2026年半年度报告摘要",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441585.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "related_updates": [
+    {
+      "name": "中芯国际",
+      "code": "688981",
+      "date": "2026-07-31",
+      "title": "中芯国际关于召开2026年第二季度业绩说明会的预告公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448405.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 48,
+    "cninfo_watchlist_rows": 67,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260731.html"
+  ]
+}

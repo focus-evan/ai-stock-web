@@ -1,0 +1,35 @@
+﻿{
+  "run_time": "2026-07-06 11:07 +08:00",
+  "window_start": "2026-06-30 00:00 +08:00",
+  "window_end": "2026-07-06 11:07 +08:00",
+  "formal_hits": [],
+  "related_updates": [
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-06-30",
+      "title": "Announcements and Notices - [Results of AGM / Dividend or Distribution] - I. POLL RESULTS OF ANNUAL GENERAL MEETING FOR THE YEAR 2025 HELD ON TUESDAY, JUNE 30, 2026 AND II. DISTRIBUTION OF DIVIDEND",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0630/2026063003025.pdf",
+      "classification": "股东会结果及股息分派，不是半年度/中期业绩。"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-06-30",
+      "title": "Announcements and Notices - [Dividend or Distribution (Announcement Form)] - (UPDATED) Final Dividend for the year ended 31 December 2025",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0630/2026063003073.pdf",
+      "classification": "股息分派表格，不是半年度/中期业绩。"
+    }
+  ],
+  "stats": {
+    "HKEX": "港交所披露易最新 7 天 JSON，lcisehk7relsde_1..8；清单内窗口公告 21 条，正式命中 0 条。",
+    "CNINFO": "巨潮资讯逐代码 hisAnnouncement/query；解析 A 股窗口公告 27 条，orgId 映射 22/22，正式命中 0 条。",
+    "CNINFO_keyword": "半年度报告、中期报告、第二季度报告、半年报、业绩预告、业绩快报、业绩说明会；清单内 watch_hits 均为空。",
+    "SSE": "上交所 queryCompanyBulletin.do，reportType2=DQBG；定期报告行 0 条。",
+    "SZSE": "深交所 annIndex GET；清单内窗口公告行 2 条，未发现正式二季报/半年报标题。"
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260706.html"
+  ]
+}

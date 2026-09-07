@@ -1,0 +1,319 @@
+{
+  "generated_at_beijing": "2026-07-01 07:31",
+  "run_label": "06:00 morning",
+  "headline": "AI CapEx仍强，但流动性和出口合规继续把总闸门压在Orange",
+  "top_conclusion": "本次06:00雷达未见微软、Meta、Alphabet、Amazon或Oracle官方下修AI/数据中心CapEx；Oracle RPO与AI云需求继续验证建设强度，但美国职位空缺/消费者信心推高收益率与美元，叠加AI服务器出口合规风险，科技链只适合看兑现和订单，不适合按主题情绪追高。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Mixed"
+  },
+  "top_changes": [
+    {
+      "title": "Oracle AI云需求仍是新增CapEx确认点",
+      "fact": "Oracle FY2026 Q4官方结果披露截至2026-05-31剩余履约义务约1380亿美元、同比增长41%，公司称2026财年云基础设施收入增长50%；同时披露2026财年自由现金流为负且后续需要大量数据中心投入。",
+      "impact": "利好AI云、服务器、网络、电力、液冷和数据中心工程，但RPO转收入、融资成本和现金流消耗必须继续跟踪。",
+      "confidence": "High",
+      "source": "Oracle Investor Relations",
+      "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+    },
+    {
+      "title": "美国数据让利率压力没有明显缓和",
+      "fact": "2026-06-30公布的美国5月职位空缺高于预期、6月消费者信心回升，市场报道显示10年期美债收益率和美元走强；Fed 6月仍维持3.50%-3.75%目标区间。",
+      "impact": "科技基本面强但估值折现率仍偏高，流动性模块继续Tightening，不能因为AI订单强就把总闸门转绿。",
+      "confidence": "High",
+      "source": "BLS / Federal Reserve / Reuters",
+      "url": "https://www.bls.gov/news.release/jolts.nr0.htm"
+    },
+    {
+      "title": "AI服务器出口合规风险继续压制催化评级",
+      "fact": "Reuters报道台湾检方调查涉嫌通过Supermicro服务器将英伟达H100芯片走私至中国的案件；本次未见Supermicro官方确认重大财务影响，但合规风险已是可验证风险项。",
+      "impact": "对AI服务器整机、ODM、GPU服务器转售和跨境交付链条形成估值折价；A/H映射必须核验客户、区域、订单和合规边界。",
+      "confidence": "Medium",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/taiwan-investigates-possible-nvidia-ai-chip-smuggling-china-2026-06-27/"
+    },
+    {
+      "title": "AI硬件正面催化仍在，但不再单边Bullish",
+      "fact": "OpenAI披露Broadcom定制推理ASIC路线，NVIDIA继续推进Vera Rubin/Spectrum-X Photonics，Micron FY2026 Q3验证AI内存与数据中心SSD需求。",
+      "impact": "AI ASIC、HBM、先进封装、CPO/光互连、交换机、电力、液冷和高端PCB/CCL仍有景气支撑；但出口合规和估值约束使科技催化维持Mixed。",
+      "confidence": "High",
+      "source": "OpenAI / NVIDIA / Micron IR",
+      "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion：四大云厂未见官方下修，Oracle RPO和AI云收入继续提供数据中心建设确认；但现金流、融资和交付节奏是强度能否兑现的约束。",
+    "items": [
+      {
+        "entity": "Microsoft",
+        "signal": "FY2026 Q3官方材料和电话会延续高AI容量投入口径，前期披露Q3资本开支约319亿美元并指向Q4更高支出；本轮未见官方下修。",
+        "direction": "持平偏强",
+        "impact": "AI服务器、GPU、网络、数据中心电力、液冷和建设链继续受益。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Q1 2026官方材料把2026年CapEx指引上调至1250-1450亿美元，AI基础设施仍是核心驱动；本轮未见官方下修。",
+        "direction": "上修后维持",
+        "impact": "训练/推理算力、HBM、AI服务器、数据中心设备、电力和冷却需求增强。",
+        "confidence": "High",
+        "source": "Meta Investor Relations",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Alphabet",
+        "signal": "六月投资者材料继续指向高强度AI技术基础设施投入；本轮未见官方下修数据中心/AI CapEx口径。",
+        "direction": "持平偏强",
+        "impact": "TPU/GPU服务器、数据中心网络、电力、液冷、光互连、PCB/CCL和先进封装需求增强。",
+        "confidence": "High",
+        "source": "Alphabet Investor Relations",
+        "url": "https://abc.xyz/investor/"
+      },
+      {
+        "entity": "Amazon / AWS",
+        "signal": "AWS仍是AI云容量扩张核心观察对象；本轮未见Amazon官方下修AI/数据中心建设口径，媒体端的容量紧张信号仍只作中等置信度交叉验证。",
+        "direction": "持平偏强",
+        "impact": "云算力、Trainium/NVIDIA容量、服务器、存储、网络和电力链条仍有需求支撑。",
+        "confidence": "Medium",
+        "source": "Amazon IR",
+        "url": "https://ir.aboutamazon.com/"
+      },
+      {
+        "entity": "Oracle",
+        "signal": "FY2026 Q4官方结果披露RPO约1380亿美元、同比增长41%，2026财年云基础设施收入增长50%；管理层继续强调AI云需求和数据中心建设。",
+        "direction": "持平偏强",
+        "impact": "AI云租赁、数据中心工程、网络、电力、液冷、服务器集成和融资链条受益；需跟踪RPO转收入与现金流。",
+        "confidence": "High",
+        "source": "Oracle Investor Relations",
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块维持Tightening：Fed未降息，PCE仍偏热，JOLTS与消费者信心增强使收益率和美元不利于长久期科技估值；短线风险偏好改善不能替代实际利率缓和。",
+    "items": [
+      {
+        "entity": "Federal Reserve",
+        "signal": "2026-06-17 FOMC维持联邦基金目标区间3.50%-3.75%。",
+        "direction": "收紧",
+        "impact": "降息确认缺失，高估值科技股贴现率仍受压。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+      },
+      {
+        "entity": "US JOLTS",
+        "signal": "BLS 2026-06-30发布的5月JOLTS显示职位空缺回升至约770万，高于市场预期。",
+        "direction": "压力",
+        "impact": "劳动力市场韧性削弱快速降息叙事，对长久期科技资产估值不友好。",
+        "confidence": "High",
+        "source": "BLS",
+        "url": "https://www.bls.gov/news.release/jolts.nr0.htm"
+      },
+      {
+        "entity": "US PCE / Core PCE",
+        "signal": "BEA数据显示2026年5月PCE和核心PCE仍高于2%目标。",
+        "direction": "压力",
+        "impact": "限制降息空间，科技成长股更依赖业绩兑现。",
+        "confidence": "High",
+        "source": "BEA",
+        "url": "https://www.bea.gov/data/personal-consumption-expenditures-price-index"
+      },
+      {
+        "entity": "US 10Y Treasury / DXY",
+        "signal": "Reuters报道JOLTS和消费者信心公布后10年期美债收益率、美元走强；这与科技估值扩张方向相反。",
+        "direction": "压力",
+        "impact": "AI链订单强也要打估值折扣，不适合单纯按风险偏好追高。",
+        "confidence": "Medium",
+        "source": "Reuters",
+        "url": "https://www.reuters.com/markets/us/"
+      },
+      {
+        "entity": "Bank of England / ECB",
+        "signal": "BOE 6月Bank Rate维持3.75%；欧洲央行口径未形成足以抵消美元利率压力的科技估值顺风。",
+        "direction": "中性偏紧",
+        "impact": "全球流动性未从多央行层面转为支撑科技估值扩张。",
+        "confidence": "Medium",
+        "source": "BOE / ECB",
+        "url": "https://www.bankofengland.co.uk/monetary-policy/the-interest-rate-bank-rate"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化维持Mixed：AI ASIC、Rubin/CPO、Micron AI存储偏多，但出口合规、估值拥挤、云资本开支融资压力和AI应用ROI验证仍是负面约束。",
+    "items": [
+      {
+        "event": "OpenAI与Broadcom Jalapeño推理ASIC",
+        "affected_chain": "AI ASIC、HBM、先进封装、网络、服务器、电力、液冷",
+        "direction": "利好",
+        "winners": "ASIC设计/封测、HBM、先进封装、服务器集成、数据中心电力与液冷",
+        "losers": "长期看，单一依赖通用GPU推理溢价的环节可能受压；短期未见GPU需求官方削弱。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "OpenAI",
+        "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+      },
+      {
+        "event": "NVIDIA Vera Rubin与Spectrum-X Photonics",
+        "affected_chain": "GPU、HBM4、CPO/光互连、交换芯片、液冷、电力、整机柜",
+        "direction": "利好",
+        "winners": "高端GPU/HBM、CPO光引擎、交换机、线缆、液冷、电源和AI机柜集成",
+        "losers": "传统低速网络与低功耗密度数据中心方案。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "NVIDIA Newsroom",
+        "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory"
+      },
+      {
+        "event": "Micron FY2026 Q3验证AI内存/SSD需求",
+        "affected_chain": "HBM、DRAM、NAND、数据中心SSD、AI服务器",
+        "direction": "利好",
+        "winners": "HBM/DRAM/NAND、企业级SSD、存储控制器与AI服务器存储链",
+        "losers": "无AI订单支撑的普通消费存储链条弹性较弱。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Micron IR",
+        "url": "https://investors.micron.com/static-files/631b1a32-5537-46ae-8f40-82e42fc79dfe"
+      },
+      {
+        "event": "台湾调查疑似NVIDIA H100经Supermicro服务器走私至中国",
+        "affected_chain": "AI服务器、GPU整机、跨境ODM、云基础设施交付",
+        "direction": "利空/风险",
+        "winners": "合规体系清晰、客户区域分散、直接订单可验证的供应商",
+        "losers": "依赖灰色转售、受限地区交付或无法清晰证明终端客户的链条环节",
+        "evidence": "媒体报道，未见本次官方财务影响确认",
+        "confidence": "Medium",
+        "source": "Reuters",
+        "url": "https://www.reuters.com/world/asia-pacific/taiwan-investigates-possible-nvidia-ai-chip-smuggling-china-2026-06-27/"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI服务器/整机柜/ODM",
+      "verified_direct": "本次全球事件未直接点名A/H上市公司；需以公司公告、客户验证或收入披露为准。",
+      "inferred": "推断受益：AI服务器、整机柜、交换机、供电、液冷集成；推断受压：跨境合规边界不清的转售/交付链。",
+      "risk": "Oracle/OpenAI/NVIDIA链条不能机械映射到个股；必须核验直接订单、客户区域、合规和毛利率。"
+    },
+    {
+      "theme": "HBM/存储/先进封装",
+      "verified_direct": "Micron官方确认AI数据中心内存和SSD强需求，但未直接映射到A/H单家公司。",
+      "inferred": "推断受益：存储材料、封装材料、测试设备、企业级SSD供应链；受压：低端存储周期股若无AI订单支撑。",
+      "risk": "海外HBM主导权强，A/H映射需要确认供应份额、产品等级和客户导入。"
+    },
+    {
+      "theme": "CPO/光模块/高速PCB/CCL",
+      "verified_direct": "NVIDIA官方确认Spectrum-X Photonics和Rubin平台方向，但本次未直接点名A/H公司。",
+      "inferred": "推断受益：高速光模块、CPO相关光引擎、高速连接器、高速PCB/CCL、交换机产业链。",
+      "risk": "CPO量产节奏、良率、客户切换与传统可插拔光模块替代速度仍需验证。"
+    },
+    {
+      "theme": "电力设备/液冷/数据中心工程",
+      "verified_direct": "微软、Meta、Alphabet、Oracle的CapEx/RPO信号验证全球数据中心建设需求，但本次未直接披露A/H订单。",
+      "inferred": "推断受益：UPS、变压器、配电、温控、液冷、机房建设与运维。",
+      "risk": "海外订单、国内数据中心订单和主题交易必须分开；电网接入、交付周期和融资成本影响收入确认。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "核验Oracle AI云RPO转收入、CapEx资金来源和数据中心交付节奏",
+      "why": "Oracle继续提供需求确认，但强RPO需要转化为收入和现金流才是高质量支撑。"
+    },
+    {
+      "item": "跟踪Supermicro/AI服务器出口合规是否出现官方处罚、订单延迟或客户调整",
+      "why": "若合规风险从媒体报道变成官方财务影响，Tech Catalysts可能转向Bearish。"
+    },
+    {
+      "item": "核验美国就业/CPI、10Y实际利率、DXY和金融条件指数",
+      "why": "只有收益率和通胀压力明显缓解，Liquidity才有条件从Tightening下调。"
+    },
+    {
+      "item": "继续确认微软、Meta、Alphabet、Amazon下一轮AI CapEx是否维持或再上修",
+      "why": "官方CapEx指引决定CapEx模块能否维持Expansion。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Oracle Announces Record Q4 and FY2026 Results",
+      "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Meta Reports First Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Amazon Investor Relations",
+      "url": "https://ir.aboutamazon.com/",
+      "used_for": "CapEx",
+      "published_at": "2026-07-01 checked"
+    },
+    {
+      "title": "Alphabet Investor Relations",
+      "url": "https://abc.xyz/investor/",
+      "used_for": "CapEx",
+      "published_at": "2026-07-01 checked"
+    },
+    {
+      "title": "Federal Reserve FOMC Statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-17"
+    },
+    {
+      "title": "BLS Job Openings and Labor Turnover Summary",
+      "url": "https://www.bls.gov/news.release/jolts.nr0.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-30"
+    },
+    {
+      "title": "BEA Personal Consumption Expenditures Price Index",
+      "url": "https://www.bea.gov/data/personal-consumption-expenditures-price-index",
+      "used_for": "Liquidity",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "Reuters US Markets Coverage",
+      "url": "https://www.reuters.com/markets/us/",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-30"
+    },
+    {
+      "title": "OpenAI and Broadcom unveil LLM-optimized inference chip",
+      "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-06-24"
+    },
+    {
+      "title": "NVIDIA Vera Rubin Ramps Into Full Production",
+      "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-06"
+    },
+    {
+      "title": "Micron Fiscal Q3 2026 Earnings Call Prepared Remarks",
+      "url": "https://investors.micron.com/static-files/631b1a32-5537-46ae-8f40-82e42fc79dfe",
+      "used_for": "Tech catalyst",
+      "published_at": "2026-06-24"
+    },
+    {
+      "title": "Taiwan investigates possible Nvidia AI chip smuggling to China",
+      "url": "https://www.reuters.com/world/asia-pacific/taiwan-investigates-possible-nvidia-ai-chip-smuggling-china-2026-06-27/",
+      "used_for": "Tech catalyst risk",
+      "published_at": "2026-06-27"
+    }
+  ]
+}

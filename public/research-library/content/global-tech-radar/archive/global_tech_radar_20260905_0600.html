@@ -1,0 +1,712 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-09-05 06:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Red：非农大超预期重燃加息风险，半导体强势难改总闸门</h1>
+      <p class="subtitle">本轮为 2026-09-05 北京时间的 06:00 morning 延迟执行版。总闸门维持Red。BLS显示美国8月非农增加16.2万、失业率维持4.1%，6月和7月合计上修5.5万；市场9月加息概率升至约65%。S&amp;P 500下跌0.4%、Nasdaq下跌0.3%，2Y升至4.37%、10Y升至4.78%，Brent收于96.28美元。NVIDIA、AMD、SanDisk和Micron逆势上涨，且Broadcom与AWS/NVIDIA订单继续确认CapEx Expansion，但不能抵消流动性收紧。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-09-05 06:00</span>
+        <span class="badge gate-neutral">06:00 morning</span>
+        <span class="badge gate-red">Red</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-red">Red</span> <span>Red：非农大超预期重燃加息风险，半导体强势难改总闸门</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>总闸门 Red：暂停追高与主动加仓；保留订单、毛利率与FCF同步兑现的卖铲核心，等待政策与利率重新缓和。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈是Broadcom AI半导体收入167亿美元、同比+221%，Q4预计217亿美元，且FCF率46%。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项是就业强势与油价共振：9月加息概率约65%，2Y/10Y升至4.37%/4.78%，Brent 96.28美元。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步只盯下周CPI、9月加息定价、油价军情，以及半导体逆势强度能否扩散并持续。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-green">Bullish</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>美国8月非农增加16.2万，显著强于预期并上修前值</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>BLS显示8月非农增加16.2万、失业率维持4.1%、平均时薪环比+0.3%/同比+3.1%；6月和7月合计上修5.5万，7月由-2.3万修正为+2.1万。</p>
+              <p><strong>影响：</strong>就业韧性为Fed继续抗通胀提供空间，重新抬升加息概率并压制长久期科技估值。</p>
+              <p class="source-line"><a href="https://www.bls.gov/news.release/archives/empsit_09042026.htm" target="_blank" rel="noreferrer">U.S. Bureau of Labor Statistics</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>就业数据逆转部分宽松交易：加息概率升至约65%</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Reuters市场定价显示9月加息概率由就业报告前约55%升至约65%；AP显示2Y升至4.37%、10Y升至4.78%。</p>
+              <p><strong>影响：</strong>Waller前一日释放的耐心信号被强就业部分逆转，Liquidity继续标记Tightening。</p>
+              <p class="source-line"><a href="https://www.marketscreener.com/news/yields-rise-stocks-mostly-ease-after-solid-u-s-jobs-report-ce785bdad08ff12c" target="_blank" rel="noreferrer">Reuters / Associated Press</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>指数回落但半导体逆势：AMD +4.7%、Micron +6.1%</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>AP显示9月4日S&amp;P 500下跌0.4%、Dow下跌0.5%、Nasdaq下跌0.3%；但NVIDIA +0.8%、AMD +4.7%、SanDisk +11.9%、Micron +6.1%。</p>
+              <p><strong>影响：</strong>卖铲链出现相对强度，但广义风险偏好仍受利率压制；应区分订单兑现标的与高估值概念。</p>
+              <p class="source-line"><a href="https://apnews.com/article/stocks-markets-oil-trump-iran-war-1af16359af43eb8abc66445465f633c8" target="_blank" rel="noreferrer">Associated Press</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>AWS与NVIDIA官宣新增200万GPU，卖铲需求再获直接订单验证</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>AWS与NVIDIA官方公告计划2027-2028年在AWS全球基础设施新增部署200万块Blackwell Ultra、Rubin和Rubin Ultra GPU；并为美国政府在安全AWS基础设施交付10万块GPU，同时扩展Vera CPU、NVLink Fusion与NVHBM。</p>
+              <p><strong>影响：</strong>直接利好GPU、HBM、AI服务器、网络、光互联、液冷、电力和数据中心工程；但交付集中于2027-2028年，需跟踪供给与资本效率。</p>
+              <p class="source-line"><a href="https://investor.nvidia.com/news/press-release-details/2026/AWS-and-NVIDIA-to-Deliver-2-Million-Additional-GPUs-and-Next-Generation-Infrastructure-for-Agentic-and-Physical-AI/default.aspx" target="_blank" rel="noreferrer">NVIDIA / AWS official announcement</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Broadcom AI半导体收入同比+221%，Q4预计再加速至217亿美元</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Broadcom官方Q3 FY2026收入295.91亿美元、同比+86%；AI半导体收入167亿美元、同比+221%、环比+54%；Q4预计AI半导体收入217亿美元、同比+236%，总收入指引348亿美元。</p>
+              <p><strong>影响：</strong>直接利好定制AI加速器、交换芯片、SerDes、光互联、CPO、HBM与先进封装；与NVIDIA订单形成交叉验证。</p>
+              <p class="source-line"><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial" target="_blank" rel="noreferrer">Broadcom IR / 8-K</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>SMIC / 中芯国际</td>
+              <td>2026 Q2 收入 30.056 亿美元，毛利率 25.3%，月产能 1,096,500 片折合 8 吋，产能利用率 93.7%，Q2 资本开支 18.357 亿美元，Q3 指引收入环比 +2% 到 +4%、毛利率 26%-28%。</td>
+              <td>强化</td>
+              <td>晶圆制造、半导体设备、材料、厂务、检测计量、封测和成熟/特色工艺链受益；先进 AI GPU 直接映射需谨慎。</td>
+              <td>High</td>
+              <td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf" target="_blank" rel="noreferrer">HKEX / SMIC</a></td>
+            </tr>
+            
+            <tr>
+              <td>Applied Materials</td>
+              <td>Q3 FY2026 收入 91.15 亿美元，同比 +25%；non-GAAP 毛利率 50.4%；Q4 收入指引 102.5 亿美元正负 5 亿美元。</td>
+              <td>强化</td>
+              <td>先进制程、DRAM/HBM、先进封装、设备材料与工艺控制继续受益。</td>
+              <td>High</td>
+              <td><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Lenovo</td>
+              <td>FY2026/27 Q1 收入 269 亿美元，同比 +43%；AI 相关收入 93 亿美元，同比 +60%；ISG 收入 85 亿美元，同比 +98%，经营利润率 9.1%。</td>
+              <td>强化</td>
+              <td>AI 服务器、HPC、液冷、电源、连接器、PCB、光模块与 ODM/OEM 链条受益。</td>
+              <td>High</td>
+              <td><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Tencent</td>
+              <td>Q2 资本开支付款 593 亿元人民币；公司继续指向 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 和云需求，但 FCF 受算力预付款影响为 -138 亿元。</td>
+              <td>强投入但需现金流验证</td>
+              <td>GPU/ASIC、AI 服务器、IDC、云基础设施和网络设备受益；自由现金流恢复是关键。</td>
+              <td>High</td>
+              <td><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Hon Hai / Foxconn</td>
+              <td>Q2 收入 2.53 万亿新台币，同比 +41%；Cloud and Networking Products 占比 51%；AI rack shipment 环比高双位数增长，2026 年预计翻倍以上。</td>
+              <td>强化</td>
+              <td>AI 服务器 ODM、机柜、散热、电源、连接器、线束和高速传输链条受益。</td>
+              <td>High</td>
+              <td><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Micron</td>
+              <td>Micron Ventures 推出 2.5 亿美元 Paradigm Fund，覆盖模型架构、compute、企业应用和 physical AI，三只基金合计承诺资本 5.5 亿美元。</td>
+              <td>战略强化</td>
+              <td>长期利好 AI 内存、存储、数据中心效率、in-memory compute 和 physical AI 生态；不直接等同短期 HBM 订单上修。</td>
+              <td>High</td>
+              <td><a href="https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx" target="_blank" rel="noreferrer">Micron IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA</td>
+              <td>Q2 FY27 收入 962.2 亿美元、同比 +106%；数据中心 890 亿美元、同比 +117%；Q3 收入指引 1080 亿美元，Vera Rubin 已进入全面生产。Q2 FCF 213.4 亿美元。</td>
+              <td>强扩张但需现金流验证</td>
+              <td>GPU、AI 服务器、交换机、光互联、CPO、液冷、电力设备直接受益；毛利率回落、营运资本与信用支持需验证。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027" target="_blank" rel="noreferrer">NVIDIA IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>AWS / NVIDIA</td>
+              <td>官方计划2027-2028年新增部署200万块NVIDIA GPU；为美国政府建设10万GPU安全AI工厂，并扩展Vera CPU、NVLink Fusion、NVHBM与机器人平台。</td>
+              <td>强化</td>
+              <td>GPU、HBM、服务器、交换机、CPO/光模块、液冷、电源与IDC工程直接受益；交付周期和供给约束需验证。</td>
+              <td>High</td>
+              <td><a href="https://investor.nvidia.com/news/press-release-details/2026/AWS-and-NVIDIA-to-Deliver-2-Million-Additional-GPUs-and-Next-Generation-Infrastructure-for-Agentic-and-Physical-AI/default.aspx" target="_blank" rel="noreferrer">NVIDIA / AWS official announcement</a></td>
+            </tr>
+            
+            <tr>
+              <td>Broadcom</td>
+              <td>Q3 FY2026收入295.91亿美元、同比+86%；AI半导体收入167亿美元、同比+221%、环比+54%；Q4 AI收入预计217亿美元，总收入指引348亿美元。</td>
+              <td>强扩张</td>
+              <td>定制AI加速器、网络交换、SerDes、光互联/CPO、HBM与先进封装直接受益。</td>
+              <td>High</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial" target="_blank" rel="noreferrer">Broadcom IR / 8-K</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel</td>
+              <td>200 亿美元普通股发行已公告 upsize and pricing；截至本轮仍未见官方 closing release。</td>
+              <td>待验证</td>
+              <td>不能把净募资当作已到账 CapEx 弹药；继续核实稀释、资金用途和先进制程 ROI。</td>
+              <td>Medium</td>
+              <td><a href="https://www.intc.com/" target="_blank" rel="noreferrer">Intel IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Federal Reserve / Waller</td>
+              <td>Waller称若通胀改善延续则倾向维持利率不变；但随后强就业令媒体市场定价中的9月加息概率升至约65%。</td>
+              <td>重新收紧</td>
+              <td>就业韧性削弱按兵不动的确定性，CPI成为下一道关键验证门。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/waller20260903a.htm" target="_blank" rel="noreferrer">Federal Reserve / Reuters market pricing</a></td>
+            </tr>
+            
+            <tr>
+              <td>U.S. Treasury / Fed H.15</td>
+              <td>美国财政部2026-09-03：2Y 4.34%，5Y 4.52%，10Y 4.77%，20Y/30Y 5.25%；实际10Y 2.42%、30Y 2.96%。</td>
+              <td>边际缓和但仍偏紧</td>
+              <td>日内回落支持估值修复，但长端与实际利率仍处高位，继续限制高估值AI、半导体和云软件。</td>
+              <td>High</td>
+              <td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&amp;field_tdr_date_value=2026" target="_blank" rel="noreferrer">U.S. Treasury / Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>2026-08-27 发布/截至 8 月 26 日周数据：准备金周均约 2.925 万亿美元，周降约 104 亿美元；TGA 周均约 9507 亿美元，周降约 29 亿美元；周三 TGA 约 9594 亿美元、周增约 230 亿美元。</td>
+              <td>收紧</td>
+              <td>准备金继续下降且周三 TGA 回升，限制科技风险偏好，阻止总闸门升级 Green。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noreferrer">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>U.S. Census retail sales</td>
+              <td>2026 年 7 月零售和食品服务销售额 7636 亿美元，环比 -0.6%，同比 +5.0%；5-7 月合计同比 +6.3%。</td>
+              <td>增长走弱</td>
+              <td>消费需求转弱压制平台科技、消费电子和广告/云外需预期；也可能降低加息预期，但不是直接利好。</td>
+              <td>High</td>
+              <td><a href="https://www.census.gov/retail/sales.html" target="_blank" rel="noreferrer">U.S. Census</a></td>
+            </tr>
+            
+            <tr>
+              <td>University of Michigan</td>
+              <td>2026 年 8 月初值：消费者信心 51.0，7 月为 55.2；当前状况 51.8，预期 50.6；1年通胀预期 4.3%，长期通胀预期 3.3%。</td>
+              <td>滞胀式压力</td>
+              <td>消费者信心走弱但通胀预期仍高，形成对成长股不友好的宏观组合。</td>
+              <td>High</td>
+              <td><a href="https://www.sca.isr.umich.edu/" target="_blank" rel="noreferrer">University of Michigan Surveys of Consumers</a></td>
+            </tr>
+            
+            <tr>
+              <td>PBOC / China liquidity</td>
+              <td>PBOC 8 月 18 日官方公告：7天期逆回购操作量为零，同时开展 4697 亿元隔夜逆回购；8 月 17 日隔夜操作量为 5655 亿元。</td>
+              <td>稳定对冲</td>
+              <td>国内资金面有托底，但更像削峰填谷，不足以抵消美元流动性约束。</td>
+              <td>Medium</td>
+              <td><a href="https://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/2026081808573129759/index.html" target="_blank" rel="noreferrer">People's Bank of China</a></td>
+            </tr>
+            
+            <tr>
+              <td>US market reaction</td>
+              <td>AP 9月1日收盘：NVIDIA -1.5%、Amazon -1.9%、AMD -2.4%，10Y升至4.79%；油价与军事冲突继续压制风险偏好。</td>
+              <td>油价与利率压制</td>
+              <td>地缘冲突推升通胀和贴现率，抵消AI订单利好，不支持追高科技。</td>
+              <td>High</td>
+              <td><a href="https://apnews.com/article/stocks-futures-bonds-oil-inflation-trump-ai-9e355be634e4a21059fc1d1f20a1239e" target="_blank" rel="noreferrer">AP</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Broadcom Q3 AI semiconductor revenue grows 221%</td>
+              <td>定制AI加速器、网络交换、SerDes、CPO、HBM、先进封装</td>
+              <td>利好</td>
+              <td>ASIC/XPU、交换芯片、光互联、CPO、HBM与先进封装供应链。</td>
+              <td>缺订单验证的概念映射；无法参与定制加速器和高速网络升级的落后供应商。</td>
+              <td>官方确认</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial" target="_blank" rel="noreferrer">Broadcom IR / 8-K</a></td>
+            </tr>
+            
+            <tr>
+              <td>AWS and NVIDIA plan 2 million additional GPUs</td>
+              <td>GPU、HBM、AI服务器、网络、光互联、液冷、电力、政府AI工厂</td>
+              <td>利好</td>
+              <td>GPU、HBM、AI服务器、CPO/光模块、交换机、液冷、电源和IDC工程。</td>
+              <td>缺订单验证的概念映射；交付延迟或供给不足的环节。</td>
+              <td>AWS/NVIDIA官方确认</td>
+              <td><a href="https://investor.nvidia.com/news/press-release-details/2026/AWS-and-NVIDIA-to-Deliver-2-Million-Additional-GPUs-and-Next-Generation-Infrastructure-for-Agentic-and-Physical-AI/default.aspx" target="_blank" rel="noreferrer">NVIDIA IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Taiwan indicts nine over illegal B300 AI server exports</td>
+              <td>NVIDIA GPU、Super Micro 服务器、分销商、转口贸易与出口合规</td>
+              <td>利空</td>
+              <td>合规追踪、供应链审计、授权分销与可验证终端客户体系。</td>
+              <td>灰色转口链、合规薄弱的服务器分销商及依赖受限地区需求的交付链。</td>
+              <td>检方文件与公司回应确认</td>
+              <td><a href="https://apnews.com/article/511e9ae69d517c49f19512d45b1a8b0c" target="_blank" rel="noreferrer">Keelung prosecutors via AP / NVIDIA / Super Micro</a></td>
+            </tr>
+            
+            <tr>
+              <td>SMIC Q2 and Applied Materials Q3 reinforce semiconductor equipment cycle</td>
+              <td>晶圆制造、半导体设备、材料、先进封装、检测计量</td>
+              <td>利好</td>
+              <td>有产能利用率、资本开支、订单和毛利率验证的制造/设备/材料链。</td>
+              <td>没有订单验证、仅靠国产替代或 AI 概念的高估值标的。</td>
+              <td>官方确认</td>
+              <td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf" target="_blank" rel="noreferrer">HKEX / Applied Materials IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel offering closing remains absent</td>
+              <td>先进制程、晶圆厂 CapEx、CPU/AI compute</td>
+              <td>待验证</td>
+              <td>若 closing 和资金用途确认，Intel 资产负债表和 CapEx 叙事可改善。</td>
+              <td>若迟迟不确认或稀释/ROI 压力扩大，先进制程链情绪受压。</td>
+              <td>未见官方 closing 确认</td>
+              <td><a href="https://www.intc.com/" target="_blank" rel="noreferrer">Intel IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI 服务器/ODM/液冷/电源</td>
+              <td>已验证海外/港股主体：联想、鸿海/Foxconn、腾讯；A/H 具体供应商需公司公告或客户认证。</td>
+              <td>服务器、液冷、电源、连接器、PCB、线束、机柜、光模块和高速网络继续是卖铲核心。</td>
+              <td>全球订单不自动映射为 A/H 公司订单；需要收入、毛利率和现金流验证。</td>
+            </tr>
+            
+            <tr>
+              <td>半导体制造/设备/材料</td>
+              <td>已验证：中芯国际 00981/688981 官方 Q2 收入、毛利率、产能利用率、资本开支和 Q3 指引；应用材料官方 Q3 强指引。</td>
+              <td>设备、材料、厂务、检测计量、成熟/特色工艺、先进封装和 HBM 配套链条受益概率提高。</td>
+              <td>不要把 AI 溢出效应直接等同于先进 AI GPU 制造突破或所有国产设备订单确认。</td>
+            </tr>
+            
+            <tr>
+              <td>内存/存储/HBM</td>
+              <td>已验证 Micron 2.5 亿美元 AI 基金；此前 Micron 财报与 Samsung 路线图支持 AI memory 长逻辑。</td>
+              <td>HBM、DRAM、NAND、企业级 SSD、数据中心存储和内存计算方向长期受益。</td>
+              <td>基金是战略投资，不是短期订单或价格上修确认。</td>
+            </tr>
+            
+            <tr>
+              <td>AI 数据中心融资链</td>
+              <td>NVIDIA 5000 亿美元 AI financing platform 属官方历史确认；本轮 Nvidia/OpenAI 担保缩小仅为媒体报道，未见官方确认。</td>
+              <td>资本成本低、客户长约强、项目回款透明的平台更占优；高杠杆租赁平台需降权。</td>
+              <td>如果融资结构收紧，GPU、服务器、IDC、电力容量订单节奏可能波动。</td>
+            </tr>
+            
+            <tr>
+              <td>平台科技/消费电子</td>
+              <td>美国零售销售和消费者信心转弱为官方/一手数据；京东此前 Q2 收入同比下滑但利润和 FCF 修复。</td>
+              <td>平台科技和消费电子弹性弱于硬件卖铲链。</td>
+              <td>需求走弱叠加通胀预期黏性，会压制高估值和广告/电商链。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>Intel 200 亿美元发行 closing release</strong><span>截至本轮仍未见官方 closing；决定这笔资金能否计入 CapEx/资产负债表改善。</span></li><li><strong>Nvidia/OpenAI 数据中心担保是否官方确认</strong><span>如果低于 1200 亿美元的媒体消息被确认，AI 基建融资链需要重新定价。</span></li><li><strong>Fed H.15/H.4.1 下一次更新</strong><span>确认长端/TIPS 回落是否延续，以及准备金/TGA 是否修复。</span></li><li><strong>PCE、就业、油价与密歇根终值</strong><span>判断宏观组合是软着陆利好科技，还是增长走弱叠加通胀预期的估值压制。</span></li><li><strong>AI 卖铲链订单转 FCF</strong><span>应用材料、联想、鸿海、腾讯、中芯、Cisco 等需要继续把订单和 CapEx 转成收入、毛利率和现金流。</span></li><li><strong>PBOC 隔夜逆回购是否连续</strong><span>连续操作若仅限隔夜仍是削峰填谷；只有期限和工具进一步扩张才可讨论更广义宽松。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/archives/empsit_09042026.htm" target="_blank" rel="noreferrer">The Employment Situation - August 2026</a></td>
+              <td>Liquidity / employment / wages</td>
+              <td>2026-09-04</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/stocks-markets-oil-trump-iran-war-1af16359af43eb8abc66445465f633c8" target="_blank" rel="noreferrer">Stocks fall after strong jobs report raises rate-hike prospects</a></td>
+              <td>Liquidity / market reaction / oil / technology relative strength</td>
+              <td>2026-09-04</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.marketscreener.com/news/yields-rise-stocks-mostly-ease-after-solid-u-s-jobs-report-ce785bdad08ff12c" target="_blank" rel="noreferrer">Yields rise after solid U.S. jobs report</a></td>
+              <td>Liquidity / rate-hike pricing</td>
+              <td>2026-09-04</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/waller20260903a.htm" target="_blank" rel="noreferrer">Governor Waller: The Economic Outlook and Policy Communication</a></td>
+              <td>Liquidity / Fed policy</td>
+              <td>2026-09-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_yield_curve" target="_blank" rel="noreferrer">Daily Treasury Par Yield Curve Rates</a></td>
+              <td>Liquidity / nominal yields</td>
+              <td>2026-09-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_real_yield_curve" target="_blank" rel="noreferrer">Daily Treasury Par Real Yield Curve Rates</a></td>
+              <td>Liquidity / real yields</td>
+              <td>2026-09-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/1af16359af43eb8abc66445465f633c8" target="_blank" rel="noreferrer">Asian benchmarks mostly rise after Wall Street tech rally</a></td>
+              <td>Tech catalyst / market reaction</td>
+              <td>2026-09-04</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ae.marketscreener.com/news/broadcom-forecasts-quarterly-revenue-below-estimates-ce7858d3db80ff24" target="_blank" rel="noreferrer">Broadcom shares fall as quarterly revenue forecast trails estimates</a></td>
+              <td>Tech catalyst / after-hours market reaction / consensus estimate</td>
+              <td>2026-09-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial" target="_blank" rel="noreferrer">Broadcom Q3 FY2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst / Free cash flow</td>
+              <td>2026-09-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.theedgesingapore.com/news/global-markets/asian-stocks-bonds-decline-crude-oil-advances" target="_blank" rel="noreferrer">Asian stocks and bonds decline as crude oil advances</a></td>
+              <td>Liquidity / Asia market reaction</td>
+              <td>2026-09-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://hk.marketscreener.com/news/bond-selloff-pressures-stocks-as-oil-crosses-91-a-barrel-ce7858ddda8ef226" target="_blank" rel="noreferrer">Bond selloff pressures stocks as oil crosses $91</a></td>
+              <td>Liquidity / intraday market reaction</td>
+              <td>2026-09-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-MediaTek-Deepen-Long-Standing-Partnership-to-Build-AI-Edge-to-Cloud-Computing-Platforms/default.aspx" target="_blank" rel="noreferrer">NVIDIA and MediaTek Deepen AI Edge-to-Cloud Partnership</a></td>
+              <td>CapEx / Tech catalyst / Capital allocation</td>
+              <td>2026-08-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://uk.investing.com/news/stock-market-news/asia-chip-stocks-fall-as-warsh-revives-ratehike-fears-oil-adds-riskoff-pressure-4852290" target="_blank" rel="noreferrer">Asia chip stocks fall as Warsh revives rate-hike fears</a></td>
+              <td>Liquidity / Asia market reaction</td>
+              <td>2026-08-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.nvidia.com/news/press-release-details/2026/AWS-and-NVIDIA-to-Deliver-2-Million-Additional-GPUs-and-Next-Generation-Infrastructure-for-Agentic-and-Physical-AI/default.aspx" target="_blank" rel="noreferrer">AWS and NVIDIA to Deliver 2 Million Additional GPUs</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-26</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027" target="_blank" rel="noreferrer">NVIDIA Q2 FY2027 Financial Results</a></td>
+              <td>CapEx / Tech catalyst / Cash flow</td>
+              <td>2026-08-26</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://au.marketscreener.com/news/asian-stocks-rise-for-third-day-as-nvidia-beats-ce7858ded98af226" target="_blank" rel="noreferrer">Asian stocks rise after NVIDIA earnings beat</a></td>
+              <td>Tech catalyst / Asia market reaction</td>
+              <td>2026-08-27</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm" target="_blank" rel="noreferrer">Chairman Warsh Jackson Hole Keynote Remarks</a></td>
+              <td>Liquidity / policy signal</td>
+              <td>2026-08-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/" target="_blank" rel="noreferrer">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-18</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&amp;field_tdr_date_value=2026" target="_blank" rel="noreferrer">U.S. Treasury Daily Treasury Par Yield Curve Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-09-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noreferrer">Federal Reserve H.4.1</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-27</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.census.gov/retail/sales.html" target="_blank" rel="noreferrer">U.S. Census Monthly Retail Trade</a></td>
+              <td>Liquidity / demand risk</td>
+              <td>2026-08-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sca.isr.umich.edu/" target="_blank" rel="noreferrer">University of Michigan Surveys of Consumers</a></td>
+              <td>Liquidity / sentiment / inflation expectations</td>
+              <td>2026-08-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx" target="_blank" rel="noreferrer">Micron Ventures Paradigm Fund</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Guarantees-SB-Energys-PORTS-Pike-Technology-Campus-in-Ohio-to-Exclusively-Host-NVIDIA-AI-Compute/default.aspx" target="_blank" rel="noreferrer">NVIDIA Guarantees SB Energy PORTS-Pike Technology Campus</a></td>
+              <td>Tech catalyst / financing risk</td>
+              <td>2026-08-17</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.intc.com/" target="_blank" rel="noreferrer">Intel Investor Relations</a></td>
+              <td>CapEx / watch item</td>
+              <td>2026-08-16 checked</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/61f03262bb5dfa1c414c4fb7be40772e" target="_blank" rel="noreferrer">AP market recap - Big Tech falls as oil and yields rise</a></td>
+              <td>Liquidity / market reaction</td>
+              <td>2026-09-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/511e9ae69d517c49f19512d45b1a8b0c" target="_blank" rel="noreferrer">Taiwan charges nine over illegal AI server exports to China</a></td>
+              <td>Tech catalyst / export compliance risk</td>
+              <td>2026-08-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.freemalaysiatoday.com/category/business/2026/08/26/asian-stocks-hesitant-before-nvidia-results-oil-slips" target="_blank" rel="noreferrer">Asian stocks hesitant before NVIDIA results as oil slips</a></td>
+              <td>Liquidity / Asia market reaction</td>
+              <td>2026-08-26</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://home.treasury.gov/news/press-releases/sb0607" target="_blank" rel="noreferrer">Treasury Announces Increased Sizes of Nominal Long-End Liquidity Support Buybacks</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-19</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.pbc.gov.cn/zhengcehuobisi/125207/125213/125431/125475/2026081808573129759/index.html" target="_blank" rel="noreferrer">PBOC Open Market Operation Announcement No. 159</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-18</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf" target="_blank" rel="noreferrer">SMIC 2026 Q2 Results - HKEX</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results" target="_blank" rel="noreferrer">Applied Materials Q3 FY2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.lenovo.com/" target="_blank" rel="noreferrer">Lenovo Investor Relations</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf" target="_blank" rel="noreferrer">Tencent Q2 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-13</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095" target="_blank" rel="noreferrer">Hon Hai / Foxconn Q2 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-12</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

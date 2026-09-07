@@ -1,0 +1,555 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>02 手动操作手册｜114.55.219.63 服务器清理</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-114.55.219.63-20260831&amp;view=reports">管理服务器清理</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">服务器清理方案</a><span>/</span><strong>手动操作手册</strong></div><div>适用主机：114.55.219.63</div></div>
+  <header class="hero amber">
+    <div class="eyebrow">CHAPTER 02 · MANUAL RUNBOOK</div>
+    <h1>服务器清理：手动逐步操作手册</h1>
+    <p>按照“核验 → 备份 → 单项处理 → 单项验收 → 长期保护 → 总验收”的顺序执行。每个命令块可单独复制，不需要一次性运行整份脚本。</p>
+    <div class="tags"><span>逐步操作</span><span>每步可停止</span><span>配置可回滚</span><span>不重启业务服务</span></div>
+  </header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 清理前情况</a><a class="active" href="02-manual-cleanup-guide.html">02 手动操作手册</a><a href="03-after-cleanup.html">03 清理后情况</a></nav>
+  <div class="status amber"><span class="pill amber">重要</span><div><strong>这份手册记录的是已经执行成功的方案，但不能在当前服务器上从头盲目重跑。</strong> 两个旧容器已经删除、历史日志已经压缩。重复执行前必须重新做第 1–4 步并使用新的归档目录。</div></div>
+
+  <div class="manual-layout">
+    <aside class="toc">
+      <strong>操作目录</strong>
+      <a href="#principles">安全原则</a>
+      <a href="#step-1">1. 登录与身份确认</a>
+      <a href="#step-2">2. 采集资源基线</a>
+      <a href="#step-3">3. 检查构建和日志句柄</a>
+      <a href="#step-4">4. 创建回滚归档</a>
+      <a href="#step-5">5. 处理停用容器日志</a>
+      <a href="#step-6">6. 清理构建缓存</a>
+      <a href="#step-7">7. 清理未引用镜像</a>
+      <a href="#step-8">8. 限制 journal</a>
+      <a href="#step-9">9. 设置 Docker 日志默认值</a>
+      <a href="#step-10">10. 配置 Nginx/Tomcat 轮转</a>
+      <a href="#step-11">11. 配置历史日志脚本</a>
+      <a href="#step-12">12. 配置资源守卫</a>
+      <a href="#step-13">13. 配置定时任务</a>
+      <a href="#step-14">14. 首次轮转和压缩</a>
+      <a href="#step-15">15. 验收服务与资源</a>
+      <a href="#rollback">回滚说明</a>
+    </aside>
+
+    <div>
+      <section id="principles">
+        <h2>执行原则与停止条件</h2>
+        <ul class="checklist">
+          <li>一次只处理一个类别；每步完成后先验证，再进入下一步。</li>
+          <li>不停止、不重建正在运行的业务容器；Docker daemon 只发送 HUP，不 restart。</li>
+          <li>不删除 MySQL 数据目录，不对打开的 Java/Nginx 日志直接 gzip、rm 或 rename。</li>
+          <li>任何配置文件修改前先复制到 <code>/data2/archive/...</code>，保证可回滚。</li>
+          <li>如果命令输出与“预期结果”不一致，立即停止，不继续执行后面的清理命令。</li>
+          <li>所有压缩任务使用 <code>nice -n 19</code> 与 <code>ionice -c3</code>，降低对正常业务的影响。</li>
+        </ul>
+        <div class="callout danger"><strong>禁止：</strong>不要使用 <code>docker system prune -a --volumes</code>、不要递归删除 <code>/var/lib/docker</code>、不要直接清空正在运行容器的 JSON 日志、不要删除 <code>/data2/mysql*_data</code>。</div>
+      </section>
+
+      <article class="step" id="step-1">
+        <div class="step-number">1</div>
+        <h2>登录服务器并确认目标</h2>
+        <div class="impact">影响：只读，无业务影响。</div>
+        <p>必须确认连接到 114.55.219.63 且当前用户为 root，避免在错误服务器执行。</p>
+        <div class="command"><div class="command-label">本地 PowerShell / Terminal</div><button class="copy-btn">复制</button><pre>ssh -o BatchMode=yes root@114.55.219.63</pre></div>
+        <div class="command"><div class="command-label">服务器内</div><button class="copy-btn">复制</button><pre>hostname
+whoami
+date --iso-8601=seconds
+hostnamectl 2&gt;/dev/null || uname -a</pre></div>
+        <h4>预期结果</h4>
+        <ul><li>主机名：<code>iZbp1jaz33icbp0776skkoZ</code>。</li><li>用户：<code>root</code>。</li><li>系统：Alibaba Cloud Linux 2.1903 LTS。</li></ul>
+        <div class="callout warn"><strong>停止条件：</strong>IP、主机名或用户不符，立即退出，不执行后续步骤。</div>
+      </article>
+
+      <article class="step" id="step-2">
+        <div class="step-number">2</div>
+        <h2>采集清理前资源基线</h2>
+        <div class="impact">影响：只读；du 会产生磁盘读取，已限制到目标目录。</div>
+        <div class="command"><div class="command-label">内存、磁盘、inode</div><button class="copy-btn">复制</button><pre>free -h
+df -hT / /data2
+df -ih / /data2
+uptime</pre></div>
+        <div class="command"><div class="command-label">Docker 与 journal</div><button class="copy-btn">复制</button><pre>docker system df
+docker ps -a --size --format '{{.Names}}|{{.Image}}|{{.Status}}|{{.Size}}'
+docker stats --no-stream --format '{{.Name}}|{{.CPUPerc}}|{{.MemUsage}}|{{.MemPerc}}'
+journalctl --disk-usage</pre></div>
+        <div class="command"><div class="command-label">顶层目录占用</div><button class="copy-btn">复制</button><pre>timeout 60 du -x -B1 --max-depth=1 / 2&gt;/dev/null | sort -nr
+timeout 60 du -x -B1 --max-depth=1 /var 2&gt;/dev/null | sort -nr | head -30
+timeout 60 du -x -B1 --max-depth=1 /data2 2&gt;/dev/null | sort -nr | head -30</pre></div>
+        <h4>本次实际基线</h4>
+        <ul><li>根盘 100%，可用约 437 MiB。</li><li>数据盘 41%，可用约 279 GiB。</li><li>内存可用约 16.77 GiB，内存不是当前瓶颈。</li><li>Docker build cache 70.77 GB；journal 3.4 GiB。</li></ul>
+      </article>
+
+      <article class="step" id="step-3">
+        <div class="step-number">3</div>
+        <h2>检查真实构建活动与打开的日志</h2>
+        <div class="impact">影响：只读。这一步决定哪些文件能处理。</div>
+        <div class="command"><div class="command-label">Docker build 活动</div><button class="copy-btn">复制</button><pre>ps -eo pid,ppid,stat,lstart,etime,%cpu,%mem,args |
+  grep -E '[d]ocker (build|builder|buildx)|[b]uildctl|[b]uildkitd' || true
+docker buildx ls
+docker builder du | head -50</pre></div>
+        <div class="command"><div class="command-label">打开的业务日志</div><button class="copy-btn">复制</button><pre>lsof +D /data2/tomcat/prod/tomcat8-s50-job/logs 2&gt;/dev/null | head -30
+lsof +D /data2/logs/stock 2&gt;/dev/null | head -30
+lsof +D /data2/wwwlogs 2&gt;/dev/null | head -40</pre></div>
+        <h4>如何判断</h4>
+        <ul><li>如果 Docker build 是当天启动且 CPU/I/O 活跃，跳过第 6 步。</li><li>任何出现在 lsof 输出中的文件都视为“正在使用”，不能直接 gzip、rm、mv。</li><li>本次发现两条从 2026-05-12 起未退出、CPU 近乎为 0 的旧 build 进程；未终止它们，只清理 Docker 标记为 reclaimable 的缓存。</li></ul>
+      </article>
+
+      <article class="step" id="step-4">
+        <div class="step-number">4</div>
+        <h2>创建明确、可核验的回滚归档目录</h2>
+        <div class="impact">影响：只在 /data2 创建归档目录，不改业务。</div>
+        <p>将目录名中的时间改成当前实际时间；必须使用一个尚不存在的新目录。</p>
+        <div class="command"><div class="command-label">创建归档并备份配置</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+test "$(realpath -m "$audit_dir")" = "$audit_dir"
+test ! -e "$audit_dir" || { echo "归档目录已存在，请换一个新名称"; exit 1; }
+mkdir -p "$audit_dir"
+
+cp -a /etc/docker/daemon.json "$audit_dir/daemon.json.before"
+crontab -l &gt; "$audit_dir/root-crontab.before" 2&gt;/dev/null || true
+test ! -f /data2/scripts/clean-tomcat-log.sh || \
+  cp -a /data2/scripts/clean-tomcat-log.sh "$audit_dir/clean-tomcat-log.sh.before"
+docker image ls --no-trunc &gt; "$audit_dir/docker-images.before.txt"
+
+ls -la "$audit_dir"</pre></div>
+        <h4>预期结果</h4><p>归档目录位于空间充足的 <code>/data2/archive</code>，包含 Docker 配置、crontab、旧清理脚本和镜像清单。</p>
+      </article>
+
+      <article class="step" id="step-5">
+        <div class="step-number">5</div>
+        <h2>归档并移除明确停用的旧容器</h2>
+        <div class="impact">影响：删除两个已停止约 9 个月的容器记录；运行中容器不受影响。完整日志先移动到 /data2。</div>
+        <h4>5.1 再次确认容器状态</h4>
+        <div class="command"><div class="command-label">必须看到 status=exited、restart=no</div><button class="copy-btn">复制</button><pre>for target_name in bz-wx-api bz-wx-api-test; do
+  docker inspect -f '{{.Name}}|status={{.State.Status}}|restart={{.HostConfig.RestartPolicy.Name}}|finished={{.State.FinishedAt}}|log={{.LogPath}}' "$target_name"
+done</pre></div>
+        <div class="callout danger"><strong>停止条件：</strong>任一容器为 running/restarting，或 restart policy 不是 no，不执行本步骤。</div>
+        <h4>5.2 保存 inspect 元数据</h4>
+        <div class="command"><div class="command-label">将 audit_dir 改成第 4 步的同一个目录</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+docker inspect bz-wx-api bz-wx-api-test &gt; "$audit_dir/retired-containers-inspect.json"
+mkdir -p "$audit_dir/docker-retired-logs"</pre></div>
+        <h4>5.3 每个容器单独验证日志路径并移动</h4>
+        <div class="command"><div class="command-label">先处理 bz-wx-api</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+target_name=bz-wx-api
+log_path="$(docker inspect -f '{{.LogPath}}' "$target_name")"
+real_log="$(realpath "$log_path")"
+case "$real_log" in
+  /var/lib/docker/containers/*/*-json.log) ;;
+  *) echo "日志路径不在允许范围：$real_log"; exit 1 ;;
+esac
+test "$(docker inspect -f '{{.State.Status}}' "$target_name")" = exited
+ionice -c3 nice -n 19 mv "$real_log" "$audit_dir/docker-retired-logs/${target_name}-json.log"
+docker rm "$target_name"</pre></div>
+        <div class="command"><div class="command-label">再处理 bz-wx-api-test</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+target_name=bz-wx-api-test
+log_path="$(docker inspect -f '{{.LogPath}}' "$target_name")"
+real_log="$(realpath "$log_path")"
+case "$real_log" in
+  /var/lib/docker/containers/*/*-json.log) ;;
+  *) echo "日志路径不在允许范围：$real_log"; exit 1 ;;
+esac
+test "$(docker inspect -f '{{.State.Status}}' "$target_name")" = exited
+ionice -c3 nice -n 19 mv "$real_log" "$audit_dir/docker-retired-logs/${target_name}-json.log"
+docker rm "$target_name"</pre></div>
+        <h4>5.4 验证</h4>
+        <div class="command"><div class="command-label">结果检查</div><button class="copy-btn">复制</button><pre>docker ps -a --format '{{.Names}}|{{.Status}}' | grep -E '^bz-wx-api(-test)?\|' || echo '目标旧容器已移除'
+du -sh "$audit_dir/docker-retired-logs"
+df -h / /data2</pre></div>
+        <p>本次实际结果：根盘由 100% 降到约 90%，旧日志完整搬移约 10.96 GiB。</p>
+      </article>
+
+      <article class="step" id="step-6">
+        <div class="step-number">6</div>
+        <h2>清理 Docker 构建缓存，同时保留热缓存</h2>
+        <div class="impact">影响：不影响已运行容器；后续 build 可能重新下载或编译。真实构建进行中时跳过。</div>
+        <div class="command"><div class="command-label">清理前确认</div><button class="copy-btn">复制</button><pre>docker system df
+ps -eo pid,lstart,etime,%cpu,args | grep -E '[d]ocker (build|buildx)' || true</pre></div>
+        <div class="command"><div class="command-label">低优先级清理 24 小时前缓存，保留 10 GB</div><button class="copy-btn">复制</button><pre>timeout 180 ionice -c3 nice -n 19 \
+  docker buildx prune -af --filter until=24h --keep-storage 10GB</pre></div>
+        <div class="command"><div class="command-label">立即验收</div><button class="copy-btn">复制</button><pre>docker system df
+df -h /</pre></div>
+        <h4>本次实际结果</h4><p>释放 <strong>60.13 GB</strong>；build cache 从 70.77 GB 降至约 10–11 GB；根盘降至约 40%。</p>
+      </article>
+
+      <article class="step" id="step-7">
+        <div class="step-number">7</div>
+        <h2>只清理 90 天以上、未被容器引用的镜像</h2>
+        <div class="impact">影响：运行容器不受影响；被删除镜像需要从仓库重新拉取或重新构建。</div>
+        <div class="command"><div class="command-label">保存清单并清理</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+docker image ls --no-trunc &gt; "$audit_dir/docker-images.before-prune.txt"
+docker image prune -af --filter until=2160h
+docker system df</pre></div>
+        <h4>为什么使用 90 天</h4><p>避免删除最近一个月的回滚镜像，只处理长期未引用镜像。本次释放 3.409 GB，镜像数从 19 降到 12。</p>
+      </article>
+
+      <article class="step" id="step-8">
+        <div class="step-number">8</div>
+        <h2>限制 systemd journal 到 1 GiB / 14 天</h2>
+        <div class="impact">影响：业务服务不重启；journald 重启并清理旧系统日志，超期历史不可恢复。</div>
+        <div class="command"><div class="command-label">写入独立 drop-in 配置</div><button class="copy-btn">复制</button><pre>install -d -m 0755 /etc/systemd/journald.conf.d
+cat &gt; /etc/systemd/journald.conf.d/99-resource-limits.conf &lt;&lt;'EOF'
+[Journal]
+SystemMaxUse=1G
+SystemKeepFree=2G
+SystemMaxFileSize=100M
+MaxRetentionSec=14day
+EOF
+
+cat /etc/systemd/journald.conf.d/99-resource-limits.conf</pre></div>
+        <div class="command"><div class="command-label">应用并收敛容量（兼容 systemd 219）</div><button class="copy-btn">复制</button><pre>systemctl restart systemd-journald.service
+systemctl is-active systemd-journald.service
+systemctl kill -s SIGUSR2 systemd-journald.service
+sleep 2
+journalctl --vacuum-time=14d
+journalctl --vacuum-size=1G
+journalctl --disk-usage</pre></div>
+        <h4>预期结果</h4><p><code>Archived and active journals take up 1000.0M</code> 左右，journald 为 active。</p>
+      </article>
+
+      <article class="step" id="step-9">
+        <div class="step-number">9</div>
+        <h2>设置 Docker 新建容器的 JSON 日志上限</h2>
+        <div class="impact">影响：只 HUP 重载 Docker daemon，不重启容器。已有容器的 log-opt 不会追溯改变。</div>
+        <div class="command"><div class="command-label">生成并验证新配置</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+cp -a /etc/docker/daemon.json "$audit_dir/daemon.json.before-log-limit"
+
+jq '. + {"log-driver":"json-file","log-opts":{"max-size":"100m","max-file":"5"}}' \
+  /etc/docker/daemon.json &gt; /tmp/daemon.json.new
+
+dockerd --validate --config-file=/tmp/daemon.json.new</pre></div>
+        <div class="command"><div class="command-label">仅在看到 configuration OK 后安装</div><button class="copy-btn">复制</button><pre>install -m 0644 /tmp/daemon.json.new /etc/docker/daemon.json
+docker_pid="$(systemctl show docker.service -p MainPID | cut -d= -f2)"
+test -n "$docker_pid" &amp;&amp; test "$docker_pid" -gt 1
+kill -HUP "$docker_pid"
+sleep 2
+systemctl is-active docker.service
+docker ps --format '{{.Names}}|{{.Status}}'</pre></div>
+        <div class="callout warn"><strong>边界：</strong>已有容器仍使用创建时的日志参数。为了零中断，本次没有重建它们；第 12 步会对现有 JSON 日志设置 500 MiB 告警。</div>
+      </article>
+
+      <article class="step" id="step-10">
+        <div class="step-number">10</div>
+        <h2>配置 Nginx 与 catalina.out 安全轮转</h2>
+        <div class="impact">影响：Nginx 只接收 USR1 reopen；Tomcat 使用 copytruncate，不重启 Java。</div>
+        <div class="command"><div class="command-label">创建 /etc/logrotate.d/bzsj-data2</div><button class="copy-btn">复制</button><pre>cat &gt; /etc/logrotate.d/bzsj-data2 &lt;&lt;'EOF'
+/data2/wwwlogs/*/*.log /data2/wwwlogs/*.log {
+    daily
+    maxsize 1G
+    rotate 14
+    missingok
+    notifempty
+    compress
+    dateext
+    create 0644 root root
+    sharedscripts
+    postrotate
+        main_pid="$(systemctl show nginx.service -p MainPID | cut -d= -f2)"
+        if [ -n "$main_pid" ] &amp;&amp; [ "$main_pid" -gt 1 ]; then
+            kill -USR1 "$main_pid"
+        fi
+    endscript
+}
+
+/data2/tomcat/prod/tomcat8-s50-job/logs/catalina.out {
+    daily
+    maxsize 1G
+    rotate 7
+    missingok
+    notifempty
+    compress
+    dateext
+    copytruncate
+}
+EOF
+
+/usr/local/nginx/nginx -t
+/usr/sbin/logrotate -d /etc/logrotate.d/bzsj-data2</pre></div>
+        <div class="callout danger"><strong>停止条件：</strong>Nginx 配置测试或 logrotate dry-run 非 0，不能执行第 14 步的强制首次轮转。</div>
+      </article>
+
+      <article class="step" id="step-11">
+        <div class="step-number">11</div>
+        <h2>替换旧的全盘 find 脚本，只压缩明确目录的关闭日志</h2>
+        <div class="impact">影响：每天处理已关闭历史日志；lsof 会跳过 Java 正在写入的文件。</div>
+        <div class="command"><div class="command-label">备份旧脚本并写入安全版本</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+cp -a /data2/scripts/clean-tomcat-log.sh "$audit_dir/clean-tomcat-log.sh.before-replace"
+
+cat &gt; /data2/scripts/clean-tomcat-log.sh &lt;&lt;'EOF'
+#!/usr/bin/env bash
+set -u
+
+lock_file=/run/bzsj-legacy-log-clean.lock
+exec 9&gt;"$lock_file"
+flock -n 9 || exit 0
+
+compress_closed_logs() {
+    scan_dir="$1"
+    scan_pattern="$2"
+    retention_days="$3"
+    [ -d "$scan_dir" ] || return 0
+
+    find "$scan_dir" -maxdepth 1 -type f -name "$scan_pattern" ! -name '*.gz' -print0 |
+        while IFS= read -r -d '' log_file; do
+            if ! lsof -- "$log_file" &gt;/dev/null 2&gt;&amp;1; then
+                gzip -f -- "$log_file"
+            fi
+        done
+
+    find "$scan_dir" -maxdepth 1 -type f -name '*.gz' \
+        -mtime "+$retention_days" -delete
+}
+
+compress_closed_logs /data2/tomcat/prod/tomcat8-s50-job/logs 'catalina.out-20*' 14
+compress_closed_logs /data2/logs/stock '*.log.20*' 14
+EOF
+
+chmod 0755 /data2/scripts/clean-tomcat-log.sh
+bash -n /data2/scripts/clean-tomcat-log.sh</pre></div>
+        <h4>与旧脚本的区别</h4><ul><li>不再 <code>find /</code> 扫描整台服务器。</li><li>不再对所有 catalina.out 用 cp + echo 直接截断。</li><li>仅处理两个明确目录，并用 lsof 跳过打开文件。</li><li>超过 14 天的压缩历史日志会删除，释放空间。</li></ul>
+      </article>
+
+      <article class="step" id="step-12">
+        <div class="step-number">12</div>
+        <h2>配置资源守卫与 Docker 大日志告警</h2>
+        <div class="impact">影响：只读检查，异常时写入 journal；不主动删除文件。</div>
+        <div class="command"><div class="command-label">创建 /data2/scripts/resource-guard.sh</div><button class="copy-btn">复制</button><pre>cat &gt; /data2/scripts/resource-guard.sh &lt;&lt;'EOF'
+#!/usr/bin/env bash
+set -u
+
+root_used_pct="$(df -P / | awk 'NR==2 {gsub(/%/, "", $5); print $5}')"
+data_used_pct="$(df -P /data2 | awk 'NR==2 {gsub(/%/, "", $5); print $5}')"
+mem_total_kb="$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)"
+mem_available_kb="$(awk '/^MemAvailable:/ {print $2}' /proc/meminfo)"
+mem_available_pct=$((mem_available_kb * 100 / mem_total_kb))
+
+if [ "${1:-}" = "--report" ]; then
+    printf 'root_used_pct=%s data2_used_pct=%s mem_available_pct=%s\n' \
+        "$root_used_pct" "$data_used_pct" "$mem_available_pct"
+    exit 0
+fi
+
+[ "$root_used_pct" -lt 85 ] || logger -p daemon.warning -t resource-guard "root filesystem usage is ${root_used_pct}% (threshold 85%)"
+[ "$data_used_pct" -lt 85 ] || logger -p daemon.warning -t resource-guard "/data2 usage is ${data_used_pct}% (threshold 85%)"
+[ "$mem_available_pct" -gt 10 ] || logger -p daemon.warning -t resource-guard "available memory is ${mem_available_pct}% (threshold 10%)"
+
+find /var/lib/docker/containers -mindepth 2 -maxdepth 2 -type f \
+    -name '*-json.log' -size +500M -print0 2&gt;/dev/null |
+    while IFS= read -r -d '' docker_log; do
+        log_size="$(du -h "$docker_log" | awk '{print $1}')"
+        logger -p daemon.warning -t resource-guard \
+            "Docker JSON log exceeds 500 MiB: ${docker_log} (${log_size})"
+    done
+EOF
+
+chmod 0755 /data2/scripts/resource-guard.sh
+bash -n /data2/scripts/resource-guard.sh
+/data2/scripts/resource-guard.sh --report</pre></div>
+        <h4>预期健康输出</h4><p>本次最终为：<code>root_used_pct=35 data2_used_pct=15 mem_available_pct=54</code>。</p>
+      </article>
+
+      <article class="step" id="step-13">
+        <div class="step-number">13</div>
+        <h2>安装定时任务并保留原 crontab</h2>
+        <div class="impact">影响：新增低优先级周期任务；先备份、去重，再安装。</div>
+        <div class="command"><div class="command-label">生成新的 root crontab</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+crontab -l &gt; "$audit_dir/root-crontab.before-schedule" 2&gt;/dev/null || true
+
+tmp_cron=/tmp/bzsj-root-crontab.new
+(crontab -l 2&gt;/dev/null || true) |
+  grep -vE 'clean-tomcat-log\.sh|bzsj-logrotate\.lock|resource-guard\.sh|bzsj-build-prune\.lock' \
+  &gt; "$tmp_cron" || true
+
+printf '%s\n' \
+  '0 2 * * * ionice -c3 nice -n 19 /data2/scripts/clean-tomcat-log.sh &gt;&gt;/tmp/log_clean.log 2&gt;&amp;1' \
+  '17 * * * * flock -n /run/bzsj-logrotate.lock ionice -c3 nice -n 19 /usr/sbin/logrotate /etc/logrotate.conf &gt;/dev/null 2&gt;&amp;1' \
+  '*/10 * * * * /data2/scripts/resource-guard.sh' \
+  '32 3 * * 0 flock -n /run/bzsj-build-prune.lock ionice -c3 nice -n 19 docker buildx prune -af --filter until=168h --keep-storage 10GB &gt;/tmp/docker-build-prune.log 2&gt;&amp;1' \
+  &gt;&gt; "$tmp_cron"
+
+crontab "$tmp_cron"
+crontab -l</pre></div>
+        <h4>四条任务</h4><ol><li>每天 02:00 压缩已关闭 Tomcat/stock 历史日志。</li><li>每小时第 17 分钟运行 logrotate。</li><li>每 10 分钟检查磁盘、内存、Docker 大日志。</li><li>每周日 03:32 将 7 天前 build cache 收敛到约 10 GB。</li></ol>
+      </article>
+
+      <article class="step" id="step-14">
+        <div class="step-number">14</div>
+        <h2>执行首次轮转和低优先级历史压缩</h2>
+        <div class="impact">影响：Nginx reopen；Tomcat copytruncate；gzip 使用一个低优先级 CPU 核。根据日志量可能运行十几分钟。</div>
+        <h4>14.1 先 dry-run</h4>
+        <div class="command"><div class="command-label">任何非 0 返回都必须停止</div><button class="copy-btn">复制</button><pre>/usr/local/nginx/nginx -t
+/usr/sbin/logrotate -d /etc/logrotate.conf
+echo "dry-run rc=$?"</pre></div>
+        <h4>14.2 首次轮转 Nginx 与 catalina.out</h4>
+        <div class="command"><div class="command-label">低优先级，最多 15 分钟</div><button class="copy-btn">复制</button><pre>timeout 900 ionice -c3 nice -n 19 \
+  /usr/sbin/logrotate -v -f /etc/logrotate.d/bzsj-data2</pre></div>
+        <h4>14.3 验证新日志句柄</h4>
+        <div class="command"><div class="command-label">必须看到 Nginx/Java 持有新或当前文件</div><button class="copy-btn">复制</button><pre>systemctl is-active nginx.service
+/usr/local/nginx/nginx -t
+lsof /data2/wwwlogs/token.baozangshijie.cn/access.log \
+     /data2/tomcat/prod/tomcat8-s50-job/logs/catalina.out 2&gt;/dev/null</pre></div>
+        <h4>14.4 压缩已关闭历史日志</h4>
+        <div class="command"><div class="command-label">可重复运行；每次只处理剩余未压缩且未打开的文件</div><button class="copy-btn">复制</button><pre>timeout 900 ionice -c3 nice -n 19 /data2/scripts/clean-tomcat-log.sh
+du -sh /data2/wwwlogs \
+       /data2/tomcat/prod/tomcat8-s50-job/logs \
+       /data2/logs/stock
+df -h /data2</pre></div>
+        <h4>14.5 压缩旧容器归档</h4>
+        <div class="command"><div class="command-label">只对第 5 步归档目录内的两个 .log 文件执行</div><button class="copy-btn">复制</button><pre>audit_dir=/data2/archive/server-cleanup-manual-20260831-1200
+archive_dir="$audit_dir/docker-retired-logs"
+test "$(realpath -m "$archive_dir")" = "$archive_dir"
+for archived_log in "$archive_dir"/*.log; do
+  test -f "$archived_log" || continue
+  timeout 600 ionice -c3 nice -n 19 gzip -f -- "$archived_log"
+done
+du -sh "$archive_dir"</pre></div>
+        <p>本次实际结果：wwwlogs 约 51.81 → 1.1 GiB；Tomcat job logs 44 → 4.9 GiB；stock logs 38 → 6.6 GiB；旧容器日志 10.96 GiB → 737 MiB 压缩归档。</p>
+      </article>
+
+      <article class="step" id="step-15">
+        <div class="step-number">15</div>
+        <h2>最终验收：服务、端口、接口、日志与资源</h2>
+        <div class="impact">影响：只读。所有检查通过后才可以宣布完成。</div>
+        <div class="command"><div class="command-label">服务状态</div><button class="copy-btn">复制</button><pre>for service_name in \
+  docker nginx tomcat8-s50-job tomcat8-s50-openApi tomcat8-s50-token \
+  dev-tomcat8-s50-openApi mysql57.server mysql80.server redis_6379 redis_6380
+do
+  printf '%s=' "$service_name"
+  systemctl is-active "$service_name" 2&gt;/dev/null || true
+done
+
+docker ps --format '{{.Names}}|{{.Status}}'
+docker inspect -f '{{.Name}}|status={{.State.Status}}|health={{if .State.Health}}{{.State.Health.Status}}{{else}}n/a{{end}}' $(docker ps -q)</pre></div>
+        <div class="command"><div class="command-label">端口与 HTTP</div><button class="copy-btn">复制</button><pre>ss -lntp | grep -E ':(80|443|3306|3307|6379|6380|9999|8317)[[:space:]]'
+
+for check_url in \
+  http://127.0.0.1:9999/health \
+  http://127.0.0.1:9999/v1/models \
+  http://127.0.0.1:8317/
+do
+  http_code="$(curl -sS -m 5 -o /dev/null -w '%{http_code}' "$check_url" 2&gt;/dev/null || echo connection_failed)"
+  echo "$check_url|$http_code"
+done</pre></div>
+        <div class="command"><div class="command-label">磁盘、内存、策略</div><button class="copy-btn">复制</button><pre>df -hT / /data2
+df -ih / /data2
+free -h
+journalctl --disk-usage
+docker system df
+/data2/scripts/resource-guard.sh --report
+/usr/sbin/logrotate -d /etc/logrotate.conf &gt;/tmp/logrotate-final-dry.txt 2&gt;&amp;1
+echo "logrotate dry-run rc=$?"
+tail -10 /tmp/logrotate-final-dry.txt</pre></div>
+        <h4>本次最终通过标准</h4>
+        <ul class="checklist"><li>根盘 35%，数据盘 15%，inode 5% / 1%。</li><li>Docker、Nginx、4 个 Tomcat、2 个 MySQL、2 个 Redis 均为 active。</li><li>7 个原运行容器仍在；sub2api health=healthy。</li><li>9999 /health=200，9999 /v1/models=401（接口可达但需鉴权），8317 /=200。</li><li>journal 约 1000 MiB，logrotate dry-run 返回 0。</li><li>Nginx、catalina.out、当前 stock 日志仍有正确打开句柄。</li></ul>
+      </article>
+
+      <section id="rollback">
+        <h2>配置回滚说明</h2><p class="section-note">仅在新策略出现异常时使用。数据清理本身不能完全原地回滚，但配置与旧容器日志已有归档。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>对象</th><th>回滚方法</th><th>限制</th></tr></thead>
+          <tbody>
+            <tr><td>Docker daemon.json</td><td>从 <code>$audit_dir/daemon.json.before</code> 恢复，先 <code>dockerd --validate</code>，再对 daemon 发送 HUP。</td><td>不重启业务容器；旧镜像需重新拉取/构建。</td></tr>
+            <tr><td>root crontab</td><td><code>crontab "$audit_dir/root-crontab.before"</code></td><td>会移除本次新增的周期保护。</td></tr>
+            <tr><td>旧清理脚本</td><td>将 <code>clean-tomcat-log.sh.before</code> 恢复到原路径。</td><td>旧脚本存在全盘 find 和未压缩问题，不建议长期恢复。</td></tr>
+            <tr><td>logrotate 规则</td><td>移除 <code>/etc/logrotate.d/bzsj-data2</code> 或恢复此前备份，然后 dry-run。</td><td>已压缩历史日志不会自动解压。</td></tr>
+            <tr><td>journal 限额</td><td>移除 drop-in，重启 journald。</td><td>已 vacuum 的旧日志不可恢复。</td></tr>
+            <tr><td>旧容器日志</td><td>完整 gzip 位于 <code>$audit_dir/docker-retired-logs</code>；inspect 元数据在同一归档目录。</td><td>容器镜像若已 prune，需要重新拉取或构建后再重建容器。</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="next-prev"><a href="01-before-cleanup.html">← 上一章：清理前情况</a><a href="03-after-cleanup.html">下一章：清理后情况 →</a></div>
+  <div class="footer">手动运行手册 · 修改服务器前必须重新执行前置检查</div>
+</main>
+<script>
+  function fallbackCopy(text) {
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var text = button.parentElement.querySelector('pre').innerText;
+      var copied = navigator.clipboard && window.isSecureContext
+        ? navigator.clipboard.writeText(text).catch(function () { fallbackCopy(text); })
+        : Promise.resolve(fallbackCopy(text));
+      copied.then(function () {
+        var old = button.textContent;
+        button.textContent = '已复制';
+        setTimeout(function () { button.textContent = old; }, 1200);
+      });
+    });
+  });
+</script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

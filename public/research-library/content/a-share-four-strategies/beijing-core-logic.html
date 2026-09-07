@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>北京炒家首板战法核心逻辑</title>
+  <style>
+    :root {
+      --ink: #3f211d;
+      --muted: #806c64;
+      --red: #a63f32;
+      --red-deep: #823128;
+      --line: rgba(180, 73, 55, 0.16);
+      --shadow: 0 26px 80px rgba(117, 52, 39, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei", serif;
+      background:
+        radial-gradient(circle at 12% -8%, rgba(191, 73, 55, 0.22), transparent 34%),
+        radial-gradient(circle at 88% 2%, rgba(222, 145, 112, 0.18), transparent 34%),
+        linear-gradient(180deg, #f1cbbd 0, #fff8f3 260px, #fffaf6 100%);
+    }
+    a { color: var(--red); text-decoration: none; }
+    .page { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; padding: 44px 0 72px; }
+    .hero, .section {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(202, 73, 55, 0.10), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,249,244,0.90));
+      box-shadow: var(--shadow);
+    }
+    .hero { padding: 42px; }
+    .eyebrow { color: #a75a4a; font-size: 13px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-size: clamp(38px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.06em; color: var(--red-deep); }
+    .lead { max-width: 930px; margin: 0; color: var(--muted); font-size: 20px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .pill, .ref-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 247, 242, 0.78);
+      color: #8e3b30;
+      font-weight: 700;
+    }
+    .section { margin-top: 22px; padding: 30px; }
+    .section h2 { margin: 0 0 18px; color: var(--red-deep); font-size: 30px; letter-spacing: -0.04em; }
+    .section h3 { margin: 0 0 10px; color: #4a2923; font-size: 20px; }
+    .section p, .section li { color: var(--muted); font-size: 16px; line-height: 1.85; }
+    .section ul, .section ol { margin: 0; padding-left: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 22px; }
+    .mini-card { padding: 20px; border-radius: 24px; background: rgba(255,255,255,0.74); border: 1px solid rgba(180, 73, 55, 0.12); }
+    .quote {
+      margin: 0;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(202, 73, 55, 0.10), rgba(255,255,255,0.76));
+      border: 1px solid rgba(180, 73, 55, 0.16);
+      color: var(--red-deep);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.65;
+    }
+    .chain { counter-reset: step; display: grid; gap: 14px; }
+    .step {
+      position: relative;
+      padding: 20px 20px 20px 72px;
+      border-radius: 24px;
+      border: 1px solid rgba(180, 73, 55, 0.12);
+      background: rgba(255,255,255,0.74);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, #b84c3d, #7f2f27);
+      font-weight: 900;
+    }
+    .matrix { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 18px; background: rgba(255,255,255,0.74); }
+    .matrix th, .matrix td { padding: 14px 16px; border-bottom: 1px solid rgba(180, 73, 55, 0.10); text-align: left; vertical-align: top; color: var(--muted); line-height: 1.7; }
+    .matrix th { color: var(--red-deep); background: rgba(202, 73, 55, 0.07); font-size: 14px; }
+    .ref-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .footer-note { margin-top: 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    @media (max-width: 860px) {
+      .page { width: min(100vw - 24px, 1180px); padding-top: 24px; }
+      .hero, .section { padding: 22px; border-radius: 26px; }
+      .grid { grid-template-columns: 1fr; }
+      .matrix { display: block; overflow-x: auto; }
+    }
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Beijing Chaogu First Board</div>
+      <h1>北京炒家首板战法核心逻辑</h1>
+      <p class="lead">这套战法不是提前预测题材，而是等市场给出右侧确认：涨幅榜、涨速榜、首板质量、板块效应、封板/回封/换手质量都通过后，才考虑分仓打板，并把次日溢价作为主要兑现窗口。</p>
+      <div class="hero-actions">
+        <a class="pill" href="latest.html">返回四战法首页</a>
+        <span class="pill">生成时间：2026-09-07 15:38:29 +0800</span>
+        <span class="pill">适用：首板打板与次日套利，不等于保证买入建议</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一句话核心</h2>
+      <p class="quote">北京炒家首板战法的核心不是“看到涨停就打”，而是只打有板块效应、有封板质量、有换手承接、能产生次日溢价的前排首板；弱板、尾盘偷鸡、后排凑数一律降级。</p>
+    </section>
+
+    <section class="section">
+      <h2>证据从哪里来</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>证据层级</h3>
+          <ul>
+            <li>第一层：北京炒家淘股吧博客和公开实盘帖，尤其是“20万起步，只打板”及后续实盘/总结。</li>
+            <li>第二层：公开整理的直播笔记、首板技术、板型分类和仓位管理。</li>
+            <li>第三层：付费 PDF、转载交割单、社媒总结，只能辅助理解，不能当作今日买入依据。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>本地 skill 的硬约束</h3>
+          <ul>
+            <li>不和 Kobe92 周期切换、养家情绪买卖压、陈小群龙头席位逻辑混用。</li>
+            <li>不能在真实盘中首板候选出现前，硬给精确五股首板名单。</li>
+            <li>不能因为涨停二字就推荐，必须同时看板块、板型、时间、封单、风险。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">公开参考入口：</p>
+      <div class="ref-links"><a href="https://www.tgb.cn/blog/2101931" target="_blank" rel="noreferrer">淘股吧博客公开入口</a>
+<a href="https://m.tgb.cn/Article/2077086/1" target="_blank" rel="noreferrer">淘股吧公开文章入口</a>
+<a href="https://www.tgb.cn/a/1WBGM8a5jyf" target="_blank" rel="noreferrer">淘股吧整理入口</a>
+<a href="https://finance.sina.com.cn/tech/roll/2024-12-12/doc-inczezhm2919908.shtml" target="_blank" rel="noreferrer">新浪公开报道入口</a>
+<a href="https://www.scribd.com/document/879273411/%E5%8C%97%E4%BA%AC%E7%82%92%E5%AE%B6%E9%A6%96%E6%9D%BF%E6%A8%A1%E5%BC%8F" target="_blank" rel="noreferrer">公开文档整理入口</a></div>
+    </section>
+
+    <section class="section">
+      <h2>完整决策链</h2>
+      <div class="chain">
+        <div class="step"><h3>第一步：从涨幅榜和涨速榜建自选</h3><p>不要等股票已经封死才开始理解。盘中先盯 4%-7% 向涨停移动的股票，判断它属于什么题材、有没有量价结构、是否值得进入首板自选。</p></div>
+        <div class="step"><h3>第二步：判断板块效应</h3><p>首板必须有清晰板块效应。板块前排、同题材扩散、核心股强，才说明不是孤立脉冲。没有板块效应的秒拉板，通常不值得为了凑数去打。</p></div>
+        <div class="step"><h3>第三步：分类板型</h3><p>秒拉板、回封板、换手板、中军板、尾盘偷鸡板的风险收益不同。回封和换手通常比无承接秒拉更稳，尾盘偷鸡除非是高质量换手/中军，否则默认回避。</p></div>
+        <div class="step"><h3>第四步：看封板质量</h3><p>看首封时间、炸板次数、回封力度、封单质量、换手、成交额、收盘强度。板质量比“涨停”两个字更重要。</p></div>
+        <div class="step"><h3>第五步：分仓和停手</h3><p>默认分仓。早盘高质量板可以稍重，尾盘板和 20cm 高波动要更小。若两个活跃候选明显炸板，停止开新仓；错了不补仓，快速降级。</p></div>
+        <div class="step"><h3>第六步：计划次日套利</h3><p>首板战法主要看次日溢价、竞价强弱和开盘承接。若次日低于预期或板块失败，退出逻辑优先，不恋战。</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>板型怎么区分</h2>
+      <table class="matrix">
+        <thead><tr><th>板型</th><th>含义</th><th>可打条件</th><th>回避条件</th></tr></thead>
+        <tbody>
+          <tr><td>秒拉板</td><td>快速直线冲板，留给判断时间少。</td><td>板块效应强、前排辨识度高，最好排板而非盲扫。</td><td>无题材、无量、孤立秒拉。</td></tr>
+          <tr><td>回封板</td><td>首次炸板后重新封回。</td><td>卖压释放后回封有力，封单恢复，板块未走弱。</td><td>反复炸板、回封虚弱。</td></tr>
+          <tr><td>换手板</td><td>在 6%-8% 附近充分换手后上板。</td><td>高位换手消化抛压，分时承接平稳。</td><td>冲高回落、换手后无法再上板。</td></tr>
+          <tr><td>中军板</td><td>板块中辨识度高、容量较大的核心票。</td><td>板块强、容量资金认可，下午也可接受。</td><td>只是大票跟涨，没有带动性。</td></tr>
+          <tr><td>尾盘偷鸡板</td><td>尾盘突然抢板。</td><td>极少数高质量换手/中军可看。</td><td>14:30 后无板块、无承接、纯偷鸡默认不打。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>候选股六道门</h2>
+      <table class="matrix">
+        <thead><tr><th>门槛</th><th>要回答的问题</th><th>不过关怎么处理</th></tr></thead>
+        <tbody>
+          <tr><td>首板门</td><td>是否是首板、高质量近板，或有量的可接受一进二？</td><td>不是首板体系就不进池。</td></tr>
+          <tr><td>板块门</td><td>是否有清晰板块效应和前排地位？</td><td>孤立板不为凑数买。</td></tr>
+          <tr><td>时间门</td><td>是否早盘前排？若是尾盘，是否真换手/中军？</td><td>尾盘偷鸡默认不打。</td></tr>
+          <tr><td>流动性门</td><td>量价是否顺畅，有没有从 6%-7% 回落到 2%-3% 的坏分时？</td><td>分时破坏就淘汰。</td></tr>
+          <tr><td>封板门</td><td>封单、回封、换手、炸板次数是否支持次日溢价？</td><td>封板质量差就只观察或不买。</td></tr>
+          <tr><td>风险门</td><td>是否有公告利空、监管、减持、低流动性、纯传闻？</td><td>风险未排除不买。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>买法和价格触发</h2>
+      <table class="matrix">
+        <thead><tr><th>动作标签</th><th>怎么操作</th><th>价格/结构触发</th><th>失效条件</th></tr></thead>
+        <tbody>
+          <tr><td>可排板</td><td>只在板块和封单质量支持时排涨停，不是盲扫。</td><td>已到或接近涨停，封单质量足够。</td><td>封单明显转弱、板块掉队、炸板恶化。</td></tr>
+          <tr><td>只等回封</td><td>现在不买，等卖压释放后重新封回。</td><td>二次回封确认，回封后封单恢复。</td><td>回封失败或反复炸板。</td></tr>
+          <tr><td>换手可打</td><td>高位充分换手后再看上板确认。</td><td>6%-8% 换手承接后上板或回踩分时均线不破再转强。</td><td>高位换手后无法再上板。</td></tr>
+          <tr><td>明早看竞价承接</td><td>你没买就不是套利；只是次日验证有没有溢价和承接。</td><td>高开不过热、开盘不砸、站稳关键价，板块还有跟随。</td><td>低开、冲高回落、跌破关键价、板块无跟随。</td></tr>
+          <tr><td>不打尾盘</td><td>尾盘偷鸡、无板块、无承接不买。</td><td>无有效触发。</td><td>默认不买。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>打分、输出与收益跟踪</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>100 分评分</h3>
+          <ul>
+            <li>板质量 25：首封时间、回封/换手、炸板次数、收盘强度。</li>
+            <li>板块效应 20：板块宽度、前排位置、联动性。</li>
+            <li>时间和流动性 15：10:30 前更优，有成交额和换手，不极端冷门。</li>
+            <li>次日溢价 15：竞价/开盘溢价概率、角色、封单和题材热度。</li>
+            <li>风控 15：公告清洁、非尾盘偷鸡、非后排强凑。</li>
+            <li>仓位适配 10：分仓、试仓、小仓是否说清楚。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>必须输出什么</h3>
+          <ul>
+            <li>每只必须写 `买`、`不买` 或 `只观察`。</li>
+            <li>`买` 必须同时有买法、价格触发、仓位、失效条件。</li>
+            <li>候选弱就写空仓席位，不强行凑五只。</li>
+            <li>只跟踪明确标记为 `买` 的股票；触发未发生就写 `未触发`。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三个检查点怎么用</h2>
+      <table class="matrix">
+        <thead><tr><th>时间</th><th>作用</th><th>必须看什么</th></tr></thead>
+        <tbody>
+          <tr><td>10:35 首板雷达</td><td>主运行。此时已有涨幅榜、涨速榜和首板数据，可以筛选五只首板/近板候选。</td><td>买不买、怎么买、排板/回封/换手触发，不把次日套利当主动作。</td></tr>
+          <tr><td>14:20 封板质量检查</td><td>检查炸板、回封、换手、尾盘风险，决定是否继续等待或停止观察。</td><td>若两个活跃候选明显炸板，剩余开仓位转为不买。</td></tr>
+          <tr><td>15:25 首板复盘</td><td>确认今天候选是否封住、炸板、弱收，并准备次日套利计划。</td><td>次日竞价预期、开盘溢价区间、低于预期如何退出。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>常见误区</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>这些不是买入理由</h3>
+          <ul>
+            <li>只因为涨停。</li>
+            <li>无板块效应的孤立秒拉。</li>
+            <li>尾盘偷鸡看起来强。</li>
+            <li>为了凑满五只，买后排首板。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>这些必须强制降级</h3>
+          <ul>
+            <li>封单明显转弱或反复炸板。</li>
+            <li>板块前排掉队，候选变后排。</li>
+            <li>分时从高位流畅转为衰退。</li>
+            <li>两只活跃候选炸板后，停止开新仓。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">这页解释的是当前本地 `beijing-chaogu-first-board` skill 的执行逻辑。它服务于首板打板研究和复盘，不构成保证收益或个性化投资建议。</p>
+    </section>
+  </main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

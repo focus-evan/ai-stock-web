@@ -1,0 +1,51 @@
+{
+  "300502": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/300502.phtml?ftype=lsgg",
+    "matches": [
+      "2026-07-20&nbsp; 新易盛：投资者关系管理信息20260719 2026-07-20&nbsp; 新易盛：2026年半年度业绩预告 2026-07-09&nbsp; "
+    ],
+    "error": null
+  },
+  "688017": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688017.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "600183": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/600183.phtml?ftype=lsgg",
+    "matches": [
+      "2026-07-14&nbsp; 生益科技：2026年半年度业绩预增公告 2026-07-10&nbsp; 生益科技：股权激励限制性股票回购注销实施公告 2026-07-09&nb"
+    ],
+    "error": null
+  },
+  "688008": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688008.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "002837": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/002837.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "688012": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688012.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "688300": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688300.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "002409": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/002409.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  },
+  "688097": {
+    "url": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688097.phtml?ftype=lsgg",
+    "matches": [],
+    "error": null
+  }
+}

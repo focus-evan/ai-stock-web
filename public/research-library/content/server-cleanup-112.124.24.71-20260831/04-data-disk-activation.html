@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>04 ESSD数据盘启用｜112.124.24.71</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">112.124.24.71 优化方案</a><span>/</span><strong>ESSD数据盘启用</strong></div><div>实施：2026-08-31</div></div>
+  <header class="hero green"><div class="eyebrow">CHAPTER 04 · ESSD ACTIVATION</div><h1>256 GiB ESSD PL0 数据盘启用</h1><p>从“已付费但未初始化的裸盘”，变成可开机自动挂载、带容量告警和Dify数据库恢复点的数据盘。</p><div class="tags"><span>/dev/vdb1</span><span>GPT + ext4</span><span>/data2</span><span>首份备份已验证</span></div></header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 优化前情况</a><a href="02-manual-cleanup-guide.html">02 清理操作</a><a href="03-after-cleanup.html">03 优化后情况</a><a class="active" href="04-data-disk-activation.html">04 ESSD数据盘</a><a href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status"><span class="pill green">实施完成</span><div><strong>数据盘已实际投入使用。</strong> fstab自动重挂载、写入、SHA-256、pg_restore目录和数据库健康检查全部通过；当前已用3%，可用约243 GiB。</div></div>
+
+  <section>
+    <h2>为什么控制台一直显示没有数据</h2>
+    <div class="table-wrap"><table><thead><tr><th>检查项</th><th>启用前结果</th><th>结论</th></tr></thead><tbody>
+      <tr><td>云盘ID/设备</td><td><code>d-bp11pv1avns1aa578cs6</code> / <code>/dev/vdb</code></td><td>序列号一一对应。</td></tr>
+      <tr><td>容量</td><td>274,877,906,944 bytes = 256 GiB</td><td>与控制台一致。</td></tr>
+      <tr><td>分区表</td><td>unknown，无任何分区</td><td>从未初始化。</td></tr>
+      <tr><td>文件系统/UUID</td><td>均为空</td><td>无法挂载和保存普通文件。</td></tr>
+      <tr><td>LVM/fstab/挂载点</td><td>均不存在</td><td>系统从未使用。</td></tr>
+      <tr><td>控制台监控</td><td>“暂无数据”，云助手未授权</td><td>监控缺失之外，系统检查也证明是空白裸盘。</td></tr>
+    </tbody></table></div>
+    <div class="callout warn"><strong>费用结论：</strong>阿里云云盘从创建时按容量和时长计费，与是否挂载、是否存数据无关。该盘是包年包月资源，因此此前一直产生预付费成本。<a href="https://www.alibabacloud.com/help/en/ecs/block-storage-devices">阿里云块存储计费规则</a></div>
+  </section>
+
+  <section>
+    <h2>实施结果</h2>
+    <div class="grid four">
+      <div class="card metric"><div class="label">设备</div><div class="value blue">/dev/vdb1</div><div class="sub">单个GPT主分区</div></div>
+      <div class="card metric"><div class="label">文件系统</div><div class="value blue">ext4</div><div class="sub">标签data2，UUID固定挂载</div></div>
+      <div class="card metric"><div class="label">挂载点</div><div class="value good">/data2</div><div class="sub">fstab自动重挂载验证通过</div></div>
+      <div class="card metric"><div class="label">当前容量</div><div class="value good">3%</div><div class="track"><div class="fill green" style="width:3%"></div></div><div class="sub">已用5.7 GiB，可用约243 GiB</div></div>
+    </div>
+    <div class="callout good"><strong>UUID：</strong><code>17e5a278-af62-45e4-9a85-48f87f6edecd</code>。fstab：<code>UUID=... /data2 ext4 defaults,nofail 0 2</code>。</div>
+  </section>
+
+  <section>
+    <h2>步骤1：删除不再使用的Dify 0.15.3</h2>
+    <p class="section-note">用户明确确认该版本不再需要。操作前已验证无进程、挂载、容器或配置引用。</p>
+    <div class="table-wrap"><table><thead><tr><th>删除目标</th><th>清理前</th><th>结果</th></tr></thead><tbody>
+      <tr><td><code>/home/dify15/dify-0.15.3</code></td><td>约1.4 GiB</td><td>已删除</td></tr>
+      <tr><td><code>/home/dify15/dify-0.15.3-back</code></td><td>约13 GiB</td><td>已删除</td></tr>
+      <tr><td><code>/home/dify15/dify_0.15.3.tar.gz</code></td><td>约23 MiB</td><td>已删除</td></tr>
+    </tbody></table></div>
+    <div class="command"><div class="command-label">执行前引用检查</div><button class="copy-btn">复制</button><pre>timeout 30 lsof +D /home/dify15 2&gt;/dev/null | head
+findmnt -R /home/dify15 2&gt;/dev/null || true
+for container_id in $(docker ps -q); do
+  docker inspect -f '{{.Name}}|{{range .Mounts}}{{.Source}};{{end}}' "$container_id"
+done | grep -E '/home/dify15|dify-0.15.3' || true</pre></div>
+    <p>删除前完整文件路径、大小和修改时间清单保存在服务器审计目录。删除后系统盘从59%降到48%。</p>
+  </section>
+
+  <section>
+    <h2>步骤2：空盘保护性复核</h2>
+    <div class="command"><div class="command-label">所有输出必须证明 /dev/vdb 是256 GiB空盘</div><button class="copy-btn">复制</button><pre>lsblk -b -o NAME,PATH,SIZE,TYPE,FSTYPE,UUID,MOUNTPOINTS,SERIAL /dev/vdb
+wipefs -n /dev/vdb
+blkid /dev/vdb || true
+file -s /dev/vdb
+parted -s /dev/vdb unit s print</pre></div>
+    <ul class="checklist"><li>序列号必须是 <code>bp11pv1avns1aa578cs6</code>。</li><li>容量必须是 274877906944 bytes。</li><li>不得存在子分区、文件系统签名、UUID或挂载点。</li><li>任何一项不符都必须停止，不能格式化。</li></ul>
+  </section>
+
+  <section>
+    <h2>步骤3：创建GPT分区和ext4</h2>
+    <div class="command"><div class="command-label">此步骤会写入 /dev/vdb，仅适用于已确认空盘</div><button class="copy-btn">复制</button><pre>disk_device=/dev/vdb
+partition_device=/dev/vdb1
+
+test "$(lsblk -dn -o SERIAL "$disk_device" | xargs)" = bp11pv1avns1aa578cs6
+test "$(lsblk -bdn -o SIZE "$disk_device" | xargs)" = 274877906944
+test -z "$(wipefs -n "$disk_device" 2&gt;/dev/null || true)"
+
+parted -s "$disk_device" mklabel gpt
+parted -s "$disk_device" mkpart primary ext4 0% 100%
+partprobe "$disk_device"
+udevadm settle
+test -b "$partition_device"
+
+mkfs.ext4 -F -L data2 "$partition_device"
+e2fsck -fn "$partition_device"</pre></div>
+    <p>首次安全校验曾因容量命令返回人类可读的“256G”而在写盘前停止；改用 <code>lsblk -b</code> 字节模式后才继续。</p>
+  </section>
+
+  <section>
+    <h2>步骤4：挂载、fstab和可写验证</h2>
+    <div class="command"><div class="command-label">挂载到全新空目录 /data2</div><button class="copy-btn">复制</button><pre>audit_dir=/var/backups/server-cleanup-112.124.24.71-20260831-1150
+cp -a /etc/fstab "$audit_dir/fstab.before-data2"
+mkdir -m 0755 /data2
+
+data_uuid="$(blkid -s UUID -o value /dev/vdb1)"
+printf 'UUID=%s /data2 ext4 defaults,nofail 0 2\n' "$data_uuid" &gt;&gt; /etc/fstab
+systemctl daemon-reload
+mount /data2
+
+mountpoint -q /data2
+test "$(findmnt -n -o SOURCE /data2)" = /dev/vdb1
+touch /data2/.write-test
+sync
+rm -f /data2/.write-test
+findmnt /data2
+df -hT /data2</pre></div>
+    <p>随后实际执行过一次卸载和 <code>mount -a</code> 重挂载测试，证明开机配置有效。</p>
+  </section>
+
+  <section>
+    <h2>步骤5：释放非系统盘保留块并创建目录</h2>
+    <div class="command"><div class="command-label">数据盘保留块5% → 1%</div><button class="copy-btn">复制</button><pre>tune2fs -m 1 /dev/vdb1
+install -d -m 0755 /data2/archive /data2/backups /data2/log-archive /data2/video
+install -d -m 0700 /data2/backups/dify-postgres /data2/backups/system
+df -hT /data2</pre></div>
+    <div class="table-wrap"><table><thead><tr><th>目录</th><th>用途</th><th>权限</th></tr></thead><tbody>
+      <tr><td><code>/data2/archive</code></td><td>服务器治理审计与长期归档</td><td>顶层0755，具体审计目录0700</td></tr>
+      <tr><td><code>/data2/backups/dify-postgres</code></td><td>Dify PostgreSQL恢复点</td><td>0700</td></tr>
+      <tr><td><code>/data2/backups/system</code></td><td>系统配置与恢复文件</td><td>0700</td></tr>
+      <tr><td><code>/data2/log-archive</code></td><td>未来离线历史日志</td><td>0755</td></tr>
+      <tr><td><code>/data2/video</code></td><td>未来冷视频素材</td><td>0755</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>步骤6：Dify PostgreSQL在线备份</h2>
+    <p class="section-note">使用CUSTOM格式、临时文件原子改名、SHA-256和35天保留策略。</p>
+    <div class="command"><div class="command-label">安装并执行</div><button class="copy-btn">复制</button><pre>bash -n /tmp/bzsj-dify-postgres-backup.sh
+install -m 0755 /tmp/bzsj-dify-postgres-backup.sh \
+  /usr/local/sbin/bzsj-dify-postgres-backup.sh
+
+ionice -c3 nice -n 19 /usr/local/sbin/bzsj-dify-postgres-backup.sh
+sha256sum -c /data2/backups/dify-postgres/*.sha256</pre></div>
+    <p>实际逻辑数据库约21 GB，压缩备份5.7 GB，导出约20分钟；PostgreSQL全程healthy。</p>
+    <p>脚本：<a href="files/bzsj-dify-postgres-backup.sh.txt">bzsj-dify-postgres-backup.sh</a></p>
+  </section>
+
+  <section>
+    <h2>步骤7：验证可恢复性并配置周期</h2>
+    <div class="command"><div class="command-label">读取备份目录，不写入数据库</div><button class="copy-btn">复制</button><pre>backup_root=/data2/backups/dify-postgres
+backup_file=dify-postgres-20260831-140417.dump
+
+docker run --rm --network none \
+  -v "$backup_root:/backup:ro" \
+  postgres:15-alpine \
+  pg_restore -l "/backup/$backup_file" \
+  &gt; "$backup_root/$backup_file.toc.txt"
+
+wc -l "$backup_root/$backup_file.toc.txt"
+head -12 "$backup_root/$backup_file.toc.txt"</pre></div>
+    <p>验证结果：CUSTOM格式、PostgreSQL 15.10、417个TOC对象、目录文件428行。</p>
+    <div class="command"><div class="command-label">每周日04:10，约保留5个周恢复点</div><button class="copy-btn">复制</button><pre>10 4 * * 0 flock -n /run/bzsj-dify-postgres-backup-cron.lock ionice -c3 nice -n 19 /usr/local/sbin/bzsj-dify-postgres-backup.sh</pre></div>
+  </section>
+
+  <section>
+    <h2>步骤8：将数据盘纳入资源守卫</h2>
+    <ul><li><code>/data2</code>挂载缺失：立即写入 daemon.err。</li><li>数据盘使用率达到85%：写入一次warning；恢复后写入一次RECOVERED。</li><li>不会每10分钟重复刷相同告警。</li></ul>
+    <div class="command"><div class="command-label">最终健康输出</div><button class="copy-btn">复制</button><pre>/usr/local/sbin/bzsj-resource-guard.sh --report
+# root_used_pct=48 data2_mounted=1 data2_used_pct=3
+# mem_available_pct=61 largest_docker_log=app_api_1 ...</pre></div>
+  </section>
+
+  <section>
+    <h2>最终状态和恢复资料</h2>
+    <div class="table-wrap"><table><thead><tr><th>检查</th><th>结果</th></tr></thead><tbody>
+      <tr><td>系统盘</td><td>48%，可用约64 GiB</td></tr>
+      <tr><td>数据盘</td><td>ext4，已用3%，可用约243 GiB</td></tr>
+      <tr><td>fstab</td><td>UUID自动挂载，实际重挂载测试通过</td></tr>
+      <tr><td>首份备份</td><td>5.7 GB，SHA-256 OK，pg_restore目录通过</td></tr>
+      <tr><td>数据库</td><td>接受连接，备份期间持续healthy</td></tr>
+      <tr><td>审计归档</td><td><code>/data2/archive/server-cleanup-112.124.24.71-20260831-1150</code></td></tr>
+    </tbody></table></div>
+    <div class="callout warn"><strong>恢复边界：</strong>旧0.15.3版本已按授权删除，不可从本机恢复；删除前文件清单仍在审计归档。当前Dify 1.7.1活跃数据没有迁移或修改。</div>
+  </section>
+
+  <div class="next-prev"><a href="03-after-cleanup.html">← 上一章：优化后情况</a><a href="05-dify-pause-experiment.html">下一章：Dify暂停实验 →</a></div>
+  <div class="footer">ESSD PL0数据盘启用与备份验证 · 112.124.24.71 · 2026-08-31</div>
+</main>
+<script>
+  function fallbackCopy(text){var textarea=document.createElement('textarea');textarea.value=text;textarea.style.position='fixed';textarea.style.opacity='0';document.body.appendChild(textarea);textarea.select();document.execCommand('copy');textarea.remove();}
+  document.querySelectorAll('.copy-btn').forEach(function(button){button.addEventListener('click',function(){var text=button.parentElement.querySelector('pre').innerText;var copied=navigator.clipboard&&window.isSecureContext?navigator.clipboard.writeText(text).catch(function(){fallbackCopy(text);}):Promise.resolve(fallbackCopy(text));copied.then(function(){var old=button.textContent;button.textContent='已复制';setTimeout(function(){button.textContent=old;},1200);});});});
+</script>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

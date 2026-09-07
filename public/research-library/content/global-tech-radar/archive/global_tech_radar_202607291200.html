@@ -1,0 +1,654 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-07-29 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Red延续但观察降级窗口：油价和名义10Y继续缓和，实际利率仍高，AI芯片卖压未消</h1>
+      <p class="subtitle">本轮午间雷达维持Red：全球AI/数据中心CapEx并未断裂，NVIDIA与SK、NAVER/Brookfield、SSI的官方合作继续把AI工厂、HBM和算力基础设施往前推；但流动性仍不友好，Fed H.15最新官方数据中10Y TIPS实际利率升至2.44%，强美元仍在高位。市场端虽然油价和名义10Y回落，但7月28日Nasdaq继续跑输，Micron、AMD、Applied Materials跌幅较大，说明资金仍在审问AI硬件链的现金流、估值和融资成本。FOMC和Microsoft/Meta财报今晚才是降级Red的第一道门。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-07-29 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-red">Red</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-red">Red</span> <span>Red延续但观察降级窗口：油价和名义10Y继续缓和，实际利率仍高，AI芯片卖压未消</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>继续按Red管理仓位：不追AI芯片反抽，只保留有官方订单、CapEx、云收入或电力链兑现证据的卖铲环节。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>NVIDIA/SK提出US$500bn+ AI与产业伙伴关系，NAVER/Brookfield AI工厂规划从55MW扩至200MW并有1GW意向，CapEx长线脉冲还在。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>Fed官方10Y TIPS实际利率升至2.44%；Micron -8.9%、AMD -8.1%、Applied Materials -7.8%，AI硬件估值仍被资金压着问。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>今晚只盯FOMC、Microsoft和Meta：若无加息且云RPO/CapEx/FCF能互相解释，Red才有资格测试降到Orange。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>名义利率缓和，但实际利率没有松</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.15 7月28日发布的7月27日数据：EFFR 3.63%，2Y美债4.28%，10Y美债4.65%，10Y TIPS实际利率2.44%；H.10最新Broad美元指数仍为120.7105。</p>
+              <p><strong>影响：</strong>名义10Y较前一日回落，但实际利率反而小幅上行，科技成长股估值压力仍在，不能把油价下跌直接解读为流动性转松。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 / H.10</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>美股大盘稳住，AI芯片链继续被卖</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>AP报道7月28日S&amp;P 500 +0.2%、Dow +1.0%、Nasdaq -0.2%；Micron -8.9%、AMD -8.1%、Applied Materials -7.8%。同日Brent跌至US$82.08，10Y市场收益率约4.60%，市场加息概率从近36%降至31.5%。</p>
+              <p><strong>影响：</strong>宏观尾部风险缓和，但半导体和AI硬件链仍承压，资金正在从高beta硬件转向现金流更确定的方向。</p>
+              <p class="source-line"><a href="https://apnews.com/article/a880057323bd065c325ad19b23de0cf3">Associated Press</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>NVIDIA/SK把AI工厂和HBM需求再次做实</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>NVIDIA官方7月25日披露与SK Group扩大合作，双方提到US$500bn+ AI与产业转型计划、2GW DSX AI Factory，以及SK hynix围绕HBM4和第六代10nm级DRAM的深度合作；文件同时标注多项内容为letters of intent和forward-looking。</p>
+              <p><strong>影响：</strong>长线利好AI工厂、HBM4、先进封装、液冷、电力和数据中心工程，但不能把LOI直接等同于已确认收入。</p>
+              <p class="source-line"><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA Newsroom</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>NAVER/Brookfield AI工厂强化主权AI与电力融资模型</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>NVIDIA官方披露NAVER Cloud、NVIDIA、Brookfield将韩国AI工厂从约55MW扩展至200MW，并表达进一步到1GW的意向；NVIDIA计划向NAVER Cloud投资US$1bn，Brookfield签署term sheet拟投资最高US$9bn。</p>
+              <p><strong>影响：</strong>主权AI和AI工厂的卖铲人从GPU扩展到电力、机房、冷却和长期资本，利好基础设施链，但执行节奏仍需跟踪。</p>
+              <p class="source-line"><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA Newsroom</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>FOMC与Microsoft/Meta进入今晚验证窗口</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed日历显示7月28-29日FOMC会议；Microsoft官方确认FY2026 Q4电话会在7月29日，Meta官方确认Q2 2026盘后发布。当前北京时间12:00尚未见两家公司正式结果。</p>
+              <p><strong>影响：</strong>今晚要验证的不是一句AI热度，而是CapEx、云RPO、AI收入、折旧和FCF能否闭环；这是Red能否降级的关键门。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve / Microsoft IR / Meta IR</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>NVIDIA / SK Group / SK hynix</td>
+              <td>官方披露US$500bn+ AI与产业转型合作、2GW DSX AI Factory、SK hynix HBM4和6th Gen 10nm-class DRAM合作，多项内容为LOI或forward-looking。</td>
+              <td>上修</td>
+              <td>HBM4、先进封装、AI工厂、液冷、电力、光互连、韩国半导体和主权AI基础设施。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NAVER Cloud / NVIDIA / Brookfield</td>
+              <td>官方披露韩国AI工厂从约55MW扩展到200MW，并表达进一步到1GW意向；NVIDIA拟投资US$1bn，Brookfield term sheet最高US$9bn。</td>
+              <td>上修</td>
+              <td>GPU、机房、电力、冷却、运营资金和数据中心长期资本成为同一个CapEx闭环。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA / Safe Superintelligence</td>
+              <td>NVIDIA官方称与SSI建立长期战略伙伴关系，将投资SSI并提供NVIDIA Vera Rubin平台访问；未披露具体订单金额。</td>
+              <td>上修</td>
+              <td>利好下一代GPU、HBM、网络和训练集群需求，但金额和交付节奏待验证。</td>
+              <td>Medium</td>
+              <td><a href="https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>官方确认FY2026 Q4业绩电话会在2026-07-29举行；截至本次北京时间12:00未见正式结果。</td>
+              <td>待验证</td>
+              <td>重点核实Azure AI、CapEx、RPO、折旧、FCF和管理层对AI回报周期的描述。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>官方确认Q2 2026结果将在2026-07-29美股盘后发布，电话会同日1:30 p.m. PT / 4:30 p.m. ET。</td>
+              <td>待验证</td>
+              <td>重点核实AI基础设施CapEx、广告AI变现、折旧费用、Reality Labs消耗和FCF。</td>
+              <td>High</td>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-to-Announce-Second-Quarter-2026-Results/default.aspx">Meta IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon</td>
+              <td>官方确认Q2 2026财报电话会将在2026-07-30 2:00 p.m. PT / 5:00 p.m. ET举行。</td>
+              <td>待验证</td>
+              <td>AWS增速、Trainium/ASIC投入、NVIDIA容量、property/equipment与租赁支出将决定AI CapEx可持续性。</td>
+              <td>High</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx">Amazon IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple</td>
+              <td>Apple投资者电话会页面已开放；截至本次运行尚未见Q3 2026正式结果。</td>
+              <td>待验证</td>
+              <td>观察端侧AI、服务收入、设备周期和AI CapEx是否对半导体/消费电子链形成补充。</td>
+              <td>Medium</td>
+              <td><a href="https://www.apple.com/investor/earnings-call/">Apple Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>AMD / Anthropic / Helios</td>
+              <td>此前官方确认Anthropic计划部署最高2GW AMD Instinct MI450系列GPU；AMD AAI 2026披露Helios rack-scale方案，OpenAI/Anthropic/Meta/Microsoft/Oracle等生态信号仍是重要正反馈。</td>
+              <td>持平</td>
+              <td>GPU、HBM4、先进封装、机柜级网络、电源、液冷、ODM服务器需求保持扩张。</td>
+              <td>High</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>GE Vernova</td>
+              <td>Q2官方披露订单US$24.2bn、organic +88%，backlog环比+US$13.0bn；YTD数据中心订单超过US$5bn，超过2025全年总额两倍以上。</td>
+              <td>持平</td>
+              <td>AI CapEx外溢到燃机、电网、电气化、储能、UPS和电力工程，电力卖铲人继续强于纯概念映射。</td>
+              <td>High</td>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Fed H.15</td>
+              <td>7月28日发布的7月27日数据：EFFR 3.63%，2Y 4.28%，10Y 4.65%，20Y 5.15%，30Y 5.12%，10Y TIPS实际利率2.44%。</td>
+              <td>压力</td>
+              <td>名义10Y下降，但实际利率仍处高位且小幅上行，长久期科技估值没有获得真正宽松。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Dollar</td>
+              <td>H.10最新可见数据中Broad美元指数为120.7105，仍处高位；此前美元指数已连续多日高于120。</td>
+              <td>压力</td>
+              <td>强美元不利于全球风险资产扩散，也压制非美元科技资金的估值承受力。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>Market rates / Oil</td>
+              <td>AP报道7月28日10Y美债市场收益率降至约4.60%，Brent跌至US$82.08，WTI跌至US$79.17。</td>
+              <td>中性偏宽松</td>
+              <td>能源通胀压力短线缓和，是Red降级的必要条件之一，但还不是充分条件。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/a880057323bd065c325ad19b23de0cf3">Associated Press</a></td>
+            </tr>
+            
+            <tr>
+              <td>FOMC</td>
+              <td>Fed官方日历显示FOMC会议为2026-07-28至2026-07-29；截至北京时间2026-07-29 12:00尚未发布本次决议。</td>
+              <td>待验证</td>
+              <td>如果不加息且发布会弱化通胀/油价压力，Red有降级窗口；若加息或维持鹰派，Red延续。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve</a></td>
+            </tr>
+            
+            <tr>
+              <td>Consumer confidence</td>
+              <td>The Conference Board报道7月Consumer Confidence Index降至90.8，6月修正值为94.0；Expectations Index降至80.1，低于通常提示未来衰退风险的80阈值附近。</td>
+              <td>中性偏宽松</td>
+              <td>增长预期走弱可能压低收益率，但如果同时打击科技需求预期，对高估值科技并非纯利好。</td>
+              <td>Medium</td>
+              <td><a href="https://www.conference-board.org/topics/consumer-confidence">The Conference Board</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1 / Reserve balances</td>
+              <td>7月23日H.4.1显示截至7月22日储备余额US$3.062149tn，周环比- US$80.572bn，同比- US$300.128bn；TGA周环比+US$73.405bn。</td>
+              <td>压力</td>
+              <td>银行体系流动性边际被吸收，高估值科技链仍需要更强业绩兑现对冲贴现率。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>PCE / GDP pending</td>
+              <td>PCE和GDP仍在本周后半段验证窗口，当前未见新官方结果。</td>
+              <td>待验证</td>
+              <td>决定通胀粘性和增长韧性，影响实际利率和科技估值闸门。</td>
+              <td>High</td>
+              <td><a href="https://www.bea.gov/">BEA / Federal Reserve watchlist</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>AI芯片链大跌</td>
+              <td>存储、GPU、半导体设备、AI服务器</td>
+              <td>利空</td>
+              <td>短期偏现金流、防御和已兑现订单的基础设施卖铲环节</td>
+              <td>Micron、AMD、Applied Materials及同类高beta硬件映射</td>
+              <td>媒体报道</td>
+              <td><a href="https://apnews.com/article/a880057323bd065c325ad19b23de0cf3">Associated Press</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA/SK Group AI Factory与HBM合作</td>
+              <td>AI工厂、HBM4、DRAM、先进封装、液冷、电力</td>
+              <td>利好</td>
+              <td>HBM、先进封装、AI机柜、电力和冷却工程</td>
+              <td>订单兑现慢、只靠主题弹性的高估值供应商</td>
+              <td>官方确认，但部分为LOI/forward-looking</td>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NAVER/Brookfield韩国AI工厂</td>
+              <td>GPU、数据中心、电力、冷却、长期资本</td>
+              <td>利好</td>
+              <td>AI数据中心建设、并网、电气化、冷却、主权AI供应链</td>
+              <td>无法获得长期低成本资本的数据中心项目</td>
+              <td>官方确认，但1GW仍为意向</td>
+              <td><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA/SSI长期合作</td>
+              <td>Vera Rubin平台、HBM、网络、训练集群</td>
+              <td>利好</td>
+              <td>下一代GPU、HBM、InfiniBand/Ethernet、机柜级电力和冷却</td>
+              <td>无法跟上下一代训练集群功耗/互连要求的旧平台</td>
+              <td>官方确认，但未披露金额</td>
+              <td><a href="https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>OpenAI/NVIDIA超大额数据中心融资报道</td>
+              <td>AI融资、数据中心、电力、GPU</td>
+              <td>中性</td>
+              <td>若后续官方确认，利好GPU、机房、电力和云资本开支链</td>
+              <td>若融资闭环不足，市场会反向惩罚高CapEx和弱FCF环节</td>
+              <td>媒体报道，未见官方确认</td>
+              <td><a href="https://www.wsj.com/">Financial media reports</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft/Meta/Amazon/Apple财报前验证</td>
+              <td>云、AI服务器、消费电子、广告AI、软件</td>
+              <td>中性</td>
+              <td>能够同时证明AI收入、云RPO、CapEx和FCF闭环的链条</td>
+              <td>只上修CapEx但不能证明现金回收的链条</td>
+              <td>官方财报日程</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4">Company IR pages</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI服务器/液冷/电源/高速网络</td>
+              <td>无直接A/H公司订单确认；全球层面有NVIDIA、AMD、Alphabet、GE Vernova等官方需求锚。</td>
+              <td>偏利好AI服务器ODM、液冷、机柜电源、高速连接器、PCB/CCL、光模块和交换网络。</td>
+              <td>二级市场正在压AI硬件估值；没有订单公告的A/H映射只能作为推断，不作为已验证受益。</td>
+            </tr>
+            
+            <tr>
+              <td>HBM/先进封装/存储</td>
+              <td>SK hynix与NVIDIA围绕HBM4和新一代DRAM的合作为官方确认；未见A/H公司直接订单确认。</td>
+              <td>国产存储、材料设备、先进封装、HBM配套和测试环节有情绪映射。</td>
+              <td>Micron大跌说明存储链短线并非单边利好，需区分长期AI需求和短期估值/竞争压力。</td>
+            </tr>
+            
+            <tr>
+              <td>数据中心电力卖铲人</td>
+              <td>GE Vernova官方数据中心订单YTD超过US$5bn；NVIDIA/NAVER/Brookfield把AI工厂规模和融资模型写入官方公告。</td>
+              <td>利好燃机、变压器、输配电、UPS、储能、能源工程、电气化系统和自备电源。</td>
+              <td>A/H公司必须等待客户、订单、产能或业绩说明会确认；不能只靠全球叙事映射。</td>
+            </tr>
+            
+            <tr>
+              <td>高CapEx/弱FCF压力</td>
+              <td>Alphabet/Tesla上一轮已经显示市场更关注FCF；本轮Microsoft/Meta/Amazon/Apple尚未公布正式结果。</td>
+              <td>现金流强、订单能兑现的卖铲人相对更稳；远期TAM叙事但缺收入闭环的方向受压。</td>
+              <td>若FOMC鸽派且巨头财报超预期，Red可降级；若CapEx与FCF矛盾扩大，压力延续。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>2026-07-29 FOMC声明和发布会</strong><span>判断是否加息、是否弱化通胀/油价担忧；这是Red能否降级的第一宏观条件。</span></li><li><strong>2026-07-29 Microsoft FY2026 Q4</strong><span>核实Azure AI、CapEx、云RPO、折旧、FCF和AI投资回报率描述。</span></li><li><strong>2026-07-29 Meta Q2 2026</strong><span>核实AI基础设施CapEx、广告AI收入、Reality Labs消耗、折旧和现金流。</span></li><li><strong>2026-07-30 Amazon和Apple</strong><span>核实AWS AI基础设施、Trainium/ASIC投入、Apple端侧AI/设备周期与现金流。</span></li><li><strong>2026-07-31 PCE及GDP</strong><span>确认通胀粘性和增长韧性，决定实际利率是否能真正下行。</span></li><li><strong>NVIDIA/SK、NAVER/Brookfield项目执行</strong><span>区分LOI/term sheet/意向与真实CapEx、设备订单、MW/GW交付和收入确认。</span></li><li><strong>OpenAI/NVIDIA超大额融资报道</strong><span>当前未见官方确认；若官方确认，将改变AI数据中心融资和电力链观察权重。</span></li><li><strong>Fed H.15/H.10下一次更新</strong><span>验证名义10Y回落是否转化为实际利率和美元同步缓和。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve - H.15 Selected Interest Rates, July 28 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve - H.10 Foreign Exchange Rates</a></td>
+              <td>Liquidity</td>
+              <td>current</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve - FOMC calendars</a></td>
+              <td>Liquidity / Watchlist</td>
+              <td>current</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve - H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/a880057323bd065c325ad19b23de0cf3">Associated Press - Stocks tick higher as oil and Treasury yields fall</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-07-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.conference-board.org/topics/consumer-confidence">The Conference Board - Consumer Confidence</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA - SK Group and NVIDIA expand strategic partnership</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-25</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA - NAVER Cloud, NVIDIA and Brookfield build AI infrastructure in Korea</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-25</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership">NVIDIA - Safe Superintelligence and NVIDIA strategic partnership</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-28</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD - AAI 2026 Helios rackscale solutions</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus">AMD and Anthropic - Strategic partnership up to 2GW</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-22</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova - Q2 2026 financial results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4">Microsoft FY2026 Q4 earnings event</a></td>
+              <td>Watchlist / CapEx</td>
+              <td>scheduled 2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-to-Announce-Second-Quarter-2026-Results/default.aspx">Meta - Q2 2026 results announcement</a></td>
+              <td>Watchlist / CapEx</td>
+              <td>scheduled 2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Second-Quarter-2026-Financial-Results-Conference-Call/default.aspx">Amazon - Q2 2026 conference call announcement</a></td>
+              <td>Watchlist / CapEx</td>
+              <td>scheduled 2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.apple.com/investor/earnings-call/">Apple investor earnings call page</a></td>
+              <td>Watchlist</td>
+              <td>current page</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.wsj.com/">Financial media reports on AI financing</a></td>
+              <td>Tech catalyst / unverified watch</td>
+              <td>2026-07-28</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

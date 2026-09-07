@@ -1,0 +1,373 @@
+{
+  "generated_at_beijing": "2026-08-04 12:00",
+  "run_label": "12:00 noon",
+  "headline": "Orange维持：Palantir把AI软件催化从待验证推到官方确认，但Fed长端/实际利率仍压住全面转绿",
+  "top_conclusion": "2026-08-04午间雷达维持Orange，但三模块出现分化：CapEx仍为Expansion，流动性仍为Stress，科技催化从早间的Mixed上修为Bullish。最重要的新变化是Palantir官方SEC Exhibit 99.1落地，Q2 revenue US$1.935bn、同比+93%，US commercial revenue US$764mn、同比+149%，US revenue US$1.573bn、同比+115%，Q2 TCV US$3.373bn、同比+49%，US commercial TCV US$2.132bn、同比+153%，RDV US$6.238bn、同比+124%，GAAP operating margin 47%，adjusted free cash flow margin 63%，并把FY2026 revenue guidance上修到约US$8.150-8.158bn。这把早间“AI软件催化待验证”更新为官方强催化，说明AI CapEx正在向企业AI软件/数据平台收入扩散。限制项没有消失：Fed H.15最新官方数据仍是10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%，贴现率仍紧；Fed H.10美元指数回落提供边际缓和，但不足以抵消长端压力。因此处理上仍是Orange：看AI卖铲与AI软件的收入/RPO/现金流闭环，不追只靠估值和媒体口径的CapEx headline。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Stress",
+    "tech_catalysts": "Bullish"
+  },
+  "focus_summary": {
+    "action": "维持Orange：午间新增重点是AI软件官方确认，可以把卖铲链从硬件/电力/服务器扩展到企业AI软件，但仍只看收入、TCV/RPO、现金流和正式文件。",
+    "positive": "最大正反馈是Palantir官方Q2：收入US$1.935bn同比+93%，US commercial +149%，TCV US$3.373bn，RDV US$6.238bn，adjusted FCF margin 63%，FY收入指引上修。",
+    "risk": "最大压制项仍是Fed H.15：10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%；美元边际缓和未足以解除长端估值闸门。",
+    "next": "下一步盯AMD盘后、Supermicro正式Q4、Amazon电话会/管理层是否确认US$220bn、Fed H.15是否确认周一收益率回落。"
+  },
+  "top_changes": [
+    {
+      "title": "Palantir官方落地，AI软件催化从待验证升级为强催化",
+      "fact": "Palantir SEC Exhibit 99.1披露Q2 revenue US$1.935bn、同比+93%；US commercial revenue US$764mn、同比+149%；US revenue US$1.573bn、同比+115%；Q2 TCV US$3.373bn、同比+49%；US commercial TCV US$2.132bn、同比+153%；RDV US$6.238bn、同比+124%。",
+      "impact": "AI链条从GPU/服务器/电力扩散到企业AI软件、数据平台和模型运营；科技催化模块上修为Bullish，但仍要求合同、RPO/TCV、利润率和现金流共同验证。",
+      "confidence": "High",
+      "source": "Palantir SEC Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+    },
+    {
+      "title": "Palantir现金流和指引同步上修，软件端不是单纯情绪交易",
+      "fact": "Palantir Q2 GAAP operating income US$912mn、margin 47%，adjusted free cash flow US$1.220bn、margin 63%；公司把FY2026 revenue guidance上修至US$8.150-8.158bn，把US commercial revenue outlook上修至超过US$3.424bn、同比至少+134%，adjusted free cash flow guidance上修至US$4.5-4.7bn。",
+      "impact": "对AI软件/数据平台的正反馈质量高于单纯订单传闻；但估值若已充分反映高速增长，后续必须盯净留存、客户扩张和现金流持续性。",
+      "confidence": "High",
+      "source": "Palantir SEC Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+    },
+    {
+      "title": "Fed H.10美元边际缓和，但H.15长端仍是硬约束",
+      "fact": "Fed H.10当前页显示最新周度美元数据回落：Broad dollar index约119.7034，人民币约6.7509，日元约159.1600；但Fed H.15 2026-08-03发布/2026-07-31数据仍显示10Y 4.75%、30Y 5.27%、10Y TIPS 2.47%、30Y TIPS 3.03%。",
+      "impact": "美元回落对成长资产有边际帮助，但实际利率和长端未松，流动性模块仍维持Stress；科技反弹需要盈利兑现支撑。",
+      "confidence": "High",
+      "source": "Federal Reserve H.10 / H.15",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+    },
+    {
+      "title": "隔夜市场风险偏好继续支持AI链，但仍是市场信号",
+      "fact": "AP报道周一S&P 500 +1.5%、Nasdaq +2.1%、Dow +1.3%并创纪录，10Y市场收益率约4.68，油价约-4.7%；Amazon和AI相关资产获市场奖励。",
+      "impact": "短线风险偏好对AI硬件、云、AI软件有支撑；但需等待Fed官方收益率数据确认，不能因为单日反弹升级总闸门。",
+      "confidence": "Medium",
+      "source": "AP market report",
+      "url": "https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa"
+    },
+    {
+      "title": "Supermicro强订单仍是AI服务器链验证点，但正式Q4尚未落地",
+      "fact": "Supermicro官方初步业务更新称FY2026 Q4收入预计接近US$11.0-12.5bn指引低端，非GAAP毛利率预计15%-17%，创纪录订单积压，Q4新订单超过US$60bn；正式FY2026 Q4仍待8月11日公布。",
+      "impact": "AI服务器、液冷、电源、机柜、PCB/高速互连仍有订单验证；但初步数据、收入低端、客户集中度和交付节奏仍是执行过滤器。",
+      "confidence": "High",
+      "source": "Supermicro IR",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx模块维持Expansion。Amazon、Microsoft、Meta、Apple、Intel和Supermicro继续提供云收入/RPO、现金CapEx、租赁义务、服务器订单、存储/先进半导体供给约束等硬证据。午间新增不是CapEx口径本身，而是Palantir把AI投资扩散到软件收入和现金流，增强CapEx回收路径的可见度。",
+    "items": [
+      {
+        "entity": "Amazon",
+        "signal": "10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn，AWS物业设备净额US$263.750bn；10-Q正文未直接确认媒体所称US$220bn全年CapEx。",
+        "direction": "上修",
+        "impact": "AI服务器、GPU/ASIC、HBM、网络交换、数据中心电力、液冷和工程建设继续受益；US$220bn仍需正式管理层确认。",
+        "confidence": "High",
+        "source": "Amazon Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+      },
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q4 Microsoft Cloud收入US$59.3bn、同比+27%，Commercial RPO同比+84%至US$678bn，Azure及其他云服务+43%，Q4物业设备新增US$35.802bn。",
+        "direction": "上修",
+        "impact": "AI CapEx有云收入和RPO吸收，是卖铲链收入闭环锚。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"
+      },
+      {
+        "entity": "Meta",
+        "signal": "10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，H1购买物业设备US$49.113bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。",
+        "direction": "上修",
+        "impact": "利好AI服务器、光通信、交换机、电力、冷却和数据中心建设；租赁、债务、折旧和FCF压力仍压估值弹性。",
+        "confidence": "High",
+        "source": "Meta Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+      },
+      {
+        "entity": "Supermicro",
+        "signal": "初步业务更新称FY2026 Q4新订单超过US$60bn，非GAAP毛利率预计15%-17%，但收入预计接近US$11.0-12.5bn指引低端，正式Q4仍待公布。",
+        "direction": "待验证",
+        "impact": "AI服务器、液冷、电源、机柜、高速互连订单强；需看正式财报、客户集中度和交付能力。",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx"
+      },
+      {
+        "entity": "Apple / Intel supply chain",
+        "signal": "Apple 10-Q确认先进半导体、NAND、DRAM和AI算力供给约束；Intel 10-Q显示DCAI服务器销量同比+9%，主要受hyperscaler需求推动，并称服务器需求超过可用供给、基板/内存/关键组件短缺可能延续到明年。",
+        "direction": "上修",
+        "impact": "存储、先进封装、基板、服务器CPU/ASIC和高端组件供需偏紧；整机和终端链要看成本转嫁能力。",
+        "confidence": "High",
+        "source": "Apple / Intel Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+      },
+      {
+        "entity": "Palantir as AI software demand proof",
+        "signal": "Q2 revenue US$1.935bn、同比+93%，TCV US$3.373bn、RDV US$6.238bn，FY revenue guidance US$8.150-8.158bn。",
+        "direction": "上修",
+        "impact": "说明AI CapEx不只停在硬件投入，开始更明确转化为企业AI软件和数据平台收入。",
+        "confidence": "High",
+        "source": "Palantir SEC Exhibit 99.1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块维持Stress。H.10美元回落提供边际缓和，但H.15长端和实际利率仍处高位，FOMC投票结构仍偏鹰。结论是：美元缓和有助于反弹持续，但总闸门还不能从Orange降到Green。",
+    "items": [
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-03发布/2026-07-31数据：EFFR 3.63%，2Y 4.31%，10Y 4.75%，20Y 5.28%，30Y 5.27%，10Y TIPS 2.47%，30Y TIPS 3.03%。",
+        "direction": "压力",
+        "impact": "长端和实际利率仍高，高估值AI/软件需要盈利、TCV/RPO和现金流兑现抵消贴现率。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.10 / Dollar",
+        "signal": "H.10当前页显示Broad dollar index约119.7034，人民币约6.7509，日元约159.1600，较前期美元压力有所缓和。",
+        "direction": "宽松观察",
+        "impact": "美元回落对成长资产和非美科技链估值有边际帮助，但需要与长端利率同步下行才可降低压力级别。",
+        "confidence": "High",
+        "source": "Federal Reserve H.10",
+        "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm"
+      },
+      {
+        "entity": "US market yields / oil",
+        "signal": "AP报道周一10Y市场收益率约4.68，低于周五约4.75；油价约-4.7%，风险偏好修复。",
+        "direction": "宽松观察",
+        "impact": "若下一次H.15确认收益率回落，Orange压力可下降；当前仍是市场信号。",
+        "confidence": "Medium",
+        "source": "AP market report",
+        "url": "https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "2026-07-30发布/7月29日数据：准备金余额US$2.984570tn，周降US$77.579bn、同比降US$362.844bn；TGA US$910.776bn，周增US$81.153bn。",
+        "direction": "压力",
+        "impact": "准备金下降和TGA上升说明系统流动性没有给高β科技明确顺风。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "FOMC",
+        "signal": "7月29日FOMC维持3.50%-3.75%目标区间，但投票9-3，Hammack、Kashkari、Logan倾向加息25bp，通胀仍高于2%目标。",
+        "direction": "压力",
+        "impact": "政策语言仍不宽松，科技估值弹性需要等待实际利率回落或盈利兑现。",
+        "confidence": "High",
+        "source": "Federal Reserve FOMC",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化模块上修为Bullish。原因是Palantir官方财务指标确认AI软件端的收入、订单和现金流爆发，叠加Amazon/Microsoft/Meta/Supermicro等基础设施证据，AI链条从硬件CapEx向软件变现扩散。限制是估值、长端利率、Supermicro正式财报、Amazon US$220bn口径和Apple供给挤压仍需继续过滤。",
+    "items": [
+      {
+        "event": "Palantir Q2官方结果",
+        "affected_chain": "企业AI软件、数据平台、模型运营、政府/商业AI部署",
+        "direction": "利好",
+        "winners": "有合同、TCV/RPO、净留存、利润率和现金流验证的AI软件平台",
+        "losers": "AI标签重但缺少真实客户扩张、现金流或续约证明的软件公司",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Palantir SEC Exhibit 99.1",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm"
+      },
+      {
+        "event": "Supermicro初步订单更新",
+        "affected_chain": "AI服务器、液冷、电源、机柜、PCB/高速互连、GPU集群",
+        "direction": "利好但待正式财报",
+        "winners": "AI服务器整机、液冷、电源、机柜、高速互连、上游零部件",
+        "losers": "交付能力不足、毛利率不可持续或客户集中度过高的中游环节",
+        "evidence": "官方初步业务更新",
+        "confidence": "High",
+        "source": "Supermicro IR",
+        "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx"
+      },
+      {
+        "event": "Amazon AWS/AI CapEx交易仍强",
+        "affected_chain": "AWS、AI芯片、HBM、AI服务器、网络、电力、液冷",
+        "direction": "利好但待管理层确认全年CapEx口径",
+        "winners": "GPU/ASIC、HBM、AI服务器、交换/光模块、电力设备、液冷、云服务",
+        "losers": "没有收入闭环、只依赖融资和估值重估的AI资产",
+        "evidence": "官方10-Q + 媒体市场反应",
+        "confidence": "Medium",
+        "source": "Amazon Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+      },
+      {
+        "event": "Apple供给约束仍在",
+        "affected_chain": "先进半导体、NAND、DRAM、端侧AI、云AI算力",
+        "direction": "分化",
+        "winners": "存储、先进制程、封装、AI算力和高端组件供应商",
+        "losers": "成本转嫁能力弱的终端整机和模组环节",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Apple Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+      },
+      {
+        "event": "AMD盘后待验证",
+        "affected_chain": "AI GPU、MI系列、服务器CPU、HBM、OEM/ODM",
+        "direction": "待验证",
+        "winners": "若AI GPU收入、订单和毛利率兑现，利好GPU、HBM、服务器、散热和电源链",
+        "losers": "若指引低于AI CapEx预期，可能压制二线AI硬件和高估值服务器链",
+        "evidence": "待官方披露",
+        "confidence": "Medium",
+        "source": "AMD IR watch",
+        "url": "https://ir.amd.com/"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI软件与数据平台",
+      "verified_direct": "无直接A/H公司映射；Palantir是海外官方源，不能自动映射到A/H个股。",
+      "inferred": "优先看有真实合同、政企客户、TCV/RPO、续约率、毛利率和经营现金流验证的企业AI软件卖铲人。",
+      "risk": "不要用历史股票涨跌筛选；没有正式合同和收入确认的AI应用只作为观察。"
+    },
+    {
+      "theme": "AI服务器与整机ODM",
+      "verified_direct": "无直接映射；Supermicro、Amazon、Meta、Microsoft均为海外来源。",
+      "inferred": "只看当下订单、客户认证、排产、液冷方案、GPU/ASIC配套和现金流质量能验证的卖铲人。",
+      "risk": "概念标签不等于订单；正式财报、客户集中度和交付能力是硬过滤。"
+    },
+    {
+      "theme": "液冷、电源、机柜与数据中心工程",
+      "verified_direct": "Supermicro订单、Amazon/Meta/Microsoft资产新增和租赁义务共同验证数据中心扩张。",
+      "inferred": "液冷、UPS、电源、机柜、配电、变压器、数据中心工程更接近CapEx卖铲环节。",
+      "risk": "需区分框架协议、订单、交付和收入确认；项目周期和毛利率不可忽视。"
+    },
+    {
+      "theme": "HBM/DRAM/NAND与存储链",
+      "verified_direct": "Apple 10-Q直接确认NAND、DRAM短缺和成本上升，Intel 10-Q确认内存和关键组件短缺。",
+      "inferred": "HBM、DRAM/NAND、存储测试、材料和封装配套仍是供需偏紧方向。",
+      "risk": "周期涨价和库存博弈可能提前反映，需用合同价、出货和毛利率验证。"
+    },
+    {
+      "theme": "先进封装、基板、PCB/CCL和高速互连",
+      "verified_direct": "Intel官方提到基板和关键组件短缺；Supermicro订单验证AI服务器高速互连需求。",
+      "inferred": "低损耗CCL、高层板、载板、高速连接器、光模块和交换链仍是卖铲重点。",
+      "risk": "技术代际和客户认证壁垒高，低端产能不能简单映射。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "AMD盘后结果",
+      "why": "验证MI系列AI GPU、数据中心收入、毛利率和订单能否承接Palantir/Supermicro/云厂商的AI需求。"
+    },
+    {
+      "item": "Fed H.15下一次更新",
+      "why": "确认周一市场收益率回落是否进入官方数据；若10Y、30Y和TIPS实质下行，Orange压力才可能下降。"
+    },
+    {
+      "item": "Amazon正式电话会文字稿/管理层后续",
+      "why": "确认或否定US$220bn全年CapEx媒体口径，并拆清现金CapEx、租赁、OpenAI/Anthropic投资和AWS收入吸收路径。"
+    },
+    {
+      "item": "Supermicro FY2026 Q4正式结果",
+      "why": "初步订单和毛利率很强，但收入接近指引低端、数据未经审计，需看正式财报、客户集中度、交付和审计风险。"
+    },
+    {
+      "item": "Palantir后续文件和电话会",
+      "why": "确认客户数、净留存、合同结构、RPO/TCV转收入节奏、利润率和现金流持续性。"
+    },
+    {
+      "item": "Apple供应链与端侧AI节奏",
+      "why": "先进半导体、NAND、DRAM和AI算力约束已官方确认，需看毛利率、新品节奏和上游订单。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Palantir Q2 2026 results, SEC Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+      "used_for": "Tech catalyst / AI software / cash flow",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity / yields / real rates",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Federal Reserve H.10 Foreign Exchange Rates",
+      "url": "https://www.federalreserve.gov/Releases/h10/current/default.htm",
+      "used_for": "Liquidity / dollar",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Federal Reserve H.4.1 Factors Affecting Reserve Balances",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity / reserves / TGA",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "FOMC statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm",
+      "used_for": "Liquidity / policy",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "AP market report",
+      "url": "https://apnews.com/article/d19a8f9a77b6fceca41da3e4b6bf17aa",
+      "used_for": "Market risk appetite / yields / oil",
+      "published_at": "2026-08-03"
+    },
+    {
+      "title": "Amazon Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "used_for": "CapEx / AWS assets / AI financing",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Amazon Q2 2026 earnings release",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/",
+      "used_for": "CapEx / AWS growth",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Microsoft FY26 Q4 earnings release",
+      "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+      "used_for": "CapEx / cloud revenue / RPO",
+      "published_at": "2026-07-29"
+    },
+    {
+      "title": "Meta Form 10-Q for quarter ended June 30, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+      "used_for": "CapEx / lease obligations",
+      "published_at": "2026-07-30"
+    },
+    {
+      "title": "Apple Form 10-Q for quarter ended June 27, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+      "used_for": "Supply-chain risk / tech catalyst",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Intel Form 10-Q for quarter ended June 27, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
+      "used_for": "Server demand / supply constraints",
+      "published_at": "2026-07-31"
+    },
+    {
+      "title": "Supermicro FY2026 Q4 preliminary business update",
+      "url": "https://ir.supermicro.com/news/news-details/2026/Supermicro-Provides-Fourth-Quarter-of-Fiscal-Year-2026-Preliminary-Business-Update/default.aspx",
+      "used_for": "AI server orders / tech catalyst",
+      "published_at": "2026-07-21"
+    },
+    {
+      "title": "AMD Investor Relations",
+      "url": "https://ir.amd.com/",
+      "used_for": "Next catalyst watch",
+      "published_at": "2026-08-04"
+    }
+  ]
+}

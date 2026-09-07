@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>工业富联 601138 V2.3.1 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d8dee9;
+      --blue: #2454a6;
+      --green: #137a4b;
+      --orange: #b54708;
+      --red: #b42318;
+      --yellow: #9a6700;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      line-height: 1.58;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 56px; }
+    header { border-bottom: 1px solid var(--line); padding: 18px 0 22px; }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: 36px; line-height: 1.16; letter-spacing: 0; }
+    h2 { margin: 30px 0 12px; font-size: 23px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 17px; }
+    .sub { color: var(--muted); margin: 12px 0 0; font-size: 16px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .green { background: var(--green); }
+    .blue { background: var(--blue); }
+    .orange { background: var(--orange); }
+    .red { background: var(--red); }
+    .yellow { background: var(--yellow); }
+    .neutral { background: #475467; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .card, .verdict {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .verdict {
+      border-left: 5px solid var(--orange);
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .card p { margin: 6px 0 0; color: var(--muted); }
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    .note { color: var(--muted); font-size: 14px; margin-top: 8px; }
+    .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 5px 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 860px) {
+      .grid, .split { grid-template-columns: 1fr; }
+      h1 { font-size: 29px; }
+      .page { padding: 20px 12px 42px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">V2.3.1 五层六维 / S五维量化校验 / 单股深度报告</div>
+      <h1>工业富联（601138）：AI算力基础设施的“规模兑现型”核心公司，但估值已进入高要求区</h1>
+      <p class="sub">生成时间：2026-06-27，北京时间。数据主要来自公司 2025 年报、2026 一季报、交易所/公司公告及行情页面；本文为研究分析，不构成收益保证。</p>
+      <div class="badges">
+        <span class="badge green">综合评分 84/100</span>
+        <span class="badge blue">策略标签：成长配置偏核心</span>
+        <span class="badge orange">估值：偏贵但有业绩支撑</span>
+        <span class="badge red">短线追高风险高</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="verdict">
+        核心结论：工业富联不是普通“AI服务器概念”，而是已经在 AI GPU 机柜、AI ASIC 服务器、800G 交换机和 CPO 样机上出现官方出货/收入验证的规模型龙头。问题不在逻辑真假，而在当前市值已要求 2026-2027 年继续高增长，买点要等回撤或下一次业绩再超预期。
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>经营世界</h3>
+          <span class="badge green">数据强验证</span>
+          <p>2025 年营收 9028.87 亿元，归母净利 352.86 亿元；2026Q1 营收 2510.78 亿元，归母净利 105.95 亿元。</p>
+        </article>
+        <article class="card">
+          <h3>资本世界</h3>
+          <span class="badge orange">预期较满</span>
+          <p>2026-06-26 收盘 70.22 元，总市值约 1.39 万亿元，TTM PE 约 34.28 倍；高成长能解释溢价，但容错率下降。</p>
+        </article>
+        <article class="card">
+          <h3>操作世界</h3>
+          <span class="badge yellow">等触发</span>
+          <p>中长线可列入 AI 算力核心池；短线经历 6 月高位剧烈波动后，不适合无条件追涨。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>一、业务本质与利润池位置</h2>
+      <div class="split">
+        <article class="card">
+          <h3>公司正在吃哪块 CapEx</h3>
+          <ul>
+            <li><strong>AI GPU 机柜：</strong>2026Q1 出货量同比增长 3.8 倍，是从服务器单机向整柜交付升级的关键证据。</li>
+            <li><strong>AI ASIC 服务器：</strong>2026Q1 出货量同比增长 3.2 倍，说明云厂商自研芯片路线也在贡献增长，不只依赖单一 GPU 叙事。</li>
+            <li><strong>高速交换机：</strong>2026Q1 800G 及以上高速交换机出货量同比增长 1.6 倍、环比增长 46%，2025 年 800G 以上高速交换机营收同比增长 13 倍。</li>
+            <li><strong>CPO/全光交换机：</strong>2026Q1 CPO 全光交换机样机开始出货，属于下一轮互联升级的早期期权。</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>利润池判断</h3>
+          <p>工业富联处在 AI 基础设施中游制造与系统集成位置。它的优势是规模、交付、全球产能和头部客户协同，弱点是客户议价强、毛利率绝对水平低。它不是利润率最高的“铲子”，但可能是确定性最高、收入体量最大的“卖铲平台”。</p>
+          <p><strong>利润池分：</strong>21/25。需求强度 5，稀缺性 4，涨价能力 3，成本转嫁 4，客户分散度 5。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>二、最近四个单季度财务校验</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>单季度</th>
+              <th>营收</th>
+              <th>营收同比</th>
+              <th>归母净利</th>
+              <th>归母同比</th>
+              <th>扣非净利</th>
+              <th>毛利率</th>
+              <th>净利率</th>
+              <th>经营现金流</th>
+              <th>结论</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026Q1</td>
+              <td>2510.78 亿元</td>
+              <td>+56.52%</td>
+              <td>105.95 亿元</td>
+              <td>+102.55%</td>
+              <td>102.50 亿元</td>
+              <td>约 7.35%</td>
+              <td>约 4.22%</td>
+              <td>250.24 亿元</td>
+              <td>利润增速显著快于收入，现金流大幅修复；AI 机柜/ASIC 出货验证强。</td>
+            </tr>
+            <tr>
+              <td>2025Q4</td>
+              <td>约 2989.56 亿元</td>
+              <td>高增</td>
+              <td>约 127.99 亿元</td>
+              <td>高增</td>
+              <td>约 125.28 亿元</td>
+              <td>全年 6.98%，公司称逐季改善</td>
+              <td>约 4.28%</td>
+              <td>93.78 亿元</td>
+              <td>全年最强季度，三季度现金流承压后修复。</td>
+            </tr>
+            <tr>
+              <td>2025Q3</td>
+              <td>2431.7 亿元</td>
+              <td>+42.8%</td>
+              <td>103.7 亿元</td>
+              <td>+62.0%</td>
+              <td>99.9 亿元</td>
+              <td>约 7.00%</td>
+              <td>约 4.27%</td>
+              <td>-55.48 亿元</td>
+              <td>收入利润加速，但备货/营运资本导致现金流阶段性承压。</td>
+            </tr>
+            <tr>
+              <td>2025Q2</td>
+              <td>约 2003.5 亿元</td>
+              <td>高增</td>
+              <td>约 68.8 亿元</td>
+              <td>增长</td>
+              <td>约 67.7 亿元</td>
+              <td>未披露单季精确值</td>
+              <td>约 3.43%</td>
+              <td>未披露单季精确值</td>
+              <td>AI服务器放量前段，规模扩张已开始但利润弹性尚未完全释放。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">注：2025Q4、2025Q2部分单季度数由公司累计披露拆分；毛利率、现金流若公司未披露单季精确值，则使用公告/权威报道中可验证口径，避免伪精确。</p>
+    </section>
+
+    <section>
+      <h2>三、S五维量化验证</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>因子</th>
+              <th>核心数据</th>
+              <th>趋势</th>
+              <th>评分</th>
+              <th>结论</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>成长性</td>
+              <td>2025营收 +48.22%，归母 +51.99%；2026Q1营收 +56.52%，归母 +102.55%。</td>
+              <td>继续加速</td>
+              <td>19/20</td>
+              <td>成长数据强验证，且利润增速开始跑赢收入。</td>
+            </tr>
+            <tr>
+              <td>盈利性</td>
+              <td>2025毛利率 6.98%，净利率 3.91%；2026Q1毛利率约 7.35%。</td>
+              <td>结构改善</td>
+              <td>15/20</td>
+              <td>制造业低毛利约束仍在，但 AI 产品结构提升带来净利率改善。</td>
+            </tr>
+            <tr>
+              <td>经营规模</td>
+              <td>2025营收 9028.87亿元，云计算收入 6026.79亿元；云服务商AI服务器收入同比超3倍。</td>
+              <td>极强</td>
+              <td>20/20</td>
+              <td>A股 AI 算力收入体量最强之一，规模不是概念而是财报事实。</td>
+            </tr>
+            <tr>
+              <td>资产效率</td>
+              <td>2026Q1加权ROE 6.18%；2025分红+回购占归母净利约56.13%。</td>
+              <td>改善</td>
+              <td>16/20</td>
+              <td>周转和规模效率强，但重资产、存货和营运资本仍要监控。</td>
+            </tr>
+            <tr>
+              <td>市值/估值</td>
+              <td>2026-06-26收盘 70.22元，总市值约1.39万亿元，TTM PE约34.28倍。</td>
+              <td>估值高要求</td>
+              <td>14/20</td>
+              <td>不是泡沫式无业绩估值，但已经要求 2026 年利润继续兑现。</td>
+            </tr>
+            <tr>
+              <td><strong>合计</strong></td>
+              <td colspan="2">经营世界强验证，资本世界偏满。</td>
+              <td><strong>84/100</strong></td>
+              <td><strong>数据基本接近强验证，但买点要受估值和波动约束。</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>四、六维评分与V2.3.1修正</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>评分</th>
+              <th>证据</th>
+              <th>修正</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>行业面</td>
+              <td>92/100</td>
+              <td>全球 hyperscaler AI CapEx 扩张，AI服务器/整柜/交换机需求高景气。</td>
+              <td>维持高分；但受全球流动性影响，估值弹性受限。</td>
+            </tr>
+            <tr>
+              <td>核心竞争力</td>
+              <td>88/100</td>
+              <td>全球化制造、头部客户协同、GPU/ASIC双路线、机柜级交付、交换机/CPO延伸。</td>
+              <td>客户保密导致无法逐一验证终端客户，置信度打 0.85 折。</td>
+            </tr>
+            <tr>
+              <td>财务质量</td>
+              <td>84/100</td>
+              <td>四季度收入利润连续兑现；2026Q1现金流强修复。</td>
+              <td>2025Q3现金流为负、存货和资产减值扩大，扣 5 分。</td>
+            </tr>
+            <tr>
+              <td>估值与赔率</td>
+              <td>68/100</td>
+              <td>TTM PE约34倍，总市值约1.39万亿元。</td>
+              <td>估值不是离谱，但已把“持续高增长”写进价格。</td>
+            </tr>
+            <tr>
+              <td>催化/影子逻辑</td>
+              <td>86/100</td>
+              <td>AI GPU机柜、ASIC服务器、800G交换机、CPO样机均有官方出货/收入线索。</td>
+              <td>下次催化看半年报是否继续超预期。</td>
+            </tr>
+            <tr>
+              <td>治理/流动性</td>
+              <td>82/100</td>
+              <td>大市值、高流动性、分红提升；鸿海体系协同明显。</td>
+              <td>关联体系、客户集中和海外地缘风险需折价。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>五、订单与客户证据边界</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>证据层级</th>
+              <th>已验证内容</th>
+              <th>不能过度外推的地方</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>强证据</td>
+              <td>2025云计算收入 6026.79亿元，同比增长88.70%；云服务商AI服务器营收同比超3倍；2026Q1 AI GPU机柜出货量同比3.8倍、AI ASIC服务器同比3.2倍。</td>
+              <td>这证明订单/出货/收入已经兑现，但不等于所有海外大厂客户都可逐名确认。</td>
+            </tr>
+            <tr>
+              <td>中强证据</td>
+              <td>2026Q1 800G及以上高速交换机出货量同比1.6倍、环比46%，CPO全光交换机样机开始出货。</td>
+              <td>CPO目前仍是样机/早期验证，不应按成熟收入曲线估值。</td>
+            </tr>
+            <tr>
+              <td>风险证据</td>
+              <td>部分云服务商客户新增订单原材料采购模式由 buy and sell 转为 consign。</td>
+              <td>出货增长与收入口径可能阶段性背离，后续要看毛利率、收入确认和库存周转。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>六、三情景估值与执行条件</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>情景</th>
+              <th>假设</th>
+              <th>合理估值判断</th>
+              <th>对应动作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>乐观</td>
+              <td>2026全年利润接近或超过市场一致预期，AI机柜/ASIC/交换机继续超预期，毛利率稳中上行。</td>
+              <td>34倍TTM PE可被消化，估值切换到2027年。</td>
+              <td>回踩不破关键均线且半年报继续强，可做成长配置。</td>
+            </tr>
+            <tr>
+              <td>中性</td>
+              <td>收入继续高增，但利润率改善放缓，consign模式影响收入确认，股价高位震荡。</td>
+              <td>当前估值基本合理偏贵。</td>
+              <td>等回撤或等业绩确认，不追涨。</td>
+            </tr>
+            <tr>
+              <td>悲观</td>
+              <td>云厂商订单节奏放缓、毛利率回落、库存/减值继续上升，或海外限制扰动供应链。</td>
+              <td>高估值压缩，可能回到制造业龙头估值框架。</td>
+              <td>跌破趋势且业绩二阶导转弱，降级为观察。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="split" style="margin-top:14px">
+        <article class="card">
+          <h3>买入/加仓触发</h3>
+          <ul>
+            <li>股价从高位回撤后放量企稳，且不再出现连续大额资金流出。</li>
+            <li>2026中报继续确认：AI GPU机柜、AI ASIC服务器、800G交换机收入/出货高增。</li>
+            <li>毛利率维持或提升，经营现金流没有再次被备货吞噬。</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>减仓/失效触发</h3>
+          <ul>
+            <li>利润增速明显低于收入增速，说明产品结构改善失效。</li>
+            <li>存货、资产减值、应收或现金流连续恶化。</li>
+            <li>主要云客户 CapEx 下修，或 GPU/ASIC平台迭代导致订单切换风险暴露。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>七、最终评级</h2>
+      <div class="table-wrap">
+        <table>
+          <tbody>
+            <tr><th>项目</th><th>结论</th></tr>
+            <tr><td>综合评分</td><td>84/100</td></tr>
+            <tr><td>策略标签</td><td>成长配置偏核心；不是纯题材交易。</td></tr>
+            <tr><td>当前动作</td><td>不建议无条件追涨；更适合“回撤企稳 + 中报继续验证”后分批配置。</td></tr>
+            <tr><td>最大仓位建议</td><td>单股上限按高波动成长股处理；若已有光模块/PCB/AI服务器重仓，应降低同一AI CapEx暴露。</td></tr>
+            <tr><td>复盘日期</td><td>2026中报披露后；若此前出现云厂商CapEx下修或公司大额减值，提前复盘。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>主要来源</h2>
+      <ul>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-03-11/1225004420.PDF">工业富联 2025 年年度报告</a></li>
+        <li><a href="https://stockmc.xueqiu.com/202604/601138_20260429_TOCL.pdf">工业富联 2026 年第一季度报告</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2025-10-30/1224761584.PDF">工业富联 2025 年第三季度报告</a></li>
+        <li><a href="https://www.fii-foxconn.com/NewsDetail?id=4815">公司新闻：2025年报业绩与AI业务说明</a></li>
+        <li><a href="https://www.fii-foxconn.com/NewsDetail?id=4868">公司新闻：2026年一季度业绩说明</a></li>
+        <li><a href="https://www.moomoo.com/hans/stock/601138-SH">行情与估值参考：Moomoo 601138</a></li>
+        <li><a href="https://cn.investing.com/equities/foxconn-historical-data">历史行情参考：Investing.com 601138</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      证据边界：客户名称和具体订单金额多数未逐项披露，本文只把公司公告中的出货、收入、客户协同与财务数据列为高置信证据；未披露部分不作确定性结论。
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

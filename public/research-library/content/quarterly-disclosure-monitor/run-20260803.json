@@ -1,0 +1,28 @@
+{
+  "run_time": "2026年8月3日 11:01:15 +08:00",
+  "window_start": "2026-07-28 00:00 +08:00",
+  "window_end": "2026-08-03 11:01 +08:00",
+  "formal_hits": [],
+  "related_updates": [
+    {
+      "name": "中芯国际",
+      "code": "688981",
+      "date": "2026-07-31",
+      "title": "中芯国际关于召开2026年第二季度业绩说明会的预告公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448405.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 44,
+    "cninfo_watchlist_rows": 50,
+    "cninfo_orgids_resolved": 22,
+    "errors": [
+      "HKEX 12c: fetch failed"
+    ]
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260803.html"
+  ]
+}

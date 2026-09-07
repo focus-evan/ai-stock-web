@@ -1,0 +1,280 @@
+{
+  "run_time": "2026-08-21 11:01:08 +08:00",
+  "window_start": "2026-08-15 00:00 +08:00",
+  "window_end": "2026-08-21 11:01 +08:00",
+  "formal_hits": [
+    {
+      "name": "泡泡玛特",
+      "code": "09992",
+      "date": "2026-08-20",
+      "title": "INTERIM RESULTS ANNOUNCEMENT\nFOR THE SIX MONTHS ENDED 30 JUNE 2026\nAND SUPPLEMENTAL ANNOUNCEMENT ON GRANT OF AWARDS",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "恒瑞医药",
+      "code": "01276",
+      "date": "2026-08-19",
+      "title": "2026 INTERIM REPORT",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081901509.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "恒瑞医药",
+      "code": "01276",
+      "date": "2026-08-19",
+      "title": "INTERIM RESULTS ANNOUNCEMENT FOR\nTHE SIX MONTHS ENDED JUNE 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081901481.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "兆易创新",
+      "code": "03986",
+      "date": "2026-08-18",
+      "title": "2026 INTERIM REPORT",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0818/2026081801933.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "兆易创新",
+      "code": "03986",
+      "date": "2026-08-18",
+      "title": "INTERIM RESULTS ANNOUNCEMENT FOR THE SIX MONTHS ENDED JUNE 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0818/2026081801925.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "小米集团-W",
+      "code": "01810",
+      "date": "2026-08-18",
+      "title": "RESULTS ANNOUNCEMENT FOR THE THREE AND SIX MONTHS ENDED JUNE 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0818/2026081801014.pdf",
+      "source": "HKEX",
+      "classification": "formal"
+    },
+    {
+      "name": "上纬新材",
+      "code": "688585",
+      "date": "2026-08-15",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-15/1225475866.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "上纬新材",
+      "code": "688585",
+      "date": "2026-08-15",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-15/1225475850.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "恒瑞医药",
+      "code": "600276",
+      "date": "2026-08-20",
+      "title": "恒瑞医药2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225483609.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "恒瑞医药",
+      "code": "600276",
+      "date": "2026-08-20",
+      "title": "恒瑞医药2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225483600.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "爱美客",
+      "code": "300896",
+      "date": "2026-08-21",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-21/1225487535.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "爱美客",
+      "code": "300896",
+      "date": "2026-08-21",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-21/1225487534.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-15/1225475868.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-15/1225475860.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "date": "2026-08-20",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225482915.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "date": "2026-08-20",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225482884.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "兆易创新",
+      "code": "603986",
+      "date": "2026-08-19",
+      "title": "兆易创新2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-19/1225480389.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "兆易创新",
+      "code": "603986",
+      "date": "2026-08-19",
+      "title": "兆易创新2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-19/1225480384.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "天孚通信",
+      "code": "300394",
+      "date": "2026-08-19",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-19/1225480328.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "天孚通信",
+      "code": "300394",
+      "date": "2026-08-19",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-19/1225480327.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "光迅科技",
+      "code": "002281",
+      "date": "2026-08-20",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225482609.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "光迅科技",
+      "code": "002281",
+      "date": "2026-08-20",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225482608.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    }
+  ],
+  "related_updates": [
+    {
+      "name": "药明康德",
+      "code": "603259",
+      "date": "2026-08-21",
+      "title": "关于召开2026年半年度业绩说明会的公告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-21/1225485839.PDF",
+      "source": "CNINFO",
+      "classification": "related"
+    },
+    {
+      "name": "中芯国际",
+      "code": "688981",
+      "date": "2026-08-20",
+      "title": "港股公告：董事会批准发布2026年中期业绩通知",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-20/1225483219.PDF",
+      "source": "CNINFO",
+      "classification": "related"
+    },
+    {
+      "name": "兆易创新",
+      "code": "603986",
+      "date": "2026-08-19",
+      "title": "兆易创新关于召开2026年半年度业绩说明会的公告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-19/1225480382.PDF",
+      "source": "CNINFO",
+      "classification": "related"
+    },
+    {
+      "name": "中芯国际",
+      "code": "00981",
+      "date": "2026-08-19",
+      "title": "董事會批准發佈2026年中期業績通知",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081901068_c.pdf",
+      "source": "HKEX",
+      "classification": "related"
+    },
+    {
+      "name": "中芯国际",
+      "code": "00981",
+      "date": "2026-08-19",
+      "title": "Notification of Approval of the Publication of 2026 Interim Results by the Board",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081901067.pdf",
+      "source": "HKEX",
+      "classification": "related"
+    },
+    {
+      "name": "兆易创新",
+      "code": "03986",
+      "date": "2026-08-18",
+      "title": "ANNOUNCEMENT ON CONVENING OF\nTHE 2026 INTERIM RESULTS BRIEFING",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0818/2026081801935.pdf",
+      "source": "HKEX",
+      "classification": "related"
+    },
+    {
+      "name": "贵州茅台",
+      "code": "600519",
+      "date": "2026-08-15",
+      "title": "贵州茅台关于召开2026年半年度业绩说明会的公告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-15/1225475856.PDF",
+      "source": "CNINFO",
+      "classification": "related"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 106,
+    "cninfo_watchlist_rows": 128,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260821.html"
+  ]
+}

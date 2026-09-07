@@ -1,0 +1,54 @@
+{
+  "run_time": "2026-08-12 11:01:24 +08:00",
+  "window_start": "2026-08-06 00:00 +08:00",
+  "window_end": "2026-08-12 11:01 +08:00",
+  "formal_hits": [
+    {
+      "name": "摩尔线程",
+      "code": "688795",
+      "date": "2026-08-10",
+      "title": "摩尔线程2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-10/1225465348.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "摩尔线程",
+      "code": "688795",
+      "date": "2026-08-10",
+      "title": "摩尔线程2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-10/1225465335.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "寒武纪",
+      "code": "688256",
+      "date": "2026-08-08",
+      "title": "2026年半年度报告摘要",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-08/1225464971.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    },
+    {
+      "name": "寒武纪",
+      "code": "688256",
+      "date": "2026-08-08",
+      "title": "2026年半年度报告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-08-08/1225464969.PDF",
+      "source": "CNINFO",
+      "classification": "formal"
+    }
+  ],
+  "related_updates": [],
+  "stats": {
+    "hkex_watchlist_rows": 60,
+    "cninfo_watchlist_rows": 53,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260812.html"
+  ]
+}

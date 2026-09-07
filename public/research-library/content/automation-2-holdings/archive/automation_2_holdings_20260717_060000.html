@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>automation-2 每日持仓利多利空监控 2026-07-17</title>
+  <style>
+    :root {
+      --bg:#f6f7f9; --panel:#ffffff; --text:#20242a; --muted:#68707d; --line:#dde2ea;
+      --red:#b42318; --red-bg:#fff0ee; --orange:#b45f06; --orange-bg:#fff6e5;
+      --yellow:#8a6a00; --yellow-bg:#fffbe6; --green:#16794c; --green-bg:#eaf7ef;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
+    header { padding:28px 32px 20px; background:#111827; color:white; }
+    h1 { margin:0 0 8px; font-size:26px; letter-spacing:0; }
+    .window { color:#cbd5e1; font-size:14px; }
+    main { max-width:1480px; margin:0 auto; padding:22px 24px 40px; }
+    section { margin:18px 0; }
+    h2 { font-size:20px; margin:0 0 12px; }
+    .grid { display:grid; grid-template-columns:1.1fr 1fr; gap:16px; }
+    .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; box-shadow:0 1px 2px rgba(15,23,42,.04); }
+    .risk-box { border-left:6px solid var(--red); background:var(--red-bg); }
+    .gate-box { border-left:6px solid var(--orange); background:var(--orange-bg); }
+    .risk-title { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .risk-title strong { font-size:18px; }
+    .badge { display:inline-flex; align-items:center; justify-content:center; min-width:54px; padding:3px 8px; border-radius:999px; font-weight:700; font-size:12px; white-space:nowrap; }
+    .badge.red { color:var(--red); background:#ffe1dc; }
+    .badge.orange { color:var(--orange); background:#ffe8bf; }
+    .badge.yellow { color:var(--yellow); background:#fff1a8; }
+    .badge.neutral { color:#475467; background:#eef2f7; }
+    .attention { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; }
+    .attention-card { border:1px solid var(--line); border-radius:8px; background:white; padding:14px; }
+    .attention-name { color:var(--red); font-weight:800; margin-bottom:6px; }
+    .attention-card p { margin:0; color:#344054; }
+    table { width:100%; border-collapse:separate; border-spacing:0; background:white; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    th, td { padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top; font-size:13px; }
+    th { position:sticky; top:0; z-index:1; background:#f0f3f8; color:#344054; text-align:left; font-weight:800; }
+    tr:last-child td { border-bottom:none; }
+    .code, .muted { color:var(--muted); font-size:12px; }
+    .judge { display:inline-flex; padding:3px 8px; border-radius:6px; font-weight:800; }
+    .judge.bull { color:#b42318; background:#fff0ee; }
+    .judge.bear { color:#16794c; background:#eaf7ef; }
+    .judge.flat { color:#344054; background:#eef2f7; }
+    .plans { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+    .plan { background:white; border:1px solid var(--line); border-radius:8px; padding:14px; }
+    .plan strong { display:block; margin-bottom:6px; }
+    ul { margin:8px 0 0 20px; padding:0; }
+    li { margin:5px 0; }
+    @media (max-width: 980px) {
+      main { padding:16px; }
+      .grid, .attention, .plans { grid-template-columns:1fr; }
+      table { display:block; overflow-x:auto; white-space:normal; }
+      th, td { min-width:120px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=automation-2-holdings&amp;view=reports">持仓晨报</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <header>
+    <h1>每日持仓利多利空监控</h1>
+    <div class="window">截至北京时间 2026-07-17 06:00；A/H股使用 2026-07-16 收盘，隔夜美股使用 2026-07-16 收盘；不引用 2026-07-17 A/H盘中或收盘。</div>
+  </header>
+  <main>
+    <section class="grid">
+      <div class="panel risk-box">
+        <div class="risk-title"><strong>今日高危预警</strong><span class="badge red">红色预警</span></div>
+        <p>红色预警。组合核心风险不是全部公司基本面恶化，而是“7月16日A股半导体/AI硬件继续下杀 + 隔夜美股芯片ETF大跌 + 澜起科技突发调查说明”叠加。澜起科技、中微公司、雅克科技触发优先防守；新易盛、联瑞新材、紫光国微、联得装备也只按防守仓处理。</p>
+      </div>
+      <div class="panel gate-box">
+        <div class="risk-title"><strong>总阀门</strong><span class="badge orange">防守</span></div>
+        <p>总阀门：不加仓、不追反弹；AI硬件、半导体材料和设备先防守，跌破成本线或关键支撑的个股优先降波动；只有核心股放量收回成本/关键位且外盘芯片止跌后再谈进攻。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>需要重点注意的3只股票</h2>
+      <div class="attention"><div class="attention-card"><div class="attention-name">澜起科技</div><p>单日-16.44%且深破263成本线；虽有H1业绩预增和回购提议，但韩国调查说明与外盘芯片大跌叠加，先按红色风险处理。</p></div>
+<div class="attention-card"><div class="attention-name">中微公司</div><p>7月16日跌破380成本线，5日跌幅约23.36%，半导体设备链受海外芯片风险传导最直接。</p></div>
+<div class="attention-card"><div class="attention-name">雅克科技</div><p>3日约-17.47%、5日约-25.36%，保留异常波动风险提示，高波动材料题材仍未止稳。</p></div></div>
+    </section>
+
+    <section>
+      <h2>持仓明细</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>股票</th><th>持仓</th><th>收盘/涨跌</th><th>3日/5日</th><th>最新利多消息</th><th>最新利空消息</th><th>级别</th><th>综合判断</th><th>今日关注位或操作提示</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>新易盛</strong><br><span class="code">300502.SZ</span></td>
+          <td>1060股；老仓760股参考成本约544.6，新增300股成本待补</td>
+          <td><strong>542.60</strong><br><span class="muted">-2.41%</span></td>
+          <td>+5.87%<br><span class="muted">5日 -0.53%</span></td>
+          <td>仍接近老仓参考成本；CPO/光模块仍是AI算力链最强弹性分支之一，未见重大新增公司级利空。</td>
+          <td>7月16日继续回落并跌破前一日收盘，隔夜QQQ -1.64%、SOXX -4.46%、SMH -3.70%，高估值AI硬件今日仍有外部压力。</td>
+          <td><span class="badge orange">橙色</span></td>
+          <td><span class="judge flat">中性偏弱</span></td>
+          <td>不加仓；542/535为短线防守区，不能快速收回544.6老仓成本线时，新增300股优先控波动。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>绿的谐波</strong><br><span class="code">688017.SH</span></td>
+          <td>400股，成本320</td>
+          <td><strong>378.61</strong><br><span class="muted">-1.93%</span></td>
+          <td>-0.24%<br><span class="muted">5日 -7.22%</span></td>
+          <td>仍高于持仓成本，机器人主线尚未完全退出资金视野。</td>
+          <td>保留7月初交易风险提示、7月10日募投延期和高估值压力；股价仍未收复400，冲高承接不足。</td>
+          <td><span class="badge orange">橙色</span></td>
+          <td><span class="judge flat">中性偏弱</span></td>
+          <td>只持有或做T；400未收复前不加，跌破375后按高位题材二次回落处理。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>生益科技</strong><br><span class="code">600183.SH</span></td>
+          <td>500股，成本138.2</td>
+          <td><strong>146.99</strong><br><span class="muted">-3.57%</span></td>
+          <td>+9.33%<br><span class="muted">5日 -6.61%</span></td>
+          <td>2026年半年度业绩预增117%到131%的公司级利多仍有效，股价仍高于成本。</td>
+          <td>业绩利多后连续巨震，7月16日回落并失守150；其拟处置联瑞转债会继续压制联瑞新材情绪。</td>
+          <td><span class="badge yellow">黄色</span></td>
+          <td><span class="judge bull">利多但兑现压力加大</span></td>
+          <td>守145/138.2两道线；若反弹不能收回150，不追，按业绩利多兑现处理。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>澜起科技</strong><br><span class="code">688008.SH</span></td>
+          <td>200股，成本263</td>
+          <td><strong>211.13</strong><br><span class="muted">-16.44%</span></td>
+          <td>-16.48%<br><span class="muted">5日 -26.13%</span></td>
+          <td>7月16日晚披露2026H1业绩预增：收入约33.35亿元，归母净利润19亿到21亿元，同比增63.9%到81.2%；董事长兼CEO提议回购3亿到6亿元A股。</td>
+          <td>同晚公告韩国办公室配合反垄断相关调查，虽称公司及董事员工未被指控且经营正常，但最终结果不可预测；股价已深度跌破263成本线，叠加隔夜海外芯片大跌。</td>
+          <td><span class="badge red">红色</span></td>
+          <td><span class="judge bear">利空冲击中带业绩利多</span></td>
+          <td>今日第一防守位；263以下不补仓，若业绩/回购利多不能带来放量修复，先降高贝塔暴露。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>英维克</strong><br><span class="code">002837.SZ</span></td>
+          <td>300股，成本74.8</td>
+          <td><strong>67.86</strong><br><span class="muted">+0.18%</span></td>
+          <td>+1.31%<br><span class="muted">5日 -10.56%</span></td>
+          <td>7月16日小幅收红，液冷/数据中心温控逻辑仍在AI基础设施分支内。</td>
+          <td>仍低于74.8成本，5日跌幅超过10%，修复弱于核心CPO/PCB品种；未见重大新增利多催化。</td>
+          <td><span class="badge yellow">黄色</span></td>
+          <td><span class="judge flat">中性偏弱</span></td>
+          <td>不补仓；先看67/70承接，不能收回74.8前只做防守。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>中微公司</strong><br><span class="code">688012.SH</span></td>
+          <td>200股，成本380</td>
+          <td><strong>361.42</strong><br><span class="muted">-7.63%</span></td>
+          <td>-11.55%<br><span class="muted">5日 -23.36%</span></td>
+          <td>半导体设备国产化长期逻辑未见公告层面破坏；未检索到重大新增经营利空。</td>
+          <td>7月16日跌破380成本线，5日跌幅超过20%；海外芯片ETF大跌会直接压制设备链估值和情绪。</td>
+          <td><span class="badge red">红色</span></td>
+          <td><span class="judge bear">利空</span></td>
+          <td>第二重点；380以下不摊低，若不能快速收回380，先按弱修复失败处理。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>联瑞新材</strong><br><span class="code">688300.SH</span></td>
+          <td>200股，成本247</td>
+          <td><strong>158.40</strong><br><span class="muted">-4.76%</span></td>
+          <td>-4.41%<br><span class="muted">5日 -19.25%</span></td>
+          <td>先进封装/高端填料叙事仍在，未见公司主营新增重大负面公告。</td>
+          <td>远低于成本且5日跌幅接近20%；生益科技授权处置1,616,660张联瑞转债，转债供给/筹码预期仍是明确压力。</td>
+          <td><span class="badge orange">橙色</span></td>
+          <td><span class="judge bear">利空</span></td>
+          <td>不补仓；158/155是短线风险线，放量跌破则优先降风险。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>雅克科技</strong><br><span class="code">002409.SZ</span></td>
+          <td>300股，成本待补</td>
+          <td><strong>156.00</strong><br><span class="muted">-8.93%</span></td>
+          <td>-17.47%<br><span class="muted">5日 -25.36%</span></td>
+          <td>电子材料仍属半导体材料链，未见7月16日前重大新增公司经营利空。</td>
+          <td>连续大跌，5日跌幅超过25%；保留7月初异常波动公告、无应披露未披露事项和注意交易风险提示。</td>
+          <td><span class="badge red">红色</span></td>
+          <td><span class="judge bear">利空</span></td>
+          <td>第三重点；156/150不稳则按题材退潮处理，不能收回170前不追反弹。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>联得装备</strong><br><span class="code">300545.SZ</span></td>
+          <td>200股，成本待补</td>
+          <td><strong>28.00</strong><br><span class="muted">-0.53%</span></td>
+          <td>-2.78%<br><span class="muted">5日 -16.42%</span></td>
+          <td>未见重大新增公司公告利空，7月16日跌幅有所收窄。</td>
+          <td>仍处于小市值高波动题材退潮后的弱修复，5日跌幅超过16%，30下方承接不足。</td>
+          <td><span class="badge orange">橙色</span></td>
+          <td><span class="judge bear">利空缓和但未解除</span></td>
+          <td>不补仓；只有放量收回30到32区间，才算从防守转观察修复。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>紫光国微</strong><br><span class="code">002049.SZ</span></td>
+          <td>100股，成本待补</td>
+          <td><strong>70.16</strong><br><span class="muted">-2.88%</span></td>
+          <td>-14.17%<br><span class="muted">5日 -19.44%</span></td>
+          <td>特种芯片/安全芯片基本盘仍有关注度；7月17日披露预计触发国微转债转股价向下修正条件提示，偏债券条款事件。</td>
+          <td>仍未收回78到80观察位，5日跌幅接近20%；转股价向下修正提示本身不构成经营利多，半导体风格压力仍在。</td>
+          <td><span class="badge orange">橙色</span></td>
+          <td><span class="judge flat">中性偏弱</span></td>
+          <td>不作为进攻品种；70/68先看止跌，不能收回78前不加。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>阿里巴巴-W</strong><br><span class="code">9988.HK</span></td>
+          <td>6手/600股，成本160</td>
+          <td><strong>116.90</strong><br><span class="muted">+3.09%</span></td>
+          <td>+5.60%<br><span class="muted">5日 +8.24%</span></td>
+          <td>港股7月16日继续修复，5日涨幅超8%；平台互联网相对半导体高贝塔更抗压，回购仍提供边际支撑。</td>
+          <td>仍远低于160成本；隔夜BABA ADR微跌0.17%，修复不宜追高。</td>
+          <td><span class="badge yellow">黄色</span></td>
+          <td><span class="judge flat">中性偏多</span></td>
+          <td>持有观察；116/113为短线强弱线，反弹不加仓摊低。</td>
+        </tr>
+        
+        <tr>
+          <td><strong>宁德时代-H</strong><br><span class="code">3750.HK</span></td>
+          <td>1手/100股，成本660</td>
+          <td><strong>621.00</strong><br><span class="muted">-0.16%</span></td>
+          <td>+2.99%<br><span class="muted">5日 -2.59%</span></td>
+          <td>600附近承接仍在，7月16日基本横住；公告层面未见重大经营恶化。</td>
+          <td>仍低于660成本，H股修复力度有限；全球成长股风险偏好转弱时仍会受压。</td>
+          <td><span class="badge yellow">黄色</span></td>
+          <td><span class="judge flat">中性</span></td>
+          <td>看621/600支撑；未回到660前不做加仓摊低。</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>风险预案</h2>
+      <div class="plans">
+        <div class="plan"><strong>红色触发</strong>澜起科技不能被业绩/回购带回230上方、中微公司不能收回380、雅克科技跌破150时，先减高贝塔而不是补仓。</div>
+        <div class="plan"><strong>橙色处理</strong>新易盛、绿的谐波、生益科技若高开冲高回落，不追涨，新增或题材仓优先做T。</div>
+        <div class="plan"><strong>港股处理</strong>阿里巴巴-W和宁德时代-H只做修复持有，不能因单日反弹摊低成本。</div>
+        <div class="plan"><strong>重新进攻条件</strong>半导体/AI硬件需出现放量止跌、核心股站回成本或关键位，且SOXX/SMH止跌。</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>来源与数据缺口</h2>
+      <ul><li><a href="https://web.ifzq.gtimg.cn/appstock/app/fqkline/get">腾讯/GTIMG qfq日K</a>：用于A/H股2026-07-16收盘、涨跌幅、3/5日累计测算；东方财富接口本次连接被远端断开，已切换备用源。</li>
+<li><a href="https://query1.finance.yahoo.com/v8/finance/chart/QQQ">Yahoo Finance chart接口</a>：用于QQQ、SOXX、SMH、BABA ADR、10年美债收益率、VIX的2026-07-16收盘与涨跌幅。</li>
+<li><a href="https://paper.cnstock.com/html/2026-07/17/content_2245364.htm">澜起科技2026H1业绩预增公告</a>：披露收入约33.35亿元、归母净利润19亿到21亿元，同比增63.9%到81.2%。</li>
+<li><a href="https://news.sina.com.cn/c/2026-07-17/doc-inihzrtu1349442.shtml">澜起科技韩国调查/回购相关报道</a>：公司说明韩国办公室配合调查，同时披露回购提议；该事项在06:00前可见。</li>
+<li><a href="https://money.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/002049.phtml">紫光国微公告索引</a>：7月17日披露预计触发国微转债转股价格向下修正条件提示。</li>
+<li><a href="https://money.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/002409.phtml">雅克科技公告索引</a>：保留7月2日股票交易异常波动公告和注意交易风险提示。</li>
+<li><a href="https://www.wsj.com/finance/stocks/u-s-stock-futures-fall-on-fresh-ai-wobble-a7d12092">WSJ/MarketWatch/Barron's 7月16日芯片压力</a>：隔夜美国芯片股显著承压，PHLX半导体指数大跌，作为高估值科技外部风险触发项。</li>
+<li><a href="https://data.eastmoney.com/stockdata/600183.html">生益科技公告/数据索引</a>：保留2026H1业绩预增与处置联瑞转债事项；未见新的重大经营负面公告。</li>
+<li>数据缺口：本次未逐条下载所有交易所PDF原文；未检索到实质新增公告的个股按“未见重大新增利多/利空”处理。</li></ul>
+    </section>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

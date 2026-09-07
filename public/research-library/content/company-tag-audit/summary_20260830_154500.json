@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-30 15:42:59",
+  "production_cutoff": "2026-08-30 15:42:40",
+  "active_companies": 8111,
+  "supported_companies": 2201,
+  "snapshot_sha256": "d6cb995662436e5e032b3304b45696d57eb0191027d7aef2d55888253932c433",
+  "audit_counts": {
+    "C_需人工复核": 480,
+    "A_主营直接支持": 1206,
+    "D_明显误标": 14,
+    "B_行业与主营一致": 477,
+    "B_人工复核支持": 17,
+    "E_资料不足": 7
+  },
+  "confirmed_error_count": 14,
+  "manual_review_count": 501,
+  "high_priority_review_count": 49,
+  "ah_conflict_company_names": [
+    "兆易创新",
+    "龙源电力"
+  ],
+  "methodology": {
+    "A": "主营或正式新战略业务直接命中",
+    "B": "人工复核或行业与主营一致",
+    "C": "宽口径行业映射，需逐家公司复核",
+    "D": "主营与标签明显冲突",
+    "E": "缺少主营/战略/行业资料"
+  }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>03 清理后服务器情况｜114.55.219.63</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-114.55.219.63-20260831&amp;view=reports">管理服务器清理</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">服务器清理方案</a><span>/</span><strong>清理后情况</strong></div><div>验收：2026-08-31 11:11 CST</div></div>
+  <header class="hero green">
+    <div class="eyebrow">CHAPTER 03 · AFTER</div>
+    <h1>清理后当前服务器情况</h1>
+    <p>记录治理完成后的资源、服务、端口与日志策略，作为后续巡检和容量告警的当前基线。</p>
+    <div class="tags"><span>系统盘 35%</span><span>数据盘 15%</span><span>7 个容器保持运行</span><span>HTTP 验收通过</span></div>
+  </header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 清理前情况</a><a href="02-manual-cleanup-guide.html">02 手动操作手册</a><a class="active" href="03-after-cleanup.html">03 清理后情况</a></nav>
+
+  <div class="status"><span class="pill green">验收通过</span><div><strong>业务进程保持正常。</strong> Docker、Nginx、4 个 Tomcat、2 个 MySQL、2 个 Redis 全部 active；9999 /health 与 8317 从服务器内外访问均返回 200。</div></div>
+
+  <section>
+    <h2>处理结果</h2>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘 /</div><div class="value good">35%</div><div class="track"><div class="fill green" style="width:35%"></div></div><div class="sub">可用 75 GiB；inode 5%</div></div>
+      <div class="card metric"><div class="label">数据盘 /data2</div><div class="value good">15%</div><div class="track"><div class="fill green" style="width:15%"></div></div><div class="sub">可用 401 GiB；inode 1%</div></div>
+      <div class="card metric"><div class="label">内存</div><div class="value good">54% 可用</div><div class="track"><div class="fill green" style="width:54%"></div></div><div class="sub">约 16 GiB 可用；仍无 Swap</div></div>
+      <div class="card metric"><div class="label">Journal</div><div class="value blue">1000 MiB</div><div class="track"><div class="fill" style="width:29%"></div></div><div class="sub">由 3.4 GiB 收敛到 1 GiB</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>前后对比</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>项目</th><th>清理前</th><th>清理后</th><th>结果</th></tr></thead>
+      <tbody>
+        <tr><td>根分区</td><td>100%，可用 437 MiB</td><td><strong>35%，可用 75 GiB</strong></td><td><span class="pill green">安全</span></td></tr>
+        <tr><td>数据盘</td><td>41%，可用 279 GiB</td><td><strong>15%，可用 401 GiB</strong></td><td><span class="pill green">安全</span></td></tr>
+        <tr><td>Docker build cache</td><td>70.77 GB</td><td>11.14 GB</td><td>释放 60.13 GB，保留热缓存</td></tr>
+        <tr><td>Nginx wwwlogs</td><td>51.81 GiB</td><td>1.1 GiB</td><td>已轮转并 gzip</td></tr>
+        <tr><td>Tomcat job logs</td><td>约 44 GiB</td><td>4.9 GiB</td><td>打开文件安全轮转，历史文件压缩</td></tr>
+        <tr><td>stock logs</td><td>约 38 GiB</td><td>6.6 GiB</td><td>已关闭历史文件全部压缩</td></tr>
+        <tr><td>停用容器日志</td><td>10.96 GiB，占根盘</td><td>737 MiB 压缩归档，位于 /data2</td><td>完整保留，可回查</td></tr>
+        <tr><td>未引用镜像</td><td>19 个镜像，共 6.723 GB</td><td>12 个镜像，共 2.649 GB</td><td>释放 3.409 GB，保留近期回滚镜像</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>服务与端口验收</h2>
+    <div class="grid three">
+      <div class="card"><span class="pill green">active</span><h3>Docker</h3><p>7 个原运行容器全部保持运行，sub2api health=healthy。</p></div>
+      <div class="card"><span class="pill green">active</span><h3>Nginx</h3><p>配置测试成功；主 PID 1380 未重启，80/443 正常监听。</p></div>
+      <div class="card"><span class="pill green">active</span><h3>Tomcat × 4</h3><p>job、openApi、token、dev openApi 均 active。</p></div>
+      <div class="card"><span class="pill green">active</span><h3>MySQL × 2</h3><p>3306 与 3307 正常监听。</p></div>
+      <div class="card"><span class="pill green">active</span><h3>Redis × 2</h3><p>6379 与 6380 正常监听。</p></div>
+      <div class="card"><span class="pill green">HTTP 200</span><h3>对外接口</h3><p>9999 /health 与 8317 / 从服务器内外均返回 200。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>已经生效的长期策略</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>策略</th><th>位置/频率</th><th>当前规则</th></tr></thead>
+      <tbody>
+        <tr><td>Docker 默认日志上限</td><td><code>/etc/docker/daemon.json</code></td><td>新建容器默认 100 MiB × 5；已有容器不追溯修改。</td></tr>
+        <tr><td>Nginx/Tomcat 轮转</td><td>每小时第 17 分钟检查</td><td>每日或超过 1 GiB 提前轮转，gzip，保留 7–14 份。</td></tr>
+        <tr><td>关闭的 Tomcat/stock 日志</td><td>每天 02:00</td><td>lsof 排除打开文件，历史文件 gzip，保留 14 天。</td></tr>
+        <tr><td>资源守卫</td><td>每 10 分钟</td><td>磁盘 85%、可用内存 10%、Docker JSON 单文件 500 MiB 告警。</td></tr>
+        <tr><td>Docker 构建缓存</td><td>每周日 03:32</td><td>清理 7 天前缓存，保留 10 GB。</td></tr>
+        <tr><td>Journal</td><td>持续生效</td><td>最大 1 GiB、保留 2 GiB 空闲、单文件 100 MiB、最长 14 天。</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>归档与剩余观察项</h2>
+    <ul>
+      <li>服务器端备份与完整归档：<code>/data2/archive/server-cleanup-20260831-1035</code>。</li>
+      <li>发现两条自 2026-05-12 起未退出、CPU 近乎为 0 的旧 <code>docker build</code> 进程。为避免误伤未知发版链路，本次没有终止。</li>
+      <li>已有容器的 Docker log-opt 无法无重建修改，因此通过 500 MiB 告警兜底；新建容器使用 100 MiB × 5。</li>
+      <li>服务器仍无 Swap，当前不是瓶颈；如需新增，建议单独评估延迟和磁盘策略。</li>
+    </ul>
+  </section>
+
+  <div class="next-prev"><a href="02-manual-cleanup-guide.html">← 上一章：手动操作手册</a><a href="index.html">返回文档集入口 →</a></div>
+  <div class="footer">清理后验收基线 · 114.55.219.63 · 2026-08-31</div>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

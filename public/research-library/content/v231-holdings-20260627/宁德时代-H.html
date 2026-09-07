@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>宁德时代-H - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>宁德时代-H V2.3.1 深度分析</h1>
+  <p>港股 · 03750 · 动力电池 / 储能电池 / 电池平台 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>核心配置 / 全球制造龙头</b><br>基本面硬、护城河强，不是短期最弹性，但适合作为硬科技核心资产观察。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">86</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>680.5</span></div>
+      <div class="card"><b>PE / PB</b><span>39.39 / 7.1</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="pos">2,050 / 3.1%</span></div>
+      <div class="card"><b>市值/换手</b><span>1485.5335亿 / 0.0%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>无一票否决；压力来自电池价格周期、海外政策、港股流动性和新能源估值偏好。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">12</span></td></tr>
+      <tr><td>海外对标</td><td>LG Energy Solution、Panasonic、Samsung SDI</td></tr>
+      <tr><td>替代阶段</td><td>全球龙头输出，不是单纯国产替代</td></tr>
+      <tr><td>结论</td><td>公司更多是中国制造全球领先，而不是追赶海外卡脖子。替代逻辑体现在全球客户份额和技术路线领先。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>A-</b></td></tr>
+      <tr><td>国内竞争对手</td><td>比亚迪、亿纬锂能、国轩高科、欣旺达</td></tr>
+      <tr><td>海外竞争对手</td><td>LGES、Panasonic、Samsung SDI</td></tr>
+      <tr><td>我有你没有</td><td>全球规模、供应链、制造良率、客户覆盖、研发投入和成本控制。</td></tr>
+      <tr><td>你有我更强</td><td>同类里规模、客户、现金流和技术路线综合最强。</td></tr>
+      <tr><td>我弱于你</td><td>整车厂自研、电池价格战、海外本土化政策会压制估值。</td></tr>
+      <tr><td>财务/客户验证</td><td>2026Q1财务使用A股宁德时代口径辅助，收入、利润、现金流和ROE质量较强。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>单季度</small></td><td>1291.31亿<small>52.4%</small></td><td>207.38亿<small>48.5%</small></td><td>180.93亿<small>52.9%</small></td><td>24.8%</td><td>17.6%</td><td>7.3796</td><td>6.0%</td></tr><tr><td>2025-12-31<small>单季度</small></td><td>1406.30亿<small>36.6%</small></td><td>231.67亿<small>57.1%</small></td><td>208.89亿<small>63.0%</small></td><td>28.2%</td><td>17.4%</td><td>11.513</td><td>7.2%</td></tr><tr><td>2025-09-30<small>单季度</small></td><td>1041.86亿<small>12.9%</small></td><td>185.49亿<small>41.2%</small></td><td>164.22亿<small>35.5%</small></td><td>25.8%</td><td>19.1%</td><td>4.8057</td><td>6.1%</td></tr><tr><td>2025-06-30<small>单季度</small></td><td>941.82亿<small>8.3%</small></td><td>165.23亿<small>33.7%</small></td><td>153.68亿<small>42.2%</small></td><td>25.6%</td><td>18.6%</td><td>5.4076</td><td>6.1%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">17</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">16</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">20</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">17</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">14</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill good">82</span></td></tr><tr><td>核心竞争力</td><td><span class="pill good">92</span></td></tr><tr><td>财务质量</td><td><span class="pill good">88</span></td></tr><tr><td>估值与赔率</td><td><span class="pill mid">74</span></td></tr><tr><td>催化/影子</td><td><span class="pill watch">65</span></td></tr><tr><td>治理/流动性</td><td><span class="pill good">82</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>动力电池和储能利润池足够大，但行业竞争压价会影响利润率，估值主要由ROE韧性和全球份额决定。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>动力电池和储能利润池足够大，但行业竞争压价会影响利润率，估值主要由ROE韧性和全球份额决定。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>公司更多是中国制造全球领先，而不是追赶海外卡脖子。替代逻辑体现在全球客户份额和技术路线领先。</td></tr>
+      <tr><td>竞争对手护城河</td><td>2026Q1财务使用A股宁德时代口径辅助，收入、利润、现金流和ROE质量较强。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：动力/储能电池。PE判断：<b>同类中枢</b>；PB判断：<b>极贵</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>宁德时代-H</td><td>39.39</td><td>7.1</td><td>1485.5335亿</td></tr><tr><td>宁德时代-A</td><td>22.32</td><td>5.39</td><td>16219.22亿</td></tr><tr><td>比亚迪</td><td>25.88</td><td>3.07</td><td>2726.53亿</td></tr><tr><td>亿纬锂能</td><td>30.18</td><td>3.13</td><td>1314.18亿</td></tr><tr><td>国轩高科</td><td>21.17</td><td>1.69</td><td>466.7亿</td></tr><tr><td>欣旺达</td><td>43.31</td><td>1.39</td><td>315.36亿</td></tr><tr><td>孚能科技</td><td>-16.57</td><td>1.33</td><td>121.6亿</td></tr><tr><td>派能科技</td><td>88.23</td><td>1.39</td><td>128.1亿</td></tr><tr><td>鹏辉能源</td><td>67.73</td><td>6.87</td><td>312.42亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>电池价格战和原材料周期影响盈利。</li><li>海外政策和贸易壁垒影响估值。</li><li>港股流动性弱时会放大折价。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>更适合回调配置，不适合追涨。</td></tr>
+      <tr><td>加仓</td><td>只有行业价格战缓和、港股风险偏好修复时加。</td></tr>
+      <tr><td>减仓</td><td>若ROE和毛利率连续下行，需要降低核心仓位。</td></tr>
+      <tr><td>失效</td><td>份额、毛利率和现金流同时恶化。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：同花顺/东方财富财务摘要(AkShare)；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

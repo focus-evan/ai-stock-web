@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>中信期货加空后次日A股上涨：一年回测</title>
+  <style>
+    :root { --bg:#f4f6f9; --panel:#fff; --ink:#172033; --muted:#667085; --line:#d9e1ec; --blue:#1f5fbf; --green:#0f7b42; --red:#c82c3a; --amber:#9a6200; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif; line-height:1.65; }
+    main { max-width:1280px; margin:auto; padding:28px 22px 60px; }
+    header { background:linear-gradient(135deg,#111827,#253a5a); color:#fff; padding:30px; border-radius:14px; box-shadow:0 14px 34px rgba(15,23,42,.18); }
+    h1,h2,h3 { margin:0; } h1 { font-size:30px; line-height:1.3; } h2 { font-size:20px; margin-bottom:12px; } h3 { font-size:16px; } p { margin:8px 0 0; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px 16px; color:#d6deec; font-size:13px; margin-top:10px; }
+    .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:16px; box-shadow:0 7px 22px rgba(15,23,42,.05); }
+    .gate { border-left:7px solid var(--amber); } .gate.good { border-left-color:var(--green); } .gate.bad { border-left-color:var(--red); }
+    .status { display:inline-block; padding:5px 11px; border-radius:999px; font-weight:800; background:#fff4dc; color:var(--amber); margin-right:8px; }
+    .gate.good .status { background:#eaf7ef; color:var(--green); } .gate.bad .status { background:#fff0f1; color:var(--red); }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .metric { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; } .metric strong { display:block; font-size:25px; } .metric span,.muted { color:var(--muted); font-size:13px; }
+    .scroll { overflow-x:auto; } table { width:100%; border-collapse:collapse; min-width:860px; font-size:14px; } th,td { padding:10px 11px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; } th { background:#eef3f9; white-space:nowrap; } tr:last-child td { border-bottom:0; }
+    .pos { color:var(--green); font-weight:700; } .neg { color:var(--red); font-weight:700; }
+    .note { background:#f8fafc; border:1px solid var(--line); padding:12px 14px; border-radius:9px; margin-top:12px; }
+    code { background:#eef2f7; padding:2px 5px; border-radius:4px; } a { color:var(--blue); } ul { margin:8px 0 0; padding-left:22px; }
+    footer { color:var(--muted); text-align:center; font-size:12px; margin-top:18px; }
+    @media(max-width:900px) { .metrics { grid-template-columns:1fr 1fr; } main { padding:16px 10px 42px; } h1 { font-size:24px; } }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=cffex-citic-backtest&amp;view=reports">中信期货席位回测</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav><main>
+  <header>
+    <h1>中信期货“加空后次日A股上涨”一年回测</h1>
+    <div class="meta">
+      <span>生成时间：2026-08-22 14:30:26 北京时间</span>
+      <span>主窗口：次日日期 2025-08-22 至 2026-08-21</span>
+      <span>信号：收盘后可见的中金所会员持仓变化</span>
+    </div>
+  </header>
+
+  <section class="panel gate bad">
+    <h2><span class="status">不成立</span>一句话结论</h2>
+    <p>多数品种未显示稳定的额外上涨概率，观察到的现象更可能来自样本选择、市场阶段或对冲结构。</p>
+    <div class="metrics">
+      <div class="metric"><strong>0/4</strong><span>显著支持的品种数（Holm校正后）</span></div>
+      <div class="metric"><strong>2/4</strong><span>胜率相对非信号日方向为正</span></div>
+      <div class="metric"><strong>否</strong><span>四品种名义金额合计显著支持</span></div>
+      <div class="metric"><strong>1588</strong><span>产品-交易日可分析样本</span></div>
+    </div>
+    <div class="note"><strong>风险门：</strong>只有“条件胜率高于非信号日”且 <code>p&lt;0.05</code> 才标记支持；单纯胜率超过50%不等于有预测力。</div>
+    <div class="note"><strong>重要例外：</strong>若把“加空”定义为四品种<strong>合计净空名义金额增加</strong>，2025完整年度确实出现局部显著关系：次日上涨率 63.6%，非信号日 48.1%，p=0.026；但最近滚动一年降为 57.7% 对 56.5%，p=0.492。因此它更像2025特定市场阶段的反身/对冲现象，而非跨阶段稳定规律。</div>
+  </section>
+
+  <section class="panel">
+    <h2>主检验：中信期货空单增加 → 对应指数次日上涨</h2>
+    <p class="muted">滚动一年；按中金所各合约“持卖单量比上一交易日增减”求和；剔除每月到期周；p值为与非加空日上涨概率的单侧Fisher检验，并对4个品种做Holm多重检验校正。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>品种 / 对应指数</th><th>加空样本</th><th>次日上涨率</th><th>非加空日上涨率</th><th>额外胜率</th><th>次日平均收益</th><th>上涨率95%区间</th><th>校正p值</th><th>判断</th></tr></thead>
+      <tbody><tr><td><strong>IF</strong><span class="muted"> · 沪深300</span></td><td>89</td><td>50.6%</td><td>57.0%</td><td class="neg">-6.4%</td><td>0.08%</td><td>40.4%–60.7%</td><td>1.000</td><td>不支持</td></tr><tr><td><strong>IH</strong><span class="muted"> · 上证50</span></td><td>92</td><td>47.8%</td><td>53.6%</td><td class="neg">-5.8%</td><td>0.13%</td><td>37.9%–57.9%</td><td>1.000</td><td>不支持</td></tr><tr><td><strong>IC</strong><span class="muted"> · 中证500</span></td><td>92</td><td>59.8%</td><td>54.6%</td><td class="pos">5.1%</td><td>0.36%</td><td>49.6%–69.2%</td><td>1.000</td><td>方向一致但不显著</td></tr><tr><td><strong>IM</strong><span class="muted"> · 中证1000</span></td><td>90</td><td>56.7%</td><td>55.6%</td><td class="pos">1.1%</td><td>0.27%</td><td>46.4%–66.4%</td><td>1.000</td><td>方向一致但不显著</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h2>宽基合计检验</h2>
+    <p class="muted">手数不能跨IF/IH/IC/IM直接相加，因此用“持仓变化手数 × 对应指数收盘点位 × 合约乘数”估算名义金额；次日收益用四个对应指数等权平均。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>信号定义</th><th>信号样本</th><th>次日上涨率</th><th>非信号日上涨率</th><th>额外胜率</th><th>平均收益</th><th>p值</th></tr></thead>
+      <tbody><tr><td>四品种合计空单名义金额增加</td><td>86</td><td>57.0%</td><td>57.3%</td><td>-0.3%</td><td>0.16%</td><td>0.575</td></tr><tr><td>四品种合计净空名义金额增加</td><td>97</td><td>57.7%</td><td>56.5%</td><td>1.2%</td><td>0.16%</td><td>0.492</td></tr><tr><td>至少3个品种同时加空</td><td>76</td><td>57.9%</td><td>56.6%</td><td>1.3%</td><td>0.30%</td><td>0.492</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h2>换月敏感性：不剔除到期周</h2>
+    <p class="muted">若原始结果明显强、剔除到期周后消失，说明观察现象可能来自移仓换月，而非稳定方向信号。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>品种 / 对应指数</th><th>加空样本</th><th>次日上涨率</th><th>非加空日上涨率</th><th>额外胜率</th><th>次日平均收益</th><th>上涨率95%区间</th><th>p值</th><th>判断</th></tr></thead>
+      <tbody><tr><td><strong>IF</strong><span class="muted"> · 沪深300</span></td><td>118</td><td>47.5%</td><td>56.5%</td><td class="neg">-9.0%</td><td>-0.00%</td><td>38.7%–56.4%</td><td>0.937</td><td>不支持</td></tr><tr><td><strong>IH</strong><span class="muted"> · 上证50</span></td><td>117</td><td>44.4%</td><td>53.6%</td><td class="neg">-9.2%</td><td>0.03%</td><td>35.8%–53.5%</td><td>0.940</td><td>不支持</td></tr><tr><td><strong>IC</strong><span class="muted"> · 中证500</span></td><td>117</td><td>55.6%</td><td>55.2%</td><td class="pos">0.4%</td><td>0.18%</td><td>46.5%–64.2%</td><td>0.529</td><td>方向一致但不显著</td></tr><tr><td><strong>IM</strong><span class="muted"> · 中证1000</span></td><td>120</td><td>51.7%</td><td>56.6%</td><td class="neg">-4.9%</td><td>0.06%</td><td>42.8%–60.4%</td><td>0.814</td><td>不支持</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h2>口径敏感性</h2>
+    <p class="muted">“加空”至少有三种说法：空单总量增加、净空增加、加空且多单未增加。若只有某一种口径有效，不能泛化为“中信加空必涨”。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>品种</th><th>空单增加上涨率</th><th>净空增加上涨率</th><th>加空且多单未增加</th><th>大幅加空上涨率</th><th>大幅阈值（手）</th></tr></thead>
+      <tbody><tr><td><strong>IF</strong> · 沪深300</td><td>50.6%</td><td>47.3%</td><td>40.0%</td><td>56.5%</td><td>3057</td></tr><tr><td><strong>IH</strong> · 上证50</td><td>47.8%</td><td>48.8%</td><td>75.0%</td><td>39.1%</td><td>1548</td></tr><tr><td><strong>IC</strong> · 中证500</td><td>59.8%</td><td>56.7%</td><td>50.0%</td><td>69.6%</td><td>3745</td></tr><tr><td><strong>IM</strong> · 中证1000</td><td>56.7%</td><td>60.2%</td><td>80.0%</td><td>60.9%</td><td>3934</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h2>2025完整年度稳健性对照</h2>
+    <p class="muted">次日日期限定为2025-01-02至2025-12-31，检验结论是否只属于最近市场阶段。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>品种 / 对应指数</th><th>加空样本</th><th>次日上涨率</th><th>非加空日上涨率</th><th>额外胜率</th><th>次日平均收益</th><th>上涨率95%区间</th><th>校正p值</th><th>判断</th></tr></thead>
+      <tbody><tr><td><strong>IF</strong><span class="muted"> · 沪深300</span></td><td>85</td><td>50.6%</td><td>57.1%</td><td class="neg">-6.6%</td><td>0.01%</td><td>40.2%–61.0%</td><td>1.000</td><td>不支持</td></tr><tr><td><strong>IH</strong><span class="muted"> · 上证50</span></td><td>82</td><td>50.0%</td><td>60.4%</td><td class="neg">-10.4%</td><td>-0.00%</td><td>39.4%–60.6%</td><td>1.000</td><td>不支持</td></tr><tr><td><strong>IC</strong><span class="muted"> · 中证500</span></td><td>90</td><td>55.6%</td><td>61.3%</td><td class="neg">-5.7%</td><td>0.15%</td><td>45.3%–65.4%</td><td>1.000</td><td>不支持</td></tr><tr><td><strong>IM</strong><span class="muted"> · 中证1000</span></td><td>88</td><td>61.4%</td><td>57.9%</td><td class="pos">3.5%</td><td>0.04%</td><td>50.9%–70.9%</td><td>1.000</td><td>方向一致但不显著</td></tr></tbody>
+    </table></div>
+    <div class="note"><strong>年度结论：</strong>不成立。多数品种未显示稳定的额外上涨概率，观察到的现象更可能来自样本选择、市场阶段或对冲结构。</div>
+  </section>
+
+  <section class="panel">
+    <h2>滚动一年最大加空样本</h2>
+    <p class="muted">仅展示极端事件以便人工复核；不能用这些事件替代全样本统计。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>信号日</th><th>品种</th><th>空单变化</th><th>多单变化</th><th>次日</th><th>次日收益</th></tr></thead>
+      <tbody><tr><td>2026-07-29</td><td>IM</td><td>12,097</td><td>11,995</td><td>2026-07-30</td><td class="neg">-2.74%</td></tr><tr><td>2026-03-09</td><td>IC</td><td>8,543</td><td>6,262</td><td>2026-03-10</td><td class="pos">1.58%</td></tr><tr><td>2026-03-09</td><td>IM</td><td>7,858</td><td>8,930</td><td>2026-03-10</td><td class="pos">1.78%</td></tr><tr><td>2026-03-23</td><td>IM</td><td>7,840</td><td>7,552</td><td>2026-03-24</td><td class="pos">2.59%</td></tr><tr><td>2026-01-29</td><td>IM</td><td>7,825</td><td>6,754</td><td>2026-01-30</td><td class="neg">-0.93%</td></tr><tr><td>2026-05-21</td><td>IC</td><td>7,558</td><td>8,179</td><td>2026-05-22</td><td class="pos">1.87%</td></tr><tr><td>2026-04-08</td><td>IC</td><td>7,487</td><td>6,754</td><td>2026-04-09</td><td class="neg">-0.59%</td></tr><tr><td>2025-10-23</td><td>IM</td><td>7,372</td><td>7,461</td><td>2025-10-24</td><td class="pos">1.52%</td></tr><tr><td>2025-12-26</td><td>IC</td><td>7,094</td><td>7,087</td><td>2025-12-29</td><td class="neg">-0.38%</td></tr><tr><td>2025-09-23</td><td>IM</td><td>7,023</td><td>7,281</td><td>2025-09-24</td><td class="pos">1.70%</td></tr><tr><td>2025-09-02</td><td>IM</td><td>6,468</td><td>6,799</td><td>2025-09-03</td><td class="neg">-1.46%</td></tr><tr><td>2026-08-04</td><td>IM</td><td>6,455</td><td>4,498</td><td>2026-08-05</td><td class="pos">2.94%</td></tr><tr><td>2025-12-26</td><td>IM</td><td>6,357</td><td>5,932</td><td>2025-12-29</td><td class="neg">-0.15%</td></tr><tr><td>2025-09-11</td><td>IC</td><td>6,349</td><td>3,223</td><td>2025-09-12</td><td class="pos">0.35%</td></tr><tr><td>2026-01-09</td><td>IC</td><td>6,325</td><td>5,665</td><td>2026-01-12</td><td class="pos">2.39%</td></tr><tr><td>2025-11-12</td><td>IC</td><td>6,198</td><td>6,776</td><td>2025-11-13</td><td class="pos">1.55%</td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h2>方法、数据和边界</h2>
+    <ul>
+      <li><strong>信号时间：</strong>交易日t收盘后的持仓排名；结果为对应现货指数t+1收盘相对t收盘的收益，严格避免把同日涨跌算成“次日”。</li>
+      <li><strong>中信口径：</strong>匹配“中信期货(代客)”；官方明确榜单是期货经纪业务客户持仓汇总，不是中信期货公司自营押注。</li>
+      <li><strong>合约处理：</strong>直接累计官方披露的各合约当日增减字段，不用可见持仓水平做差；另剔除每月第三个周五所在到期周。</li>
+      <li><strong>披露限制：</strong>中金所榜单为排名披露，未进入榜单不等于持仓为零。因此结果检验的是“公开可见的中信席位变化”，不是穿透后全部客户账户。</li>
+      <li><strong>行情来源：</strong>持仓来自<a href="https://www.cffex.com.cn/cn/ccpm.html">中金所成交持仓排名</a>及其历史CSV；指数OHLC来自东方财富历史行情接口。指数与合约映射以中金所产品定义为准。</li>
+      <li><strong>统计边界：</strong>样本约一年、四品种相关性高、多个口径属于探索性检验；显著相关仍不能证明因果，也未计交易成本和开盘可执行性。</li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>数据质量</h2>
+    <div class="metrics">
+      <div class="metric"><strong>1588</strong><span>中金所产品-日期成功记录</span></div>
+      <div class="metric"><strong>0</strong><span>下载或解析失败记录</span></div>
+      <div class="metric"><strong>0</strong><span>当日未见中信空头排名记录</span></div>
+      <div class="metric"><strong>2026-08-21</strong><span>最近完整指数交易日</span></div>
+    </div>
+  </section>
+
+  <footer>本报告是历史统计研究，不构成投资建议。返回 <a href="../index.html">研究报告总入口</a>。</footer>
+</main><script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

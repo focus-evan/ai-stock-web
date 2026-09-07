@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阿里巴巴-W - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>阿里巴巴-W V2.3.1 深度分析</h1>
+  <p>港股 · 09988 · 平台互联网 / 云计算 / AI云 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>低估值科技底仓 / 稳态配置</b><br>估值不贵，现金流和平台壁垒仍在；但不是AI硬件高弹性股，重估需要云和AI商业化证明。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">79</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>89.5</span></div>
+      <div class="card"><b>PE / PB</b><span>14.65 / 1.43</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="neg">-42,300 / -44.1%</span></div>
+      <div class="card"><b>市值/换手</b><span>17189.4404亿 / 0.0%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>无一票否决；风险在于平台竞争、云业务增速、利润波动和港股风险偏好。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">8</span></td></tr>
+      <tr><td>海外对标</td><td>Amazon AWS、Microsoft Azure、Google Cloud，以及国内腾讯云、百度智能云</td></tr>
+      <tr><td>替代阶段</td><td>战略基础设施，但非典型卡脖子替代</td></tr>
+      <tr><td>结论</td><td>云和AI基础设施具备战略意义，但不是设备/材料类国产替代。投资逻辑更偏平台现金流和AI云重估。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>B+</b></td></tr>
+      <tr><td>国内竞争对手</td><td>腾讯、京东、美团、拼多多、百度、字节生态</td></tr>
+      <tr><td>海外竞争对手</td><td>Amazon、Microsoft、Google、Meta生态</td></tr>
+      <tr><td>我有你没有</td><td>电商生态、商家和支付/物流协同、云资源和AI应用场景。</td></tr>
+      <tr><td>你有我更强</td><td>相比多数港股平台，估值低、现金流强、业务多元。</td></tr>
+      <tr><td>我弱于你</td><td>相比海外云巨头，云利润率、AI基础设施话语权和全球化仍弱。</td></tr>
+      <tr><td>财务/客户验证</td><td>年度/TTM口径显示收入体量和现金流强，但利润增速波动，需要拆分云业务。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <p class="warnline">注：该公司当前接口未取得最近四个单季度，使用年度/TTM口径替代，财务趋势置信度下调。</p><table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>年度/TTM替代</small></td><td>10236.70亿<small>2.7%</small></td><td>1035.92亿<small>-20.4%</small></td><td>—<small>—</small></td><td>39.8%</td><td>10.0%</td><td>—</td><td>9.9%</td></tr><tr><td>2025-03-31<small>年度/TTM替代</small></td><td>9963.47亿<small>5.9%</small></td><td>1301.09亿<small>62.6%</small></td><td>—<small>—</small></td><td>40.0%</td><td>12.6%</td><td>—</td><td>12.9%</td></tr><tr><td>2024-03-31<small>年度/TTM替代</small></td><td>9411.68亿<small>8.3%</small></td><td>800.09亿<small>9.9%</small></td><td>—<small>—</small></td><td>37.7%</td><td>7.6%</td><td>—</td><td>8.0%</td></tr><tr><td>2023-03-31<small>年度/TTM替代</small></td><td>8686.87亿<small>1.8%</small></td><td>727.83亿<small>16.9%</small></td><td>—<small>—</small></td><td>36.7%</td><td>7.5%</td><td>—</td><td>7.4%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">11</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">14</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">20</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">13</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">17</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill mid">72</span></td></tr><tr><td>核心竞争力</td><td><span class="pill good">82</span></td></tr><tr><td>财务质量</td><td><span class="pill mid">78</span></td></tr><tr><td>估值与赔率</td><td><span class="pill good">84</span></td></tr><tr><td>催化/影子</td><td><span class="pill watch">68</span></td></tr><tr><td>治理/流动性</td><td><span class="pill good">80</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>电商基本盘提供现金流，AI云若放量才有重估弹性；当前不是高增长硬件利润池。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>电商基本盘提供现金流，AI云若放量才有重估弹性；当前不是高增长硬件利润池。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>云和AI基础设施具备战略意义，但不是设备/材料类国产替代。投资逻辑更偏平台现金流和AI云重估。</td></tr>
+      <tr><td>竞争对手护城河</td><td>年度/TTM口径显示收入体量和现金流强，但利润增速波动，需要拆分云业务。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：港股互联网/云AI平台。PE判断：<b>同类中枢</b>；PB判断：<b>相对便宜</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>阿里巴巴-W</td><td>14.65</td><td>1.43</td><td>17189.4404亿</td></tr><tr><td>腾讯控股</td><td>15.07</td><td>2.97</td><td>37507.5384亿</td></tr><tr><td>美团-W</td><td>-15.34</td><td>2.34</td><td>3595.0869亿</td></tr><tr><td>京东集团-SW</td><td>12.07</td><td>1.07</td><td>2313.4804亿</td></tr><tr><td>百度集团-SW</td><td>43.44</td><td>0.88</td><td>2170.5259亿</td></tr><tr><td>快手-W</td><td>8.58</td><td>1.92</td><td>1496.9403亿</td></tr><tr><td>网易-S</td><td>16.01</td><td>3.21</td><td>5982.451亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>云业务增速和利润率不达预期。</li><li>平台业务竞争继续压制估值。</li><li>港股大盘弱时估值修复慢。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>适合作为低估值科技均衡器，回调分批优于追高。</td></tr>
+      <tr><td>加仓</td><td>云收入/AI商业化超预期时再提高权重。</td></tr>
+      <tr><td>减仓</td><td>若云业务继续低于预期且平台竞争恶化。</td></tr>
+      <tr><td>失效</td><td>现金流和利润率持续下行。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：东方财富美股财务指标(AkShare)，年度口径；季度口径需后续用公司公告补充；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

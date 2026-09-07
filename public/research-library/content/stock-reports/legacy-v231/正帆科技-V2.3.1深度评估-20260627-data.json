@@ -1,0 +1,251 @@
+{
+  "asof": "2026-06-27",
+  "quote_window": "2026-06-26 收盘/盘后行情",
+  "quote": {
+    "name": "正帆科技",
+    "price": 56.22,
+    "change_pct": 20.0,
+    "pe": 216.78,
+    "turnover": 15.06,
+    "mcap_yi": 165.36,
+    "pb": 4.6,
+    "high": 56.22,
+    "low": 45.5
+  },
+  "ret_month": 47.55905511811023,
+  "ret_10": 18.55757064529733,
+  "financial_rows": [
+    {
+      "period": "2026-03-31",
+      "revenue": 970099362.4,
+      "revenue_yoy": 43.35468,
+      "net_profit": -25596554.25,
+      "net_profit_yoy": -174.35877,
+      "deduct_profit": -39843293.67,
+      "deduct_profit_yoy": -261.738,
+      "gross_margin": 18.2316,
+      "net_margin": -2.6018,
+      "ocf_per_share": -0.4425,
+      "roe": -0.68,
+      "debt_ratio": 67.9705
+    },
+    {
+      "period": "2025-12-31",
+      "revenue": 1624425494.25,
+      "revenue_yoy": -17.45465,
+      "net_profit": 64997846.09,
+      "net_profit_yoy": -66.85394,
+      "deduct_profit": 58764801.16,
+      "deduct_profit_yoy": -67.1927,
+      "gross_margin": 19.9474,
+      "net_margin": 4.1709,
+      "ocf_per_share": 1.4244,
+      "roe": 1.76,
+      "debt_ratio": 68.1898
+    },
+    {
+      "period": "2025-09-30",
+      "revenue": 1275139841.76,
+      "revenue_yoy": -22.676122,
+      "net_profit": -22938263.73,
+      "net_profit_yoy": -110.117918,
+      "deduct_profit": -37492210.69,
+      "deduct_profit_yoy": -119.2252,
+      "gross_margin": 18.0337,
+      "net_margin": -1.9315,
+      "ocf_per_share": -0.0992,
+      "roe": -0.63,
+      "debt_ratio": 67.8506
+    },
+    {
+      "period": "2025-06-30",
+      "revenue": 1340155532.58,
+      "revenue_yoy": 6.058963,
+      "net_profit": 59817807.97,
+      "net_profit_yoy": -25.266165,
+      "deduct_profit": 34167412.92,
+      "deduct_profit_yoy": -65.0371,
+      "gross_margin": 22.3456,
+      "net_margin": 4.4726,
+      "ocf_per_share": -0.3165,
+      "roe": 1.62,
+      "debt_ratio": 62.8428
+    }
+  ],
+  "peer_rows": [
+    {
+      "name": "正帆科技",
+      "role": "工艺介质/特气系统",
+      "pe": 216.78,
+      "pb": 4.6,
+      "mcap_yi": 165.36,
+      "turnover": 15.06,
+      "change_pct": 20.0
+    },
+    {
+      "name": "至纯科技",
+      "role": "高纯工艺系统/湿法设备",
+      "pe": -16.34,
+      "pb": 3.91,
+      "mcap_yi": 135.91,
+      "turnover": 21.29,
+      "change_pct": 2.66
+    },
+    {
+      "name": "柏诚股份",
+      "role": "洁净室/机电系统",
+      "pe": 104.89,
+      "pb": 6.67,
+      "mcap_yi": 201.43,
+      "turnover": 7.06,
+      "change_pct": 10.0
+    },
+    {
+      "name": "亚翔集成",
+      "role": "洁净室/集成工程",
+      "pe": 52.6,
+      "pb": 25.6,
+      "mcap_yi": 556.55,
+      "turnover": 6.58,
+      "change_pct": 2.27
+    },
+    {
+      "name": "中微公司",
+      "role": "刻蚀/薄膜设备",
+      "pe": 143.39,
+      "pb": 15.17,
+      "mcap_yi": 3913.02,
+      "turnover": 3.41,
+      "change_pct": 3.48
+    },
+    {
+      "name": "北方华创",
+      "role": "平台型设备",
+      "pe": 105.86,
+      "pb": 15.02,
+      "mcap_yi": 5902.54,
+      "turnover": 1.71,
+      "change_pct": 1.93
+    },
+    {
+      "name": "华海清科",
+      "role": "CMP设备",
+      "pe": 118.81,
+      "pb": 17.21,
+      "mcap_yi": 1304.11,
+      "turnover": 2.75,
+      "change_pct": 4.4
+    },
+    {
+      "name": "盛美上海",
+      "role": "清洗/电镀设备",
+      "pe": 159.34,
+      "pb": 14.52,
+      "mcap_yi": 1997.95,
+      "turnover": 1.85,
+      "change_pct": 0.25
+    },
+    {
+      "name": "安集科技",
+      "role": "CMP抛光液",
+      "pe": 75.92,
+      "pb": 13.87,
+      "mcap_yi": 624.42,
+      "turnover": 5.11,
+      "change_pct": 2.21
+    },
+    {
+      "name": "华特气体",
+      "role": "电子特气",
+      "pe": 237.28,
+      "pb": 15.8,
+      "mcap_yi": 296.21,
+      "turnover": 8.13,
+      "change_pct": -7.94
+    },
+    {
+      "name": "江丰电子",
+      "role": "靶材",
+      "pe": 177.36,
+      "pb": 14.01,
+      "mcap_yi": 979.09,
+      "turnover": 12.32,
+      "change_pct": 7.51
+    }
+  ],
+  "scores": {
+    "行业面": [
+      82,
+      "半导体CAPEX回暖，工艺介质/特气系统属于扩产基础设施"
+    ],
+    "核心竞争力": [
+      72,
+      "系统+材料+运维一体化有特色，但高毛利垄断证据不够"
+    ],
+    "财务质量": [
+      48,
+      "2026Q1亏损、毛利率下滑、现金流和负债率承压"
+    ],
+    "估值与赔率": [
+      56,
+      "PB不高但PE很高，当前买的是利润修复预期"
+    ],
+    "催化/影子逻辑": [
+      82,
+      "半导体订单回暖、OPEX占比提升、电子特气/前驱体放量期权"
+    ],
+    "治理/流动性": [
+      63,
+      "流动性好，但近期异常波动和高管减持降低交易舒适度"
+    ]
+  },
+  "s5": {
+    "成长性": [
+      64,
+      "Q1收入+43.35%、新签订单改善，但2025全年收入下滑"
+    ],
+    "盈利性": [
+      42,
+      "毛利率18%-22%且净利率低，尚未体现材料/耗材重估质量"
+    ],
+    "经营规模": [
+      72,
+      "2025收入49.16亿，已经具备平台体量"
+    ],
+    "资产效率": [
+      44,
+      "ROE低，Q1为负，重资产和折旧压力明显"
+    ],
+    "市值/估值": [
+      58,
+      "市值约165亿，PB 4.6可解释，PE高且依赖利润修复"
+    ]
+  },
+  "sources": [
+    {
+      "name": "正帆科技2025年年度报告",
+      "url": "https://big5.sse.com.cn/site/cht/www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-18/688596_20260418_YQFF.pdf",
+      "note": "年度经营、业务结构、风险和财务数据来源"
+    },
+    {
+      "name": "正帆科技2026年第一季度报告",
+      "url": "https://paper.cnstock.com/html/2026-04/18/content_2201481.htm",
+      "note": "2026Q1收入、利润和资产负债数据来源"
+    },
+    {
+      "name": "正帆科技2026-04-20投资者关系活动记录表",
+      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604211821376901_1.pdf",
+      "note": "半导体/OPEX占比、2026Q1新签订单、电子特气与前驱体进展"
+    },
+    {
+      "name": "高级管理人员减持股份结果公告",
+      "url": "https://paper.cnstock.com/html/2026-06/23/content_2234058.htm",
+      "note": "郑鸿亮减持计划完成，交易风险观察项"
+    },
+    {
+      "name": "股票交易异常波动公告",
+      "url": "https://stockmc.xueqiu.com/202605/688596_20260515_S4KN.pdf",
+      "note": "公司提示短期波动、估值高于行业和Q1亏损风险"
+    }
+  ]
+}

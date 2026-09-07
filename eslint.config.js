@@ -11,6 +11,10 @@ export default antfu({
 		"scripts/**",
 		".github/**",
 		"**/*.css",
+		"public/research-library/content/**",
+		"public/research-library/catalog.json",
+		"public/research-library/.sync-manifest.json",
+		"research-library/sync-report.json",
 	],
 	rules: {
 		"style/quotes": ["error", "double"],

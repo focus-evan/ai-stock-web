@@ -2,6 +2,7 @@ import type { EChartsOption } from "echarts";
 
 import { fetchDashboard } from "#src/api/portfolio";
 import { BasicContent } from "#src/components/basic-content";
+import ResearchEntry from "#src/components/research-entry";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -315,6 +316,7 @@ export default function Home() {
 	return (
 		<BasicContent>
 			<Space direction="vertical" style={{ width: "100%" }} size="middle">
+				<ResearchEntry />
 				{/* ==================== 总览指标卡片 ==================== */}
 				<Row gutter={[16, 16]}>
 					<Col xs={24} sm={12} lg={6}>

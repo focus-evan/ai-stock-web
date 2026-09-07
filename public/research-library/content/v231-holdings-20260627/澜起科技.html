@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>澜起科技 - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>澜起科技 V2.3.1 深度分析</h1>
+  <p>A股-科创板 · 688008 · DDR5内存接口 / CXL / 服务器互连芯片 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>核心观察 / 存储服务器芯片高壁垒</b><br>技术壁垒和财务质量都强，是组合里较硬的真科技；估值不低，但同类相对并不离谱。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">84</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>261.82</span></div>
+      <div class="card"><b>PE / PB</b><span>125.11 / 15.35</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="neg">-236 / -0.4%</span></div>
+      <div class="card"><b>市值/换手</b><span>3001.57亿 / 6.6%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>无一票否决；风险在于芯片周期、库存、订单节奏和估值波动。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">18</span></td></tr>
+      <tr><td>海外对标</td><td>Rambus、Renesas/IDT、Astera Labs相关互连芯片生态</td></tr>
+      <tr><td>替代阶段</td><td>高端芯片收入利润兑现</td></tr>
+      <tr><td>结论</td><td>内存接口和服务器互连芯片属于高门槛环节，具备国产替代和全球细分龙头双重逻辑。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>A-</b></td></tr>
+      <tr><td>国内竞争对手</td><td>兆易创新、聚辰股份、北京君正、佰维存储等存储链公司</td></tr>
+      <tr><td>海外竞争对手</td><td>Rambus、Renesas、Astera Labs</td></tr>
+      <tr><td>我有你没有</td><td>DDR5内存接口芯片卡位、生态认证、客户粘性和高毛利。</td></tr>
+      <tr><td>你有我更强</td><td>相比多数存储概念股，盈利质量和细分壁垒更强。</td></tr>
+      <tr><td>我弱于你</td><td>相比海外互连芯片龙头，生态广度和全球市场估值溢价仍有差距。</td></tr>
+      <tr><td>财务/客户验证</td><td>2026Q1毛利率、净利率和利润增速都较强，财务验证充分。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>单季度</small></td><td>14.61亿<small>19.5%</small></td><td>8.47亿<small>61.3%</small></td><td>6.04亿<small>20.1%</small></td><td>69.8%</td><td>56.8%</td><td>0.5127</td><td>5.4%</td></tr><tr><td>2025-12-31<small>单季度</small></td><td>13.99亿<small>31.0%</small></td><td>6.03亿<small>39.1%</small></td><td>5.54亿<small>48.0%</small></td><td>64.5%</td><td>39.6%</td><td>0.366</td><td>4.7%</td></tr><tr><td>2025-09-30<small>单季度</small></td><td>14.24亿<small>57.2%</small></td><td>4.73亿<small>22.9%</small></td><td>3.76亿<small>14.1%</small></td><td>63.3%</td><td>32.6%</td><td>0.473</td><td>3.9%</td></tr><tr><td>2025-06-30<small>单季度</small></td><td>14.11亿<small>52.1%</small></td><td>6.34亿<small>71.4%</small></td><td>5.89亿<small>81.4%</small></td><td>60.4%</td><td>43.1%</td><td>0.7604</td><td>5.2%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">16</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">20</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">15</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">15</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">12</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill good">88</span></td></tr><tr><td>核心竞争力</td><td><span class="pill good">90</span></td></tr><tr><td>财务质量</td><td><span class="pill good">90</span></td></tr><tr><td>估值与赔率</td><td><span class="pill watch">66</span></td></tr><tr><td>催化/影子</td><td><span class="pill mid">74</span></td></tr><tr><td>治理/流动性</td><td><span class="pill good">80</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>服务器内存升级带动接口芯片需求，利润池较厚，壁垒高于普通存储分销/模组。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>服务器内存升级带动接口芯片需求，利润池较厚，壁垒高于普通存储分销/模组。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>内存接口和服务器互连芯片属于高门槛环节，具备国产替代和全球细分龙头双重逻辑。</td></tr>
+      <tr><td>竞争对手护城河</td><td>2026Q1毛利率、净利率和利润增速都较强，财务验证充分。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：存储/服务器互连芯片。PE判断：<b>同类中枢</b>；PB判断：<b>相对便宜</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>澜起科技</td><td>125.11</td><td>15.35</td><td>3001.57亿</td></tr><tr><td>兆易创新</td><td>187.97</td><td>21.83</td><td>5147.39亿</td></tr><tr><td>北京君正</td><td>181.55</td><td>8.9</td><td>983.43亿</td></tr><tr><td>聚辰股份</td><td>102.06</td><td>11.67</td><td>301.03亿</td></tr><tr><td>佰维存储</td><td>59.82</td><td>27.57</td><td>2362.78亿</td></tr><tr><td>普冉股份</td><td>245.61</td><td>40.13</td><td>1081.09亿</td></tr><tr><td>东芯股份</td><td>30843.52</td><td>23.44</td><td>842.86亿</td></tr><tr><td>江波龙</td><td>52.88</td><td>23.85</td><td>1915.47亿</td></tr><tr><td>德明利</td><td>52.57</td><td>32.57</td><td>1568.34亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>DDR5/CXL放量节奏不及预期。</li><li>存储周期反转带来库存扰动。</li><li>估值依赖高毛利持续。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>适合等技术支撑或业绩催化，不追高。</td></tr>
+      <tr><td>加仓</td><td>订单和利润率继续验证时加。</td></tr>
+      <tr><td>减仓</td><td>跌破趋势且存储链转弱时降仓。</td></tr>
+      <tr><td>失效</td><td>毛利率和客户订单同时恶化。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：同花顺/东方财富财务摘要(AkShare)；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

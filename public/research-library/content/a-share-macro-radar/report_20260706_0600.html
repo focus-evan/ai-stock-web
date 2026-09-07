@@ -1,0 +1,652 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A股大盘情绪06点预警 - 2026-07-06</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9dee8;
+      --orange: #c2410c;
+      --orange-deep: #8a2f0a;
+      --orange-soft: #fff7ed;
+      --red: #c81e1e;
+      --red-soft: #fff1f1;
+      --blue: #155eef;
+      --blue-soft: #eef4ff;
+      --green: #067647;
+      --green-soft: #ecfdf3;
+      --shadow: 0 14px 34px rgba(23, 32, 51, .09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .meta {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+      min-width: 250px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--orange-deep), var(--orange));
+      color: #fff;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, .45);
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      background: rgba(255, 255, 255, .14);
+    }
+
+    .hero h2 {
+      margin: 14px 0 8px;
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 17px;
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .gate {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .gate-item {
+      background: rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 86px;
+    }
+
+    .gate-item strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .gate-item span {
+      color: rgba(255, 255, 255, .86);
+      font-size: 13px;
+    }
+
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 16px;
+      box-shadow: 0 8px 22px rgba(23, 32, 51, .04);
+    }
+
+    .section h3 {
+      margin: 0 0 14px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcff;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .metric .value {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .metric .note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .score-wrap {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .score {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--orange) 0 52%, #eef1f6 52% 100%);
+      position: relative;
+    }
+
+    .score::before {
+      content: "";
+      position: absolute;
+      inset: 17px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .score-content {
+      position: relative;
+      text-align: center;
+    }
+
+    .score-content strong {
+      display: block;
+      font-size: 44px;
+      line-height: 1;
+      color: var(--orange);
+    }
+
+    .score-content span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 58px 1fr 40px;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .track {
+      height: 10px;
+      background: #edf0f6;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: var(--orange);
+      border-radius: 999px;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .callout.red { background: var(--red-soft); border-color: #facaca; }
+    .callout.orange { background: var(--orange-soft); border-color: #fed7aa; }
+    .callout.blue { background: var(--blue-soft); border-color: #c7d7fe; }
+    .callout.green { background: var(--green-soft); border-color: #b7e4c7; }
+
+    .callout h4 {
+      margin: 0 0 7px;
+      font-size: 16px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: #344054;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f2f5fa;
+      color: #344054;
+      font-weight: 700;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .list li { margin: 7px 0; }
+    .forbid li::marker { color: var(--red); }
+    .allow li::marker { color: var(--green); }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .time-card {
+      border-left: 5px solid var(--orange);
+      background: #fbfcff;
+      border-radius: 8px;
+      padding: 14px 14px 14px 16px;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .time-card h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+      padding: 0 2px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eef1f6;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    @media (max-width: 860px) {
+      .topbar, .hero-grid, .score-wrap, .grid-4, .grid-3, .grid-2, .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        display: block;
+      }
+
+      .meta {
+        margin-top: 10px;
+        text-align: left;
+        min-width: auto;
+      }
+
+      .gate {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h2 { font-size: 28px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=a-share-macro-radar&amp;view=reports">A股大盘情绪</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <div class="topbar">
+      <div>
+        <p class="kicker">A股大盘情绪06点预警 / a-06</p>
+        <h1>2026-07-06 盘前宏观情绪雷达</h1>
+      </div>
+      <div class="meta">
+        运行窗口：06:00 盘前<br>
+        交易阶段：正常交易日盘前<br>
+        数据截止：2026-07-06 06:08 北京时间<br>
+        置信度：中等
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="badge">橙色预警 · S6 退潮后修复观察</span>
+          <h2>今天可以观察修复，但不能追高。先看承接，再决定是否小动作。</h2>
+          <p>上周五宽度修复明显，但高位科技仍补跌，机器人/微盘成为新的拥挤点；09:45 与 10:30 前不放开题材仓。</p>
+        </div>
+        <div class="gate">
+          <div class="gate-item">
+            <strong>40%-55%</strong>
+            <span>总仓位上限</span>
+          </div>
+          <div class="gate-item">
+            <strong>0%-3%</strong>
+            <span>题材交易上限</span>
+          </div>
+          <div class="gate-item">
+            <strong>30%-45%</strong>
+            <span>核心持仓上限</span>
+          </div>
+          <div class="gate-item">
+            <strong>5%-10%</strong>
+            <span>成长/事件仓位</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>今日总阀门</h3>
+      <div class="grid-3">
+        <div class="callout orange">
+          <h4>一句话结论</h4>
+          <p>持有观察为主，只允许确认后的低位修复小动作；高位科技和机器人后排不追。</p>
+        </div>
+        <div class="callout red">
+          <h4>禁止动作</h4>
+          <p>不把上周五普涨当作退潮结束；不补 CPO/半导体/MLCC 等高位弱势链；不追机器人后排一致加速。</p>
+        </div>
+        <div class="callout blue">
+          <h4>关键判断</h4>
+          <p>美国 7月3日休市，没有新增隔夜科技杀跌；外围压力缓和，但本地高位链仍要靠盘中承接自证。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>RadarScore</h3>
+      <div class="score-wrap">
+        <div class="score">
+          <div class="score-content">
+            <strong>52</strong>
+            <span>最终状态 S6</span>
+          </div>
+        </div>
+        <div>
+          <div class="bar"><span>MSS</span><div class="track"><div class="fill" style="width:56%"></div></div><b>56</b></div>
+          <div class="bar"><span>MBS</span><div class="track"><div class="fill" style="width:55%"></div></div><b>55</b></div>
+          <div class="bar"><span>FRS</span><div class="track"><div class="fill" style="width:46%"></div></div><b>46</b></div>
+          <div class="bar"><span>TES</span><div class="track"><div class="fill" style="width:50%"></div></div><b>50</b></div>
+          <div class="bar"><span>ET</span><div class="track"><div class="fill" style="width:78%"></div></div><b>78</b></div>
+          <p class="footer">RadarScore 修复到 50 上方，但 ET 仍偏热，适合观察强弱切换，不适合无条件进攻。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>预警触发项</h3>
+      <div class="grid-4">
+        <div class="metric">
+          <div class="label">宽度修复</div>
+          <div class="value">3800+ 上涨</div>
+          <div class="note">上周五指数和个股同步修复，红色退潮暂缓。</div>
+        </div>
+        <div class="metric">
+          <div class="label">成交降温</div>
+          <div class="value">3.18万亿</div>
+          <div class="note">较前一日缩量约2681亿，不是强增量进攻。</div>
+        </div>
+        <div class="metric">
+          <div class="label">短线分歧</div>
+          <div class="value">52 炸板</div>
+          <div class="note">108涨停、19跌停，封板率约68%，连板晋级约21%。</div>
+        </div>
+        <div class="metric">
+          <div class="label">高位链</div>
+          <div class="value">MA3 下行</div>
+          <div class="note">CPO、半导体、PCB/CCL、MLCC 多数仍在承接验证。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>大盘压力来源</h3>
+      <div class="grid-2">
+        <div class="callout">
+          <h4>宽度</h4>
+          <p>7月3日全市场超3800只上涨，宽度较7月2日明显修复；但指数冲高回落，说明修复仍偏试探。</p>
+        </div>
+        <div class="callout">
+          <h4>成交/资金</h4>
+          <p>沪深两市成交额约3.18万亿，缩量修复。资金从高位科技转向机器人、贵金属、军工和微盘，扩散有了，但也有新拥挤。</p>
+        </div>
+        <div class="callout">
+          <h4>外围</h4>
+          <p>美国市场7月3日因独立日假期休市，没有新的纳指/SOX信号；港股恒指 +1.28%、恒科 +1.00%，外围不构成红色硬压制。</p>
+        </div>
+        <div class="callout">
+          <h4>题材情绪</h4>
+          <p>机器人近70只涨停或涨超10%，是修复核心；但连板高度和晋级率仍低，高位科技午后仍有补跌，TES 不能上调过快。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>仓位上限</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>账户模块</th>
+            <th>上限</th>
+            <th>执行含义</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>总仓位</td>
+            <td><b>40%-55%</b></td>
+            <td>从红色防守恢复到观察仓，但不进入进攻仓。</td>
+          </tr>
+          <tr>
+            <td>核心持仓</td>
+            <td><b>30%-45%</b></td>
+            <td>保留强逻辑、低拥挤、承接稳定的核心。</td>
+          </tr>
+          <tr>
+            <td>成长/事件</td>
+            <td><b>5%-10%</b></td>
+            <td>只做强承接低吸验证，不追涨。</td>
+          </tr>
+          <tr>
+            <td>题材交易</td>
+            <td><b>0%-3%</b></td>
+            <td>仅在 10:30 后确认扩散、封板质量稳定时开放。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h3>允许做的事 / 禁止做的事</h3>
+      <div class="grid-2">
+        <div class="callout green">
+          <h4>允许做的事</h4>
+          <ul class="list allow">
+            <li>持有观察核心仓，等待 09:45 宽度和高位承接确认。</li>
+            <li>观察机器人前排是否继续换手承接，而不是后排一致加速。</li>
+            <li>若科技核心止跌且不再拖累创业板/科创，可做小仓验证。</li>
+          </ul>
+        </div>
+        <div class="callout red">
+          <h4>禁止做的事</h4>
+          <ul class="list forbid">
+            <li>禁止追高机器人后排、微盘高潮、摘帽连续加速。</li>
+            <li>禁止把 CPO/半导体/MLCC 的反抽当作趋势恢复。</li>
+            <li>禁止在 09:45 前扩大题材仓，尤其不要补高位弱势链。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>09:45 与 10:30 二次确认</h3>
+      <div class="timeline">
+        <div class="time-card">
+          <h4>09:45</h4>
+          <p><b>降级为黄色：</b>上涨家数维持 3000+，创业板/科创不再被高位科技拖累，机器人前排换手不炸，跌停数低于15。</p>
+          <p><b>维持橙色或转红：</b>高位科技继续下杀，机器人后排大面积开板，指数冲高回落且跌停扩散。</p>
+        </div>
+        <div class="time-card">
+          <h4>10:30</h4>
+          <p><b>允许小动作：</b>涨停池扩张、炸板率下降、连板晋级不再低迷，资金从机器人扩散到低位制造/军工/消费电子。</p>
+          <p><b>继续防守：</b>涨停数不增反降，机器人高潮回落，高位科技无承接，成交缩量下指数走弱。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>与模型联动</h3>
+      <div class="grid-2">
+        <div class="callout">
+          <h4>V2.3.1</h4>
+          <p>S6 下只看 80 分以上、赔率仍在、估值不过热的公司；优先利润池控制、客户结构、承接强度。弱资金流或高拥挤直接降权。</p>
+        </div>
+        <div class="callout">
+          <h4>题材雷达 V1.2</h4>
+          <p>FID 可记录，ENOS/PLS 只允许 10:30 后小仓验证；TLM 仍是温度计，不追一致加速的机器人后排。</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">
+      <span class="tag">数据缺口</span>
+      未完整核验全市场成交额20日均量、北向/ETF/融资/主力资金同向指标、全部热门题材逐股MA3/MA16；美国7月3日休市，隔夜美股科技信号以7月2日旧信号和港股7月3日表现为辅。置信度中等。
+    </p>
+  </main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

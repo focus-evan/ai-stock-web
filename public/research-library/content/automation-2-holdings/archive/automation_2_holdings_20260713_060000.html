@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>每日持仓利多利空监控 - 2026-07-13</title>
+  <style>
+    :root { --bg:#f6f8fb; --ink:#172033; --muted:#667085; --line:#d9e0ea; --red:#b42318; --orange:#b54708; --yellow:#a15c07; --green:#067647; --blue:#175cd3; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.55 "Microsoft YaHei", "PingFang SC", Arial, sans-serif; }
+    .wrap { max-width:1280px; margin:0 auto; padding:24px; }
+    header { display:flex; justify-content:space-between; gap:16px; align-items:flex-end; margin-bottom:18px; }
+    h1 { font-size:26px; margin:0 0 6px; letter-spacing:0; }
+    h2 { font-size:18px; margin:26px 0 12px; }
+    .sub { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:14px 0 18px; }
+    .card { background:white; border:1px solid var(--line); border-radius:8px; padding:14px; min-height:86px; box-shadow:0 1px 2px rgba(16,24,40,.04); }
+    .card.alert { border-color:#fedf89; background:#fffbeb; }
+    .card.gate { grid-column:span 2; border-color:#fdb022; background:#fff7ed; }
+    .label { font-size:12px; color:var(--muted); margin-bottom:6px; }
+    .value { font-size:16px; font-weight:700; }
+    .danger { border:1px solid #f79009; background:#fff7ed; border-radius:8px; padding:16px 18px; }
+    .danger ul { margin:8px 0 0; padding-left:20px; }
+    .attention-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .attention { background:white; border-left:5px solid #f79009; border-radius:8px; padding:14px; border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .attention p { margin:6px 0 0; color:#344054; }
+    table { width:100%; border-collapse:collapse; background:white; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    th,td { border-bottom:1px solid var(--line); padding:10px; vertical-align:top; text-align:left; }
+    th { background:#eef2f7; color:#344054; font-weight:700; white-space:nowrap; }
+    td span { color:var(--muted); font-size:12px; }
+    tr:last-child td { border-bottom:0; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-weight:700; color:white; }
+    .risk-red { background:var(--red); }
+    .risk-orange { background:var(--orange); }
+    .risk-yellow { background:var(--yellow); }
+    .risk-neutral { background:var(--blue); }
+    .plans { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .plans .card { min-height:128px; }
+    a { color:#175cd3; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    @media (max-width:900px) {
+      .grid,.attention-grid,.plans { grid-template-columns:1fr; }
+      .card.gate { grid-column:span 1; }
+      header { display:block; }
+      table { font-size:12px; }
+      th,td { padding:8px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=automation-2-holdings&amp;view=reports">持仓晨报</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>每日持仓利多利空监控</h1>
+        <div class="sub">2026-07-10 06:00 至 2026-07-13 06:00 北京时间；行情使用2026-07-10 A/H收盘，隔夜外围参考2026-07-10美股收盘，新闻/公告截至06:00</div>
+      </div>
+      <div class="sub">生成时间：2026-07-13 12:14:54 +08:00</div>
+    </header>
+
+    <section class="grid">
+      <div class="card alert"><div class="label">今日风险等级</div><div class="value">橙色偏红</div></div>
+      <div class="card gate"><div class="label">总阀门</div><div class="value">不加仓、不追高；先防7月10日高开回落后的二次杀跌。只有核心科技票放量站回关键位，才从防守转为修复持有。</div></div>
+      <div class="card "><div class="label">数据口径</div><div class="value">行情截至2026-07-10 A/H收盘；新闻公告截至2026-07-13 06:00</div></div>
+    </section>
+
+    <section class="danger">
+      <h2>今日高危预警</h2>
+      <ul><li>今日高危预警：未触发组合级红色“高位踩踏风险”，但触发橙色偏红防守。核心原因是7月10日A股高估值科技股出现高开回落，半导体设备、存储接口、材料和机器人票振幅明显放大。</li>
+<li>最需要防守的是中微公司、澜起科技、雅克科技、联瑞新材、绿的谐波和宁德时代-H；这些票不适合早盘加仓，只能看承接、做T或降波动。</li>
+<li>外围不是强制红色：7月10日美股QQQ小涨、SOXX微跌、SMH小涨，BABA ADR上涨；压力主要来自A股自身高位兑现和港股宁德时代-H破位。</li></ul>
+    </section>
+
+    <h2>需要重点注意的3只股票</h2>
+    <section class="attention-grid"><div class="attention"><b>中微公司</b><p>7月10日-7.86%、振幅12.31%，且出现董监高持股变动记录；半导体设备核心票今天只能看430-435承接。</p></div>
+<div class="attention"><b>澜起科技</b><p>7月9日涨15.64%后7月10日高开低走收跌6.21%，仍接近263成本线，是组合半导体修复成败的关键。</p></div>
+<div class="attention"><b>宁德时代-H</b><p>7月10日港股收跌7.92%至587港元，明显低于660成本，属于非AI链但实际亏损压力最大的持仓。</p></div></section>
+
+    <h2>持仓明细表</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>股票</th><th>持仓</th><th>最新收盘</th><th>涨跌</th><th>预警</th><th>利多 / 利空</th><th>判断 / 操作提示</th>
+        </tr>
+      </thead>
+      <tbody><tr><td><strong>新易盛</strong><br><span>300502</span></td><td>1060股；其中原760股参考成本约544.6，新增300股成本待补</td><td>523.05</td><td>-4.12%<br><span>3日 +2.54% / 5日 -0.56%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 4.07% / 振幅 9.24%</span></td><td><b>利多：</b>AI算力/CPO核心资产，H股上市筹划仍提升国际化与融资弹性预期；7月10日成交额维持高位。<br><b>利空：</b>7月10日高开后收跌4.12%，从570.98回落到523.05，说明前一日修复后兑现压力仍重。</td><td>中性偏防守<br><span>不追高；先看520-526能否守住，若跌破则新增300股按交易仓先降风险。</span></td></tr>
+<tr><td><strong>绿的谐波</strong><br><span>688017</span></td><td>4手，成本320</td><td>405.00</td><td>-0.75%<br><span>3日 -12.88% / 5日 -16.97%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 8.75% / 振幅 11.40%</span></td><td><b>利多：</b>机器人/谐波减速器核心属性仍在，7月10日盘中一度冲高到437.51，说明仍有资金反复承接。<br><b>利空：</b>7月10日上交所披露年报问询回复及募投项目延期公告，叠加此前风险提示和高估值，高位筹码仍不稳定。</td><td>橙色防守<br><span>不加仓；405上方只看持有，跌回390或冲高回落放量则减交易风险。</span></td></tr>
+<tr><td><strong>生益科技</strong><br><span>600183</span></td><td>5手，成本138.2</td><td>149.39</td><td>-5.09%<br><span>3日 -0.92% / 5日 -7.08%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 2.65% / 振幅 9.04%</span></td><td><b>利多：</b>AI服务器PCB/高端覆铜板逻辑未变，仍显著高于138.2成本线。<br><b>利空：</b>7月10日收跌5.09%，且公司近期有董事减持计划、7月10日股权激励限制性股票回购注销实施公告，情绪端不支持追涨。</td><td>偏中性<br><span>145-150为短线防守区；不能快速收回150则以保利润为先。</span></td></tr>
+<tr><td><strong>澜起科技</strong><br><span>688008</span></td><td>200股，成本263</td><td>268.06</td><td>-6.21%<br><span>3日 +5.87% / 5日 +0.47%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 7.26% / 振幅 10.49%</span></td><td><b>利多：</b>DDR5、MRCD/MDB和AI服务器存储链仍是半导体修复核心，价格仍略高于263成本。<br><b>利空：</b>7月9日+15.64%后，7月10日高开到297.96再收跌6.21%，典型高开兑现，短线筹码未稳。</td><td>橙色防守<br><span>263-268是成本与情绪防线；跌破263转防守，重新站上280才算修复。</span></td></tr>
+<tr><td><strong>英维克</strong><br><span>002837</span></td><td>300股，成本74.8</td><td>73.54</td><td>-3.07%<br><span>3日 +3.16% / 5日 +2.95%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 6.37% / 振幅 6.75%</span></td><td><b>利多：</b>液冷/数据中心温控仍受AI基础设施投资带动，7月10日收盘仍接近持仓成本。<br><b>利空：</b>7月10日收跌3.07%，融资余额处于高位区间的公开提示仍指向筹码弹性压力。</td><td>中性偏弱<br><span>73-75为强弱区；若跌破72且板块无修复，先降低交易预期。</span></td></tr>
+<tr><td><strong>中微公司</strong><br><span>688012</span></td><td>2手，成本380</td><td>434.51</td><td>-7.86%<br><span>3日 +3.44% / 5日 +5.03%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 4.03% / 振幅 12.31%</span></td><td><b>利多：</b>半导体设备国产替代核心地位不变，7月10日成交额仍高，说明资金仍在博弈核心票。<br><b>利空：</b>7月10日收跌7.86%，盘中振幅12.31%；上交所董监高持股变动记录显示尹志尧二级市场卖出1万股，短线压制情绪。</td><td>橙色偏红防守<br><span>先看430-435能否止跌；若反抽不能站回450，不做加仓，只考虑T或降波动。</span></td></tr>
+<tr><td><strong>联瑞新材</strong><br><span>688300</span></td><td>2手，成本247</td><td>183.17</td><td>-6.62%<br><span>3日 -3.09% / 5日 -12.35%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 4.40% / 振幅 11.37%</span></td><td><b>利多：</b>高端填料/先进封装材料逻辑仍在，AI材料链中长期景气未被证伪。<br><b>利空：</b>7月10日收跌6.62%，并有可转债投资者适当性风险提示；股价仍明显低于247成本。</td><td>橙色防守<br><span>183附近不能快速收回190则弱；不加仓，先等企稳或缩量止跌。</span></td></tr>
+<tr><td><strong>雅克科技</strong><br><span>002409</span></td><td>3手，成本待补</td><td>207.17</td><td>-0.88%<br><span>3日 +11.49% / 5日 +3.84%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 14.31% / 振幅 10.53%</span></td><td><b>利多：</b>电子特气/半导体材料主题仍强，7月10日盘中创229高点，资金关注度仍高。<br><b>利空：</b>此前异动公告已提示市场过度解读/无WF6业务，7月10日14.31%换手并留下长上影，高位兑现压力明显。</td><td>橙色防守<br><span>205-209为短线强弱区；弱转强失败不加仓，跌破200先降交易仓。</span></td></tr>
+<tr><td><strong>联得装备</strong><br><span>300545</span></td><td>2手，成本待补</td><td>32.32</td><td>-3.52%<br><span>3日 -8.05% / 5日 -22.10%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 11.76% / 振幅 6.21%</span></td><td><b>利多：</b>面板/半导体装备弹性仍在，若科技题材修复可跟随反抽。<br><b>利空：</b>7月10日继续收跌3.52%，5日回撤仍深，说明不是强势修复核心，持仓成本待补也不宜盲目摊低。</td><td>偏利空<br><span>32-33上方才有止跌意义；跌破31.5继续弱，不做加仓。</span></td></tr>
+<tr><td><strong>紫光国微</strong><br><span>002049</span></td><td>1手，成本待补</td><td>85.83</td><td>-1.45%<br><span>3日 +4.67% / 5日 +4.98%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 10.50% / 振幅 5.30%</span></td><td><b>利多：</b>特种芯片/国产替代属性仍在，7月10日披露注销部分回购股份并减少注册资本，长期看偏治理中性略正面。<br><b>利空：</b>7月10日换手10.50%、成交额78.41亿元但收跌1.45%，高成交未形成继续上攻，短线仍有分歧。</td><td>中性<br><span>83-86区间观察承接；不能放量突破90前不追。</span></td></tr>
+<tr><td><strong>阿里巴巴-W</strong><br><span>09988</span></td><td>6手，成本160港元</td><td>110.200</td><td>+2.04%<br><span>3日 +15.03% / 5日 +17.11%</span></td><td><span class="pill risk-yellow">黄</span><br><span>换手 0.54% / 振幅 3.70%</span></td><td><b>利多：</b>7月9日回购72,800股，7月10日港股收涨2.04%，BABA ADR 7月10日继续上涨约1.06%，中国科技资产有修复资金。<br><b>利空：</b>仍低于160港元成本，业务端即时零售/AI投入对利润率的压制尚未完全消化。</td><td>偏利多修复<br><span>110上方修复延续；若跌回106以下，说明反弹失败，继续按中线弱势处理。</span></td></tr>
+<tr><td><strong>宁德时代-H</strong><br><span>03750</span></td><td>1手，成本660港元</td><td>587.000</td><td>-7.92%<br><span>3日 -9.97% / 5日 -13.10%</span></td><td><span class="pill risk-orange">橙</span><br><span>换手 2.84% / 振幅 10.35%</span></td><td><b>利多：</b>动力电池龙头基本面仍强，A+H稀缺资产属性未变。<br><b>利空：</b>7月10日港股收跌7.92%至587港元，明显低于660成本，属于本组合最需要防守的港股风险点。</td><td>偏利空<br><span>先看580-600能否止跌；不能回到620上方前不加仓，反抽以减压为先。</span></td></tr></tbody>
+    </table>
+
+    <h2>风险预案</h2>
+    <section class="plans">
+      <div class="card"><div class="label">开盘弱</div><div class="value">先控风险</div><p>半导体、CPO、机器人若低开后无承接，不做补仓，优先降低高波动和成本待补仓位。</p></div>
+      <div class="card"><div class="label">冲高回落</div><div class="value">做T或落袋</div><p>7月10日已经出现高开兑现，今日若再冲高不封强，按反弹处理，不把普通波动误判为基本面利空。</p></div>
+      <div class="card"><div class="label">强修复</div><div class="value">只看核心</div><p>只有中微、澜起、新易盛等核心票放量站回关键位，才考虑恢复进攻；边缘弱票继续等待。</p></div>
+    </section>
+
+    <h2>来源 / 数据缺口说明</h2>
+    <div class="card">
+      <p>本次未见多数持仓在窗口内出现足以改变基本面的重大新增利多/利空。部分公告为治理、回购注销、可转债适当性或问询回复事项，按情绪和筹码影响处理，不直接等同基本面恶化。</p>
+      <p>数据缺口：未接入券商实时 Level-2、盘前集合竞价、融资融券当日最新值；7月13日A/H盘中数据不纳入本次06:00窗口。</p>
+      <ul><li><a href="https://www.sse.com.cn/assortment/stock/list/info/summary/index.shtml?COMPANY_CODE=688017">上交所绿的谐波公告摘要：7月10日年报问询回复、募投延期等</a></li>
+<li><a href="https://www.sse.com.cn/star/market/stocklist/info/index/index.shtml?COMPANY_CODE=688012">上交所中微公司行情页：7月10日收盘434.51，跌7.86%</a></li>
+<li><a href="https://www.sse.com.cn/disclosure/credibility/supervision/change/">上交所董监高持股变动：中微公司尹志尧7月10日卖出1万股</a></li>
+<li><a href="https://bond.sse.com.cn/disclosure/announ/convertible/">上交所可转债公告：联瑞新材7月10日可转债适当性风险提示</a></li>
+<li><a href="https://www.syst.com.cn/cn/gsgg/list_45.aspx">生益科技公司公告：7月10日股权激励限制性股票回购注销实施公告</a></li>
+<li><a href="https://data.eastmoney.com/notice/002049.html">东方财富/证券星：紫光国微7月10日注销部分回购股份并减少注册资本</a></li>
+<li><a href="https://finance.sina.com.cn/stock/aigc/hkgg/2026-07-10/doc-inihinfu7050709.shtml">阿里巴巴7月9日回购72,800股公开消息</a></li>
+<li><a href="https://hk.stockstar.com/RB2026071000034648.shtml">宁德时代-H 7月10日港股收跌7.92%公开行情</a></li>
+<li><a href="https://finance.yahoo.com/">美股7月10日收盘：QQQ、SOXX、SMH、BABA 行情</a></li></ul>
+    </div>
+  </div>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

@@ -1,0 +1,166 @@
+{
+  "timestamp": "2026-08-05T10:42:20.020243+08:00",
+  "counts": {
+    "zt": 62,
+    "broken": 20
+  },
+  "targets": [
+    {
+      "code": "002036",
+      "name": "联创电子",
+      "price": 7.8,
+      "turnover": 3.2978391647338867,
+      "seal_fund": 844129751.0,
+      "first": "093224",
+      "last": "093224",
+      "breaks": 0,
+      "boards": 1,
+      "industry": "光学光电",
+      "state": "sealed"
+    },
+    {
+      "code": "000981",
+      "name": "山子高科",
+      "price": 3.17,
+      "turnover": 6.1197357177734375,
+      "seal_fund": 517506621.0,
+      "first": "094206",
+      "last": "094318",
+      "breaks": 1,
+      "boards": 1,
+      "industry": "汽车零部",
+      "state": "sealed"
+    },
+    {
+      "code": "600206",
+      "name": "有研新材",
+      "price": 39.81,
+      "turnover": 9.69272518157959,
+      "seal_fund": 1874873646.0,
+      "first": "094632",
+      "last": "102811",
+      "breaks": 1,
+      "boards": 1,
+      "industry": "半导体",
+      "state": "sealed"
+    },
+    {
+      "code": "000603",
+      "name": "盛达资源",
+      "price": 29.15,
+      "turnover": 7.289727210998535,
+      "seal_fund": 565948999.0,
+      "first": "101800",
+      "last": "101800",
+      "breaks": 0,
+      "boards": 1,
+      "industry": "贵金属",
+      "state": "sealed"
+    },
+    {
+      "code": "002842",
+      "name": "翔鹭钨业",
+      "price": 34.56,
+      "turnover": 13.847225189208984,
+      "seal_fund": 516175718.0,
+      "first": "102915",
+      "last": "102927",
+      "breaks": 1,
+      "boards": 1,
+      "industry": "小金属",
+      "state": "sealed"
+    }
+  ],
+  "quotes": {
+    "sh600206": {
+      "name": "有研新材",
+      "current": 39.81,
+      "prev_close": 36.19,
+      "open": 36.5,
+      "pct": 10.0,
+      "high": 39.81,
+      "low": 36.5,
+      "time": "20260805104217"
+    },
+    "sz002036": {
+      "name": "联创电子",
+      "current": 7.8,
+      "prev_close": 7.09,
+      "open": 7.32,
+      "pct": 10.01,
+      "high": 7.8,
+      "low": 7.31,
+      "time": "20260805104218"
+    },
+    "sz000603": {
+      "name": "盛达资源",
+      "current": 29.15,
+      "prev_close": 26.5,
+      "open": 26.98,
+      "pct": 10.0,
+      "high": 29.15,
+      "low": 26.49,
+      "time": "20260805104218"
+    },
+    "sz000981": {
+      "name": "山子高科",
+      "current": 3.17,
+      "prev_close": 2.88,
+      "open": 2.9,
+      "pct": 10.07,
+      "high": 3.17,
+      "low": 2.9,
+      "time": "20260805104218"
+    },
+    "sz002842": {
+      "name": "翔鹭钨业",
+      "current": 34.56,
+      "prev_close": 31.42,
+      "open": 31.63,
+      "pct": 9.99,
+      "high": 34.56,
+      "low": 31.12,
+      "time": "20260805104218"
+    },
+    "sh600410": {
+      "name": "华胜天成",
+      "current": 15.98,
+      "prev_close": 15.62,
+      "open": 15.85,
+      "pct": 2.3,
+      "high": 16.13,
+      "low": 15.81,
+      "time": "20260805104217"
+    },
+    "sz002173": {
+      "name": "创新医疗",
+      "current": 21.12,
+      "prev_close": 20.92,
+      "open": 20.5,
+      "pct": 0.96,
+      "high": 21.46,
+      "low": 20.38,
+      "time": "20260805104218"
+    },
+    "sz002821": {
+      "name": "凯莱英",
+      "current": 165.5,
+      "prev_close": 161.61,
+      "open": 162.0,
+      "pct": 2.41,
+      "high": 171.5,
+      "low": 162.0,
+      "time": "20260805104218"
+    },
+    "sz002796": {
+      "name": "世嘉科技",
+      "current": 27.18,
+      "prev_close": 26.81,
+      "open": 26.85,
+      "pct": 1.38,
+      "high": 27.35,
+      "low": 25.2,
+      "time": "20260805104218"
+    }
+  }
+}

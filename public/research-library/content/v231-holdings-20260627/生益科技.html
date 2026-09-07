@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>生益科技 - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>生益科技 V2.3.1 深度分析</h1>
+  <p>A股-主板 · 600183 · 高频高速覆铜板 / CCL / PCB上游材料 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>成长配置 / AI服务器材料卖铲人</b><br>AI PCB材料利润池位置较好，业绩兑现强；但股价已经重估，后续看利润连续性。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">82</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>178.5</span></div>
+      <div class="card"><b>PE / PB</b><span>110.37 / 27.13</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="pos">20,150 / 29.2%</span></div>
+      <div class="card"><b>市值/换手</b><span>4274.19亿 / 3.0%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>无一票否决；主要风险是高位重估、下游服务器订单波动、材料价格和周期库存。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">17</span></td></tr>
+      <tr><td>海外对标</td><td>Panasonic、Rogers、Isola、台系高端CCL体系</td></tr>
+      <tr><td>替代阶段</td><td>高频高速CCL国产替代已进入放量和利润兑现</td></tr>
+      <tr><td>结论</td><td>AI服务器带动高速高频材料升级，国产材料厂商切入高端CCL是明确国产替代和利润池重估逻辑。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>A-</b></td></tr>
+      <tr><td>国内竞争对手</td><td>南亚新材、华正新材、金安国纪、生益电子、沪电股份上游链</td></tr>
+      <tr><td>海外竞争对手</td><td>Panasonic、Rogers、Isola</td></tr>
+      <tr><td>我有你没有</td><td>高端CCL配方、客户认证、产能和PCB链协同。</td></tr>
+      <tr><td>你有我更强</td><td>相比多数材料同行，规模、客户和盈利兑现更强。</td></tr>
+      <tr><td>我弱于你</td><td>相对海外顶级材料，高端型号覆盖和全球客户仍需持续验证。</td></tr>
+      <tr><td>财务/客户验证</td><td>2026Q1收入和利润高增，毛利率/净利率明显改善，财务验证强。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>单季度</small></td><td>81.41亿<small>45.1%</small></td><td>11.58亿<small>105.5%</small></td><td>10.83亿<small>93.5%</small></td><td>28.1%</td><td>16.4%</td><td>0.2353</td><td>6.7%</td></tr><tr><td>2025-12-31<small>单季度</small></td><td>78.18亿<small>38.5%</small></td><td>8.91亿<small>143.1%</small></td><td>7.95亿<small>119.6%</small></td><td>25.8%</td><td>13.2%</td><td>0.8636</td><td>5.5%</td></tr><tr><td>2025-09-30<small>单季度</small></td><td>79.34亿<small>55.1%</small></td><td>10.17亿<small>131.2%</small></td><td>10.01亿<small>147.7%</small></td><td>28.1%</td><td>15.6%</td><td>0.5071</td><td>6.3%</td></tr><tr><td>2025-06-30<small>单季度</small></td><td>70.69亿<small>35.8%</small></td><td>8.63亿<small>59.7%</small></td><td>8.19亿<small>56.6%</small></td><td>26.9%</td><td>14.0%</td><td>0.6887</td><td>5.7%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">18</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">16</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">18</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">15</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">11</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill good">88</span></td></tr><tr><td>核心竞争力</td><td><span class="pill good">84</span></td></tr><tr><td>财务质量</td><td><span class="pill good">88</span></td></tr><tr><td>估值与赔率</td><td><span class="pill watch">64</span></td></tr><tr><td>催化/影子</td><td><span class="pill mid">78</span></td></tr><tr><td>治理/流动性</td><td><span class="pill good">82</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>位于AI服务器PCB上游材料，具备涨价和规格升级弹性，是典型卖铲人。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>位于AI服务器PCB上游材料，具备涨价和规格升级弹性，是典型卖铲人。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>AI服务器带动高速高频材料升级，国产材料厂商切入高端CCL是明确国产替代和利润池重估逻辑。</td></tr>
+      <tr><td>竞争对手护城河</td><td>2026Q1收入和利润高增，毛利率/净利率明显改善，财务验证强。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：PCB/CCL高频高速链。PE判断：<b>略贵</b>；PB判断：<b>略贵</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>生益科技</td><td>110.37</td><td>27.13</td><td>4274.19亿</td></tr><tr><td>沪电股份</td><td>65.88</td><td>17.91</td><td>2831.92亿</td></tr><tr><td>胜宏科技</td><td>67.11</td><td>20.05</td><td>2764.73亿</td></tr><tr><td>深南电路</td><td>81.24</td><td>17.94</td><td>2881.95亿</td></tr><tr><td>景旺电子</td><td>62.81</td><td>5.6</td><td>708.72亿</td></tr><tr><td>生益电子</td><td>64.32</td><td>19.6</td><td>1104.78亿</td></tr><tr><td>南亚新材</td><td>261.14</td><td>34.25</td><td>964.47亿</td></tr><tr><td>华正新材</td><td>134.03</td><td>16.7</td><td>387.66亿</td></tr><tr><td>金安国纪</td><td>170.34</td><td>21.93</td><td>812.17亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>股价已反映AI PCB重估，估值不再便宜。</li><li>下游订单和价格若回落，会影响利润弹性。</li><li>材料周期库存风险需要跟踪。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>只等回调或业绩继续超预期确认。</td></tr>
+      <tr><td>加仓</td><td>利润增速持续高于收入增速时可提高权重。</td></tr>
+      <tr><td>减仓</td><td>若高端CCL景气降温或同类材料股退潮。</td></tr>
+      <tr><td>失效</td><td>毛利率回落且经营现金流恶化。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：同花顺/东方财富财务摘要(AkShare)；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

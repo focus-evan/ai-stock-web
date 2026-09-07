@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-09-05T11:34:44.501479",
+  "branch": "codex/strategy-quality-audit",
+  "commits": {
+    "ai-stock": "f934b74b1fa1b0d55b42aab90885a3ae00ad9097",
+    "ai-stock-web": "74244246100a367c61cc3250f62c4d8f81bce693"
+  },
+  "pushed": true,
+  "production_deployed": false,
+  "backend_tests_passed": 158,
+  "frontend_tests_passed": 2,
+  "frontend_typecheck": "passed",
+  "frontend_production_build": "passed",
+  "frontend_lint": "0 errors; 1 existing hook warning",
+  "limitations": [
+    "No production deployment or MySQL integration test in this turn",
+    "No retrospective relabelling as forward evidence",
+    "Real forward profitability remains unverified"
+  ]
+}

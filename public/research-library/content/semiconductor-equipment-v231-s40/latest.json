@@ -1,0 +1,148 @@
+{
+  "generated_at": "2026-07-05 14:50:06",
+  "frameworks": [
+    "stock-v231-selector",
+    "s-quant-5d-subtraction",
+    "s40-tech-growth-stock"
+  ],
+  "main_narrative": "存储/HBM扩产 + 前道设备/先进封装设备 + 国产替代订单验证",
+  "companies": [
+    {
+      "rank": 1,
+      "code": "688072",
+      "name": "拓荆科技",
+      "role": "正宗滞后",
+      "combined": 85.9,
+      "v231": 86.8,
+      "s_quant": 87.3,
+      "s40": 83.1,
+      "label": "核心优先"
+    },
+    {
+      "rank": 2,
+      "code": "300604",
+      "name": "长川科技",
+      "role": "业绩验证龙头",
+      "combined": 82.2,
+      "v231": 82.7,
+      "s_quant": 85.2,
+      "s40": 78.2,
+      "label": "核心跟进"
+    },
+    {
+      "rank": 3,
+      "code": "688012",
+      "name": "中微公司",
+      "role": "叙事总龙头",
+      "combined": 80.1,
+      "v231": 86.0,
+      "s_quant": 67.5,
+      "s40": 84.8,
+      "label": "核心跟进"
+    },
+    {
+      "rank": 4,
+      "code": "002371",
+      "name": "北方华创",
+      "role": "叙事总龙头",
+      "combined": 73.6,
+      "v231": 82.3,
+      "s_quant": 52.2,
+      "s40": 83.6,
+      "label": "观察等待触发"
+    },
+    {
+      "rank": 5,
+      "code": "688120",
+      "name": "华海清科",
+      "role": "正宗滞后",
+      "combined": 71.0,
+      "v231": 77.9,
+      "s_quant": 55.1,
+      "s40": 77.8,
+      "label": "观察等待触发"
+    },
+    {
+      "rank": 6,
+      "code": "688409",
+      "name": "富创精密",
+      "role": "设备零部件卖铲人",
+      "combined": 65.1,
+      "v231": 67.6,
+      "s_quant": 58.2,
+      "s40": 68.8,
+      "label": "观察等待触发"
+    },
+    {
+      "rank": 7,
+      "code": "688082",
+      "name": "盛美上海",
+      "role": "分支龙头",
+      "combined": 61.6,
+      "v231": 72.7,
+      "s_quant": 36.1,
+      "s40": 72.4,
+      "label": "题材观察"
+    },
+    {
+      "rank": 8,
+      "code": "688037",
+      "name": "芯源微",
+      "role": "分支龙头",
+      "combined": 50.4,
+      "v231": 59.7,
+      "s_quant": 24.5,
+      "s40": 64.1,
+      "label": "降级/回避"
+    },
+    {
+      "rank": 9,
+      "code": "300567",
+      "name": "精测电子",
+      "role": "先进封装/检测补涨",
+      "combined": 49.2,
+      "v231": 57.0,
+      "s_quant": 28.7,
+      "s40": 59.6,
+      "label": "降级/回避"
+    },
+    {
+      "rank": 10,
+      "code": "688361",
+      "name": "中科飞测",
+      "role": "分支龙头",
+      "combined": 48.2,
+      "v231": 61.8,
+      "s_quant": 11.8,
+      "s40": 66.8,
+      "label": "降级/回避"
+    }
+  ],
+  "paths": {
+    "latest_html": "D:\\Evan\\Codes\\reports\\semiconductor-equipment-v231-s40\\latest.html",
+    "latest_json": "D:\\Evan\\Codes\\reports\\semiconductor-equipment-v231-s40\\latest.json",
+    "archive_html": "D:\\Evan\\Codes\\reports\\semiconductor-equipment-v231-s40\\archive\\semiconductor_equipment_v231_s40_20260705_145006.html"
+  },
+  "sources": [
+    [
+      "SEMI Q1全球设备销售额365.5亿美元、AI/DRAM/先进封装驱动",
+      "https://wap.eastmoney.com/a/202606113768415774.html"
+    ],
+    [
+      "21财经：国产设备在长鑫/长存订单占比与2026-2028增量预测",
+      "https://www.21jingji.com/article/20260622/herald/2c68ee17df0b5fbabcac2e6234a76c02.html"
+    ],
+    [
+      "财联社/新浪：ASML上调全年营收指引，设备景气度仍在上行",
+      "https://finance.sina.com.cn/roll/2026-07-03/doc-inifnnxk3780879.shtml"
+    ],
+    [
+      "财联社焦点复盘：7月2日硬科技重挫与半导体设备调整",
+      "https://www.cls.cn/detail/2415483"
+    ],
+    [
+      "科创板日报：三星电机/住友化学玻璃基板合资公司",
+      "https://www.cls.cn/detail/2417094"
+    ]
+  ]
+}

@@ -1,0 +1,612 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-12 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange维持：AI云、AI服务器和光互连同时给出官方正反馈，但CPI前长端实际利率仍把总闸门压在防守区</h1>
+      <p class="subtitle">2026-08-12午间雷达维持Orange。三条驱动分开看：第一，全球AI CapEx继续Expansion，Supermicro正式确认US$60bn+新订单和FY2027 US$65-72bn收入指引，CoreWeave Q2收入US$2.575bn、backlog约US$104bn且早Q3又新增超过US$25bn客户承诺，Lumentum Q4收入US$1.006bn、同比+109.3%并给出Q1 FY2027 US$1.225-1.275bn指引，AI基础设施从GPU服务器扩散到AI云和光互连；第二，流动性维持Stress，Fed H.15最新10Y 4.72%、30Y 5.25%、10Y TIPS 2.43%、30Y TIPS 3.00%，BLS官方确认7月CPI要到美东8:30发布，本次12:00北京尚未落地，PBOC 7天逆回购零操作仅作为非官方转述观察；第三，科技催化上调为Bullish，但仍是执行过滤后的Bullish，Intel US$20bn发股说明资本强度和稀释风险没有消失。处理建议：只看AI云、服务器、液冷电力、光互连、先进封装、AI软件、商业航天这些卖铲人，且优先级从“叙事强”切换到“订单/backlog/毛利率/现金流/融资结构强”。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-12 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange维持：AI云、AI服务器和光互连同时给出官方正反馈，但CPI前长端实际利率仍把总闸门压在防守区</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持Orange：只做订单和利润率已经兑现的AI卖铲链；CPI前不追高无现金流、高融资依赖、高估值的远期科技资产。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>最大正反馈是CoreWeave backlog约US$104bn、Supermicro US$60bn+新订单、Lumentum 1.6T/OCS/CPO光链指引同时官方确认。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>最大压制项是Fed H.15显示10Y 4.72%、30Y 5.25%、10Y TIPS 2.43%、30Y TIPS 3.00%，Intel US$20bn发股继续提示融资稀释风险。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步只盯今晚美国CPI、下一版Fed H.15/H.4.1、Intel发行交割、CoreWeave/Lumentum指引兑现、NVIDIA融资平台真实项目。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-green">Bullish</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>CoreWeave官方Q2确认AI云backlog继续放大</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>CoreWeave 2026-08-11发布Q2结果：收入US$2.575bn，同比约+112%；adjusted EBITDA US$1.510bn，margin 59%；截至2026-06-30 revenue backlog约US$104bn，且不包括早Q3新增超过US$25bn净客户承诺；active power扩大近500MW至1.5GW，contracted power约3.7GW。</p>
+              <p><strong>影响：</strong>利好AI云、GPU集群、数据中心电力、液冷、网络、存储和工程链；但公司仍有GAAP净亏损US$626mn、利息费用US$640mn，必须用融资成本和订单交付过滤。</p>
+              <p class="source-line"><a href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx">CoreWeave IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Lumentum官方Q4验证AI光互连强景气</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Lumentum 2026-08-11发布FY2026 Q4结果：净收入US$1.0063bn，同比+109.3%，非GAAP毛利率50.4%，非GAAP operating margin 36.6%；公司指引FY2027 Q1收入US$1.225-1.275bn，并称AI带动1.6T、OCS、CPO lasers、ELS modules和NPO engagements。</p>
+              <p><strong>影响：</strong>利好数据中心光模块、1.6T、OCS、CPO激光器、NPO和高速光互连；但GAAP净亏损来自US$7.8bn一次性非现金债务清偿损失，估值仍需看非GAAP利润和现金。</p>
+              <p class="source-line"><a href="https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx">Lumentum IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Supermicro正式财报继续支撑AI服务器卖铲主线</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Supermicro 2026-08-11正式发布FY2026 Q4：净销售US$11.1bn，毛利率17.5%，净利润US$1.178bn，非GAAP EPS US$1.70，Q4经营现金流US$747mn；公司称过去一年新增订单超过US$60bn，FY2027收入指引US$65.0-72.0bn。</p>
+              <p><strong>影响：</strong>利好AI服务器整机、GPU集群集成、液冷、电源、机柜、交换网络、PCB/高速互连和数据中心工程；但仍需跟踪客户集中和出口控制相关独立审查。</p>
+              <p class="source-line"><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx">Supermicro IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Intel US$20bn发行定价确认融资稀释约束</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Intel 2026-08-11宣布以每股US$95定价210,526,315股普通股，发行规模从US$15bn上修至US$20bn，预计2026-08-12交割，净募集约US$19.7bn，资金可用于一般公司用途，包括CapEx和营运资金。</p>
+              <p><strong>影响：</strong>AI compute、先进封装、外部晶圆和purpose-built silicon需求仍强；但半导体制造链的资本强度、稀释和ROI约束被进一步确认。</p>
+              <p class="source-line"><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common">Intel IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>CPI前流动性仍是Stress，不是Easing</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.15 2026-08-11发布/2026-08-10数据：EFFR 3.63%，2Y 4.25%，10Y 4.72%，30Y 5.25%，10Y TIPS 2.43%，30Y TIPS 3.00%。BLS官方页面显示7月CPI将于2026-08-12 8:30 a.m. ET发布，本次12:00北京尚未发布。</p>
+              <p><strong>影响：</strong>AI链官方财报正反馈很强，但折现率尚未转宽松；午间前不应把CPI未发布当作利好兑现。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 / BLS</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>CoreWeave</td>
+              <td>Q2收入US$2.575bn，adjusted EBITDA US$1.510bn，revenue backlog约US$104bn；早Q3新增超过US$25bn净客户承诺；active power 1.5GW，contracted power约3.7GW。</td>
+              <td>上修</td>
+              <td>AI云、GPU集群、数据中心电力、液冷、网络、存储和工程链受益；融资成本和净亏损仍是约束。</td>
+              <td>High</td>
+              <td><a href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx">CoreWeave IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro</td>
+              <td>FY2026 Q4净销售US$11.1bn，毛利率17.5%，经营现金流US$747mn；过去一年新增订单超过US$60bn，FY2027收入指引US$65.0-72.0bn。</td>
+              <td>上修</td>
+              <td>AI服务器、GPU集群、液冷、电源、机柜、交换网络、PCB/高速互连和数据中心工程链获得订单验证。</td>
+              <td>High</td>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx">Supermicro IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Lumentum</td>
+              <td>FY2026 Q4收入US$1.0063bn，同比+109.3%，非GAAP毛利率50.4%；FY2027 Q1收入指引US$1.225-1.275bn，AI demand推动1.6T、OCS、CPO lasers和ELS modules。</td>
+              <td>上修</td>
+              <td>数据中心光模块、1.6T、OCS、CPO激光器、NPO和高速光互连链受益。</td>
+              <td>High</td>
+              <td><a href="https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx">Lumentum IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA / AI infrastructure finance platform</td>
+              <td>NVIDIA宣布与Apollo、BlackRock、Blackstone、Brookfield、Goldman Sachs和KKR建立AI compute基础设施融资平台，目标动员超过US$500bn第三方资本。</td>
+              <td>上修</td>
+              <td>AI GPU、AI服务器、先进封装、交换芯片、光互连、电力、液冷、机柜和工程服务受益；需跟踪真实项目和循环融资风险。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel</td>
+              <td>普通股发行上修至US$20bn，净募集约US$19.7bn，资金可用于CapEx和营运资金。</td>
+              <td>上修但稀释</td>
+              <td>先进制程、先进封装、外部晶圆、服务器CPU/ASIC和AI compute供应链受益；股权稀释和资本回报不确定性上升。</td>
+              <td>High</td>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common">Intel IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q4 Microsoft Cloud revenue US$59.3bn，同比+27%；Commercial RPO同比+84%至US$678bn；Azure及其他云服务+43%；Q4物业设备新增US$35.802bn。</td>
+              <td>上修</td>
+              <td>AI服务器、网络、存储、电力和冷却需求仍由云收入和RPO吸收。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon</td>
+              <td>10-Q确认Q2现金CapEx US$53.1bn、H1现金CapEx US$96.3bn，AWS H1物业设备净新增US$90.120bn；但10-Q未直接确认媒体所称US$220bn全年CapEx。</td>
+              <td>上修</td>
+              <td>AWS、AI芯片/GPU/HBM、数据中心电力、液冷、网络和服务器链继续受益；US$220bn仍按未见官方确认处理。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>10-Q确认Q2 CapEx含融资租赁本金US$31.08bn，2026全年CapEx预期US$130-145bn；未开始租赁义务约US$278.99bn。</td>
+              <td>上修</td>
+              <td>AI服务器、光通信、交换机、电力、冷却和数据中心建设受益；租赁、折旧、债务和FCF压力是估值过滤器。</td>
+              <td>High</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Fed H.15</td>
+              <td>2026-08-11发布，最新2026-08-10数据：EFFR 3.63%，2Y 4.25%，5Y 4.41%，10Y 4.72%，20Y 5.25%，30Y 5.25%，10Y TIPS 2.43%，30Y TIPS 3.00%。</td>
+              <td>压力</td>
+              <td>长端和实际利率同步上行，对高估值科技成长资产是直接折现率压力。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>BLS CPI release window</td>
+              <td>BLS官方页面显示7月CPI将于2026-08-12 8:30 a.m. ET发布；本次北京时间12:00报告尚未到发布时间。</td>
+              <td>待验证</td>
+              <td>今晚CPI决定Stress能否缓和；发布前不提前交易为宽松确认。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>最新可用仍为2026-08-06发布的2026-08-05周数据：准备金周均US$2.993349tn，周增US$8.779bn；TGA周均US$907.324bn，周降US$3.452bn；ON RRP周均US$342.725bn，周降US$1.222bn。</td>
+              <td>边际缓和</td>
+              <td>系统流动性边际改善，但尚未抵消长端实际利率上行。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>PBOC open-market operation</td>
+              <td>财联社/东方财富转述央行公告称，2026-08-12 7天期逆回购操作量为零；本轮未抓到PBOC官方原文。</td>
+              <td>中性偏紧观察</td>
+              <td>对全球科技估值不是核心变量，但说明中国端也未见新增宽松脉冲；按中等置信度处理。</td>
+              <td>Medium</td>
+              <td><a href="https://finance.eastmoney.com/a/202608123838742464.html">Eastmoney / CLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>AP market variables</td>
+              <td>AP报道2026-08-11 S&amp;P 500 -0.3%、Dow -0.3%、Nasdaq -0.6%；Brent原油上涨1.4%至US$88.91，盘中在US$87-90之间波动。</td>
+              <td>压力</td>
+              <td>油价高位会强化通胀和利率不确定性，高估值科技链需要降低追价。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e5e8f3360f8d30714778761e3a483347">AP</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>CoreWeave Q2 AI云需求和backlog</td>
+              <td>AI云、GPU集群、数据中心电力、液冷、网络、存储、工程建设</td>
+              <td>利好但高负债过滤</td>
+              <td>有真实backlog、客户承诺、电力资源和部署能力的AI云及上游卖铲链</td>
+              <td>融资成本过高、交付能力不足、只有算力租赁叙事但无客户承诺的平台</td>
+              <td>官方确认</td>
+              <td><a href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx">CoreWeave IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Lumentum FY2026 Q4光互连财报</td>
+              <td>1.6T光模块、OCS、CPO lasers、NPO、ELS modules、数据中心光互连</td>
+              <td>利好</td>
+              <td>数据中心高速光互连、CPO/NPO、激光器和光模块供应链</td>
+              <td>无法进入1.6T/CPO/OCS客户认证、毛利率无法跟随提升的传统光通信环节</td>
+              <td>官方确认</td>
+              <td><a href="https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx">Lumentum IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro FY2026 Q4正式业绩和FY2027强指引</td>
+              <td>AI服务器、GPU集群、液冷、电源、机柜、网络交换、PCB/高速互连</td>
+              <td>利好</td>
+              <td>有真实订单、交付能力、毛利率修复和经营现金流验证的AI服务器卖铲链</td>
+              <td>订单无法转收入、客户集中、合规调查未落地、毛利率不可持续的中游环节</td>
+              <td>官方确认</td>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx">Supermicro IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Intel US$20bn普通股发行定价</td>
+              <td>先进制程、先进封装、外部晶圆、AI compute、服务器CPU/ASIC</td>
+              <td>分化</td>
+              <td>资本投入能换来客户承诺、先进封装订单、代工利用率和毛利率修复的环节</td>
+              <td>高CapEx但回报不清、股权稀释严重、现金流承压的制造资产</td>
+              <td>官方确认</td>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common">Intel IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Anthropic/Riot AI算力租赁传闻</td>
+              <td>AI数据中心、电力、矿场改造、HPC租赁</td>
+              <td>待验证</td>
+              <td>若官方确认，可能利好有电力和机房资源的HPC数据中心运营商</td>
+              <td>未披露客户名称、合同条款和资本投入要求的矿场转型叙事</td>
+              <td>媒体报道，未见Anthropic/Riot官方确认客户名</td>
+              <td><a href="https://w.media/anthropic-signs-us-9-1-billion-computing-deal-with-riot-platforms/">w.media / Barron's / Investopedia watch</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI服务器和数据中心卖铲链</td>
+              <td>无直接A/H公司订单映射；Supermicro、CoreWeave、NVIDIA是海外官方证据，不能直接等同于A/H单家公司订单。</td>
+              <td>AI服务器整机、液冷、电源、机柜、交换机、光模块/光互连、PCB/高速连接器、数据中心工程和运维是主要推断受益方向。</td>
+              <td>必须看是否被直接客户认证、是否有订单公告、毛利率是否修复、是否受出口管制和客户集中影响。</td>
+            </tr>
+            
+            <tr>
+              <td>光互连/CPO/1.6T</td>
+              <td>无直接A/H公司映射；Lumentum只验证海外数据中心光互连景气。</td>
+              <td>1.6T光模块、CPO/NPO、光芯片、激光器、FAU、连接器、高速PCB和交换网络环节可作为推断受益方向。</td>
+              <td>A/H映射必须看客户认证、量产节点、毛利率、海外限制和估值预期；不能把Lumentum财报直接映射为国内公司订单。</td>
+            </tr>
+            
+            <tr>
+              <td>先进封装和半导体制造</td>
+              <td>Intel官方US$20bn发股是海外一手证据；无直接A/H公司映射。</td>
+              <td>先进封装、外部晶圆、服务器CPU/ASIC、AI compute silicon、ABF/基板、HBM配套和半导体设备材料具备景气观察价值。</td>
+              <td>资本开支越强，稀释、折旧、良率、客户承诺和ROI越重要。</td>
+            </tr>
+            
+            <tr>
+              <td>AI软件和AI云卖铲链</td>
+              <td>CoreWeave、Cloudflare、Atlassian、Twilio为海外官方验证样本；无直接A/H公司映射。</td>
+              <td>AI云、边缘云、网络安全、企业协作、开发者工具、通信API、客户数据平台和企业AI工作流可作为AI硬件CapEx扩散方向。</td>
+              <td>必须看ARR/RPO/backlog、客户留存、利润率和free cash flow，不能只看AI概念。</td>
+            </tr>
+            
+            <tr>
+              <td>商业航天卖铲链</td>
+              <td>无直接A/H公司映射；SpaceX官方文件只验证海外商业航天和AI基础设施高投入。</td>
+              <td>卫星制造、通信载荷、地面终端、测控系统、发射配套、热控材料、精密制造、电源管理和复合材料是更偏卖铲方向。</td>
+              <td>高CapEx、亏损、融资、出口管制和客户认证会压制兑现速度。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>美国7月CPI</strong><span>BLS官方发布时间为2026-08-12 8:30 a.m. ET，决定Liquidity能否从Stress缓和，或继续压制科技估值。</span></li><li><strong>Fed H.15/H.4.1下一次更新</strong><span>确认长端和TIPS是否回落，准备金修复是否延续。</span></li><li><strong>CoreWeave backlog转收入和融资成本</strong><span>US$104bn backlog和早Q3超过US$25bn新承诺很强，但净亏损和利息费用也很高，需看交付、客户集中、资本成本和现金流。</span></li><li><strong>Lumentum 1.6T/OCS/CPO收入兑现</strong><span>Q1 FY2027指引强，需要验证光互连需求是否能持续超过估值预期。</span></li><li><strong>Intel US$20bn发行交割</strong><span>确认2026-08-12交割、超额配售、稀释、CapEx投向和信用/ROI影响。</span></li><li><strong>Supermicro订单转收入和出口控制审查</strong><span>重点验证US$60bn+新订单、record backlog、FY2027 US$65-72bn指引、毛利率持续性、客户集中和独立审查。</span></li><li><strong>NVIDIA AI融资平台真实项目</strong><span>确认US$500bn+第三方资本是可执行项目、贷款/租赁/股权结构，还是框架性资本动员。</span></li><li><strong>Anthropic/Riot AI算力租赁传闻</strong><span>目前未见Anthropic/Riot官方确认客户名；若确认，会影响矿场转HPC、电力资源和AI数据中心租赁映射。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-Second-Quarter-2026-Results/default.aspx">CoreWeave Reports Strong Second Quarter 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.lumentum.com/financial-news-releases/news-details/2026/Lumentum-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Results/default.aspx">Lumentum Announces Fourth Quarter and Full Fiscal Year 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.supermicro.com/news/news-details/2026/Supermicro-Announces-Fourth-Quarter-and-Full-Fiscal-Year-2026-Financial-Results/default.aspx">Supermicro Announces Fourth Quarter and Full Fiscal Year 2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.intc.com/news-events/press-releases/detail/1779/intel-announces-upsize-and-pricing-of-20-billion-common">Intel Announces Upsize and Pricing of $20 Billion Common Stock Offering</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS Consumer Price Index release</a></td>
+              <td>Liquidity / CPI watch</td>
+              <td>2026-07-14 current release page</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1 Factors Affecting Reserve Balances</a></td>
+              <td>Liquidity</td>
+              <td>2026-08-06</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e5e8f3360f8d30714778761e3a483347">How major US stock indexes fared Tuesday 8/11/2026</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-08-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://finance.eastmoney.com/a/202608123838742464.html">Eastmoney report quoting PBOC open-market operation</a></td>
+              <td>Liquidity watch</td>
+              <td>2026-08-12</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital">NVIDIA Partners With Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-08-10</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm">Amazon Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx</td>
+              <td>2026-08-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft FY2026 Q4 Earnings Release</a></td>
+              <td>CapEx</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm">Meta Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx</td>
+              <td>2026-08-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm">SpaceX Form 10-Q for quarter ended June 30, 2026</a></td>
+              <td>CapEx / Commercial space</td>
+              <td>2026-08-05</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://w.media/anthropic-signs-us-9-1-billion-computing-deal-with-riot-platforms/">w.media Anthropic/Riot report</a></td>
+              <td>Tech catalyst watch / unverified</td>
+              <td>2026-08-11</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

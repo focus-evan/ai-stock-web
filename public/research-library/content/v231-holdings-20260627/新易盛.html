@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新易盛 - V2.3.1 深度分析</title>
+<style>
+body{margin:0;background:#f5f7fb;color:#15171a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;}
+header{background:#111827;color:white;padding:28px 36px 20px;} h1{margin:0;font-size:28px;} header p{color:#d1d5db;margin:8px 0 0;}
+main{max-width:1280px;margin:0 auto;padding:24px 28px 48px;} section{background:white;border:1px solid #d9dee7;border-radius:8px;margin-bottom:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;} .scorebox{display:flex;gap:12px;align-items:center;justify-content:flex-end;} .bigscore{width:88px;height:88px;border-radius:14px;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;} .card{border:1px solid #d9dee7;background:#fbfcfe;border-radius:8px;padding:12px;} .card b{display:block;color:#667085;font-size:12px;margin-bottom:6px;} .card span{font-size:18px;font-weight:700;}
+h2{font-size:20px;margin:0 0 12px;} h3{font-size:16px;margin:12px 0 8px;} table{width:100%;border-collapse:collapse;font-size:13px;} th,td{border-bottom:1px solid #e5e7eb;padding:9px 8px;text-align:left;vertical-align:top;} th{background:#f2f4f7;color:#475467;} small{display:block;color:#667085;margin-top:2px;}
+.pill{display:inline-block;min-width:44px;text-align:center;color:white;border-radius:999px;padding:4px 8px;font-weight:700;} .pill.good{background:#0f766e;} .pill.mid{background:#2563eb;} .pill.watch{background:#b7791f;} .pill.bad{background:#b42318;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;} ul{margin:0;padding-left:18px;line-height:1.7;} .verdict{border-left:4px solid #f59e0b;background:#fff7ed;padding:12px;border-radius:6px;line-height:1.7;} .warnline{background:#fff1f3;border:1px solid #ffd1d8;padding:10px;border-radius:6px;color:#9f1239;}
+.pos{color:#16845f;} .neg{color:#c43d3d;} a{color:#2563eb;text-decoration:none;}
+@media(max-width:900px){.hero,.grid,.twocol{grid-template-columns:1fr;} main,header{padding-left:16px;padding-right:16px;}}
+</style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>新易盛 V2.3.1 深度分析</h1>
+  <p>A股-创业板 · 300502 · AI数据中心高速光模块 / 光收发器 · 数据窗口：2026-06-26 收盘/盘后行情</p>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <h2>综合评分 / 标签</h2>
+      <p class="verdict"><b>成长配置 / AI硬件核心弹性 / 下一代光互联期权</b><br>逻辑强、数据强，并且具备CPO/OCS/NPO/XPO等下一代光互联估值重构期权；但这部分仍需订单和收入颗粒度验证，交易上不能按已完全兑现处理。</p>
+    </div>
+    <div class="scorebox"><div class="bigscore">84</div></div>
+  </section>
+
+  <section>
+    <h2>持仓与行情快照</h2>
+    <div class="grid">
+      <div class="card"><b>最新价</b><span>566.0</span></div>
+      <div class="card"><b>PE / PB</b><span>73.48 / 40.65</span></div>
+      <div class="card"><b>持仓盈亏</b><span class="neg">-75,621 / -16.0%</span></div>
+      <div class="card"><b>市值/换手</b><span>7099.02亿 / 4.9%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险门</h2>
+    <p>未见一票否决；主要风险是海外AI资本开支节奏、客户集中、短期高波动和交易拥挤。</p>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table><tbody>
+      <tr><td>分数</td><td><span class="pill bad">16</span></td></tr>
+      <tr><td>海外对标</td><td>Coherent、Lumentum、Fabrinet、海外光模块/光器件供应链，以及下一代光互联方案商</td></tr>
+      <tr><td>替代阶段</td><td>800G/1.6T收入利润兑现；CPO/OCS/NPO/XPO处于技术布局与客户验证期</td></tr>
+      <tr><td>结论</td><td>不是传统意义的国内替代卡脖子，更像中国厂商在全球AI光模块利润池中替代海外供给。800G/1.6T已经有收入和利润兑现；CPO、OCS、NPO、XPO属于下一代光互联能力储备，能提高估值重构上限，但暂不能等同于当前利润主项。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table><tbody>
+      <tr><td>护城河等级</td><td><b>A-</b></td></tr>
+      <tr><td>国内竞争对手</td><td>中际旭创、天孚通信、华工科技、光迅科技</td></tr>
+      <tr><td>海外竞争对手</td><td>Coherent、Lumentum、Fabrinet</td></tr>
+      <tr><td>我有你没有</td><td>高速光模块批量交付能力、海外客户验证、盈利弹性，以及围绕CPO/OCS/NPO/XPO的下一代光互联技术储备。</td></tr>
+      <tr><td>你有我更强</td><td>相比多数后排光通信标的，利润兑现、高端产品放量和下一代互联布局更完整。</td></tr>
+      <tr><td>我弱于你</td><td>相比中际旭创，市值/规模、头部客户确定性和CPO/OCS商业化订单颗粒度仍需持续验证。</td></tr>
+      <tr><td>财务/客户验证</td><td>2026Q1收入和利润高增，毛利率和净利率处于高位，财务验证强；CPO/OCS仍以技术和布局验证为主，尚需单独披露收入、订单或客户进展。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>最近四季度财务表</h2>
+    <table><thead><tr><th>期间</th><th>营收 / YoY</th><th>归母净利 / YoY</th><th>扣非净利 / YoY</th><th>毛利率</th><th>净利率</th><th>经营现金流/股</th><th>ROE</th></tr></thead><tbody><tr><td>2026-03-31<small>单季度</small></td><td>83.38亿<small>105.8%</small></td><td>27.80亿<small>76.8%</small></td><td>27.68亿<small>76.4%</small></td><td>49.2%</td><td>33.3%</td><td>0.6882</td><td>14.5%</td></tr><tr><td>2025-12-31<small>单季度</small></td><td>83.37亿<small>137.1%</small></td><td>32.05亿<small>168.9%</small></td><td>32.06亿<small>170.4%</small></td><td>48.9%</td><td>38.7%</td><td>3.0821</td><td>17.6%</td></tr><tr><td>2025-09-30<small>单季度</small></td><td>60.68亿<small>152.5%</small></td><td>23.85亿<small>205.4%</small></td><td>23.67亿<small>203.8%</small></td><td>46.9%</td><td>39.3%</td><td>3.7054</td><td>17.1%</td></tr><tr><td>2025-06-30<small>单季度</small></td><td>63.85亿<small>295.4%</small></td><td>23.70亿<small>338.4%</small></td><td>23.65亿<small>338.0%</small></td><td>46.6%</td><td>37.1%</td><td>0.6793</td><td>20.9%</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table><tbody><tr><td>成长性</td><td><span class="pill bad">19</span></td></tr><tr><td>盈利性</td><td><span class="pill bad">18</span></td></tr><tr><td>经营规模</td><td><span class="pill bad">17</span></td></tr><tr><td>资产效率</td><td><span class="pill bad">17</span></td></tr><tr><td>市值/估值</td><td><span class="pill bad">12</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><tbody><tr><td>行业面</td><td><span class="pill good">91</span></td></tr><tr><td>核心竞争力</td><td><span class="pill good">86</span></td></tr><tr><td>财务质量</td><td><span class="pill good">91</span></td></tr><tr><td>估值与赔率</td><td><span class="pill mid">72</span></td></tr><tr><td>催化/影子</td><td><span class="pill good">85</span></td></tr><tr><td>治理/流动性</td><td><span class="pill good">80</span></td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>利润池与 V2.3.1 修正</h2>
+    <p>AI服务器互连带宽升级直接推升800G/1.6T需求，光模块是上游高弹性利润池；CPO、OCS、NPO、XPO对应下一代AI集群光互联架构升级，是估值重构期权，但客户集中和代际切换会带来订单波动。</p>
+    <table><tbody>
+      <tr><td>产业链利润池</td><td>AI服务器互连带宽升级直接推升800G/1.6T需求，光模块是上游高弹性利润池；CPO、OCS、NPO、XPO对应下一代AI集群光互联架构升级，是估值重构期权，但客户集中和代际切换会带来订单波动。</td></tr>
+      <tr><td>国产替代/卡脖子</td><td>不是传统意义的国内替代卡脖子，更像中国厂商在全球AI光模块利润池中替代海外供给。800G/1.6T已经有收入和利润兑现；CPO、OCS、NPO、XPO属于下一代光互联能力储备，能提高估值重构上限，但暂不能等同于当前利润主项。</td></tr>
+      <tr><td>竞争对手护城河</td><td>2026Q1收入和利润高增，毛利率和净利率处于高位，财务验证强；CPO/OCS仍以技术和布局验证为主，尚需单独披露收入、订单或客户进展。</td></tr>
+      <tr><td>预期差/已定价</td><td>若股价已提前大幅反映催化，交易上降权；若财报后仍跑赢同题材，说明预期差仍在。</td></tr>
+      <tr><td>客户集中/组合暴露</td><td>结合你当前组合，AI硬件、半导体、电子材料相关性较高，需要仓位上限控制。</td></tr>
+    </tbody></table>
+  </section>
+
+
+  <section>
+    <h2>CPO / OCS / NPO / XPO 下一代光互联期权</h2>
+    <table><tbody>
+      <tr><td>公开证据</td><td>公司2026-04-23投资者关系活动记录提到，已构建覆盖XPO、OCS、NPO、CPO等多种互联形态的技术体系；800G产品需求仍然强劲，1.6T订单量逐季增长，预计今年800G与1.6T仍是主要交付产品。</td></tr>
+      <tr><td>估值重构逻辑</td><td>CPO降低交换芯片到光引擎的电互连损耗，OCS提高AI集群网络调度和光层交换效率，NPO/XPO代表更靠近芯片侧的光互联演进。若海外大厂从800G/1.6T模块继续切向CPO/OCS，新易盛的估值不只看当期光模块利润，而要加入下一代互联方案卡位溢价。</td></tr>
+      <tr><td>评分影响</td><td>提高行业面、核心竞争力和催化/影子逻辑分；不直接提高财务质量分，除非后续看到CPO/OCS订单、客户认证、收入占比或毛利率贡献。</td></tr>
+      <tr><td>风险边界</td><td>这部分目前更像技术储备和产业趋势期权，而不是已经完全财务化的利润池。若只讲CPO/OCS、不披露订单和收入，交易上容易变成高位叙事溢价。</td></tr>
+    </tbody></table>
+  </section>
+
+
+  <section>
+    <h2>同类相对估值</h2>
+    <p class="verdict">同类池：AI光模块/光通信。PE判断：<b>相对便宜</b>；PB判断：<b>略贵</b>。系统性科技估值水位另行讨论，不混入此处结论。</p>
+    <table><thead><tr><th>公司</th><th>PE</th><th>PB</th><th>市值</th></tr></thead><tbody><tr><td>新易盛</td><td>73.48</td><td>40.65</td><td>7099.02亿</td></tr><tr><td>中际旭创</td><td>93.54</td><td>40.37</td><td>13917.42亿</td></tr><tr><td>天孚通信</td><td>159.72</td><td>63.45</td><td>3461.07亿</td></tr><tr><td>太辰光</td><td>186.32</td><td>30.06</td><td>449.92亿</td></tr><tr><td>华工科技</td><td>95.23</td><td>14.15</td><td>1617.42亿</td></tr><tr><td>光迅科技</td><td>191.97</td><td>14.39</td><td>1875.85亿</td></tr><tr><td>剑桥科技</td><td>258.46</td><td>12.13</td><td>677.73亿</td></tr><tr><td>源杰科技</td><td>621.34</td><td>89.76</td><td>2183.68亿</td></tr><tr><td>仕佳光子</td><td>205.52</td><td>53.33</td><td>812.22亿</td></tr><tr><td>德科立</td><td>437.31</td><td>14.21</td><td>335.23亿</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>风险点</h2>
+    <ul><li>海外AI链波动会直接压制估值。</li><li>高端光模块价格/毛利率若下行，估值弹性会快速收缩。</li><li>CPO/OCS如果没有订单、客户和收入颗粒度，只能算估值期权，不能算业绩锚。</li><li>当前不是低位挖掘，交易上必须等触发。</li></ul>
+  </section>
+
+  <section>
+    <h2>执行条件</h2>
+    <table><tbody>
+      <tr><td>买入</td><td>仅在大盘宽度修复且股价重新站回关键均线后考虑。</td></tr>
+      <tr><td>加仓</td><td>回踩不破支撑并放量转强，同时看到800G/1.6T订单或CPO/OCS产业催化强化时再加。</td></tr>
+      <tr><td>减仓</td><td>跌破重要趋势位、海外光模块链连续走弱，或CPO/OCS催化被证伪时先减新增仓。</td></tr>
+      <tr><td>失效</td><td>订单/毛利率/客户验证明显弱于预期，且CPO/OCS长期停留在概念层无订单收入验证。</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>数据来源与限制</h2>
+    <p>行情：腾讯行情接口；财务：同花顺/东方财富财务摘要(AkShare)；V2.3.1要求优先以正式公告复核，本文为本地投研快照。</p>
+    <p><a href="index.html">返回持仓报告目录</a></p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

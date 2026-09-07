@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>03 优化后服务器情况｜112.124.24.71</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">112.124.24.71 优化方案</a><span>/</span><strong>优化后情况</strong></div><div>验收：2026-08-31 11:45 CST</div></div>
+  <header class="hero green"><div class="eyebrow">CHAPTER 03 · AFTER</div><h1>优化后当前服务器情况</h1><p>记录清理、ESSD启用和Dify恢复后的当前资源与业务健康基线。</p><div class="tags"><span>根盘 48%</span><span>数据盘 3%</span><span>13/13容器运行</span><span>接口健康</span></div></header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 优化前情况</a><a href="02-manual-cleanup-guide.html">02 清理操作</a><a class="active" href="03-after-cleanup.html">03 优化后情况</a><a href="04-data-disk-activation.html">04 ESSD数据盘</a><a href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status"><span class="pill green">恢复完成</span><div><strong>Dify的11个容器已全部恢复为running/always。</strong> Dify、S5000与app API health均为200，公网入口恢复。</div></div>
+
+  <section>
+    <h2>当前资源</h2>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘 /</div><div class="value good">48%</div><div class="track"><div class="fill green" style="width:48%"></div></div><div class="sub">可用约 64 GiB</div></div>
+      <div class="card metric"><div class="label">数据盘 /data2</div><div class="value good">3%</div><div class="track"><div class="fill green" style="width:3%"></div></div><div class="sub">可用约243 GiB；fstab重挂载通过</div></div>
+      <div class="card metric"><div class="label">Dify备份</div><div class="value good">5.7 GB</div><div class="track"><div class="fill green" style="width:27%"></div></div><div class="sub">SHA-256与pg_restore目录通过</div></div>
+      <div class="card metric"><div class="label">运行容器</div><div class="value good">13 / 13</div><div class="track"><div class="fill green" style="width:100%"></div></div><div class="sub">11个Dify容器已恢复running/always</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>前后对比</h2>
+    <div class="table-wrap"><table><thead><tr><th>项目</th><th>优化前</th><th>优化后</th><th>结果</th></tr></thead><tbody>
+      <tr><td>根分区</td><td>92%，可用约 10.6 GiB</td><td><strong>48%，可用约 64 GiB</strong></td><td><span class="pill green">安全</span></td></tr>
+      <tr><td>ESSD 数据盘</td><td>256 GiB裸盘、无分区/文件系统</td><td>/dev/vdb1，ext4，挂载/data2；已用3%</td><td><span class="pill green">已启用</span></td></tr>
+      <tr><td>回收站</td><td>约 12.55 GiB</td><td>4 KiB</td><td>清单归档后删除重复副本</td></tr>
+      <tr><td>Docker 镜像</td><td>73 个 / 33.18 GB</td><td>35 个 / 12.02 GB</td><td>实际释放 13.96 GB，保留 30 天回滚</td></tr>
+      <tr><td>Build cache</td><td>9.047 GB；镜像清理后重新计量 13.95 GB</td><td>4.926 GB</td><td>两轮合计报告释放约 13.45 GB</td></tr>
+      <tr><td>Journal</td><td>1.2 GiB</td><td>49.6 MiB</td><td>上限 1 GiB、最长 14 天</td></tr>
+      <tr><td>活跃 Dify volumes</td><td>约 23 GiB</td><td>约 23 GiB</td><td>完整保留</td></tr>
+      <tr><td>旧 0.15.3 版本</td><td>约 13.5 GiB</td><td>已按用户授权删除</td><td>删除清单已归档</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>服务与接口验收</h2>
+    <div class="grid three">
+      <div class="card"><span class="pill green">active</span><h3>Docker / containerd</h3><p>daemon正常；全部13个容器运行。</p></div>
+      <div class="card"><span class="pill green">healthy</span><h3>Dify 基础组件</h3><p>Redis、PostgreSQL、sandbox均healthy，其他Dify服务running。</p></div>
+      <div class="card"><span class="pill green">HTTP 200</span><h3>Dify API</h3><p>容器内health=200，公网console入口恢复；workflow GET返回预期405。</p></div>
+      <div class="card"><span class="pill green">HTTP 200</span><h3>S5000 API</h3><p>容器内与主机私网 18080 /health 均为 200。</p></div>
+      <div class="card"><span class="pill green">HTTP 200</span><h3>app API</h3><p>容器内及主机 127.0.0.1:8000 /health=200。</p></div>
+      <div class="card"><span class="pill blue">可达</span><h3>Workflow API</h3><p>公网 GET /v1/workflows/run 返回预期 405，证明路由可达且方法受限。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>已生效的长期保护</h2>
+    <div class="table-wrap"><table><thead><tr><th>策略</th><th>位置/频率</th><th>规则</th></tr></thead><tbody>
+      <tr><td>Docker 新建容器日志</td><td><code>/etc/docker/daemon.json</code></td><td>json-file 100 MiB × 5；daemon HUP reload 成功。</td></tr>
+      <tr><td>Journal</td><td>持续</td><td>最大 1 GiB、保留 2 GiB 空闲、单文件 100 MiB、最长 14 天。</td></tr>
+      <tr><td>资源守卫</td><td>每 10 分钟</td><td>根盘 85%、可用内存 10%、Docker JSON 500 MiB；只在状态变化时写 journal。</td></tr>
+      <tr><td>数据盘守卫</td><td>每 10 分钟</td><td>/data2挂载缺失立即告警；容量达到85%告警。</td></tr>
+      <tr><td>Dify PostgreSQL备份</td><td>每周日 04:10</td><td>在线CUSTOM格式、SHA-256、保留约5个周恢复点。</td></tr>
+      <tr><td>Docker 周维护</td><td>每周日 03:27</td><td>有 active build 时自动跳过；否则清理 7 天前缓存并保留 5 GB、清理 30 天前未引用镜像。</td></tr>
+      <tr><td>原安全 watchdog</td><td>每分钟</td><td><code>/usr/local/bin/kill-docker-daemon.sh</code> 原样保留。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>归档与剩余观察项</h2>
+    <ul><li>服务器端审计归档：<code>/var/backups/server-cleanup-112.124.24.71-20260831-1150</code>。</li><li>归档含原 daemon.json、原 crontab、容器与镜像清单、磁盘/内存快照、完整回收站文件清单和重复性哈希。</li><li>当前 <code>app_api_1</code>、<code>dify17-api-1</code>、<code>dify17-nginx-1</code> 历史 JSON 日志超过 500 MiB，已各记录一次状态告警。</li><li>已有容器不会因 daemon 默认值自动获得轮转参数；如需缩减现有 JSON 日志，应安排维护窗口逐个重建容器，不建议直接截断。</li><li>服务器仍无 Swap；目前内存可用约 59%，不是当前瓶颈。</li></ul>
+  </section>
+  <div class="next-prev"><a href="02-manual-cleanup-guide.html">← 上一章：清理操作手册</a><a href="04-data-disk-activation.html">下一章：ESSD数据盘启用 →</a></div>
+  <div class="footer">优化后验收基线 · 112.124.24.71 · 2026-08-31</div>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

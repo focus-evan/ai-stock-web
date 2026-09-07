@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>AI-Stock审计证据与异常明细</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f2f5f8;color:#172b3a;font:15px/1.72 "Segoe UI","Microsoft YaHei",sans-serif}a{color:#006d77;text-decoration:none}a:hover{text-decoration:underline}.layout{max-width:1660px;margin:auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;padding:26px}.sidebar{position:sticky;top:22px;height:calc(100vh - 44px);overflow:auto;padding:16px 8px}.brand{font-weight:800;letter-spacing:2px;font-size:13px}.sidebar a{display:block;padding:8px 12px;border-radius:8px;color:#526575}.sidebar a:hover{background:#e0e9ef}.sidebar small{display:block;padding:12px;color:#758595}.main{min-width:0}.hero{background:#102d3c;color:#fff;border-radius:20px;padding:42px;position:relative;overflow:hidden}.eyebrow{color:#84d1c9;letter-spacing:2px;font-size:12px;font-weight:800}.hero h1{font-size:36px;line-height:1.3;margin:14px 0}.hero p{max-width:850px;color:#cddde5}.hero .date{margin-top:26px;color:#97b2bf;font-size:12px}.hero strong{color:#fff}.section{background:#fff;border:1px solid #dfE6eb;padding:28px;border-radius:16px;margin-top:22px;scroll-margin-top:18px}.section h2{font-size:24px;line-height:1.35;margin:0 0 12px}.section h3{font-size:18px;margin:24px 0 10px}.section p{margin:8px 0 14px}.muted,.caption{color:#637789}.caption{font-size:12px;line-height:1.6}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.kpi{background:#f3f7f8;border:1px solid #e3ebee;padding:16px;border-radius:12px}.kpi b{display:block;font-size:29px;line-height:1.35}.kpi span{font-size:12px;color:#617785}.callout{padding:16px 19px;border-left:4px solid #178b8b;background:#edf8f6;border-radius:0 10px 10px 0;margin:15px 0}.callout.warn{border-color:#e9a14f;background:#fff6e9}.callout.danger{border-color:#c95759;background:#fff1ef}.callout p{margin:5px 0 0}.tablewrap{overflow:auto;border:1px solid #dfE6eb;border-radius:10px;margin:16px 0;max-width:100%}table{border-collapse:collapse;width:100%;font-size:13px}th{position:sticky;top:0;background:#edf3f6;text-align:left;font-size:12px;color:#526575;white-space:nowrap}th,td{padding:12px 13px;border-bottom:1px solid #e8edf0;vertical-align:top}td{min-width:84px}td:first-child{font-weight:650;min-width:125px}tr:last-child td{border:0}tr:hover td{background:#f8fbfc}.pos{color:#b84831;font-variant-numeric:tabular-nums}.neg{color:#087967;font-variant-numeric:tabular-nums}.tag{display:inline-block;font-size:11px;border-radius:6px;padding:3px 8px;background:#eaf0f4;color:#526779;white-space:nowrap}.pill{font-size:12px;background:#edf5f7;color:#226779;padding:5px 10px;border-radius:99px;display:inline-block;margin:3px}.ref{font-size:11px;margin-left:4px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.controls{display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:#f2f7f9;border-radius:10px;padding:14px;margin-top:18px}input[type=search],select{border:1px solid #cbd9df;background:white;border-radius:7px;padding:9px;max-width:100%;font:inherit}input[type=range]{accent-color:#087f85;width:180px}.chart{width:100%;overflow:hidden}svg text{font-family:"Segoe UI","Microsoft YaHei",sans-serif}.barrow{display:grid;grid-template-columns:130px 1fr 85px;gap:12px;align-items:center;margin:10px 0;font-size:13px}.bartrack{height:18px;background:#eef3f6;position:relative;border-radius:3px}.bartrack:before{content:"";position:absolute;left:50%;height:18px;width:1px;background:#a9bac6}.bar{height:12px;position:absolute;top:3px;border-radius:2px}.strategy{scroll-margin-top:20px;border:1px solid #dce7ec;border-radius:12px;margin-top:16px;overflow:hidden}.strategy summary{padding:18px;cursor:pointer;background:#f7fafb;display:flex;justify-content:space-between;gap:15px;font-weight:750}.strategy summary small{font-weight:400;color:#617583}.detail{padding:20px}.detail .kpis{grid-template-columns:repeat(6,1fr);margin:0 0 16px}.detail .kpi{padding:10px}.detail .kpi b{font-size:21px}.mini{font-size:12px}.steps{counter-reset:step}.steps article{border-top:1px solid #e3eaee;padding:18px 0}.steps h3{margin:0 0 5px}.steps h3:before{counter-increment:step;content:counter(step,decimal-leading-zero);display:inline-block;margin-right:12px;color:#14878b;font-size:14px}.links{display:flex;gap:10px;flex-wrap:wrap}.button{border:1px solid #bfd1da;border-radius:8px;padding:8px 14px;background:#fff;color:#155b70;display:inline-block}.footer{color:#6a7d8b;font-size:12px;padding:25px 4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#102d3c;color:#d4e7ef;border-radius:10px;padding:18px;font-size:11px;line-height:1.7}.longtable{max-height:630px}.source{scroll-margin-top:20px;border-top:1px solid #dfe6eb;margin-top:26px;padding-top:10px}.source code{font-size:12px;overflow-wrap:anywhere}.list{padding-left:20px}.list li{margin:10px 0}@media(max-width:1050px){.layout{grid-template-columns:1fr;padding:16px}.sidebar{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px;padding:0}.sidebar .brand,.sidebar small{width:100%}.sidebar a{font-size:12px;padding:5px 9px}.hero{padding:28px}.detail .kpis{grid-template-columns:repeat(3,1fr)}}@media(max-width:650px){body{font-size:14px}.layout{padding:9px;gap:12px}.hero{padding:25px 20px;border-radius:14px}.hero h1{font-size:27px}.section{padding:19px 14px}.section h2{font-size:21px}.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.barrow{grid-template-columns:96px 1fr 68px;gap:5px;font-size:11px}.detail{padding:14px}.detail .kpis{grid-template-columns:repeat(2,1fr)}.strategy summary{display:block}.strategy summary small{display:block;margin-top:5px}td,th{padding:10px}.kpi b{font-size:25px}}@media print{.sidebar,.controls,.no-print{display:none}.layout{display:block;padding:0}.section,.hero{break-inside:avoid;box-shadow:none}.strategy .detail{display:block}.tablewrap{overflow:visible}.hero{background:#fff;color:#123}.hero p,.hero strong{color:#123}.longtable{max-height:none}}</style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head><body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=ai-stock-strategy-audit-20260905&amp;view=reports">战法质量与交易审计</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav><div class="layout"><aside class="sidebar"><div class="brand">AI-STOCK / AUDIT</div><small>研究报告 · 2026.09.05</small><a href="index.html">← 返回分析报告</a><a href="#data">快照范围</a><a href="#prices">典型买价异常</a><a href="#alltrades">全部区间外成交</a><a href="#calendar">日期错位证据</a><a href="#references">外部依据</a><a href="#C01">C01 · 重建脚本的开盘买/当日收盘卖</a><a href="#C02">C02 · 成熟样本按未来快照数量计算</a><a href="#C03">C03 · 已有报价校验与异常买价</a><a href="#C04">C04 · 成交现金更新与无成本计算</a><a href="#C05">C05 · 回填可更新原follow与四法账本</a><a href="#C06">C06 · 当前综合战法已有相关性分簇</a><a href="#C07">C07 · 首板开盘结算规则</a><a href="#C08">C08 · 收益胜率与顺序复利回撤的原实现</a><a href="#C09">C09 · 前端跟进胜率采用当前快照</a><a href="#C10">C10 · 模拟组合列表只显示active</a><a href="#C11">C11 · 进化按成熟日期顺序留出30%</a><a href="#C12">C12 · 前端无样本时0%与旧来源数量文案</a></aside><main class="main"><header class="hero"><div class="eyebrow">EVIDENCE REGISTER</div><h1>证据与异常明细</h1><p>保存查询快照、统计脚本、外部行情、源代码定位和异常行ID。每项结论可回到原始记录复核。</p></header><section class="section" id="data"><h2>采样范围与文件</h2><div class="tablewrap "><table><thead><tr><th>数据表</th><th>快照行数</th></tr></thead><tbody><tr><td>portfolio_config</td><td>18</td></tr><tr><td>portfolio_daily_summary</td><td>1545</td></tr><tr><td>portfolio_follow_recommendation</td><td>462</td></tr><tr><td>portfolio_position</td><td>496</td></tr><tr><td>portfolio_review</td><td>1240</td></tr><tr><td>portfolio_trade</td><td>1556</td></tr><tr><td>skill_tactics_run_ledger</td><td>60</td></tr><tr><td>skill_tactics_signal_ledger</td><td>295</td></tr><tr><td>strategy_evolution_run</td><td>322</td></tr><tr><td>strategy_evolution_state</td><td>14</td></tr><tr><td>strategy_follow</td><td>4045</td></tr><tr><td>strategy_follow_snapshot</td><td>30593</td></tr><tr><td>strategy_performance_track</td><td>2411</td></tr><tr><td>strategy_recommendation_cache</td><td>2363</td></tr></tbody></table></div><p>数据库只读事务：REPEATABLE READ + READ ONLY + CONSISTENT SNAPSHOT，结束时rollback。排除了portfolio_config.user_id；连接配置与密码未写入报告。</p><div class="links"><a class="button" href="data/manifest.json">数据库快照SHA-256</a><a class="button" href="data/schema.json">字段与表结构</a><a class="button" href="data/external_market_check.json">指数与典型个股核对</a><a class="button" href="data/market_prices.json">1,034只股票原始日线</a></div></section><section class="section" id="prices"><h2>异常买价与收益形成</h2><div class="tablewrap "><table><thead><tr><th>交易ID</th><th>组合</th><th>股票</th><th>交易日</th><th>库内买价</th><th>外部最低</th><th>外部最高</th></tr></thead><tbody><tr><td>1685</td><td>40</td><td>301130 西点药业</td><td>2026-08-14</td><td>13.0</td><td>25.3</td><td>30.85</td></tr><tr><td>1733</td><td>40</td><td>603757 大元泵业</td><td>2026-08-21</td><td>4.0</td><td>57.83</td><td>64.11</td></tr><tr><td>1702</td><td>42</td><td>000019 深粮控股</td><td>2026-08-18</td><td>2.0</td><td>6.27</td><td>6.96</td></tr></tbody></table></div><div class="callout warn"><strong>事实与推断边界</strong><p>已确认：这些库内价格不被腾讯当日未复权OHLC容纳，且相关利润集中来自这些低成本。待核：当时使用的原始盘口、除权事件、落库路径和部署版本。当前盘口校验可拦截明显错位，但不能据此推定历史根因已经完全确认。</p></div></section><section class="section" id="alltrades"><h2>194笔日线区间外成交（待核）</h2><div class="tablewrap longtable"><table><thead><tr><th>ID</th><th>组合</th><th>股票</th><th>日期</th><th>方向</th><th>成交价</th><th>日低～日高</th><th>严重偏离</th></tr></thead><tbody><tr><td>456</td><td>1</td><td>600691 潞化科技</td><td>2026-03-20</td><td>sell</td><td>4.2800</td><td>3.85～4.04</td><td>待核</td></tr><tr><td>566</td><td>1</td><td>603558 健盛集团</td><td>2026-03-26</td><td>sell</td><td>15.4000</td><td>14.2～14.93</td><td>待核</td></tr><tr><td>582</td><td>1</td><td>000601 韶能股份</td><td>2026-03-27</td><td>sell</td><td>8.8700</td><td>7.68～8.45</td><td>待核</td></tr><tr><td>583</td><td>1</td><td>600758 辽宁能源</td><td>2026-03-27</td><td>sell</td><td>6.1400</td><td>5.53～5.78</td><td>待核</td></tr><tr><td>604</td><td>1</td><td>600396 华电辽能</td><td>2026-03-30</td><td>sell</td><td>9.2700</td><td>8.09～8.68</td><td>待核</td></tr><tr><td>623</td><td>1</td><td>600666 奥瑞德</td><td>2026-03-31</td><td>sell</td><td>6.2400</td><td>5.69～6.12</td><td>待核</td></tr><tr><td>624</td><td>1</td><td>600396 华电辽能</td><td>2026-03-31</td><td>sell</td><td>9.2700</td><td>7.31～8.72</td><td>待核</td></tr><tr><td>625</td><td>1</td><td>600666 奥瑞德</td><td>2026-03-31</td><td>sell</td><td>6.2400</td><td>5.69～6.12</td><td>待核</td></tr><tr><td>626</td><td>1</td><td>000722 湖南发展</td><td>2026-03-31</td><td>sell</td><td>18.2800</td><td>14.6～15.88</td><td>&gt;10%</td></tr><tr><td>644</td><td>1</td><td>600396 华电辽能</td><td>2026-04-01</td><td>sell</td><td>8.3500</td><td>7.52～8.19</td><td>待核</td></tr><tr><td>645</td><td>1</td><td>000722 湖南发展</td><td>2026-04-01</td><td>sell</td><td>18.2800</td><td>13.91～14.55</td><td>&gt;10%</td></tr><tr><td>671</td><td>1</td><td>600184 光电股份</td><td>2026-04-02</td><td>sell</td><td>19.3000</td><td>18.18～19.2</td><td>待核</td></tr><tr><td>674</td><td>1</td><td>600396 华电辽能</td><td>2026-04-02</td><td>sell</td><td>8.3500</td><td>7.03～7.76</td><td>待核</td></tr><tr><td>585</td><td>2</td><td>600408 安泰集团</td><td>2026-03-27</td><td>sell</td><td>4.3600</td><td>3.71～3.95</td><td>&gt;10%</td></tr><tr><td>629</td><td>2</td><td>603876 鼎胜新材</td><td>2026-03-31</td><td>sell</td><td>23.2800</td><td>21.86～23.2</td><td>待核</td></tr><tr><td>630</td><td>2</td><td>600408 安泰集团</td><td>2026-03-31</td><td>sell</td><td>4.3600</td><td>3.5～3.78</td><td>&gt;10%</td></tr><tr><td>651</td><td>2</td><td>603876 鼎胜新材</td><td>2026-04-01</td><td>sell</td><td>23.2800</td><td>21.36～22.66</td><td>待核</td></tr><tr><td>652</td><td>2</td><td>600408 安泰集团</td><td>2026-04-01</td><td>sell</td><td>4.3600</td><td>3.32～3.5</td><td>&gt;10%</td></tr><tr><td>675</td><td>2</td><td>600408 安泰集团</td><td>2026-04-02</td><td>sell</td><td>4.3600</td><td>3.39～3.47</td><td>&gt;10%</td></tr><tr><td>823</td><td>2</td><td>603629 利通电子</td><td>2026-04-21</td><td>sell</td><td>108.8100</td><td>99.35～106.0</td><td>待核</td></tr><tr><td>904</td><td>2</td><td>300461 田中精机</td><td>2026-04-24</td><td>sell</td><td>62.7000</td><td>57.77～60.32</td><td>待核</td></tr><tr><td>970</td><td>2</td><td>300461 田中精机</td><td>2026-04-29</td><td>sell</td><td>62.7000</td><td>52.92～57.29</td><td>待核</td></tr><tr><td>1115</td><td>2</td><td>603296 华勤技术</td><td>2026-05-12</td><td>sell</td><td>118.6000</td><td>108.5～115.8</td><td>待核</td></tr><tr><td>1116</td><td>2</td><td>002664 信质集团</td><td>2026-05-12</td><td>sell</td><td>23.6300</td><td>22.78～23.6</td><td>待核</td></tr><tr><td>1148</td><td>2</td><td>002664 信质集团</td><td>2026-05-13</td><td>sell</td><td>23.6300</td><td>22.9～23.49</td><td>待核</td></tr><tr><td>603</td><td>3</td><td>000539 粤电力Ａ</td><td>2026-03-30</td><td>sell</td><td>7.4600</td><td>6.25～6.9</td><td>待核</td></tr><tr><td>621</td><td>3</td><td>601606 长城军工</td><td>2026-03-31</td><td>sell</td><td>42.8300</td><td>40.68～42.47</td><td>待核</td></tr><tr><td>622</td><td>3</td><td>000539 粤电力Ａ</td><td>2026-03-31</td><td>sell</td><td>7.4600</td><td>5.88～6.33</td><td>&gt;10%</td></tr><tr><td>637</td><td>3</td><td>603585 苏利股份</td><td>2026-04-01</td><td>sell</td><td>22.8100</td><td>21.71～22.6</td><td>待核</td></tr><tr><td>638</td><td>3</td><td>601606 长城军工</td><td>2026-04-01</td><td>sell</td><td>42.8300</td><td>39.73～40.95</td><td>待核</td></tr><tr><td>639</td><td>3</td><td>000539 粤电力Ａ</td><td>2026-04-01</td><td>sell</td><td>7.4600</td><td>5.77～6.06</td><td>&gt;10%</td></tr><tr><td>640</td><td>3</td><td>601606 长城军工</td><td>2026-04-01</td><td>sell</td><td>42.8300</td><td>39.73～40.95</td><td>待核</td></tr><tr><td>641</td><td>3</td><td>000539 粤电力Ａ</td><td>2026-04-01</td><td>sell</td><td>7.4600</td><td>5.77～6.06</td><td>&gt;10%</td></tr><tr><td>669</td><td>3</td><td>000539 粤电力Ａ</td><td>2026-04-02</td><td>sell</td><td>7.4600</td><td>5.58～5.9</td><td>&gt;10%</td></tr><tr><td>713</td><td>3</td><td>605006 山东玻纤</td><td>2026-04-09</td><td>sell</td><td>9.6700</td><td>8.71～9.3</td><td>待核</td></tr><tr><td>753</td><td>3</td><td>605189 富春染织</td><td>2026-04-14</td><td>sell</td><td>17.8500</td><td>16.61～17.4</td><td>待核</td></tr><tr><td>761</td><td>3</td><td>605189 富春染织</td><td>2026-04-15</td><td>sell</td><td>17.8500</td><td>16.5～16.96</td><td>待核</td></tr><tr><td>762</td><td>3</td><td>605189 富春染织</td><td>2026-04-15</td><td>sell</td><td>17.8500</td><td>16.5～16.96</td><td>待核</td></tr><tr><td>801</td><td>3</td><td>601778 晶科科技</td><td>2026-04-20</td><td>sell</td><td>6.9100</td><td>6.38～6.86</td><td>待核</td></tr><tr><td>803</td><td>3</td><td>000815 美利云</td><td>2026-04-20</td><td>sell</td><td>22.2100</td><td>21.34～22.1</td><td>待核</td></tr><tr><td>818</td><td>3</td><td>600654 中安科</td><td>2026-04-21</td><td>sell</td><td>4.6800</td><td>4.03～4.28</td><td>待核</td></tr><tr><td>819</td><td>3</td><td>000612 焦作万方</td><td>2026-04-21</td><td>sell</td><td>13.7300</td><td>13.3～13.56</td><td>待核</td></tr><tr><td>845</td><td>3</td><td>600654 中安科</td><td>2026-04-22</td><td>sell</td><td>4.6800</td><td>3.96～4.18</td><td>&gt;10%</td></tr><tr><td>846</td><td>3</td><td>000612 焦作万方</td><td>2026-04-22</td><td>sell</td><td>13.7300</td><td>13.34～13.63</td><td>待核</td></tr><tr><td>878</td><td>3</td><td>600654 中安科</td><td>2026-04-23</td><td>sell</td><td>4.6800</td><td>3.87～4.09</td><td>&gt;10%</td></tr><tr><td>879</td><td>3</td><td>000612 焦作万方</td><td>2026-04-23</td><td>sell</td><td>13.7300</td><td>13.01～13.57</td><td>待核</td></tr><tr><td>921</td><td>3</td><td>600654 中安科</td><td>2026-04-27</td><td>sell</td><td>4.6800</td><td>3.65～3.79</td><td>&gt;10%</td></tr><tr><td>922</td><td>3</td><td>000612 焦作万方</td><td>2026-04-27</td><td>sell</td><td>13.7300</td><td>13.05～13.26</td><td>待核</td></tr><tr><td>951</td><td>3</td><td>600654 中安科</td><td>2026-04-28</td><td>sell</td><td>4.6800</td><td>3.67～3.83</td><td>&gt;10%</td></tr><tr><td>967</td><td>3</td><td>600522 中天科技</td><td>2026-04-29</td><td>sell</td><td>35.7800</td><td>33.33～34.49</td><td>待核</td></tr><tr><td>496</td><td>20</td><td>603175 超颖电子</td><td>2026-03-23</td><td>sell</td><td>87.2100</td><td>78.49～85.9</td><td>待核</td></tr><tr><td>649</td><td>20</td><td>600815 厦工股份</td><td>2026-04-01</td><td>sell</td><td>4.2900</td><td>3.72～4.19</td><td>待核</td></tr><tr><td>820</td><td>20</td><td>000967 盈峰环境</td><td>2026-04-21</td><td>sell</td><td>14.0000</td><td>12.95～13.71</td><td>待核</td></tr><tr><td>847</td><td>20</td><td>000967 盈峰环境</td><td>2026-04-22</td><td>sell</td><td>14.0000</td><td>12.3～13.87</td><td>待核</td></tr><tr><td>903</td><td>20</td><td>000049 德赛电池</td><td>2026-04-24</td><td>sell</td><td>30.2700</td><td>28.38～29.4</td><td>待核</td></tr><tr><td>925</td><td>20</td><td>000049 德赛电池</td><td>2026-04-27</td><td>sell</td><td>30.2700</td><td>28.4～29.28</td><td>待核</td></tr><tr><td>952</td><td>20</td><td>002392 北京利尔</td><td>2026-04-28</td><td>sell</td><td>9.0600</td><td>8.84～9.02</td><td>待核</td></tr><tr><td>954</td><td>20</td><td>000049 德赛电池</td><td>2026-04-28</td><td>sell</td><td>30.2700</td><td>28.04～28.78</td><td>待核</td></tr><tr><td>969</td><td>20</td><td>000049 德赛电池</td><td>2026-04-29</td><td>sell</td><td>30.2700</td><td>27.97～30.18</td><td>待核</td></tr><tr><td>984</td><td>20</td><td>002392 北京利尔</td><td>2026-04-30</td><td>sell</td><td>9.0600</td><td>9.19～9.38</td><td>待核</td></tr><tr><td>1064</td><td>20</td><td>300558 贝达药业</td><td>2026-05-07</td><td>sell</td><td>51.9400</td><td>52.33～53.82</td><td>待核</td></tr><tr><td>1084</td><td>20</td><td>002353 杰瑞股份</td><td>2026-05-08</td><td>sell</td><td>150.0400</td><td>142.79～149.6</td><td>待核</td></tr><tr><td>1111</td><td>20</td><td>002353 杰瑞股份</td><td>2026-05-12</td><td>sell</td><td>150.0400</td><td>140.0～146.26</td><td>待核</td></tr><tr><td>631</td><td>21</td><td>000617 中油资本</td><td>2026-03-31</td><td>sell</td><td>10.6400</td><td>9.75～10.55</td><td>待核</td></tr><tr><td>632</td><td>21</td><td>002709 天赐材料</td><td>2026-03-31</td><td>sell</td><td>48.1700</td><td>45.7～47.98</td><td>待核</td></tr><tr><td>633</td><td>21</td><td>000617 中油资本</td><td>2026-03-31</td><td>sell</td><td>10.6400</td><td>9.75～10.55</td><td>待核</td></tr><tr><td>718</td><td>21</td><td>600010 包钢股份</td><td>2026-04-09</td><td>sell</td><td>2.6600</td><td>2.78～2.91</td><td>待核</td></tr><tr><td>740</td><td>21</td><td>601600 中国铝业</td><td>2026-04-13</td><td>sell</td><td>12.7700</td><td>11.96～12.28</td><td>待核</td></tr><tr><td>767</td><td>21</td><td>600010 包钢股份</td><td>2026-04-15</td><td>sell</td><td>2.9800</td><td>2.82～2.91</td><td>待核</td></tr><tr><td>776</td><td>21</td><td>600010 包钢股份</td><td>2026-04-16</td><td>sell</td><td>2.9800</td><td>2.82～2.88</td><td>待核</td></tr><tr><td>777</td><td>21</td><td>600010 包钢股份</td><td>2026-04-16</td><td>sell</td><td>2.9800</td><td>2.82～2.88</td><td>待核</td></tr><tr><td>827</td><td>21</td><td>000977 浪潮信息</td><td>2026-04-21</td><td>sell</td><td>73.1200</td><td>68.3～72.23</td><td>待核</td></tr><tr><td>971</td><td>21</td><td>000977 浪潮信息</td><td>2026-04-29</td><td>sell</td><td>74.2000</td><td>69.69～73.0</td><td>待核</td></tr><tr><td>1054</td><td>21</td><td>601600 中国铝业</td><td>2026-05-06</td><td>sell</td><td>12.8000</td><td>11.66～12.15</td><td>待核</td></tr><tr><td>1068</td><td>21</td><td>002050 三花智控</td><td>2026-05-07</td><td>sell</td><td>46.9200</td><td>47.88～50.4</td><td>待核</td></tr><tr><td>1120</td><td>21</td><td>600522 中天科技</td><td>2026-05-12</td><td>sell</td><td>40.9000</td><td>43.25～46.18</td><td>待核</td></tr><tr><td>1121</td><td>21</td><td>002050 三花智控</td><td>2026-05-12</td><td>sell</td><td>52.5900</td><td>50.45～52.1</td><td>待核</td></tr><tr><td>1122</td><td>21</td><td>002851 麦格米特</td><td>2026-05-12</td><td>sell</td><td>120.2100</td><td>122.78～127.0</td><td>待核</td></tr><tr><td>1124</td><td>21</td><td>002050 三花智控</td><td>2026-05-12</td><td>sell</td><td>52.5900</td><td>50.45～52.1</td><td>待核</td></tr><tr><td>1150</td><td>21</td><td>600522 中天科技</td><td>2026-05-13</td><td>sell</td><td>40.9000</td><td>42.54～43.94</td><td>待核</td></tr><tr><td>492</td><td>22</td><td>300738 奥飞数据</td><td>2026-03-23</td><td>sell</td><td>22.3000</td><td>20.63～22.2</td><td>待核</td></tr><tr><td>610</td><td>23</td><td>600982 宁波能源</td><td>2026-03-30</td><td>sell</td><td>7.3500</td><td>6.62～7.25</td><td>待核</td></tr><tr><td>612</td><td>23</td><td>600982 宁波能源</td><td>2026-03-30</td><td>sell</td><td>7.3500</td><td>6.62～7.25</td><td>待核</td></tr><tr><td>654</td><td>23</td><td>600982 宁波能源</td><td>2026-04-01</td><td>sell</td><td>7.3500</td><td>5.45～5.96</td><td>&gt;10%</td></tr><tr><td>722</td><td>23</td><td>300834 星辉环材</td><td>2026-04-09</td><td>sell</td><td>46.7200</td><td>39.06～43.94</td><td>待核</td></tr><tr><td>723</td><td>23</td><td>688048 长光华芯</td><td>2026-04-09</td><td>sell</td><td>236.9300</td><td>227.0～235.89</td><td>待核</td></tr><tr><td>744</td><td>23</td><td>300970 华绿生物</td><td>2026-04-13</td><td>sell</td><td>30.0700</td><td>28.23～29.79</td><td>待核</td></tr><tr><td>829</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-21</td><td>sell</td><td>14.0000</td><td>12.95～13.71</td><td>待核</td></tr><tr><td>853</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-22</td><td>sell</td><td>14.0000</td><td>12.3～13.87</td><td>待核</td></tr><tr><td>854</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-22</td><td>sell</td><td>14.0000</td><td>12.3～13.87</td><td>待核</td></tr><tr><td>906</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-24</td><td>sell</td><td>14.0000</td><td>12.36～13.4</td><td>待核</td></tr><tr><td>928</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-27</td><td>sell</td><td>14.0000</td><td>12.48～13.05</td><td>待核</td></tr><tr><td>929</td><td>23</td><td>000967 盈峰环境</td><td>2026-04-27</td><td>sell</td><td>14.0000</td><td>12.48～13.05</td><td>待核</td></tr><tr><td>1069</td><td>23</td><td>301322 绿通科技</td><td>2026-05-07</td><td>sell</td><td>38.8000</td><td>39.32～40.8</td><td>待核</td></tr><tr><td>1070</td><td>23</td><td>300558 贝达药业</td><td>2026-05-07</td><td>sell</td><td>51.9400</td><td>52.33～53.82</td><td>待核</td></tr><tr><td>1095</td><td>23</td><td>301322 绿通科技</td><td>2026-05-08</td><td>sell</td><td>38.8000</td><td>39.61～40.88</td><td>待核</td></tr><tr><td>1125</td><td>23</td><td>301322 绿通科技</td><td>2026-05-12</td><td>sell</td><td>38.8000</td><td>40.09～41.87</td><td>待核</td></tr><tr><td>1153</td><td>23</td><td>002515 金字火腿</td><td>2026-05-13</td><td>sell</td><td>7.5600</td><td>7.01～7.28</td><td>待核</td></tr><tr><td>1175</td><td>23</td><td>002515 金字火腿</td><td>2026-05-14</td><td>sell</td><td>7.5600</td><td>7.04～7.37</td><td>待核</td></tr><tr><td>1191</td><td>23</td><td>300558 贝达药业</td><td>2026-05-15</td><td>sell</td><td>51.9400</td><td>49.2～51.28</td><td>待核</td></tr><tr><td>1192</td><td>23</td><td>002515 金字火腿</td><td>2026-05-15</td><td>sell</td><td>7.5600</td><td>6.72～7.2</td><td>待核</td></tr><tr><td>571</td><td>24</td><td>002565 顺灏股份</td><td>2026-03-26</td><td>sell</td><td>16.9800</td><td>14.7～16.32</td><td>待核</td></tr><tr><td>573</td><td>24</td><td>603803 瑞斯康达</td><td>2026-03-26</td><td>sell</td><td>15.6100</td><td>14.0～15.03</td><td>待核</td></tr><tr><td>595</td><td>24</td><td>600780 通宝能源</td><td>2026-03-27</td><td>sell</td><td>8.4300</td><td>7.67～8.13</td><td>待核</td></tr><tr><td>597</td><td>24</td><td>603803 瑞斯康达</td><td>2026-03-27</td><td>sell</td><td>15.6100</td><td>13.13～14.25</td><td>待核</td></tr><tr><td>614</td><td>24</td><td>300394 天孚通信</td><td>2026-03-30</td><td>sell</td><td>325.0000</td><td>308.0～322.0</td><td>待核</td></tr><tr><td>615</td><td>24</td><td>600982 宁波能源</td><td>2026-03-30</td><td>sell</td><td>7.3500</td><td>6.62～7.25</td><td>待核</td></tr><tr><td>617</td><td>24</td><td>603803 瑞斯康达</td><td>2026-03-30</td><td>sell</td><td>15.6100</td><td>13.03～13.84</td><td>&gt;10%</td></tr><tr><td>661</td><td>24</td><td>600982 宁波能源</td><td>2026-04-01</td><td>sell</td><td>7.3500</td><td>5.45～5.96</td><td>&gt;10%</td></tr><tr><td>662</td><td>24</td><td>600815 厦工股份</td><td>2026-04-01</td><td>sell</td><td>4.2900</td><td>3.72～4.19</td><td>待核</td></tr><tr><td>663</td><td>24</td><td>600982 宁波能源</td><td>2026-04-01</td><td>sell</td><td>7.3500</td><td>5.45～5.96</td><td>&gt;10%</td></tr><tr><td>664</td><td>24</td><td>600815 厦工股份</td><td>2026-04-01</td><td>sell</td><td>4.2900</td><td>3.72～4.19</td><td>待核</td></tr><tr><td>681</td><td>24</td><td>600815 厦工股份</td><td>2026-04-02</td><td>sell</td><td>4.2900</td><td>3.63～3.83</td><td>&gt;10%</td></tr><tr><td>732</td><td>24</td><td>600780 通宝能源</td><td>2026-04-10</td><td>sell</td><td>8.4300</td><td>6.39～6.47</td><td>&gt;10%</td></tr><tr><td>569</td><td>33</td><td>600970 中材国际</td><td>2026-03-26</td><td>sell</td><td>10.1000</td><td>10.15～10.42</td><td>待核</td></tr><tr><td>657</td><td>33</td><td>002028 思源电气</td><td>2026-04-01</td><td>sell</td><td>201.8000</td><td>205.44～209.93</td><td>待核</td></tr><tr><td>690</td><td>33</td><td>002028 思源电气</td><td>2026-04-03</td><td>sell</td><td>201.8000</td><td>207.1～212.89</td><td>待核</td></tr><tr><td>707</td><td>33</td><td>002028 思源电气</td><td>2026-04-08</td><td>sell</td><td>201.8000</td><td>203.7～207.47</td><td>待核</td></tr><tr><td>782</td><td>33</td><td>600970 中材国际</td><td>2026-04-16</td><td>sell</td><td>10.3700</td><td>10.44～10.65</td><td>待核</td></tr><tr><td>797</td><td>33</td><td>600970 中材国际</td><td>2026-04-17</td><td>sell</td><td>10.3700</td><td>10.41～10.66</td><td>待核</td></tr><tr><td>809</td><td>33</td><td>600970 中材国际</td><td>2026-04-20</td><td>sell</td><td>10.3700</td><td>10.47～10.76</td><td>待核</td></tr><tr><td>831</td><td>33</td><td>601231 环旭电子</td><td>2026-04-21</td><td>sell</td><td>42.3700</td><td>40.21～41.99</td><td>待核</td></tr><tr><td>833</td><td>33</td><td>600970 中材国际</td><td>2026-04-21</td><td>sell</td><td>10.3700</td><td>10.4～10.54</td><td>待核</td></tr><tr><td>907</td><td>33</td><td>600183 生益科技</td><td>2026-04-24</td><td>sell</td><td>76.0000</td><td>71.55～75.7</td><td>待核</td></tr><tr><td>931</td><td>33</td><td>600276 恒瑞医药</td><td>2026-04-27</td><td>sell</td><td>56.4000</td><td>55.2～56.07</td><td>待核</td></tr><tr><td>973</td><td>33</td><td>002402 和而泰</td><td>2026-04-29</td><td>sell</td><td>32.9600</td><td>30.58～31.27</td><td>待核</td></tr><tr><td>986</td><td>33</td><td>002402 和而泰</td><td>2026-04-30</td><td>sell</td><td>32.9600</td><td>30.89～32.17</td><td>待核</td></tr><tr><td>987</td><td>33</td><td>000001 平安银行</td><td>2026-04-30</td><td>sell</td><td>11.3800</td><td>11.46～11.6</td><td>待核</td></tr><tr><td>1056</td><td>33</td><td>600276 恒瑞医药</td><td>2026-05-06</td><td>sell</td><td>56.4000</td><td>53.4～54.11</td><td>待核</td></tr><tr><td>1072</td><td>33</td><td>600460 士兰微</td><td>2026-05-07</td><td>sell</td><td>28.9000</td><td>29.27～29.78</td><td>待核</td></tr><tr><td>1128</td><td>33</td><td>600460 士兰微</td><td>2026-05-12</td><td>sell</td><td>28.9000</td><td>29.71～30.57</td><td>待核</td></tr><tr><td>1156</td><td>33</td><td>000528 柳工</td><td>2026-05-13</td><td>sell</td><td>9.8700</td><td>9.55～9.84</td><td>待核</td></tr><tr><td>1194</td><td>33</td><td>601231 环旭电子</td><td>2026-05-15</td><td>sell</td><td>44.9700</td><td>39.01～42.36</td><td>待核</td></tr><tr><td>490</td><td>34</td><td>688307 中润光学</td><td>2026-03-23</td><td>sell</td><td>65.9600</td><td>59.99～65.3</td><td>待核</td></tr><tr><td>556</td><td>34</td><td>300724 捷佳伟创</td><td>2026-03-26</td><td>sell</td><td>128.4100</td><td>120.8～126.41</td><td>待核</td></tr><tr><td>576</td><td>34</td><td>300724 捷佳伟创</td><td>2026-03-27</td><td>sell</td><td>128.4100</td><td>116.69～121.98</td><td>待核</td></tr><tr><td>599</td><td>34</td><td>600982 宁波能源</td><td>2026-03-30</td><td>sell</td><td>7.3500</td><td>6.62～7.25</td><td>待核</td></tr><tr><td>600</td><td>34</td><td>300724 捷佳伟创</td><td>2026-03-30</td><td>sell</td><td>128.4100</td><td>109.93～117.97</td><td>待核</td></tr><tr><td>619</td><td>34</td><td>600982 宁波能源</td><td>2026-03-31</td><td>sell</td><td>7.3500</td><td>5.96～6.38</td><td>&gt;10%</td></tr><tr><td>635</td><td>34</td><td>600982 宁波能源</td><td>2026-04-01</td><td>sell</td><td>7.3500</td><td>5.45～5.96</td><td>&gt;10%</td></tr><tr><td>636</td><td>34</td><td>600982 宁波能源</td><td>2026-04-01</td><td>sell</td><td>7.3500</td><td>5.45～5.96</td><td>&gt;10%</td></tr><tr><td>667</td><td>34</td><td>600982 宁波能源</td><td>2026-04-02</td><td>sell</td><td>7.3500</td><td>5.4～5.92</td><td>&gt;10%</td></tr><tr><td>685</td><td>34</td><td>600982 宁波能源</td><td>2026-04-03</td><td>sell</td><td>5.7200</td><td>5.19～5.6</td><td>待核</td></tr><tr><td>920</td><td>34</td><td>001389 广合科技</td><td>2026-04-27</td><td>sell</td><td>180.8400</td><td>170.0～179.61</td><td>待核</td></tr><tr><td>948</td><td>34</td><td>001389 广合科技</td><td>2026-04-28</td><td>sell</td><td>180.8400</td><td>164.0～175.0</td><td>待核</td></tr><tr><td>949</td><td>34</td><td>603115 海星股份</td><td>2026-04-28</td><td>sell</td><td>60.1900</td><td>57.37～59.81</td><td>待核</td></tr><tr><td>1061</td><td>34</td><td>301193 家联科技</td><td>2026-05-07</td><td>sell</td><td>27.0300</td><td>24.6～26.52</td><td>待核</td></tr><tr><td>1081</td><td>34</td><td>002353 杰瑞股份</td><td>2026-05-08</td><td>sell</td><td>150.0400</td><td>142.79～149.6</td><td>待核</td></tr><tr><td>1082</td><td>34</td><td>301193 家联科技</td><td>2026-05-08</td><td>sell</td><td>27.0300</td><td>25.33～26.38</td><td>待核</td></tr><tr><td>1184</td><td>34</td><td>300553 集智股份</td><td>2026-05-15</td><td>sell</td><td>67.2000</td><td>62.54～66.0</td><td>待核</td></tr><tr><td>591</td><td>35</td><td>300184 力源信息</td><td>2026-03-27</td><td>sell</td><td>11.3800</td><td>10.52～11.23</td><td>待核</td></tr><tr><td>708</td><td>35</td><td>002840 华统股份</td><td>2026-04-08</td><td>sell</td><td>11.7600</td><td>12.45～13.37</td><td>待核</td></tr><tr><td>942</td><td>35</td><td>300099 尤洛卡</td><td>2026-04-27</td><td>sell</td><td>10.0000</td><td>8.83～9.3</td><td>待核</td></tr><tr><td>961</td><td>35</td><td>603319 美湖股份</td><td>2026-04-28</td><td>sell</td><td>37.7000</td><td>35.3～37.58</td><td>待核</td></tr><tr><td>978</td><td>35</td><td>300199 翰宇药业</td><td>2026-04-29</td><td>sell</td><td>22.5700</td><td>20.45～21.88</td><td>待核</td></tr><tr><td>992</td><td>35</td><td>603985 恒润股份</td><td>2026-04-30</td><td>sell</td><td>27.5200</td><td>26.0～27.32</td><td>待核</td></tr><tr><td>704</td><td>36</td><td>300834 星辉环材</td><td>2026-04-08</td><td>sell</td><td>46.7200</td><td>43.4～46.5</td><td>待核</td></tr><tr><td>709</td><td>36</td><td>605162 新中港</td><td>2026-04-09</td><td>sell</td><td>15.4800</td><td>13.93～14.86</td><td>待核</td></tr><tr><td>815</td><td>36</td><td>300905 宝丽迪</td><td>2026-04-21</td><td>sell</td><td>59.5900</td><td>52.4～56.86</td><td>待核</td></tr><tr><td>869</td><td>36</td><td>603052 可川科技</td><td>2026-04-23</td><td>sell</td><td>91.6900</td><td>91.9～98.0</td><td>待核</td></tr><tr><td>913</td><td>36</td><td>603178 圣龙股份</td><td>2026-04-27</td><td>sell</td><td>22.1900</td><td>16.3～17.98</td><td>&gt;10%</td></tr><tr><td>935</td><td>36</td><td>603052 可川科技</td><td>2026-04-27</td><td>sell</td><td>94.6600</td><td>87.6～92.49</td><td>待核</td></tr><tr><td>936</td><td>36</td><td>603178 圣龙股份</td><td>2026-04-27</td><td>sell</td><td>22.1900</td><td>16.3～17.98</td><td>&gt;10%</td></tr><tr><td>944</td><td>36</td><td>603178 圣龙股份</td><td>2026-04-28</td><td>sell</td><td>22.1900</td><td>17.0～18.85</td><td>&gt;10%</td></tr><tr><td>958</td><td>36</td><td>603052 可川科技</td><td>2026-04-28</td><td>sell</td><td>94.6600</td><td>84.13～89.99</td><td>待核</td></tr><tr><td>964</td><td>36</td><td>603052 可川科技</td><td>2026-04-29</td><td>sell</td><td>94.6600</td><td>83.5～87.24</td><td>待核</td></tr><tr><td>975</td><td>36</td><td>603052 可川科技</td><td>2026-04-29</td><td>sell</td><td>94.6600</td><td>83.5～87.24</td><td>待核</td></tr><tr><td>988</td><td>36</td><td>603052 可川科技</td><td>2026-04-30</td><td>sell</td><td>94.6600</td><td>81.37～87.44</td><td>待核</td></tr><tr><td>812</td><td>37</td><td>300823 建科智能</td><td>2026-04-20</td><td>buy</td><td>16.0500</td><td>16.2～16.59</td><td>待核</td></tr><tr><td>814</td><td>37</td><td>001309 德明利</td><td>2026-04-20</td><td>buy</td><td>349.6300</td><td>512.0～538.0</td><td>&gt;10%</td></tr><tr><td>842</td><td>37</td><td>001309 德明利</td><td>2026-04-22</td><td>sell</td><td>349.6300</td><td>509.96～530.0</td><td>&gt;10%</td></tr><tr><td>861</td><td>37</td><td>001309 德明利</td><td>2026-04-22</td><td>sell</td><td>349.6300</td><td>509.96～530.0</td><td>&gt;10%</td></tr><tr><td>863</td><td>37</td><td>300823 建科智能</td><td>2026-04-22</td><td>sell</td><td>16.0500</td><td>16.25～16.58</td><td>待核</td></tr><tr><td>871</td><td>37</td><td>001309 德明利</td><td>2026-04-23</td><td>sell</td><td>349.6300</td><td>487.0～544.93</td><td>&gt;10%</td></tr><tr><td>873</td><td>37</td><td>002188 中天服务</td><td>2026-04-23</td><td>sell</td><td>6.4500</td><td>6.21～6.43</td><td>待核</td></tr><tr><td>874</td><td>37</td><td>300823 建科智能</td><td>2026-04-23</td><td>sell</td><td>16.0500</td><td>16.09～16.52</td><td>待核</td></tr><tr><td>890</td><td>37</td><td>002188 中天服务</td><td>2026-04-23</td><td>sell</td><td>6.4500</td><td>6.21～6.43</td><td>待核</td></tr><tr><td>891</td><td>37</td><td>300823 建科智能</td><td>2026-04-23</td><td>sell</td><td>16.0500</td><td>16.09～16.52</td><td>待核</td></tr><tr><td>976</td><td>37</td><td>002156 通富微电</td><td>2026-04-29</td><td>sell</td><td>51.2000</td><td>48.11～49.84</td><td>待核</td></tr><tr><td>979</td><td>37</td><td>601699 潞安环能</td><td>2026-04-30</td><td>sell</td><td>15.8300</td><td>15.89～16.44</td><td>待核</td></tr><tr><td>980</td><td>37</td><td>300748 金力永磁</td><td>2026-04-30</td><td>sell</td><td>33.4900</td><td>32.66～33.33</td><td>待核</td></tr><tr><td>989</td><td>37</td><td>300748 金力永磁</td><td>2026-04-30</td><td>sell</td><td>33.4900</td><td>32.66～33.33</td><td>待核</td></tr><tr><td>1078</td><td>37</td><td>603800 洪田股份</td><td>2026-05-08</td><td>sell</td><td>51.9200</td><td>53.06～55.88</td><td>待核</td></tr><tr><td>1103</td><td>37</td><td>002655 共达电声</td><td>2026-05-12</td><td>sell</td><td>39.3900</td><td>34.59～38.44</td><td>待核</td></tr><tr><td>1105</td><td>37</td><td>301171 易点天下</td><td>2026-05-12</td><td>sell</td><td>45.3700</td><td>41.89～43.68</td><td>待核</td></tr><tr><td>1106</td><td>37</td><td>300270 中威电子</td><td>2026-05-12</td><td>sell</td><td>15.2200</td><td>14.37～15.11</td><td>待核</td></tr><tr><td>1133</td><td>37</td><td>301171 易点天下</td><td>2026-05-12</td><td>sell</td><td>45.3700</td><td>41.89～43.68</td><td>待核</td></tr><tr><td>1134</td><td>37</td><td>300270 中威电子</td><td>2026-05-12</td><td>sell</td><td>15.2200</td><td>14.37～15.11</td><td>待核</td></tr><tr><td>1159</td><td>37</td><td>002396 星网锐捷</td><td>2026-05-13</td><td>sell</td><td>32.9000</td><td>31.28～32.4</td><td>待核</td></tr><tr><td>1160</td><td>37</td><td>603816 顾家家居</td><td>2026-05-13</td><td>sell</td><td>33.5800</td><td>32.02～33.43</td><td>待核</td></tr><tr><td>1732</td><td>39</td><td>688828 国仪公司-U</td><td>2026-08-21</td><td>buy</td><td>72.0000</td><td>79.0～97.39</td><td>待核</td></tr><tr><td>1685</td><td>40</td><td>301130 西点药业</td><td>2026-08-14</td><td>buy</td><td>13.0000</td><td>25.3～30.85</td><td>&gt;10%</td></tr><tr><td>1733</td><td>40</td><td>603757 大元泵业</td><td>2026-08-21</td><td>buy</td><td>4.0000</td><td>57.83～64.11</td><td>&gt;10%</td></tr><tr><td>1702</td><td>42</td><td>000019 深粮控股</td><td>2026-08-18</td><td>buy</td><td>2.0000</td><td>6.27～6.96</td><td>&gt;10%</td></tr></tbody></table></div></section><section class="section" id="calendar"><h2>日期错位的直接证据</h2><p>strategy_follow.id=14，pick_date=2026-05-08，原计算matured_date=2026-07-25，horizon_days=3，return=-60.57%。周末快照能被原函数计入，跨度约两个半月却标记3日。完整逐条差异已在独立复核CSV保留original及expected日期、收益差异和质量状态。</p><div class="links"><a class="button" href="data/independent_samples.csv">全部1,609条逐信号审计</a><a class="button" href="data/independent_samples.json">含特征与路径的JSON</a></div></section><section class="section" id="references"><h2>外部依据</h2><ul class="list"><li><a href="https://www.sse.com.cn/lawandrules/sselawsrules2025/stocks/exchange/c/c_20260424_10816482.shtml">上交所交易规则（2026年修订）</a>：普通股票交收前不得卖出的约束，用于检验当日新买当日卖的重建假设。</li><li><a href="https://www3.hkexnews.hk/sdw/search/mutualmarket.aspx?t=sz">港交所北向持仓披露说明</a>：2024年8月19日起按季度披露，用于区分北向事实与日内代理。</li><li><a href="https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm">NIST：比例置信区间与Wilson方法</a>：本报告区间公式依据。</li><li>腾讯日K发布接口：每只股票的精确请求URL、抓取时间和未复权OHLC已存于<a href="data/market_prices.json">market_prices.json</a>。全部数据截于2026-09-04，不使用之后行情。</li></ul></section><section class="section source" id="C01"><h2>C01 · 重建脚本的开盘买/当日收盘卖</h2><p><code>D:\Evan\Codes\ai-stock\scripts\backfill_scheduler_full_simulation.py:1034–1071</code></p><pre>1034                      amount_buy = buy_price * quantity
+1035                      profit = (sell_price - buy_price) * quantity
+1036                      profit_pct = (sell_price - buy_price) / buy_price * 100
+1037                      reason_base = {
+1038                          "historical_reconstruction": True,
+1039                          "run_id": run_id,
+1040                          "algorithm_version": ALGORITHM_VERSION,
+1041                          "simulation_mode": "full",
+1042                          "intraday_proxy": "open_to_close",
+1043                          "strategy_type": strategy,
+1044                          "source_session": PRIMARY_SESSION.get(strategy),
+1045                      }
+1046                      await cur.execute(
+1047                          """INSERT INTO portfolio_trade
+1048                             (portfolio_id,stock_code,stock_name,direction,price,quantity,
+1049                              amount,profit,profit_pct,reason,trade_date,created_at)
+1050                             VALUES (%s,%s,%s,'buy',%s,%s,%s,NULL,NULL,%s,%s,%s)""",
+1051                          (
+1052                              portfolio_id, rec.get("stock_code"), rec.get("stock_name"),
+1053                              round(buy_price, 4), quantity, round(amount_buy, 2),
+1054                              _json({**reason_base, "proxy_price": "open"}), day, f"{day} 10:00:00",
+1055                          ),
+1056                      )
+1057                      await cur.execute(
+1058                          """INSERT INTO portfolio_trade
+1059                             (portfolio_id,stock_code,stock_name,direction,price,quantity,
+1060                              amount,profit,profit_pct,reason,trade_date,created_at)
+1061                             VALUES (%s,%s,%s,'sell',%s,%s,%s,%s,%s,%s,%s,%s)""",
+1062                          (
+1063                              portfolio_id, rec.get("stock_code"), rec.get("stock_name"),
+1064                              round(sell_price, 4), quantity, round(sell_price * quantity, 2),
+1065                              round(profit, 2), round(profit_pct, 4),
+1066                              _json({**reason_base, "proxy_price": "close"}), day, f"{day} 15:00:00",
+1067                          ),
+1068                      )
+1069                      day_profit = profit
+1070                      trade_count = 2
+1071                      counts["trades"] += 2</pre></section><section class="section source" id="C02"><h2>C02 · 成熟样本按未来快照数量计算</h2><p><code>D:\Evan\Codes\ai-stock\api\strategy_evolution_service.py:239–291</code></p><pre>0239  def build_evaluation_samples(
+0240      records: List[Dict[str, Any]],
+0241      policy: Dict[str, Any],
+0242  ) -&gt; List[Dict[str, Any]]:
+0243      """把跟进记录转换为同一战法持有周期口径的成熟样本。"""
+0244      horizon = max(1, int(policy.get("horizon_days") or 1))
+0245      is_overnight = policy.get("family") == "overnight"
+0246      samples: List[Dict[str, Any]] = []
+0247  
+0248      for record in records or []:
+0249          pick_date = str(record.get("pick_date") or "")[:10]
+0250          snapshots = sorted(
+0251              record.get("snapshots") or [],
+0252              key=lambda item: str(item.get("snapshot_date") or ""),
+0253          )
+0254          feature = record.get("feature_snapshot") or {}
+0255          if not isinstance(feature, dict):
+0256              feature = {}
+0257          pick_price = _safe_float(record.get("pick_price"))
+0258          execution_source = "close_snapshot"
+0259  
+0260          if is_overnight:
+0261              # 隔夜策略的真实目标是次日早盘退出。优先使用模拟组合实际卖单
+0262              # 收益，未成交推荐才使用次日开盘代理收益，禁止退回次日收盘价。
+0263              direct_return = record.get("exit_return_pct")
+0264              execution_source = str(record.get("exit_source") or "")
+0265              if direct_return is None:
+0266                  direct_return = record.get("next_day_return_pct")
+0267                  execution_source = execution_source or "market_open_proxy"
+0268              if direct_return is None:
+0269                  continue
+0270              returns = [_safe_float(direct_return)]
+0271              matured_date = (
+0272                  str(record.get("exit_at") or "")[:10]
+0273                  or str(record.get("closed_date") or "")[:10]
+0274              )
+0275              if not matured_date or matured_date &lt;= pick_date:
+0276                  continue
+0277          else:
+0278              # 推荐日基准快照不算 T+1；只使用后续真实交易日快照。
+0279              future = [
+0280                  item for item in snapshots
+0281                  if str(item.get("snapshot_date") or "")[:10] &gt; pick_date
+0282                  and item.get("total_return_pct") is not None
+0283              ]
+0284              if len(future) &lt; horizon:
+0285                  continue
+0286              window = future[:horizon]
+0287              returns = [
+0288                  _safe_float(item.get("total_return_pct")) for item in window
+0289              ]
+0290              matured_date = str(window[-1].get("snapshot_date") or "")[:10]
+0291  </pre></section><section class="section source" id="C03"><h2>C03 · 已有报价校验与异常买价</h2><p><code>D:\Evan\Codes\ai-stock\api\market_data_provider.py:77–110</code></p><pre>0077  
+0078  
+0079  def validate_targeted_quote(quote: Dict) -&gt; Tuple[bool, str]:
+0080      """Validate price/level-one consistency before a quote can drive a trade."""
+0081      try:
+0082          code = str(quote.get("code") or "").zfill(6)
+0083          price = float(quote.get("price") or 0)
+0084          prev_close = float(quote.get("prev_close") or 0)
+0085          high = float(quote.get("high") or 0)
+0086          low = float(quote.get("low") or 0)
+0087          bid1 = float(quote.get("bid1_price") or 0)
+0088          ask1 = float(quote.get("ask1_price") or 0)
+0089          change_pct = float(quote.get("change_pct") or 0)
+0090      except (TypeError, ValueError):
+0091          return False, "行情字段无法转换为数值"
+0092  
+0093      if price &lt;= 0:
+0094          return False, "最新价缺失"
+0095      if high &gt; 0 and price &gt; high * 1.005:
+0096          return False, "最新价高于当日最高价"
+0097      if low &gt; 0 and price &lt; low * 0.995:
+0098          return False, "最新价低于当日最低价"
+0099  
+0100      # A股一档价通常紧贴最新价。3%的宽容区足以覆盖集合竞价和低流动性，
+0101      # 同时可以拦截把“卖一数量”误当“卖一价格”的字段漂移。
+0102      for label, level_price in (("买一", bid1), ("卖一", ask1)):
+0103          if level_price &gt; 0 and abs(level_price / price - 1) &gt; 0.03:
+0104              return False, f"{label}价与最新价偏离超过3%"
+0105      if bid1 &gt; 0 and ask1 &gt; 0 and bid1 &gt; ask1 * 1.001:
+0106          return False, "买一价高于卖一价"
+0107  
+0108      if prev_close &gt; 0:
+0109          calculated_change = (price - prev_close) / prev_close * 100
+0110          max_change = 31.5 if code.startswith(("8", "9")) else 21.5</pre></section><section class="section source" id="C04"><h2>C04 · 成交现金更新与无成本计算</h2><p><code>D:\Evan\Codes\ai-stock\api\portfolio_manager.py:710–733</code></p><pre>0710                      if sell_qty &lt;= 0:
+0711                          continue
+0712  
+0713                      avg_cost = float(held.get("avg_cost", 0))
+0714                      profit = (price - avg_cost) * sell_qty
+0715                      profit_pct = ((price - avg_cost) / avg_cost * 100) if avg_cost &gt; 0 else 0
+0716  
+0717                      await self.repo.save_trade(
+0718                          portfolio_id=portfolio_id,
+0719                          stock_code=code, stock_name=name_s,
+0720                          direction="sell", price=price, quantity=sell_qty,
+0721                          reason=reason, profit=profit, profit_pct=profit_pct,
+0722                          trade_date=today,
+0723                      )
+0724  
+0725                      remaining = held["quantity"] - sell_qty
+0726                      await self.repo.upsert_position(
+0727                          portfolio_id=portfolio_id,
+0728                          stock_code=code, stock_name=name_s,
+0729                          quantity=remaining, avg_cost=avg_cost,
+0730                          current_price=price, weight=0,
+0731                      )
+0732  
+0733                      available_cash += price * sell_qty</pre></section><section class="section source" id="C05"><h2>C05 · 回填可更新原follow与四法账本</h2><p><code>D:\Evan\Codes\ai-stock\api\strategy_follow_repository.py:526–562</code></p><pre>0526                  )
+0527                  existing_rows = await cur.fetchall()
+0528                  if existing_rows:
+0529                      follow_id = int(existing_rows[0][0])
+0530                      await cur.execute(
+0531                          """UPDATE strategy_follow
+0532                             SET stock_name=%s, pick_price=%s,
+0533                                 recommendation_level=%s, reasons=%s,
+0534                                 pick_rank=%s, session_type=%s,
+0535                                 feature_snapshot=%s, evolution_version=%s,
+0536                                 status='closed', closed_date=%s,
+0537                                 closed_reason=%s
+0538                             WHERE id=%s""",
+0539                          (
+0540                              stock_name,
+0541                              pick_price,
+0542                              recommendation_level,
+0543                              reasons_json,
+0544                              pick_rank,
+0545                              session_type or "",
+0546                              feature_json,
+0547                              max(int(evolution_version or 1), 1),
+0548                              settlement_date,
+0549                              settlement_reason[:200],
+0550                              follow_id,
+0551                          ),
+0552                      )
+0553                      normalized_time = self._normalize_recommended_at(
+0554                          recommended_at
+0555                      )
+0556                      if self._supports_recommended_at and normalized_time:
+0557                          await cur.execute(
+0558                              "UPDATE strategy_follow SET recommended_at=%s WHERE id=%s",
+0559                              (normalized_time, follow_id),
+0560                          )
+0561                      return {
+0562                          "follow_id": follow_id,</pre></section><section class="section source" id="C06"><h2>C06 · 当前综合战法已有相关性分簇</h2><p><code>D:\Evan\Codes\ai-stock\api\combined_strategy.py:67–92</code></p><pre>0067  }
+0068  
+0069  # 相关性分组：同一价格结构/情绪语言的战法，不应被当作完全独立票数
+0070  STRATEGY_CLUSTER_MAP = {
+0071      "dragon_head": "leader_sentiment",
+0072      "emotion_relay": "leader_sentiment",
+0073      "event_driven": "event_catalyst",
+0074      "breakthrough": "trend_structure",
+0075      "volume_price": "trend_structure",
+0076      "moving_average": "trend_structure",
+0077      "trend_momentum": "trend_structure",
+0078      "northbound": "capital_flow",
+0079      "overnight": "overnight",
+0080      # 四个 skill 战法与龙头/接力共享情绪与高辨识度语义，归为同族避免重复投票。
+0081      "yangjia_emotion_cycle": "leader_sentiment",
+0082      "kobe92_cycle_speculation": "leader_sentiment",
+0083      "a_share_leader_tactics": "leader_sentiment",
+0084      "beijing_chaogu_first_board": "leader_sentiment",
+0085  }
+0086  
+0087  STRATEGY_CLUSTER_NAMES = {
+0088      "leader_sentiment": "龙头/接力情绪",
+0089      "market_regime": "市场情绪周期",
+0090      "event_catalyst": "事件催化",
+0091      "trend_structure": "趋势结构",
+0092      "capital_flow": "资金流",</pre></section><section class="section source" id="C07"><h2>C07 · 首板开盘结算规则</h2><p><code>D:\Evan\Codes\ai-stock\api\strategy_performance_service.py:198–225</code></p><pre>0198  def _settlement_rule(strategy_type: str) -&gt; Dict[str, Any]:
+0199      try:
+0200          try:
+0201              from strategy_evolution_service import STRATEGY_EVOLUTION_POLICIES
+0202          except ImportError:
+0203              from api.strategy_evolution_service import STRATEGY_EVOLUTION_POLICIES
+0204          horizon = int(
+0205              STRATEGY_EVOLUTION_POLICIES[strategy_type]["horizon_days"]
+0206          )
+0207      except Exception:
+0208          horizon = 5
+0209  
+0210      if strategy_type == "overnight":
+0211          return {
+0212              "mode": "next_day_open",
+0213              "horizon_days": 1,
+0214              "label": "次一交易日开盘卖出",
+0215          }
+0216      if strategy_type == "beijing_chaogu_first_board":
+0217          return {
+0218              "mode": "next_day_open",
+0219              "horizon_days": 1,
+0220              "label": "首板后次一交易日开盘溢价",
+0221          }
+0222      return {
+0223          "mode": "nth_day_close",
+0224          "horizon_days": max(horizon, 1),
+0225          "label": f"第{max(horizon, 1)}个交易日收盘",</pre></section><section class="section source" id="C08"><h2>C08 · 收益胜率与顺序复利回撤的原实现</h2><p><code>D:\Evan\Codes\ai-stock\api\strategy_performance_service.py:475–511</code></p><pre>0475      wins = sum(1 for value in returns if value &gt; 0)
+0476      losses = sum(1 for value in returns if value &lt; 0)
+0477      win_returns = [value for value in returns if value &gt; 0]
+0478      loss_returns = [value for value in returns if value &lt; 0]
+0479      avg_win = statistics.fmean(win_returns) if win_returns else None
+0480      avg_loss = statistics.fmean(loss_returns) if loss_returns else None
+0481      profit_loss_ratio = (
+0482          avg_win / abs(avg_loss)
+0483          if avg_win is not None and avg_loss is not None and avg_loss != 0
+0484          else None
+0485      )
+0486      gross_profit = sum(win_returns)
+0487      gross_loss = abs(sum(loss_returns))
+0488      profit_factor = (
+0489          gross_profit / gross_loss
+0490          if gross_profit &gt; 0 and gross_loss &gt; 0 else None
+0491      )
+0492      volatility = (
+0493          statistics.pstdev(returns) if len(returns) &gt; 1 else 0.0
+0494      )
+0495  
+0496      equity = 1.0
+0497      peak = 1.0
+0498      max_drawdown = 0.0
+0499      for value in returns:
+0500          equity *= max(1 + value / 100, 0.0001)
+0501          peak = max(peak, equity)
+0502          drawdown = (equity / peak - 1) * 100
+0503          max_drawdown = min(max_drawdown, drawdown)
+0504  
+0505      recent_count = min(10, len(returns))
+0506      recent_returns = returns[-recent_count:]
+0507      recent_wins = sum(1 for value in recent_returns if value &gt; 0)
+0508      recent_avg = statistics.fmean(recent_returns)
+0509      prior_returns = returns[-recent_count * 2:-recent_count]
+0510      recent_change = (
+0511          recent_avg - statistics.fmean(prior_returns)</pre></section><section class="section source" id="C09"><h2>C09 · 前端跟进胜率采用当前快照</h2><p><code>D:\Evan\Codes\ai-stock-web\src\components\strategy-follow-tab\index.tsx:170–189</code></p><pre>0170  		isOvernight
+0171  			? i.next_day_return_pct != null
+0172  			: i.latest_return_pct != null
+0173  	));
+0174  	const selectedPerformance = followTypeFilter === "watch"
+0175  		? summary?.watch_performance
+0176  		: summary?.trade_performance;
+0177  	const wins = isOvernight
+0178  		? pricedItems.filter(i =&gt; (i.next_day_return_pct ?? 0) &gt; 0).length
+0179  		: (selectedPerformance?.profitable_count ?? pricedItems.filter(i =&gt; (i.latest_return_pct ?? 0) &gt; 0).length);
+0180  	const overallReturn = isOvernight
+0181  		? (pricedItems.length &gt; 0
+0182  			? pricedItems.reduce((sum, item) =&gt; sum + (item.next_day_return_pct ?? 0), 0) / pricedItems.length
+0183  			: null)
+0184  		: (selectedPerformance?.overall_return_pct ?? null);
+0185  	const pricedCount = isOvernight ? pricedItems.length : (selectedPerformance?.priced_count ?? pricedItems.length);
+0186  	const winRate = pricedCount &gt; 0
+0187  		? (isOvernight ? wins / pricedCount * 100 : (selectedPerformance?.win_rate_pct ?? wins / pricedCount * 100))
+0188  		: null;
+0189  	const latestSnapshotDate = useMemo(() =&gt; {</pre></section><section class="section source" id="C10"><h2>C10 · 模拟组合列表只显示active</h2><p><code>D:\Evan\Codes\ai-stock-web\src\api\portfolio\index.ts:28–41</code></p><pre>0028   * 列出所有模拟交易组合
+0029   */
+0030  export function fetchPortfolioList(strategyType?: string) {
+0031  	const searchParams: Record&lt;string, string&gt; = { status: "active" };
+0032  	if (strategyType) {
+0033  		searchParams.strategy_type = strategyType;
+0034  	}
+0035  	return request
+0036  		.get("portfolio/list", { searchParams, timeout: 15000 })
+0037  		.json&lt;PortfolioListResponse&gt;();
+0038  }
+0039  
+0040  /**
+0041   * 获取组合详情</pre></section><section class="section source" id="C11"><h2>C11 · 进化按成熟日期顺序留出30%</h2><p><code>D:\Evan\Codes\ai-stock\api\strategy_evolution_service.py:1063–1096</code></p><pre>1063      else:
+1064          ordered_samples = sorted(
+1065              samples,
+1066              key=lambda item: (
+1067                  item.get("matured_date") or "",
+1068                  int(item.get("follow_id") or 0),
+1069              ),
+1070          )
+1071          validation_size = max(5, math.ceil(len(ordered_samples) * 0.30))
+1072          training_samples = ordered_samples[:-validation_size]
+1073          validation_samples = ordered_samples[-validation_size:]
+1074          training_metrics, _, _ = analyze_strategy_samples(
+1075              strategy_type, training_samples, policy
+1076          )
+1077          proposed, proposal_reasons = propose_evolved_params(
+1078              current_params, training_metrics, training_samples, policy
+1079          )
+1080          if _params_changed(current_params, proposed):
+1081              validation_ok, validation, validation_reason = validate_evolved_params(
+1082                  current_params,
+1083                  proposed,
+1084                  validation_samples,
+1085                  policy,
+1086              )
+1087              metrics["validation"] = validation
+1088              if validation_ok:
+1089                  decision = "applied"
+1090                  reason = "；".join(
+1091                      proposal_reasons + [validation_reason]
+1092                  ) or "通过受控参数边界、步长和留出验证"
+1093              else:
+1094                  decision = "rejected"
+1095                  reason = f"候选参数未通过留出验证：{validation_reason}"
+1096          else:</pre></section><section class="section source" id="C12"><h2>C12 · 前端无样本时0%与旧来源数量文案</h2><p><code>D:\Evan\Codes\ai-stock-web\src\pages\short-term-strategy\skill-tactics\index.tsx:196–208</code></p><pre>0196  		&lt;Space direction="vertical" size={16} style={{ width: "100%" }}&gt;
+0197  			&lt;Alert
+0198  				showIcon
+0199  				type={item.trade.avg_return_pct != null &amp;&amp; item.trade.avg_return_pct &lt; 0 ? "warning" : "info"}
+0200  				message="不可改写收益复盘"
+0201  				description={`只统计明确买入且已成熟的样本；观察票单独对照、不进入参数训练。当前结算口径：${item.settlement_rule.label}。`}
+0202  			/&gt;
+0203  			&lt;Row gutter={[12, 12]}&gt;
+0204  				&lt;Col xs={12} md={6}&gt;&lt;Card size="small"&gt;&lt;Statistic title="成熟买入样本" value={item.trade.sample_count || 0} /&gt;&lt;/Card&gt;&lt;/Col&gt;
+0205  				&lt;Col xs={12} md={6}&gt;&lt;Card size="small"&gt;&lt;Statistic title="胜率" value={item.trade.win_rate_pct ?? 0} suffix="%" precision={1} /&gt;&lt;/Card&gt;&lt;/Col&gt;
+0206  				&lt;Col xs={12} md={6}&gt;&lt;Card size="small"&gt;&lt;Statistic title="平均收益" value={item.trade.avg_return_pct ?? 0} suffix="%" precision={2} /&gt;&lt;/Card&gt;&lt;/Col&gt;
+0207  				&lt;Col xs={12} md={6}&gt;&lt;Card size="small"&gt;&lt;Statistic title="最近10笔平均" value={item.trade.recent_avg_return_pct ?? 0} suffix="%" precision={2} /&gt;&lt;/Card&gt;&lt;/Col&gt;
+0208  			&lt;/Row&gt;</pre></section><footer class="footer">本报告分析主库快照与本地代码，不改写历史推荐、模拟交易或线上参数。报告为系统质量研究；代理价格收益仍需通过前向成交数据验证。</footer></main></div><script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

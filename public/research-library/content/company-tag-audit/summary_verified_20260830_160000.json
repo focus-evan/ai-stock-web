@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-08-30 15:48:02",
+  "production_cutoff": "2026-08-30 15:42:40",
+  "supported_companies": 2201,
+  "audit_counts": {
+    "B_行业与主营一致": 825,
+    "A_主营直接支持": 1206,
+    "D_确认需修正": 13,
+    "C_需人工复核": 132,
+    "B_人工复核支持": 17,
+    "B_官方披露支持": 8
+  },
+  "confirmed_corrections": 13,
+  "manual_review_queue": 145,
+  "high_priority_review_queue": 4,
+  "ah_conflicts": [
+    "兆易创新：A股高端芯片/H股存储芯片，建议按存储芯片统一",
+    "龙源电力：A股风电/H股光伏，需按收入/装机主导方向统一"
+  ],
+  "policy_source_reachability": {
+    "http_200": 2,
+    "programmatic_403": 2,
+    "tls_or_host_validation_issue": 3
+  },
+  "audit_sha256": "ca73d3b031d6400c90f0c93aedf292bca2b97d0e9c5ca3e2fbac7fcfb2af1ec2",
+  "read_only": true
+}

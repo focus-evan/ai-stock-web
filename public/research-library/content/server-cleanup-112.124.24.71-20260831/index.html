@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>112.124.24.71 服务器优化文档集</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-112.124.24.71-20260831&amp;view=reports">Dify 服务器优化</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><strong>112.124.24.71 服务器优化</strong></div><div>文档集版本：2026-08-31</div></div>
+  <header class="hero">
+    <div class="eyebrow">SERVER CLEANUP PLAYBOOK</div>
+    <h1>112.124.24.71 服务器优化方案</h1>
+    <p>针对旧 Dify 1.7.1 生产平台的完整文档集：先识别活跃数据和可回收对象，再按零中断步骤清理，最后形成当前资源与服务验收基线。</p>
+    <div class="tags"><span>Debian 12</span><span>Dify 1.7.1</span><span>13 个运行容器</span><span>业务容器零重启</span></div>
+  </header>
+  <nav class="doc-nav"><a class="active" href="index.html">文档集入口</a><a href="01-before-cleanup.html">01 优化前情况</a><a href="02-manual-cleanup-guide.html">02 清理操作</a><a href="03-after-cleanup.html">03 优化后情况</a><a href="04-data-disk-activation.html">04 ESSD数据盘</a><a href="05-dify-pause-experiment.html">05 Dify暂停</a></nav>
+  <div class="status"><span class="pill green">当前状态</span><div><strong>Dify暂停实验因业务影响已提前结束并完成恢复。</strong> 11个Dify容器均为running/always，Dify、S5000与app API健康检查全部为200。</div></div>
+
+  <section>
+    <h2>推荐阅读顺序</h2><p class="section-note">五个章节组成“现状 → 清理 → 验收 → 数据盘启用 → Dify暂停实验”的完整记录。</p>
+    <div class="grid four">
+      <a class="card" href="01-before-cleanup.html"><span class="pill red">第 1 章</span><h3>优化前服务器情况</h3><p>查看 92% 根盘占用、Docker、旧 Dify 回收副本、活跃数据库和大日志边界。</p><div class="go">先确认风险与引用关系 →</div></a>
+      <a class="card" href="02-manual-cleanup-guide.html"><span class="pill blue">第 2 章 · 核心</span><h3>可手动执行的详细操作手册</h3><p>包含前置检查、重复副本校验、路径保护、清理命令、停止条件、长期限额和回滚。</p><div class="go">按步骤开始操作 →</div></a>
+      <a class="card" href="03-after-cleanup.html"><span class="pill green">第 3 章</span><h3>优化后当前服务器情况</h3><p>核对磁盘、内存、Docker、接口、容器 ID、告警状态和保留的业务数据。</p><div class="go">查看最终验收 →</div></a>
+      <a class="card" href="04-data-disk-activation.html"><span class="pill green">第 4 章</span><h3>ESSD数据盘启用</h3><p>记录裸盘判断、费用结论、GPT/ext4挂载、Dify数据库备份和恢复验证。</p><div class="go">查看数据盘实施 →</div></a>
+      <a class="card" href="05-dify-pause-experiment.html"><span class="pill green">第 5 章 · 已结束</span><h3>Dify暂停实验记录</h3><p>记录暂停范围、业务影响、恢复时间、一键恢复过程和最终健康验收。</p><div class="go">查看实验记录 →</div></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>本次治理摘要</h2>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘</div><div class="value good">92% → 48%</div><div class="track"><div class="fill green" style="width:48%"></div></div><div class="sub">可用空间约 10.6 → 64 GiB</div></div>
+      <div class="card metric"><div class="label">ESSD 数据盘</div><div class="value good">已启用</div><div class="track"><div class="fill green" style="width:3%"></div></div><div class="sub">/data2，已用3%，可用约243 GiB</div></div>
+      <div class="card metric"><div class="label">Dify 数据库备份</div><div class="value blue">5.7 GB</div><div class="track"><div class="fill" style="width:27%"></div></div><div class="sub">pg_restore目录与SHA-256验证通过</div></div>
+      <div class="card metric"><div class="label">当前运行</div><div class="value good">13 / 13</div><div class="track"><div class="fill green" style="width:100%"></div></div><div class="sub">11个Dify容器已完整恢复</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>本机特殊边界</h2>
+    <div class="grid two">
+      <div class="callout good"><strong>已保留：</strong>Dify 1.7.1 活跃 volumes 约 23 GiB、最近 30 天 S5000 回滚镜像和所有运行容器；旧 0.15.3 版本经授权删除。</div>
+      <div class="callout warn"><strong>未强制处理：</strong>现有运行容器的 JSON 日志不能在零中断条件下原地切换 log-opt，因此保留文件并设置 500 MiB 状态型告警；新建容器使用 100 MiB×5。</div>
+    </div>
+  </section>
+  <div class="next-prev"><a href="../index.html">← 返回总入口</a><a href="01-before-cleanup.html">开始阅读：优化前情况 →</a></div>
+  <div class="footer">文档集目录：D:\Evan\html\server-cleanup-112.124.24.71-20260831</div>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

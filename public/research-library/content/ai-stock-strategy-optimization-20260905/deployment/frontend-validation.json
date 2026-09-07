@@ -1,0 +1,60 @@
+{
+  "candidate": "74244246100a367c61cc3250f62c4d8f81bce693",
+  "worktree": "D:\\Evan\\Codes\\.codex-release-worktrees\\ai-stock-web-20260905-quality",
+  "node_version": "v22.17.1",
+  "pnpm_version": "10.6.4",
+  "locked_install_exit": 0,
+  "typecheck_exit": 0,
+  "tests_exit": 0,
+  "tests_passed": 2,
+  "build_exit": 0,
+  "build_files": 132,
+  "index_sha256": "CD951C0522FF60162F1C97D1D0000FCC5E9E829442B87AB521C91F47BE1B92FC",
+  "lockfile_blob": "eae2e588b7e0e804ab142f6047aa31e4ace06e0c",
+  "lockfile_unchanged": true,
+  "tracked_tree_clean": true,
+  "entry_asset_checks": [
+    {
+      "reference": "/assets/antd-BrCuLA9y.js",
+      "exists": true,
+      "sha256": "50A1A1F513E3EC04D830FB89E51789F94FC0832E0C821FD7830F32D23E15B58D"
+    },
+    {
+      "reference": "/assets/index-BjNHmAO-.js",
+      "exists": true,
+      "sha256": "AA7AB28C84B920F6B94A3358F70E598775EA115BB1349867D838D6602A75E03A"
+    },
+    {
+      "reference": "/assets/index-ReXrWlsW.css",
+      "exists": true,
+      "sha256": "C25A18542229C0D9CDF7A80A180BD0EE191EEEE7F464D73BE2FF7631BA12BD94"
+    },
+    {
+      "reference": "/assets/react-DlK0E8NM.js",
+      "exists": true,
+      "sha256": "D9BC42DD813B9ECE7C065E51C3763D5A66A0F963697DA6E7187D2C1040AEBEA9"
+    },
+    {
+      "reference": "/favicon.ico",
+      "exists": true,
+      "sha256": "54A283D583AB88A3A78249F441D80EB51D17F172BD34532A7D04DBFB22F3E338"
+    },
+    {
+      "reference": "/logo192.png",
+      "exists": true,
+      "sha256": "16167E251FC01646C84BE0C36458CD3AAE8B3CA6DB65C01F64D7EE346B9CFC20"
+    },
+    {
+      "reference": "/manifest.json",
+      "exists": true,
+      "sha256": "2DD0D8C3F5B0D392035B50A983E1FD0C7B1AF474D878E3D95AE28B4BFE54870F"
+    }
+  ],
+  "warnings": [
+    "pnpm ignored dependency build scripts esbuild and simple-git-hooks; Vite build succeeded.",
+    "Vitest passed, then reported a 10-second Vite shutdown delay before exiting 0.",
+    "Vite externalized node:module for browser compatibility.",
+    "Vite emitted an empty faker chunk and chunks larger than 500kB.",
+    "Pre-existing src test modules are included by current bundle configuration; candidate does not change Vite config."
+  ]
+}

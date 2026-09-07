@@ -1,0 +1,720 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI硬件材料与半导体材料A股核心受益公司地图</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe3ef;
+      --red: #df1f2d;
+      --red-soft: #fff0f1;
+      --blue: #1f5fbf;
+      --blue-soft: #eef5ff;
+      --green: #16803b;
+      --green-soft: #edf9f1;
+      --amber: #a96800;
+      --amber-soft: #fff7e6;
+      --slate: #334155;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 24px 52px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111827, #26364f);
+      color: #fff;
+      border-radius: 10px;
+      padding: 28px 30px;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      letter-spacing: 0;
+      line-height: 1.25;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0 0 10px; }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #d7e2f0;
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill.red { color: var(--red); background: var(--red-soft); border: 1px solid #ffc7cd; }
+    .pill.blue { color: var(--blue); background: var(--blue-soft); border: 1px solid #c9dcff; }
+    .pill.green { color: var(--green); background: var(--green-soft); border: 1px solid #bfe8cb; }
+    .pill.amber { color: var(--amber); background: var(--amber-soft); border: 1px solid #ffe0a3; }
+    .pill.gray { color: var(--slate); background: #eef2f7; border: 1px solid #d7dee9; }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .panel.tight { padding: 14px 16px; }
+
+    .rank {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .rank-item {
+      display: grid;
+      grid-template-columns: 92px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdff;
+    }
+
+    .rank-title {
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .muted { color: var(--muted); }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #eef2f8;
+      color: #111827;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .company {
+      font-weight: 800;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .code {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .section-title small {
+      color: var(--muted);
+      font-size: 13px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .note {
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 12px 0;
+      color: #183963;
+    }
+
+    .warning {
+      border-left: 4px solid var(--amber);
+      background: var(--amber-soft);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 12px 0;
+      color: #5a3a05;
+    }
+
+    .tagline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .source-list {
+      columns: 2;
+      column-gap: 28px;
+      font-size: 13px;
+    }
+
+    a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
+      .rank-item { grid-template-columns: 1fr; }
+      .source-list { columns: 1; }
+      table { font-size: 13px; }
+      th, td { padding: 9px 8px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=ai-hardware-materials-beneficiaries&amp;view=reports">AI硬件材料地图</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main>
+  <header>
+    <h1>AI硬件材料与半导体材料A股核心受益公司地图</h1>
+    <div class="meta">
+      <span>生成时间：2026-07-05 16:55 北京时间</span>
+      <span>范围：A股上市公司</span>
+      <span>方法：题材正宗度 + 利润池位置 + 国产替代 + 订单/量产证据边界</span>
+      <span>用途：研究清单，不构成投资建议</span>
+    </div>
+  </header>
+
+  <section class="panel">
+    <h2>总判断</h2>
+    <p>这份清单不是按短线涨幅排序，而是按“材料在AI硬件升级里的必要性、公司所处利润池、国产替代难度、当前验证或量产阶段”来筛。最值得持续跟踪的，不是所有AI概念股，而是能被下游高端化、涨价、扩产、认证壁垒同时推着走的材料卖铲人。</p>
+    <div class="grid cols-3">
+      <div class="panel tight">
+        <h3>第一主线</h3>
+        <p><strong>AI PCB材料</strong>：CCL、电子布、HVLP铜箔、球形硅微粉同时受益于AI服务器高速化。量价逻辑最清楚，市场共识最强。</p>
+        <div class="tagline"><span class="pill red">热度高</span><span class="pill blue">业绩弹性强</span></div>
+      </div>
+      <div class="panel tight">
+        <h3>第二主线</h3>
+        <p><strong>MLCC及粉体</strong>：AI服务器、车规、高容小型化推高陶瓷粉体和纳米镍粉门槛，上游材料更接近利润弹性。</p>
+        <div class="tagline"><span class="pill red">涨价弹性</span><span class="pill green">国产替代</span></div>
+      </div>
+      <div class="panel tight">
+        <h3>第三主线</h3>
+        <p><strong>HBM/先进封装材料</strong>：空间大、技术含量高，但很多产品仍在送样、验证、小批量阶段，需要严控“叙事领先于业绩”的风险。</p>
+        <div class="tagline"><span class="pill blue">空间大</span><span class="pill amber">兑现慢</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>全局优先级</h2>
+    <div class="rank">
+      <div class="rank-item">
+        <div><span class="pill red">核心跟踪</span></div>
+        <div>
+          <div class="rank-title">联瑞新材、雅克科技、国瓷材料、生益科技、安集科技、江丰电子</div>
+          <div class="muted">共同特征：材料卡位更硬、国产替代清晰、下游AI硬件升级可以形成持续需求，不只是一次性题材。</div>
+        </div>
+        <span class="pill blue">中长期主线</span>
+      </div>
+      <div class="rank-item">
+        <div><span class="pill amber">弹性观察</span></div>
+        <div>
+          <div class="rank-title">沃格光电、华海诚科、德邦科技、德福科技、兴森科技</div>
+          <div class="muted">共同特征：技术方向很性感，但需验证客户导入、良率、量产规模和利润转化。</div>
+        </div>
+        <span class="pill amber">验证优先</span>
+      </div>
+      <div class="rank-item">
+        <div><span class="pill gray">映射跟踪</span></div>
+        <div>
+          <div class="rank-title">有研硅、沪硅产业、晶盛机电、中核科技、神工股份</div>
+          <div class="muted">共同特征：纯硅/量子芯片叙事级别高，但A股大多是硅材料、硅片、设备或中核体系映射，短期业绩直接性弱于PCB/MLCC/HBM封装材料。</div>
+        </div>
+        <span class="pill gray">直接性较弱</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>1. AI PCB材料：CCL、电子布、铜箔、硅微粉</h2>
+        <small>核心逻辑：AI服务器带来高速高频、高多层、高散热、低损耗PCB升级，向上拉动CCL、低介电电子布、HVLP铜箔、Low-Dk球形硅微粉。</small>
+      </div>
+      <span class="pill red">当前最强材料主线</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">生益科技</span><span class="code">600183</span></td>
+          <td>高频高速覆铜板、CCL</td>
+          <td>站在AI PCB上游最核心的基材层。服务器PCB层数提升、信号速率提升、低损耗材料升级，都会提升高端CCL价值量。</td>
+          <td><span class="pill green">已量产供货</span></td>
+          <td>优势是规模、客户、配方体系和产业链话语权；风险是市场已充分认知，弹性可能弱于更小的材料公司。</td>
+        </tr>
+        <tr>
+          <td><span class="company">联瑞新材</span><span class="code">688300</span></td>
+          <td>球形硅微粉、Low-Dk填料、Low-α粉体</td>
+          <td>用于高频高速覆铜板、IC载板、EMC、Underfill等，属于AI PCB和先进封装共同基础材料。</td>
+          <td><span class="pill green">批量应用</span></td>
+          <td>优势是高端球形粉体、客户认证、批次稳定性；风险是股价已被重估，需看新产能和高端品占比兑现。</td>
+        </tr>
+        <tr>
+          <td><span class="company">德福科技</span><span class="code">301511</span></td>
+          <td>HVLP高端电子铜箔</td>
+          <td>AI服务器高速板需要更低粗糙度、更低传输损耗的铜箔，HVLP国产替代弹性高。</td>
+          <td><span class="pill blue">批量供货推进</span></td>
+          <td>优势是高端铜箔方向对口；风险是铜箔行业周期性强，需看高端HVLP占比而非普通铜箔产能。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">替补池：宏和科技是电子布最正宗标的之一，尤其低介电、低热膨胀电子布；铜冠铜箔可跟踪HVLP进展；东材科技、华正新材更偏树脂/覆铜板材料链补充。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>2. MLCC及上游陶瓷粉体、镍粉</h2>
+        <small>核心逻辑：AI服务器、车规电动化和高端消费电子推高MLCC容量、可靠性和高温性能要求，材料端先受益于高端粉体、内电极粉体和成品结构升级。</small>
+      </div>
+      <span class="pill red">涨价弹性清晰</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">国瓷材料</span><span class="code">300285</span></td>
+          <td>MLCC介质粉体、纳米钛酸钡、配方粉</td>
+          <td>卡在MLCC性能升级的核心介质粉体层，AI服务器高容、高可靠MLCC会倒逼粉体高端化。</td>
+          <td><span class="pill green">产业化供应</span></td>
+          <td>优势是水热法纳米钛酸钡、客户认证、材料平台；风险是公司多业务平台，MLCC粉体不是全部利润来源。</td>
+        </tr>
+        <tr>
+          <td><span class="company">博迁新材</span><span class="code">605376</span></td>
+          <td>纳米镍粉、铜粉、银包铜粉</td>
+          <td>镍粉用于MLCC内电极，高端MLCC小型化、高叠层会提升粉体粒径、分散、纯度要求。</td>
+          <td><span class="pill green">量产供应</span></td>
+          <td>优势是PVD粉体工艺和海外客户积累；风险是业绩周期受MLCC景气和客户拉货节奏影响较大。</td>
+        </tr>
+        <tr>
+          <td><span class="company">三环集团</span><span class="code">300408</span></td>
+          <td>MLCC成品、电子陶瓷平台</td>
+          <td>不是纯上游材料，但成品MLCC和电子陶瓷平台能直接承接高端被动元件升级。</td>
+          <td><span class="pill green">产品量产</span></td>
+          <td>优势是电子陶瓷一体化和平台能力；风险是成品端竞争更激烈，利润弹性未必高于上游粉体。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">这一类里，国瓷材料偏“陶瓷粉体卖铲人”，博迁新材偏“金属内电极粉体卖铲人”，三环集团偏“成品和电子陶瓷平台”。三者不是同一层级，不能只按MLCC概念统一估值。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>3. 玻璃基板 / 先进封装基板</h2>
+        <small>核心逻辑：Chiplet、AI ASIC、GPU、CPO和先进封装对高密度互连提出更高要求，玻璃基板和FC-BGA/ABF载板成为国产替代关注点。</small>
+      </div>
+      <span class="pill amber">高弹性但兑现慢</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料/环节</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">沃格光电</span><span class="code">603773</span></td>
+          <td>TGV玻璃基线路板、玻璃基先进封装载板</td>
+          <td>玻璃基板叙事中弹性最直接之一，子公司通格微覆盖TGV、PVD镀膜、高精密布线等环节。</td>
+          <td><span class="pill amber">送样/验证/小批量</span></td>
+          <td>优势是方向正宗、弹性大；风险是规模化量产、客户认证、良率和收入贡献仍需验证。</td>
+        </tr>
+        <tr>
+          <td><span class="company">深南电路</span><span class="code">002916</span></td>
+          <td>FC-BGA封装基板、IC载板</td>
+          <td>先进封装基板确定性更强，已具备高层FC-BGA量产能力，受益AI芯片、存储和国产载板升级。</td>
+          <td><span class="pill green">批量能力提升</span></td>
+          <td>优势是规模、客户和产能爬坡确定性；风险是市值较大，短线弹性弱于主题型小市值公司。</td>
+        </tr>
+        <tr>
+          <td><span class="company">兴森科技</span><span class="code">002436</span></td>
+          <td>FC-BGA/ABF封装基板</td>
+          <td>国产ABF/FC-BGA载板先行者，AI芯片、CPU/GPU/ASIC封装需求带来技术突破和订单放量机会。</td>
+          <td><span class="pill blue">小批量/认证推进</span></td>
+          <td>优势是国产替代弹性；风险是良率、客户导入和盈利拐点仍是核心跟踪变量。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warning">玻璃基板目前更像“高赔率方向”，不等于确定业绩主线。若没有客户认证、良率和收入确认，题材弹性会大于基本面支撑。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>4. DRAM/HBM涨价外溢材料</h2>
+        <small>核心逻辑：DRAM价格上行和HBM扩产会向前道前驱体、后道封装材料、Low-α粉体、EMC/GMC等环节扩散。</small>
+      </div>
+      <span class="pill blue">HBM外溢</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">雅克科技</span><span class="code">002409</span></td>
+          <td>半导体前驱体、电子特气、球形硅微粉</td>
+          <td>前驱体用于3D NAND、DRAM等先进制程，HBM扩产和先进封装升级均能带动高端材料需求。</td>
+          <td><span class="pill green">客户导入较深</span></td>
+          <td>优势是平台型半导体材料和海外大厂绑定；风险是业务较多，需要拆分真实利润贡献。</td>
+        </tr>
+        <tr>
+          <td><span class="company">联瑞新材</span><span class="code">688300</span></td>
+          <td>Low-α球形硅微粉、球形氧化铝</td>
+          <td>HBM 3D堆叠对封装材料低α、低应力、低膨胀和稳定性要求更高，球形粉体是关键基础材料。</td>
+          <td><span class="pill green">批量应用</span></td>
+          <td>优势是粉体平台和认证壁垒；风险是估值已对HBM/AI封装预期敏感。</td>
+        </tr>
+        <tr>
+          <td><span class="company">华海诚科</span><span class="code">688535</span></td>
+          <td>EMC、GMC、先进封装塑封材料</td>
+          <td>HBM/Chiplet先进封装需要更高性能的塑封保护材料，国产化率低，重估逻辑强。</td>
+          <td><span class="pill amber">验证到放量过渡</span></td>
+          <td>优势是国产EMC龙头之一；风险是先进封装材料从验证到批量周期长，不能把送样直接当利润。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">这类不是“谁做DRAM颗粒”，而是“谁吃DRAM/HBM扩产和先进封装材料外溢”。真正的观察点是客户认证、产能放量、毛利率改善和单季收入加速。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>5. 半导体特气 / 靶材 / 硅片 / CMP</h2>
+        <small>核心逻辑：晶圆扩产、先进制程、存储上行共同提升前道材料消耗，特气、靶材、CMP和硅片都是典型卡脖子材料环节。</small>
+      </div>
+      <span class="pill green">国产替代硬材料</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">中船特气</span><span class="code">688146</span></td>
+          <td>电子特气、三氟化氮、六氟化钨等</td>
+          <td>电子特气是刻蚀、清洗、沉积等核心耗材，六氟化钨国产替代关注度高。</td>
+          <td><span class="pill green">规模化产品</span></td>
+          <td>优势是特气技术和产能地位；风险是部分热门产品被交易过度，需看实质订单而非洽谈消息。</td>
+        </tr>
+        <tr>
+          <td><span class="company">江丰电子</span><span class="code">300666</span></td>
+          <td>高纯溅射靶材、半导体零部件</td>
+          <td>靶材用于晶圆制造薄膜沉积，是典型前道材料卡脖子环节，国产替代和全球供应链地位都较硬。</td>
+          <td><span class="pill green">国际供应链</span></td>
+          <td>优势是高纯靶材技术和客户壁垒；风险是短期不是HBM最弹的环节，利润弹性比封装材料慢。</td>
+        </tr>
+        <tr>
+          <td><span class="company">安集科技</span><span class="code">688019</span></td>
+          <td>CMP抛光液、湿电子化学品、电镀液添加剂</td>
+          <td>CMP步骤随先进制程和先进封装复杂度提升而增加，抛光液国产替代壁垒高。</td>
+          <td><span class="pill green">主流客户供应</span></td>
+          <td>优势是CMP抛光液龙头和产品拓展；风险是估值通常不便宜，需要靠持续成长消化。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">替补池：沪硅产业是硅片最正宗；鼎龙股份是CMP抛光垫和先进封装材料的强替补；中巨芯、华特气体偏特气补充。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>6. 先进封装胶材 / TIM / Underfill / PSPI</h2>
+        <small>核心逻辑：HBM、Chiplet、CoWoS、玻璃基板、CPO都提高封装材料复杂度，胶材、热界面材料、底填胶、PSPI成为后道国产替代重点。</small>
+      </div>
+      <span class="pill blue">后道材料升级</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应材料</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">华海诚科</span><span class="code">688535</span></td>
+          <td>EMC、GMC、先进封装塑封料</td>
+          <td>国产EMC龙头之一，先进封装塑封材料国产化率低，若客户验证推进，利润池有重估可能。</td>
+          <td><span class="pill amber">验证推进</span></td>
+          <td>优势是EMC行业地位；风险是高端材料收入占比和利润弹性仍需季报验证。</td>
+        </tr>
+        <tr>
+          <td><span class="company">德邦科技</span><span class="code">688035</span></td>
+          <td>Underfill、TIM、DAF/CDAF、粘接材料</td>
+          <td>底填胶和热界面材料直连先进封装可靠性、散热和应力管理，是HBM/AI GPU封装升级的关键耗材。</td>
+          <td><span class="pill blue">客户验证/供货推进</span></td>
+          <td>优势是材料品类对口；风险是单品验证周期长，需确认是否进入核心客户批量供应。</td>
+        </tr>
+        <tr>
+          <td><span class="company">鼎龙股份</span><span class="code">300054</span></td>
+          <td>PSPI、临时键合材料、CMP抛光垫/液</td>
+          <td>同时覆盖先进封装材料和CMP材料，PSPI、临时键合、抛光垫都受益于先进封装复杂度提升。</td>
+          <td><span class="pill green">部分产品量产</span></td>
+          <td>优势是材料平台化和国产替代；风险是业务线多，需要区分显示材料、打印耗材和半导体材料贡献。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warning">先进封装胶材最容易出现“产品名很先进、收入还很小”的情况。判断时要优先看客户验证进度、批量供货、收入占比、毛利率，而不是只看是否提到CoWoS/HBM。</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <div>
+        <h2>7. 纯硅 / 量子芯片材料</h2>
+        <small>核心逻辑：高丰度硅-28自主量产解决硅基量子芯片关键材料瓶颈，叙事级别高，但A股多数公司是硅材料、硅片、设备或同位素体系映射。</small>
+      </div>
+      <span class="pill amber">高叙事低直接兑现</span>
+    </div>
+    <table>
+      <thead><tr><th>公司</th><th>对应环节</th><th>受益逻辑</th><th>证据阶段</th><th>护城河与风险</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="company">有研硅</span><span class="code">688432</span></td>
+          <td>半导体硅材料、硅片相关</td>
+          <td>在纯硅/硅基量子芯片叙事中属于材料端映射，市场关注度高于直接订单确定性。</td>
+          <td><span class="pill amber">产业映射</span></td>
+          <td>优势是硅材料属性正；风险是硅-28量产主体并非公司，直接业绩弹性需谨慎。</td>
+        </tr>
+        <tr>
+          <td><span class="company">沪硅产业</span><span class="code">688126</span></td>
+          <td>300mm硅片、SOI硅片、硅基材料平台</td>
+          <td>国内大硅片平台，先进制程、存储、传感器等领域均需硅片，是半导体材料底座。</td>
+          <td><span class="pill green">规模化出货</span></td>
+          <td>优势是硅片平台和国产化地位；风险是硅片价格周期、产能爬坡和盈利弹性。</td>
+        </tr>
+        <tr>
+          <td><span class="company">晶盛机电</span><span class="code">300316</span></td>
+          <td>半导体大硅片设备、硅材料装备</td>
+          <td>纯硅和硅片扩产最终需要长晶、切片、抛光等装备，晶盛是设备端映射。</td>
+          <td><span class="pill blue">设备供应</span></td>
+          <td>优势是设备和材料协同；风险是光伏设备业务周期会干扰半导体材料估值逻辑。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">替补池：中核科技是中核体系映射，题材弹性强但主营直接性不足；神工股份、TCL中环也可作为硅材料链观察，但需防止把量子芯片材料突破直接等同为公司订单。</div>
+  </section>
+
+  <section class="panel">
+    <h2>按“最可能被重估”的排序</h2>
+    <table>
+      <thead><tr><th>排序</th><th>方向</th><th>首选公司</th><th>重估条件</th><th>主要失效条件</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>AI PCB材料</td>
+          <td>联瑞新材、生益科技、德福科技</td>
+          <td>AI服务器PCB持续涨价，高端CCL、球形粉体、HVLP铜箔供需紧张进入财报。</td>
+          <td>下游砍单、普通产能替代高端紧缺、估值提前透支。</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>MLCC上游粉体</td>
+          <td>国瓷材料、博迁新材、三环集团</td>
+          <td>AI服务器MLCC高端化传导到粉体ASP和毛利率，海外涨价形成国内价格锚。</td>
+          <td>消费级MLCC价格回落，高端粉体导入慢，粉体收入占比不足。</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>HBM/先进封装材料</td>
+          <td>雅克科技、联瑞新材、华海诚科、鼎龙股份、德邦科技</td>
+          <td>HBM扩产、CoWoS/Chiplet放量，材料从送样转批量，单季收入开始加速。</td>
+          <td>验证周期拉长，产品只停留在概念或小批量，利润贡献太小。</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>前道半导体材料</td>
+          <td>中船特气、江丰电子、安集科技</td>
+          <td>国产晶圆厂扩产、存储上行、先进工艺增加材料消耗，国产替代率继续提升。</td>
+          <td>交易拥挤、订单不及预期、行业周期重新下行。</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>纯硅/量子芯片</td>
+          <td>有研硅、沪硅产业、晶盛机电</td>
+          <td>硅-28从科研突破走向产业链采购，量子芯片进入明确工程化路线。</td>
+          <td>仍停留在科研新闻，A股公司缺少直接订单和收入确认。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>证据边界</h2>
+    <div class="grid cols-2">
+      <div class="panel tight">
+        <h3>可以高置信的判断</h3>
+        <p>AI PCB材料、MLCC粉体、先进封装材料是近期AI硬件材料中最容易被资金反复定价的三条线。</p>
+        <p>联瑞新材、国瓷材料、雅克科技、安集科技、江丰电子这类公司有较明确的材料卡位，不是简单“AI概念映射”。</p>
+      </div>
+      <div class="panel tight">
+        <h3>必须保留的谨慎</h3>
+        <p>玻璃基板、HBM专用胶材、纯硅/量子芯片材料仍有大量“验证、送样、映射”成分，不能把题材热度直接等同为本季利润。</p>
+        <p>后续真正改变排序的，不是新闻标题，而是客户认证、批量订单、单季收入增速、毛利率和现金流。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>主要参考来源</h2>
+    <div class="source-list">
+      <p><a href="https://novoray.com/index.php/application/page/id/34.html">联瑞新材：电子与电器应用说明</a></p>
+      <p><a href="https://yuanchuang.10jqka.com.cn/20260630/c677819246.shtml">德福科技：HVLP高端电子电路铜箔互动回复</a></p>
+      <p><a href="https://www.stcn.com/article/detail/3735574.html">证券时报：宏和科技高性能电子布放量</a></p>
+      <p><a href="https://www.cctc.cc/productSec.html?id=46">三环集团：多层片式陶瓷电容器产品页</a></p>
+      <p><a href="https://stockmc.xueqiu.com/202604/605376_20260420_RM34.pdf">博迁新材2025年年度报告</a></p>
+      <p><a href="https://www.tgvtech.cn/">通格微：玻璃基TGV多层精密线路板</a></p>
+      <p><a href="https://www.wgtechjx.com/news/212.html">沃格光电：TGV技术与产业化进展</a></p>
+      <p><a href="https://www.cls.cn/detail/1786554">财联社：深南电路FC-BGA封装基板进展</a></p>
+      <p><a href="https://www.cls.cn/detail/1892666">财联社：兴森科技FCBGA用于高端芯片封装</a></p>
+      <p><a href="https://www.pericsg.com/standards.html">中船特气：电子特种气体公司资料</a></p>
+      <p><a href="https://www.kfmic.com/">江丰电子：高纯溅射靶材公司资料</a></p>
+      <p><a href="https://www.anjimicro.com/">安集科技：高端半导体材料公司资料</a></p>
+      <p><a href="https://www.dl-kg.com/products/2.html">鼎龙股份：半导体先进封装材料</a></p>
+      <p><a href="https://www.stdaily.com/web/gdxw/2026-06/15/content_532320.html">科技日报：硅-28同位素自主量产</a></p>
+      <p><a href="https://www.nsig.com/">沪硅产业：硅材料平台资料</a></p>
+      <p><a href="https://www.jsjd.cc/news_detail_3756.html">晶盛机电：半导体硅片设备解决方案</a></p>
+    </div>
+  </section>
+
+  <footer>
+    本报告仅用于产业研究和自选股梳理，不构成任何买卖建议。后续若用于交易，应叠加最新价格、估值、财报、龙虎榜/资金面和大盘情绪。
+  </footer>
+</main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

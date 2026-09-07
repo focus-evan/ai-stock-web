@@ -1,0 +1,86 @@
+[
+  {
+    "id": "C01",
+    "file": "D:\\Evan\\Codes\\ai-stock\\scripts\\backfill_scheduler_full_simulation.py",
+    "start": 1034,
+    "end": 1071,
+    "sha256": "cbe4652ac396ba0e6cbed0850407b7e887eac3947c818c5fcecb6c3c3c97f642"
+  },
+  {
+    "id": "C02",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\strategy_evolution_service.py",
+    "start": 239,
+    "end": 291,
+    "sha256": "5fd032946957ad107d58b9126d252b0ece9c5ff8087fed9023873d09a20e901d"
+  },
+  {
+    "id": "C03",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\market_data_provider.py",
+    "start": 77,
+    "end": 110,
+    "sha256": "d493b210c19622b4644df7a308a2772bf261bf2fccc0a8236fa6798e1acd1aab"
+  },
+  {
+    "id": "C04",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\portfolio_manager.py",
+    "start": 710,
+    "end": 733,
+    "sha256": "e559344b09b654219c574dfb38bdd6ca49ac7505fca12357f523f2e4d729ef37"
+  },
+  {
+    "id": "C05",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\strategy_follow_repository.py",
+    "start": 526,
+    "end": 562,
+    "sha256": "c73ae53d6ce07713aed83268048c6d2ece50f2fa5196e0b58ccbc9290a494a5f"
+  },
+  {
+    "id": "C06",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\combined_strategy.py",
+    "start": 67,
+    "end": 92,
+    "sha256": "4bc7860cf2cc049b9903475f80b6efe37aed3a81bf07758ccfcee1ae7fc15237"
+  },
+  {
+    "id": "C07",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\strategy_performance_service.py",
+    "start": 198,
+    "end": 225,
+    "sha256": "493caac5da2dc38854b78e78395a4af5a6bc100303176f276cf8ad504cddcaa3"
+  },
+  {
+    "id": "C08",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\strategy_performance_service.py",
+    "start": 475,
+    "end": 511,
+    "sha256": "493caac5da2dc38854b78e78395a4af5a6bc100303176f276cf8ad504cddcaa3"
+  },
+  {
+    "id": "C09",
+    "file": "D:\\Evan\\Codes\\ai-stock-web\\src\\components\\strategy-follow-tab\\index.tsx",
+    "start": 170,
+    "end": 189,
+    "sha256": "f2d7b72dc767427dd70ce41f392cf8765256e463992c32d1717b4dba31dbb789"
+  },
+  {
+    "id": "C10",
+    "file": "D:\\Evan\\Codes\\ai-stock-web\\src\\api\\portfolio\\index.ts",
+    "start": 28,
+    "end": 41,
+    "sha256": "442348f9e0bd73241b5426e714c293080e3c392279fb9c379ca779e13ba9f592"
+  },
+  {
+    "id": "C11",
+    "file": "D:\\Evan\\Codes\\ai-stock\\api\\strategy_evolution_service.py",
+    "start": 1063,
+    "end": 1096,
+    "sha256": "5fd032946957ad107d58b9126d252b0ece9c5ff8087fed9023873d09a20e901d"
+  },
+  {
+    "id": "C12",
+    "file": "D:\\Evan\\Codes\\ai-stock-web\\src\\pages\\short-term-strategy\\skill-tactics\\index.tsx",
+    "start": 196,
+    "end": 208,
+    "sha256": "3b6c70a25ed42c2f75fb94aa2a1b9af255b2044add4238c696586c0f032d1b80"
+  }
+]

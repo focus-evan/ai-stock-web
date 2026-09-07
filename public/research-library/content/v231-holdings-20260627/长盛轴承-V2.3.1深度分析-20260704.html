@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>长盛轴承 V2.3.1 深度分析</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#182230;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',Arial,sans-serif;line-height:1.62}
+    header{background:#101828;color:#fff;padding:28px 34px;border-bottom:5px solid #b42318}
+    header h1{margin:0 0 8px;font-size:30px} header p{margin:6px 0;color:#d0d5dd}
+    main{max-width:1280px;margin:0 auto;padding:24px}
+    section{background:#fff;border:1px solid #d7dde8;border-radius:8px;padding:20px;margin:0 0 18px;box-shadow:0 12px 30px rgba(15,23,42,.07)}
+    h2{margin:0 0 13px;border-left:5px solid #b42318;padding-left:10px;font-size:23px} h3{margin:18px 0 8px;font-size:17px}
+    table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:13px} th,td{border:1px solid #d7dde8;padding:8px 9px;text-align:left;vertical-align:top} th{background:#111827;color:#fff} tr:nth-child(even) td{background:#f8fafc}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:12px 0}
+    .kpi{background:#fbfcfe;border:1px solid #d7dde8;border-radius:8px;padding:12px} .kpi b{display:block;color:#667085;font-size:12px} .kpi span{font-size:18px;font-weight:800;color:#101828}
+    .tag{display:inline-block;border-radius:999px;padding:3px 9px;margin:2px 3px 2px 0;font-size:12px;font-weight:700;background:#f2f4f7;color:#344054}
+    .red{background:#fef3f2;color:#b42318} .blue{background:#eff8ff;color:#175cd3} .green{background:#ecfdf3;color:#027a48} .amber{background:#fffaeb;color:#b54708}
+    .note{background:#fffaeb;border:1px solid #fedf89;border-left:5px solid #b54708;border-radius:8px;padding:12px;margin:12px 0}
+    .danger{background:#fef3f2;border:1px solid #fecdca;border-left:5px solid #b42318;border-radius:8px;padding:12px;margin:12px 0}
+    .good{background:#ecfdf3;border:1px solid #abefc6;border-left:5px solid #027a48;border-radius:8px;padding:12px;margin:12px 0}
+    a{color:#175cd3;text-decoration:none;font-weight:700} .small{color:#667085;font-size:12px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr} main{padding:12px}}
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=v231-holdings-20260627&amp;view=reports">V2.3.1 持仓体检</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<header>
+  <h1>长盛轴承（300718）V2.3.1 深度分析</h1>
+  <p>生成时间：2026-07-04 16:06:57 北京时间；数据窗口：截至2026-07-04可得公告、行情、财务与公开报道。</p>
+  <p>方法：V2.3.1五层六维 + 四季度财务拆分 + S五维硬数据校验 + 同题材/同链条竞对比较。</p>
+</header>
+<main>
+  <section>
+    <h2>核心结论</h2>
+    <div class="grid">
+      <div class="kpi"><b>综合评分</b><span>66/100</span></div>
+      <div class="kpi"><b>策略标签</b><span>观察池 / 机器人题材交易 / 自润滑轴承质量公司</span></div>
+      <div class="kpi"><b>S五维硬数据</b><span>63/100</span></div>
+      <div class="kpi"><b>执行评级</b><span>观察，不追高</span></div>
+    </div>
+    <p><span class="tag red">一句话判断</span>长盛轴承是自润滑轴承和高性能聚合物领域有真实经营质量的公司，也是机器人关节轴承的高弹性期权，但公司最新异动公告明确提示“具身智能零部件领域收入占主营业务收入不足1%”，因此V2.3.1不能把机器人叙事当成当前业绩锚，只能列为观察池/题材交易，等待订单与收入占比验证。</p>
+    <div class="danger"><b>最高风险：</b>2026年7月1日至7月3日股价偏离值累计超过30%，公司已发布异动公告；机器人热度已经明牌，短线追高的赔率不够干净。</div>
+    <div class="good"><b>可保留理由：</b>公司传统主业不是空壳概念，2026Q1收入、利润和毛利率仍有支撑；自润滑轴承适合低速、重载、免维护等场景，若机器人关节客户订单持续放大，具备从传统轴承材料公司向机器人零部件供应商重估的期权。</div>
+  </section>
+
+  <section>
+    <h2>公司画像与风险门</h2>
+    <table>
+      <tbody>
+        <tr><th>公司名称</th><td>浙江长盛滑动轴承股份有限公司</td><th>上市日期</th><td>2017-11-06</td></tr>
+        <tr><th>所属市场/行业</th><td>深交所创业板 / 通用设备制造业</td><th>主营业务</th><td>自润滑轴承的研发、生产和销售。</td></tr>
+        <tr><th>经营范围</th><td colspan="3">生产销售自润滑、固体润滑、水润滑、双金属、含油粉末冶金的滑动轴承、轴瓦、滑块、垫片及其半成品、结构零部件和与产品相配套的专用设备；从事进出口业务（国家限制、禁止的除外）；从事普通货物运输及房产出租业务。（依法须经批准的项目，经相关部门批准后方可开展经营活动）</td></tr>
+        <tr><th>最新价</th><td>77.23 元；涨跌幅 19.997%；时间戳 16:29:30</td><th>成交额</th><td>2142139247.0</td></tr>
+      </tbody>
+    </table>
+    <p><span class="tag amber">风险门结论</span>无ST/退市风险线索；但存在短期股票交易异常波动，且机器人业务收入占比低。风险门不否决公司，但否决“按机器人主线核心持仓追高”的动作。</p>
+  </section>
+
+  <section>
+    <h2>最新公告与事实优先级</h2>
+    <table><thead><tr><th>时间</th><th>公告</th><th>链接</th></tr></thead><tbody><tr><td>2026-07-03 18:09:07</td><td>关于股票交易异常波动的公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225409261&amp;orgId=9900023668&amp;announcementTime=2026-07-03 18:09:07">巨潮链接</a></td></tr><tr><td>2026-05-28 17:28:11</td><td>关于子公司拟购买土地使用权并投资建设项目的进展公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225335358&amp;orgId=9900023668&amp;announcementTime=2026-05-28 17:28:11">巨潮链接</a></td></tr><tr><td>2026-05-22 18:18:28</td><td>2025年度权益分派实施公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225326466&amp;orgId=9900023668&amp;announcementTime=2026-05-22 18:18:28">巨潮链接</a></td></tr><tr><td>2026-05-20 19:18:27</td><td>北京市竞天公诚律师事务所上海分所关于浙江长盛滑动轴承股份有限公司2025年度股东会的法律意见书</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225321024&amp;orgId=9900023668&amp;announcementTime=2026-05-20 19:18:27">巨潮链接</a></td></tr><tr><td>2026-05-20 19:18:27</td><td>2025年度股东会决议公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225321023&amp;orgId=9900023668&amp;announcementTime=2026-05-20 19:18:27">巨潮链接</a></td></tr><tr><td>2026-05-15 19:04:30</td><td>第五届董事会第九次临时会议决议公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225310702&amp;orgId=9900023668&amp;announcementTime=2026-05-15 19:04:30">巨潮链接</a></td></tr><tr><td>2026-05-15 19:04:30</td><td>关于子公司拟购买土地使用权并投资建设项目的公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225310701&amp;orgId=9900023668&amp;announcementTime=2026-05-15 19:04:30">巨潮链接</a></td></tr><tr><td>2026-04-28 00:00:00</td><td>2025年年度报告及摘要披露的提示性公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225211931&amp;orgId=9900023668&amp;announcementTime=2026-04-28 00:00:00">巨潮链接</a></td></tr><tr><td>2026-04-28 00:00:00</td><td>关于2025年度财务决算报告的公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225211930&amp;orgId=9900023668&amp;announcementTime=2026-04-28 00:00:00">巨潮链接</a></td></tr><tr><td>2026-04-28 00:00:00</td><td>关于2026年度公司向银行等金融机构申请综合授信额度的公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225211929&amp;orgId=9900023668&amp;announcementTime=2026-04-28 00:00:00">巨潮链接</a></td></tr><tr><td>2026-04-28 00:00:00</td><td>关于开展票据池业务的公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225211928&amp;orgId=9900023668&amp;announcementTime=2026-04-28 00:00:00">巨潮链接</a></td></tr><tr><td>2026-04-28 00:00:00</td><td>2026年第一季度报告披露的提示性公告</td><td><a href="http://www.cninfo.com.cn/new/disclosure/detail?stockCode=300718&amp;announcementId=1225211927&amp;orgId=9900023668&amp;announcementTime=2026-04-28 00:00:00">巨潮链接</a></td></tr></tbody></table>
+    <div class="note"><b>公告事实优先于媒体解读：</b>2026-07-03异动公告是本报告最重要的风险源。公司称主营业务保持平稳，具身智能零部件收入占主营业务收入不足1%，不会对业绩产生重大影响。因此，机器人相关内容只能作为新业务期权和题材催化，不能抬高财务质量分。</div>
+  </section>
+
+  <section>
+    <h2>卡脖子 / 国产替代位置</h2>
+    <table>
+      <thead><tr><th>项目</th><th>V2.3.1判断</th></tr></thead>
+      <tbody>
+        <tr><td>卡脖子环节</td><td>不是典型“被海外绝对封锁”的芯片/设备型卡脖子，更接近高性能自润滑轴承、聚合物材料、机器人关节免维护零部件的国产替代/进口替代环节。</td></tr>
+        <tr><td>海外对标</td><td>自润滑轴承和工程塑料轴承可对标海外滑动轴承/工程塑料轴承供应商；机器人关节零部件则需对标海外机器人关节材料与轴承供应链。但公司公告未给出细粒度海外替代收入数据。</td></tr>
+        <tr><td>替代必要性</td><td>汽车、工程机械、风电、机器人等领域需要低摩擦、耐磨、免润滑、长寿命零部件，国产供应链有成本、交付和本土服务价值。</td></tr>
+        <tr><td>替代阶段</td><td>传统自润滑轴承主业已经收入化/利润化；机器人关节相关产品处于小批量/批量销售但占比低阶段，尚未成为业绩锚。</td></tr>
+        <tr><td>证据强度</td><td>主业证据强，机器人证据中等偏弱：有公开合作/订单/销售线索，但公司公告确认收入占比不足1%。</td></tr>
+        <tr><td>估值影响</td><td>主业给质量底座；机器人只给期权溢价，不给核心持仓溢价。国产替代模块评分：12/20。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>竞争对手与护城河</h2>
+    <table>
+      <thead><tr><th>模块</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>国内竞争对手</td><td>崇德科技、双飞集团、万达轴承、五洲新春；机器人同题材还要横向比较贝斯特、瑞迪智驱、绿的谐波等。</td></tr>
+        <tr><td>海外竞争对手</td><td>海外滑动轴承/工程塑料轴承龙头和机器人关节材料供应链；但公开数据不足以确认长盛在机器人环节已替代高端海外利润池。</td></tr>
+        <tr><td>我有你没有</td><td>自润滑轴承与高性能聚合物材料平台化产品线，适用于低速、重载、免维护、复杂工况；公司在自润滑轴承主业有长期积累和较高毛利。</td></tr>
+        <tr><td>你有我更强</td><td>与传统轴承公司相比，长盛的自润滑/工程塑料产品差异化更明显，财务毛利率较好；但在机器人核心执行器价值链中，不如谐波减速器/丝杠/执行器龙头直接。</td></tr>
+        <tr><td>我弱于你</td><td>机器人业务收入占比低，利润池位置暂不如绿的谐波、贝斯特等更容易被市场归为“核心零部件”的标的；若客户验证不扩大，题材弹性会反噬估值。</td></tr>
+        <tr><td>护城河等级</td><td>B-/C+：主业护城河有财务验证；机器人护城河尚未充分财务化。不能给A级核心竞争力溢价。</td></tr>
+      </tbody>
+    </table>
+    <h3>同链条/同题材横向数据快照</h3>
+    <table><thead><tr><th>公司</th><th>最近年营收</th><th>最近年净利</th><th>年毛利率</th><th>年净利率</th><th>年ROE</th><th>最新季</th><th>营收同比</th><th>净利同比</th><th>季毛利率</th><th>季净利率</th><th>价格</th><th>涨跌幅%</th></tr></thead><tbody><tr><td>崇德科技 301548</td><td>6.19亿</td><td>1.35亿</td><td>37.4%</td><td>21.8%</td><td>8.9%</td><td>2026Q1</td><td>35.0%</td><td>40.6%</td><td>40.9%</td><td>24.1%</td><td>90.43</td><td>-0.066</td></tr><tr><td>双飞集团 300817</td><td>9.45亿</td><td>6505.54万</td><td>24.6%</td><td>7.1%</td><td>6.3%</td><td>2026Q1</td><td>21.3%</td><td>28.3%</td><td>24.6%</td><td>6.6%</td><td>18.85</td><td>16.502</td></tr><tr><td>万达轴承 920002</td><td>3.53亿</td><td>6267.62万</td><td>32.7%</td><td>17.8%</td><td>8.9%</td><td>2026Q1</td><td>10.4%</td><td>-17.4%</td><td>30.9%</td><td>15.7%</td><td>65.82</td><td>25.133</td></tr><tr><td>贝斯特 300580</td><td>15.04亿</td><td>2.78亿</td><td>33.2%</td><td>18.5%</td><td>8.7%</td><td>2026Q1</td><td>10.3%</td><td>5.2%</td><td>33.6%</td><td>18.9%</td><td>25.96</td><td>20.018</td></tr><tr><td>瑞迪智驱 301596</td><td>6.46亿</td><td>1.05亿</td><td>30.6%</td><td>16.9%</td><td>12.2%</td><td>2026Q1</td><td>14.4%</td><td>-13.9%</td><td>25.4%</td><td>12.8%</td><td>63.97</td><td>19.996</td></tr><tr><td>五洲新春 603667</td><td>33.43亿</td><td>9138.99万</td><td>18.1%</td><td>3.0%</td><td>3.1%</td><td>2026Q1</td><td>-18.8%</td><td>-18.6%</td><td>19.8%</td><td>4.3%</td><td>76.15</td><td>8.507</td></tr><tr><td>绿的谐波 688017</td><td>5.71亿</td><td>1.24亿</td><td>36.9%</td><td>22.1%</td><td>3.6%</td><td>2026Q1</td><td>42.8%</td><td>61.2%</td><td>33.6%</td><td>23.3%</td><td>488.0</td><td>18.146</td></tr></tbody></table>
+    <p class="small">注：财务来自AkShare同花顺财务摘要；季度数据按累计口径拆分，市场数据为A股收盘快照，北交所/接口字段可能存在口径差异。</p>
+  </section>
+
+  <section>
+    <h2>新战略业务 / 未来布局</h2>
+    <table>
+      <thead><tr><th>新业务</th><th>证据阶段</th><th>对利润池/护城河影响</th><th>当前能否计入业绩锚</th><th>升级触发</th><th>风险边界</th></tr></thead>
+      <tbody>
+        <tr><td>机器人关节自润滑轴承</td><td>小批量/批量销售线索，公告确认占比低。</td><td>若机器人放量，可打开高频迭代和轻量化免维护部件利润池。</td><td>不能。收入不足1%，只能计入期权。</td><td>披露核心客户订单、收入占比升至3%-5%以上、毛利不低于主业、持续两个季度放量。</td><td>客户出货节奏慢、单价/价值量低、供应商替代、市场预期已透支。</td></tr>
+        <tr><td>部分直线执行器/丝杠相关产品</td><td>研发/客户验证预期，公开财务拆分不足。</td><td>若进入执行器价值链，估值弹性提高。</td><td>不能。缺少收入和利润拆分。</td><td>公告定点、量产订单、收入拆分和毛利披露。</td><td>技术路线不确定，特斯拉/宇树路线差异影响价值量。</td></tr>
+        <tr><td>高性能聚合物材料延伸</td><td>主业延伸，收入化程度更高。</td><td>提升材料平台属性，弱化单一轴承周期。</td><td>部分可以，需看产品线拆分。</td><td>高毛利产品占比提升，应收/存货健康。</td><td>下游价格竞争和原材料波动。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>最近四个单季度财务表</h2>
+    <table><thead><tr><th>单季度</th><th>营收</th><th>营收同比</th><th>归母净利</th><th>归母同比</th><th>扣非净利</th><th>扣非同比</th><th>毛利率*</th><th>净利率</th><th>每股经营现金流*</th><th>ROE*</th><th>资产负债率*</th></tr></thead><tbody><tr><td>2026Q1</td><td>3.48亿</td><td>23.4%</td><td>6104.21万</td><td>15.1%</td><td>5612.86万</td><td>12.3%</td><td>33.9%</td><td>17.5%</td><td>-0</td><td>3.4%</td><td>12.6%</td></tr><tr><td>2025Q4</td><td>3.33亿</td><td>10.3%</td><td>6500.00万</td><td>8.3%</td><td>5500.00万</td><td>7.8%</td><td>35.0%</td><td>19.5%</td><td>0</td><td>15.0%</td><td>13.4%</td></tr><tr><td>2025Q3</td><td>3.17亿</td><td>14.0%</td><td>6200.00万</td><td>14.8%</td><td>5800.00万</td><td>13.7%</td><td>34.9%</td><td>19.6%</td><td>0</td><td>11.2%</td><td>15.3%</td></tr><tr><td>2025Q2</td><td>3.36亿</td><td>19.6%</td><td>7296.35万</td><td>16.2%</td><td>6701.37万</td><td>10.3%</td><td>34.5%</td><td>21.7%</td><td>0</td><td>7.5%</td><td>17.1%</td></tr></tbody></table>
+    <p class="small">* 毛利率、ROE、资产负债率来自报告期摘要口径；收入/归母/扣非按累计值拆单季。每股经营现金流为摘要字段拆分，不能等同于完整现金流量表单季总额。</p>
+    <div class="note"><b>财务解读：</b>2026Q1营收同比与利润同比为正，毛利率保持较高；但从V2.3.1看，这更多验证传统主业韧性，而不是机器人业务已经兑现。若后续Q2/Q3未看到机器人收入占比提升，股价中的机器人溢价需要回吐。</div>
+  </section>
+
+  <section>
+    <h2>S五维量化校验</h2>
+    <table>
+      <thead><tr><th>因子</th><th>核心数据</th><th>横向位置</th><th>趋势</th><th>评分</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>成长性</td><td>最新单季营收同比 23.4%，归母同比 15.1%。</td><td>主业增长不差，但机器人收入占比低。</td><td>温和改善。</td><td>13/20</td><td>基本支持，不是强爆发。</td></tr>
+        <tr><td>盈利性</td><td>最新报告期毛利率 33.9%，单季净利率 17.5%。</td><td>自润滑轴承公司中盈利质量较好。</td><td>稳定。</td><td>15/20</td><td>主业质量较好。</td></tr>
+        <tr><td>经营规模</td><td>最近年营收 12.68亿，净利润 2.53亿。</td><td>不是大体量平台，但已有稳定利润池。</td><td>平稳。</td><td>12/20</td><td>有基本盘，规模不算大。</td></tr>
+        <tr><td>资产效率</td><td>最近年ROE 15.0%，资产负债率 13.41%。</td><td>资产负债表压力不高。</td><td>稳健。</td><td>13/20</td><td>效率可接受。</td></tr>
+        <tr><td>市值/估值</td><td>股价短期受机器人情绪推动，异动公告提示风险。</td><td>相对传统轴承公司估值含机器人期权。</td><td>偏热。</td><td>10/20</td><td>需要回到订单和收入验证。</td></tr>
+        <tr><td>合计</td><td colspan="3">经营世界结论：数据有基本盘，但机器人叙事未财务化；资本世界结论：短期偏热。</td><td>63/100</td><td>观察，不升核心。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>六维评分</h2>
+    <table><thead><tr><th>维度</th><th>原始分</th><th>趋势分</th><th>置信度</th><th>调整后分</th><th>证据与说明</th></tr></thead><tbody><tr><td>行业面</td><td>17</td><td>1</td><td>0.74</td><td>13.3</td><td>自润滑轴承基本盘稳健，机器人关节轴承是高弹性期权，但公告确认具身智能收入占比不足1%。</td></tr><tr><td>核心竞争力</td><td>18</td><td>0</td><td>0.72</td><td>13.0</td><td>自润滑轴承和聚合物材料工艺有积累，具备客户验证与小批量销售，但机器人链收入尚未财务化。</td></tr><tr><td>财务质量</td><td>17</td><td>1</td><td>0.78</td><td>14.0</td><td>2026Q1营收与利润同比改善、毛利率维持高位，但需要看后续季度持续性和现金流。</td></tr><tr><td>估值与赔率</td><td>12</td><td>-2</td><td>0.68</td><td>6.8</td><td>股价受机器人热度和异动推动，估值对未来机器人放量预期敏感。</td></tr><tr><td>催化剂/影子逻辑</td><td>16</td><td>-1</td><td>0.70</td><td>10.5</td><td>宇树/人形机器人链催化强，但公告已提示收入占比低，短线催化与业绩锚错位。</td></tr><tr><td>流动性与治理</td><td>15</td><td>-1</td><td>0.76</td><td>10.6</td><td>创业板流动性可交易，近端异动公告和高波动降低交易评级。</td></tr></tbody></table>
+    <p><b>综合评分：</b>66/100。标签为“观察池 / 机器人题材交易 / 自润滑轴承质量公司”。</p>
+  </section>
+
+  <section>
+    <h2>V2.3.1修正项</h2>
+    <table>
+      <thead><tr><th>修正项</th><th>分数/影响</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>产业链利润池</td><td>+4</td><td>传统自润滑轴承有真实利润池；机器人关节轴承尚未形成主营利润池。</td></tr>
+        <tr><td>国产替代/卡脖子</td><td>+2</td><td>有进口替代和材料工艺价值，但不是高端硬卡脖子主线。</td></tr>
+        <tr><td>竞争对手护城河</td><td>+2</td><td>主业护城河有财务验证；机器人环节护城河待客户和收入验证。</td></tr>
+        <tr><td>新战略业务期权</td><td>+3 / 同时降置信</td><td>机器人期权存在，但公告确认收入不足1%，不能提高财务质量分。</td></tr>
+        <tr><td>母子公司穿透</td><td>0</td><td>本次无明显母子上市套利问题。</td></tr>
+        <tr><td>预期差/已定价程度</td><td>-4</td><td>7月1日至7月3日强势异动后，机器人期权被快速明牌。</td></tr>
+        <tr><td>客户集中度折扣</td><td>-1</td><td>机器人核心客户订单未充分披露，多客户放量验证不足。</td></tr>
+        <tr><td>二阶增长趋势</td><td>+1</td><td>2026Q1利润同比改善，但需连续季度确认。</td></tr>
+        <tr><td>同题材相对强弱</td><td>-2</td><td>短线相对强，但强度主要来自主题交易，降低仓位上限。</td></tr>
+        <tr><td>S五维硬数据调整</td><td>-2</td><td>S五维支持主业，不支持机器人核心重仓定价。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>三情景与执行条件</h2>
+    <table>
+      <thead><tr><th>情景</th><th>条件</th><th>V2.3.1动作</th></tr></thead>
+      <tbody>
+        <tr><td>乐观</td><td>机器人客户订单持续披露，具身智能零部件收入占比从不足1%提升至3%-5%以上，且毛利率不低于主业；传统主业维持双位数净利率。</td><td>从观察池升为成长配置候选，评分可上调至72-78。</td></tr>
+        <tr><td>中性</td><td>传统主业平稳，机器人收入占比低但有持续样品/小批量；股价回到估值可解释区间。</td><td>保持观察池，只等触发。</td></tr>
+        <tr><td>悲观</td><td>机器人订单无进展，后续公告继续提示收入极低；板块退潮，股价跌破异动前支撑；季度利润/现金流走弱。</td><td>降为题材交易或剔除。</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr><th>买入/试错触发</th><td>不追高。只在板块退潮后仍能放量承接，且公司出现订单/收入占比/客户验证更新时，才允许小仓观察。</td></tr>
+        <tr><th>加仓触发</th><td>连续两个季度机器人相关收入占比提升，主营毛利率稳定，经营现金流不恶化，并且估值未再次透支。</td></tr>
+        <tr><th>减仓/回避触发</th><td>高开低走放巨量、后排机器人股退潮、公告继续提示占比极低、季度扣非利润或现金流弱于收入。</td></tr>
+        <tr><th>最大仓位</th><td>0-5%观察仓；只有收入占比与订单验证后才允许上调</td></tr>
+        <tr><th>复盘日期</th><td>2026年半年报披露后；若此前有机器人客户订单/异动公告/风险提示，提前复盘。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>资料来源与数据缺口</h2>
+    <table><thead><tr><th>来源</th><th>链接</th><th>用途</th></tr></thead><tbody>
+      <tr><td>巨潮资讯：长盛轴承股票交易异常波动公告 2026-07-03</td><td><a href="https://static.cninfo.com.cn/finalpage/2026-07-03/1225409261.PDF">https://static.cninfo.com.cn/finalpage/2026-07-03/1225409261.PDF</a></td><td>事实验证/公告/财务/风险提示</td></tr><tr><td>巨潮资讯：长盛轴承2025年半年度报告</td><td><a href="https://static.cninfo.com.cn/finalpage/2025-08-27/1224579275.PDF">https://static.cninfo.com.cn/finalpage/2025-08-27/1224579275.PDF</a></td><td>事实验证/公告/财务/风险提示</td></tr><tr><td>新浪财经：长盛轴承2025年年度报告</td><td><a href="https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12225862&amp;stockid=300718">https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12225862&amp;stockid=300718</a></td><td>事实验证/公告/财务/风险提示</td></tr><tr><td>21财经：多只机器人概念股提示风险</td><td><a href="https://m.21jingji.com/article/20260703/herald/53ae81cc3254ee2e0bc7d5c6d94dbdf3.html">https://m.21jingji.com/article/20260703/herald/53ae81cc3254ee2e0bc7d5c6d94dbdf3.html</a></td><td>事实验证/公告/财务/风险提示</td></tr><tr><td>证券时报：2024年报与2025一季报报道</td><td><a href="https://stcn.com/article/detail/1691454.html">https://stcn.com/article/detail/1691454.html</a></td><td>事实验证/公告/财务/风险提示</td></tr><tr><td>东方财富：长盛轴承公告大全</td><td><a href="https://data.eastmoney.com/notice/300718.html">https://data.eastmoney.com/notice/300718.html</a></td><td>事实验证/公告/财务/风险提示</td></tr>
+    </tbody></table>
+    <div class="note"><b>数据缺口：</b>机器人关节轴承和丝杠相关产品的收入、毛利率、客户结构、订单规模、单机价值量未达到可量化建模颗粒度；因此本报告不把机器人业务纳入当前业绩锚，只作为估值期权。</div>
+    <p class="small">非投资建议。本报告用于框架化研究和交易纪律约束，不保证收益。</p>
+  </section>
+</main>
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

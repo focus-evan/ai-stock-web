@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>01 清理前服务器情况｜114.55.219.63</title>
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=server-cleanup-114.55.219.63-20260831&amp;view=reports">管理服务器清理</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="shell">
+  <div class="topbar"><div class="crumbs"><a href="../index.html">总入口</a><span>/</span><a href="index.html">服务器清理方案</a><span>/</span><strong>清理前情况</strong></div><div>快照：2026-08-31 10:24 CST</div></div>
+  <header class="hero red">
+    <div class="eyebrow">CHAPTER 01 · BEFORE</div>
+    <h1>清理前服务器情况</h1>
+    <p>记录开始操作前的真实资源状态、最大占用来源和不能误删的业务边界，作为后续清理与验收的对照基线。</p>
+    <div class="tags"><span>系统盘 P0</span><span>只剩 0.43 GiB</span><span>Docker 占 90.96 GiB</span><span>未执行清理</span></div>
+  </header>
+  <nav class="doc-nav"><a href="index.html">文档集入口</a><a class="active" href="01-before-cleanup.html">01 清理前情况</a><a href="02-manual-cleanup-guide.html">02 手动操作手册</a><a href="03-after-cleanup.html">03 清理后情况</a></nav>
+
+  <div class="status red"><span class="pill red">P0 紧急</span><div><strong>根分区被 df 判定为 100%，仅剩约 437 MiB。</strong> 继续写日志、Docker build、拉取镜像或生产发版都可能失败；必须先恢复系统盘安全空间。</div></div>
+  <div class="callout"><strong>原始巡检快照：</strong>如需查看首次采集时更完整的目录、进程和大文件明细，可打开 <a href="../server-resource-audit/114.55.219.63-2026-08-31.html">114.55.219.63 原始服务器资源检查 HTML</a>。</div>
+
+  <section>
+    <h2>资源总览</h2><p class="section-note">内存当前正常，真正的运行风险是系统盘容量。</p>
+    <div class="grid four">
+      <div class="card metric"><div class="label">系统盘 /</div><div class="value danger">100%</div><div class="track"><div class="fill red" style="width:99.6%"></div></div><div class="sub">117.99 GiB，可用 0.43 GiB</div></div>
+      <div class="card metric"><div class="label">数据盘 /data2</div><div class="value warn">41%</div><div class="track"><div class="fill amber" style="width:41%"></div></div><div class="sub">491.15 GiB，可用 278.53 GiB</div></div>
+      <div class="card metric"><div class="label">内存</div><div class="value good">16.77 GiB</div><div class="track"><div class="fill green" style="width:54.8%"></div></div><div class="sub">总 30.61 GiB，可用 54.8%</div></div>
+      <div class="card metric"><div class="label">Swap</div><div class="value warn">0 GiB</div><div class="track"><div class="fill amber" style="width:2%"></div></div><div class="sub">当前无压力，但缺少峰值缓冲</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>系统盘最大占用来源</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>路径/类别</th><th>占用</th><th>判断</th></tr></thead>
+      <tbody>
+        <tr><td><code>/var</code></td><td><strong>95.41 GiB</strong></td><td>根盘占用主体。</td></tr>
+        <tr><td><code>/var/lib/docker</code></td><td><strong>90.96 GiB</strong></td><td>根盘最主要原因。</td></tr>
+        <tr><td>Docker build cache</td><td><strong>70.77 GB</strong></td><td>Docker 标记 100% reclaimable；属于 overlay2 的底层数据，不能重复相加。</td></tr>
+        <tr><td><code>/var/lib/docker/containers</code></td><td>11.17 GiB</td><td>几乎全部来自容器 JSON 日志。</td></tr>
+        <tr><td><code>/var/log/journal</code></td><td>3.45 GiB</td><td>未配置明确容量/保留期。</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>两个停用容器</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>容器</th><th>状态</th><th>日志</th><th>清理前判断</th></tr></thead>
+      <tbody>
+        <tr><td><code>bz-wx-api-test</code></td><td>已停止约 9 个月，restart=no</td><td><strong>6.28 GiB</strong></td><td>可在完整归档日志和 inspect 元数据后删除。</td></tr>
+        <tr><td><code>bz-wx-api</code></td><td>已停止约 9 个月，restart=no</td><td><strong>4.68 GiB</strong></td><td>可在完整归档日志和 inspect 元数据后删除。</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>数据盘大目录</h2><p class="section-note">数据盘没有立刻写满，但日志增长明显，必须建立长期轮转。</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>目录</th><th>占用</th><th>最大来源</th></tr></thead>
+      <tbody>
+        <tr><td><code>/data2/wwwlogs</code></td><td><strong>51.81 GiB</strong></td><td><code>token.../access.log</code> 单文件 44.36 GiB。</td></tr>
+        <tr><td><code>/data2/tomcat</code></td><td><strong>47.01 GiB</strong></td><td>job 的每日 catalina 日志单文件 5–8 GiB。</td></tr>
+        <tr><td><code>/data2/mysql57_data</code></td><td>45.90 GiB</td><td>业务数据库数据，不能按缓存直接删除。</td></tr>
+        <tr><td><code>/data2/logs/stock</code></td><td><strong>37.94 GiB</strong></td><td>stock-job 日志单日约 3–7 GiB。</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout warn"><strong>事实边界：</strong>MySQL 数据属于业务数据，本方案不执行数据库文件删除；Nginx、Tomcat 与 stock 只处理已关闭历史日志，当前打开文件必须用 lsof 保护。</div>
+  </section>
+
+  <section>
+    <h2>操作前必须遵守的停止条件</h2>
+    <ul class="checklist">
+      <li>如果目标容器不是 exited，停止并重新评估，不能删除或搬移其日志。</li>
+      <li>如果有真实进行中的 Docker build，跳过缓存清理，等待构建结束。</li>
+      <li>如果 <code>/data2</code> 可用空间不足以容纳归档，不能跨盘搬移旧日志。</li>
+      <li>如果 Nginx 配置测试不通过，不能执行日志 reopen 或强制轮转。</li>
+      <li>如果日志文件仍被 Java/Nginx 打开，不能直接 gzip、rm 或 rename，必须使用对应的安全轮转方式。</li>
+    </ul>
+  </section>
+
+  <div class="next-prev"><a href="index.html">← 文档集入口</a><a href="02-manual-cleanup-guide.html">下一章：手动操作手册 →</a></div>
+  <div class="footer">清理前基线 · 114.55.219.63 · 2026-08-31</div>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

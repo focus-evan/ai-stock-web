@@ -1,0 +1,391 @@
+{
+  "generated_at_beijing": "2026-08-16 12:00",
+  "run_label": "12:00 noon",
+  "headline": "Orange：AI 卖铲主线仍在，但周末新增信号转向“融资风险+宏观需求走弱”",
+  "top_conclusion": "本轮为 2026-08-16 15:48 北京时间执行的 12:00 noon 延迟版。总闸门维持 Orange。CapEx 仍是 Expansion，因为中芯、应用材料、联想、腾讯、鸿海、Cisco 等已确认的 AI 卖铲链没有被推翻；但科技催化从 Bullish 下调为 Mixed：Micron 官方 AI 基金是正反馈，Nvidia/OpenAI 数据中心担保缩小仅为媒体报道且未见官方确认，再叠加美国零售销售和消费者信心走弱、通胀预期仍高，说明现在不能把 AI 基建扩张当作无风险单边交易。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Mixed"
+  },
+  "focus_summary": {
+    "action": "总闸门 Orange：AI 卖铲链只看业绩/订单/现金流验证，不追高融资叙事；对媒体传闻先降权，等官方确认。",
+    "positive": "最大正反馈是 Micron 官方推出 2.5 亿美元 AI 基金，覆盖模型架构、compute、企业应用和 physical AI，继续确认内存/存储是 AI 基建核心。",
+    "risk": "最大压制项是融资和宏观需求：Nvidia/OpenAI 大额担保缩小仅为媒体报道且未官方确认；美国零售销售 -0.6%、密歇根信心 51.0、1年通胀预期 4.3%。",
+    "next": "下一步只盯 Intel 200 亿美元发行 closing、Nvidia/OpenAI 是否官方确认、Fed H.15/H.4.1 下一次更新、以及 AI 订单转 FCF。"
+  },
+  "top_changes": [
+    {
+      "title": "Fed H.15 更新：长端/实际利率小幅回落，但仍在估值压力区",
+      "fact": "Fed H.15 8 月 14 日发布、对应 8 月 13 日数据：EFFR 3.63%，2Y 4.15%，5Y 4.32%，10Y 4.63%，20Y 5.20%，30Y 5.21%；TIPS 5Y 2.11%，10Y 2.39%，20Y 2.76%，30Y 2.97%。较 8 月 12 日略回落，但 30Y 名义和 30Y TIPS 仍高。",
+      "impact": "利率边际缓和有助于科技估值喘息，但不能把流动性模块改成 Easing；高估值 AI/半导体仍受实际利率压制。",
+      "confidence": "High",
+      "source": "Federal Reserve H.15",
+      "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+      "title": "美国零售销售与消费者信心转弱，需求端开始压住科技风险偏好",
+      "fact": "美国 Census 8 月 14 日发布：7 月零售和食品服务销售额 7636 亿美元，环比 -0.6%，同比 +5.0%。密歇根大学 8 月初值显示消费者信心 51.0，低于 7 月 55.2；当前状况 51.8，预期 50.6；1年通胀预期从 4.2% 升至 4.3%，长期通胀预期连续第三个月为 3.3%。",
+      "impact": "宏观组合变成“增长走弱但通胀预期仍黏”，对平台科技、消费电子和高估值成长股不友好；卖铲链必须用订单和现金流抵抗估值压缩。",
+      "confidence": "High",
+      "source": "U.S. Census / University of Michigan",
+      "url": "https://www.census.gov/retail/sales.html"
+    },
+    {
+      "title": "Micron 官方 2.5 亿美元 AI 基金补强内存/存储卖铲逻辑",
+      "fact": "Micron 8 月 13 日宣布 Micron Ventures Paradigm Fund，规模 2.5 亿美元，投资模型架构、compute、企业应用和 physical AI；该基金使 Micron Ventures 三只基金合计承诺资本增至 5.5 亿美元。",
+      "impact": "这是 AI 卖铲链的正反馈，但更偏战略/生态投资，不等同短期 HBM 或 DRAM 订单上修；利好内存、存储、数据中心效率和 physical AI 方向的长期验证。",
+      "confidence": "High",
+      "source": "Micron IR",
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx"
+    },
+    {
+      "title": "Nvidia/OpenAI 大额数据中心担保缩小为媒体消息，未见官方确认",
+      "fact": "Reuters 转引 WSJ 报道称，Nvidia 拟把 OpenAI 俄亥俄数据中心项目初期金融担保从此前讨论的 2500 亿美元降至不足 1200 亿美元；报道同时称 OpenAI 拒绝置评，Nvidia 未立即回应。Nvidia/OpenAI 官方站点本轮未见相应确认。",
+      "impact": "这是 AI 基建融资链的风险提醒：不是需求消失，但说明项目金融结构、担保规模和资本成本正在被重新定价；报告中只作为媒体未确认风险处理。",
+      "confidence": "Medium",
+      "source": "Reuters via Investing.com / WSJ",
+      "url": "https://www.investing.com/news/stock-market-news/nvidia-scales-back-250-billion-openai-data-center-guarantee-wsj-reports-4861638"
+    },
+    {
+      "title": "Intel 200 亿美元发行仍未见 closing release",
+      "fact": "截至本轮检索，Intel IR 首页最新新闻仍是 8 月 11 日的 200 亿美元普通股发行 upsize and pricing 公告；未见 8 月 12 日预期交割后的官方 closing release。",
+      "impact": "不能把约 197 亿美元净募资当作已到账 CapEx 弹药；Intel 仍是 watch item，不是新增确认利好。",
+      "confidence": "High",
+      "source": "Intel IR",
+      "url": "https://www.intc.com/"
+    }
+  ],
+  "capex": {
+    "verdict": "CapEx 模块维持 Expansion，但新增官方披露不多。已确认的硬证据来自中芯、应用材料、联想、腾讯、鸿海、Cisco、CoreWeave、Nebius、Supermicro、Lumentum 等，说明 AI 设备、服务器、网络、光模块、晶圆制造和算力采购仍强。新增 Micron 基金是战略生态投入，不是短期订单上修。",
+    "items": [
+      {
+        "entity": "SMIC / 中芯国际",
+        "signal": "2026 Q2 收入 30.056 亿美元，毛利率 25.3%，月产能 1,096,500 片折合 8 吋，产能利用率 93.7%，Q2 资本开支 18.357 亿美元，Q3 指引收入环比 +2% 到 +4%、毛利率 26%-28%。",
+        "direction": "强化",
+        "impact": "晶圆制造、半导体设备、材料、厂务、检测计量、封测和成熟/特色工艺链受益；先进 AI GPU 直接映射需谨慎。",
+        "confidence": "High",
+        "source": "HKEX / SMIC",
+        "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf"
+      },
+      {
+        "entity": "Applied Materials",
+        "signal": "Q3 FY2026 收入 91.15 亿美元，同比 +25%；non-GAAP 毛利率 50.4%；Q4 收入指引 102.5 亿美元正负 5 亿美元。",
+        "direction": "强化",
+        "impact": "先进制程、DRAM/HBM、先进封装、设备材料与工艺控制继续受益。",
+        "confidence": "High",
+        "source": "Applied Materials IR",
+        "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results"
+      },
+      {
+        "entity": "Lenovo",
+        "signal": "FY2026/27 Q1 收入 269 亿美元，同比 +43%；AI 相关收入 93 亿美元，同比 +60%；ISG 收入 85 亿美元，同比 +98%，经营利润率 9.1%。",
+        "direction": "强化",
+        "impact": "AI 服务器、HPC、液冷、电源、连接器、PCB、光模块与 ODM/OEM 链条受益。",
+        "confidence": "High",
+        "source": "Lenovo IR",
+        "url": "https://investor.lenovo.com/"
+      },
+      {
+        "entity": "Tencent",
+        "signal": "Q2 资本开支付款 593 亿元人民币；公司继续指向 Hunyuan、WorkBuddy/CodeBuddy、微信 AI 和云需求，但 FCF 受算力预付款影响为 -138 亿元。",
+        "direction": "强投入但需现金流验证",
+        "impact": "GPU/ASIC、AI 服务器、IDC、云基础设施和网络设备受益；自由现金流恢复是关键。",
+        "confidence": "High",
+        "source": "Tencent IR",
+        "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf"
+      },
+      {
+        "entity": "Hon Hai / Foxconn",
+        "signal": "Q2 收入 2.53 万亿新台币，同比 +41%；Cloud and Networking Products 占比 51%；AI rack shipment 环比高双位数增长，2026 年预计翻倍以上。",
+        "direction": "强化",
+        "impact": "AI 服务器 ODM、机柜、散热、电源、连接器、线束和高速传输链条受益。",
+        "confidence": "High",
+        "source": "Hon Hai / Foxconn IR",
+        "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095"
+      },
+      {
+        "entity": "Micron",
+        "signal": "Micron Ventures 推出 2.5 亿美元 Paradigm Fund，覆盖模型架构、compute、企业应用和 physical AI，三只基金合计承诺资本 5.5 亿美元。",
+        "direction": "战略强化",
+        "impact": "长期利好 AI 内存、存储、数据中心效率、in-memory compute 和 physical AI 生态；不直接等同短期 HBM 订单上修。",
+        "confidence": "High",
+        "source": "Micron IR",
+        "url": "https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx"
+      },
+      {
+        "entity": "Intel",
+        "signal": "200 亿美元普通股发行已公告 upsize and pricing；截至本轮仍未见官方 closing release。",
+        "direction": "待验证",
+        "impact": "不能把净募资当作已到账 CapEx 弹药；继续核实稀释、资金用途和先进制程 ROI。",
+        "confidence": "Medium",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "流动性模块维持 Tightening。Fed H.15 的 10Y/30Y/TIPS 边际回落，但水平仍高；H.4.1 的准备金下降和 TGA 上升尚未被新数据修复。美国零售销售下滑与密歇根信心下降强化增长担忧，而 1年通胀预期上行使 Fed 更难明确转宽。PBOC 属稳定对冲。",
+    "items": [
+      {
+        "entity": "Fed H.15",
+        "signal": "2026-08-13：EFFR 3.63%，2Y 4.15%，5Y 4.32%，10Y 4.63%，20Y 5.20%，30Y 5.21%；TIPS 10Y 2.39%，30Y 2.97%。",
+        "direction": "边际缓和但仍压估值",
+        "impact": "利率小幅回落支撑科技反弹，但长端/实际利率仍限制高估值 AI 与半导体扩张。",
+        "confidence": "High",
+        "source": "Federal Reserve H.15",
+        "url": "https://www.federalreserve.gov/releases/h15/"
+      },
+      {
+        "entity": "Fed H.4.1",
+        "signal": "最新仍为 2026-08-13 发布/截至 2026-08-12 周数据：准备金平均约 2.944 万亿美元，周降约 493 亿美元；TGA 平均约 9639.5 亿美元，周增约 566 亿美元。",
+        "direction": "收紧",
+        "impact": "准备金下降与 TGA 上升尚未被修复，维持 Orange 的核心压制项。",
+        "confidence": "High",
+        "source": "Federal Reserve H.4.1",
+        "url": "https://www.federalreserve.gov/releases/h41/current/"
+      },
+      {
+        "entity": "U.S. Census retail sales",
+        "signal": "2026 年 7 月零售和食品服务销售额 7636 亿美元，环比 -0.6%，同比 +5.0%；5-7 月合计同比 +6.3%。",
+        "direction": "增长走弱",
+        "impact": "消费需求转弱压制平台科技、消费电子和广告/云外需预期；也可能降低加息预期，但不是直接利好。",
+        "confidence": "High",
+        "source": "U.S. Census",
+        "url": "https://www.census.gov/retail/sales.html"
+      },
+      {
+        "entity": "University of Michigan",
+        "signal": "2026 年 8 月初值：消费者信心 51.0，7 月为 55.2；当前状况 51.8，预期 50.6；1年通胀预期 4.3%，长期通胀预期 3.3%。",
+        "direction": "滞胀式压力",
+        "impact": "消费者信心走弱但通胀预期仍高，形成对成长股不友好的宏观组合。",
+        "confidence": "High",
+        "source": "University of Michigan Surveys of Consumers",
+        "url": "https://www.sca.isr.umich.edu/"
+      },
+      {
+        "entity": "PBOC / China liquidity",
+        "signal": "新华社报道央行 8 月 14 日开展 10000 亿元 6 个月买断式逆回购，8 月同期限到期量同为 10000 亿元；央行还预告 8 月 14 日、17-19 日开展隔夜逆回购，每日操作量不超过 6000 亿元。",
+        "direction": "稳定对冲",
+        "impact": "国内资金面有托底，但更像削峰填谷，不足以抵消美元流动性约束。",
+        "confidence": "Medium",
+        "source": "Xinhua / PBOC announcement via 21st Century Business Herald",
+        "url": "https://www.news.cn/fortune/20260813/0867acf5286e40718be1bba39a002c13/c.html"
+      },
+      {
+        "entity": "US market reaction",
+        "signal": "AP 报道 8 月 14 日 S&P 500 -0.2% 至 7,785.76，Dow -0.2%，Nasdaq -0.3%，Russell 2000 +0.5%；周度 S&P 500 +0.4%，Nasdaq +0.1%。",
+        "direction": "高位降温",
+        "impact": "美股仍接近高位，但科技和芯片交易已有获利回吐；不支持无差别追高。",
+        "confidence": "Medium",
+        "source": "AP",
+        "url": "https://apnews.com/article/41b7cf2acc6562758183b1c5eae73635"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "科技催化下调为 Mixed。官方正反馈仍在：Micron AI 基金、中芯/应用材料/联想/鸿海/腾讯/Cisco 等卖铲链继续有效；但 Nvidia/OpenAI 担保缩小属于可信媒体风险、未见官方确认，同时美国需求数据变弱，融资链和估值链开始变得敏感。",
+    "items": [
+      {
+        "event": "Micron AI venture fund",
+        "affected_chain": "HBM/DRAM/NAND、数据中心存储、AI compute、physical AI",
+        "direction": "利好",
+        "winners": "高性能内存、存储、AI 数据基础设施、in-memory compute 和 physical AI 生态。",
+        "losers": "缺客户验证、只靠概念的边缘 AI/存储映射。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "Micron IR",
+        "url": "https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx"
+      },
+      {
+        "event": "Nvidia/OpenAI data-center guarantee reportedly reduced",
+        "affected_chain": "AI 数据中心融资、GPU 租赁、云算力、数据中心债务",
+        "direction": "利空/待验证",
+        "winners": "资本结构更稳、客户长约更清晰的 AI 基建平台。",
+        "losers": "依赖大额担保、租赁回款不确定、项目融资成本上升的平台和供应链。",
+        "evidence": "媒体报道，未见官方确认",
+        "confidence": "Medium",
+        "source": "Reuters via Investing.com / WSJ",
+        "url": "https://www.investing.com/news/stock-market-news/nvidia-scales-back-250-billion-openai-data-center-guarantee-wsj-reports-4861638"
+      },
+      {
+        "event": "US retail sales and consumer sentiment weaken",
+        "affected_chain": "平台科技、广告、电商、消费电子、云外需",
+        "direction": "利空",
+        "winners": "现金流稳定、防御性更强、订单由企业/云厂锁定的卖铲链。",
+        "losers": "依赖消费弹性、广告预算或高估值远期现金流的科技方向。",
+        "evidence": "官方/一手数据确认",
+        "confidence": "High",
+        "source": "U.S. Census / University of Michigan",
+        "url": "https://www.census.gov/retail/sales.html"
+      },
+      {
+        "event": "SMIC Q2 and Applied Materials Q3 reinforce semiconductor equipment cycle",
+        "affected_chain": "晶圆制造、半导体设备、材料、先进封装、检测计量",
+        "direction": "利好",
+        "winners": "有产能利用率、资本开支、订单和毛利率验证的制造/设备/材料链。",
+        "losers": "没有订单验证、仅靠国产替代或 AI 概念的高估值标的。",
+        "evidence": "官方确认",
+        "confidence": "High",
+        "source": "HKEX / Applied Materials IR",
+        "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf"
+      },
+      {
+        "event": "Intel offering closing remains absent",
+        "affected_chain": "先进制程、晶圆厂 CapEx、CPU/AI compute",
+        "direction": "待验证",
+        "winners": "若 closing 和资金用途确认，Intel 资产负债表和 CapEx 叙事可改善。",
+        "losers": "若迟迟不确认或稀释/ROI 压力扩大，先进制程链情绪受压。",
+        "evidence": "未见官方 closing 确认",
+        "confidence": "Medium",
+        "source": "Intel IR",
+        "url": "https://www.intc.com/"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "AI 服务器/ODM/液冷/电源",
+      "verified_direct": "已验证海外/港股主体：联想、鸿海/Foxconn、腾讯；A/H 具体供应商需公司公告或客户认证。",
+      "inferred": "服务器、液冷、电源、连接器、PCB、线束、机柜、光模块和高速网络继续是卖铲核心。",
+      "risk": "全球订单不自动映射为 A/H 公司订单；需要收入、毛利率和现金流验证。"
+    },
+    {
+      "theme": "半导体制造/设备/材料",
+      "verified_direct": "已验证：中芯国际 00981/688981 官方 Q2 收入、毛利率、产能利用率、资本开支和 Q3 指引；应用材料官方 Q3 强指引。",
+      "inferred": "设备、材料、厂务、检测计量、成熟/特色工艺、先进封装和 HBM 配套链条受益概率提高。",
+      "risk": "不要把 AI 溢出效应直接等同于先进 AI GPU 制造突破或所有国产设备订单确认。"
+    },
+    {
+      "theme": "内存/存储/HBM",
+      "verified_direct": "已验证 Micron 2.5 亿美元 AI 基金；此前 Micron 财报与 Samsung 路线图支持 AI memory 长逻辑。",
+      "inferred": "HBM、DRAM、NAND、企业级 SSD、数据中心存储和内存计算方向长期受益。",
+      "risk": "基金是战略投资，不是短期订单或价格上修确认。"
+    },
+    {
+      "theme": "AI 数据中心融资链",
+      "verified_direct": "NVIDIA 5000 亿美元 AI financing platform 属官方历史确认；本轮 Nvidia/OpenAI 担保缩小仅为媒体报道，未见官方确认。",
+      "inferred": "资本成本低、客户长约强、项目回款透明的平台更占优；高杠杆租赁平台需降权。",
+      "risk": "如果融资结构收紧，GPU、服务器、IDC、电力容量订单节奏可能波动。"
+    },
+    {
+      "theme": "平台科技/消费电子",
+      "verified_direct": "美国零售销售和消费者信心转弱为官方/一手数据；京东此前 Q2 收入同比下滑但利润和 FCF 修复。",
+      "inferred": "平台科技和消费电子弹性弱于硬件卖铲链。",
+      "risk": "需求走弱叠加通胀预期黏性，会压制高估值和广告/电商链。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "Intel 200 亿美元发行 closing release",
+      "why": "截至本轮仍未见官方 closing；决定这笔资金能否计入 CapEx/资产负债表改善。"
+    },
+    {
+      "item": "Nvidia/OpenAI 数据中心担保是否官方确认",
+      "why": "如果低于 1200 亿美元的媒体消息被确认，AI 基建融资链需要重新定价。"
+    },
+    {
+      "item": "Fed H.15/H.4.1 下一次更新",
+      "why": "确认长端/TIPS 回落是否延续，以及准备金/TGA 是否修复。"
+    },
+    {
+      "item": "PCE、就业、油价与密歇根终值",
+      "why": "判断宏观组合是软着陆利好科技，还是增长走弱叠加通胀预期的估值压制。"
+    },
+    {
+      "item": "AI 卖铲链订单转 FCF",
+      "why": "应用材料、联想、鸿海、腾讯、中芯、Cisco 等需要继续把订单和 CapEx 转成收入、毛利率和现金流。"
+    },
+    {
+      "item": "PBOC 8月17-19日隔夜逆回购执行量",
+      "why": "验证国内资金面是短端削峰填谷，还是进一步转向更宽松。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Federal Reserve H.15 Selected Interest Rates",
+      "url": "https://www.federalreserve.gov/releases/h15/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Federal Reserve H.4.1",
+      "url": "https://www.federalreserve.gov/releases/h41/current/",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "U.S. Census Monthly Retail Trade",
+      "url": "https://www.census.gov/retail/sales.html",
+      "used_for": "Liquidity / demand risk",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "University of Michigan Surveys of Consumers",
+      "url": "https://www.sca.isr.umich.edu/",
+      "used_for": "Liquidity / sentiment / inflation expectations",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Micron Ventures Paradigm Fund",
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Nvidia/OpenAI guarantee reduction report",
+      "url": "https://www.investing.com/news/stock-market-news/nvidia-scales-back-250-billion-openai-data-center-guarantee-wsj-reports-4861638",
+      "used_for": "Tech catalyst / financing risk",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Intel Investor Relations",
+      "url": "https://www.intc.com/",
+      "used_for": "CapEx / watch item",
+      "published_at": "2026-08-16 checked"
+    },
+    {
+      "title": "AP market recap",
+      "url": "https://apnews.com/article/41b7cf2acc6562758183b1c5eae73635",
+      "used_for": "Liquidity / market reaction",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Xinhua PBOC reverse repo report",
+      "url": "https://www.news.cn/fortune/20260813/0867acf5286e40718be1bba39a002c13/c.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "SMIC 2026 Q2 Results - HKEX",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300354_c.pdf",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Applied Materials Q3 FY2026 Results",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Lenovo Investor Relations",
+      "url": "https://investor.lenovo.com/",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-14"
+    },
+    {
+      "title": "Tencent Q2 2026 Results",
+      "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-13"
+    },
+    {
+      "title": "Hon Hai / Foxconn Q2 2026 Results",
+      "url": "https://www.foxconn.com/en-us/press-center/press-releases/latest-news/2095",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-08-12"
+    }
+  ]
+}

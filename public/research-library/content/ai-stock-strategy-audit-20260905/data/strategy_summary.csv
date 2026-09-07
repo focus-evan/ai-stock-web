@@ -1,0 +1,15 @@
+﻿id,name,horizon,family,follow_rows,dedup_all,cache_rows,cache_original,cache_reconstructed,cache_stock_occurrences,cache_dates,missing_old_count,unique_recommendations,recommendation_follow_overlap,sample_count,win_rate,avg_return
+dragon_head,龙头战法,3,high_beta_sentiment,721,721,446,430,16,5696,123,4,2081,309,284,48.5915,1.6574
+emotion_relay,情绪接力,2,high_beta_sentiment,235,235,84,80,4,544,79,0,270,195,190,48.4211,0.0408
+event_driven,事件驱动,5,catalyst,269,269,148,144,4,961,120,8,261,136,134,51.4925,1.938
+breakthrough,突破战法,5,trend_structure,232,232,144,141,3,462,119,0,112,65,57,40.3509,-0.9373
+volume_price,量价关系,5,trend_structure,252,252,143,140,3,416,118,0,138,115,94,45.7447,-0.5428
+overnight,隔夜施工,1,overnight,342,339,129,125,4,481,113,0,390,267,264,35.9848,-0.3998
+moving_average,均线战法,10,trend_structure,256,256,144,141,3,458,118,2,113,59,48,43.75,1.1816
+northbound,北向资金,15,capital_flow,236,236,92,88,4,400,81,0,126,104,94,54.2553,3.7989
+trend_momentum,趋势动量,7,trend_structure,293,293,138,135,3,452,114,0,256,198,149,42.2819,-1.1312
+combined,综合战法,5,blended,154,154,109,105,4,319,75,0,80,55,52,46.1538,-2.561
+yangjia_emotion_cycle,炒股养家,1,high_beta_sentiment,308,308,130,118,12,458,41,0,83,76,43,44.186,-0.5512
+kobe92_cycle_speculation,92科比,1,high_beta_sentiment,269,269,129,117,12,481,41,0,112,66,40,45.0,-0.2029
+a_share_leader_tactics,陈小群龙头,1,high_beta_sentiment,246,246,128,116,12,381,41,0,40,40,15,40.0,-2.9302
+beijing_chaogu_first_board,北京炒家首板,1,first_board,221,221,118,106,12,497,41,0,42,41,25,44.0,0.4033

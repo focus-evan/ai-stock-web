@@ -1,0 +1,792 @@
+{
+  "generated_at": "2026-09-06T20:29:54.993778+08:00",
+  "window": "2026-09-05 15:00 至 2026-09-06 07:00 北京时间；2026-09-06为周日非交易日；不产生新A股交易确认",
+  "edition": "非交易日 / 周日多分支退潮观察版",
+  "confidence": "低",
+  "source_status": {
+    "财联社": "部分成功/财联社数据缺口：成功/早报截点说明：部分成功/早报截点：取得窗口内未取得可核验的新A股交易证据；9月6日07:00后周末汇总与观点全部排除，继续沿用9月4日收盘硬证据。",
+    "公告源": "部分成功：交易所/巨潮入口可用，但未完成部分成功：部分成功：部分成功：巨潮周末公告索引可访问；9月5日至6日07:00全量公告未逐条闭环，未发现逆转AI硬件退潮的统一公司级硬触发。",
+    "行情": "成功/部分缺口：成功/部分缺口：成功：9月4日沪指跌0.30%、创业板跌0.78%、科创50跌2.10%，成交约2.03万亿元；CPO、存储、PCB、液冷服务器均跌幅居前，浪潮信息等跌停。",
+    "财务": "沿用并复核：旧CPO五家公司四单季度底稿完整，继续只作退潮锚；液冷新池在板块同步退潮下不进入买入排序，待四单季度/纯度补齐和价格止跌后重启。",
+    "海外": "成功：成功：部分成功：前一交易日美股科技反弹，但截至9月5日07:00未形成能抵消A股AI硬件多分支退潮的同截点完整海外矩阵。",
+    "X MCP": "不可用：未实测到xapi公开帖子搜索恢复，继续按403处理；不作主数据源。"
+  },
+  "top_narratives": [
+    {
+      "rank": 1,
+      "name": "AI硬件 / 多分支退潮与下周一止跌验证",
+      "heat": 89,
+      "evidence": "9月4日CPO、存储、PCB、液冷、半导体同步回调，科创50领跌；退潮已从CPO核心扩散到此前相对强势的液冷分支。",
+      "stance": "多分支退潮 / 防守；旧CPO池只作退潮锚，液冷也不抢反抽。"
+    },
+    {
+      "rank": 2,
+      "name": "猪肉 / 大消费逆势防御",
+      "heat": 78,
+      "evidence": "9月4日猪肉、养殖、白酒、食品逆势走强，体现资金从科技高弹性向消费防御切换。",
+      "stance": "防御轮动观察，持续性仍需下周一宽度确认。"
+    },
+    {
+      "rank": 3,
+      "name": "油气 / 地缘与通胀交易",
+      "heat": 69,
+      "evidence": "油价大涨、美债收益率上行，海外风险偏好受压；A股映射需正确日期宽度确认。",
+      "stance": "宏观防御观察，不把消息波动当长期利润。"
+    }
+  ],
+  "main_narrative": {
+    "name": "AI硬件 / 多分支退潮与下周一止跌验证",
+    "heat": 89,
+    "status": "A级负向扩散/周日防守",
+    "evidence": "9月3日防守方向命中、旧CPO池平均跑输沪深300约0.35%、角色履职率60%；9月4日液冷也加入回调，验证退潮扩散。"
+  },
+  "ignition_scores": {
+    "narrative_name": "AI硬件 / 多分支退潮与下周一止跌验证",
+    "NSS": 89,
+    "FID": 82,
+    "PLS": 5,
+    "ENOS": 2,
+    "TLR": 82,
+    "TLM": 0,
+    "明牌程度": "极高：CPO、存储、PCB、液冷同步回调，退潮由核心扩散至分支",
+    "risk_penalty": 98,
+    "mode": "AI硬件多分支退潮 / 周末防守；TLM归零，不参与首日反抽",
+    "action": "不抄底CPO或液冷；至少等待科技权重止跌、跌停减少、成交缩量且两个以上硬件分支同步修复后再评估。"
+  },
+  "candidates": [
+    {
+      "code": "300308",
+      "name": "中际旭创",
+      "role": "叙事总龙头 / 海外AI算力映射 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+      "s5_score": 93.4,
+      "v231_total": 90,
+      "label": "观察",
+      "trigger": "科技权重停止创新低、跌停减少，且CPO/液冷/PCB至少两个分支同步修复并有成交承接",
+      "invalidation": "科技权重继续破低、液冷高标补跌、硬件分支无同步修复或海外利率/科技再度走弱"
+    },
+    {
+      "code": "600487",
+      "name": "亨通光电",
+      "role": "首爆中军 / 光纤光缆与海缆 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+      "s5_score": 39.8,
+      "v231_total": 79.0,
+      "label": "观察",
+      "trigger": "科技权重停止创新低、跌停减少，且CPO/液冷/PCB至少两个分支同步修复并有成交承接",
+      "invalidation": "科技权重继续破低、液冷高标补跌、硬件分支无同步修复或海外利率/科技再度走弱"
+    },
+    {
+      "code": "003031",
+      "name": "中瓷电子",
+      "role": "正宗滞后 / 光通信陶瓷封装 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+      "s5_score": 59.4,
+      "v231_total": 75.9,
+      "label": "观察",
+      "trigger": "科技权重停止创新低、跌停减少，且CPO/液冷/PCB至少两个分支同步修复并有成交承接",
+      "invalidation": "科技权重继续破低、液冷高标补跌、硬件分支无同步修复或海外利率/科技再度走弱"
+    },
+    {
+      "code": "603083",
+      "name": "剑桥科技",
+      "role": "分支龙头 / 光模块弹性 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+      "s5_score": 44.6,
+      "v231_total": 73.5,
+      "label": "观察",
+      "trigger": "科技权重停止创新低、跌停减少，且CPO/液冷/PCB至少两个分支同步修复并有成交承接",
+      "invalidation": "科技权重继续破低、液冷高标补跌、硬件分支无同步修复或海外利率/科技再度走弱"
+    },
+    {
+      "code": "603118",
+      "name": "共进股份",
+      "role": "低位补涨 / 网络设备代工 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+      "s5_score": 12.9,
+      "v231_total": 65,
+      "label": "观察",
+      "trigger": "科技权重停止创新低、跌停减少，且CPO/液冷/PCB至少两个分支同步修复并有成交承接",
+      "invalidation": "科技权重继续破低、液冷高标补跌、硬件分支无同步修复或海外利率/科技再度走弱"
+    }
+  ],
+  "v231_scores": {
+    "300308": {
+      "industry": 18,
+      "competitiveness": 19,
+      "financial": 20,
+      "valuation_odds": 8,
+      "catalyst_shadow": 17,
+      "governance_liquidity": 8,
+      "total": 90,
+      "label": "保留"
+    },
+    "600487": {
+      "industry": 17,
+      "competitiveness": 17,
+      "financial": 14.0,
+      "valuation_odds": 9,
+      "catalyst_shadow": 14,
+      "governance_liquidity": 8,
+      "total": 79.0,
+      "label": "观察"
+    },
+    "603083": {
+      "industry": 17,
+      "competitiveness": 15,
+      "financial": 11.5,
+      "valuation_odds": 7,
+      "catalyst_shadow": 16,
+      "governance_liquidity": 7,
+      "total": 73.5,
+      "label": "观察"
+    },
+    "603118": {
+      "industry": 15,
+      "competitiveness": 13,
+      "financial": 7,
+      "valuation_odds": 9,
+      "catalyst_shadow": 14,
+      "governance_liquidity": 7,
+      "total": 65,
+      "label": "观察"
+    },
+    "003031": {
+      "industry": 16,
+      "competitiveness": 17,
+      "financial": 14.9,
+      "valuation_odds": 8,
+      "catalyst_shadow": 13,
+      "governance_liquidity": 7,
+      "total": 75.9,
+      "label": "观察"
+    }
+  },
+  "s5_scores": {
+    "300308": {
+      "name": "中际旭创",
+      "score": 93.4,
+      "label": "保留",
+      "latest_period": "20260331",
+      "latest_metrics": {
+        "period": "20260331",
+        "revenue": 19496398083.95,
+        "revenue_yoy": 1.921169094232574,
+        "net_profit": 5734501526.83,
+        "net_profit_yoy": 2.6228365713294144,
+        "deduct_net_profit": 5717748340.78,
+        "gross_margin": 0.3847841852862958,
+        "net_margin": 0.2941313314458227,
+        "operating_cashflow": 3367573676.62,
+        "roe_cum": 17.54,
+        "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+      },
+      "quarters": [
+        {
+          "period": "20260331",
+          "revenue": 19496398083.95,
+          "revenue_yoy": 1.921169094232574,
+          "net_profit": 5734501526.83,
+          "net_profit_yoy": 2.6228365713294144,
+          "deduct_net_profit": 5717748340.78,
+          "gross_margin": 0.3847841852862958,
+          "net_margin": 0.2941313314458227,
+          "operating_cashflow": 3367573676.62,
+          "roe_cum": 17.54,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20251231",
+          "revenue": 13235134789.349998,
+          "revenue_yoy": 1.0207676540322845,
+          "net_profit": 3665321863.750001,
+          "net_profit_yoy": 1.5833469382532797,
+          "deduct_net_profit": 3626353533.8500004,
+          "gross_margin": 0.3583091187235956,
+          "net_margin": 0.2769387635326086,
+          "operating_cashflow": 5441304932.6,
+          "roe_cum": 43.84,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250930",
+          "revenue": 10215726013.52,
+          "revenue_yoy": 0.5682705005704158,
+          "net_profit": 3136817052.0,
+          "net_profit_yoy": 1.24984312927644,
+          "deduct_net_profit": 3108318117.79,
+          "gross_margin": 0.3559422685747112,
+          "net_margin": 0.30705767244037085,
+          "operating_cashflow": 2236357940.13,
+          "roe_cum": 31.22,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250630",
+          "revenue": 8114898350.57,
+          "revenue_yoy": 0.36246372707577446,
+          "net_profit": 2412239256.0299997,
+          "net_profit_yoy": 0.7879633522027731,
+          "deduct_net_profit": 2406996307.68,
+          "gross_margin": 0.3531580715978654,
+          "net_margin": 0.2972605634500106,
+          "operating_cashflow": 1054003717.1400003,
+          "roe_cum": 18.84,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        }
+      ],
+      "valuation_snapshot": {
+        "market_cap": null,
+        "pe_ttm": null,
+        "note": "同截点缺口，不进入S分"
+      }
+    },
+    "600487": {
+      "name": "亨通光电",
+      "score": 39.8,
+      "label": "剔除/数据偏弱",
+      "latest_period": "20260331",
+      "latest_metrics": {
+        "period": "20260331",
+        "revenue": 17790560069.79,
+        "revenue_yoy": 0.34086710357021177,
+        "net_profit": 1105364232.68,
+        "net_profit_yoy": 0.9852680730493579,
+        "deduct_net_profit": 1133293686.59,
+        "gross_margin": 0.07450269534407336,
+        "net_margin": 0.062132064889683244,
+        "operating_cashflow": -193663046.38,
+        "roe_cum": 3.44,
+        "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+      },
+      "quarters": [
+        {
+          "period": "20260331",
+          "revenue": 17790560069.79,
+          "revenue_yoy": 0.34086710357021177,
+          "net_profit": 1105364232.68,
+          "net_profit_yoy": 0.9852680730493579,
+          "deduct_net_profit": 1133293686.59,
+          "gross_margin": 0.07450269534407336,
+          "net_margin": 0.062132064889683244,
+          "operating_cashflow": -193663046.38,
+          "roe_cum": 3.44,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20251231",
+          "revenue": 17234345372.86,
+          "revenue_yoy": -0.019933431828991877,
+          "net_profit": 304448360.8299999,
+          "net_profit_yoy": -0.3294325982618177,
+          "deduct_net_profit": 225699061.67999983,
+          "gross_margin": 0.01569073704916264,
+          "net_margin": 0.01766521177586668,
+          "operating_cashflow": 2314471548.0699997,
+          "roe_cum": 8.96,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250930",
+          "revenue": 17571945333.54,
+          "revenue_yoy": 0.11320310530854738,
+          "net_profit": 762622270.24,
+          "net_profit_yoy": 0.0809882784975069,
+          "deduct_net_profit": 768642432.4300001,
+          "gross_margin": 0.04686487112204648,
+          "net_margin": 0.04339999105189363,
+          "operating_cashflow": 488421399.84000003,
+          "roe_cum": 7.99,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250630",
+          "revenue": 18780611897.199997,
+          "revenue_yoy": 0.2664384708579419,
+          "net_profit": 1056415345.1099999,
+          "net_profit_yoy": -0.03633232252472429,
+          "deduct_net_profit": 1025194430.81,
+          "gross_margin": 0.06030400680229433,
+          "net_margin": 0.056250315532450836,
+          "operating_cashflow": -71745369.35,
+          "roe_cum": 5.47,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        }
+      ],
+      "valuation_snapshot": {
+        "market_cap": null,
+        "pe_ttm": null,
+        "note": "同截点缺口，不进入S分"
+      }
+    },
+    "603083": {
+      "name": "剑桥科技",
+      "score": 44.6,
+      "label": "剔除/数据偏弱",
+      "latest_period": "20260331",
+      "latest_metrics": {
+        "period": "20260331",
+        "revenue": 1286551914.15,
+        "revenue_yoy": 0.43981308736436175,
+        "net_profit": 118328991.17,
+        "net_profit_yoy": 2.76440510129284,
+        "deduct_net_profit": 116923697.09,
+        "gross_margin": 0.05220232705057391,
+        "net_margin": 0.09197373993895744,
+        "operating_cashflow": -219391482.7,
+        "roe_cum": 1.58,
+        "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+      },
+      "quarters": [
+        {
+          "period": "20260331",
+          "revenue": 1286551914.15,
+          "revenue_yoy": 0.43981308736436175,
+          "net_profit": 118328991.17,
+          "net_profit_yoy": 2.76440510129284,
+          "deduct_net_profit": 116923697.09,
+          "gross_margin": 0.05220232705057391,
+          "net_margin": 0.09197373993895744,
+          "operating_cashflow": -219391482.7,
+          "roe_cum": 1.58,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20251231",
+          "revenue": 1463477550.9800005,
+          "revenue_yoy": 0.6476893050878942,
+          "net_profit": 4192170.1899999976,
+          "net_profit_yoy": -0.7194592372048976,
+          "deduct_net_profit": 3499093.9799999893,
+          "gross_margin": 0.0017062669381764468,
+          "net_margin": 0.002864526474760587,
+          "operating_cashflow": -82829178.82000005,
+          "roe_cum": 8.25,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250930",
+          "revenue": 1324801878.7199998,
+          "revenue_yoy": 0.3228669279053442,
+          "net_profit": 138388632.85000002,
+          "net_profit_yoy": 0.9291886402416374,
+          "deduct_net_profit": 136257719.13,
+          "gross_margin": 0.08259894914681633,
+          "net_margin": 0.10445987062134052,
+          "operating_cashflow": -197951218.39999998,
+          "roe_cum": 10.66,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250630",
+          "revenue": 1141571454.8600001,
+          "revenue_yoy": 0.2505529312842978,
+          "net_profit": 89470756.88,
+          "net_profit_yoy": 0.655357007783173,
+          "deduct_net_profit": 88729393.33,
+          "gross_margin": 0.07881509638924374,
+          "net_margin": 0.07837508243491643,
+          "operating_cashflow": -47669837.599999994,
+          "roe_cum": 5.1,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        }
+      ],
+      "valuation_snapshot": {
+        "market_cap": null,
+        "pe_ttm": null,
+        "note": "同截点缺口，不进入S分"
+      }
+    },
+    "603118": {
+      "name": "共进股份",
+      "score": 12.9,
+      "label": "剔除/数据偏弱",
+      "latest_period": "20260331",
+      "latest_metrics": {
+        "period": "20260331",
+        "revenue": 2179307067.01,
+        "revenue_yoy": 0.06256525253922596,
+        "net_profit": 24449905.91,
+        "net_profit_yoy": 0.09645537224834988,
+        "deduct_net_profit": 18961280.82,
+        "gross_margin": 0.0024995566446144334,
+        "net_margin": 0.011219119269660868,
+        "operating_cashflow": -66279902.6,
+        "roe_cum": 0.48,
+        "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+      },
+      "quarters": [
+        {
+          "period": "20260331",
+          "revenue": 2179307067.01,
+          "revenue_yoy": 0.06256525253922596,
+          "net_profit": 24449905.91,
+          "net_profit_yoy": 0.09645537224834988,
+          "deduct_net_profit": 18961280.82,
+          "gross_margin": 0.0024995566446144334,
+          "net_margin": 0.011219119269660868,
+          "operating_cashflow": -66279902.6,
+          "roe_cum": 0.48,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20251231",
+          "revenue": 2658476057.829999,
+          "revenue_yoy": 0.14133050699650362,
+          "net_profit": -8505293.870000005,
+          "net_profit_yoy": -0.9091741851996564,
+          "deduct_net_profit": -3697417.1000000015,
+          "gross_margin": 0.0045272351972288636,
+          "net_margin": -0.0031993118181182774,
+          "operating_cashflow": 490848558.49,
+          "roe_cum": 1.56,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250930",
+          "revenue": 2386087323.7300005,
+          "revenue_yoy": 0.16104687028914078,
+          "net_profit": 28794936.22,
+          "net_profit_yoy": -0.04527342574059534,
+          "deduct_net_profit": 13007516.440000005,
+          "gross_margin": 0.023637435813469453,
+          "net_margin": 0.012067846777286811,
+          "operating_cashflow": -146416261.55000004,
+          "roe_cum": 1.73,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250630",
+          "revenue": 2102185725.03,
+          "revenue_yoy": 0.015499838308708158,
+          "net_profit": 35194096.68000001,
+          "net_profit_yoy": -2.5622147692759056,
+          "deduct_net_profit": 37795367.94,
+          "gross_margin": 0.0407811821996728,
+          "net_margin": 0.016741668569506513,
+          "operating_cashflow": 3802579.030000001,
+          "roe_cum": 1.15,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        }
+      ],
+      "valuation_snapshot": {
+        "market_cap": null,
+        "pe_ttm": null,
+        "note": "同截点缺口，不进入S分"
+      }
+    },
+    "003031": {
+      "name": "中瓷电子",
+      "score": 59.4,
+      "label": "观察",
+      "latest_period": "20260331",
+      "latest_metrics": {
+        "period": "20260331",
+        "revenue": 1099043302.94,
+        "revenue_yoy": 0.7904824624916889,
+        "net_profit": 193303413.2,
+        "net_profit_yoy": 0.5731819798501767,
+        "deduct_net_profit": 189683294.62,
+        "gross_margin": 0.20384876587727221,
+        "net_margin": 0.17588334570885691,
+        "operating_cashflow": 376982766.9,
+        "roe_cum": 2.97,
+        "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+      },
+      "quarters": [
+        {
+          "period": "20260331",
+          "revenue": 1099043302.94,
+          "revenue_yoy": 0.7904824624916889,
+          "net_profit": 193303413.2,
+          "net_profit_yoy": 0.5731819798501767,
+          "deduct_net_profit": 189683294.62,
+          "gross_margin": 0.20384876587727221,
+          "net_margin": 0.17588334570885691,
+          "operating_cashflow": 376982766.9,
+          "roe_cum": 2.97,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20251231",
+          "revenue": 734708154.6799998,
+          "revenue_yoy": -0.03585155893666503,
+          "net_profit": 119386364.60999995,
+          "net_profit_yoy": -0.2975974028826541,
+          "deduct_net_profit": 115118983.5,
+          "gross_margin": 0.19971129206250277,
+          "net_margin": 0.1624949496606559,
+          "operating_cashflow": 326831217.25,
+          "roe_cum": 9.04,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250930",
+          "revenue": 745316863.6600001,
+          "revenue_yoy": 0.12226012655839313,
+          "net_profit": 165362122.09000003,
+          "net_profit_yoy": 0.05387305666785469,
+          "deduct_net_profit": 155919411.38,
+          "gross_margin": 0.22413699314363902,
+          "net_margin": 0.2218682149199769,
+          "operating_cashflow": 286745804.03,
+          "roe_cum": 7.15,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        },
+        {
+          "period": "20250630",
+          "revenue": 784219514.5500001,
+          "revenue_yoy": 0.16291563682072363,
+          "net_profit": 155052044.40999997,
+          "net_profit_yoy": 0.19539988863357372,
+          "deduct_net_profit": 150508992.82999998,
+          "gross_margin": 0.24125543210763514,
+          "net_margin": 0.19771510595342906,
+          "operating_cashflow": 150932679.00000003,
+          "roe_cum": 4.5,
+          "roic_trend": "公开摘要未提供可比单季ROIC，使用ROE趋势作低权重校验"
+        }
+      ],
+      "valuation_snapshot": {
+        "market_cap": null,
+        "pe_ttm": null,
+        "note": "同截点缺口，不进入S分"
+      }
+    }
+  },
+  "risk_notes": [
+    "最高风险：最高风险：最高风险：最高风险：把液冷前期强势或电子信息政策当成逆转信号；9月4日多分支同步回调说明当前首先是去风险，而非选分支抄底。",
+    "周日不产生A股交易确认；9月5日08:03财联社早报晚于07:00，未用于盘前结论。",
+    "周末正确日期完整公告、液冷新候选四单季度/纯度证据及ROIC/PE.ttm仍有缺口。"
+  ],
+  "sources_or_data_gaps": [
+    {
+      "name": "财联社",
+      "url": "https://www.cls.cn/",
+      "note": "沿用9月4日收盘证据；9月6日07:00后周末资讯全部排除。"
+    },
+    {
+      "name": "巨潮资讯",
+      "url": "https://www.cninfo.com.cn/",
+      "note": "官方公告优先入口；9月5日至6日07:00周末公告漏斗未闭环。"
+    },
+    {
+      "name": "AP美股收盘",
+      "url": "https://apnews.com/article/63300d6f51d4d27ce881cc6c11719171",
+      "note": "8月18日纳指跌1.3%，AI芯片高估值链承压；不是8月19日完整同截点矩阵。"
+    }
+  ],
+  "prior_calibration": {
+    "calibrated_at": "2026-09-05T08:49:43.036040+08:00",
+    "forecast_path": "D:\\Evan\\html\\theme-ignition-v231\\archive\\theme_ignition_v231_20260903_102125.json",
+    "forecast_generated_at": "2026-09-03T10:21:25.634211+08:00",
+    "forecast_window": "2026-09-02 15:00 至 2026-09-03 07:00 北京时间；2026-09-03为交易日；严格排除07:00后盘中数据",
+    "session": "2026-09-03",
+    "benchmark": {
+      "status": "ok",
+      "session": "2026-09-03",
+      "symbol": "sh000300",
+      "open": 4570.91,
+      "close": 4552.58,
+      "high": 4585.99,
+      "low": 4536.92,
+      "volume": 182244060.0,
+      "prior_close": 4547.96,
+      "close_to_close": 0.0010158400689539437,
+      "open_to_close": -0.004010142400528549,
+      "mfe_from_open": 0.0032991242444064817,
+      "mae_from_open": -0.007436156038950648
+    },
+    "bias": "defensive",
+    "direction_result": "hit",
+    "candidate_mean_relative_return": -0.003512442137728655,
+    "positive_relative_count": 2,
+    "valid_candidate_count": 5,
+    "role_hits": 3,
+    "role_hit_rate": 0.6,
+    "trigger_evaluation": "not_evaluable_from_daily_ohlc",
+    "outcomes": [
+      {
+        "status": "ok",
+        "session": "2026-09-03",
+        "symbol": "sz300308",
+        "open": 833.2,
+        "close": 813.0,
+        "high": 835.9,
+        "low": 804.02,
+        "volume": 216429.0,
+        "prior_close": 822.4,
+        "close_to_close": -0.011429961089494123,
+        "open_to_close": -0.0242438790206434,
+        "mfe_from_open": 0.0032405184829571443,
+        "mae_from_open": -0.03502160345655314,
+        "code": "300308",
+        "name": "中际旭创",
+        "role": "叙事总龙头 / 海外AI算力映射 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+        "relative_to_benchmark": -0.012445801158448067,
+        "role_result": "fulfilled"
+      },
+      {
+        "status": "ok",
+        "session": "2026-09-03",
+        "symbol": "sh600487",
+        "open": 67.77,
+        "close": 65.29,
+        "high": 67.96,
+        "low": 64.6,
+        "volume": 1306763.0,
+        "prior_close": 66.9,
+        "close_to_close": -0.024065769805680093,
+        "open_to_close": -0.03659436328759025,
+        "mfe_from_open": 0.0028036004131621883,
+        "mae_from_open": -0.04677585952486352,
+        "code": "600487",
+        "name": "亨通光电",
+        "role": "首爆中军 / 光纤光缆与海缆 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+        "relative_to_benchmark": -0.025081609874634037,
+        "role_result": "fulfilled"
+      },
+      {
+        "status": "ok",
+        "session": "2026-09-03",
+        "symbol": "sz003031",
+        "open": 119.52,
+        "close": 120.39,
+        "high": 120.94,
+        "low": 117.2,
+        "volume": 70677.0,
+        "prior_close": 118.92,
+        "close_to_close": 0.012361251261352235,
+        "open_to_close": 0.007279116465863433,
+        "mfe_from_open": 0.011880856760374758,
+        "mae_from_open": -0.019410977242302452,
+        "code": "003031",
+        "name": "中瓷电子",
+        "role": "正宗滞后 / 光通信陶瓷封装 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+        "relative_to_benchmark": 0.011345411192398291,
+        "role_result": "not_fulfilled"
+      },
+      {
+        "status": "ok",
+        "session": "2026-09-03",
+        "symbol": "sh603083",
+        "open": 185.0,
+        "close": 186.31,
+        "high": 192.37,
+        "low": 184.38,
+        "volume": 252297.0,
+        "prior_close": 180.0,
+        "close_to_close": 0.03505555555555562,
+        "open_to_close": 0.007081081081081075,
+        "mfe_from_open": 0.0398378378378379,
+        "mae_from_open": -0.0033513513513513393,
+        "code": "603083",
+        "name": "剑桥科技",
+        "role": "分支龙头 / 光模块弹性 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+        "relative_to_benchmark": 0.034039715486601674,
+        "role_result": "not_fulfilled"
+      },
+      {
+        "status": "ok",
+        "session": "2026-09-03",
+        "symbol": "sh603118",
+        "open": 17.98,
+        "close": 17.19,
+        "high": 18.14,
+        "low": 16.98,
+        "volume": 722482.0,
+        "prior_close": 17.62,
+        "close_to_close": -0.024404086265607194,
+        "open_to_close": -0.043937708565072287,
+        "mfe_from_open": 0.008898776418242438,
+        "mae_from_open": -0.05561735261401557,
+        "code": "603118",
+        "name": "共进股份",
+        "role": "低位补涨 / 网络设备代工 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+        "relative_to_benchmark": -0.025419926334561138,
+        "role_result": "fulfilled"
+      }
+    ],
+    "error_classification": [],
+    "parameter_adjustments": [],
+    "adjustment_note": "Diagnostic only until at least 5 comparable valid observations exist; any later single-review change is capped at 5 points.",
+    "forecast_snapshot": {
+      "main_narrative": {
+        "name": "博通AI网络业绩强验证 / A股CPO价格负背离",
+        "heat": 89,
+        "status": "A级海外强业绩/A股负背离",
+        "evidence": "9月2日防守方向命中、旧CPO池平均跑输沪深300约0.96%、角色履职率80%；博通业绩强但A股不接力，进一步验证价格负背离。"
+      },
+      "ignition_scores": {
+        "narrative_name": "博通AI网络业绩强验证 / A股CPO价格负背离",
+        "NSS": 89,
+        "FID": 82,
+        "PLS": 10,
+        "ENOS": 3,
+        "TLR": 82,
+        "TLM": 1,
+        "明牌程度": "极高：海外AI业绩持续超预期，但A股CPO连续下跌，负背离已充分显性化",
+        "risk_penalty": 96,
+        "mode": "海外业绩强 / A股价格弱的负背离模式；不参与利好刺激的首日反抽",
+        "action": "不抄底旧CPO池；博通利好只有在A股中军止跌、板块宽度扩散后才算跨市场接力，否则继续按背离防守。"
+      },
+      "candidates": [
+        {
+          "code": "300308",
+          "name": "中际旭创",
+          "role": "叙事总龙头 / 海外AI算力映射 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+          "s5_score": 93.4,
+          "v231_total": 90,
+          "label": "观察",
+          "trigger": "中际旭创等CPO中军停止创新低，博通利好映射带动板块宽度扩散且成交不过度放大",
+          "invalidation": "CPO核心继续放量破低、博通利好只拉后排不拉中军、海外反弹再度回吐"
+        },
+        {
+          "code": "600487",
+          "name": "亨通光电",
+          "role": "首爆中军 / 光纤光缆与海缆 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+          "s5_score": 39.8,
+          "v231_total": 79.0,
+          "label": "观察",
+          "trigger": "中际旭创等CPO中军停止创新低，博通利好映射带动板块宽度扩散且成交不过度放大",
+          "invalidation": "CPO核心继续放量破低、博通利好只拉后排不拉中军、海外反弹再度回吐"
+        },
+        {
+          "code": "003031",
+          "name": "中瓷电子",
+          "role": "正宗滞后 / 光通信陶瓷封装 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+          "s5_score": 59.4,
+          "v231_total": 75.9,
+          "label": "观察",
+          "trigger": "中际旭创等CPO中军停止创新低，博通利好映射带动板块宽度扩散且成交不过度放大",
+          "invalidation": "CPO核心继续放量破低、博通利好只拉后排不拉中军、海外反弹再度回吐"
+        },
+        {
+          "code": "603083",
+          "name": "剑桥科技",
+          "role": "分支龙头 / 光模块弹性 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+          "s5_score": 44.6,
+          "v231_total": 73.5,
+          "label": "观察",
+          "trigger": "中际旭创等CPO中军停止创新低，博通利好映射带动板块宽度扩散且成交不过度放大",
+          "invalidation": "CPO核心继续放量破低、博通利好只拉后排不拉中军、海外反弹再度回吐"
+        },
+        {
+          "code": "603118",
+          "name": "共进股份",
+          "role": "低位补涨 / 网络设备代工 / 当前仅作退潮锚 / 当前仅作退潮锚 / 当前仅作退潮锚",
+          "s5_score": 12.9,
+          "v231_total": 65,
+          "label": "观察",
+          "trigger": "中际旭创等CPO中军停止创新低，博通利好映射带动板块宽度扩散且成交不过度放大",
+          "invalidation": "CPO核心继续放量破低、博通利好只拉后排不拉中军、海外反弹再度回吐"
+        }
+      ],
+      "risk_notes": [
+        "最高风险：最高风险：最高风险：再次把海外强业绩直接外推为A股CPO买点；连续两日价格背离说明产业逻辑成立不等于交易时点成立。",
+        "不得使用9月3日07:00后A股盘中数据或08:00财联社早报倒推盘前结论。",
+        "9月2日涨跌停全量池、液冷新候选四单季度/纯度证据及ROIC/PE.ttm存在缺口。"
+      ]
+    },
+    "comparable_sample_size_before": 3,
+    "rolling_20_direction_hit_rate": null
+  },
+  "calibration_window": "2026-09-03",
+  "parameter_adjustments": [],
+  "candidate_pool_warning": "当前5只为旧CPO退潮锚，不是液冷纯正五强；液冷四单季度和业务纯度未补齐前不输出买入排序。"
+}

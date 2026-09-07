@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-07-04 06:01</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>AI CapEx与电力基建继续扩张，但高利率和出口合规风险仍压制追高</h1>
+      <p class="subtitle">本轮维持 Orange：微软、Meta、Alphabet、Amazon、Oracle、Broadcom 等官方材料仍指向 AI/数据中心 CapEx 扩张，Brookfield/Bloom 将 AI 电力基础设施融资框架从 50 亿美元扩大到 250 亿美元，新增验证了“电力成为 AI 工厂瓶颈”的方向；但 Fed 仍维持 3.50%-3.75% 目标区间，10Y 美债最新官方/FRED数据仍在 4.4% 上方，Supermicro 台湾调查继续构成 AI 服务器出口合规压制。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-07-04 06:01</span>
+        <span class="badge gate-neutral">06:00 morning</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>AI CapEx与电力基建继续扩张，但高利率和出口合规风险仍压制追高</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>不追高，优先盯订单已验证的AI电力/液冷/电源与高速互连方向。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>Brookfield/Bloom把AI电力基础设施框架扩大到250亿美元，电力瓶颈成为新增主线。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>10Y美债仍在4.4%上方，Supermicro合规风险未解除，估值扩张受限。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>2026-07-04 12:00复核利率/美元、Supermicro进展、AI电力项目客户与规模。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>AI电力基础设施融资扩容</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Bloom Energy 与 Brookfield 于 2026-06-30 官方宣布将 AI infrastructure power projects 融资框架从此前 50 亿美元扩大到 250 亿美元，并称需求来自 hyperscalers 与 AI infrastructure developers。</p>
+              <p><strong>影响：</strong>直接强化 AI data center 电力、分布式电源、燃料电池、备用电源、配电、液冷与数据中心集成链条；同时说明 CapEx 的瓶颈正在从芯片扩展到电力交付。</p>
+              <p class="source-line"><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>长端利率仍未放行科技估值</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed 2026-06-17 FOMC 声明维持联邦基金目标区间 3.50%-3.75%；FRED/H.15 显示 2026-07-01 10Y 美债为 4.48%，下一次官方更新在 2026-07-06；WSJ 报道 2026-07-02 就业数据后 10Y 一度降至约 4.46%、美元指数跌至 97.25。</p>
+              <p><strong>影响：</strong>弱就业与美元回落只提供边际缓和，尚不足以把高估值 AI/半导体从 Tightening 流动性框架中解放出来；继续避免在估值扩张段追高。</p>
+              <p class="source-line"><a href="https://fred.stlouisfed.org/series/DGS10">Federal Reserve / FRED / WSJ</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>就业转弱但增长动能也放缓</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>BLS 2026-07-02 发布 June 2026 Employment Situation：非农 +57,000，失业率 4.2%，4-5 月合计下修 74,000，劳动参与率降至 61.5%。</p>
+              <p><strong>影响：</strong>这降低进一步加息压力，但也提示美国增长和风险偏好边际走弱；对科技链是估值缓和而非需求端利好。</p>
+              <p class="source-line"><a href="https://www.bls.gov/news.release/archives/empsit_07022026.htm">U.S. Bureau of Labor Statistics</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>AI服务器合规风险仍在台面上</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Supermicro 2026-07-01 Taiwan Business Update 确认台湾员工被问询，两名员工被拘留等待听证、两名保释，并称公司已配合提供办公桌和电子设备访问；未见官方确认订单取消或财务影响。</p>
+              <p><strong>影响：</strong>AI 服务器、GPU 整机和渠道链条的出口合规风险仍是科技催化项的负面权重；合规可追溯供应链相对占优，灰色转运或客户穿透不足方向受压。</p>
+              <p class="source-line"><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>大厂AI基建未见官方下修</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>微软 FY26 Q3 指引下一季 CapEx 超过 400 亿美元、CY2026 CapEx 约 1900 亿美元；Meta Q1 2026 将全年 CapEx 指引上调至 1250-1450 亿美元；Alphabet Q1 CapEx 357 亿美元且大部分用于 AI 技术基础设施；Amazon Q1 自由现金流下降主要反映 AI 相关 property/equipment 购买增加；Oracle 与 Broadcom 的 AI 订单/收入仍强。</p>
+              <p><strong>影响：</strong>GPU/ASIC、HBM、先进封装、光互连、交换机、PCB/CCL、液冷、电源与数据中心建设需求能见度仍高；但高融资成本和 ROI 审视继续约束估值。</p>
+              <p class="source-line"><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft / Meta / Alphabet / Amazon / Oracle / Broadcom IR</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q3 earnings call 指引 Q4 CapEx spend 将超过 400 亿美元；CY2026 预计约 1900 亿美元 CapEx，其中约 250 亿美元来自更高组件价格影响，并称 GPU/CPU/storage capacity 至少到 2026 年仍受约束。</td>
+              <td>持平偏强</td>
+              <td>继续支撑 AI 数据中心、GPU/CPU、存储、网络、电力与液冷需求；关注 finance lease、折旧和组件价格对利润率的压力。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>Meta Q1 2026 官方披露 2026 CapEx 指引为 1250-1450 亿美元，较此前 1150-1350 亿美元上调，原因包括更高组件价格和未来数据中心容量成本。</td>
+              <td>上修</td>
+              <td>利好 GPU/ASIC、服务器、光模块、液冷、电力设备与数据中心工程；但高 CapEx 放大 ROI 与折旧审视。</td>
+              <td>High</td>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx">Meta Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Alphabet</td>
+              <td>Alphabet Q1 2026 earnings call 披露 Q1 CapEx 为 357 亿美元，绝大多数用于支持 AI 机会的 technical infrastructure，其中约 60% 为服务器、40% 为数据中心与网络设备。</td>
+              <td>持平偏强</td>
+              <td>强化 TPU/GPU、服务器、数据中心、网络设备和电力链需求；未见本轮官方下修。</td>
+              <td>High</td>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon / AWS</td>
+              <td>Amazon Q1 2026 官方结果显示 AWS 销售额同比 +28% 至 376 亿美元；TTM 自由现金流下降至 12 亿美元，主要来自 property and equipment 购买同比增加 593 亿美元，增加主要反映 AI 投资。</td>
+              <td>持平偏强</td>
+              <td>确认 AWS AI 基建支出仍强，但现金流压力说明 AI CapEx 的资金效率会被市场持续审视。</td>
+              <td>High</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Oracle</td>
+              <td>FY2026 Q4 RPO 达 6380 亿美元，同比 +363%，环比 +850 亿美元；大规模 AI 合同中客户预付或自供 GPU 部分合计 750 亿美元；FY2026 free cash flow 为 -237 亿美元。</td>
+              <td>持平偏强</td>
+              <td>验证 AI cloud/data-center 订单需求，对数据中心建设、网络、光互连、电力和液冷正面；负 FCF 和融资节奏仍是风险。</td>
+              <td>High</td>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Broadcom</td>
+              <td>FY2026 Q2 AI semiconductor revenue 为 108 亿美元，同比 +143%；Q3 指引 AI semiconductor revenue 达 160 亿美元，同比超过 +200%。</td>
+              <td>持平偏强</td>
+              <td>强化定制 AI accelerator、AI networking、以太网交换、先进封装和高速 PCB/CCL 需求。</td>
+              <td>High</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom Investor Relations</a></td>
+            </tr>
+            
+            <tr>
+              <td>Brookfield / Bloom Energy</td>
+              <td>2026-06-30 官方宣布将 AI infrastructure power projects 融资框架从 50 亿美元扩大到 250 亿美元，用于快速电力与 onsite power 支持 AI factories。</td>
+              <td>上修</td>
+              <td>把 AI CapEx 正面扩展到电力基础设施、燃料电池、现场供电、配电、UPS、液冷和数据中心综合交付。</td>
+              <td>High</td>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Federal Reserve</td>
+              <td>2026-06-17 FOMC 维持联邦基金目标区间 3.50%-3.75%，并重申维持充足准备金；声明称通胀相对 2% 目标仍偏高。</td>
+              <td>压力</td>
+              <td>政策利率仍处高位，长久期科技资产不能仅因单月就业偏弱而解除估值压力。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm">Federal Reserve</a></td>
+            </tr>
+            
+            <tr>
+              <td>BLS payrolls</td>
+              <td>June 2026 非农就业 +57,000，失业率 4.2%，4-5 月合计下修 74,000，劳动参与率 61.5%。</td>
+              <td>宽松倾向</td>
+              <td>降低进一步加息紧迫性，但也确认增长动能放缓；对科技股是估值缓和而非需求利好。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/archives/empsit_07022026.htm">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>US 10Y Treasury</td>
+              <td>FRED/H.15 最新官方可见数据为 2026-07-01 的 4.48%，下一次更新 2026-07-06；WSJ 报道就业数据后 10Y 一度降至约 4.461%，但仍在 4.4% 上方。</td>
+              <td>压力</td>
+              <td>长端利率仍限制 AI/半导体高估值扩张，尤其压制远期现金流型科技成长股。</td>
+              <td>High</td>
+              <td><a href="https://fred.stlouisfed.org/series/DGS10">FRED / WSJ</a></td>
+            </tr>
+            
+            <tr>
+              <td>US Dollar</td>
+              <td>WSJ 报道 2026-07-02 WSJ Dollar Index 下跌 0.47% 至 97.25，为弱就业后美元回落信号。</td>
+              <td>宽松倾向</td>
+              <td>对全球风险资产和非美科技链有边际支撑，但需要与美债收益率和实际利率同步下行共同确认。</td>
+              <td>Medium</td>
+              <td><a href="https://www.wsj.com/finance/currencies/yen-consolidates-ahead-of-u-s-nonfarm-payrolls-report-94a64c4a">WSJ</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Brookfield / Bloom Energy AI power partnership expanded to $25B</td>
+              <td>AI数据中心电力/现场能源/燃料电池/配电/UPS/液冷</td>
+              <td>利好</td>
+              <td>快速部署现场电源、燃料电池、数据中心电力系统、配电、UPS、液冷与工程集成方向</td>
+              <td>不能解决 time-to-power 的传统数据中心项目、单纯依赖公共电网排队的低确定性交付方向</td>
+              <td>官方确认</td>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro Taiwan Business Update</td>
+              <td>AI服务器/GPU整机/渠道合规/出口管制</td>
+              <td>利空</td>
+              <td>合规可追溯供应链、客户穿透清晰的服务器和数据中心交付商</td>
+              <td>存在转运、客户穿透不足、出口合规薄弱的服务器/渠道环节</td>
+              <td>官方确认</td>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro</a></td>
+            </tr>
+            
+            <tr>
+              <td>Broadcom AI semiconductor revenue and guidance</td>
+              <td>AI ASIC/AI networking/高速互连</td>
+              <td>利好</td>
+              <td>定制 ASIC、先进封装、AI 以太网、交换芯片、PCB/CCL、高速互连</td>
+              <td>未进入 hyperscaler 定制链条、低端通用网络或低速 PCB 环节</td>
+              <td>官方确认</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom</a></td>
+            </tr>
+            
+            <tr>
+              <td>OpenAI / Broadcom Jalapeno inference chip route</td>
+              <td>AI inference ASIC/advanced packaging/networking/power</td>
+              <td>利好</td>
+              <td>推理 ASIC、AI networking、先进封装、服务器、电源和液冷方向</td>
+              <td>仅依赖训练卡单一叙事、未进入推理优化链条的环节</td>
+              <td>官方确认</td>
+              <td><a href="https://openai.com/index/openai-broadcom-jalapeno-inference-chip/">OpenAI</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta potential external AI compute sales</td>
+              <td>AI cloud/GPU utilization/cloud competition</td>
+              <td>中性待验证</td>
+              <td>若 Meta 官方确认，将利好 AI 云供给、GPU 利用率和 CapEx ROI 叙事</td>
+              <td>CoreWeave 等专门 AI 云商可能面对更强竞争；当前仍未见 Meta 官方确认</td>
+              <td>媒体报道</td>
+              <td><a href="https://www.businessinsider.com/meta-stock-cloud-computing-ai-compute-tech-stocks-data-centers-2026-7">Business Insider</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI数据中心电力与液冷</td>
+              <td>无 A/H 公司被本轮 Bloom/Brookfield 官方材料直接点名为新增订单受益方。</td>
+              <td>推断受益方向包括数据中心电源、UPS、配电、液冷、温控、工程交付和高可靠现场供电；但需等 A/H 公司公告或客户认证。</td>
+              <td>不可把 Bloom/Brookfield 框架直接映射成 A/H 个股订单；只能作为 AI 电力瓶颈主题验证。</td>
+            </tr>
+            
+            <tr>
+              <td>AI CapEx / ASIC / CPO / 高速互连</td>
+              <td>无 A/H 公司在本轮 Microsoft/Meta/Alphabet/Amazon/Oracle/Broadcom/OpenAI 官方材料中被直接确认为新增订单受益。</td>
+              <td>CPO/光模块、交换机、高速 PCB/CCL、先进封装、服务器 ODM、液冷、电源方向继续受益于 AI factory 升级。</td>
+              <td>推断受益不等于订单落地；需核实是否进入 NVIDIA Rubin/Spectrum-X、Broadcom ASIC、Oracle OCI、Meta 或其他 hyperscaler 供应链。</td>
+            </tr>
+            
+            <tr>
+              <td>AI服务器出口合规</td>
+              <td>无 A/H 公司被本轮 Supermicro 官方材料直接点名；Supermicro 为美股公司，台湾调查主体不等于 A/H 披露对象。</td>
+              <td>客户穿透清晰、合规可追溯、出口管控流程强的服务器/PCB/光模块/液冷/电源企业相对占优；灰色转运或合规披露不足方向受压。</td>
+              <td>不得将 Supermicro 调查直接映射到任一 A/H 个股；等待交易所公告、客户认证或订单披露。</td>
+            </tr>
+            
+            <tr>
+              <td>高利率环境下科技成长估值</td>
+              <td>无直接公司映射。</td>
+              <td>现金流强、订单已验证、估值不依赖远期叙事的科技链更抗压；纯概念和高久期标的受压。</td>
+              <td>若 10Y/实际利率继续高位，强基本面也可能被估值收缩抵消。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>2026-07-06 FRED/H.15 10Y、实际利率和美元更新</strong><span>判断 Liquidity 是否仍维持 Tightening，弱就业后的利率下行是否能持续。</span></li><li><strong>Supermicro/Taiwan 调查是否出现正式起诉、罚款、订单延迟、客户变化或财务影响</strong><span>这是 AI 服务器合规噪音转向基本面冲击的关键分界。</span></li><li><strong>Bloom/Brookfield 250 亿美元框架是否披露首批 hyperscaler 客户、项目地点、MW/GW 规模和交付节奏</strong><span>决定电力基础设施利好能否从主题验证转为订单验证。</span></li><li><strong>Meta 是否官方确认外售 AI compute/cloud 业务</strong><span>若确认，会改变 AI CapEx ROI 与 AI 云竞争格局；当前仍按媒体报道处理。</span></li><li><strong>A/H 科技链是否披露与 Rubin、Broadcom ASIC、Oracle/OCI、Meta CapEx、AI 电力项目相关的直接订单</strong><span>没有直接公告前，只能做主题映射，不能做公司级已验证受益。</span></li><li><strong>Oracle RPO 转收入、CapEx 融资与 free cash flow 修复</strong><span>RPO 很强但负 FCF 会影响市场对 AI 数据中心建设可持续性的定价。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Brookfield and Bloom Energy Expand AI Infrastructure Partnership to $25 Billion</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm">Federal Reserve FOMC Statement</a></td>
+              <td>Liquidity</td>
+              <td>2026-06-17</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://fred.stlouisfed.org/series/DGS10">FRED DGS10 10-Year Treasury Constant Maturity</a></td>
+              <td>Liquidity</td>
+              <td>updated 2026-07-02; latest observation 2026-07-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/archives/empsit_07022026.htm">BLS Employment Situation News Release - June 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.wsj.com/finance/currencies/yen-consolidates-ahead-of-u-s-nonfarm-payrolls-report-94a64c4a">WSJ Dollar Index Falls 0.47% to 97.25</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-02</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft FY26 Q3 Earnings Conference Call</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx">Meta Reports First Quarter 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet 2026 Q1 Earnings Call</a></td>
+              <td>CapEx</td>
+              <td>2026-04-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon.com Announces First Quarter Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle Announces Record Q4 and FY 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-06-11</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom FY2026 Q2 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro Taiwan Business Update</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-07-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://openai.com/index/openai-broadcom-jalapeno-inference-chip/">OpenAI and Broadcom unveil Jalapeno inference chip</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-06-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.businessinsider.com/meta-stock-cloud-computing-ai-compute-tech-stocks-data-centers-2026-7">Business Insider - Meta AI compute cloud report</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-07-01</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

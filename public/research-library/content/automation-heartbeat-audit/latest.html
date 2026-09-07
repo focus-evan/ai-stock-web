@@ -1,0 +1,59 @@
+<html lang="zh-CN" data-library-page=""><head><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head><body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=automation-heartbeat-audit&amp;view=reports">自动化任务审查</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>﻿
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Heartbeat 巡检 - 2026-07-08</title><style>body{font-family:"Microsoft YaHei",Arial,sans-serif;background:#f6f7f9;color:#1f2937;margin:0}main{max-width:1080px;margin:0 auto;padding:28px 18px}section{background:#fff;border:1px solid #d9dee7;border-radius:8px;padding:16px;margin:14px 0}table{width:100%;border-collapse:collapse}th,td{padding:10px 12px;border-bottom:1px solid #d9dee7;text-align:left;vertical-align:top}th{background:#eef1f5}.bad{color:#b42318;font-weight:800}.ok{color:#067647;font-weight:800}.muted{color:#667085}</style>
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><main><h1>Heartbeat 执行巡检</h1><p class="muted">巡检时间：2026-07-08 07:36 +08:00。检查对象为本机 C:\Users\bzsj_\.codex\automations 下 ACTIVE 且 kind=heartbeat 的任务。</p><section><h2>结论</h2><table><thead><tr><th>Automation</th><th>状态</th><th>计划</th><th>最近证据</th><th>处理</th></tr></thead><tbody><tr><td>a-06 / A股大盘情绪06点预警</td><td class="bad">漏跑</td><td>工作日 06:00 heartbeat</td><td>memory 与 latest.html 停在 2026-07-06 06:12</td><td>已延后补跑并更新 latest.html / report_20260708_0600.html；风险颜色红色 S7。</td></tr><tr><td>codex-obsidian / Codex Obsidian 三日同步</td><td class="ok">未超时</td><td>每 72 小时 heartbeat</td><td>memory 最后写入 2026-07-07 19:34，覆盖到 2026-07-07</td><td>无需补跑；下一次约 2026-07-10 19:34 后才算到期。</td></tr></tbody></table></section><section><h2>非 heartbeat 但顺手核对</h2><p>automation-2、v231、global-tech-capex-liquidity-radar、quarterly-disclosure-monitor 等是 cron 或其他调度；其中 automation-2 与 v231 已在 2026-07-08 07:25/07:26 左右写入 memory，不属于本次 heartbeat 漏跑。</p></section></main>
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

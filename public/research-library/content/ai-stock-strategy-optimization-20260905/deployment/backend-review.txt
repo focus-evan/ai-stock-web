@@ -1,0 +1,55 @@
+Backend independent release review
+Candidate: f934b74b1fa1b0d55b42aab90885a3ae00ad9097
+Baseline: 7a50a6aac6744d082b4efd718d8193027c6792c7
+Review date: 2026-09-05
+Worktree: D:/Evan/Codes/.worktrees/ai-stock-deploy-review-f934b74
+
+SCOPE
+Read-only source review and isolated tests. No production database/network access, no push, no deployment. User working tree was not changed. This review used the deploy-ai-stock-main-prod skill, prerequisites and release runbook.
+
+RELEASE GATE FINDINGS
+1. BLOCKER (inherited startup behavior, also present in baseline): SCHEDULER_ENABLED=false only gates portfolio_scheduler.start() at api/main.py:977-999. It does not prevent schema or vector writes earlier in startup.
+   - api/main.py:887 calls ensure_signal_snapshot_table().
+   - api/database/northbound_radar_repository.py:42 executes CREATE TABLE IF NOT EXISTS through execute_update. It is not a read-only schema check.
+   - api/main.py:919 and :932 construct RAG indexes. api/rag.py:215-227 catches any get_collection exception, requests an embedding and invokes client.create_collection(). This can write to co-hosted Qdrant when a configured collection is missing or a lookup fails.
+   - No existing dedicated environment gate covers these two startup actions.
+   Suggested minimal release hardening: separate STARTUP_SCHEMA_INIT_ENABLED and STARTUP_RAG_INIT_ENABLED environment gates; keep existing defaults for other deployments, explicitly set both false for this main release, and prove with mocked startup tests that schema/index callbacks are not called. Never use invalid credentials or an intentionally empty collection name as a substitute.
+   - QdrantConnectionPool.initialize() itself performs get_collections reads, not collection mutation. Existing startup prompt preload writes Redis cache entries; this is pre-existing ordinary cache warmup rather than database migration/index mutation.
+
+CANDIDATE CHANGES
+- New portfolio_execution_evidence DDL is additive and contains no historical UPDATE/DELETE or account rewrite.
+- The new table is not executed from startup and the migration file is not auto-discovered by changed startup code. api/paper_execution.py:121 executes CREATE TABLE IF NOT EXISTS only after current-session/quote validation when a trade is requested.
+- get_account_audit() catches missing evidence schema and returns legacy history as unverified; missing table does not by itself make normal account audit reads fail. First actual fill requires CREATE privilege if the table has not separately been provisioned.
+- Executed trade, position, available_cash, asset figures and evidence INSERT share one explicit transaction. Evidence INSERT failure rollback, duplicate same-signal execution, stale/unprovable quote rejection, T+1, costs and insufficient cash are covered by the isolated tests.
+- Source exclusion SQL identifiers are restricted to a source-code identifier regex; values remain parameterized. Reconstruction filters are shared between recommendation, follow and portfolio readers. Date settlement fails closed outside the explicit 2025-2026 exchange calendar.
+- New modules only add Python standard library dependencies plus aiomysql, which already exists in requirements.txt. No requirements/Dockerfile change in this candidate.
+- No newly introduced startup import fatality was identified in reviewed modules.
+
+VERIFICATION
+1. Isolated related tests: 93 passed in 4.10s (system Python 3.13).
+   tests/test_paper_execution_transaction.py
+   tests/test_strategy_audit_contract.py
+   tests/test_strategy_follow_service.py
+   tests/test_strategy_performance_service.py
+   tests/test_strategy_evolution_service.py
+   tests/test_overnight_execution_lifecycle.py
+   tests/test_skill_tactic_executor.py
+2. Python 3.11 grammar parse: all 27 changed .py files passed (AST feature_version 3.11).
+3. Network-disabled import check: all five new modules imported successfully: api.paper_execution, api.portfolio_audit, api.strategy_evidence, api.strategy_settlement, api.trading_calendar.
+4. Independent worktree remained git-clean after review. Main user worktree was not modified.
+
+LIMITS / DEPLOYMENT EFFECT
+- Tests use mocked MySQL and cannot certify real MySQL SQL syntax, isolation semantics, table engine/privileges or existing production schema. No production SQL was run by this reviewer.
+- Local imports prove absence of new undeclared dependencies, not the contents of the production image; final image import/health probes remain required.
+- Scheduling correction from the release owner: only the isolated candidate runs with SCHEDULER_ENABLED=false. The current main release script explicitly enables the main-owned scheduler (restored by cb61956); the main Compose default is true. This patch preserves that ownership and configuration. It does not change or restart any other scheduler service.
+- Existing history becomes unverified where evidence is absent; this is intentional evidence policy, not proof that legacy returns are valid or invalid.
+
+STARTUP GUARD FOLLOW-UP (2026-09-05)
+Commit: 30d18620d33b92234b2263b168e8010f8379ce59
+Branch: codex/strategy-quality-startup-guard
+Base: f934b74b1fa1b0d55b42aab90885a3ae00ad9097
+Changed only api/main.py, api/rag.py, docker-compose.main.yml and tests/test_main_startup_guards.py.
+Main Compose now explicitly sets STARTUP_SCHEMA_INIT_ENABLED=false and RAG_ALLOW_COLLECTION_CREATE=false. Startup skips the northbound schema initializer. RAG continues to connect to existing collections; lookup errors/missing collections cannot invoke create_collection or the dimension-probing embedding request. The constructor also accepts allow_create=False and the environment guard covers lazy initialization. Other deployments preserve the old default unless they opt out.
+The patch does not disable ordinary scheduled business operations or runtime repositories' existing ensure-table behavior; the isolated release candidate must continue to run with scheduling disabled during preflight. Live scheduler ownership/default remains unchanged.
+Validation: 11 new guard tests passed; combined with related candidate tests, 104 passed in 2.35s. All 30 cumulatively changed Python files parse with Python 3.11 grammar. git diff --check passed; committed worktree is clean.
+No server, production database, main push or deployment operation was performed by this agent.

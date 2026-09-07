@@ -1,0 +1,1863 @@
+{
+  "holdings": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "market": "A股-创业板",
+      "qt": "sz300502",
+      "shares": 700,
+      "cost": 674.03,
+      "subsector": "AI数据中心光模块 / 高速光收发器",
+      "role": "算力硬件出口链高弹性核心",
+      "price": 566.0,
+      "pct_chg": -7.29,
+      "high": 598.0,
+      "low": 550.0,
+      "turnover_rate": 4.93,
+      "pe": 73.48,
+      "mcap_yi": 7099.02,
+      "pb": 40.65,
+      "quote_time": "20260626161439",
+      "market_value": 396200.0,
+      "pnl": -75620.99999999999,
+      "pnl_pct": -0.1602747652181653,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 8337902040.74,
+            "single": 8337902040.74,
+            "yoy": 1.05759481,
+            "single_yoy": 1.05759481
+          },
+          "parent_holder_net_profit": {
+            "value": 2780222960.23,
+            "single": 2780222960.23,
+            "yoy": 0.76799832,
+            "single_yoy": 0.76799832
+          },
+          "sale_gross_margin": {
+            "value": 49.161,
+            "single": 49.161,
+            "yoy": 0.01030216,
+            "single_yoy": 0.01030216
+          },
+          "sale_net_interest_ratio": {
+            "value": 33.2721,
+            "single": 33.2721,
+            "yoy": -0.14260866,
+            "single_yoy": -0.14260866
+          },
+          "index_weighted_avg_roe": {
+            "value": 14.52,
+            "single": 14.52,
+            "yoy": -0.15581395,
+            "single_yoy": -0.15581395
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.6882,
+            "single": 0.6882,
+            "yoy": 1.4508547,
+            "single_yoy": 1.4508547
+          },
+          "assets_debt_ratio": {
+            "value": 31.035,
+            "single": null,
+            "yoy": -0.06364273,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 8337902040.74,
+            "parent_holder_net_profit": 2780222960.23
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 8337063628.86,
+            "parent_holder_net_profit": 3204830222.33
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 6067620945.86,
+            "parent_holder_net_profit": 2384798239.47
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 6384913727.13,
+            "parent_holder_net_profit": 2369768479.15
+          }
+        ],
+        "ttm_rev": 29127500342.59,
+        "ttm_np": 10739619901.18,
+        "ttm_rev_yoy": 1.513974851551386,
+        "ttm_np_yoy": 1.6285238745793786
+      },
+      "s40_score": 84.1,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "market": "A股-科创板",
+      "qt": "sh688017",
+      "shares": 400,
+      "cost": 320.0,
+      "subsector": "机器人精密传动 / 谐波减速器",
+      "role": "物理AI执行器核心零部件",
+      "price": 369.46,
+      "pct_chg": -5.51,
+      "high": 396.76,
+      "low": 368.95,
+      "turnover_rate": 6.62,
+      "pe": 495.3,
+      "mcap_yi": 677.33,
+      "pb": 18.98,
+      "quote_time": "20260626161459",
+      "market_value": 147784.0,
+      "pnl": 19783.999999999993,
+      "pnl_pct": 0.15456249999999994,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 140134456.3,
+            "single": 140134456.3,
+            "yoy": 0.42955626,
+            "single_yoy": 0.42955626
+          },
+          "parent_holder_net_profit": {
+            "value": 32634147.52,
+            "single": 32634147.52,
+            "yoy": 0.61168762,
+            "single_yoy": 0.61168762
+          },
+          "sale_gross_margin": {
+            "value": 33.618,
+            "single": 33.618,
+            "yoy": -0.01304085,
+            "single_yoy": -0.01304085
+          },
+          "sale_net_interest_ratio": {
+            "value": 23.541,
+            "single": 23.541,
+            "yoy": 0.09568447,
+            "single_yoy": 0.09568447
+          },
+          "index_weighted_avg_roe": {
+            "value": 0.92,
+            "single": 0.92,
+            "yoy": 0.55932203,
+            "single_yoy": 0.55932203
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.0294,
+            "single": 0.0294,
+            "yoy": -0.68589744,
+            "single_yoy": -0.68589744
+          },
+          "assets_debt_ratio": {
+            "value": 9.4431,
+            "single": null,
+            "yoy": -0.39554102,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 140134456.3,
+            "parent_holder_net_profit": 32634147.52
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 164061075.33,
+            "parent_holder_net_profit": 30699564.24
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 155241029.24,
+            "parent_holder_net_profit": 40250972.98
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 153385379.12,
+            "parent_holder_net_profit": 33167944.12
+          }
+        ],
+        "ttm_rev": 612821939.99,
+        "ttm_np": 136752628.85999998,
+        "ttm_rev_yoy": 0.518725276566947,
+        "ttm_np_yoy": 1.4289656576101417
+      },
+      "s40_score": 68.8,
+      "grade": "B 观察仓"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750",
+      "market": "港股",
+      "qt": "hk03750",
+      "shares": 100,
+      "cost": 660.0,
+      "subsector": "动力/储能电池平台",
+      "role": "新能源硬科技全球龙头",
+      "price": 680.5,
+      "pct_chg": -5.02,
+      "high": 722.0,
+      "low": 668.0,
+      "turnover_rate": 0.0,
+      "pe": 39.39,
+      "mcap_yi": 1485.5335,
+      "pb": 7.1,
+      "quote_time": "2026/06/26 16:08:13",
+      "market_value": 68050.0,
+      "pnl": 2050.0,
+      "pnl_pct": 0.03106060606060601,
+      "fin": {
+        "source": "东方财富港股财务指标(AkShare)",
+        "latest": "2025-12-31",
+        "hk_ind": {
+          "基本每股收益(元)": 4.58,
+          "每股净资产(元)": 78.277309071872,
+          "法定股本(股)": null,
+          "每手股": 100.0,
+          "每股股息TTM(港元)": 8.85963468,
+          "派息比率(%)": 46.1006,
+          "已发行股本(股)": 4626627170.0,
+          "已发行股本-H股(股)": 218300300.0,
+          "每股经营现金流(元)": 7.379576116736,
+          "股息率TTM(%)": 1.30193,
+          "总市值(港元)": 3148419789185.0,
+          "港股市值(港元)": 148553354150.0,
+          "营业总收入": 129131041000.0,
+          "营业总收入滚动环比增长(%)": 10.48531029016,
+          "销售净利率(%)": 17.6078918159,
+          "净利润": 20737710000.0,
+          "净利润滚动环比增长(%)": 9.383700416843,
+          "股东权益回报率(%)": 5.973097914674,
+          "市盈率": 35.658228550347,
+          "市净率": 7.781103721,
+          "总资产回报率(%)": 2.052063675344
+        },
+        "hk_ana": {
+          "SECUCODE": null,
+          "SECURITY_CODE": 3750.0,
+          "SECURITY_NAME_ABBR": null,
+          "ORG_CODE": 10554205.0,
+          "REPORT_DATE": null,
+          "DATE_TYPE_CODE": 1.0,
+          "PER_NETCASH_OPERATE": 29.190560538,
+          "PER_OI": 92.839631485903,
+          "BPS": 72.862526979886,
+          "BASIC_EPS": 16.14,
+          "DILUTED_EPS": 16.14,
+          "OPERATE_INCOME": 423701834000.0,
+          "OPERATE_INCOME_YOY": 17.040646607,
+          "GROSS_PROFIT": 111318537000.0,
+          "GROSS_PROFIT_YOY": 25.79276161173,
+          "HOLDER_PROFIT": 72201282000.0,
+          "HOLDER_PROFIT_YOY": 42.2834455835,
+          "GROSS_PROFIT_RATIO": 26.272847570445,
+          "EPS_TTM": 15.82041869021,
+          "OPERATE_INCOME_QOQ": 9.755999972148,
+          "NET_PROFIT_RATIO": 18.1227228297,
+          "ROE_AVG": 24.724866942683,
+          "GROSS_PROFIT_QOQ": 16.629524829544,
+          "ROA": 8.197771160178,
+          "HOLDER_PROFIT_QOQ": 10.966424937826,
+          "ROE_YEARLY": 24.724866942683,
+          "ROIC_YEARLY": 13.504595042982,
+          "TAX_EBT": 14.230679850317,
+          "OCF_SALES": 31.441917714239,
+          "DEBT_ASSET_RATIO": 61.9392859503,
+          "CURRENT_RATIO": 1.59769775283,
+          "CURRENTDEBT_DEBT": 66.185024932543,
+          "START_DATE": null,
+          "FISCAL_YEAR": null,
+          "CURRENCY": null,
+          "IS_CNY_CODE": 0.0
+        }
+      },
+      "s40_score": 85.8,
+      "grade": "A 核心真科技"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988",
+      "market": "港股",
+      "qt": "hk09988",
+      "shares": 600,
+      "cost": 160.0,
+      "subsector": "云计算 / AI云 / 平台互联网",
+      "role": "现金流型科技平台",
+      "price": 89.5,
+      "pct_chg": -5.79,
+      "high": 92.5,
+      "low": 88.65,
+      "turnover_rate": 0.0,
+      "pe": 14.65,
+      "mcap_yi": 17189.4404,
+      "pb": 1.43,
+      "quote_time": "2026/06/26 16:08:13",
+      "market_value": 53700.0,
+      "pnl": -42300.0,
+      "pnl_pct": -0.44062500000000004,
+      "fin": {
+        "source": "东方财富港股财务指标(AkShare)",
+        "latest": "2026-03-31",
+        "hk_ind": {
+          "基本每股收益(元)": 5.7,
+          "每股净资产(元)": 55.854925164908,
+          "法定股本(股)": 32000000000.0,
+          "每手股": 100.0,
+          "每股股息TTM(港元)": 1.02684913,
+          "派息比率(%)": 16.6378,
+          "已发行股本(股)": 19206078670.0,
+          "已发行股本-H股(股)": 19206078670.0,
+          "每股经营现金流(元)": 3.983108388915,
+          "股息率TTM(%)": 1.147317,
+          "总市值(港元)": 1718944040965.0,
+          "港股市值(港元)": 1718944040965.0,
+          "营业总收入": 1023670000000.0,
+          "营业总收入滚动环比增长(%)": 0.4633147408,
+          "销售净利率(%)": 9.9765549445,
+          "净利润": 103592000000.0,
+          "净利润滚动环比增长(%)": -26.544741151483,
+          "股东权益回报率(%)": 9.911677834112,
+          "市盈率": 14.651147202198,
+          "市净率": 1.420134384583,
+          "总资产回报率(%)": 5.578764805939
+        },
+        "hk_ana": {
+          "SECUCODE": null,
+          "SECURITY_CODE": 9988.0,
+          "SECURITY_NAME_ABBR": null,
+          "ORG_CODE": 10139711.0,
+          "REPORT_DATE": null,
+          "DATE_TYPE_CODE": 1.0,
+          "PER_NETCASH_OPERATE": 3.983108388915,
+          "PER_OI": 53.499908998205,
+          "BPS": 55.645455710299,
+          "BASIC_EPS": 5.7,
+          "DILUTED_EPS": 5.5,
+          "OPERATE_INCOME": 1023670000000.0,
+          "OPERATE_INCOME_YOY": 2.7423176865,
+          "GROSS_PROFIT": 407534000000.0,
+          "GROSS_PROFIT_YOY": 2.379528817119,
+          "HOLDER_PROFIT": 103592000000.0,
+          "HOLDER_PROFIT_YOY": -20.3806039551,
+          "GROSS_PROFIT_RATIO": 39.811071927477,
+          "EPS_TTM": 4.744162199391,
+          "OPERATE_INCOME_QOQ": 0.4633147408,
+          "NET_PROFIT_RATIO": 9.9765549445,
+          "ROE_AVG": 9.911677834112,
+          "GROSS_PROFIT_QOQ": -0.557002123856,
+          "ROA": 5.578764805939,
+          "HOLDER_PROFIT_QOQ": -26.544741151483,
+          "ROE_YEARLY": 9.911677834112,
+          "ROIC_YEARLY": 6.258000559397,
+          "TAX_EBT": 22.731743485761,
+          "OCF_SALES": 7.445075073022,
+          "DEBT_ASSET_RATIO": 41.0197060071,
+          "CURRENT_RATIO": 1.282056179917,
+          "CURRENTDEBT_DEBT": 60.819354015065,
+          "START_DATE": null,
+          "FISCAL_YEAR": null,
+          "CURRENCY": null,
+          "IS_CNY_CODE": 0.0
+        }
+      },
+      "s40_score": 82.0,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "生益科技",
+      "code": "600183",
+      "market": "A股-主板",
+      "qt": "sh600183",
+      "shares": 500,
+      "cost": 138.2,
+      "subsector": "高频高速覆铜板 CCL / PCB上游材料",
+      "role": "AI服务器PCB材料卖铲人",
+      "price": 178.5,
+      "pct_chg": -4.65,
+      "high": 182.3,
+      "low": 171.69,
+      "turnover_rate": 2.99,
+      "pe": 110.37,
+      "mcap_yi": 4274.19,
+      "pb": 27.13,
+      "quote_time": "20260626161409",
+      "market_value": 89250.0,
+      "pnl": 20150.000000000007,
+      "pnl_pct": 0.2916063675832128,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 8141455910.4,
+            "single": 8141455910.4,
+            "yoy": 0.45088535,
+            "single_yoy": 0.45088535
+          },
+          "parent_holder_net_profit": {
+            "value": 1158139324.56,
+            "single": 1158139324.56,
+            "yoy": 1.05472358,
+            "single_yoy": 1.05472358
+          },
+          "sale_gross_margin": {
+            "value": 28.1013,
+            "single": 28.1013,
+            "yoy": 0.14228748,
+            "single_yoy": 0.14228748
+          },
+          "sale_net_interest_ratio": {
+            "value": 16.3645,
+            "single": 16.3645,
+            "yoy": 0.44641942,
+            "single_yoy": 0.44641942
+          },
+          "index_weighted_avg_roe": {
+            "value": 6.68,
+            "single": 6.68,
+            "yoy": 0.80540541,
+            "single_yoy": 0.80540541
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.2353,
+            "single": 0.2353,
+            "yoy": 1.10842294,
+            "single_yoy": 1.10842294
+          },
+          "assets_debt_ratio": {
+            "value": 44.0312,
+            "single": null,
+            "yoy": 0.12445541,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 8141455910.4,
+            "parent_holder_net_profit": 1158139324.56
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 7817583309.0,
+            "parent_holder_net_profit": 890789962.1
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 7933658445.5,
+            "parent_holder_net_profit": 1016673556.57
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 7068525756.47,
+            "parent_holder_net_profit": 862843596.19
+          }
+        ],
+        "ttm_rev": 30961223421.37,
+        "ttm_np": 3928446439.42,
+        "ttm_rev_yoy": 0.43495508194344823,
+        "ttm_np_yoy": 1.0565301726156084
+      },
+      "s40_score": 80.1,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "market": "A股-科创板",
+      "qt": "sh688008",
+      "shares": 200,
+      "cost": 263.0,
+      "subsector": "DDR5内存接口 / CXL / 互连芯片",
+      "role": "AI服务器内存链高壁垒芯片",
+      "price": 261.82,
+      "pct_chg": -6.21,
+      "high": 276.97,
+      "low": 257.02,
+      "turnover_rate": 6.59,
+      "pe": 125.11,
+      "mcap_yi": 3001.57,
+      "pb": 15.35,
+      "quote_time": "20260626161439",
+      "market_value": 52364.0,
+      "pnl": -236.00000000000136,
+      "pnl_pct": -0.004486692015209126,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 1460718316.43,
+            "single": 1460718316.43,
+            "yoy": 0.19514563,
+            "single_yoy": 0.19514563
+          },
+          "parent_holder_net_profit": {
+            "value": 847375292.29,
+            "single": 847375292.29,
+            "yoy": 0.6130464,
+            "single_yoy": 0.6130464
+          },
+          "sale_gross_margin": {
+            "value": 69.7882,
+            "single": 69.7882,
+            "yoy": 0.1544819,
+            "single_yoy": 0.1544819
+          },
+          "sale_net_interest_ratio": {
+            "value": 56.8026,
+            "single": 56.8026,
+            "yoy": 0.37824224,
+            "single_yoy": 0.37824224
+          },
+          "index_weighted_avg_roe": {
+            "value": 5.39,
+            "single": 5.39,
+            "yoy": 0.19777778,
+            "single_yoy": 0.19777778
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.5127,
+            "single": 0.5127,
+            "yoy": 2.11861314,
+            "single_yoy": 2.11861314
+          },
+          "assets_debt_ratio": {
+            "value": 4.1745,
+            "single": null,
+            "yoy": -0.26966882,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 1460718316.43,
+            "parent_holder_net_profit": 847375292.29
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 1398628292.82,
+            "parent_holder_net_profit": 603285984.25
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 1424232009.73,
+            "parent_holder_net_profit": 473213606.21
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 1411247007.15,
+            "parent_holder_net_profit": 633744331.75
+          }
+        ],
+        "ttm_rev": 5694825626.13,
+        "ttm_np": 2557619214.5,
+        "ttm_rev_yoy": 0.3809462319049126,
+        "ttm_np_yoy": 0.4924574384675249
+      },
+      "s40_score": 83.6,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "market": "A股-主板",
+      "qt": "sz002837",
+      "shares": 600,
+      "cost": 79.9,
+      "subsector": "数据中心液冷 / 热管理",
+      "role": "AI数据中心散热基础设施",
+      "price": 82.57,
+      "pct_chg": -5.08,
+      "high": 85.58,
+      "low": 81.0,
+      "turnover_rate": 6.73,
+      "pe": 218.05,
+      "mcap_yi": 933.42,
+      "pb": 31.93,
+      "quote_time": "20260626161445",
+      "market_value": 49541.99999999999,
+      "pnl": 1601.9999999999925,
+      "pnl_pct": 0.033416770963704545,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 1175329313.61,
+            "single": 1175329313.61,
+            "yoy": 0.26029084,
+            "single_yoy": 0.26029084
+          },
+          "parent_holder_net_profit": {
+            "value": 8657602.27,
+            "single": 8657602.27,
+            "yoy": -0.81967264,
+            "single_yoy": -0.81967264
+          },
+          "sale_gross_margin": {
+            "value": 24.2935,
+            "single": 24.2935,
+            "yoy": -0.08164577,
+            "single_yoy": -0.08164577
+          },
+          "sale_net_interest_ratio": {
+            "value": 1.2049,
+            "single": 1.2049,
+            "yoy": -0.79337369,
+            "single_yoy": -0.79337369
+          },
+          "index_weighted_avg_roe": {
+            "value": 0.25,
+            "single": 0.25,
+            "yoy": -0.84662577,
+            "single_yoy": -0.84662577
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": -0.3953,
+            "single": -0.3953,
+            "yoy": -0.72319093,
+            "single_yoy": -0.72319093
+          },
+          "assets_debt_ratio": {
+            "value": 55.1085,
+            "single": null,
+            "yoy": 0.05735912,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 1175329313.61,
+            "parent_holder_net_profit": 8657602.27
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 2041728313.2,
+            "parent_holder_net_profit": 122845111.89
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 1452891317.45,
+            "parent_holder_net_profit": 183429234.55
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 1640553679.64,
+            "parent_holder_net_profit": 167629951.15
+          }
+        ],
+        "ttm_rev": 6310502623.9,
+        "ttm_np": 482561899.86,
+        "ttm_rev_yoy": 0.32136076531817914,
+        "ttm_np_yoy": 0.0999824776052427
+      },
+      "s40_score": 65.1,
+      "grade": "C 卫星/题材仓"
+    },
+    {
+      "name": "三环集团",
+      "code": "300408",
+      "market": "A股-创业板",
+      "qt": "sz300408",
+      "shares": 200,
+      "cost": 161.0,
+      "subsector": "电子陶瓷 / MLCC / 陶瓷材料平台",
+      "role": "AI硬件高端电子材料平台",
+      "price": 160.05,
+      "pct_chg": -2.18,
+      "high": 164.49,
+      "low": 154.9,
+      "turnover_rate": 4.0,
+      "pe": 106.63,
+      "mcap_yi": 2992.62,
+      "pb": 14.24,
+      "quote_time": "20260626161436",
+      "market_value": 32010.000000000004,
+      "pnl": -189.99999999999773,
+      "pnl_pct": -0.0059006211180123724,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 2680993393.34,
+            "single": 2680993393.34,
+            "yoy": 0.46251348,
+            "single_yoy": 0.46251348
+          },
+          "parent_holder_net_profit": {
+            "value": 790899567.77,
+            "single": 790899567.77,
+            "yoy": 0.48483523,
+            "single_yoy": 0.48483523
+          },
+          "sale_gross_margin": {
+            "value": 43.4889,
+            "single": 43.4889,
+            "yoy": 0.06038676,
+            "single_yoy": 0.06038676
+          },
+          "sale_net_interest_ratio": {
+            "value": 29.4967,
+            "single": 29.4967,
+            "yoy": 0.01467487,
+            "single_yoy": 0.01467487
+          },
+          "index_weighted_avg_roe": {
+            "value": 3.59,
+            "single": 3.59,
+            "yoy": 0.35984848,
+            "single_yoy": 0.35984848
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.0818,
+            "single": 0.0818,
+            "yoy": -0.35387046,
+            "single_yoy": -0.35387046
+          },
+          "assets_debt_ratio": {
+            "value": 17.1361,
+            "single": null,
+            "yoy": 0.13954262,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 2680993393.34,
+            "parent_holder_net_profit": 790899567.77
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 2498785044.1,
+            "parent_holder_net_profit": 659865211.47
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 2359573768.66,
+            "parent_holder_net_profit": 721381208.34
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 2315654107.9,
+            "parent_holder_net_profit": 704486482.59
+          }
+        ],
+        "ttm_rev": 9855006314.0,
+        "ttm_np": 2876632470.17,
+        "ttm_rev_yoy": 0.28916019145716576,
+        "ttm_np_yoy": 0.2561045728645537
+      },
+      "s40_score": 79.7,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "market": "A股-科创板",
+      "qt": "sh688012",
+      "shares": 200,
+      "cost": 380.0,
+      "subsector": "半导体刻蚀/薄膜沉积设备",
+      "role": "国产半导体设备核心龙头",
+      "price": 413.0,
+      "pct_chg": 3.48,
+      "high": 423.8,
+      "low": 393.24,
+      "turnover_rate": 3.41,
+      "pe": 143.39,
+      "mcap_yi": 3869.7,
+      "pb": 15.17,
+      "quote_time": "20260626161449",
+      "market_value": 82600.0,
+      "pnl": 6600.0,
+      "pnl_pct": 0.08684210526315783,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 2914986518.73,
+            "single": 2914986518.73,
+            "yoy": 0.34128538,
+            "single_yoy": 0.34128538
+          },
+          "parent_holder_net_profit": {
+            "value": 930487319.17,
+            "single": 930487319.17,
+            "yoy": 1.97201998,
+            "single_yoy": 1.97201998
+          },
+          "sale_gross_margin": {
+            "value": 39.8926,
+            "single": 39.8926,
+            "yoy": -0.03959111,
+            "single_yoy": -0.03959111
+          },
+          "sale_net_interest_ratio": {
+            "value": 31.5075,
+            "single": 31.5075,
+            "yoy": 1.22141925,
+            "single_yoy": 1.22141925
+          },
+          "index_weighted_avg_roe": {
+            "value": 4.0,
+            "single": 4.0,
+            "yoy": 1.5477707,
+            "single_yoy": 1.5477707
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": -0.2535,
+            "single": -0.2535,
+            "yoy": -1.41873142,
+            "single_yoy": -1.41873142
+          },
+          "assets_debt_ratio": {
+            "value": 22.1756,
+            "single": null,
+            "yoy": -0.13851055,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 2914986518.73,
+            "parent_holder_net_profit": 930487319.17
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 4322073152.69,
+            "parent_holder_net_profit": 900280589.61
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 3101963845.38,
+            "parent_holder_net_profit": 505275864.48
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 2787322884.42,
+            "parent_holder_net_profit": 392834078.62
+          }
+        ],
+        "ttm_rev": 13126346401.22,
+        "ttm_np": 2728877851.88,
+        "ttm_rev_yoy": 0.3625843405925353,
+        "ttm_np_yoy": 0.6246972015568828
+      },
+      "s40_score": 83.8,
+      "grade": "B+ 强观察/核心候选"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "market": "A股-科创板",
+      "qt": "sh688300",
+      "shares": 200,
+      "cost": 247.0,
+      "subsector": "球形硅微粉/氧化铝 / 高端填料",
+      "role": "PCB/封装/电子材料卖铲人",
+      "price": 265.56,
+      "pct_chg": -1.64,
+      "high": 276.0,
+      "low": 251.87,
+      "turnover_rate": 4.21,
+      "pe": 212.87,
+      "mcap_yi": 641.25,
+      "pb": 38.72,
+      "quote_time": "20260626161449",
+      "market_value": 53112.0,
+      "pnl": 3712.0000000000005,
+      "pnl_pct": 0.07514170040485824,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 293960879.87,
+            "single": 293960879.87,
+            "yoy": 0.23156125,
+            "single_yoy": 0.23156125
+          },
+          "parent_holder_net_profit": {
+            "value": 71636519.87,
+            "single": 71636519.87,
+            "yoy": 0.13640758,
+            "single_yoy": 0.13640758
+          },
+          "sale_gross_margin": {
+            "value": 40.0209,
+            "single": 40.0209,
+            "yoy": -0.01477315,
+            "single_yoy": -0.01477315
+          },
+          "sale_net_interest_ratio": {
+            "value": 24.3694,
+            "single": 24.3694,
+            "yoy": -0.07726269,
+            "single_yoy": -0.07726269
+          },
+          "index_weighted_avg_roe": {
+            "value": 4.11,
+            "single": 4.11,
+            "yoy": 0.00243902,
+            "single_yoy": 0.00243902
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": -0.0051,
+            "single": -0.0051,
+            "yoy": -1.04415584,
+            "single_yoy": -1.04415584
+          },
+          "assets_debt_ratio": {
+            "value": 37.1755,
+            "single": null,
+            "yoy": 0.84710132,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 293960879.87,
+            "parent_holder_net_profit": 71636519.87
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 291663145.43,
+            "parent_holder_net_profit": 72620406.54
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 304582947.23,
+            "parent_holder_net_profit": 81377731.2
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 280567827.96,
+            "parent_holder_net_profit": 75608897.31
+          }
+        ],
+        "ttm_rev": 1170774800.49,
+        "ttm_np": 301243554.92,
+        "ttm_rev_yoy": 0.17457039297801646,
+        "ttm_np_yoy": 0.14656021689985033
+      },
+      "s40_score": 72.7,
+      "grade": "B 观察仓"
+    },
+    {
+      "name": "四方达",
+      "code": "300179",
+      "market": "A股-创业板",
+      "qt": "sz300179",
+      "shares": 400,
+      "cost": 59.0,
+      "subsector": "超硬材料 / 金刚石工具与热管理叙事",
+      "role": "材料端高弹性题材卫星",
+      "price": 57.38,
+      "pct_chg": -7.45,
+      "high": 61.37,
+      "low": 56.68,
+      "turnover_rate": 16.91,
+      "pe": 273.37,
+      "mcap_yi": 214.59,
+      "pb": 24.75,
+      "quote_time": "20260626161424",
+      "market_value": 22952.0,
+      "pnl": -647.999999999999,
+      "pnl_pct": -0.02745762711864408,
+      "fin": {
+        "source": "同花顺/东方财富财务摘要(AkShare)",
+        "latest": "2026-03-31",
+        "rows": {
+          "operating_income_total": {
+            "value": 184034297.52,
+            "single": 184034297.52,
+            "yoy": 0.40198333,
+            "single_yoy": 0.40198333
+          },
+          "parent_holder_net_profit": {
+            "value": 42928894.98,
+            "single": 42928894.98,
+            "yoy": 0.25663585,
+            "single_yoy": 0.25663585
+          },
+          "sale_gross_margin": {
+            "value": 46.8024,
+            "single": 46.8024,
+            "yoy": -0.08008727,
+            "single_yoy": -0.08008727
+          },
+          "sale_net_interest_ratio": {
+            "value": 18.8548,
+            "single": 18.8548,
+            "yoy": -0.16770916,
+            "single_yoy": -0.16770916
+          },
+          "index_weighted_avg_roe": {
+            "value": 3.44,
+            "single": 3.44,
+            "yoy": 0.25090909,
+            "single_yoy": 0.25090909
+          },
+          "index_per_operating_cash_flow_net": {
+            "value": 0.0684,
+            "single": 0.0684,
+            "yoy": 1.63925234,
+            "single_yoy": 1.63925234
+          },
+          "assets_debt_ratio": {
+            "value": 38.0178,
+            "single": null,
+            "yoy": 0.22066714,
+            "single_yoy": null
+          }
+        },
+        "qrows": [
+          {
+            "date": "2026-03-31",
+            "operating_income_total": 184034297.52,
+            "parent_holder_net_profit": 42928894.98
+          },
+          {
+            "date": "2025-12-31",
+            "operating_income_total": 159472180.48,
+            "parent_holder_net_profit": 33620395.77
+          },
+          {
+            "date": "2025-09-30",
+            "operating_income_total": 146906485.99,
+            "parent_holder_net_profit": 6345060.44
+          },
+          {
+            "date": "2025-06-30",
+            "operating_income_total": 129252411.07,
+            "parent_holder_net_profit": 19056675.39
+          }
+        ],
+        "ttm_rev": 619665375.06,
+        "ttm_np": 101951026.58,
+        "ttm_rev_yoy": 0.17956069313689427,
+        "ttm_np_yoy": -0.17947403846301213
+      },
+      "s40_score": 62.7,
+      "grade": "C 卫星/题材仓"
+    }
+  ],
+  "fin_map": {
+    "300502": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 8337902040.74,
+          "single": 8337902040.74,
+          "yoy": 1.05759481,
+          "single_yoy": 1.05759481
+        },
+        "parent_holder_net_profit": {
+          "value": 2780222960.23,
+          "single": 2780222960.23,
+          "yoy": 0.76799832,
+          "single_yoy": 0.76799832
+        },
+        "sale_gross_margin": {
+          "value": 49.161,
+          "single": 49.161,
+          "yoy": 0.01030216,
+          "single_yoy": 0.01030216
+        },
+        "sale_net_interest_ratio": {
+          "value": 33.2721,
+          "single": 33.2721,
+          "yoy": -0.14260866,
+          "single_yoy": -0.14260866
+        },
+        "index_weighted_avg_roe": {
+          "value": 14.52,
+          "single": 14.52,
+          "yoy": -0.15581395,
+          "single_yoy": -0.15581395
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.6882,
+          "single": 0.6882,
+          "yoy": 1.4508547,
+          "single_yoy": 1.4508547
+        },
+        "assets_debt_ratio": {
+          "value": 31.035,
+          "single": null,
+          "yoy": -0.06364273,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 8337902040.74,
+          "parent_holder_net_profit": 2780222960.23
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 8337063628.86,
+          "parent_holder_net_profit": 3204830222.33
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 6067620945.86,
+          "parent_holder_net_profit": 2384798239.47
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 6384913727.13,
+          "parent_holder_net_profit": 2369768479.15
+        }
+      ],
+      "ttm_rev": 29127500342.59,
+      "ttm_np": 10739619901.18,
+      "ttm_rev_yoy": 1.513974851551386,
+      "ttm_np_yoy": 1.6285238745793786
+    },
+    "688017": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 140134456.3,
+          "single": 140134456.3,
+          "yoy": 0.42955626,
+          "single_yoy": 0.42955626
+        },
+        "parent_holder_net_profit": {
+          "value": 32634147.52,
+          "single": 32634147.52,
+          "yoy": 0.61168762,
+          "single_yoy": 0.61168762
+        },
+        "sale_gross_margin": {
+          "value": 33.618,
+          "single": 33.618,
+          "yoy": -0.01304085,
+          "single_yoy": -0.01304085
+        },
+        "sale_net_interest_ratio": {
+          "value": 23.541,
+          "single": 23.541,
+          "yoy": 0.09568447,
+          "single_yoy": 0.09568447
+        },
+        "index_weighted_avg_roe": {
+          "value": 0.92,
+          "single": 0.92,
+          "yoy": 0.55932203,
+          "single_yoy": 0.55932203
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.0294,
+          "single": 0.0294,
+          "yoy": -0.68589744,
+          "single_yoy": -0.68589744
+        },
+        "assets_debt_ratio": {
+          "value": 9.4431,
+          "single": null,
+          "yoy": -0.39554102,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 140134456.3,
+          "parent_holder_net_profit": 32634147.52
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 164061075.33,
+          "parent_holder_net_profit": 30699564.24
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 155241029.24,
+          "parent_holder_net_profit": 40250972.98
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 153385379.12,
+          "parent_holder_net_profit": 33167944.12
+        }
+      ],
+      "ttm_rev": 612821939.99,
+      "ttm_np": 136752628.85999998,
+      "ttm_rev_yoy": 0.518725276566947,
+      "ttm_np_yoy": 1.4289656576101417
+    },
+    "03750": {
+      "source": "东方财富港股财务指标(AkShare)",
+      "latest": "2025-12-31",
+      "hk_ind": {
+        "基本每股收益(元)": 4.58,
+        "每股净资产(元)": 78.277309071872,
+        "法定股本(股)": null,
+        "每手股": 100.0,
+        "每股股息TTM(港元)": 8.85963468,
+        "派息比率(%)": 46.1006,
+        "已发行股本(股)": 4626627170.0,
+        "已发行股本-H股(股)": 218300300.0,
+        "每股经营现金流(元)": 7.379576116736,
+        "股息率TTM(%)": 1.30193,
+        "总市值(港元)": 3148419789185.0,
+        "港股市值(港元)": 148553354150.0,
+        "营业总收入": 129131041000.0,
+        "营业总收入滚动环比增长(%)": 10.48531029016,
+        "销售净利率(%)": 17.6078918159,
+        "净利润": 20737710000.0,
+        "净利润滚动环比增长(%)": 9.383700416843,
+        "股东权益回报率(%)": 5.973097914674,
+        "市盈率": 35.658228550347,
+        "市净率": 7.781103721,
+        "总资产回报率(%)": 2.052063675344
+      },
+      "hk_ana": {
+        "SECUCODE": null,
+        "SECURITY_CODE": 3750.0,
+        "SECURITY_NAME_ABBR": null,
+        "ORG_CODE": 10554205.0,
+        "REPORT_DATE": null,
+        "DATE_TYPE_CODE": 1.0,
+        "PER_NETCASH_OPERATE": 29.190560538,
+        "PER_OI": 92.839631485903,
+        "BPS": 72.862526979886,
+        "BASIC_EPS": 16.14,
+        "DILUTED_EPS": 16.14,
+        "OPERATE_INCOME": 423701834000.0,
+        "OPERATE_INCOME_YOY": 17.040646607,
+        "GROSS_PROFIT": 111318537000.0,
+        "GROSS_PROFIT_YOY": 25.79276161173,
+        "HOLDER_PROFIT": 72201282000.0,
+        "HOLDER_PROFIT_YOY": 42.2834455835,
+        "GROSS_PROFIT_RATIO": 26.272847570445,
+        "EPS_TTM": 15.82041869021,
+        "OPERATE_INCOME_QOQ": 9.755999972148,
+        "NET_PROFIT_RATIO": 18.1227228297,
+        "ROE_AVG": 24.724866942683,
+        "GROSS_PROFIT_QOQ": 16.629524829544,
+        "ROA": 8.197771160178,
+        "HOLDER_PROFIT_QOQ": 10.966424937826,
+        "ROE_YEARLY": 24.724866942683,
+        "ROIC_YEARLY": 13.504595042982,
+        "TAX_EBT": 14.230679850317,
+        "OCF_SALES": 31.441917714239,
+        "DEBT_ASSET_RATIO": 61.9392859503,
+        "CURRENT_RATIO": 1.59769775283,
+        "CURRENTDEBT_DEBT": 66.185024932543,
+        "START_DATE": null,
+        "FISCAL_YEAR": null,
+        "CURRENCY": null,
+        "IS_CNY_CODE": 0.0
+      }
+    },
+    "09988": {
+      "source": "东方财富港股财务指标(AkShare)",
+      "latest": "2026-03-31",
+      "hk_ind": {
+        "基本每股收益(元)": 5.7,
+        "每股净资产(元)": 55.854925164908,
+        "法定股本(股)": 32000000000.0,
+        "每手股": 100.0,
+        "每股股息TTM(港元)": 1.02684913,
+        "派息比率(%)": 16.6378,
+        "已发行股本(股)": 19206078670.0,
+        "已发行股本-H股(股)": 19206078670.0,
+        "每股经营现金流(元)": 3.983108388915,
+        "股息率TTM(%)": 1.147317,
+        "总市值(港元)": 1718944040965.0,
+        "港股市值(港元)": 1718944040965.0,
+        "营业总收入": 1023670000000.0,
+        "营业总收入滚动环比增长(%)": 0.4633147408,
+        "销售净利率(%)": 9.9765549445,
+        "净利润": 103592000000.0,
+        "净利润滚动环比增长(%)": -26.544741151483,
+        "股东权益回报率(%)": 9.911677834112,
+        "市盈率": 14.651147202198,
+        "市净率": 1.420134384583,
+        "总资产回报率(%)": 5.578764805939
+      },
+      "hk_ana": {
+        "SECUCODE": null,
+        "SECURITY_CODE": 9988.0,
+        "SECURITY_NAME_ABBR": null,
+        "ORG_CODE": 10139711.0,
+        "REPORT_DATE": null,
+        "DATE_TYPE_CODE": 1.0,
+        "PER_NETCASH_OPERATE": 3.983108388915,
+        "PER_OI": 53.499908998205,
+        "BPS": 55.645455710299,
+        "BASIC_EPS": 5.7,
+        "DILUTED_EPS": 5.5,
+        "OPERATE_INCOME": 1023670000000.0,
+        "OPERATE_INCOME_YOY": 2.7423176865,
+        "GROSS_PROFIT": 407534000000.0,
+        "GROSS_PROFIT_YOY": 2.379528817119,
+        "HOLDER_PROFIT": 103592000000.0,
+        "HOLDER_PROFIT_YOY": -20.3806039551,
+        "GROSS_PROFIT_RATIO": 39.811071927477,
+        "EPS_TTM": 4.744162199391,
+        "OPERATE_INCOME_QOQ": 0.4633147408,
+        "NET_PROFIT_RATIO": 9.9765549445,
+        "ROE_AVG": 9.911677834112,
+        "GROSS_PROFIT_QOQ": -0.557002123856,
+        "ROA": 5.578764805939,
+        "HOLDER_PROFIT_QOQ": -26.544741151483,
+        "ROE_YEARLY": 9.911677834112,
+        "ROIC_YEARLY": 6.258000559397,
+        "TAX_EBT": 22.731743485761,
+        "OCF_SALES": 7.445075073022,
+        "DEBT_ASSET_RATIO": 41.0197060071,
+        "CURRENT_RATIO": 1.282056179917,
+        "CURRENTDEBT_DEBT": 60.819354015065,
+        "START_DATE": null,
+        "FISCAL_YEAR": null,
+        "CURRENCY": null,
+        "IS_CNY_CODE": 0.0
+      }
+    },
+    "600183": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 8141455910.4,
+          "single": 8141455910.4,
+          "yoy": 0.45088535,
+          "single_yoy": 0.45088535
+        },
+        "parent_holder_net_profit": {
+          "value": 1158139324.56,
+          "single": 1158139324.56,
+          "yoy": 1.05472358,
+          "single_yoy": 1.05472358
+        },
+        "sale_gross_margin": {
+          "value": 28.1013,
+          "single": 28.1013,
+          "yoy": 0.14228748,
+          "single_yoy": 0.14228748
+        },
+        "sale_net_interest_ratio": {
+          "value": 16.3645,
+          "single": 16.3645,
+          "yoy": 0.44641942,
+          "single_yoy": 0.44641942
+        },
+        "index_weighted_avg_roe": {
+          "value": 6.68,
+          "single": 6.68,
+          "yoy": 0.80540541,
+          "single_yoy": 0.80540541
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.2353,
+          "single": 0.2353,
+          "yoy": 1.10842294,
+          "single_yoy": 1.10842294
+        },
+        "assets_debt_ratio": {
+          "value": 44.0312,
+          "single": null,
+          "yoy": 0.12445541,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 8141455910.4,
+          "parent_holder_net_profit": 1158139324.56
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 7817583309.0,
+          "parent_holder_net_profit": 890789962.1
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 7933658445.5,
+          "parent_holder_net_profit": 1016673556.57
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 7068525756.47,
+          "parent_holder_net_profit": 862843596.19
+        }
+      ],
+      "ttm_rev": 30961223421.37,
+      "ttm_np": 3928446439.42,
+      "ttm_rev_yoy": 0.43495508194344823,
+      "ttm_np_yoy": 1.0565301726156084
+    },
+    "688008": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 1460718316.43,
+          "single": 1460718316.43,
+          "yoy": 0.19514563,
+          "single_yoy": 0.19514563
+        },
+        "parent_holder_net_profit": {
+          "value": 847375292.29,
+          "single": 847375292.29,
+          "yoy": 0.6130464,
+          "single_yoy": 0.6130464
+        },
+        "sale_gross_margin": {
+          "value": 69.7882,
+          "single": 69.7882,
+          "yoy": 0.1544819,
+          "single_yoy": 0.1544819
+        },
+        "sale_net_interest_ratio": {
+          "value": 56.8026,
+          "single": 56.8026,
+          "yoy": 0.37824224,
+          "single_yoy": 0.37824224
+        },
+        "index_weighted_avg_roe": {
+          "value": 5.39,
+          "single": 5.39,
+          "yoy": 0.19777778,
+          "single_yoy": 0.19777778
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.5127,
+          "single": 0.5127,
+          "yoy": 2.11861314,
+          "single_yoy": 2.11861314
+        },
+        "assets_debt_ratio": {
+          "value": 4.1745,
+          "single": null,
+          "yoy": -0.26966882,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 1460718316.43,
+          "parent_holder_net_profit": 847375292.29
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 1398628292.82,
+          "parent_holder_net_profit": 603285984.25
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 1424232009.73,
+          "parent_holder_net_profit": 473213606.21
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 1411247007.15,
+          "parent_holder_net_profit": 633744331.75
+        }
+      ],
+      "ttm_rev": 5694825626.13,
+      "ttm_np": 2557619214.5,
+      "ttm_rev_yoy": 0.3809462319049126,
+      "ttm_np_yoy": 0.4924574384675249
+    },
+    "002837": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 1175329313.61,
+          "single": 1175329313.61,
+          "yoy": 0.26029084,
+          "single_yoy": 0.26029084
+        },
+        "parent_holder_net_profit": {
+          "value": 8657602.27,
+          "single": 8657602.27,
+          "yoy": -0.81967264,
+          "single_yoy": -0.81967264
+        },
+        "sale_gross_margin": {
+          "value": 24.2935,
+          "single": 24.2935,
+          "yoy": -0.08164577,
+          "single_yoy": -0.08164577
+        },
+        "sale_net_interest_ratio": {
+          "value": 1.2049,
+          "single": 1.2049,
+          "yoy": -0.79337369,
+          "single_yoy": -0.79337369
+        },
+        "index_weighted_avg_roe": {
+          "value": 0.25,
+          "single": 0.25,
+          "yoy": -0.84662577,
+          "single_yoy": -0.84662577
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": -0.3953,
+          "single": -0.3953,
+          "yoy": -0.72319093,
+          "single_yoy": -0.72319093
+        },
+        "assets_debt_ratio": {
+          "value": 55.1085,
+          "single": null,
+          "yoy": 0.05735912,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 1175329313.61,
+          "parent_holder_net_profit": 8657602.27
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 2041728313.2,
+          "parent_holder_net_profit": 122845111.89
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 1452891317.45,
+          "parent_holder_net_profit": 183429234.55
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 1640553679.64,
+          "parent_holder_net_profit": 167629951.15
+        }
+      ],
+      "ttm_rev": 6310502623.9,
+      "ttm_np": 482561899.86,
+      "ttm_rev_yoy": 0.32136076531817914,
+      "ttm_np_yoy": 0.0999824776052427
+    },
+    "300408": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 2680993393.34,
+          "single": 2680993393.34,
+          "yoy": 0.46251348,
+          "single_yoy": 0.46251348
+        },
+        "parent_holder_net_profit": {
+          "value": 790899567.77,
+          "single": 790899567.77,
+          "yoy": 0.48483523,
+          "single_yoy": 0.48483523
+        },
+        "sale_gross_margin": {
+          "value": 43.4889,
+          "single": 43.4889,
+          "yoy": 0.06038676,
+          "single_yoy": 0.06038676
+        },
+        "sale_net_interest_ratio": {
+          "value": 29.4967,
+          "single": 29.4967,
+          "yoy": 0.01467487,
+          "single_yoy": 0.01467487
+        },
+        "index_weighted_avg_roe": {
+          "value": 3.59,
+          "single": 3.59,
+          "yoy": 0.35984848,
+          "single_yoy": 0.35984848
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.0818,
+          "single": 0.0818,
+          "yoy": -0.35387046,
+          "single_yoy": -0.35387046
+        },
+        "assets_debt_ratio": {
+          "value": 17.1361,
+          "single": null,
+          "yoy": 0.13954262,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 2680993393.34,
+          "parent_holder_net_profit": 790899567.77
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 2498785044.1,
+          "parent_holder_net_profit": 659865211.47
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 2359573768.66,
+          "parent_holder_net_profit": 721381208.34
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 2315654107.9,
+          "parent_holder_net_profit": 704486482.59
+        }
+      ],
+      "ttm_rev": 9855006314.0,
+      "ttm_np": 2876632470.17,
+      "ttm_rev_yoy": 0.28916019145716576,
+      "ttm_np_yoy": 0.2561045728645537
+    },
+    "688012": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 2914986518.73,
+          "single": 2914986518.73,
+          "yoy": 0.34128538,
+          "single_yoy": 0.34128538
+        },
+        "parent_holder_net_profit": {
+          "value": 930487319.17,
+          "single": 930487319.17,
+          "yoy": 1.97201998,
+          "single_yoy": 1.97201998
+        },
+        "sale_gross_margin": {
+          "value": 39.8926,
+          "single": 39.8926,
+          "yoy": -0.03959111,
+          "single_yoy": -0.03959111
+        },
+        "sale_net_interest_ratio": {
+          "value": 31.5075,
+          "single": 31.5075,
+          "yoy": 1.22141925,
+          "single_yoy": 1.22141925
+        },
+        "index_weighted_avg_roe": {
+          "value": 4.0,
+          "single": 4.0,
+          "yoy": 1.5477707,
+          "single_yoy": 1.5477707
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": -0.2535,
+          "single": -0.2535,
+          "yoy": -1.41873142,
+          "single_yoy": -1.41873142
+        },
+        "assets_debt_ratio": {
+          "value": 22.1756,
+          "single": null,
+          "yoy": -0.13851055,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 2914986518.73,
+          "parent_holder_net_profit": 930487319.17
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 4322073152.69,
+          "parent_holder_net_profit": 900280589.61
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 3101963845.38,
+          "parent_holder_net_profit": 505275864.48
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 2787322884.42,
+          "parent_holder_net_profit": 392834078.62
+        }
+      ],
+      "ttm_rev": 13126346401.22,
+      "ttm_np": 2728877851.88,
+      "ttm_rev_yoy": 0.3625843405925353,
+      "ttm_np_yoy": 0.6246972015568828
+    },
+    "688300": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 293960879.87,
+          "single": 293960879.87,
+          "yoy": 0.23156125,
+          "single_yoy": 0.23156125
+        },
+        "parent_holder_net_profit": {
+          "value": 71636519.87,
+          "single": 71636519.87,
+          "yoy": 0.13640758,
+          "single_yoy": 0.13640758
+        },
+        "sale_gross_margin": {
+          "value": 40.0209,
+          "single": 40.0209,
+          "yoy": -0.01477315,
+          "single_yoy": -0.01477315
+        },
+        "sale_net_interest_ratio": {
+          "value": 24.3694,
+          "single": 24.3694,
+          "yoy": -0.07726269,
+          "single_yoy": -0.07726269
+        },
+        "index_weighted_avg_roe": {
+          "value": 4.11,
+          "single": 4.11,
+          "yoy": 0.00243902,
+          "single_yoy": 0.00243902
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": -0.0051,
+          "single": -0.0051,
+          "yoy": -1.04415584,
+          "single_yoy": -1.04415584
+        },
+        "assets_debt_ratio": {
+          "value": 37.1755,
+          "single": null,
+          "yoy": 0.84710132,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 293960879.87,
+          "parent_holder_net_profit": 71636519.87
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 291663145.43,
+          "parent_holder_net_profit": 72620406.54
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 304582947.23,
+          "parent_holder_net_profit": 81377731.2
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 280567827.96,
+          "parent_holder_net_profit": 75608897.31
+        }
+      ],
+      "ttm_rev": 1170774800.49,
+      "ttm_np": 301243554.92,
+      "ttm_rev_yoy": 0.17457039297801646,
+      "ttm_np_yoy": 0.14656021689985033
+    },
+    "300179": {
+      "source": "同花顺/东方财富财务摘要(AkShare)",
+      "latest": "2026-03-31",
+      "rows": {
+        "operating_income_total": {
+          "value": 184034297.52,
+          "single": 184034297.52,
+          "yoy": 0.40198333,
+          "single_yoy": 0.40198333
+        },
+        "parent_holder_net_profit": {
+          "value": 42928894.98,
+          "single": 42928894.98,
+          "yoy": 0.25663585,
+          "single_yoy": 0.25663585
+        },
+        "sale_gross_margin": {
+          "value": 46.8024,
+          "single": 46.8024,
+          "yoy": -0.08008727,
+          "single_yoy": -0.08008727
+        },
+        "sale_net_interest_ratio": {
+          "value": 18.8548,
+          "single": 18.8548,
+          "yoy": -0.16770916,
+          "single_yoy": -0.16770916
+        },
+        "index_weighted_avg_roe": {
+          "value": 3.44,
+          "single": 3.44,
+          "yoy": 0.25090909,
+          "single_yoy": 0.25090909
+        },
+        "index_per_operating_cash_flow_net": {
+          "value": 0.0684,
+          "single": 0.0684,
+          "yoy": 1.63925234,
+          "single_yoy": 1.63925234
+        },
+        "assets_debt_ratio": {
+          "value": 38.0178,
+          "single": null,
+          "yoy": 0.22066714,
+          "single_yoy": null
+        }
+      },
+      "qrows": [
+        {
+          "date": "2026-03-31",
+          "operating_income_total": 184034297.52,
+          "parent_holder_net_profit": 42928894.98
+        },
+        {
+          "date": "2025-12-31",
+          "operating_income_total": 159472180.48,
+          "parent_holder_net_profit": 33620395.77
+        },
+        {
+          "date": "2025-09-30",
+          "operating_income_total": 146906485.99,
+          "parent_holder_net_profit": 6345060.44
+        },
+        {
+          "date": "2025-06-30",
+          "operating_income_total": 129252411.07,
+          "parent_holder_net_profit": 19056675.39
+        }
+      ],
+      "ttm_rev": 619665375.06,
+      "ttm_np": 101951026.58,
+      "ttm_rev_yoy": 0.17956069313689427,
+      "ttm_np_yoy": -0.17947403846301213
+    }
+  },
+  "asof": "2026-06-27"
+}

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -u
+
+active_build_pids="$(ps -eo pid=,comm=,args= | awk '$2 == "docker-buildx" || ($2 == "docker" && $3 == "docker" && $4 ~ /^build/) {print $1}')"
+
+if [ -n "$active_build_pids" ]; then
+    logger -p daemon.notice -t docker-maintenance "Skipped prune because active build processes exist: ${active_build_pids}"
+    exit 0
+fi
+
+if ! docker builder prune -af --filter until=168h --keep-storage 5GB >/dev/null; then
+    logger -p daemon.err -t docker-maintenance "docker builder prune failed"
+    exit 1
+fi
+
+if ! docker image prune -af --filter until=720h >/dev/null; then
+    logger -p daemon.err -t docker-maintenance "docker image prune failed"
+    exit 1
+fi
+
+logger -p daemon.notice -t docker-maintenance "Weekly Docker cache/image maintenance completed"
+

@@ -1,0 +1,553 @@
+﻿{
+    "timestamp":  "2026-07-15 15:19:13 +08:00",
+    "indices":  [
+                    {
+                        "code":  "000001",
+                        "name":  "上证指数",
+                        "close":  3955.58,
+                        "pct":  -0.29,
+                        "amount_yi":  12262.98
+                    },
+                    {
+                        "code":  "399001",
+                        "name":  "深证成指",
+                        "close":  14779.4,
+                        "pct":  -0.97,
+                        "amount_yi":  13448.56
+                    },
+                    {
+                        "code":  "399006",
+                        "name":  "创业板指",
+                        "close":  3804.7,
+                        "pct":  -1.21,
+                        "amount_yi":  5960.05
+                    }
+                ],
+    "total_turnover_yi":  31671.59,
+    "counts":  {
+                   "limit_up":  72,
+                   "first_board":  56,
+                   "broken":  21,
+                   "broken_rate":  22.58,
+                   "limit_down":  0,
+                   "medicine_limit_up":  19,
+                   "medicine_broken":  7
+               },
+    "prior_limit":  {
+                        "sample":  81,
+                        "avg":  1.81,
+                        "median":  1.6,
+                        "up":  46,
+                        "down":  34
+                    },
+    "ladder":  [
+                   {
+                       "code":  "600664",
+                       "name":  "哈药股份",
+                       "boards":  4,
+                       "price":  4.49,
+                       "breaks":  0,
+                       "fund_yi":  0.61,
+                       "industry":  "化学制药"
+                   },
+                   {
+                       "code":  "920305",
+                       "name":  "云创退",
+                       "boards":  3,
+                       "price":  1.2,
+                       "breaks":  3,
+                       "fund_yi":  0.05,
+                       "industry":  "IT服务Ⅱ"
+                   },
+                   {
+                       "code":  "001388",
+                       "name":  "信通电子",
+                       "boards":  3,
+                       "price":  35.68,
+                       "breaks":  3,
+                       "fund_yi":  0.36,
+                       "industry":  "电网设备"
+                   },
+                   {
+                       "code":  "603137",
+                       "name":  "恒尚节能",
+                       "boards":  3,
+                       "price":  35.61,
+                       "breaks":  3,
+                       "fund_yi":  0.04,
+                       "industry":  "装修装饰"
+                   },
+                   {
+                       "code":  "600844",
+                       "name":  "金煤科技",
+                       "boards":  2,
+                       "price":  2.97,
+                       "breaks":  1,
+                       "fund_yi":  0.02,
+                       "industry":  "化学原料"
+                   },
+                   {
+                       "code":  "600403",
+                       "name":  "大有能源",
+                       "boards":  2,
+                       "price":  5.63,
+                       "breaks":  0,
+                       "fund_yi":  0.02,
+                       "industry":  "煤炭开采"
+                   },
+                   {
+                       "code":  "600746",
+                       "name":  "江苏索普",
+                       "boards":  2,
+                       "price":  6.31,
+                       "breaks":  0,
+                       "fund_yi":  0.01,
+                       "industry":  "化学原料"
+                   },
+                   {
+                       "code":  "605189",
+                       "name":  "富春染织",
+                       "boards":  2,
+                       "price":  15.64,
+                       "breaks":  0,
+                       "fund_yi":  0.02,
+                       "industry":  "纺织制造"
+                   },
+                   {
+                       "code":  "600227",
+                       "name":  "赤天化",
+                       "boards":  2,
+                       "price":  2.92,
+                       "breaks":  1,
+                       "fund_yi":  0.03,
+                       "industry":  "农化制品"
+                   },
+                   {
+                       "code":  "002141",
+                       "name":  "贤丰控股",
+                       "boards":  2,
+                       "price":  5.61,
+                       "breaks":  2,
+                       "fund_yi":  0.64,
+                       "industry":  "元件"
+                   },
+                   {
+                       "code":  "603580",
+                       "name":  "艾艾精工",
+                       "boards":  2,
+                       "price":  37.13,
+                       "breaks":  0,
+                       "fund_yi":  0.12,
+                       "industry":  "塑料"
+                   },
+                   {
+                       "code":  "002432",
+                       "name":  "九安医疗",
+                       "boards":  2,
+                       "price":  66.99,
+                       "breaks":  0,
+                       "fund_yi":  3.32,
+                       "industry":  "医疗器械"
+                   },
+                   {
+                       "code":  "688192",
+                       "name":  "迪哲医药-U",
+                       "boards":  2,
+                       "price":  67.6,
+                       "breaks":  0,
+                       "fund_yi":  0.19,
+                       "industry":  "化学制药"
+                   },
+                   {
+                       "code":  "600829",
+                       "name":  "人民同泰",
+                       "boards":  2,
+                       "price":  9.89,
+                       "breaks":  1,
+                       "fund_yi":  0.02,
+                       "industry":  "医药商业"
+                   },
+                   {
+                       "code":  "605028",
+                       "name":  "世茂能源",
+                       "boards":  2,
+                       "price":  24.23,
+                       "breaks":  1,
+                       "fund_yi":  0.01,
+                       "industry":  "电力"
+                   },
+                   {
+                       "code":  "605255",
+                       "name":  "天普股份",
+                       "boards":  2,
+                       "price":  87.19,
+                       "breaks":  0,
+                       "fund_yi":  0.02,
+                       "industry":  "汽车零部"
+                   }
+               ],
+    "top_industries":  [
+                           {
+                               "industry":  "化学制药",
+                               "count":  9
+                           },
+                           {
+                               "industry":  "医疗服务",
+                               "count":  6
+                           },
+                           {
+                               "industry":  "电力",
+                               "count":  4
+                           },
+                           {
+                               "industry":  "电网设备",
+                               "count":  3
+                           },
+                           {
+                               "industry":  "医疗器械",
+                               "count":  3
+                           },
+                           {
+                               "industry":  "互联网电",
+                               "count":  3
+                           },
+                           {
+                               "industry":  "服装家纺",
+                               "count":  2
+                           },
+                           {
+                               "industry":  "煤炭开采",
+                               "count":  2
+                           },
+                           {
+                               "industry":  "纺织制造",
+                               "count":  2
+                           },
+                           {
+                               "industry":  "一般零售",
+                               "count":  2
+                           },
+                           {
+                               "industry":  "游戏Ⅱ",
+                               "count":  2
+                           },
+                           {
+                               "industry":  "白酒Ⅱ",
+                               "count":  2
+                           }
+                       ],
+    "medicine_ladder":  [
+                            {
+                                "code":  "600664",
+                                "name":  "哈药股份",
+                                "boards":  4,
+                                "price":  4.49,
+                                "breaks":  0,
+                                "fund_yi":  0.61,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "600829",
+                                "name":  "人民同泰",
+                                "boards":  2,
+                                "price":  9.89,
+                                "breaks":  1,
+                                "fund_yi":  0.02,
+                                "industry":  "医药商业"
+                            },
+                            {
+                                "code":  "688192",
+                                "name":  "迪哲医药-U",
+                                "boards":  2,
+                                "price":  67.6,
+                                "breaks":  0,
+                                "fund_yi":  0.19,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "002432",
+                                "name":  "九安医疗",
+                                "boards":  2,
+                                "price":  66.99,
+                                "breaks":  0,
+                                "fund_yi":  3.32,
+                                "industry":  "医疗器械"
+                            },
+                            {
+                                "code":  "000908",
+                                "name":  "石药景峰",
+                                "boards":  1,
+                                "price":  7.5,
+                                "breaks":  0,
+                                "fund_yi":  0.71,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "002940",
+                                "name":  "昂利康",
+                                "boards":  1,
+                                "price":  28.94,
+                                "breaks":  0,
+                                "fund_yi":  0.75,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "002365",
+                                "name":  "永安药业",
+                                "boards":  1,
+                                "price":  11.98,
+                                "breaks":  0,
+                                "fund_yi":  1.14,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "603538",
+                                "name":  "美诺华",
+                                "boards":  1,
+                                "price":  39,
+                                "breaks":  3,
+                                "fund_yi":  0.04,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "002821",
+                                "name":  "凯莱英",
+                                "boards":  1,
+                                "price":  195.75,
+                                "breaks":  0,
+                                "fund_yi":  1.65,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "301520",
+                                "name":  "万邦医药",
+                                "boards":  1,
+                                "price":  58.79,
+                                "breaks":  0,
+                                "fund_yi":  0.11,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "002900",
+                                "name":  "哈三联",
+                                "boards":  1,
+                                "price":  11.19,
+                                "breaks":  0,
+                                "fund_yi":  0.21,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "600721",
+                                "name":  "百花医药",
+                                "boards":  1,
+                                "price":  7.57,
+                                "breaks":  0,
+                                "fund_yi":  0.02,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "000566",
+                                "name":  "海南海药",
+                                "boards":  1,
+                                "price":  5.15,
+                                "breaks":  0,
+                                "fund_yi":  0.9,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "603127",
+                                "name":  "昭衍新药",
+                                "boards":  1,
+                                "price":  50.62,
+                                "breaks":  2,
+                                "fund_yi":  0.77,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "002382",
+                                "name":  "蓝帆医疗",
+                                "boards":  1,
+                                "price":  5.96,
+                                "breaks":  1,
+                                "fund_yi":  1.46,
+                                "industry":  "医疗器械"
+                            },
+                            {
+                                "code":  "300149",
+                                "name":  "睿智医药",
+                                "boards":  1,
+                                "price":  10.39,
+                                "breaks":  2,
+                                "fund_yi":  0.88,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "688166",
+                                "name":  "博瑞医药",
+                                "boards":  1,
+                                "price":  35.44,
+                                "breaks":  2,
+                                "fund_yi":  0.06,
+                                "industry":  "化学制药"
+                            },
+                            {
+                                "code":  "000504",
+                                "name":  "南华生物",
+                                "boards":  1,
+                                "price":  8.51,
+                                "breaks":  2,
+                                "fund_yi":  0.35,
+                                "industry":  "医疗服务"
+                            },
+                            {
+                                "code":  "603387",
+                                "name":  "基蛋生物",
+                                "boards":  1,
+                                "price":  9.23,
+                                "breaks":  1,
+                                "fund_yi":  0.01,
+                                "industry":  "医疗器械"
+                            }
+                        ],
+    "medicine_broken_names":  [
+                                  "002653海思科(9.45%)",
+                                  "002412汉森制药(9.49%)",
+                                  "920266生物谷(26.45%)",
+                                  "688265南模生物(14.61%)",
+                                  "688046药康生物(17.02%)",
+                                  "002317众生药业(6.87%)",
+                                  "000739普洛药业(7.23%)"
+                              ],
+    "quotes":  [
+                   {
+                       "code":  "600664",
+                       "name":  "哈药股份",
+                       "close":  4.49,
+                       "pct":  10.05,
+                       "open":  4.32,
+                       "high":  4.49,
+                       "low":  4.32,
+                       "prev":  4.08,
+                       "amount_yi":  4.94,
+                       "turnover":  4.43,
+                       "main_net_yi":  1.10
+                   },
+                   {
+                       "code":  "600829",
+                       "name":  "人民同泰",
+                       "close":  9.89,
+                       "pct":  10.01,
+                       "open":  9.25,
+                       "high":  9.89,
+                       "low":  9.15,
+                       "prev":  8.99,
+                       "amount_yi":  2.37,
+                       "turnover":  4.24,
+                       "main_net_yi":  0.21
+                   },
+                   {
+                       "code":  "603127",
+                       "name":  "昭衍新药",
+                       "close":  50.62,
+                       "pct":  10.0,
+                       "open":  50.62,
+                       "high":  50.62,
+                       "low":  47.73,
+                       "prev":  46.02,
+                       "amount_yi":  21.91,
+                       "turnover":  6.93,
+                       "main_net_yi":  4.86
+                   },
+                   {
+                       "code":  "300149",
+                       "name":  "睿智医药",
+                       "close":  10.39,
+                       "pct":  19.98,
+                       "open":  8.75,
+                       "high":  10.39,
+                       "low":  8.67,
+                       "prev":  8.66,
+                       "amount_yi":  7.50,
+                       "turnover":  15.58,
+                       "main_net_yi":  2.16
+                   },
+                   {
+                       "code":  "000566",
+                       "name":  "海南海药",
+                       "close":  5.15,
+                       "pct":  10.04,
+                       "open":  4.45,
+                       "high":  5.15,
+                       "low":  4.41,
+                       "prev":  4.68,
+                       "amount_yi":  5.38,
+                       "turnover":  8.38,
+                       "main_net_yi":  2.20
+                   },
+                   {
+                       "code":  "002940",
+                       "name":  "昂利康",
+                       "close":  28.94,
+                       "pct":  10.0,
+                       "open":  26.09,
+                       "high":  28.94,
+                       "low":  26.09,
+                       "prev":  26.31,
+                       "amount_yi":  3.71,
+                       "turnover":  7.13,
+                       "main_net_yi":  1.24
+                   },
+                   {
+                       "code":  "001389",
+                       "name":  "广合科技",
+                       "close":  196.5,
+                       "pct":  5.64,
+                       "open":  197.0,
+                       "high":  204.61,
+                       "low":  193.27,
+                       "prev":  186.01,
+                       "amount_yi":  38.76,
+                       "turnover":  12.72,
+                       "main_net_yi":  -1.97
+                   },
+                   {
+                       "code":  "600183",
+                       "name":  "生益科技",
+                       "close":  152.43,
+                       "pct":  3.06,
+                       "open":  154.01,
+                       "high":  160.3,
+                       "low":  151.5,
+                       "prev":  147.9,
+                       "amount_yi":  146.51,
+                       "turnover":  3.94,
+                       "main_net_yi":  -1.76
+                   },
+                   {
+                       "code":  "002384",
+                       "name":  "东山精密",
+                       "close":  262.49,
+                       "pct":  0.81,
+                       "open":  261.0,
+                       "high":  280.08,
+                       "low":  255.88,
+                       "prev":  260.37,
+                       "amount_yi":  372.58,
+                       "turnover":  10.04,
+                       "main_net_yi":  -5.44
+                   },
+                   {
+                       "code":  "300214",
+                       "name":  "日科化学",
+                       "close":  11.58,
+                       "pct":  -13.58,
+                       "open":  13.14,
+                       "high":  14.12,
+                       "low":  10.86,
+                       "prev":  13.4,
+                       "amount_yi":  9.94,
+                       "turnover":  17.53,
+                       "main_net_yi":  -0.11
+                   }
+               ]
+}

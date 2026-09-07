@@ -1,0 +1,725 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>宇顺电子(002289) V2.3.1 + S40 深度分析报告</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --ink: #17212b;
+      --muted: #5f6f7c;
+      --line: #dce3eb;
+      --blue: #165dff;
+      --teal: #087f8c;
+      --red: #c3352b;
+      --amber: #a76400;
+      --green: #177245;
+      --soft-blue: #eef5ff;
+      --soft-red: #fff1f0;
+      --soft-amber: #fff8e8;
+      --soft-green: #effaf3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.68;
+    }
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 28px auto 56px;
+    }
+    .hero, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(18, 31, 46, 0.06);
+    }
+    .hero {
+      padding: 26px 28px;
+      margin-bottom: 16px;
+      border-left: 6px solid var(--red);
+    }
+    .kicker {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0;
+      letter-spacing: 0;
+      line-height: 1.25;
+    }
+    h1 { font-size: clamp(28px, 4vw, 42px); margin-top: 8px; }
+    h2 { font-size: 22px; margin-bottom: 12px; }
+    h3 { font-size: 17px; margin-bottom: 6px; }
+    p { margin: 6px 0 0; }
+    .meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .card {
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metric {
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 112px;
+    }
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .metric .value {
+      margin-top: 8px;
+      font-size: 26px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+    .metric .note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: #fff;
+      margin: 4px 6px 0 0;
+      white-space: nowrap;
+    }
+    .badge.red { color: var(--red); background: var(--soft-red); border-color: #ffd2cf; }
+    .badge.amber { color: var(--amber); background: var(--soft-amber); border-color: #ffe1a6; }
+    .badge.green { color: var(--green); background: var(--soft-green); border-color: #c9efda; }
+    .badge.blue { color: var(--blue); background: var(--soft-blue); border-color: #cfe0ff; }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      color: #111827;
+      background: #eef2f7;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .section-note {
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+      margin-top: 12px;
+    }
+    .callout.red { background: var(--soft-red); border-color: #ffd2cf; }
+    .callout.amber { background: var(--soft-amber); border-color: #ffe1a6; }
+    .callout.green { background: var(--soft-green); border-color: #c9efda; }
+    .scorebar {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      background: #e7edf4;
+      overflow: hidden;
+      margin-top: 7px;
+    }
+    .scorebar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--amber));
+      border-radius: inherit;
+    }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 4px 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .muted { color: var(--muted); }
+    .red { color: var(--red); }
+    .green { color: var(--green); }
+    .amber { color: var(--amber); }
+    @media (max-width: 920px) {
+      .grid, .grid.two { grid-template-columns: 1fr; }
+      .hero, .card { padding: 18px; }
+      table { font-size: 13px; }
+      th, td { padding: 9px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=stock-reports&amp;view=reports">个股深度报告</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">V2.3.1 + S40 Tech Growth</div>
+    <h1>宇顺电子(002289) 深度分析报告</h1>
+    <p class="meta">生成时间：2026-07-08 北京时间 · 当前行情快照：2026-07-08 16:14:09 · 数据口径：公司公告 / 深交所披露 / 财联社与行情快照辅助</p>
+    <div style="margin-top:12px">
+      <span class="badge red">结论：观察池 / 事件驱动重估</span>
+      <span class="badge amber">V2.3.1：46 / 100</span>
+      <span class="badge amber">S40：42 / 100</span>
+      <span class="badge blue">核心变量：中恩云 IDC 并表</span>
+      <span class="badge red">风险门：高估值 + 高杠杆 + 单一客户</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>一句话结论</h2>
+    <p>宇顺电子不是标准意义上的“硬科技成长核心股”，更像是 <strong>撤销 ST 后，借助中恩云数据中心资产注入形成的 IDC 资源重估票</strong>。它有北京稀缺数据中心资源、并表后利润显著改善、摘帽带来的交易弹性，但当前估值已经非常高，且现金流、债务、商誉、单一客户和治理验证都没有完全穿透。</p>
+    <div class="callout red">
+      <strong>模型动作：</strong>暂不按 V2.3.1 核心持仓处理；只能列入“事件驱动 / 重估观察池”。若后续半年报验证经营现金流转正、交易价款和债务安排落地、客户结构改善，才有资格重新上调评分。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>当前行情与估值</h2>
+    <div class="grid">
+      <div class="metric">
+        <div class="label">最新价</div>
+        <div class="value">45.08 元</div>
+        <div class="note">较前收盘 -5.19%</div>
+      </div>
+      <div class="metric">
+        <div class="label">市值</div>
+        <div class="value">约 126.34 亿</div>
+        <div class="note">流通市值约 123.71 亿</div>
+      </div>
+      <div class="metric">
+        <div class="label">估值快照</div>
+        <div class="value">PE 约 376.88x</div>
+        <div class="note">PB 约 47.62x，显著高于 IDC/电子行业常规水位</div>
+      </div>
+    </div>
+    <p class="section-note" style="margin-top:12px">行情来自腾讯行情快照；公司 2026-06-25 风险提示曾披露截至 2026-06-24 的滚动 PE 为 404.38 倍、PB 为 51.09 倍，同期 I65 软件和信息技术服务业滚动 PE 为 73.50 倍、PB 为 5.59 倍。</p>
+  </section>
+
+  <section class="card">
+    <h2>风险门先行</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>风险门</th>
+          <th>判断</th>
+          <th>原因</th>
+          <th>对模型的影响</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>交易警示 / ST 历史</td>
+          <td><span class="badge amber">未一票否决，但必须降权</span></td>
+          <td>2026-06-26 起撤销退市风险警示，短期是正催化；但公司在 2025 年仍有扣非亏损历史，摘帽本身不等于经营质量完全恢复。</td>
+          <td>不得直接按稳定成长股给估值。</td>
+        </tr>
+        <tr>
+          <td>估值风险</td>
+          <td><span class="badge red">高风险</span></td>
+          <td>当前 PE/PB 与同行业相比显著偏高，且股价已经充分反映“摘帽 + 数据中心”重估预期。</td>
+          <td>V2.3.1 估值/赔率项大幅扣分。</td>
+        </tr>
+        <tr>
+          <td>客户集中</td>
+          <td><span class="badge red">核心风险</span></td>
+          <td>财联社转述重大资产购买报告书称，中恩云数据中心报告期内收入 100% 来自“互联网客户 A”，合同从第七年起存在提前 90 天终止全部或部分机柜服务的条款。</td>
+          <td>利润池可见，但可持续性折价。</td>
+        </tr>
+        <tr>
+          <td>债务和支付压力</td>
+          <td><span class="badge red">核心风险</span></td>
+          <td>公司一季报显示资产负债率已升至 94.58%；交易仍涉及剩余对价支付、债务转移和融资安排。</td>
+          <td>现金流未验证前，不适合重仓逻辑。</td>
+        </tr>
+        <tr>
+          <td>商誉减值</td>
+          <td><span class="badge red">核心风险</span></td>
+          <td>2026Q1 商誉约 20.32 亿元，而归母权益约 2.65 亿元；若中恩云盈利或合同稳定性低于预期，减值对净资产冲击极大。</td>
+          <td>S40 财务质量和 V2.3.1 财务维度扣分。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>业务重构：它到底是什么公司</h2>
+    <div class="grid two">
+      <div class="metric">
+        <div class="label">原有业务</div>
+        <div class="value" style="font-size:20px">液晶显示屏相关产品、仪器仪表、配电设备</div>
+        <div class="note">传统业务竞争激烈、盈利能力弱，是过去扣非亏损的主要背景。</div>
+      </div>
+      <div class="metric">
+        <div class="label">新主线</div>
+        <div class="value" style="font-size:20px">北京房山中恩云数据中心</div>
+        <div class="note">由中恩云科技、申惠碧源、中恩云信息共同构成，覆盖土地房屋、供配电/制冷基础设施、IDC 牌照和服务合同。</div>
+      </div>
+    </div>
+    <div class="callout amber">
+      <strong>核心变化：</strong>公司价值锚从“亏损显示模组公司”切换为“稀缺 IDC 资产持有人”。这就是它近期股价弹性的底层来源，但也意味着估值本质上要看中恩云资产质量，而不是原有电子制造业务。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>最近四个单季度财务拆解</h2>
+    <p class="section-note">按 V2.3.1 要求，以下为累计报表拆分后的单季度口径；单位为百万元。2026Q1 因中恩云并表，数据出现结构性跃迁。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>季度</th>
+          <th>营业收入</th>
+          <th>毛利率</th>
+          <th>归母净利润</th>
+          <th>扣非净利润</th>
+          <th>销售净利率</th>
+          <th>经营现金流</th>
+          <th>关键解读</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026Q1</td>
+          <td>265.42</td>
+          <td class="green">47.62%</td>
+          <td class="green">49.26</td>
+          <td class="green">47.70</td>
+          <td class="green">18.84%</td>
+          <td class="red">-231.20</td>
+          <td>利润显著转正，但经营现金流大幅流出，说明并表利润与现金回款质量尚未同步验证。</td>
+        </tr>
+        <tr>
+          <td>2025Q4</td>
+          <td>135.16</td>
+          <td>36.87%</td>
+          <td class="red">-2.75</td>
+          <td class="red">-2.87</td>
+          <td class="red">-2.20%</td>
+          <td class="green">137.31</td>
+          <td>收入改善但净利润仍亏，现金流阶段性转正，可能与并表、回款和交易结构有关。</td>
+        </tr>
+        <tr>
+          <td>2025Q3</td>
+          <td>57.77</td>
+          <td>18.69%</td>
+          <td class="red">-7.38</td>
+          <td class="red">-7.38</td>
+          <td class="red">-11.50%</td>
+          <td>14.09</td>
+          <td>传统业务盈利能力弱，利润端仍承压。</td>
+        </tr>
+        <tr>
+          <td>2025Q2</td>
+          <td>88.77</td>
+          <td>13.08%</td>
+          <td class="red">-5.61</td>
+          <td class="red">-6.03</td>
+          <td class="red">-6.00%</td>
+          <td class="red">-15.64</td>
+          <td>原业务低毛利、低净利特征明显，无法支撑高估值。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout amber">
+      <strong>财务结论：</strong>2026Q1 的“利润爆发”不是自然经营爬坡，而是重大资产购买后的并表跃迁。模型需要继续看 2026Q2/Q3 是否能维持收入、利润和现金流三者一致改善。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>V2.3.1 战略优先模块</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>模块</th>
+          <th>结论</th>
+          <th>证据与解释</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>卡脖子 / 国产替代</td>
+          <td><span class="badge amber">弱</span></td>
+          <td>中恩云数据中心属于 IDC 基础设施资源，不是半导体材料、设备、芯片、工业软件等被海外垄断的核心卡脖子环节。它享受的是北京数据中心资源稀缺和 AI 算力需求扩张，而不是“国产替代进口”的硬逻辑。</td>
+        </tr>
+        <tr>
+          <td>利润池位置</td>
+          <td><span class="badge amber">有利润池，但可持续性待验</span></td>
+          <td>IDC 资产本身可产生较稳定服务收入，毛利率高于传统显示业务；但若收入过度依赖单一客户，利润池并不完全掌握在公司手里。</td>
+        </tr>
+        <tr>
+          <td>影子股逻辑</td>
+          <td><span class="badge amber">有交易性加成</span></td>
+          <td>公司通过长芯贰号基金间接参与盛合晶微，叠加数据中心、摘帽和算力链叙事，形成市场关注度；但该部分更偏财务投资和情绪催化，不能替代主营验证。</td>
+        </tr>
+        <tr>
+          <td>估值重构逻辑</td>
+          <td><span class="badge green">成立，但已大幅反映</span></td>
+          <td>公司从显示模组亏损公司向 IDC 资产平台切换，估值锚发生变化；但当前 PE/PB 已经显著高于可比行业，重估空间需要新的业绩或现金流证据继续打开。</td>
+        </tr>
+        <tr>
+          <td>新战略业务 / 未来布局</td>
+          <td><span class="badge blue">并表转利润阶段</span></td>
+          <td>数据中心业务已从概念进入收入和利润转换阶段，这是最大亮点；但尚未看到多客户扩展、AI 算力服务能力或更高附加值业务的充分披露。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>竞争对手与护城河</h2>
+    <p class="section-note">这里不把宇顺电子和半导体硬科技公司比较，而是放在 IDC / 数据中心基础设施服务这一真实赛道里比较。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>宇顺电子</th>
+          <th>主要对手</th>
+          <th>判断</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>资源卡位</td>
+          <td>北京房山数据中心资产，土地房屋、供配电制冷、IDC 牌照和服务合同组合。</td>
+          <td>光环新网、奥飞数据、数据港、润泽科技、世纪互联、宝信软件、运营商与云厂商自建资源。</td>
+          <td><span class="badge green">局部稀缺</span> 北京地区资源有稀缺性，但不是全国性龙头资源。</td>
+        </tr>
+        <tr>
+          <td>我有你没有</td>
+          <td>上市公司小市值弹性 + 摘帽重估 + 单个 IDC 资产带来的利润弹性。</td>
+          <td>大型 IDC 对手通常体量更大、客户更多、融资更稳，但短期弹性未必强。</td>
+          <td>这是交易弹性，不是深护城河。</td>
+        </tr>
+        <tr>
+          <td>你有我更强</td>
+          <td>若高密机柜和北京资源属实，区域资源价值较强。</td>
+          <td>头部 IDC 公司在多园区布局、客户多元、运营经验、融资成本、能耗管理上更强。</td>
+          <td>宇顺暂时没有形成“你有我更强”的系统性优势。</td>
+        </tr>
+        <tr>
+          <td>对手比我强</td>
+          <td>客户集中、资产负债率高、商誉大、业务切换刚开始。</td>
+          <td>成熟 IDC 平台拥有多客户、多区域、长期运营数据和更低融资约束。</td>
+          <td><span class="badge red">护城河等级 C / C-</span> 更像资源型护城河，不是技术型护城河。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>S 五维量化验证</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>评分</th>
+          <th>模型判断</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>成长性</td>
+          <td>14 / 20<div class="scorebar"><span style="width:70%"></span></div></td>
+          <td>2026Q1 收入和利润暴增，但主要来自并表，不是内生持续成长。成长性成立，但需连续季度验证。</td>
+        </tr>
+        <tr>
+          <td>盈利性</td>
+          <td>11 / 20<div class="scorebar"><span style="width:55%"></span></div></td>
+          <td>并表后毛利率改善明显，但财务费用、信用减值和现金流压力说明盈利质量还不稳。</td>
+        </tr>
+        <tr>
+          <td>经营规模</td>
+          <td>8 / 20<div class="scorebar"><span style="width:40%"></span></div></td>
+          <td>公司市值已上百亿，但上市公司合并口径收入规模仍偏小，且新业务只有短期并表记录。</td>
+        </tr>
+        <tr>
+          <td>资产效率</td>
+          <td>6 / 20<div class="scorebar"><span style="width:30%"></span></div></td>
+          <td>Q1 ROE 因净资产很小被放大；负债率 94.58%、商誉巨大，ROE 不宜机械看高。</td>
+        </tr>
+        <tr>
+          <td>估值 / 市值</td>
+          <td>3 / 20<div class="scorebar"><span style="width:15%"></span></div></td>
+          <td>PE/PB 明显高于行业，已对重估预期给出很高价格，安全边际不足。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout red">
+      <strong>S 五维结论：</strong>经营世界已经出现“重组后改善”，但资本世界定价跑得更快。当前不是数据站得住的核心配置，更偏事件驱动观察。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>V2.3.1 六维评分</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>分数</th>
+          <th>扣分/加分原因</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>行业与赛道</td>
+          <td>15 / 22</td>
+          <td>IDC/AIDC 需求受 AI 算力和数字经济拉动，赛道不差；但宇顺不是算力核心设备或云服务龙头，属于资源型基础设施承接。</td>
+        </tr>
+        <tr>
+          <td>核心竞争力</td>
+          <td>11 / 28</td>
+          <td>有北京数据中心资源，但技术壁垒、客户多元化、运营能力和可复制扩张能力尚未被充分证明。</td>
+        </tr>
+        <tr>
+          <td>财务质量</td>
+          <td>7 / 22</td>
+          <td>Q1 利润改善，但经营现金流为 -2.31 亿、资产负债率 94.58%、商誉 20.32 亿，财务质量不支持高分。</td>
+        </tr>
+        <tr>
+          <td>估值与赔率</td>
+          <td>3 / 18</td>
+          <td>当前价格已经明显交易了摘帽和 IDC 重估，风险收益比偏弱。</td>
+        </tr>
+        <tr>
+          <td>催化 / 影子股</td>
+          <td>7 / 10</td>
+          <td>撤销 ST、IDC 并表、盛合晶微间接投资、算力叙事都能提供交易催化，但这些不能替代基本面验证。</td>
+        </tr>
+        <tr>
+          <td>治理与流动性</td>
+          <td>3 / 10</td>
+          <td>近期异常波动提示、质押冻结、交易对价支付和治理历史需要持续跟踪；流动性尚可但波动大。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout amber">
+      <strong>综合评分：46 / 100。</strong>分数卡在“题材重估 / 事件驱动观察”区间，低于“成长配置”和“核心持仓”门槛。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>S40 科技成长校验</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>S40 问题</th>
+          <th>回答</th>
+          <th>结论</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>真赛道天花板</td>
+          <td>IDC/AIDC 是千亿级甚至更大赛道，AI 算力需求支撑长期空间。</td>
+          <td><span class="badge green">赛道通过</span></td>
+        </tr>
+        <tr>
+          <td>真卡位 / 国产替代</td>
+          <td>公司卡的是北京区域数据中心资源，不是海外卡脖子的设备、材料、芯片或软件。</td>
+          <td><span class="badge amber">改造适用</span></td>
+        </tr>
+        <tr>
+          <td>真技术</td>
+          <td>当前披露更多是数据中心资产、供配电、制冷和 IDC 牌照，不是高技术产品突破。</td>
+          <td><span class="badge red">弱</span></td>
+        </tr>
+        <tr>
+          <td>真客户</td>
+          <td>有真实客户和长期合同，但客户集中度极高，且客户身份未完全透明。</td>
+          <td><span class="badge amber">有客户，但折价</span></td>
+        </tr>
+        <tr>
+          <td>真财务</td>
+          <td>并表后利润转正，但现金流、负债和商誉问题未解决。</td>
+          <td><span class="badge red">未通过核心标准</span></td>
+        </tr>
+        <tr>
+          <td>真竞争对手 / 护城河</td>
+          <td>区域资源有壁垒，但与头部 IDC 平台相比，客户、规模、融资、运营经验均偏弱。</td>
+          <td><span class="badge amber">C 级护城河</span></td>
+        </tr>
+        <tr>
+          <td>真龙头</td>
+          <td>不是 IDC 全国龙头，也不是算力链核心技术龙头。</td>
+          <td><span class="badge red">不通过</span></td>
+        </tr>
+        <tr>
+          <td>真估值</td>
+          <td>估值显著高于行业，安全边际弱。</td>
+          <td><span class="badge red">不通过</span></td>
+        </tr>
+        <tr>
+          <td>真能力圈</td>
+          <td>能讲清业务切换和重估逻辑，但不能用硬科技龙头逻辑解释当前价格。</td>
+          <td><span class="badge amber">只适合观察</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout red">
+      <strong>S40 结论：</strong>它是“IDC 资产重估股”，不是“卡脖子硬科技成长股”。S40 只给观察，不给核心买入。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>后续触发条件</h2>
+    <div class="grid two">
+      <div class="callout green">
+        <h3>上调条件</h3>
+        <ul>
+          <li>2026 半年报或三季报显示 IDC 收入、利润、经营现金流同步改善。</li>
+          <li>剩余交易价款、债务转移和融资安排完整落地，且没有明显稀释或资金链压力。</li>
+          <li>中恩云新增客户或披露客户稳定性增强，单一客户风险下降。</li>
+          <li>商誉减值测试继续安全，且数据中心盈利假设能被经营数据支撑。</li>
+          <li>估值回落到能用中恩云年化利润解释的区间，或利润连续超预期。</li>
+        </ul>
+      </div>
+      <div class="callout red">
+        <h3>失效条件</h3>
+        <ul>
+          <li>利润为正但经营现金流持续大幅为负。</li>
+          <li>主要客户缩减机柜、提前终止服务或回款变差。</li>
+          <li>商誉出现减值迹象，或并表资产盈利不及承诺/预期。</li>
+          <li>融资、对价支付、关联方借款或质押冻结出现新的不确定性。</li>
+          <li>股价继续上冲但公告层面没有新增经营证据，只剩情绪交易。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>最终操作结论</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>场景</th>
+          <th>动作</th>
+          <th>原因</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>当前价格与当前信息</td>
+          <td><span class="badge red">不追高</span></td>
+          <td>估值已经显著前置，基本面证据还没有完全覆盖现金流、客户和债务风险。</td>
+        </tr>
+        <tr>
+          <td>作为 V2.3.1 标的</td>
+          <td><span class="badge amber">观察池</span></td>
+          <td>重估逻辑成立，但不满足核心持仓的财务质量和护城河要求。</td>
+        </tr>
+        <tr>
+          <td>作为 S40 科技成长股</td>
+          <td><span class="badge red">暂不纳入核心</span></td>
+          <td>不是卡脖子硬科技环节，缺少技术型护城河和龙头地位。</td>
+        </tr>
+        <tr>
+          <td>跟踪优先级</td>
+          <td><span class="badge blue">等半年报验证</span></td>
+          <td>下一次决定性信息是 2026Q2/半年报：看经营现金流、财务费用、应收款、客户稳定性和债务安排。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>资料来源</h2>
+    <ul>
+      <li><a href="https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-29/7ecd8d22-8c99-462b-914b-040a0da1f9a5.PDF">深圳证券交易所：宇顺电子 2026 年第一季度报告</a></li>
+      <li><a href="https://www.cls.cn/detail/2085163">财联社：连亏 3 年的 *ST 宇顺欲上演“蛇吞象”</a></li>
+      <li><a href="https://paper.cnstock.com/html/2026-04/23/content_2204059.htm">上海证券报：宇顺电子股票交易异常波动暨风险提示公告</a></li>
+      <li><a href="https://www.sohu.com/a/1041220160_120988533">风险提示公告镜像：2026-06-25 异常波动与撤销退市风险警示事项</a></li>
+      <li><a href="https://data.eastmoney.com/stockdata/002289.html">东方财富：宇顺电子个股数据</a></li>
+      <li>腾讯行情快照：sz002289，抓取时间 2026-07-08 16:14:09。</li>
+    </ul>
+    <p class="section-note">本报告用于投研框架训练和风险识别，不构成收益承诺或个性化投资建议。</p>
+  </section>
+</main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

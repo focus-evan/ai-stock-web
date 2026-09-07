@@ -1,0 +1,166 @@
+{
+  "run_time": "2026-07-13 12:15 +08:00",
+  "window_start": "2026-07-07 00:00 +08:00",
+  "window_end": "2026-07-13 12:15 +08:00",
+  "formal_hits": [],
+  "related_updates": [
+    {
+      "name": "兆易創新",
+      "code": "03986",
+      "date": "2026-07-09",
+      "title": "正面盈利預告",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0709/2026070901276_c.pdf",
+      "source": "HKEX",
+      "class": "related"
+    },
+    {
+      "name": "兆易创新",
+      "code": "603986",
+      "date": "2026-07-10",
+      "title": "兆易创新2026年半年度业绩预增公告",
+      "link": "http://static.cninfo.com.cn/finalpage/2026-07-10/1225417171.PDF",
+      "source": "CNINFO",
+      "class": "related"
+    }
+  ],
+  "excluded_examples": [
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "Notification Letter with Reply Form to Registered Shareholders",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001623.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "Notification Letter with Request Form to Non-Registered Shareholders",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001621.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "Proxy Form for the 2026 First Extraordinary General Meeting\nto be held on Thursday, July 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001617.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "NOTICE OF THE 2026 FIRST EXTRAORDINARY GENERAL MEETING",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001615.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "(1) PROPOSED RE-ELECTION OR ELECTION AND\nAPPOINTMENT OF MEMBERS OF THE FIFTH SESSION OF\nTHE BOARD OF DIRECTORS\nAND\n(2) NOTICE OF THE 2026 FIRST EXTRAORDINARY\nGENERAL MEETING",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001611.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-10",
+      "title": "(1) PROPOSED RE-ELECTION OR ELECTION AND\nAPPOINTMENT OF DIRECTORS\nAND\n(2) ELECTION AND APPOINTMENT OF EMPLOYMENT\nREPRESENTATIVE DIRECTOR",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001535.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "HENGRUI PHARMA",
+      "code": "01276",
+      "date": "2026-07-10",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071001218.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "BABA-W",
+      "code": "09988",
+      "date": "2026-07-10",
+      "title": "Next Day Disclosure Return",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071000987.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "HENGRUI PHARMA",
+      "code": "01276",
+      "date": "2026-07-10",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0710/2026071000200.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "YOFC",
+      "code": "06869",
+      "date": "2026-07-09",
+      "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0709/2026070901226.htm",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "非正式二季报/半年报披露"
+    },
+    {
+      "name": "BABA-W",
+      "code": "09988",
+      "date": "2026-07-09",
+      "title": "Next Day Disclosure Return",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0709/2026070900951.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    },
+    {
+      "name": "TENCENT",
+      "code": "00700",
+      "date": "2026-07-09",
+      "title": "Next Day Disclosure Return",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0709/2026070900827.pdf",
+      "source": "HKEX",
+      "class": "excluded",
+      "reason": "月报、治理、海外监管或其他非正式财报公告"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 50,
+    "cninfo_watchlist_rows": 42,
+    "sse_szse_rows": 0,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "sources": [
+    "https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsdc_1.json",
+    "https://www1.hkexnews.hk/ncms/json/eds/lcisehk7relsde_1.json",
+    "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "https://query.sse.com.cn/security/stock/queryCompanyBulletin.do",
+    "https://www.szse.cn/api/disc/announcement/annIndex"
+  ],
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260713.html"
+  ]
+}

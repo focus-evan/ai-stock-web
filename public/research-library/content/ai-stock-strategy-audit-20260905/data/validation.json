@@ -1,0 +1,237 @@
+{
+  "checks": [
+    {
+      "name": "index.html UTF-8",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "index.html unique ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "evidence.html UTF-8",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "evidence.html unique ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "index.html UTF-8",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "index.html unique ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All local links exist",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "All anchors exist",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "14 strategy details",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "14 ranking rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Preserve every original portal link",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "New entry in portal card and folder table",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Signal counts reconcile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dragon_head independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "emotion_relay independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "event_driven independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "breakthrough independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "volume_price independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "overnight independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "moving_average independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "northbound independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "trend_momentum independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "combined independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "yangjia_emotion_cycle independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "kobe92_cycle_speculation independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "a_share_leader_tactics independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beijing_chaogu_first_board independent mean/win",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_config snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_daily_summary snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_follow_recommendation snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_position snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_review snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portfolio_trade snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "skill_tactics_run_ledger snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "skill_tactics_signal_ledger snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_evolution_run snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_evolution_state snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_follow snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_follow_snapshot snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_performance_track snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "strategy_recommendation_cache snapshot hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "3 index calendars agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All Python scripts parse",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Embedded JavaScript syntax",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No external script/image dependencies",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No credentials in visible report",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 46,
+  "failed": 0,
+  "visual_preview": "Browser file URL blocked by browser safety policy; no workaround attempted. Static HTML, CSS structure, local links, data and embedded JS checked."
+}

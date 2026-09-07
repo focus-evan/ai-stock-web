@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>养家情绪周期核心逻辑</title>
+  <style>
+    :root {
+      --paper: #fff8f3;
+      --card: rgba(255, 255, 255, 0.88);
+      --ink: #3f211d;
+      --muted: #806c64;
+      --red: #a63f32;
+      --red-deep: #823128;
+      --line: rgba(180, 73, 55, 0.16);
+      --shadow: 0 26px 80px rgba(117, 52, 39, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei", serif;
+      background:
+        radial-gradient(circle at 15% -8%, rgba(191, 73, 55, 0.22), transparent 34%),
+        radial-gradient(circle at 90% 4%, rgba(222, 145, 112, 0.20), transparent 32%),
+        linear-gradient(180deg, #f2cdbf 0, #fff8f3 260px, #fffaf6 100%);
+    }
+    a { color: var(--red); text-decoration: none; }
+    .page { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; padding: 44px 0 72px; }
+    .hero, .section {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(202, 73, 55, 0.10), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,249,244,0.90));
+      box-shadow: var(--shadow);
+    }
+    .hero { padding: 42px; }
+    .eyebrow { color: #a75a4a; font-size: 13px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-size: clamp(38px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.06em; color: var(--red-deep); }
+    .lead { max-width: 900px; margin: 0; color: var(--muted); font-size: 20px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .pill, .ref-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 247, 242, 0.78);
+      color: #8e3b30;
+      font-weight: 700;
+    }
+    .section { margin-top: 22px; padding: 30px; }
+    .section h2 { margin: 0 0 18px; color: var(--red-deep); font-size: 30px; letter-spacing: -0.04em; }
+    .section h3 { margin: 0 0 10px; color: #4a2923; font-size: 20px; }
+    .section p, .section li { color: var(--muted); font-size: 16px; line-height: 1.85; }
+    .section ul, .section ol { margin: 0; padding-left: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 22px; }
+    .mini-card { padding: 20px; border-radius: 24px; background: rgba(255,255,255,0.74); border: 1px solid rgba(180, 73, 55, 0.12); }
+    .quote {
+      margin: 0;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(202, 73, 55, 0.10), rgba(255,255,255,0.76));
+      border: 1px solid rgba(180, 73, 55, 0.16);
+      color: var(--red-deep);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.65;
+    }
+    .chain { counter-reset: step; display: grid; gap: 14px; }
+    .step {
+      position: relative;
+      padding: 20px 20px 20px 72px;
+      border-radius: 24px;
+      border: 1px solid rgba(180, 73, 55, 0.12);
+      background: rgba(255,255,255,0.74);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, #b84c3d, #7f2f27);
+      font-weight: 900;
+    }
+    .matrix { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 18px; background: rgba(255,255,255,0.74); }
+    .matrix th, .matrix td { padding: 14px 16px; border-bottom: 1px solid rgba(180, 73, 55, 0.10); text-align: left; vertical-align: top; color: var(--muted); line-height: 1.7; }
+    .matrix th { color: var(--red-deep); background: rgba(202, 73, 55, 0.07); font-size: 14px; }
+    .ref-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .footer-note { margin-top: 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    @media (max-width: 860px) {
+      .page { width: min(100vw - 24px, 1180px); padding-top: 24px; }
+      .hero, .section { padding: 22px; border-radius: 26px; }
+      .grid { grid-template-columns: 1fr; }
+      .matrix { display: block; overflow-x: auto; }
+    }
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Yangjia Emotion Cycle</div>
+      <h1>养家情绪周期核心逻辑</h1>
+      <p class="lead">这套战法不是先问“哪只股票好看”，而是先问“今天市场允许出手吗”。核心是先判断赚钱效应或亏钱效应，再比较外部增量买盘与场内持筹卖压，最后只在主线、角色、买点、风控同时通过时给出操作。</p>
+      <div class="hero-actions">
+        <a class="pill" href="latest.html">返回四战法首页</a>
+        <span class="pill">生成时间：2026-09-07 15:38:29 +0800</span>
+        <span class="pill">适用：短线情绪雷达，不等于保证买入建议</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一句话核心</h2>
+      <p class="quote">赚钱效应扩散时，外部资金愿意继续接力；亏钱效应扩散时，持筹资金更急着卖。养家战法只在“买的人更愿意买，卖的人没那么急着卖”的地方找机会。</p>
+    </section>
+
+    <section class="section">
+      <h2>证据从哪里来</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>证据层级</h3>
+          <ul>
+            <li>第一层：淘股吧《养家心法论股市》原帖，尤其是 2012-08-18 相关表达。</li>
+            <li>第二层：保留原框架语言的淘股吧整理帖，用来补充赚钱效应、亏钱效应、仓位、龙头/跟风、忘记成本等例子。</li>
+            <li>第三层：后来的转述、视频和社媒总结，只能辅助理解，不能单独作为推荐依据。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>本地 skill 的硬约束</h3>
+          <ul>
+            <li>不和 V2.3.1 基本面选股混用，也不和陈小群席位/龙虎榜逻辑混用。</li>
+            <li>不能因为知名席位、截图、传闻、单一 K 线就推荐股票。</li>
+            <li>数据过期、非交易日、无法验证时，必须降低置信度，宁可空仓席位。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">公开参考入口：</p>
+      <div class="ref-links"><a href="https://m.tgb.cn/a/1ykwVHqdlf8-4?type=" target="_blank" rel="noreferrer">淘股吧原帖/整理入口 1</a>
+<a href="https://m.tgb.cn/a/1QoeRN5Qedq" target="_blank" rel="noreferrer">淘股吧原帖/整理入口 2</a>
+<a href="https://m.tgb.cn/a/2mLq5dhLU53" target="_blank" rel="noreferrer">淘股吧原帖/整理入口 3</a>
+<a href="https://www.tgb.cn/blog/134434" target="_blank" rel="noreferrer">淘股吧博客整理入口</a></div>
+    </section>
+
+    <section class="section">
+      <h2>完整决策链</h2>
+      <div class="chain">
+        <div class="step"><h3>先判市场情绪</h3><p>先看市场处于 `赚钱扩散`、`分歧震荡` 还是 `亏钱扩散`。重点看指数、成交额、涨停/跌停数量、昨日涨停溢价、高标生存、炸板回封、全市场上涨下跌家数。情绪不允许出手时，个股再好也先降级。</p></div>
+        <div class="step"><h3>比较买盘和卖压</h3><p>外部资金意愿来自新题材催化、赚钱后回流、愿意抬高价格、低位分支被激活；卖压来自套牢盘反弹卖、获利盘兑现、老龙退潮、止损一致性。只有买盘明显强过卖压，才考虑买。</p></div>
+        <div class="step"><h3>找主线和角色</h3><p>优先找政策、产业催化、人气和资金共振的主线。再区分市场总龙、题材龙、分支龙、低位补涨、后排噪音。龙头不是信仰，只是一个角色；风险收益变坏时也要卖或降级。</p></div>
+        <div class="step"><h3>确认买点质量</h3><p>有效买点包括弱转强、首次有承接的分歧、炸板回封、首阴承接、亏钱效应末端的恐慌反转、主线内低位补涨启动。无效买点包括一字加速追高、只看席位、后排凑数、只看图形、因为成本不甘心而加仓。</p></div>
+        <div class="step"><h3>过仓位门</h3><p>胜率低于 60% 只能观察或不出手；60%-70% 只允许轻仓试错；70%-80% 才是中等把握；80%-90% 也要看盈亏比；90% 以上极少见，不能随口说满仓。</p></div>
+        <div class="step"><h3>写清楚失效条件</h3><p>只要说买，就必须同时写买法、价格触发、仓位、失效条件。比如回封失败、跌破分时均线、放量弱收、题材龙头崩塌、官方风险公告出现，都可能让候选从买变成不买。</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三种情绪怎么操作</h2>
+      <table class="matrix">
+        <thead><tr><th>情绪阶段</th><th>市场特征</th><th>允许动作</th><th>禁止动作</th></tr></thead>
+        <tbody>
+          <tr><td>赚钱扩散</td><td>涨停增加、高标能活、昨日涨停溢价为正、主线从龙头扩散到分支和低位。</td><td>做主线核心、分支龙、低位补涨的确认买点。</td><td>盲目买后排、无触发价追高。</td></tr>
+          <tr><td>分歧震荡</td><td>主线还在，但高低切、炸板、拥挤、缩容或板块内分化明显。</td><td>只做确认，不做一致追高；优先弱转强、回封、承接。</td><td>高位加速、情绪中位、没承接的冲高。</td></tr>
+          <tr><td>亏钱扩散</td><td>高标坍塌、昨日涨停溢价转负、跌停增加、老龙补跌、追高连续失败。</td><td>默认不买；只有恐慌末端反转且条件极清楚时轻仓试错。</td><td>为了回本加仓、赌老龙修复、硬凑五只雷达。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>候选股六道门</h2>
+      <table class="matrix">
+        <thead><tr><th>门槛</th><th>要回答的问题</th><th>不过关怎么处理</th></tr></thead>
+        <tbody>
+          <tr><td>情绪门</td><td>市场是否允许短线出手？如果亏钱扩散，是否属于恐慌反转而非硬接飞刀？</td><td>不买或空仓席位。</td></tr>
+          <tr><td>主线门</td><td>是否属于已确认主线或资金直接分支？有没有政策、产业、公告或资金证据？</td><td>降级为只观察或淘汰。</td></tr>
+          <tr><td>买盘门</td><td>量能、换手、封板、回封、承接、讨论热度是否证明买的人还在？</td><td>不追高，等下一次确认。</td></tr>
+          <tr><td>角色门</td><td>它是龙头、分支龙、低位补涨，还是只是后排噪音？</td><td>后排噪音不为凑数进入雷达。</td></tr>
+          <tr><td>买点门</td><td>是否有弱转强、首次分歧承接、回封、首阴承接、恐慌反转或低位启动？</td><td>没有触发就只能只观察。</td></tr>
+          <tr><td>风险门</td><td>是否有异动公告、监管关注、减持解禁、澄清公告、纯传闻、过度一致加速？</td><td>降级、空仓或等待风险释放。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>打分、输出与收益跟踪</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>100 分评分</h3>
+          <ul>
+            <li>情绪匹配 20：是否顺应当前赚钱/亏钱阶段。</li>
+            <li>主线热度 20：是否属于最强确认主线，而不是模糊概念。</li>
+            <li>买盘优势 20：外部买意、量能、封单、回封、热度是否压过卖压。</li>
+            <li>角色质量 15：龙头、分支龙、有效补涨得分高，后排噪音低。</li>
+            <li>买点质量 15：是否有可执行确认或等待触发。</li>
+            <li>风险扣分 10：公告、监管、减持、拥挤、数据过期等都要扣。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>必须输出什么</h3>
+          <ul>
+            <li>结论必须是 `买`、`不买`、`只观察` 三选一。</li>
+            <li>`买` 必须同时有买法、价格触发、仓位、失效条件。</li>
+            <li>候选不足五只时，用 `空仓席位`，不能硬凑。</li>
+            <li>只跟踪明确标记为 `买` 的股票；未触发就写 `未触发`，不计入真实胜率。</li>
+            <li>收益跟踪至少包含触发价、最大涨幅、收盘收益、次日收益、最大回撤。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三个检查点怎么用</h2>
+      <table class="matrix">
+        <thead><tr><th>时间</th><th>作用</th><th>必须看什么</th></tr></thead>
+        <tbody>
+          <tr><td>08:50 盘前计划</td><td>用昨收和隔夜信息做预案，不等于开盘直接买。</td><td>昨收结构、公告、政策/行业催化、老题材赚钱/亏钱反馈、昨日涨停溢价、成交额、前序候选。</td></tr>
+          <tr><td>10:05 早盘确认</td><td>最关键。集合竞价和开盘 35 分钟后确认真实买盘。</td><td>主线是否被资金承认，候选是否弱转强/回封/承接，风险股是否掉队。</td></tr>
+          <tr><td>15:25 收盘复盘</td><td>复盘今天推荐是否有效，并准备明日逻辑。</td><td>开盘、最高、最低、收盘、最大回撤、相对题材强弱、keep/drop/upgrade/downgrade。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>常见误区</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>这些不是买入理由</h3>
+          <ul>
+            <li>某个知名席位出现。</li>
+            <li>股票名字和热门概念沾边，但没有资金承认。</li>
+            <li>一字板很强，所以第二天无脑追。</li>
+            <li>K 线好看，但市场亏钱效应扩散。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>这些必须强制降级</h3>
+          <ul>
+            <li>触发价没有出现：从 `买` 降为 `未触发/只观察`。</li>
+            <li>放量弱收或回封失败：从核心降为观察或淘汰。</li>
+            <li>题材龙头退潮：跟风和低位补涨一起降级。</li>
+            <li>官方澄清、异动、监管、减持等风险出现：先过风险门。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">这页解释的是当前本地 `yangjia-emotion-cycle` skill 的执行逻辑。它服务于短线情绪研究和复盘，不构成保证收益或个性化投资建议。</p>
+    </section>
+  </main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

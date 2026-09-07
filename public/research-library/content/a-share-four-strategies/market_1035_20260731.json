@@ -1,0 +1,75 @@
+﻿{
+    "timestamp":  "2026-07-31 10:42:24 +08:00",
+    "market":  {
+                   "limit_up":  74,
+                   "first_board":  65,
+                   "broken":  71,
+                   "limit_down":  0,
+                   "broken_ratio":  48.97,
+                   "ad_first":  6,
+                   "software_it_first":  6,
+                   "semi_component_first":  9
+               },
+    "candidates":  [
+                       {
+                           "code":  "603629",
+                           "name":  "利通电子",
+                           "price":  96.01,
+                           "sector":  "消费电子",
+                           "first":  92503,
+                           "last":  102651,
+                           "opens":  2,
+                           "turnover":  4.82,
+                           "amount_yi":  16.66,
+                           "seal_yi":  9.51
+                       },
+                       {
+                           "code":  "600667",
+                           "name":  "太极实业",
+                           "price":  17.23,
+                           "sector":  "工程咨询",
+                           "first":  92504,
+                           "last":  93304,
+                           "opens":  1,
+                           "turnover":  8.42,
+                           "amount_yi":  30.35,
+                           "seal_yi":  10.23
+                       },
+                       {
+                           "code":  "301171",
+                           "name":  "易点天下",
+                           "price":  30.49,
+                           "sector":  "广告营销",
+                           "first":  101024,
+                           "last":  101654,
+                           "opens":  2,
+                           "turnover":  13.59,
+                           "amount_yi":  19.63,
+                           "seal_yi":  7.26
+                       },
+                       {
+                           "code":  "600588",
+                           "name":  "用友网络",
+                           "price":  11.08,
+                           "sector":  "软件开发",
+                           "first":  102055,
+                           "last":  102055,
+                           "opens":  0,
+                           "turnover":  2.58,
+                           "amount_yi":  9.36,
+                           "seal_yi":  3.03
+                       },
+                       {
+                           "code":  "600602",
+                           "name":  "云赛智联",
+                           "price":  17.62,
+                           "sector":  "软件开发",
+                           "first":  102702,
+                           "last":  102702,
+                           "opens":  0,
+                           "turnover":  3.66,
+                           "amount_yi":  6.79,
+                           "seal_yi":  3.02
+                       }
+                   ]
+}

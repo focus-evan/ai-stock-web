@@ -1,0 +1,676 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-08-02 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>Orange维持：Amazon/Microsoft支撑AI CapEx，但Apple下跌与长端利率高位限制全面转多</h1>
+      <p class="subtitle">本轮周日午间雷达维持Orange。AI/数据中心CapEx主线没有断裂，Amazon Q2的AWS +37%、AI与芯片业务各超US$25bn年化run rate，以及Microsoft Azure +43%和RPO US$678bn，继续证明需求端能接住一部分资本开支；但流动性仍是Stress，FOMC三票支持加息，Fed H.15最新官方10Y仍4.67%、30Y 5.20%，AP周五市场收益率约4.71且油价反弹。科技催化为Mixed：Amazon大涨确认AI基础设施分层修复，Apple虽然收入强但股价下跌、供应链和端侧AI节奏仍待验证。当前不是Red恐慌，也不是Green普涨，只能做有收入/RPO/订单闭环的卖铲人筛选。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-08-02 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>Orange维持：Amazon/Microsoft支撑AI CapEx，但Apple下跌与长端利率高位限制全面转多</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持Orange：只看收入、RPO、订单、电力约束能互相验证的AI卖铲人；不追仅靠CapEx口号和远期TAM的高估值链条。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>Amazon和Microsoft继续给AI CapEx需求端背书：AWS +37%、AI/芯片各超US$25bn run rate，Azure +43%、commercial RPO US$678bn。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>Fed长端利率和流动性仍卡住估值：10Y官方4.67%、30Y 5.20%，AP周五10Y约4.71；Apple股价下跌提示AI抢组件会挤压消费电子链。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下周重点盯Amazon 10-Q/电话会CapEx口径、Apple 10-Q供应链表述、Fed H.15/H.10是否回落、Microsoft/Meta 10-K/10-Q承诺。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-red">Stress</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Amazon成为本轮AI CapEx最大正反馈</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Amazon Q2官方披露net sales US$200.6bn、+20%；AWS sales US$42.2bn、+37%；AWS operating income US$16.6bn；AI business和chips business各自超过US$25bn annual run rate；TTM FCF为- US$7.6bn，因PPE购买同比增加US$66.1bn且主要反映AI投资。</p>
+              <p><strong>影响：</strong>AI云需求和自研芯片需求确认，利好AI服务器、HBM、网络、数据中心电力与冷却；但负FCF说明高CapEx仍要过现金流过滤器。</p>
+              <p class="source-line"><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Apple官方业绩强，但市场给供应链压力打折</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Apple官方披露FY26 Q3 revenue US$109.4bn、+16%，iPhone revenue US$53.0bn、+16%，Services revenue US$31.0bn、+12%，EPS US$2.02、+19%。AP报道周五Apple下跌7.4%，市场担心内存和先进制程供应被AI需求挤占，影响下一财季iPhone收入。</p>
+              <p><strong>影响：</strong>端侧AI和消费电子需求不是坏消息，但AI数据中心抢组件会让存储、先进节点和消费电子供应链出现分化。</p>
+              <p class="source-line"><a href="https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/">Apple Newsroom / AP</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>美股周五分层修复：Amazon强，Apple弱</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>AP报道周五S&amp;P 500 +0.7%，Dow +0.5%，Nasdaq +1.0%；Amazon +15.3%，Apple -7.4%；Microsoft在前一日大涨后回落4.0%。周度看S&amp;P 500 +1.0%、Nasdaq +0.4%、Dow +2.1%。</p>
+              <p><strong>影响：</strong>市场从恐慌防守转为分层定价：奖励AWS/AI基础设施收入闭环，惩罚供应链压力和高估值兑现不足。</p>
+              <p class="source-line"><a href="https://apnews.com/article/stock-markets-rates-korea-ai-oil-e31b3a442bcb957a53f1823ef21e73e8">Associated Press</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>流动性仍不是顺风：长端收益率和油价回升</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Fed H.15 7月30日发布的7月29日官方数据：EFFR 3.63%，10Y Treasury 4.67%，30Y Treasury 5.20%，10Y TIPS实际利率2.41%；AP报道周五10Y市场收益率约4.71、Brent升至US$89.47、WTI升至US$85.74。</p>
+              <p><strong>影响：</strong>PCE降温带来缓和，但高长端利率和油价反弹仍压制高估值科技，Orange不能升Green。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 / AP</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>Microsoft仍是AI CapEx收入闭环样板</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>Microsoft FY26 Q4官方披露收入US$90.0bn、+18%，Microsoft Cloud US$59.3bn、+27%，commercial RPO +84%至US$678bn，Azure and other cloud services revenue +43%，Q4 additions to property and equipment US$35.802bn。</p>
+              <p><strong>影响：</strong>AI云收入/RPO/CapEx三者同步，是本轮AI卖铲人能从Red降到Orange的核心证据；后续要验证FY27 CapEx和折旧压力。</p>
+              <p class="source-line"><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Amazon</td>
+              <td>Q2 net sales US$200.6bn、+20%；AWS US$42.2bn、+37%；AWS operating income US$16.6bn；AI business和chips business各自超过US$25bn annual run rate；TTM FCF -US$7.6bn，PPE购买同比增加US$66.1bn且主要反映AI投资。</td>
+              <td>上修</td>
+              <td>AWS AI、Trainium/自研芯片、GPU/HBM、AI服务器、数据中心电力、冷却和网络需求继续扩张。</td>
+              <td>High</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon 2026 CapEx口径</td>
+              <td>AP等媒体称Amazon将2026资本开支计划上调至约US$220bn；Amazon官方新闻稿已确认AI驱动PPE购买大增，但US$220bn仍需10-Q或正式电话会文字稿逐字核验。</td>
+              <td>待验证</td>
+              <td>若官方文件确认，将继续抬高AI服务器、内存、网络、电力与数据中心工程年度需求。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/b4ce02b4666a35b8975823c5c22072ee">AP / pending official filing transcript</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q4 revenue US$90.0bn、+18%；Microsoft Cloud US$59.3bn、+27%；commercial RPO +84%至US$678bn；Azure and other cloud services +43%；Q4 additions to property and equipment US$35.802bn，FY26为US$115.948bn。</td>
+              <td>上修</td>
+              <td>云AI收入、RPO和CapEx同步扩张，利好GPU/HBM、光模块、交换网络、液冷、电源、服务器ODM和数据中心工程。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>Q2 revenue US$60.80bn、+28%；CapEx含融资租赁本金US$31.08bn；FCF仅US$784mn；2026 CapEx指引US$130-145bn。</td>
+              <td>上修</td>
+              <td>对供应链是订单利好，对平台估值是现金流压力；后续重点看AI ROI、租赁和购买承诺。</td>
+              <td>High</td>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple</td>
+              <td>FY26 Q3 revenue US$109.4bn、+16%；iPhone US$53.0bn、+16%；Services US$31.0bn、+12%；EPS US$2.02、+19%。Apple不是本轮数据中心CapEx主驱动，但供应链和端侧AI节奏影响消费电子链。</td>
+              <td>持平</td>
+              <td>端侧AI、iPhone/Mac链和服务收入稳定；AI抢占内存/先进节点产能可能压制消费电子供应节奏。</td>
+              <td>High</td>
+              <td><a href="https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/">Apple Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA / SK Group / SK hynix</td>
+              <td>NVIDIA官方披露与SK Group扩大战略合作，涉及US$500bn+ AI/industrial transformation、2GW DSX AI Factory、HBM4和第六代10nm级DRAM合作；多项为LOI/forward-looking。</td>
+              <td>持平</td>
+              <td>HBM4、先进封装、AI工厂、电力、液冷和韩国主权AI基础设施继续受益。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>NAVER Cloud / NVIDIA / Brookfield</td>
+              <td>官方披露韩国AI工厂从约55MW扩展到200MW，并表达1GW意向；NVIDIA计划投资US$1bn，Brookfield term sheet最高US$9bn。</td>
+              <td>持平</td>
+              <td>主权AI、数据中心融资、电力并网、冷却和机房工程继续成为卖铲人方向。</td>
+              <td>High</td>
+              <td><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>AMD / Anthropic / Helios</td>
+              <td>Anthropic最高2GW AMD Instinct MI450部署与AMD Helios rack-scale方案仍是前期确认的正反馈；本轮未见新增官方订单金额。</td>
+              <td>持平</td>
+              <td>GPU、HBM4、机柜级网络、电源、液冷、ODM服务器维持需求锚。</td>
+              <td>High</td>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>GE Vernova</td>
+              <td>Q2订单US$24.2bn、organic +88%；backlog环比+US$13.0bn；YTD数据中心订单超过US$5bn。</td>
+              <td>持平</td>
+              <td>AI CapEx向燃机、电气化、变压器、储能、UPS和电力工程外溢，电力卖铲人继续优先。</td>
+              <td>High</td>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>FOMC 2026-07-29</td>
+              <td>维持联邦基金目标区间3.50%-3.75%；9-3表决，3名委员支持加息25bp；声明称通胀仍高于2%目标，部分来自能源等供应冲击。</td>
+              <td>压力</td>
+              <td>未加息缓和风险，但三票加息和通胀表述限制科技估值修复空间。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve FOMC</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.15</td>
+              <td>7月30日发布的7月29日数据：EFFR 3.63%，2Y 4.22%，10Y 4.67%，20Y 5.21%，30Y 5.20%，10Y TIPS实际利率2.41%，30Y TIPS 2.98%。</td>
+              <td>压力</td>
+              <td>长端利率仍高，贴现率继续压制高估值AI硬件链。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.4.1</td>
+              <td>7月30日H.4.1显示截至7月29日储备余额US$2.984570tn，周环比- US$77.579bn，同比- US$362.844bn；TGA升至US$910.776bn，周环比+US$81.153bn。</td>
+              <td>压力</td>
+              <td>银行体系流动性继续被TGA吸收，高估值科技仍需要业绩兑现对冲资金面压力。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve H.4.1</a></td>
+            </tr>
+            
+            <tr>
+              <td>BEA PCE</td>
+              <td>6月PCE价格指数环比-0.1%、同比+3.7%；核心PCE环比+0.1%、同比+3.3%。</td>
+              <td>中性偏宽松</td>
+              <td>通胀边际降温，但核心PCE仍明显高于Fed目标，不足以支撑Green。</td>
+              <td>High</td>
+              <td><a href="https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026">BEA</a></td>
+            </tr>
+            
+            <tr>
+              <td>BEA GDP</td>
+              <td>Q2 real GDP advance为1.5%，低于Q1的2.1%；real final sales to private domestic purchasers +3.9%；GDP purchases price index +5.7%。</td>
+              <td>中性</td>
+              <td>增长放缓但私人需求仍强，Fed难以快速转松；AI设备和软件投资仍是增长支撑。</td>
+              <td>High</td>
+              <td><a href="https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026">BEA</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed H.10 / Dollar</td>
+              <td>H.10最近一周数据显示Broad美元指数7月24日为120.7105，人民币6.7719，日元163.7100；周末未见新更新。</td>
+              <td>压力</td>
+              <td>强美元环境尚未确认改善，全球科技风险偏好扩散仍受限。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve H.10</a></td>
+            </tr>
+            
+            <tr>
+              <td>US jobless claims</td>
+              <td>DOL 7月30日发布：截至7月25日初请197,000，周环比+9,000；四周均值202,750；截至7月18日续请1,782,000，周环比-7,000。</td>
+              <td>中性</td>
+              <td>就业未明显恶化，不能给Fed快速宽松提供足够理由；但初请小升也减轻过热压力。</td>
+              <td>High</td>
+              <td><a href="https://www.dol.gov/ui/data.pdf">US Department of Labor</a></td>
+            </tr>
+            
+            <tr>
+              <td>Market rates / Oil</td>
+              <td>AP报道周五10Y市场收益率约4.71，Brent升至US$89.47，WTI升至US$85.74。</td>
+              <td>压力</td>
+              <td>油价和长端利率回升会压缩AI高估值反弹空间。</td>
+              <td>Medium</td>
+              <td><a href="https://apnews.com/article/stock-markets-rates-korea-ai-oil-e31b3a442bcb957a53f1823ef21e73e8">Associated Press</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>Amazon大涨确认AI基础设施分层修复</td>
+              <td>AWS、AI芯片、服务器、HBM、数据中心电力、冷却</td>
+              <td>利好</td>
+              <td>能绑定AWS/云AI/自研芯片/数据中心电力的卖铲人</td>
+              <td>FCF承压且没有收入闭环的数据中心项目</td>
+              <td>官方确认 + 媒体市场反应</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon IR / AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>Apple强业绩但股价下跌</td>
+              <td>消费电子、端侧AI、内存、先进制程、iPhone/Mac供应链</td>
+              <td>中性</td>
+              <td>iPhone/Mac强需求、服务收入、端侧AI硬件升级链</td>
+              <td>受内存/先进节点供给约束、成本转嫁弱的消费电子供应链</td>
+              <td>官方确认 + 媒体市场反应</td>
+              <td><a href="https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/">Apple Newsroom / AP</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft继续证明AI收入/RPO闭环</td>
+              <td>云、AI服务器、GPU/HBM、光模块、交换网络、液冷、电源</td>
+              <td>利好</td>
+              <td>Azure和高RPO相关AI基础设施卖铲人</td>
+              <td>没有收入闭环、只靠远期TAM估值的高beta硬件</td>
+              <td>官方确认</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta AI CapEx吞噬现金流仍是反面样本</td>
+              <td>AI数据中心、广告AI、GPU/服务器、融资租赁</td>
+              <td>利空</td>
+              <td>现金流和订单转换更清晰的云厂商、数据中心电力卖铲人</td>
+              <td>只提高CapEx但AI变现路径不够清晰的平台型公司</td>
+              <td>官方确认</td>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>NVIDIA/SK与NAVER/Brookfield继续强化AI工厂</td>
+              <td>AI工厂、HBM4、DRAM、先进封装、电力、液冷、数据中心融资</td>
+              <td>利好</td>
+              <td>HBM、先进封装、电力设备、并网工程、数据中心运营和长期资本</td>
+              <td>无法拿到长期供电和低成本资本的数据中心项目</td>
+              <td>官方确认，但部分为LOI/term sheet/forward-looking</td>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA Newsroom</a></td>
+            </tr>
+            
+            <tr>
+              <td>OpenAI/NVIDIA超大额融资传闻</td>
+              <td>GPU、数据中心、电力、AI融资</td>
+              <td>中性</td>
+              <td>若官方确认，GPU/HBM/电力链权重上升</td>
+              <td>若融资闭环不清，AI CapEx泡沫担忧会加重</td>
+              <td>媒体报道，未见官方确认</td>
+              <td><a href="https://www.wsj.com/">Financial media reports</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>AI服务器/液冷/电源/高速网络</td>
+              <td>无直接A/H公司订单确认；全球层面Microsoft、Amazon、AMD、NVIDIA和GE Vernova给出需求锚。</td>
+              <td>偏利好AI服务器ODM、液冷、机柜电源、高速连接器、PCB/CCL、光模块和交换网络；优先看有海外客户或订单公告的环节。</td>
+              <td>Orange不是Green，没有订单和业绩确认的纯概念映射容易被长端利率和FCF压力反噬。</td>
+            </tr>
+            
+            <tr>
+              <td>HBM/先进封装/存储</td>
+              <td>NVIDIA/SK hynix HBM4合作为官方确认；Amazon和Microsoft云增长强化AI内存需求。</td>
+              <td>国产存储、材料设备、先进封装、测试和HBM配套有情绪映射。</td>
+              <td>Apple供应链压力说明AI抢组件可能利好上游但挤压消费电子交付，不能泛化为所有存储公司利好。</td>
+            </tr>
+            
+            <tr>
+              <td>数据中心电力卖铲人</td>
+              <td>GE Vernova官方数据中心订单YTD超过US$5bn；Amazon/Microsoft/NVIDIA项目继续确认数据中心电力瓶颈。</td>
+              <td>利好燃机、变压器、输配电、UPS、储能、能源工程、电气化系统和自备电源。</td>
+              <td>A/H映射仍要等客户、订单、产能、海外收入或业绩说明会确认；无直接映射的个股只做观察。</td>
+            </tr>
+            
+            <tr>
+              <td>端侧AI/消费电子</td>
+              <td>Apple官方披露iPhone和服务收入强，但AP报道股价下跌反映供应链和下一季收入担忧。</td>
+              <td>端侧AI、iPhone/Mac链、服务收入稳定；但AI数据中心抢先进组件可能增加消费电子链不确定性。</td>
+              <td>Apple不是本轮AI数据中心CapEx主驱动，更多是消费电子链稳定器和供应链约束观察口。</td>
+            </tr>
+            
+            <tr>
+              <td>高CapEx/弱FCF压力</td>
+              <td>Meta官方FCF仅US$784mn、CapEx US$31.08bn；Amazon官方TTM FCF为- US$7.6bn。</td>
+              <td>优先选择现金流、订单、RPO、云收入能互相验证的卖铲人；回避只讲远期TAM且融资依赖加大的链条。</td>
+              <td>如果下周Fed长端收益率不降，AI高CapEx公司会继续被资金严格分层。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>Amazon 10-Q和电话会文字稿</strong><span>确认2026 CapEx是否正式上修至US$220bn，以及AI/内存/数据中心支出和FCF修复路径。</span></li><li><strong>Apple 10-Q与供应链表述</strong><span>核实内存/先进节点约束、端侧AI节奏、下一财季收入指引和毛利压力。</span></li><li><strong>Fed H.15/H.10下周更新</strong><span>确认PCE降温后10Y、30Y、实际利率和美元是否真正回落。</span></li><li><strong>Meta 10-Q和租赁/购买承诺</strong><span>拆分AI数据中心租赁、服务器采购、Reality Labs和现金流承压程度。</span></li><li><strong>Microsoft 10-K/电话会CapEx guidance</strong><span>确认FY27 CapEx增长节奏、Azure capacity constraint、RPO转收入速度和折旧压力。</span></li><li><strong>NVIDIA/SK、NAVER/Brookfield项目执行</strong><span>区分LOI/term sheet/意向与真实订单、MW/GW交付、收入确认和供应商份额。</span></li><li><strong>OpenAI/NVIDIA融资报道</strong><span>当前仍未见官方确认；若官方确认，将改变AI数据中心融资和电力链权重。</span></li><li><strong>Supermicro FY2026 Q4正式结果和Intel 10-Q</strong><span>确认AI服务器需求、毛利、现金转换、调查风险和foundry现金流。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/">Amazon.com Announces Second Quarter Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.apple.com/newsroom/2026/07/apple-reports-third-quarter-results/">Apple Reports Third Quarter Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/stock-markets-rates-korea-ai-oil-e31b3a442bcb957a53f1823ef21e73e8">Associated Press - Stocks finish higher as Amazon jumps and Apple sinks</a></td>
+              <td>Market reaction / Liquidity / Tech catalyst</td>
+              <td>2026-07-31</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast">Microsoft FY26 Q4 Earnings Release</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta Reports Second Quarter 2026 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve - FOMC Statement, July 29 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve - H.15 Selected Interest Rates, July 30 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h41/current/">Federal Reserve - H.4.1 Factors Affecting Reserve Balances, July 30 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/Releases/h10/current/default.htm">Federal Reserve - H.10 Foreign Exchange Rates, July 27 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-27</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026">BEA - Personal Income and Outlays, June 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026">BEA - GDP Advance Estimate, 2nd Quarter 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.dol.gov/ui/data.pdf">US Department of Labor - Unemployment Insurance Weekly Claims</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/b4ce02b4666a35b8975823c5c22072ee">Associated Press - Amazon boosts AI and technology spending</a></td>
+              <td>CapEx / Media cross-check</td>
+              <td>2026-07-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/sk-group-and-nvidia-expand-strategic-partnership-across-ai-factories-and-next-generation-memory">NVIDIA - SK Group and NVIDIA expand strategic partnership</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-25</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://nvidianews.nvidia.com/news/naver-cloud-nvidia-and-brookfield-asset-management-to-build-next-generation-ai-infrastructure-in-korea">NVIDIA - NAVER Cloud, NVIDIA and Brookfield build AI infrastructure in Korea</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-25</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era">AMD - AAI 2026 Helios rackscale solutions</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-23</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial">GE Vernova - Q2 2026 financial results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.wsj.com/">Financial media reports on OpenAI/NVIDIA financing</a></td>
+              <td>Tech catalyst / unverified watch</td>
+              <td>2026-07-28</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

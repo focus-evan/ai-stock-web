@@ -1,0 +1,277 @@
+{
+  "generated_at_beijing": "2026-06-27 11:00",
+  "run_label": "manual setup run",
+  "headline": "AI资本开支继续扩张，但全球流动性闸门偏紧",
+  "top_conclusion": "大厂AI/data-center CapEx没有看到降温信号，微软、Alphabet、Meta、Amazon仍在以高强度投入支撑云和AI需求；但Fed维持高利率、ECB和BOJ近期均偏收紧，10年美债仍在4.37%附近，科技成长股估值端不适合无差别追高。",
+  "overall_gate": "Orange",
+  "module_badges": {
+    "capex": "Expansion",
+    "liquidity": "Tightening",
+    "tech_catalysts": "Bullish"
+  },
+  "top_changes": [
+    {
+      "title": "大厂AI CapEx仍是主线",
+      "fact": "微软Q3 CapEx为319亿美元且约三分之二用于GPU/CPU等短周期资产；Alphabet Q1 CapEx为357亿美元，约60%投向服务器；Meta将2026年CapEx指引上调至1250-1450亿美元。",
+      "impact": "对GPU、服务器、网络、光模块、PCB/CCL、液冷、电力设备仍是需求支撑。",
+      "confidence": "High",
+      "source": "Microsoft/Alphabet/Meta IR",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+    },
+    {
+      "title": "Fed维持高利率，流动性不是全面顺风",
+      "fact": "Fed在2026-06-17将联邦基金目标区间维持在3.50%-3.75%，并称通胀仍高于2%目标；美国10年期收益率截至6月26日约4.371%。",
+      "impact": "对高估值科技股形成估值压制，利好需要更多来自业绩兑现而不是单纯流动性扩张。",
+      "confidence": "High",
+      "source": "Federal Reserve / MarketWatch",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+    },
+    {
+      "title": "NVIDIA把AI工厂和Vera Rubin继续推到主舞台",
+      "fact": "NVIDIA Q1 FY27数据中心收入752亿美元，同比增长92%；同时披露Vera Rubin、Blackwell推理软件、先进光学合作等进展。",
+      "impact": "强化AI工厂、网络、光互联、先进封装和电力/散热链条的景气判断。",
+      "confidence": "High",
+      "source": "NVIDIA IR",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx"
+    },
+    {
+      "title": "中国链条需要区分直接证据和推断映射",
+      "fact": "NVIDIA Q2 FY27展望未假设来自中国的数据中心计算收入；这对国内AI算力链既是国产替代叙事，也是全球供给受限和验证难度上升的风险源。",
+      "impact": "A/H映射要保守：直接供货证据优先，概念标签降权。",
+      "confidence": "Medium",
+      "source": "NVIDIA IR",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx"
+    }
+  ],
+  "capex": {
+    "verdict": "Expansion：大厂仍在用高CapEx换AI和云容量，暂未看到需求端主动降温。",
+    "items": [
+      {
+        "entity": "Microsoft",
+        "signal": "FY26 Q3 CapEx 319亿美元，约三分之二为GPU/CPU等短周期资产；Azure需求继续超过可用产能。",
+        "direction": "持平偏强",
+        "impact": "GPU、CPU、数据中心、服务器、电力和散热需求继续被支撑。",
+        "confidence": "High",
+        "source": "Microsoft IR",
+        "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"
+      },
+      {
+        "entity": "Alphabet / Google",
+        "signal": "Q1 CapEx 357亿美元，绝大多数用于AI技术基础设施；Google Cloud backlog超过4600亿美元。",
+        "direction": "上修/扩张",
+        "impact": "TPU、NVIDIA GPU、服务器、数据中心网络和企业AI基础设施需求确认度高。",
+        "confidence": "High",
+        "source": "Alphabet IR",
+        "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx"
+      },
+      {
+        "entity": "Meta",
+        "signal": "Q1 CapEx 198.4亿美元；2026年CapEx指引上调至1250-1450亿美元，原因包括组件价格和数据中心成本。",
+        "direction": "上修",
+        "impact": "AI训练/推理、服务器和数据中心配套需求偏强，但要跟踪ROI和广告变现。",
+        "confidence": "High",
+        "source": "Meta IR",
+        "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "entity": "Amazon / AWS",
+        "signal": "Q1购买物业和设备442.03亿美元，TTM净额1472.99亿美元；AWS收入同比增长28%。",
+        "direction": "扩张",
+        "impact": "AWS、Trainium、自研芯片和NVIDIA供给共同支撑AI基础设施支出。",
+        "confidence": "High",
+        "source": "Amazon IR",
+        "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx"
+      }
+    ]
+  },
+  "liquidity": {
+    "verdict": "Tightening：央行口径和市场利率仍对高估值科技股构成约束，暂不是全面放水环境。",
+    "items": [
+      {
+        "entity": "Federal Reserve",
+        "signal": "2026-06-17维持联邦基金目标区间3.50%-3.75%，并称通胀仍高于2%目标。",
+        "direction": "偏紧/高位维持",
+        "impact": "高估值科技股估值端受压，利好需要业绩和订单兑现来抵消利率压力。",
+        "confidence": "High",
+        "source": "Federal Reserve",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm"
+      },
+      {
+        "entity": "US 10Y / DXY",
+        "signal": "截至2026-06-26，美10年期收益率约4.371%，DXY约101.37。",
+        "direction": "中性偏紧",
+        "impact": "收益率仍高，美元不弱，科技成长股不适合只按流动性宽松逻辑追高。",
+        "confidence": "Medium",
+        "source": "MarketWatch",
+        "url": "https://www.marketwatch.com/investing/bond/tmubmusd10y/charts?countrycode=bx"
+      },
+      {
+        "entity": "ECB",
+        "signal": "ECB 2026-06-11决定上调三大关键利率25bp，存款便利利率升至2.25%。",
+        "direction": "收紧",
+        "impact": "欧洲风险资产流动性边际承压，对全球科技估值不是顺风。",
+        "confidence": "High",
+        "source": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~4d41bd5e83.en.html"
+      },
+      {
+        "entity": "BOJ",
+        "signal": "BOJ 2026-06-16将无担保隔夜拆借利率目标调整至约1.0%，并称金融环境仍宽松但降低宽松程度。",
+        "direction": "收紧",
+        "impact": "日元和全球套息交易的变化需要观察，科技股全球流动性闸门偏谨慎。",
+        "confidence": "High",
+        "source": "Bank of Japan",
+        "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260616a.pdf"
+      }
+    ]
+  },
+  "tech_catalysts": {
+    "verdict": "Bullish：AI工厂、Vera Rubin、云厂商TPU/GPU扩容、先进光学合作仍是主催化；但中国数据中心GPU收入假设为零是风险项。",
+    "items": [
+      {
+        "event": "NVIDIA Q1 FY27数据中心收入创新高",
+        "affected_chain": "AI GPU、网络、光互联、HBM、先进封装、服务器",
+        "direction": "利好",
+        "winners": "全球AI算力硬件、光模块/CPO、先进封装、液冷电源",
+        "losers": "无订单验证的纯概念AI硬件",
+        "evidence": "官方财报",
+        "confidence": "High",
+        "source": "NVIDIA IR",
+        "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx"
+      },
+      {
+        "event": "Google Cloud将提供NVIDIA Vera Rubin NVL72，并继续扩展TPU 8代",
+        "affected_chain": "云AI基础设施、TPU/GPU、数据中心网络",
+        "direction": "利好",
+        "winners": "GPU/ASIC并行生态、云AI基础设施、服务器和高速互联",
+        "losers": "只押单一芯片路线且缺少客户验证的供应商",
+        "evidence": "官方电话会",
+        "confidence": "High",
+        "source": "Alphabet IR",
+        "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx"
+      },
+      {
+        "event": "NVIDIA披露与Coherent、Corning、Lumentum的先进光学合作",
+        "affected_chain": "光模块、CPO、硅光、数据中心互联",
+        "direction": "利好",
+        "winners": "高速光模块、硅光、光器件和上游材料",
+        "losers": "低速率、低壁垒光通信产品",
+        "evidence": "官方财报重点事项",
+        "confidence": "High",
+        "source": "NVIDIA IR",
+        "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx"
+      },
+      {
+        "event": "NVIDIA Q2展望未假设中国数据中心计算收入",
+        "affected_chain": "中国AI服务器、国产算力、半导体替代",
+        "direction": "利空/分化",
+        "winners": "有真实客户验证的国产替代链条",
+        "losers": "依赖海外高端GPU转售或无验证的概念股",
+        "evidence": "官方展望",
+        "confidence": "High",
+        "source": "NVIDIA IR",
+        "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx"
+      }
+    ]
+  },
+  "china_mapping": [
+    {
+      "theme": "光模块/CPO/硅光",
+      "verified_direct": "本报告未验证到A/H具体公司直接订单。",
+      "inferred": "全球AI工厂和NVIDIA先进光学合作强化高速互联方向。",
+      "risk": "需用公司公告、客户认证、订单和收入占比验证，不能只看概念标签。"
+    },
+    {
+      "theme": "PCB/CCL/服务器材料",
+      "verified_direct": "本报告未验证到A/H具体公司直接披露。",
+      "inferred": "大厂服务器和数据中心网络CapEx扩张对高端PCB、低损耗材料形成推断支撑。",
+      "risk": "材料价格、客户结构、产能认证和毛利率决定利润弹性。"
+    },
+    {
+      "theme": "液冷/电源/数据中心电力",
+      "verified_direct": "本报告未验证到A/H具体公司直接披露。",
+      "inferred": "AI工厂功耗上升推升液冷、UPS、配电和能耗管理需求。",
+      "risk": "需要区分数据中心真实订单和主题炒作。"
+    },
+    {
+      "theme": "国产AI算力/半导体替代",
+      "verified_direct": "NVIDIA官方展望未假设中国数据中心计算收入。",
+      "inferred": "国产替代叙事升温，但只有真实客户、出货和软件生态验证的公司才有持续性。",
+      "risk": "政策/出口管制既是替代机会，也是供应链和交付风险。"
+    }
+  ],
+  "watchlist": [
+    {
+      "item": "下一轮微软/Alphabet/Meta/Amazon是否继续上修或维持AI CapEx指引",
+      "why": "判断AI硬件链景气是否从订单扩张进入折旧/ROI压力阶段。"
+    },
+    {
+      "item": "Fed下一次会议前的PCE、就业、2Y/10Y收益率和DXY",
+      "why": "决定高估值科技股估值端是否继续承压。"
+    },
+    {
+      "item": "NVIDIA Blackwell/Rubin交付、HBM供应、网络和光互联订单",
+      "why": "确认受益链条从GPU扩散到光、电、散热、PCB/CCL的节奏。"
+    },
+    {
+      "item": "中国AI算力链的官方订单、客户验证和收入占比",
+      "why": "防止把全球AI CapEx利好误映射到缺少直接证据的A/H概念股。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Microsoft FY26 Q3 Earnings Call",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Alphabet 2026 Q1 Earnings Call",
+      "url": "https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx",
+      "used_for": "CapEx / Tech catalyst",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Meta Reports First Quarter 2026 Results",
+      "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-29"
+    },
+    {
+      "title": "Amazon Q1 2026 Results",
+      "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx",
+      "used_for": "CapEx",
+      "published_at": "2026-04-30"
+    },
+    {
+      "title": "NVIDIA Q1 FY27 Results",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx",
+      "used_for": "Tech catalyst / vendor confirmation",
+      "published_at": "2026-05-20"
+    },
+    {
+      "title": "Federal Reserve FOMC Statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-17"
+    },
+    {
+      "title": "ECB Monetary Policy Decisions",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260611~4d41bd5e83.en.html",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-11"
+    },
+    {
+      "title": "Bank of Japan Monetary Policy Statement",
+      "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260616a.pdf",
+      "used_for": "Liquidity",
+      "published_at": "2026-06-16"
+    },
+    {
+      "title": "MarketWatch U.S. 10Y Treasury / DXY",
+      "url": "https://www.marketwatch.com/investing/bond/tmubmusd10y/charts?countrycode=bx",
+      "used_for": "Market variables",
+      "published_at": "2026-06-26"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "run_time": "2026年8月5日 11:00:46 +08:00",
+  "window_start": "2026-07-30 00:00 +08:00",
+  "window_end": "2026-08-05 11:00 +08:00",
+  "formal_hits": [
+    {
+      "name": "药明康德",
+      "code": "02359",
+      "date": "2026-08-03",
+      "title": "ANNOUNCEMENT OF THE UNAUDITED INTERIM RESULTS FOR THE SIX MONTHS ENDED JUNE 30, 2026",
+      "link": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0803/2026080302540.pdf",
+      "source": "HKEX"
+    },
+    {
+      "name": "药明康德",
+      "code": "603259",
+      "date": "2026-08-04",
+      "title": "2026年半年度报告摘要",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455040.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "药明康德",
+      "code": "603259",
+      "date": "2026-08-04",
+      "title": "2026年半年度报告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "related_updates": [
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "date": "2026-08-04",
+      "title": "2026年半年度业绩预告的自愿性披露公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455464.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "中芯国际",
+      "code": "688981",
+      "date": "2026-07-31",
+      "title": "中芯国际关于召开2026年第二季度业绩说明会的预告公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-07-31/1225448405.PDF",
+      "source": "CNINFO"
+    },
+    {
+      "name": "寒武纪",
+      "code": "688256",
+      "date": "2026-08-05",
+      "title": "关于召开2026年半年度业绩说明会的公告",
+      "link": "https://static.cninfo.com.cn/finalpage/2026-08-05/1225457845.PDF",
+      "source": "CNINFO"
+    }
+  ],
+  "stats": {
+    "hkex_watchlist_rows": 76,
+    "cninfo_watchlist_rows": 48,
+    "cninfo_orgids_resolved": 22,
+    "errors": []
+  },
+  "html_files": [
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\index.html",
+    "D:\\Evan\\Codes\\reports\\quarterly-disclosure-monitor\\run-20260805.html"
+  ]
+}

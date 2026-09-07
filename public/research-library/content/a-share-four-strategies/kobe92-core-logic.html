@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kobe92 周期切换核心逻辑</title>
+  <style>
+    :root {
+      --ink: #3f211d;
+      --muted: #806c64;
+      --red: #a63f32;
+      --red-deep: #823128;
+      --line: rgba(180, 73, 55, 0.16);
+      --shadow: 0 26px 80px rgba(117, 52, 39, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei", serif;
+      background:
+        radial-gradient(circle at 12% -8%, rgba(191, 73, 55, 0.22), transparent 34%),
+        radial-gradient(circle at 88% 2%, rgba(222, 145, 112, 0.18), transparent 34%),
+        linear-gradient(180deg, #f1cbbd 0, #fff8f3 260px, #fffaf6 100%);
+    }
+    a { color: var(--red); text-decoration: none; }
+    .page { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; padding: 44px 0 72px; }
+    .hero, .section {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(202, 73, 55, 0.10), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,249,244,0.90));
+      box-shadow: var(--shadow);
+    }
+    .hero { padding: 42px; }
+    .eyebrow { color: #a75a4a; font-size: 13px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-size: clamp(38px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.06em; color: var(--red-deep); }
+    .lead { max-width: 920px; margin: 0; color: var(--muted); font-size: 20px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .pill, .ref-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 247, 242, 0.78);
+      color: #8e3b30;
+      font-weight: 700;
+    }
+    .section { margin-top: 22px; padding: 30px; }
+    .section h2 { margin: 0 0 18px; color: var(--red-deep); font-size: 30px; letter-spacing: -0.04em; }
+    .section h3 { margin: 0 0 10px; color: #4a2923; font-size: 20px; }
+    .section p, .section li { color: var(--muted); font-size: 16px; line-height: 1.85; }
+    .section ul, .section ol { margin: 0; padding-left: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 22px; }
+    .mini-card { padding: 20px; border-radius: 24px; background: rgba(255,255,255,0.74); border: 1px solid rgba(180, 73, 55, 0.12); }
+    .quote {
+      margin: 0;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(202, 73, 55, 0.10), rgba(255,255,255,0.76));
+      border: 1px solid rgba(180, 73, 55, 0.16);
+      color: var(--red-deep);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.65;
+    }
+    .chain { counter-reset: step; display: grid; gap: 14px; }
+    .step {
+      position: relative;
+      padding: 20px 20px 20px 72px;
+      border-radius: 24px;
+      border: 1px solid rgba(180, 73, 55, 0.12);
+      background: rgba(255,255,255,0.74);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, #b84c3d, #7f2f27);
+      font-weight: 900;
+    }
+    .matrix { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 18px; background: rgba(255,255,255,0.74); }
+    .matrix th, .matrix td { padding: 14px 16px; border-bottom: 1px solid rgba(180, 73, 55, 0.10); text-align: left; vertical-align: top; color: var(--muted); line-height: 1.7; }
+    .matrix th { color: var(--red-deep); background: rgba(202, 73, 55, 0.07); font-size: 14px; }
+    .ref-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .footer-note { margin-top: 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    @media (max-width: 860px) {
+      .page { width: min(100vw - 24px, 1180px); padding-top: 24px; }
+      .hero, .section { padding: 22px; border-radius: 26px; }
+      .grid { grid-template-columns: 1fr; }
+      .matrix { display: block; overflow-x: auto; }
+    }
+  </style>
+<link rel="stylesheet" href="../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../index.html?collection=a-share-four-strategies&amp;view=reports">短线四法</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Kobe92 Cycle Speculation</div>
+      <h1>Kobe92 周期切换核心逻辑</h1>
+      <p class="lead">这套战法不是固定买法，而是先判周期位置，再判断题材故事还能不能吸引增量资金。它的核心问题是：现在该做龙头、做补涨、做新周期切换，还是坚决避开中位和旧周期退潮。</p>
+      <div class="hero-actions">
+        <a class="pill" href="latest.html">返回四战法首页</a>
+        <span class="pill">生成时间：2026-09-07 15:38:29 +0800</span>
+        <span class="pill">适用：短线周期与题材预期，不等于保证买入建议</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一句话核心</h2>
+      <p class="quote">Kobe92 的关键不是“用哪种买法”，而是“这个票在当前周期里扮演什么角色”。周期对了，龙头、补涨、切换才有意义；周期错了，中位股最容易变成亏钱陷阱。</p>
+    </section>
+
+    <section class="section">
+      <h2>证据从哪里来</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>证据层级</h3>
+          <ul>
+            <li>第一层：公开流传的 92科比本人交易总结，尤其是“大道无形，无所不及”的周期框架。</li>
+            <li>第二层：公开实盘赛复盘、交割单分析，只能用来理解方法，不能直接当作今日股票证据。</li>
+            <li>第三层：视频、付费课件、社媒总结，只能弱辅助，不能替代市场数据和公告验证。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>本地 skill 的硬约束</h3>
+          <ul>
+            <li>不和养家买卖压模型、陈小群席位逻辑、V2.3.1 基本面逻辑混用。</li>
+            <li>先判周期，再选模式；不能因为票热门就忽略周期位置。</li>
+            <li>中位不清楚、旧题材退潮、数据过期或官方风险未排除时，宁可空仓席位。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">公开参考入口：</p>
+      <div class="ref-links"><a href="https://www.tgb.cn/a/2b3huuGjxTF" target="_blank" rel="noreferrer">淘股吧公开资料入口</a>
+<a href="https://caifuhao.eastmoney.com/news/20250125112848790842000" target="_blank" rel="noreferrer">东方财富公开整理</a>
+<a href="https://www.scribd.com/document/789546030/92%E7%A7%91%E6%AF%94-%E6%96%B0%E7%94%9F%E4%BB%A3%E9%A6%96%E6%9D%BF%E9%AB%98%E6%89%8B" target="_blank" rel="noreferrer">公开文档整理入口</a></div>
+    </section>
+
+    <section class="section">
+      <h2>完整决策链</h2>
+      <div class="chain">
+        <div class="step"><h3>第一步：先判周期阶段</h3><p>先判断市场处于低位震荡、主升、高位震荡还是主跌。低位震荡看新题材试错，主升看龙头/分支龙，高位震荡看低位补涨或新切换，主跌则避开旧题材接力。</p></div>
+        <div class="step"><h3>第二步：判断题材故事深度</h3><p>题材故事要能让更多人愿意在更高价格接盘。需要看政策、产业事件、公司公告、媒体密度、跨市场共振，以及旧题材赚钱或亏钱反馈。</p></div>
+        <div class="step"><h3>第三步：选择操作模式</h3><p>模式只有三类核心：龙头、补涨、切换。龙头要求故事仍有空间且人气溢价没耗尽；补涨要求龙头赚钱效应外溢且低位标签干净；切换要求旧周期亏钱后资金进入真正不同的新方向。</p></div>
+        <div class="step"><h3>第四步：避开中位陷阱</h3><p>如果股票既不是市场认可的高位核心，也不是低位补涨或干净新切换，只是夹在中间、辨识度不清、空间不大，就标记为不做中位。</p></div>
+        <div class="step"><h3>第五步：确认买点</h3><p>有效买点包括分歧介入、弱转强、早盘确认、回封确认、恐慌修复、低位启动。无效买点是一致加速硬追、旧题材退潮后接力、为了凑五只而买。</p></div>
+        <div class="step"><h3>第六步：写清楚失效条件</h3><p>只要给买，就必须同时写买入方式、价格触发、仓位和失效条件。比如回封失败、跌破关键价、题材证伪、高标崩塌、监管/公告风险，都要触发降级或不买。</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>四个周期阶段怎么操作</h2>
+      <table class="matrix">
+        <thead><tr><th>周期阶段</th><th>市场含义</th><th>主要机会</th><th>应该避免</th></tr></thead>
+        <tbody>
+          <tr><td>低位震荡</td><td>主跌后亏钱效应缓和，但新主线还没完全确认。</td><td>低位试错、新题材切换、小仓确认。</td><td>重仓赌方向、追旧周期反抽。</td></tr>
+          <tr><td>主升</td><td>题材故事被资金持续接受，龙头和分支有赚钱效应。</td><td>龙头首次分歧、分支龙确认、早期补涨。</td><td>后排杂毛、迟到的一致加速。</td></tr>
+          <tr><td>高位震荡</td><td>老龙高位拥挤，分歧加大，但人气还没完全散。</td><td>低位补涨、轻仓修复、新方向观察。</td><td>中位股、老龙高位硬接。</td></tr>
+          <tr><td>主跌</td><td>旧题材亏钱扩散，接力失败，资金开始离场。</td><td>不买为主，只准备下一轮切换。</td><td>旧题材补跌途中幻想修复。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>三种核心模式</h2>
+      <table class="matrix">
+        <thead><tr><th>模式</th><th>成立条件</th><th>买点</th><th>失效信号</th></tr></thead>
+        <tbody>
+          <tr><td>龙头</td><td>题材故事还有空间，市场认可度高，人气流动性溢价仍在。</td><td>有承接的分歧、弱转强、回封确认。</td><td>高位放量弱收、题材证伪、补涨不跟、监管压制。</td></tr>
+          <tr><td>补涨</td><td>龙头赚钱效应外溢，资金还想参与，低位标的标签干净。</td><td>低位启动、首板/回封、分支龙确认。</td><td>龙头退潮、低位跟风无承接、板块扩散失败。</td></tr>
+          <tr><td>切换</td><td>旧周期亏钱，资金流向一个真正不同的新故事。</td><td>新方向早盘确认、低位试错、换手承接。</td><td>新题材不被资金选择、旧题材继续抽血、成交不足。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>候选股六道门</h2>
+      <table class="matrix">
+        <thead><tr><th>门槛</th><th>要回答的问题</th><th>不过关怎么处理</th></tr></thead>
+        <tbody>
+          <tr><td>周期门</td><td>这只股票的角色是否匹配低位震荡、主升、高位震荡或主跌？</td><td>周期不匹配就不买。</td></tr>
+          <tr><td>故事门</td><td>题材故事是否还足够深，能吸引增量资金继续接？</td><td>故事变薄就降级观察。</td></tr>
+          <tr><td>人气门</td><td>是否有讨论度、成交、换手、板块带动和流动性溢价？</td><td>没人接就不做。</td></tr>
+          <tr><td>位置门</td><td>它是龙头、分支龙、低位补涨、干净切换，还是暧昧中位？</td><td>中位不清楚直接不做中位。</td></tr>
+          <tr><td>买点门</td><td>是否有分歧、弱转强、回封、恐慌修复或低位激活？</td><td>没有触发就只观察。</td></tr>
+          <tr><td>风险门</td><td>是否有官方利空、监管、减持、旧题材退潮、过度一致？</td><td>降级、空仓或等待确认。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>打分、输出与收益跟踪</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>100 分评分</h3>
+          <ul>
+            <li>周期匹配 20：角色是否匹配当前周期阶段。</li>
+            <li>题材故事深度 20：故事是否仍能延续，是否有公开催化支持。</li>
+            <li>人气/流动性 20：关注度、成交、板块质量是否支撑溢价。</li>
+            <li>角色纯度 15：龙头、分支龙、低位补涨、干净切换得分高，中位模糊得分低。</li>
+            <li>买点质量 15：是否有可执行确认或精确触发。</li>
+            <li>风险扣分 10：拥挤、退潮、监管、数据过期、强行凑数都扣分。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>必须输出什么</h3>
+          <ul>
+            <li>候选必须标明：龙头、补涨、切换、中位或空仓。</li>
+            <li>决策必须归一为 `买`、`不买`、`只观察`。</li>
+            <li>`买` 必须同时有买法、价格触发、仓位、失效条件。</li>
+            <li>只跟踪明确标记为 `买` 的股票；触发没出现就写 `未触发`。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三个检查点怎么用</h2>
+      <table class="matrix">
+        <thead><tr><th>时间</th><th>作用</th><th>必须看什么</th></tr></thead>
+        <tbody>
+          <tr><td>08:45 盘前计划</td><td>把隔夜催化映射成可能的题材故事，准备五股预案。</td><td>昨收、隔夜催化、老题材赚钱/亏钱反馈、前序候选、事件映射。</td></tr>
+          <tr><td>10:15 早盘确认</td><td>最关键。集合竞价和开盘 45 分钟后确认资金选择了龙头、补涨还是切换。</td><td>题材是否被选择，核心是否分歧承接，补涨是否被识别，切换是否真实。</td></tr>
+          <tr><td>15:20 收盘复盘</td><td>复盘当天周期模式是否赚钱，更新明日池。</td><td>高低切是否成功、旧题材是否退潮、候选 keep/drop/upgrade/downgrade。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>常见误区</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>这些不是买入理由</h3>
+          <ul>
+            <li>买法很多，所以任何形态都能买。</li>
+            <li>票很热门，所以无视周期和位置。</li>
+            <li>老龙跌多了，一定会修复。</li>
+            <li>中位股看起来便宜，实际上辨识度和空间都不够。</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>这些必须强制降级</h3>
+          <ul>
+            <li>角色不纯：不是龙头、不是低位补涨、不是新切换。</li>
+            <li>题材故事走薄：没人愿意在更高价格接。</li>
+            <li>主升转高位震荡：仓位和买点都要更保守。</li>
+            <li>旧周期进入主跌：不再做旧题材接力。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-note">这页解释的是当前本地 `kobe92-cycle-speculation` skill 的执行逻辑。它服务于短线周期研究和复盘，不构成保证收益或个性化投资建议。</p>
+    </section>
+  </main>
+
+
+<script src="../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>

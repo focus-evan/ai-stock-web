@@ -1,0 +1,766 @@
+<!DOCTYPE html><html lang="zh-CN" data-library-page=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Global Tech Radar - 2026-07-17 12:00</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #16202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2454a6;
+      --green: #147d4f;
+      --yellow: #a56a00;
+      --orange: #b54708;
+      --red: #b42318;
+      --neutral: #475467;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 48px; }
+    header { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
+    .kicker { color: var(--blue); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: 0; }
+    .subtitle { margin: 14px 0 0; max-width: 920px; color: var(--muted); font-size: 17px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px;
+      border-radius: 6px; color: #fff; font-weight: 700; font-size: 13px;
+    }
+    .gate-green { background: var(--green); }
+    .gate-neutral { background: var(--neutral); }
+    .gate-yellow { background: var(--yellow); }
+    .gate-orange { background: var(--orange); }
+    .gate-red { background: var(--red); }
+    section { margin-top: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: 0; }
+    .summary {
+      background: #fff7ed; border: 2px solid var(--orange); border-radius: 8px;
+      padding: 20px; margin-top: 18px; font-size: 20px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(181, 71, 8, 0.10);
+    }
+    .focus-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .focus-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 15px; min-height: 132px; border-top: 5px solid var(--blue);
+    }
+    .focus-card.action { border-top-color: var(--orange); background: #fff7ed; }
+    .focus-card.positive { border-top-color: var(--green); }
+    .focus-card.risk { border-top-color: var(--red); }
+    .focus-card.next { border-top-color: var(--neutral); }
+    .focus-label { color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .focus-card p { margin: 0; font-size: 16px; font-weight: 750; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      padding: 16px;
+    }
+    .panel h3 { margin: 0 0 8px; font-size: 17px; }
+    .panel p { margin: 0; color: var(--muted); }
+    .changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .change-card {
+      background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 8px; padding: 15px;
+    }
+    .change-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .change-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .change-card p { margin: 7px 0; }
+    .confidence { color: var(--blue); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .source-line, .muted { color: var(--muted); }
+    .table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .detail-section {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+      margin-top: 14px; overflow: hidden;
+    }
+    .detail-section summary {
+      cursor: pointer; padding: 15px 16px; font-size: 18px; font-weight: 800;
+      background: #eef2f7; color: #243b53;
+    }
+    .detail-body { padding: 16px; }
+    .detail-body > .table-wrap { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; color: #344054; font-size: 13px; }
+    td { font-size: 14px; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .watchlist { margin: 0; padding: 0; display: grid; gap: 10px; list-style: none; }
+    .watchlist li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; }
+    .watchlist span { display: block; color: var(--muted); margin-top: 4px; }
+    footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      .grid, .changes, .focus-grid { grid-template-columns: 1fr; }
+      .page { padding: 18px 12px 36px; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+
+  <!-- codex-global-fullscreen-v1 -->
+  <style id="codex-global-fullscreen-v1">
+    html {
+      width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+    }
+
+    body {
+      width: 100% !important;
+      min-height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+
+    body > header,
+    body > main,
+    body > section,
+    body > footer,
+    body > div {
+      width: calc(100% - clamp(20px, 2.4vw, 48px)) !important;
+      max-width: none !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body > div > main,
+    body > div > .container,
+    body > div > .wrap,
+    body > div > .wrapper,
+    body > div > .page,
+    body > div > .shell,
+    body > main > .container,
+    body > main > .wrap,
+    body > main > .wrapper,
+    body > main > .page,
+    body > main > .shell {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      body > header,
+      body > main,
+      body > section,
+      body > footer,
+      body > div {
+        width: calc(100% - 16px) !important;
+      }
+    }
+  </style><link rel="stylesheet" href="../../../_ui/reader.css?v=f20167fff4fb"></head>
+<body><nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="../../../index.html">← 内容中心</a><a class="rl-reader-collection" href="../../../index.html?collection=global-tech-radar&amp;view=reports">全球科技与流动性</a><button type="button" data-reader-font="" aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top="">回顶部 ↑</button></nav>
+  <main class="page">
+    <header>
+      <div class="kicker">GLOBAL TECH CAPEX / LIQUIDITY / CATALYST RADAR</div>
+      <h1>TSMC/ASML把AI CapEx再上修，但利率与AI融资仍限制追高</h1>
+      <p class="subtitle">本轮维持 Orange：AI CapEx的正反馈明显增强，TSMC正式上调2026资本预算至600-640亿美元并给出Q3收入高于Q2的指引，ASML也上调2026收入展望并披露客户因AI加速扩产；但流动性没有同步转绿，PPI和CPI降温后，Fed官方H.15仍显示10Y与实际利率处于高位，7月16日强就业/费城联储数据和鹰派Fed表态又推高市场收益率。结论是“硬件链强、估值阀门仍紧”：看订单和供给瓶颈，不追纯估值扩张。</p>
+      <div class="meta">
+        <span class="badge gate-neutral">北京时间 2026-07-17 12:00</span>
+        <span class="badge gate-neutral">12:00 noon</span>
+        <span class="badge gate-orange">Orange</span>
+      </div>
+    </header>
+
+    <div class="summary">总闸门：<span class="badge gate-orange">Orange</span> <span>TSMC/ASML把AI CapEx再上修，但利率与AI融资仍限制追高</span></div>
+
+    <section class="focus-grid" aria-label="focus summary">
+      <article class="focus-card action">
+        <div class="focus-label">现在怎么处理</div>
+        <p>维持不追高、只做强验证链：AI晶圆、先进制程、EUV/DUV、先进封装、HBM/内存、AI服务器、电力/冷却优先；传统软件、重融资AI CapEx叙事和无订单映射方向继续降权。</p>
+      </article>
+      <article class="focus-card positive">
+        <div class="focus-label">最大正反馈</div>
+        <p>TSMC把2026资本预算上调至600-640亿美元、全年美元收入增速指引升至略高于40%；ASML上调2026收入展望并明确AI推动客户加速扩产，这是本轮最大正反馈。</p>
+      </article>
+      <article class="focus-card risk">
+        <div class="focus-label">最大压制项</div>
+        <p>PPI/CPI虽降温，但Fed H.15最新官方10Y仍4.55%、10Y实际利率2.32%，7月16日市场10Y又回到约4.57%-4.60%；Cook/Jefferson/Warsh口径都没有释放宽松确认。</p>
+      </article>
+      <article class="focus-card next">
+        <div class="focus-label">下一步只盯这些</div>
+        <p>下一步看7月17日美国工业产出、H.15是否确认7月16日利率回升、TSMC/ASML订单后续解读、IBM 7月22日正式财报、Amazon/AI债券利差、Supermicro调查是否出现实质影响。</p>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="module badges">
+      <article class="panel">
+        <h3>大厂资本开支</h3>
+        <p><span class="badge gate-green">Expansion</span></p>
+      </article>
+      <article class="panel">
+        <h3>全球流动性</h3>
+        <p><span class="badge gate-orange">Tightening</span></p>
+      </article>
+      <article class="panel">
+        <h3>科技重大消息</h3>
+        <p><span class="badge gate-yellow">Mixed</span></p>
+      </article>
+    </section>
+
+    <section>
+      <h2>今日最重要的变化</h2>
+      <div class="changes">
+            <article class="change-card">
+              <div class="change-head">
+                <h3>TSMC正式上调CapEx：AI/HPC需求从月营收验证升级为资本预算上修</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>TSMC 2Q26收入US$40.20bn，净利NT$706.56bn，同比+77.4%；Q2 CapEx为US$15.70bn，YTD US$26.80bn。电话会披露2026资本预算上调至US$60-64bn，全年美元收入增速预期略高于40%，且AI需求“extremely robust”。</p>
+              <p><strong>影响：</strong>这是AI晶圆、先进制程、EUV/DUV、CoWoS/先进封装、HBM配套、测试设备和高端PCB/基板的最强正反馈；CapEx模块维持Expansion。</p>
+              <p class="source-line"><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC IR</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>ASML上调2026收入展望并扩产，设备链验证增强</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>ASML Q2净销售€9.3bn、净利€2.9bn、毛利率54.0%；公司预计Q3净销售€11.0-12.0bn，并把2026全年净销售展望上调至€43-45bn。管理层称AI相关投资推动先进逻辑和存储需求，客户继续加速扩产，H1订单极强，并计划2027年低NA EUV和DUV immersion产能各增加约30%。</p>
+              <p><strong>影响：</strong>先进制程设备、零部件、真空/光学/控制系统、先进封装前道配套获得强验证；但出口管制和交付节奏仍需持续核实。</p>
+              <p class="source-line"><a href="https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results">ASML</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>PPI继续降温但Fed不转鸽，流动性只是边际缓和</h3>
+                <span class="confidence">High</span>
+              </div>
+              <p><strong>事实：</strong>BLS显示6月PPI final demand环比-0.3%，final demand goods -1.4%，services +0.2%，final demand less foods/energy/trade +0.1%；但12个月final demand仍+5.5%。Fed H.15 7月16日发布的最新官方表显示7月15日10Y为4.55%、10Y TIPS实际利率为2.32%。</p>
+              <p><strong>影响：</strong>通胀数据给估值缓冲，但实际利率仍高，AI/半导体高估值不能切换到宽松交易。</p>
+              <p class="source-line"><a href="https://www.bls.gov/news.release/ppi.nr0.htm">BLS / Federal Reserve H.15</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>7月16日市场利率回升，Fed官员把AI也纳入潜在通胀/r*讨论</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>WSJ报道7月16日美国初请失业金下降、费城联储制造业指数跳升，10Y盘中一度到4.596%，尾盘约4.568%；Fed Jefferson称AI投资可能在供给效应兑现前先推高需求，并可能影响中性利率；Cook称CPI/PPI虽软但目标通胀估计仍3.7%，高通胀风险更令其担忧。</p>
+              <p><strong>影响：</strong>AI CapEx本身可能成为融资需求和通胀/中性利率变量，意味着“AI强=无脑降息受益”的链条不成立。</p>
+              <p class="source-line"><a href="https://www.federalreserve.gov/newsevents/speech/jefferson20260716a.htm">WSJ / Federal Reserve</a></p>
+            </article>
+            
+
+            <article class="change-card">
+              <div class="change-head">
+                <h3>IBM预警与Amazon债券说明科技内部继续分化</h3>
+                <span class="confidence">Medium</span>
+              </div>
+              <p><strong>事实：</strong>IBM向SEC提交的投资者信披露Q2初步收入US$17.2bn、仅+1%，Software +5%，Infrastructure -7%，并称最终结果仍可能略变；Amazon 7月7日25bn美元债券发行用于一般公司用途，包括未来CapEx和债务到期偿还，市场继续关注AI相关债务供给。</p>
+              <p><strong>影响：</strong>预算正向AI基础设施、服务器、存储、内存和安全迁移，传统软件/主机承压；同时重融资AI CapEx叙事需要看现金流和信用利差。</p>
+              <p class="source-line"><a href="https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714xex991.htm">IBM SEC / Reuters</a></p>
+            </article>
+            </div>
+    </section>
+
+    
+    <details class="detail-section">
+      <summary>全球大厂 CapEx 明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>公司/主体</th><th>最新信号</th><th>方向</th><th>供应链影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>TSMC</td>
+              <td>2Q26收入US$40.20bn，Q3收入指引US$44.6-45.8bn；2Q26 CapEx US$15.70bn，YTD US$26.80bn；2026资本预算上调至US$60-64bn，70%-80%投向先进制程、10%-20%投向先进封装/测试/光罩等。</td>
+              <td>上修</td>
+              <td>先进制程、EUV/DUV、CoWoS/先进封装、测试、HBM配套、AI/HPC基板、高端PCB/CCL和材料链受益最直接。</td>
+              <td>High</td>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC Management Report / Transcript</a></td>
+            </tr>
+            
+            <tr>
+              <td>TSMC AI/HPC platform</td>
+              <td>2Q26 HPC占收入66%，高于1Q26的61%；3nm占30%、5nm占33%、7nm占11%，先进技术合计77%。管理层称AI相关需求极强，客户和客户的客户信号强劲，agentic AI带动CPU需求。</td>
+              <td>强验证</td>
+              <td>AI accelerator、CPU、先进逻辑、HBM companion chip、先进封装和电源管理IC均有需求验证。</td>
+              <td>High</td>
+              <td><a href="https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/6f49632674bd2d0fd48cb65aaf89ec6ab510b559/2Q26%20ManagementReport.pdf">TSMC Management Report / Transcript</a></td>
+            </tr>
+            
+            <tr>
+              <td>ASML</td>
+              <td>Q2净销售€9.326bn、净利€2.918bn、毛利率54.0%；2026全年净销售展望上调至€43-45bn，毛利率54%-56%；计划2027年低NA EUV和DUV immersion产能各增加约30%。</td>
+              <td>上修</td>
+              <td>EUV/DUV、量测检测、光学、真空、精密控制、上游零部件和先进制程CapEx链条受益。</td>
+              <td>High</td>
+              <td><a href="https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results">ASML Q2 2026 Results</a></td>
+            </tr>
+            
+            <tr>
+              <td>Meta</td>
+              <td>Meta Q1 2026官方CapEx指引仍为US$125-145bn；加拿大Alberta和Louisiana项目金额/功率继续由AP、WSJ/BI等报道推动，但本轮未见新的完整Meta项目文件。</td>
+              <td>持平偏强</td>
+              <td>AI数据中心、电力、冷却、服务器、光模块、网络、配电和工程交付继续受益；项目细节未官方完整确认前不做个股订单映射。</td>
+              <td>Medium</td>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx">Meta IR / AP / WSJ</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon / AWS</td>
+              <td>AWS Q1销售同比+28%至US$37.6bn；7月7日25bn美元债券融资最终用于一般公司用途，包括未来CapEx和债务到期偿还。</td>
+              <td>扩张但融资压力上升</td>
+              <td>AWS AI基础设施需求仍强，但债券供给和信用利差将抬高市场对ROI与现金流的审视。</td>
+              <td>Medium</td>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon IR / Reuters</a></td>
+            </tr>
+            
+            <tr>
+              <td>Alphabet</td>
+              <td>Q1 2026电话会披露CapEx为US$35.7bn，多数用于支持AI机会的technical infrastructure；Google Cloud backlog为US$462bn。本轮未见官方CapEx下修。</td>
+              <td>持平偏强</td>
+              <td>TPU/GPU、数据中心、网络、服务器和电力链条保持需求支撑，但等待下一次财报确认RPO与CapEx节奏。</td>
+              <td>High</td>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Microsoft</td>
+              <td>FY26 Q3材料仍显示AI业务ARR超过US$37bn、同比+123%，新增约1GW容量。本轮未见官方下修。</td>
+              <td>持平偏强</td>
+              <td>Azure AI、GPU/CPU、数据中心、光互连、存储、电力与冷却继续有需求支撑。</td>
+              <td>High</td>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Oracle</td>
+              <td>FY2026 Q4 RPO达US$638bn，同比+363%；OCI Q4收入US$5.8bn，同比+93%；FY2026 free cash flow为-23.7bn。</td>
+              <td>订单强但现金流承压</td>
+              <td>AI云订单强，但资本开支融资、RPO转收入与自由现金流修复仍是关键约束。</td>
+              <td>High</td>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Broadcom</td>
+              <td>FY2026 Q2 AI semiconductor revenue US$10.8bn，同比+143%；Q3 AI semiconductor revenue指引US$16.0bn，同比超过+200%。本轮未见下修。</td>
+              <td>强验证</td>
+              <td>定制ASIC、AI networking、交换芯片、先进封装、高速PCB/CCL持续受益。</td>
+              <td>High</td>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Micron</td>
+              <td>FY2026 Q3创纪录，HBM4已在领先客户平台高量出货，Q4收入指引US$50.0bn上下US$1.0bn。</td>
+              <td>强验证</td>
+              <td>HBM、数据中心SSD、服务器DRAM、先进封装和高端材料继续受益；IBM预算迁移也侧面支持服务器/存储/内存优先级。</td>
+              <td>High</td>
+              <td><a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter">Micron IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>Bloom Energy / Brookfield</td>
+              <td>AI infrastructure power partnership融资框架已扩大至US$25bn；本轮仍未见首批hyperscaler客户、项目地点、MW/GW规模和交付节奏的新增披露。</td>
+              <td>上修后待落地</td>
+              <td>AI电力基础设施、现场供电、燃料电池、配电、UPS、液冷和工程交付方向继续受益，但不能提前确认项目订单归属。</td>
+              <td>High</td>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy IR</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>全球流动性明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>央行/变量</th><th>最新信号</th><th>方向</th><th>科技影响</th><th>置信度</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>US PPI</td>
+              <td>6月PPI final demand环比-0.3%，final demand goods -1.4%，services +0.2%，less foods/energy/trade +0.1%；12个月final demand +5.5%。</td>
+              <td>边际宽松</td>
+              <td>生产端价格短线降温，支持科技估值缓冲；但同比仍高，不能转为Easing。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/ppi.nr0.htm">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>US CPI</td>
+              <td>6月CPI-U环比-0.4%、同比+3.5%，核心CPI环比持平、同比+2.6%；能源与汽油下行贡献大。</td>
+              <td>边际宽松</td>
+              <td>给长久期科技短线估值修复，但核心仍高于2%目标，且能源扰动可能反复。</td>
+              <td>High</td>
+              <td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS</a></td>
+            </tr>
+            
+            <tr>
+              <td>Federal Reserve H.15</td>
+              <td>7月16日发布的H.15显示，7月15日10Y Treasury为4.55%，10Y TIPS实际利率为2.32%，effective fed funds为3.63%。</td>
+              <td>压力</td>
+              <td>官方利率较7月13日4.62%/2.36%回落，但仍处高位，限制高估值AI链追高。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15</a></td>
+            </tr>
+            
+            <tr>
+              <td>July 16 market rates</td>
+              <td>WSJ报道7月16日初请失业金下降、费城联储制造业指数跳升后，10Y盘中到4.596%、尾盘约4.568%，2Y到约4.155%-4.179%。</td>
+              <td>压力</td>
+              <td>CPI/PPI后的利率缓和不稳，增长韧性和Fed表态会继续压制估值扩张。</td>
+              <td>Medium</td>
+              <td><a href="https://www.wsj.com/finance/jgbs-mixed-as-investors-grapple-with-gains-in-u-s-treasurys-rising-oil-prices-6753ed21">WSJ / MarketWatch</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed Beige Book</td>
+              <td>7月Beige Book称11个辖区经济活动轻微至温和增长，消费小幅上升但高价格特别是燃料价格压制部分品类；San Francisco辖区提到雇主继续投资AI。</td>
+              <td>中性偏压力</td>
+              <td>经济没有显著失速，给Fed保持谨慎提供空间；AI投资热度也可能支撑需求。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/monetarypolicy/beigebook202607-summary.htm">Federal Reserve Beige Book</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed speeches / AI and r*</td>
+              <td>Jefferson称AI资本开支显著增加，若需求效应早于生产率供给效应，AI可能给通胀上行压力，并可能影响中性利率；Cook称CPI/PPI软但目标通胀估计仍3.7%，其更担心高通胀风险；Warsh重申对持续高通胀没有容忍度。</td>
+              <td>压力</td>
+              <td>Fed没有确认宽松转向，AI CapEx强本身还可能成为融资需求、r*和通胀变量。</td>
+              <td>High</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/cook20260715a.htm">Federal Reserve</a></td>
+            </tr>
+            
+            <tr>
+              <td>US retail sales</td>
+              <td>Census显示6月零售和餐饮销售US$768.6bn，环比+0.2%、同比+6.7%；4-6月同比+6.4%，5月环比上修至+1.0%。</td>
+              <td>中性偏压力</td>
+              <td>消费仍有韧性，不支持快速降息交易；但环比放缓对过热担忧有一定缓冲。</td>
+              <td>High</td>
+              <td><a href="https://www.census.gov/retail/sales.html">U.S. Census Bureau</a></td>
+            </tr>
+            
+            <tr>
+              <td>AI-linked corporate debt</td>
+              <td>Reuters报道Amazon 25bn美元债券包含2029-2066多期限票据，用途包括未来CapEx和偿还到期债务；市场继续关注AI相关投资级债供给。</td>
+              <td>压力</td>
+              <td>融资渠道仍打开，但AI CapEx越强，信用市场越要求ROI和现金流兑现。</td>
+              <td>Medium</td>
+              <td><a href="https://www.investing.com/news/stock-market-news/amazon-aims-to-raise-25-billion-from-bond-sale-bloomberg-news-reports-4779326">Reuters / Investing.com</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>科技重大利好/利空明细</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>事件</th><th>影响链条</th><th>方向</th><th>可能受益</th><th>可能受压</th><th>证据</th><th>来源</th></tr></thead><tbody>
+            <tr>
+              <td>TSMC raises 2026 capital budget and growth outlook</td>
+              <td>AI晶圆/先进制程/CoWoS/先进封装/HBM配套/电源管理IC</td>
+              <td>利好</td>
+              <td>先进制程、EUV/DUV、先进封装、测试、AI/HPC基板、高端PCB/CCL、HBM配套、电源管理IC</td>
+              <td>无法进入AI/HPC先进节点或缺乏客户认证的通用低端环节</td>
+              <td>官方确认</td>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC IR</a></td>
+            </tr>
+            
+            <tr>
+              <td>ASML upgrades 2026 outlook and expands EUV/DUV capacity</td>
+              <td>半导体设备/EUV/DUV/先进制程</td>
+              <td>利好</td>
+              <td>ASML供应链、精密光学、真空、控制、量测检测、先进制程设备材料</td>
+              <td>受出口管制或订单延迟影响较大的地区/客户敞口</td>
+              <td>官方确认</td>
+              <td><a href="https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results">ASML</a></td>
+            </tr>
+            
+            <tr>
+              <td>Fed frames AI as demand/inflation/r-star variable</td>
+              <td>AI基础设施/高估值成长/债券融资</td>
+              <td>中性偏利空</td>
+              <td>盈利和现金流能跟上CapEx的龙头硬件链</td>
+              <td>靠远期估值、重融资和长久期叙事支撑的AI资产</td>
+              <td>官方讲话/研究</td>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/jefferson20260716a.htm">Federal Reserve</a></td>
+            </tr>
+            
+            <tr>
+              <td>IBM preliminary Q2 warning</td>
+              <td>传统软件/主机/服务器/存储/内存/网络安全</td>
+              <td>结构分化</td>
+              <td>AI服务器、存储、内存、HBM、网络安全和能证明AI ROI的基础设施供应商</td>
+              <td>传统软件、主机、执行节奏弱且大单延迟的企业IT供应商</td>
+              <td>公司SEC文件/媒体解读</td>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714xex991.htm">IBM SEC</a></td>
+            </tr>
+            
+            <tr>
+              <td>Amazon AI bond financing and AI debt supply</td>
+              <td>Hyperscaler融资/数据中心CapEx/信用利差</td>
+              <td>风险提示</td>
+              <td>现金流强、债务成本低、CapEx回报可验证的云厂商和供应链</td>
+              <td>重融资、订单回款慢、估值依赖信用利差收窄的环节</td>
+              <td>媒体报道+公司发行文件口径</td>
+              <td><a href="https://www.investing.com/news/stock-market-news/amazon-aims-to-raise-25-billion-from-bond-sale-bloomberg-news-reports-4779326">Reuters / MarketWatch / WSJ</a></td>
+            </tr>
+            
+            <tr>
+              <td>Supermicro Taiwan investigation remains unresolved</td>
+              <td>AI服务器/渠道/出口合规</td>
+              <td>风险提示</td>
+              <td>合规可追溯、客户穿透清晰、渠道透明的服务器与零部件供应商</td>
+              <td>出口合规薄弱、客户穿透不足、过度依赖灰色渠道的环节</td>
+              <td>公司官方7月1日更新；本轮未见新增正式处罚或订单影响</td>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro</a></td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>A/H 科技链映射</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>主题</th><th>已验证直接相关</th><th>推断映射</th><th>证据边界/风险</th></tr></thead><tbody>
+            <tr>
+              <td>TSMC资本预算上调与HPC占比提升</td>
+              <td>无A/H公司在TSMC 2Q26官方材料中被直接点名为新增订单受益方。</td>
+              <td>先进封装、CoWoS配套、半导体设备零部件、材料、基板、高端PCB/CCL、AI服务器和电源管理IC方向相对受益。</td>
+              <td>只能作为产业链景气验证，不能直接等同于A/H公司订单；需等待公司公告、客户认证、收入拆分或在手订单披露。</td>
+            </tr>
+            
+            <tr>
+              <td>ASML上调展望与EUV/DUV扩产</td>
+              <td>无A/H公司在ASML新闻稿中被直接点名。</td>
+              <td>精密零部件、真空、光学、控制、量测检测、半导体设备材料和先进制程配套方向受益。</td>
+              <td>出口管制、交付节奏和海外设备链国产替代进度存在差异，不能简单映射到所有设备股。</td>
+            </tr>
+            
+            <tr>
+              <td>AI数据中心电力与融资</td>
+              <td>无A/H公司被Amazon债券或Bloom/Brookfield官方材料直接点名为新增订单受益方。</td>
+              <td>电力设备、配电、UPS、液冷/温控、工程交付和现场供电方向继续有主题验证。</td>
+              <td>AI债务供给增加会提高ROI门槛，若信用利差走阔，重融资CapEx叙事可能受压。</td>
+            </tr>
+            
+            <tr>
+              <td>传统IT预算被AI基础设施挤压</td>
+              <td>无A/H公司被IBM文件直接点名。</td>
+              <td>AI服务器、内存、存储、网络安全和能量化AI ROI的软件方向更强；传统软件、主机和弱执行IT服务方向承压。</td>
+              <td>IBM是单公司事件，需等7月22日正式财报和后续软件同业财报确认行业外推。</td>
+            </tr>
+            
+            <tr>
+              <td>高实际利率压制高估值科技</td>
+              <td>无直接A/H公司映射。</td>
+              <td>若10Y和实际利率继续高位，纯估值弹性和远期订单不清晰的科技股更受压；订单/现金流/客户验证强的AI硬件链更抗压。</td>
+              <td>若后续PCE、就业或Fed口径转鸽，估值阀门可能边际松动，需要动态更新。</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    
+    <details class="detail-section" open="">
+      <summary>下一次观察清单</summary>
+      <div class="detail-body"><ul class="watchlist"><li><strong>2026-07-17美国工业产出与H.15更新</strong><span>确认7月16日市场收益率回升是否进入官方利率序列；若10Y重新接近4.6%、实际利率高于2.3%，Liquidity继续Tightening。</span></li><li><strong>TSMC电话会后续客户/先进封装/2nm解读</strong><span>验证资本预算上调是否更多流向先进制程、CoWoS/先进封装、测试或Arizona扩产，并识别供应瓶颈。</span></li><li><strong>ASML订单、出口管制与2027/2028扩产执行</strong><span>判断设备链利好是否可持续，还是被中国/出口限制或交付瓶颈部分抵消。</span></li><li><strong>IBM 2026-07-22正式Q2财报</strong><span>确认初步结果是否变化，并验证软件/基础设施短缺是否属于单公司执行问题或行业预算迁移。</span></li><li><strong>Amazon与AI hyperscaler债券利差</strong><span>如果AI债务供给导致信用利差继续走阔，会削弱CapEx扩张对股权估值的正反馈。</span></li><li><strong>Supermicro/Taiwan调查</strong><span>等待是否出现正式起诉、罚款、订单延迟、客户变化或财务影响；目前仍不能把风险直接映射到A/H个股。</span></li><li><strong>2026-07-23 AMD Advancing AI 2026</strong><span>验证MI系列、rack-scale、networking、软件生态和客户订单是否能继续加强AI硬件链。</span></li></ul></div>
+    </details>
+    
+
+    
+    <details class="detail-section">
+      <summary>来源链接</summary>
+      <div class="detail-body"><div class="table-wrap"><table><thead><tr><th>来源</th><th>用途</th><th>日期/时间</th></tr></thead><tbody>
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC 2026 Q2 Quarterly Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/a80d7933be643644081584087731f73b22ea5a2c/2Q26%20EarningsRelease.pdf">TSMC 2Q26 Earnings Release</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/6f49632674bd2d0fd48cb65aaf89ec6ab510b559/2Q26%20ManagementReport.pdf">TSMC 2Q26 Management Report</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/57b65edbfe6e480e74abe202be983ecbde79e934/TSMC%202Q26%20Transcript.pdf">TSMC 2Q26 Earnings Conference Transcript</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.asml.com/en/investors/financial-results/q2-2026">ASML Q2 2026 Financial Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-15</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results">ASML Q2 2026 Press Release</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-07-15</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/ppi.nr0.htm">BLS Producer Price Index - June 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-15</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS Consumer Price Index - June 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve H.15 Selected Interest Rates</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/monetarypolicy/beigebook202607-summary.htm">Federal Reserve Beige Book - July 2026</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-07-15</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/jefferson20260716a.htm">Fed Vice Chair Jefferson - Navigating Economic Shocks</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/speech/cook20260715a.htm">Fed Governor Cook - Economic Outlook</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-15</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/newsevents/testimony/warsh20260714a.htm">Fed Chairman Warsh - Semiannual Monetary Policy Report</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.census.gov/retail/sales.html">U.S. Census Advance Monthly Retail Sales - June 2026</a></td>
+              <td>Liquidity</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.wsj.com/finance/jgbs-mixed-as-investors-grapple-with-gains-in-u-s-treasurys-rising-oil-prices-6753ed21">WSJ - Treasury Yields Rise as Fedspeak Leans Hawkish</a></td>
+              <td>Liquidity / market reaction</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.marketwatch.com/livecoverage/stock-market-today-dow-s-p-500-nasdaq-softer-than-expected-inflation-data-retail-sales-june/card/treasury-yields-rise-after-surprise-jump-in-philadelphia-fed-manufacturing-survey-q33A9rHU9Orbt0E3YLHC">MarketWatch - Treasury yields rise after Philadelphia Fed survey</a></td>
+              <td>Liquidity / market reaction</td>
+              <td>2026-07-16</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714xex991.htm">IBM Investor Letter filed with SEC</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-07-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://apnews.com/article/2f28030dd13c572ad21a512da77d96cd">AP - IBM preliminary Q2 results below expectations</a></td>
+              <td>Tech catalyst</td>
+              <td>2026-07-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.investing.com/news/stock-market-news/amazon-aims-to-raise-25-billion-from-bond-sale-bloomberg-news-reports-4779326">Reuters via Investing.com - Amazon aims to raise $25 billion bond sale</a></td>
+              <td>CapEx / Liquidity / Tech catalyst</td>
+              <td>2026-07-07</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-First-Quarter-Results/default.aspx">Amazon.com Announces First Quarter Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx">Alphabet 2026 Q1 Earnings Call</a></td>
+              <td>CapEx</td>
+              <td>2026-04-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3">Microsoft FY26 Q3 Earnings</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx">Meta Reports First Quarter 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-04-29</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Record-Q4-and-FY-2026-Results-Driven-by-Cloud-Infrastructure--Cloud-Applications/default.aspx">Oracle Announces Record Q4 and FY 2026 Results</a></td>
+              <td>CapEx</td>
+              <td>2026-06-10</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial">Broadcom FY2026 Q2 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-03</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter">Micron FY2026 Q3 Results</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-24</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.supermicro.com/en/news/taiwan-business-update-2026-07-01">Supermicro Taiwan Business Update</a></td>
+              <td>Tech catalyst / Watchlist</td>
+              <td>2026-07-01</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom Energy and Brookfield AI Infrastructure Partnership</a></td>
+              <td>CapEx / Tech catalyst</td>
+              <td>2026-06-30</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.federalreserve.gov/econres/notes/feds-notes/technology-shocks-the-ai-boomandthe-u-s-current-account-20260714.html">Federal Reserve FEDS Notes - Technology Shocks, the AI Boom, and the U.S. Current Account</a></td>
+              <td>Liquidity / Tech catalyst</td>
+              <td>2026-07-14</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.amd.com/en/newsroom/press-releases/2026-4-28-amd-announces-advancing-ai-2026-.html">AMD Announces Advancing AI 2026</a></td>
+              <td>Watchlist</td>
+              <td>2026-04-28</td>
+            </tr>
+            </tbody></table></div></div>
+    </details>
+    
+
+    <footer>
+      Generated by global-tech-capex-liquidity-radar. This report is research monitoring, not a guarantee of investment results.
+    </footer>
+  </main>
+
+
+<script src="../../../_ui/reader.js?v=f9e062dac51e" defer=""></script></body></html>
