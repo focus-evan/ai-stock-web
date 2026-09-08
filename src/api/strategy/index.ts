@@ -1286,12 +1286,28 @@ export function fetchPortfolioAnalysis(date?: string) {
 }
 
 /** 触发生成整体持仓分析 */
+export interface PortfolioAnalysisJob {
+	status: "idle" | "running" | "success" | "error"
+	job_id?: string | null
+	data?: PortfolioAnalysisData | null
+	message?: string
+	started_at?: string
+}
+
+export function fetchPortfolioAnalysisJob(jobId?: string) {
+	return request.get("strategy/combined/watchlist/portfolio-analysis/job", {
+		searchParams: jobId ? { job_id: jobId } : {},
+		timeout: 15000,
+	}).json<PortfolioAnalysisJob>();
+}
+
 export function triggerPortfolioAnalysis() {
 	return request
 		.post("strategy/combined/watchlist/portfolio-analysis", {
-			timeout: 300000,
+			searchParams: { background: true },
+			timeout: 15000,
 		})
-		.json<{ status: string, data: PortfolioAnalysisData, message?: string }>();
+		.json<PortfolioAnalysisJob>();
 }
 
 // ===================== 不追加资金滚动降本 =====================

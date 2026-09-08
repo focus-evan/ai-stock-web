@@ -1,5 +1,5 @@
 import type { PortfolioAnalysisData, PortfolioStockAnalysis } from "#src/api/strategy";
-import { fetchPortfolioAnalysis, triggerPortfolioAnalysis } from "#src/api/strategy";
+import { fetchPortfolioAnalysis, fetchPortfolioAnalysisJob, triggerPortfolioAnalysis } from "#src/api/strategy";
 import {
 	BarChartOutlined,
 	BulbOutlined,
@@ -737,6 +737,8 @@ const PortfolioAnalysisPanel: React.FC = () => {
 	const [data, setData] = useState<PortfolioAnalysisData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [generating, setGenerating] = useState(false);
+	const [jobId, setJobId] = useState<string | null>(null);
+	const [jobNotice, setJobNotice] = useState<string | null>(null);
 	const [generatedAt, setGeneratedAt] = useState<string | null>(null);
 	const [sentimentTrigger, setSentimentTrigger] = useState<any>(null);
 
@@ -760,12 +762,67 @@ const PortfolioAnalysisPanel: React.FC = () => {
 
 	useEffect(() => {
 		loadData();
+		let active = true;
+		fetchPortfolioAnalysisJob().then((job) => {
+			if (active && job.status === "running" && job.job_id) {
+				setJobId(job.job_id);
+				setGenerating(true);
+			}
+		}).catch(() => {});
+		return () => {
+			active = false;
+		};
 	}, [loadData]);
+
+	useEffect(() => {
+		if (!jobId)
+			return;
+		let active = true;
+		let timer: ReturnType<typeof setTimeout>;
+		const poll = async () => {
+			try {
+				const job = await fetchPortfolioAnalysisJob(jobId);
+				if (!active)
+					return;
+				setJobNotice(null);
+				if (job.status === "success" && job.data) {
+					setData(job.data);
+					setGeneratedAt(job.data.generated_at || null);
+					setGenerating(false);
+					setJobId(null);
+					message.success("持仓分析已生成");
+					return;
+				}
+				if (job.status !== "running") {
+					setGenerating(false);
+					setJobId(null);
+					setJobNotice(job.message || "任务状态已失效，请刷新查看最新报告");
+					return;
+				}
+			}
+			catch {
+				if (active)
+					setJobNotice("暂时无法获取进度，正在重连；后台任务可能仍在运行，请勿重复提交。");
+			}
+			if (active)
+				timer = setTimeout(poll, 5000);
+		};
+		poll();
+		return () => {
+			active = false;
+			clearTimeout(timer);
+		};
+	}, [jobId]);
 
 	const handleGenerate = async () => {
 		setGenerating(true);
+		setJobNotice(null);
 		try {
 			const resp = await triggerPortfolioAnalysis();
+			if (resp.status === "running" && resp.job_id) {
+				setJobId(resp.job_id);
+				return;
+			}
 			if (resp.status === "success" && resp.data) {
 				setData(resp.data);
 				setGeneratedAt(resp.data.generated_at || null);
@@ -776,11 +833,17 @@ const PortfolioAnalysisPanel: React.FC = () => {
 			}
 		}
 		catch {
-			message.error("生成持仓分析失败");
+			try {
+				const job = await fetchPortfolioAnalysisJob();
+				if (job.status === "running" && job.job_id) {
+					setJobId(job.job_id);
+					return;
+				}
+			}
+			catch { /* Keep submission uncertainty visible; do not auto-resubmit. */ }
+			setJobNotice("提交结果未确认，请刷新检查后台任务或最新报告后再重试。");
 		}
-		finally {
-			setGenerating(false);
-		}
+		setGenerating(false);
 	};
 
 	if (loading) {
@@ -819,6 +882,8 @@ const PortfolioAnalysisPanel: React.FC = () => {
 	return (
 		<>
 			{/* Header Card */}
+			{generating && <Alert type="info" showIcon message="正在后台生成持仓分析，通常需要数分钟。完成后自动更新，刷新页面也可继续查看进度。" style={{ marginTop: 16 }} />}
+			{jobNotice && <Alert type="warning" showIcon message={jobNotice} style={{ marginTop: 16 }} />}
 			<Card
 				bordered={false}
 				style={{
