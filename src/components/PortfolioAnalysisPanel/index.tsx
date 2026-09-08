@@ -1,15 +1,10 @@
 import type { PortfolioAnalysisData, PortfolioStockAnalysis } from "#src/api/strategy";
 import { fetchPortfolioAnalysis, fetchPortfolioAnalysisJob, triggerPortfolioAnalysis } from "#src/api/strategy";
 import {
-	BarChartOutlined,
-	BulbOutlined,
 	ClockCircleOutlined,
-	ExperimentOutlined,
 	FundProjectionScreenOutlined,
-	LineChartOutlined,
 	LoadingOutlined,
 	ReloadOutlined,
-	SafetyCertificateOutlined,
 	ThunderboltOutlined,
 	WarningOutlined,
 } from "@ant-design/icons";
@@ -32,52 +27,12 @@ import React, { useCallback, useEffect, useState } from "react";
 
 const { Text, Paragraph } = Typography;
 
-/* ========== Colors & Configs ========== */
-
-const GROWTH_COLORS: Record<string, string> = {
-	高成长: "#f5222d",
-	稳定成长: "#1890ff",
-	周期型: "#faad14",
-	价值型: "#722ed1",
-	困境反转: "#eb2f96",
-};
-
-const MOAT_ICONS: Record<string, string> = {
-	技术壁垒: "🔬",
-	品牌优势: "👑",
-	规模效应: "🏭",
-	网络效应: "🌐",
-	成本优势: "💰",
-};
-
-const CASH_COLORS: Record<string, string> = {
-	充裕: "#52c41a",
-	一般: "#faad14",
-	紧张: "#f5222d",
-};
-
 function fmtPnl(v: number): string {
 	return v >= 0 ? `+${v.toFixed(2)}` : v.toFixed(2);
 }
 
 function fmtMetric(value?: number | null, suffix = "%"): string {
 	return value == null || !Number.isFinite(value) ? "-" : `${value.toFixed(2)}${suffix}`;
-}
-
-function fmtMoney(value?: number | null): string {
-	if (value == null || !Number.isFinite(value))
-		return "-";
-	const absoluteValue = Math.abs(value);
-	const sign = value < 0 ? "-" : "";
-	if (absoluteValue >= 1e8)
-		return `${sign}${(absoluteValue / 1e8).toFixed(2)}亿`;
-	if (absoluteValue >= 1e4)
-		return `${sign}${(absoluteValue / 1e4).toFixed(2)}万`;
-	return `${value.toFixed(0)}元`;
-}
-
-function joinText(values?: string[]): string {
-	return values?.filter(Boolean).join("、") || "-";
 }
 
 function stockCurrency(stock: PortfolioStockAnalysis): "CNY" | "HKD" {
@@ -115,313 +70,120 @@ function currencyBreakdown(
 }
 
 /* ========== Mini Sparkline ========== */
-const MiniSparkline: React.FC<{ prices: PortfolioStockAnalysis["prices_7d"] }> = ({ prices }) => {
-	if (!prices || prices.length === 0)
-		return <Text type="secondary" style={{ fontSize: 11 }}>无数据</Text>;
-
-	const closes = prices.map(p => p.close || 0).filter(v => v > 0);
-	if (closes.length < 2)
-		return <Text type="secondary" style={{ fontSize: 11 }}>数据不足</Text>;
-
-	const min = Math.min(...closes);
-	const max = Math.max(...closes);
-	const range = max - min || 1;
-	const w = 120;
-	const h = 32;
-	const points = closes.map((v, i) => {
-		const x = (i / (closes.length - 1)) * w;
-		const y = h - ((v - min) / range) * (h - 4) - 2;
-		return `${x},${y}`;
-	}).join(" ");
-
-	const trend = closes[closes.length - 1] >= closes[0];
-
+export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
+	const t = stock.short_term;
+	if (!t) {
+		return <Alert type="info" showIcon message="这是旧版基本面报告，请点击重新分析生成短线解析。" />;
+	}
+	const price = (v: number | null) => v == null ? "数据不足" : `${currencySymbol(stock)}${v.toFixed(3)}`;
 	return (
-		<svg width={w} height={h} style={{ display: "block" }}>
-			<polyline
-				points={points}
-				fill="none"
-				stroke={trend ? "#f5222d" : "#52c41a"}
-				strokeWidth="1.5"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-};
-
-/* ========== Three-framework research detail ========== */
-const SkillAnalysisSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
-	const skill = stock.skill_analysis;
-	if (!skill)
-		return null;
-
-	const v231 = skill.stock_v231_selector;
-	const s5d = skill.s_quant_5d_subtraction;
-	const s40 = skill.s40_tech_growth_stock;
-	const domestic = v231?.domestic_substitution;
-	const moat = v231?.competitor_moat;
-	const periods = s5d?.latest_four_reported_periods || [];
-	const s40Moat = s40?.true_technology_and_customer;
-	const scoreItems = [
-		{ label: "V2.3.1", score: v231?.score, note: v231?.strategy_label },
-		{ label: "S五维", score: s5d?.score, note: s5d?.operating_world_conclusion },
-		{ label: "S40科技", score: s40?.score, note: s40?.conclusion },
-	];
-
-	return (
-		<div style={{
-			border: "1px solid #d3adf7",
-			borderRadius: 8,
-			background: "linear-gradient(180deg, #faf5ff 0%, #ffffff 100%)",
-			marginBottom: 10,
-			overflow: "hidden",
-		}}
-		>
-			<div style={{ padding: "10px 12px", borderBottom: "1px solid #efdbff" }}>
-				<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
-					<Space size={4}>
-						<FundProjectionScreenOutlined style={{ color: "#722ed1", fontSize: 13 }} />
-						<Text style={{ fontSize: 12, fontWeight: 700, color: "#531dab" }}>三框架深度研判</Text>
-					</Space>
-					{skill.data_as_of && (
-						<Text type="secondary" style={{ fontSize: 10 }}>
-							数据截至
-							{skill.data_as_of}
-						</Text>
-					)}
-				</div>
-				<div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 6 }}>
-					{scoreItems.map(item => (
-						<div key={item.label} style={{ padding: "6px 5px", textAlign: "center", borderRadius: 6, background: "#fff", border: "1px solid #efdbff" }}>
-							<div style={{ color: "#8c8c8c", fontSize: 9 }}>{item.label}</div>
-							<div style={{ color: "#722ed1", fontSize: 16, lineHeight: "20px", fontWeight: 800 }}>
-								{item.score == null ? "-" : item.score}
-								<span style={{ fontSize: 9, marginLeft: 1 }}>分</span>
+		<div style={{ fontSize: 12, lineHeight: 1.7 }}>
+			<Text strong>短线价量解析</Text>
+			<div style={{ color: "#8c8c8c", margin: "4px 0 12px" }}>
+				{t.timeframe}
+				{" "}
+				· 收盘截至
+				{t.as_of || "未知"}
+				{" "}
+				·
+				{t.bar_count}
+				{" "}
+				根日线
+				<br />
+				分析收盘价
+				{" "}
+				{price(t.close)}
+				{" "}
+				·
+				{" "}
+				{t.adjustment === "qfq" ? "前复权" : t.adjustment === "raw" ? "不复权" : "复权口径未知"}
+				<br />
+				顶部报价与日线分析时间独立；以下均线位置按分析收盘价判断。
+			</div>
+			{t.status !== "ready" && <Alert type="warning" showIcon message="日线待更新或核验，不能确认当前交易信号" style={{ marginBottom: 12 }} />}
+			<div style={{ background: "#fafafa", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+				<Text strong>是否站上均线</Text>
+				<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 8 }}>
+					{t.moving_averages.map(ma => (
+						<div key={ma.period}>
+							<div>
+								MA
+								{ma.period}
+								{" "}
+								·
+								{price(ma.value)}
 							</div>
-							<div style={{ color: "#595959", fontSize: 9, lineHeight: "13px" }}>{item.note || "-"}</div>
+							<Tag color={ma.position === "站上" ? "blue" : ma.position === "跌破" ? "orange" : "default"}>{ma.position}</Tag>
+							<span>{ma.slope}</span>
 						</div>
 					))}
 				</div>
-				{v231?.direct_action && (
-					<div style={{ marginTop: 8, padding: "7px 9px", borderRadius: 6, background: "#f0e8ff", borderLeft: "3px solid #722ed1" }}>
-						<Text style={{ fontSize: 11, color: "#391085", fontWeight: 600 }}>
-							直接结论：
-							{v231.direct_action}
-						</Text>
-					</div>
-				)}
-			</div>
-
-			<details style={{ padding: "0 12px 10px" }}>
-				<summary style={{ cursor: "pointer", padding: "9px 0 0", color: "#722ed1", fontSize: 11, fontWeight: 600 }}>
-					展开查看每只股票的完整分析逻辑
-				</summary>
-
-				<div style={{ marginTop: 9 }}>
-					<div style={{ background: "#fff", borderRadius: 7, border: "1px solid #e8e8e8", padding: "9px 10px", marginBottom: 8 }}>
-						<div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap", marginBottom: 6 }}>
-							<Text style={{ fontSize: 11, fontWeight: 700, color: "#531dab" }}>V2.3.1｜风险门与利润池择优</Text>
-							{skill.risk_gate?.status && (
-								<Tag color={skill.risk_gate.status === "通过" ? "success" : "warning"} style={{ margin: 0, fontSize: 9 }}>
-									风险门：
-									{skill.risk_gate.status}
-								</Tag>
-							)}
-							{v231?.recommendation_level && <Tag color="purple" style={{ margin: 0, fontSize: 9 }}>{v231.recommendation_level}</Tag>}
-						</div>
-						{domestic && (
-							<div style={{ marginBottom: 7 }}>
-								<Text style={{ fontSize: 10, fontWeight: 700 }}>卡脖子 / 国产替代：</Text>
-								<Text style={{ fontSize: 10, lineHeight: "16px" }}>
-									{domestic.bottleneck || "-"}
-									；阶段为
-									{domestic.stage || "-"}
-									；海外对标
-									{joinText(domestic.benchmarks)}
-									。
-									{domestic.judgement || ""}
-								</Text>
-								{domestic.score != null && (
-									<Tag color="geekblue" style={{ margin: "0 0 0 4px", fontSize: 9 }}>
-										{domestic.score}
-										/20
-									</Tag>
-								)}
-							</div>
-						)}
-						{moat && (
-							<div style={{ fontSize: 10, lineHeight: "16px", marginBottom: 7 }}>
-								<div>
-									<Text strong style={{ fontSize: 10 }}>竞对：</Text>
-									国内
-									{" "}
-									{joinText(moat.domestic)}
-									；海外
-									{" "}
-									{joinText(moat.overseas)}
-									；护城河
-									{" "}
-									{moat.grade || "-"}
-									级
-								</div>
-								<div>
-									<Text strong style={{ fontSize: 10 }}>我有你没有：</Text>
-									{moat.unique || "-"}
-								</div>
-								<div>
-									<Text strong style={{ fontSize: 10 }}>你有我更强：</Text>
-									{moat.stronger || "-"}
-								</div>
-								<div>
-									<Text strong style={{ fontSize: 10 }}>对手比我强：</Text>
-									{moat.weaker || "-"}
-								</div>
-							</div>
-						)}
-						{v231?.new_strategic_business && (
-							<div style={{ fontSize: 10, lineHeight: "16px", marginBottom: 5 }}>
-								<Text strong style={{ fontSize: 10 }}>新战略业务：</Text>
-								{v231.new_strategic_business}
-							</div>
-						)}
-						{v231?.valuation_odds && (
-							<div style={{ fontSize: 10, lineHeight: "16px", marginBottom: 6 }}>
-								<Text strong style={{ fontSize: 10 }}>估值与赔率：</Text>
-								{v231.valuation_odds}
-							</div>
-						)}
-						{v231?.dimension_scores && v231.dimension_scores.length > 0 && (
-							<div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-								{v231.dimension_scores.map(item => (
-									<Tag key={item.dimension} color={(item.score || 0) >= 70 ? "blue" : "default"} style={{ margin: 0, fontSize: 9 }}>
-										{item.dimension}
-										{" "}
-										{item.score ?? "-"}
-									</Tag>
-								))}
-							</div>
-						)}
-					</div>
-
-					<div style={{ background: "#fff", borderRadius: 7, border: "1px solid #e8e8e8", padding: "9px 10px", marginBottom: 8 }}>
-						<div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap", marginBottom: 6 }}>
-							<Text style={{ fontSize: 11, fontWeight: 700, color: "#096dd9" }}>S量化五维｜经营世界验证</Text>
-							{s5d?.operating_world_conclusion && <Tag color="blue" style={{ margin: 0, fontSize: 9 }}>{s5d.operating_world_conclusion}</Tag>}
-						</div>
-						{s5d?.method && <Paragraph style={{ fontSize: 10, color: "#595959", lineHeight: "16px", margin: "0 0 6px" }}>{s5d.method}</Paragraph>}
-						{periods.map(period => (
-							<div key={period.period} style={{ fontSize: 10, lineHeight: "16px", padding: "5px 0", borderTop: "1px dashed #f0f0f0" }}>
-								<Text strong style={{ fontSize: 10 }}>{period.period || "报告期"}</Text>
-								：营收
-								{" "}
-								{fmtMoney(period.revenue_yuan)}
-								（同比
-								{" "}
-								{fmtMetric(period.revenue_yoy_pct)}
-								）；归母净利
-								{" "}
-								{fmtMoney(period.net_profit_yuan)}
-								（同比
-								{" "}
-								{fmtMetric(period.net_profit_yoy_pct)}
-								）；毛利率
-								{" "}
-								{fmtMetric(period.gross_margin_pct)}
-								；净利率
-								{" "}
-								{fmtMetric(period.net_margin_pct)}
-								；ROE
-								{" "}
-								{fmtMetric(period.roe_pct)}
-								；经营现金流
-								{" "}
-								{fmtMoney(period.operating_cash_flow_yuan)}
-								{period.margin_scope && (
-									<Text type="secondary" style={{ fontSize: 9 }}>
-										（
-										{period.margin_scope}
-										）
-									</Text>
-								)}
-							</div>
-						))}
-						<div style={{ marginTop: 6, fontSize: 10, color: "#595959" }}>
-							估值快照：
-							{typeof s5d?.pe_ttm === "number" ? `PE(TTM) ${s5d.pe_ttm.toFixed(1)}倍` : "PE -"}
-							，市值
-							{" "}
-							{s5d?.market_cap || "-"}
-							；市值与PE仅展示，未进入默认量化评分。
-						</div>
-						{s5d?.limitations && s5d.limitations.length > 0 && (
-							<div style={{ marginTop: 6, fontSize: 9, lineHeight: "14px", color: "#8c8c8c" }}>
-								口径限制：
-								{s5d.limitations.join("；")}
-							</div>
-						)}
-					</div>
-
-					<div style={{ background: "#fff", borderRadius: 7, border: "1px solid #e8e8e8", padding: "9px 10px", marginBottom: 8 }}>
-						<div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap", marginBottom: 6 }}>
-							<Text style={{ fontSize: 11, fontWeight: 700, color: "#389e0d" }}>S40科技成长｜九重真验证</Text>
-							{s40?.applicability && <Tag color="green" style={{ margin: 0, fontSize: 9 }}>{s40.applicability}</Tag>}
-						</div>
-						<div style={{ fontSize: 10, lineHeight: "16px" }}>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>真赛道：</Text>
-								{s40?.true_track || "-"}
-							</div>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>真技术/真客户：</Text>
-								{s40Moat?.unique || "-"}
-								；
-								{s40Moat?.stronger || "-"}
-							</div>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>真财务：</Text>
-								{s40?.true_finance?.operating_conclusion || "-"}
-							</div>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>真估值：</Text>
-								{s40?.true_valuation || "-"}
-							</div>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>真能力圈：</Text>
-								{s40?.ability_circle || "-"}
-							</div>
-							<div>
-								<Text strong style={{ fontSize: 10 }}>最终判断：</Text>
-								{s40?.conclusion || "-"}
-							</div>
-						</div>
-					</div>
-
-					<div style={{ background: "#fff", borderRadius: 7, border: "1px solid #ffe7ba", padding: "9px 10px", marginBottom: 8 }}>
-						<div style={{ fontSize: 10, lineHeight: "16px", marginBottom: 4 }}>
-							<Text strong style={{ fontSize: 10, color: "#d46b08" }}>触发条件：</Text>
-							{joinText(v231?.triggers || s40?.triggers)}
-						</div>
-						<div style={{ fontSize: 10, lineHeight: "16px" }}>
-							<Text strong style={{ fontSize: 10, color: "#cf1322" }}>失效条件：</Text>
-							{joinText(v231?.invalidations || s40?.failure_conditions)}
-						</div>
-					</div>
-
-					{skill.sources && skill.sources.length > 0 && (
-						<div style={{ fontSize: 9, lineHeight: "15px", color: "#8c8c8c" }}>
-							数据/来源：
-							{skill.sources.map((source, index) => (
-								<React.Fragment key={`${source.name}-${source.url || source.as_of || "source"}`}>
-									{index > 0 && "、"}
-									{source.url
-										? <a href={source.url} target="_blank" rel="noreferrer">{source.name || "原始来源"}</a>
-										: source.name}
-								</React.Fragment>
-							))}
-						</div>
-					)}
+				<div style={{ marginTop: 8 }}>
+					MA16 乖离：
+					{fmtMetric(t.bias16_pct)}
 				</div>
+			</div>
+			<div style={{ background: "#f0f5ff", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+				<Text strong>量能与关键价位</Text>
+				<div>
+					相对前 5 日均量：
+					{fmtMetric(t.volume_ratio_5, " 倍")}
+					{" "}
+					·
+					{t.volume_label}
+				</div>
+				<div style={{ color: "#8c8c8c" }}>本日完整成交量 ÷ 前 5 日均量，不含本日；不是盘中量比。</div>
+				<div>
+					前 20 日高点：
+					{price(t.resistance_20)}
+				</div>
+				<div>
+					前 5 日低点：
+					{price(t.support_5)}
+				</div>
+				<div>
+					ATR14：
+					{price(t.atr14)}
+				</div>
+				<div>
+					收盘价 − 1.5×ATR：
+					{price(t.atr_reference)}
+				</div>
+				<div style={{ color: "#8c8c8c" }}>高低点均不含本日；ATR 线只作波动风险参考。</div>
+			</div>
+			{t.signals.map(signal => (
+				<div key={signal.name} style={{ borderBottom: "1px solid #f0f0f0", padding: "10px 0" }}>
+					<Text strong>{signal.name}</Text>
+					<Tag style={{ marginLeft: 6 }} color={signal.state === "风险触发" ? "red" : signal.state === "条件成立" ? "blue" : "default"}>{signal.state}</Tag>
+					<div style={{ marginTop: 6 }}>{signal.evidence}</div>
+					<div style={{ marginTop: 6 }}>
+						<Text strong>触发条件：</Text>
+						{signal.trigger}
+					</div>
+					<div style={{ marginTop: 6 }}>
+						<Text strong type="danger">失效条件：</Text>
+						{signal.invalidation}
+					</div>
+				</div>
+			))}
+			{t.warnings.length > 0 && (
+				<div style={{ marginTop: 12, color: "#ad6800" }}>
+					{t.warnings.map(w => (
+						<div key={w}>
+							•
+							{w}
+						</div>
+					))}
+				</div>
+			)}
+			<details style={{ marginTop: 12, color: "#8c8c8c" }}>
+				<summary>方法依据与数据口径</summary>
+				<div>{t.rule_note}</div>
+				<div>
+					行情来源：
+					{t.source}
+				</div>
+				{t.sources.map(source => <div key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.name}</a></div>)}
 			</details>
 		</div>
 	);
@@ -429,11 +191,6 @@ const SkillAnalysisSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ sto
 
 /* ========== Stock Card ========== */
 const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
-	const growthColor = GROWTH_COLORS[stock.growth_type] || "#8c8c8c";
-	// PE 颜色：<15绿 15-30蓝 >30橙
-	const peColor = stock.pe_ttm == null ? "#8c8c8c" : stock.pe_ttm < 15 ? "#52c41a" : stock.pe_ttm < 30 ? "#1890ff" : "#fa8c16";
-	const cashColor = CASH_COLORS[stock.financial_analysis?.cash_flow_quality] || "#8c8c8c";
-
 	return (
 		<Card
 			bordered={false}
@@ -534,7 +291,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						borderRadius: 3,
 					}}
 					>
-						{stock.sector || "未知赛道"}
+						{stock.short_term ? "短线日线解析" : "旧版报告"}
 					</Tag>
 					{stockCurrency(stock) === "HKD" && (
 						<Tag color="cyan" style={{ margin: 0, fontSize: 10 }}>港股 · HKD</Tag>
@@ -544,18 +301,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 							<Tag color="orange" style={{ margin: 0, fontSize: 10 }}>非实时行情</Tag>
 						</Tooltip>
 					)}
-					<Tag style={{
-						margin: 0,
-						background: growthColor,
-						border: "none",
-						color: "#fff",
-						fontSize: 10,
-						borderRadius: 3,
-					}}
-					>
-						{stock.growth_type || "未知"}
-					</Tag>
-					{stock.action_verdict && (
+					{stock.short_term && stock.action_verdict && (
 						<Tag style={{
 							margin: 0,
 							fontSize: 12,
@@ -583,123 +329,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 
 			{/* Body */}
 			<div style={{ padding: "12px 18px" }}>
-				{/* 主营业务 */}
-				<div style={{ marginBottom: 10 }}>
-					<Space size={4} style={{ marginBottom: 4 }}>
-						<BulbOutlined style={{ color: "#faad14", fontSize: 12 }} />
-						<Text style={{ fontSize: 11, color: "#8c8c8c" }}>主营业务</Text>
-					</Space>
-					<div>
-						<Text style={{ fontSize: 12 }}>{stock.main_business || "-"}</Text>
-					</div>
-				</div>
-
-				{/* 财务分析 */}
-				<div style={{
-					background: "#fafafa",
-					borderRadius: 8,
-					padding: "10px 12px",
-					marginBottom: 10,
-				}}
-				>
-					<Space size={4} style={{ marginBottom: 6 }}>
-						<BarChartOutlined style={{ color: "#1890ff", fontSize: 12 }} />
-						<Text style={{ fontSize: 11, fontWeight: 600 }}>财务分析</Text>
-					</Space>
-					<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 12px" }}>
-						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>营收</Text>
-							<div><Text style={{ fontSize: 11 }}>{stock.financial_analysis?.revenue_trend || "-"}</Text></div>
-						</div>
-						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>利润</Text>
-							<div><Text style={{ fontSize: 11 }}>{stock.financial_analysis?.profit_trend || "-"}</Text></div>
-						</div>
-						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>PE(TTM)</Text>
-							<div>
-								<Text style={{ fontSize: 11, color: peColor, fontWeight: 600 }}>
-									{stock.pe_ttm != null ? stock.pe_ttm.toFixed(1) : "-"}
-								</Text>
-							</div>
-						</div>
-						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>市值</Text>
-							<div>
-								<Text style={{ fontSize: 11, color: "#d46b08", fontWeight: 600 }}>
-									{stock.total_market_cap || "-"}
-								</Text>
-							</div>
-						</div>
-						<div>
-							<Text type="secondary" style={{ fontSize: 10 }}>现金流</Text>
-							<div>
-								<Text style={{ fontSize: 11, color: cashColor, fontWeight: 600 }}>
-									{stock.financial_analysis?.cash_flow_quality || "-"}
-								</Text>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				{/* 护城河 */}
-				<div style={{ marginBottom: 10 }}>
-					<Space size={4} style={{ marginBottom: 4 }}>
-						<SafetyCertificateOutlined style={{ color: "#722ed1", fontSize: 12 }} />
-						<Text style={{ fontSize: 11, color: "#8c8c8c" }}>护城河</Text>
-					</Space>
-					<div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-						<Tag color="purple" style={{ margin: 0, fontSize: 11 }}>
-							{MOAT_ICONS[stock.moat] || "🏰"}
-							{" "}
-							{stock.moat || "未知"}
-						</Tag>
-					</div>
-					<Paragraph style={{ fontSize: 11, color: "#595959", margin: "4px 0 0" }} ellipsis={{ rows: 2 }}>
-						{stock.moat_detail || ""}
-					</Paragraph>
-				</div>
-
-				{/* 成长性 */}
-				<div style={{ marginBottom: 10 }}>
-					<Space size={4} style={{ marginBottom: 4 }}>
-						<ExperimentOutlined style={{ color: "#52c41a", fontSize: 12 }} />
-						<Text style={{ fontSize: 11, color: "#8c8c8c" }}>成长性依据</Text>
-					</Space>
-					<div>
-						<Text style={{ fontSize: 11 }}>{stock.growth_evidence || "-"}</Text>
-					</div>
-				</div>
-
-				{/* 7日走势 */}
-				<div style={{ marginBottom: 10 }}>
-					<Space size={4} style={{ marginBottom: 4 }}>
-						<LineChartOutlined style={{ color: "#1890ff", fontSize: 12 }} />
-						<Text style={{ fontSize: 11, color: "#8c8c8c" }}>近7日走势</Text>
-					</Space>
-					<div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-						<MiniSparkline prices={stock.prices_7d} />
-						<Text style={{ fontSize: 11 }}>{stock.price_analysis || ""}</Text>
-					</div>
-				</div>
-
-				{/* 风险因素 */}
-				{stock.risk_factors && stock.risk_factors.length > 0 && (
-					<div style={{ marginBottom: 10 }}>
-						<Space size={4} style={{ marginBottom: 4 }}>
-							<WarningOutlined style={{ color: "#faad14", fontSize: 12 }} />
-							<Text style={{ fontSize: 11, color: "#8c8c8c" }}>风险因素</Text>
-						</Space>
-						<div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-							{stock.risk_factors.map(f => (
-								<Tag key={`risk-${f}`} color="warning" style={{ margin: 0, fontSize: 10, borderRadius: 3 }}>{f}</Tag>
-							))}
-						</div>
-					</div>
-				)}
-
-				{/* 三套自研框架产出：增量展示，不改动原有分析区域 */}
-				<SkillAnalysisSection stock={stock} />
+				<ShortTermSection stock={stock} />
 			</div>
 
 			{/* Footer: 操作指导 */}
@@ -720,9 +350,9 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 					lineHeight: "18px",
 				}}
 				>
-					{stock.operation_guidance || "暂无指导"}
+					{stock.short_term?.guidance || "重新分析后查看短线触发与失效条件"}
 				</Paragraph>
-				{stock.verdict_reason && (
+				{stock.short_term && stock.verdict_reason && (
 					<div style={{ marginTop: 6, padding: "6px 10px", background: "rgba(255,255,255,0.06)", borderRadius: 6, borderLeft: "3px solid #a78bfa" }}>
 						<Text style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: "16px" }}>{stock.verdict_reason}</Text>
 					</div>
@@ -901,7 +531,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 							<Text style={{ color: "#fff", fontSize: 18, fontWeight: 700 }}>整体持仓分析</Text>
 							<div>
 								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>
-									基于理杏仁财务数据 + AI 深度分析
+									日线价量计算 · 均线趋势 / 量价确认 / ATR 风险
 								</Text>
 							</div>
 						</div>
@@ -1076,7 +706,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 				<Card bordered={false} style={{ borderRadius: 12, marginTop: 16, textAlign: "center", padding: 40 }}>
 					<Spin size="large" />
 					<div style={{ marginTop: 16 }}>
-						<Text type="secondary">正在生成持仓分析（获取财务数据 + AI 分析），请稍候...</Text>
+						<Text type="secondary">正在生成短线解析（获取日线 + 计算量价指标），请稍候...</Text>
 					</div>
 					<Progress percent={99} status="active" showInfo={false} style={{ maxWidth: 300, margin: "16px auto 0" }} />
 				</Card>

@@ -1212,7 +1212,34 @@ export interface PortfolioStockSkillAnalysis {
 	}>
 }
 
+export interface PortfolioShortTermAnalysis {
+	version: string
+	timeframe: string
+	as_of: string | null
+	source: string
+	adjustment: string
+	bar_count: number
+	status: "ready" | "stale" | "invalid" | "insufficient"
+	stale: boolean
+	close: number | null
+	moving_averages: Array<{ period: number, value: number | null, position: string, slope: string }>
+	volume_ratio_5: number | null
+	volume_label: string
+	bias16_pct: number | null
+	atr14: number | null
+	support_5: number | null
+	resistance_20: number | null
+	atr_reference: number | null
+	signals: Array<{ name: string, state: string, evidence: string, trigger: string, invalidation: string }>
+	warnings: string[]
+	sources: Array<{ name: string, url: string }>
+	verdict: string
+	guidance: string
+	rule_note: string
+}
+
 export interface PortfolioStockAnalysis {
+	short_term?: PortfolioShortTermAnalysis
 	stock_code: string
 	stock_name: string
 	market?: "a" | "hk"
@@ -1266,6 +1293,7 @@ export interface PortfolioStockAnalysis {
 }
 
 export interface PortfolioAnalysisData {
+	analysis_version?: string
 	stocks: PortfolioStockAnalysis[]
 	total: number
 	overall_summary: string
