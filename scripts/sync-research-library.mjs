@@ -14,6 +14,7 @@ export const categories = [
 	{ id: "engineering", title: "系统与工程", description: "产品研究、系统审查与运维记录" },
 ];
 const collections = {
+	"short-drama-playbook": ["短剧创作与盈利", "method", "从选题、剧本、AI漫剧与真人制作到平台发布、推广分销和回款的实操手册。"],
 	"douyin": ["抖音研究资料", "research", "账号概览、收藏汇总、逐条摘要与校验原文。"],
 	"douyin_account_MS4wLjABAAAAuNn_since_20260501": ["抖音账号文字库", "research", "账号视频转写与研究原文。"],
 	"douyin_research_all": ["抖音研究汇总", "research", "跨视频研究汇总与相关资料。"],

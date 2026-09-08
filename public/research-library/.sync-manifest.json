@@ -3781,6 +3781,10 @@
     "server-cleanup-114.55.219.63-20260831/manual-preview.png",
     "server-resource-audit/114.55.219.63-2026-08-31.html",
     "server-resource-audit/114.55.219.63-preview.png",
+    "short-drama-playbook/index.html",
+    "short-drama-playbook/sources.json",
+    "short-drama-playbook/templates/example-project.json",
+    "short-drama-playbook/templates/project-kit.md",
     "skill-list/index.html",
     "skill-list/s-teacher-hotspot-finance-logic-20260831/index.html",
     "skill-list/s-teacher-mind-methodology-20260901/allocation.html",
@@ -7879,6 +7883,10 @@
     "douyin/collections/favorites/videos/209_7663409857688554803.html": "139e916d85e22cfec3c94e28822065e163d9eeaa50cae5d142c7d9461fbc12c6",
     "douyin/collections/favorites/videos/210_7664483703749397779.html": "835599500a84c01c4202bff309b124c3d2ce9cfbd9f92a93e9f3d21387a4f496",
     "douyin/collections/favorites/videos/211_7662971418828737842.html": "83fb8de718b5ccf4061ca482ef5316dd12a2fd17830b8e6b7cdff7a63bf1b228",
-    "douyin/collections/favorites/videos/212_7664456815115078921.html": "a1865b09f2c5b983f7505f73a58eca9a19757555feb8c7e593b341c10477a76c"
+    "douyin/collections/favorites/videos/212_7664456815115078921.html": "a1865b09f2c5b983f7505f73a58eca9a19757555feb8c7e593b341c10477a76c",
+    "short-drama-playbook/index.html": "ce93d6215526dec0f3474d265824d450c0acdf0840c5338a5afdc98455572e39",
+    "short-drama-playbook/sources.json": "4bb00029bcab620a54a9af1707579ddf78cb80c5ef571d23c2afb4e82daceae1",
+    "short-drama-playbook/templates/example-project.json": "373ae1ee87e318ee9a2d7579ca3ab19ccf6cf0b75027d364341f7a83c3657382",
+    "short-drama-playbook/templates/project-kit.md": "b51ce34c13c343bb12858579dc29581af8fc82c1a77ff0e7205527973b11c1c5"
   }
 }

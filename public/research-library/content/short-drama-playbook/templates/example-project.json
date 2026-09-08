@@ -1,0 +1,100 @@
+{
+  "project": "巷口修理铺",
+  "status": "原创教学样例，未制作、未验证商业表现",
+  "format": "AI漫剧",
+  "pilot_seconds": 75,
+  "planned_episodes": 12,
+  "planned_episode_seconds": "60—90",
+  "platform_format_confirmed": false,
+  "budget_assumption_cny": 15000,
+  "characters": [
+    "C01 林禾：修理师",
+    "C02 周姨：顾客",
+    "C03 阿川：学徒"
+  ],
+  "locations": [
+    "S01 修理铺",
+    "S02 门口",
+    "S03 储物间"
+  ],
+  "rights": {
+    "script": "本手册原创示例",
+    "images": "待创作或取得许可",
+    "voice": "待授权",
+    "music": "待授权"
+  },
+  "gates": [
+    {
+      "task": "确定一种起步路线、目标观众和收入来源",
+      "done": false
+    },
+    {
+      "task": "完成20部同类作品观察与立项卡",
+      "done": false
+    },
+    {
+      "task": "确认目标平台接收当前形态及主体",
+      "done": false
+    },
+    {
+      "task": "拿到剧本、IP、人物、声音和素材所需授权",
+      "done": false
+    },
+    {
+      "task": "按新规确认项目分类及申报责任人",
+      "done": false
+    },
+    {
+      "task": "锁定全季结局、大纲及前三集剧本",
+      "done": false
+    },
+    {
+      "task": "完成角色、场景和道具资产表",
+      "done": false
+    },
+    {
+      "task": "样片通过故事、画面、声音和成本验收",
+      "done": false
+    },
+    {
+      "task": "当前合作合同明确收入、扣项、独家及账期",
+      "done": false
+    },
+    {
+      "task": "整季制作未超预算并留有返工余量",
+      "done": false
+    },
+    {
+      "task": "完成字幕、声音、署名和AI标识检查",
+      "done": false
+    },
+    {
+      "task": "取得对应审核通过及许可／批准／编号记录",
+      "done": false
+    },
+    {
+      "task": "逐渠道检查剧集顺序、前台播放及收益设置",
+      "done": false
+    },
+    {
+      "task": "推广授权、任务和归因链路已核验",
+      "done": false
+    },
+    {
+      "task": "自然与付费数据分开记录",
+      "done": false
+    },
+    {
+      "task": "结算单按合同可复算",
+      "done": false
+    },
+    {
+      "task": "票据或结算凭证齐全",
+      "done": false
+    },
+    {
+      "task": "第一笔款项已实际到账并完成复盘",
+      "done": false
+    }
+  ]
+}
