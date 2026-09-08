@@ -23,6 +23,7 @@ import {
 	Col,
 	Empty,
 	message,
+	Popover,
 	Row,
 	Segmented,
 	Space,
@@ -55,12 +56,30 @@ type TrustedDashboardItem = StrategyPerformanceDashboardItem & {
 		data_quality_passed?: boolean | null
 		data_quality_issue_count?: number
 		data_quality_issues?: string[]
+		data_quality_status?: "invalid" | "insufficient_evidence" | "verified" | "no_trades"
+		data_quality_issue_counts?: Record<string, number>
+		missing_execution_evidence_count?: number
+		hard_data_quality_issue_count?: number
+		cash_residual?: number
+		asset_residual?: number
 	}
 	trade: StrategyPerformanceDashboardItem["trade"] & {
 		estimated_net_avg_return_pct?: number
 		estimated_net_recent_return_pct?: number
 		estimated_round_trip_cost_pct?: number
 	}
+};
+
+const AUDIT_ISSUE_LABELS: Record<string, string> = {
+	execution_evidence_missing: "历史交易缺少成交证据",
+	invalid_amount_price_quantity: "成交价格、数量或金额不一致",
+	invalid_direction: "交易方向无效",
+	return_over_80pct: "单笔收益超过 80%，需核验",
+	oversell: "卖出数量超过可核对持仓",
+	same_day_exit: "同日买入卖出",
+	quantity_mismatch: "流水与持仓数量不一致",
+	cash_reconciliation_failed: "账户现金与交易流水不一致",
+	asset_reconciliation_failed: "总资产与现金、持仓市值不一致",
 };
 
 type TrustedDashboard = DashboardData & {
@@ -404,20 +423,55 @@ export default function StrategyPerformanceDashboard() {
 			width: 180,
 			render: (_, item) => {
 				const trust = TRUST_LABELS[item.trust_status] || TRUST_LABELS.observe;
-				const detail = item.trust_failures?.length
-					? item.trust_failures.join("；")
-					: item.trust_reason;
+				const paper = item.paper_validation;
+				const detail = (
+					<Space direction="vertical" style={{ maxWidth: 360 }}>
+						<Text strong>准入检查</Text>
+						{(item.trust_failures?.length ? item.trust_failures : [item.trust_reason]).map(reason => <Text key={reason}>{reason}</Text>)}
+						{Object.entries(paper?.data_quality_issue_counts || {}).map(([code, count]) => (
+							<Text key={code}>
+								{AUDIT_ISSUE_LABELS[code] || code}
+								：
+								{count}
+								{" "}
+								项
+							</Text>
+						))}
+						{paper?.cash_residual !== undefined && Math.abs(paper.cash_residual) > 0.02 && (
+							<Text>
+								现金核对差额：
+								{paper.cash_residual.toFixed(2)}
+								{" "}
+								元
+							</Text>
+						)}
+						{paper?.asset_residual !== undefined && Math.abs(paper.asset_residual) > 0.02 && (
+							<Text>
+								资产核对差额：
+								{paper.asset_residual.toFixed(2)}
+								{" "}
+								元
+							</Text>
+						)}
+						<Text type="secondary">保留原始记录；历史证据不足需积累可核验的前向交易，账务异常需先核对原始成交与资金流水。分数不代表胜率或跟投资格。</Text>
+					</Space>
+				);
 				return (
 					<Space direction="vertical" size={2}>
 						<Space size={4}>
 							<Tag color={trust.color}>{trust.label}</Tag>
-							<Text strong>{item.trust_score.toFixed(1)}</Text>
+							<Tooltip title="可信度评分（0–100），不是胜率">
+								<Text strong>
+									{item.trust_score.toFixed(1)}
+									{" "}
+									分
+								</Text>
+							</Tooltip>
 						</Space>
-						<Tooltip title={detail}>
-							<Text type="secondary" ellipsis style={{ width: 150, fontSize: 12 }}>
-								{item.trust_reason}
-							</Text>
-						</Tooltip>
+						<Text type="secondary" style={{ width: 170, fontSize: 12, whiteSpace: "normal" }}>{item.trust_reason}</Text>
+						<Popover content={detail} title="跟投条件与账户核验" trigger="click">
+							<Button type="link" size="small" style={{ padding: 0 }}>查看原因与恢复条件</Button>
+						</Popover>
 					</Space>
 				);
 			},
@@ -518,8 +572,8 @@ export default function StrategyPerformanceDashboard() {
 				return (
 					<Space direction="vertical" size={2}>
 						<Space size={4}>
-							<Tag color={paper.data_quality_passed ? "green" : "red"}>
-								{paper.data_quality_passed ? "数据通过" : "数据异常"}
+							<Tag color={paper.data_quality_status === "insufficient_evidence" ? "gold" : paper.data_quality_status === "no_trades" || paper.data_quality_passed == null ? "default" : paper.data_quality_passed ? "green" : "red"}>
+								{paper.data_quality_status === "insufficient_evidence" ? "证据不足" : paper.data_quality_status === "no_trades" ? "尚无实测交易" : paper.data_quality_passed == null ? "待核验" : paper.data_quality_passed ? "数据通过" : "数据异常"}
 							</Tag>
 							<Text style={{ color: returnColor(paper.account_return_pct) }}>
 								{formatPct(paper.account_return_pct)}
@@ -529,7 +583,7 @@ export default function StrategyPerformanceDashboard() {
 							回撤
 							{" "}
 							{formatPct(paper.max_drawdown_pct)}
-							{" · 干净前向 "}
+							{" · 已验证交易日 "}
 							{paper.clean_forward_days ?? 0}
 							天
 						</Text>
