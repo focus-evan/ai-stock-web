@@ -32,6 +32,8 @@ import {
 } from "antd";
 import ReactECharts from "echarts-for-react";
 
+import { strategyExecutionStatus } from "./strategy-status";
+
 const { Text } = Typography;
 
 // ===================== 策略配置 =====================
@@ -399,6 +401,7 @@ export default function Home() {
 					{strategySummary.map((s: any) => {
 						const cfg = STRATEGY_CONFIG[s.strategy_type] || {};
 						const sPositions: any[] = s.positions || [];
+						const executionStatus = strategyExecutionStatus(s);
 						return (
 							<Col xs={24} md={8} key={s.strategy_type}>
 								<Card
@@ -414,8 +417,8 @@ export default function Home() {
 											<Text strong style={{ fontSize: 15 }}>{cfg.label}</Text>
 										</Space>
 										<Badge
-											status={s.auto_trade ? "processing" : "default"}
-											text={<Text type="secondary" style={{ fontSize: 12 }}>{s.auto_trade ? "自动交易中" : "已暂停"}</Text>}
+											status={executionStatus.status}
+											text={<Text type="secondary" style={{ fontSize: 12 }}>{executionStatus.text}</Text>}
 										/>
 									</div>
 									<Row gutter={[8, 8]}>
@@ -433,7 +436,7 @@ export default function Home() {
 												title="总收益"
 												value={s.total_profit}
 												precision={0}
-												prefix={s.total_profit >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+												prefix={s.total_profit > 0 ? <ArrowUpOutlined /> : s.total_profit < 0 ? <ArrowDownOutlined /> : null}
 												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.total_profit) }}
 											/>
 										</Col>
@@ -442,7 +445,7 @@ export default function Home() {
 												title="今日收益"
 												value={s.daily_profit || 0}
 												precision={0}
-												prefix={(s.daily_profit || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+												prefix={s.daily_profit > 0 ? <ArrowUpOutlined /> : s.daily_profit < 0 ? <ArrowDownOutlined /> : null}
 												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.daily_profit || 0) }}
 											/>
 										</Col>
@@ -597,6 +600,9 @@ export default function Home() {
 										}}
 										>
 											<Text type="secondary" style={{ fontSize: 12 }}>暂无持仓</Text>
+											{!s.last_actual_trade_at && !s.last_actual_trade_date && Number(s.total_profit || 0) === 0 && (
+												<div style={{ marginTop: 4, fontSize: 11, color: "#8c8c8c" }}>尚无实时模拟成交，收益样本为空</div>
+											)}
 										</div>
 									)}
 								</Card>
