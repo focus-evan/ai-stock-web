@@ -424,7 +424,7 @@ export default function EmotionRelayPage() {
 				},
 				{
 					key: "follow",
-					label: "结果跟踪",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType={"emotion_relay" as any} isOvernight={false} />,
 				},
 			]}

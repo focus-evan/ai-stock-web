@@ -1182,7 +1182,7 @@ export default function EventDriven() {
 				},
 				{
 					key: "follow",
-					label: "推荐跟进",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType="event_driven" isOvernight={false} />,
 				},
 			]}

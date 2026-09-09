@@ -741,7 +741,7 @@ export default function DragonHead() {
 				},
 				{
 					key: "follow",
-					label: "结果跟踪",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType="dragon_head" isOvernight={false} />,
 				},
 			]}

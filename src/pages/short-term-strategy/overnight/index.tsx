@@ -704,7 +704,7 @@ const OvernightPage: React.FC = () => {
 				},
 				{
 					key: "follow",
-					label: "推荐跟踪",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType="overnight" isOvernight={true} />,
 				},
 			]}

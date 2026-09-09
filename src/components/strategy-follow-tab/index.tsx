@@ -11,6 +11,7 @@ import {
 	triggerStrategyAutoFollow,
 	triggerStrategyFollowSnapshot,
 } from "#src/api/strategy";
+import StrategyTradeJournal from "#src/components/strategy-trade-journal";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -35,6 +36,7 @@ import {
 	Space,
 	Spin,
 	Statistic,
+	Tabs,
 	Tag,
 	Timeline,
 	Typography,
@@ -55,7 +57,7 @@ interface Props {
 	isOvernight?: boolean
 }
 
-export default function StrategyFollowTab({ strategyType, title, isOvernight = false }: Props) {
+function RecommendationFollowTab({ strategyType, title, isOvernight = false }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [autoAddLoading, setAutoAddLoading] = useState(false);
 	const [snapshotLoading, setSnapshotLoading] = useState(false);
@@ -190,8 +192,8 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 	const isDragonHead = strategyType === "dragon_head";
 	const autoAddButtonLabel = isDragonHead
 		? "同步可执行信号"
-		: "同步交易/推荐跟进";
-	const countTitle = followTypeFilter === "watch" ? "推荐跟进数" : "交易跟进数";
+		: "同步推荐跟进";
+	const countTitle = followTypeFilter === "watch" ? "推荐跟进数" : "可执行推荐数";
 	const overallReturnTitle = "固定周期信号平均收益";
 	const winsTitle = "成熟信号盈利数";
 	const winRateTitle = followTypeFilter === "watch" ? "固定周期观察上涨率" : "固定周期推荐胜率";
@@ -215,7 +217,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 						<Tag color="blue">自动择优持续跟进</Tag>
 					)}
 					<Tag color="red">
-						交易：
+						可执行推荐：
 						{summary?.trade_count ?? allItems.filter(item => item.follow_type !== "watch").length}
 					</Tag>
 					<Tag color="gold">
@@ -254,12 +256,12 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 						value={followTypeFilter}
 						onChange={value => setFollowTypeFilter(value as "trade" | "watch")}
 						options={[
-							{ label: "交易跟进", value: "trade" },
+							{ label: "可执行推荐", value: "trade" },
 							{ label: "推荐跟进", value: "watch" },
 						]}
 					/>
 					<Text type="secondary">
-						交易跟进单独计算交易胜率；推荐跟进记录尚未成交、仍待条件触发的候选，两类收益不混算
+						可执行推荐和观察推荐分别跟踪信号表现，买卖成交记录可在交易跟进中查看
 					</Text>
 				</Space>
 			</div>
@@ -282,7 +284,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 			</Row>
 
 			{items.length === 0
-				? <Empty description={followTypeFilter === "watch" ? "暂无推荐跟进数据" : isDragonHead ? "暂无可执行交易信号" : "暂无交易跟进数据"} />
+				? <Empty description={followTypeFilter === "watch" ? "暂无推荐跟进数据" : isDragonHead ? "暂无可执行交易信号" : "暂无可执行推荐数据"} />
 				: (
 					<Row gutter={[12, 12]}>
 						{items.map((item) => {
@@ -300,14 +302,14 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 											</div>
 											<Space size={4}>
 												<Tag color={item.follow_type === "watch" ? "gold" : "red"}>
-													{item.follow_type === "watch" ? "推荐跟进" : "交易跟进"}
+													{item.follow_type === "watch" ? "推荐跟进" : "可执行推荐"}
 												</Tag>
 												<Tag color={item.recommendation_level === "强烈推荐" ? "red" : item.recommendation_level === "关注" ? "gold" : "blue"}>{item.recommendation_level}</Tag>
 											</Space>
 										</div>
 										<div style={{ marginTop: 8, display: "flex", justifyContent: "space-between" }}>
 											<Text type="secondary" style={{ fontSize: 12 }}>
-												{isOvernight ? "次日收益" : item.follow_type === "watch" ? "推荐后涨跌" : "交易后收益"}
+												{isOvernight ? "次日收益" : item.follow_type === "watch" ? "推荐后涨跌" : "信号后涨跌"}
 											</Text>
 											<Text strong style={{ color: isUp ? "#cf1322" : hasReturn && returnVal < 0 ? "#389e0d" : undefined }}>
 												{hasReturn
@@ -316,7 +318,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 											</Text>
 										</div>
 										<div style={{ marginTop: 4, display: "flex", justifyContent: "space-between" }}>
-											<Text type="secondary" style={{ fontSize: 12 }}>{item.follow_type === "watch" ? "推荐价" : "交易信号价"}</Text>
+											<Text type="secondary" style={{ fontSize: 12 }}>{item.follow_type === "watch" ? "推荐价" : "信号参考价"}</Text>
 											<Text style={{ fontSize: 12 }}>{item.pick_price.toFixed(2)}</Text>
 										</div>
 										{!isOvernight && item.latest_price && (
@@ -396,7 +398,7 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 								<Text type="secondary">跟进类型</Text>
 								<br />
 								<Tag color={detailItem.follow_type === "watch" ? "gold" : "red"}>
-									{detailItem.follow_type === "watch" ? "推荐跟进" : "交易跟进"}
+									{detailItem.follow_type === "watch" ? "推荐跟进" : "可执行推荐"}
 								</Tag>
 							</Col>
 							<Col span={12}>
@@ -486,5 +488,17 @@ export default function StrategyFollowTab({ strategyType, title, isOvernight = f
 				)}
 			</Drawer>
 		</Spin>
+	);
+}
+
+export default function StrategyFollowTab(props: Props) {
+	return (
+		<Tabs
+			defaultActiveKey="trades"
+			items={[
+				{ key: "trades", label: "交易跟进", children: <StrategyTradeJournal key={props.strategyType} strategyType={props.strategyType} /> },
+				{ key: "recommendations", label: "推荐跟进", children: <RecommendationFollowTab {...props} /> },
+			]}
+		/>
 	);
 }

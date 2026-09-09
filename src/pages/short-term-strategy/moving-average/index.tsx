@@ -479,7 +479,7 @@ const MovingAveragePage: React.FC = () => {
 				},
 				{
 					key: "follow",
-					label: "推荐跟进",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType="moving_average" isOvernight={false} />,
 				},
 			]}

@@ -462,7 +462,7 @@ const VolumePricePage: React.FC = () => {
 				},
 				{
 					key: "follow",
-					label: "推荐跟进",
+					label: "交易跟进",
 					children: <StrategyFollowTab strategyType="volume_price" isOvernight={false} />,
 				},
 			]}

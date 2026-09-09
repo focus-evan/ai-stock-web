@@ -1793,3 +1793,45 @@ export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType)
 		})
 		.json<{ status: string, data?: { updated: number }, message: string }>();
 }
+
+export type StrategyTradeStatus = "all" | "holding" | "closed" | "incomplete";
+export interface StrategyTradeExecution {
+	trade_id: number
+	direction: "buy" | "sell"
+	date: string | null
+	price: number | null
+	quantity: number | null
+	reason: string | null
+}
+export interface StrategyTradeCycle {
+	id: string
+	portfolio_id: number
+	portfolio_name: string
+	portfolio_status: string
+	stock_code: string
+	stock_name: string
+	status: "holding" | "partial" | "closed" | "incomplete"
+	buy_date: string | null
+	buy_reason: string | null
+	buy_price: number | null
+	sell_date: string | null
+	sell_price: number | null
+	sell_reason: string | null
+	buy_count: number
+	sell_count: number
+	remaining_quantity: number | null
+	issues: string[]
+	executions: StrategyTradeExecution[]
+}
+export interface StrategyTradeJournalData {
+	items: StrategyTradeCycle[]
+	total: number
+	strategy_type: StrategyFollowType
+	summary: { total: number, holding: number, closed: number, incomplete: number, excluded_reconstruction_count: number }
+}
+export function fetchStrategyTradeJournal(strategyType: StrategyFollowType, status: StrategyTradeStatus = "all", limit = 20, offset = 0) {
+	return request.get("strategy/trade-journal", {
+		searchParams: { strategy_type: strategyType, status, limit, offset },
+		timeout: 15000,
+	}).json<{ status: string, message?: string, data: StrategyTradeJournalData | null }>();
+}
