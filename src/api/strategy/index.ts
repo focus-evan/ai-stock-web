@@ -1795,6 +1795,7 @@ export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType)
 }
 
 export type StrategyTradeStatus = "all" | "holding" | "closed" | "incomplete";
+export type StrategyTradeVerification = "verified" | "unverified" | "anomalous";
 export interface StrategyTradeExecution {
 	trade_id: number
 	direction: "buy" | "sell"
@@ -1802,6 +1803,8 @@ export interface StrategyTradeExecution {
 	price: number | null
 	quantity: number | null
 	reason: string | null
+	verification_status: StrategyTradeVerification
+	verification_issue: string | null
 }
 export interface StrategyTradeCycle {
 	id: string
@@ -1817,6 +1820,11 @@ export interface StrategyTradeCycle {
 	sell_date: string | null
 	sell_price: number | null
 	sell_reason: string | null
+	buy_quantity: number | null
+	sell_quantity: number | null
+	verification_status: StrategyTradeVerification
+	verification_issues: string[]
+	performance_eligible: boolean
 	buy_count: number
 	sell_count: number
 	remaining_quantity: number | null
@@ -1827,7 +1835,7 @@ export interface StrategyTradeJournalData {
 	items: StrategyTradeCycle[]
 	total: number
 	strategy_type: StrategyFollowType
-	summary: { total: number, holding: number, closed: number, incomplete: number, excluded_reconstruction_count: number }
+	summary: { total: number, holding: number, closed: number, incomplete: number, unverified: number, anomalous: number, excluded_reconstruction_count: number }
 }
 export function fetchStrategyTradeJournal(strategyType: StrategyFollowType, status: StrategyTradeStatus = "all", limit = 20, offset = 0) {
 	return request.get("strategy/trade-journal", {
