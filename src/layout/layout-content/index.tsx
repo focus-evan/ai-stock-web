@@ -1,5 +1,6 @@
 import { GlobalSpin } from "#src/components/global-spin";
 import { Scrollbar } from "#src/components/scrollbar";
+import ShortTermTradeAlerts from "#src/components/short-term-trade-alerts";
 import { useLayoutContentStyle } from "#src/hooks/use-layout-style";
 import { CSS_VARIABLE_LAYOUT_CONTENT_HEIGHT, ELEMENT_ID_MAIN_CONTENT } from "#src/layout/constants";
 import LayoutFooter from "#src/layout/layout-footer";
@@ -108,6 +109,7 @@ export default function LayoutContent() {
 					<div
 						className="flex flex-col h-full"
 					>
+						<ShortTermTradeAlerts pathname={pathname} />
 						<div
 							style={{
 								height: `var(${CSS_VARIABLE_LAYOUT_CONTENT_HEIGHT})`,
