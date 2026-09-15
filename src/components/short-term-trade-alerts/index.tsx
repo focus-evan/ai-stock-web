@@ -3,6 +3,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { useQueries } from "@tanstack/react-query";
 import { Alert, Button, Space, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
+import StrategyBuyAlerts from "../strategy-buy-alerts";
 import { beijingTradeDate, loadTacticTradeCycles, SHORT_TERM_TACTICS, showTradeAlertsOnPath, todayTradeAlerts } from "./data";
 
 const { Text } = Typography;
@@ -120,5 +121,7 @@ export default function ShortTermTradeAlerts({ pathname }: { pathname: string })
 	const userId = useUserStore(state => state.id);
 	if (!userId || !showTradeAlertsOnPath(pathname))
 		return null;
+	if (pathname === "/home")
+		return <StrategyBuyAlerts key={userId} userId={userId} />;
 	return <LiveTradeAlerts key={userId} userId={userId} />;
 }

@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import ShortTermTradeAlerts from "../src/components/short-term-trade-alerts";
 import { beijingTradeDate, loadTacticTradeCycles, SHORT_TERM_TACTICS, todayTradeAlerts } from "../src/components/short-term-trade-alerts/data";
 
-vi.mock("#src/api/strategy", () => ({ fetchStrategyTradeJournal: vi.fn() }));
+vi.mock("#src/api/strategy", () => ({ fetchStrategyTradeJournal: vi.fn(), fetchTodayStrategyBuys: vi.fn() }));
 const fetchJournal = vi.mocked(fetchStrategyTradeJournal);
 let clients: QueryClient[] = [];
 const day = "2026-09-10";
@@ -41,7 +41,7 @@ function cycle(id = 1): StrategyTradeCycle {
 function response(items: StrategyTradeCycle[] = [], total = items.length) {
 	return { status: "success", data: { items, total, strategy_type: "a_share_leader_tactics" as const, summary: { total, holding: total, closed: 0, incomplete: 0, unverified: 0, anomalous: 0, excluded_reconstruction_count: 0 } } };
 }
-function mount(pathname = "/home") {
+function mount(pathname = "/short-term-strategy/skill-tactics") {
 	const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 	clients.push(client);
 	return render(<QueryClientProvider client={client}><ShortTermTradeAlerts pathname={pathname} /></QueryClientProvider>);

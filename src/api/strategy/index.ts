@@ -1843,3 +1843,49 @@ export function fetchStrategyTradeJournal(strategyType: StrategyFollowType, stat
 		timeout: 15000,
 	}).json<{ status: string, message?: string, data: StrategyTradeJournalData | null }>();
 }
+
+export interface StrategyBuyAlert {
+	trade_id: number
+	portfolio_id: number
+	portfolio_name: string
+	strategy_type: StrategyFollowType
+	stock_code: string
+	stock_name: string
+	buy_date: string
+	bought_at: string
+	buy_price: number | null
+	buy_quantity: number | null
+	buy_lots: number | null
+	buy_reason: string | null
+	verification_status: StrategyTradeVerification
+	verification_issue: string | null
+	follow: {
+		status: "consider" | "wait" | "avoid" | "unknown"
+		label: string
+		reasons: string[]
+		assessed_at: string
+		expires_at: string
+		signal_at: string | null
+		quote_at: string | null
+		current_price: number | null
+		entry_price: number | null
+		price_change_from_buy_pct: number | null
+		entry_zone_low: number | null
+		entry_zone_high: number | null
+		target_price: number | null
+		stop_loss_price: number | null
+		risk_reward_ratio: number | null
+	}
+}
+export interface TodayStrategyBuys {
+	trading_date: string
+	as_of: string
+	items: StrategyBuyAlert[]
+	total: number
+	warnings: string[]
+	strategy_count: number
+}
+export function fetchTodayStrategyBuys(signal?: AbortSignal) {
+	return request.get("strategy/today-buys", { signal, timeout: 25000 })
+		.json<{ status: string, data: TodayStrategyBuys | null, message?: string }>();
+}
