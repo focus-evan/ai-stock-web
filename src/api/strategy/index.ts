@@ -1875,6 +1875,31 @@ export interface StrategyBuyAlert {
 		target_price: number | null
 		stop_loss_price: number | null
 		risk_reward_ratio: number | null
+		strategy_performance: {
+			strategy_family: string | null
+			settlement_label: string | null
+			entry_buffer_pct: number | null
+			min_risk_reward_ratio: number | null
+			sample_count: number
+			forward_sample_count: number
+			win_rate_pct: number | null
+			win_rate_ci95_pct: [number, number] | null
+			break_even_win_rate_pct: number | null
+			win_rate_edge_pct: number | null
+			win_rate_gate_passed: boolean
+			recent_sample_count: number
+			recent_win_rate_pct: number | null
+			avg_return_pct: number | null
+			estimated_net_avg_return_pct: number | null
+			profit_factor: number | null
+			quality_score: number | null
+			confidence_level: "high" | "medium" | "low" | null
+			trust_status: "trusted" | "canary" | "observe" | "disabled" | null
+			trust_score: number | null
+			trust_reason: string | null
+			trust_failures: string[]
+			follow_allowed: boolean
+		}
 	}
 }
 export interface TodayStrategyBuys {

@@ -26,7 +26,24 @@ function item(id = 1): StrategyBuyAlert {
 		buy_reason: "事件催化，成交盘口确认",
 		verification_status: "verified",
 		verification_issue: null,
-		follow: { status: "consider", label: "可考虑跟投", reasons: ["价格与风控通过"], assessed_at: `${day}T10:00:00+08:00`, expires_at: `${day}T10:00:30+08:00`, signal_at: null, quote_at: null, current_price: null, entry_price: null, price_change_from_buy_pct: null, entry_zone_low: null, entry_zone_high: null, target_price: null, stop_loss_price: null, risk_reward_ratio: null },
+		follow: {
+			status: "consider",
+			label: "可考虑跟投",
+			reasons: ["价格、战法综合表现与风控通过"],
+			assessed_at: `${day}T10:00:00+08:00`,
+			expires_at: `${day}T10:00:30+08:00`,
+			signal_at: null,
+			quote_at: null,
+			current_price: null,
+			entry_price: null,
+			price_change_from_buy_pct: null,
+			entry_zone_low: null,
+			entry_zone_high: null,
+			target_price: null,
+			stop_loss_price: null,
+			risk_reward_ratio: null,
+			strategy_performance: { strategy_family: "catalyst", settlement_label: "第5个交易日收盘", entry_buffer_pct: 1.4, min_risk_reward_ratio: 1.1, sample_count: 120, forward_sample_count: 80, win_rate_pct: 62.5, win_rate_ci95_pct: [53.6, 70.7], break_even_win_rate_pct: 40, win_rate_edge_pct: 22.5, win_rate_gate_passed: true, recent_sample_count: 10, recent_win_rate_pct: 70, avg_return_pct: 1.5, estimated_net_avg_return_pct: 1.25, profit_factor: 1.5, quality_score: 72.5, confidence_level: "high", trust_status: "trusted", trust_score: 86, trust_reason: "已通过可信跟投硬门槛", trust_failures: [], follow_allowed: true },
+		},
 	};
 }
 function response(items: StrategyBuyAlert[] = [], trading_date = day) {
@@ -63,6 +80,10 @@ it("highlights any strategy with original price, fractional lots, shares and rea
 	expect(screen.getByText("买入 2.01 手（201 股）")).toBeInTheDocument();
 	expect(screen.getByText("买入价格 ¥10.1250")).toHaveStyle({ color: "#cf1322", fontWeight: "800" });
 	expect(screen.getByText("事件催化，成交盘口确认")).toBeInTheDocument();
+	expect(screen.getByText(/事件催化 · 第5个交易日收盘 · 最大追价 1.40% · 最低盈亏比 1.10/)).toBeInTheDocument();
+	expect(screen.getByText("固定周期胜率 62.50% · 近10笔胜率 70.00% · 综合质量分 72.5")).toBeInTheDocument();
+	expect(screen.getByText("该战法保本胜率 40.00% · 胜率安全边际 +22.50个百分点")).toBeInTheDocument();
+	expect(screen.getByText(/成熟样本 120 笔（前向 80 笔） · 胜率95%区间 53.6%–70.7%/)).toBeInTheDocument();
 	expect(screen.getByText("可考虑跟投")).toBeInTheDocument();
 });
 it("finds new buys on the next poll and preserves each fill", async () => {

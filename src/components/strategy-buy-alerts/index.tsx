@@ -24,8 +24,25 @@ const names: Record<StrategyFollowType, string> = {
 };
 const { Text } = Typography;
 const price = (value: number | null) => value == null || !Number.isFinite(value) ? "未记录" : `¥${value.toFixed(4)}`;
+const percent = (value: number | null) => value == null || !Number.isFinite(value) ? "未验证" : `${value.toFixed(2)}%`;
 const stamp = (value: string | null) => value ? value.replace("T", " ").replace(/(?:\.\d+)?\+08:00$/, "") : "未记录";
 const red = { color: "#cf1322", fontSize: "clamp(22px, 2.3vw, 32px)", fontWeight: 800, lineHeight: 1.5 };
+const familyNames: Record<string, string> = {
+	high_beta_sentiment: "高弹性情绪/龙头",
+	first_board: "首板次日套利",
+	overnight: "隔夜尾盘确认",
+	trend_structure: "趋势结构",
+	catalyst: "事件催化",
+	capital_flow: "资金流",
+	blended: "多战法综合",
+	generic: "通用",
+};
+const trustNames: Record<string, string> = {
+	trusted: "可信跟投",
+	canary: "小仓验证",
+	observe: "仅观察",
+	disabled: "暂停跟投",
+};
 
 function BuyCard({ item, now, unavailable }: { item: StrategyBuyAlert, now: number, unavailable: boolean }) {
 	const follow = item.follow;
@@ -34,6 +51,7 @@ function BuyCard({ item, now, unavailable }: { item: StrategyBuyAlert, now: numb
 	const stale = unavailable || expired;
 	const label = stale ? "等待刷新确认" : follow.label;
 	const quantity = item.buy_quantity;
+	const performance = follow.strategy_performance;
 	const lots = quantity == null ? "未记录" : `${(quantity / 100).toLocaleString("zh-CN", { maximumFractionDigits: 2 })} 手（${quantity.toLocaleString("zh-CN")} 股）`;
 	return (
 		<article style={{ padding: 16, background: "#fff", border: "1px solid #ffa39e", borderRadius: 10, minWidth: 0, overflowWrap: "anywhere" }}>
@@ -47,6 +65,30 @@ function BuyCard({ item, now, unavailable }: { item: StrategyBuyAlert, now: numb
 			</div>
 			{item.verification_status !== "verified" && <Alert style={{ marginTop: 8 }} type="warning" showIcon message="成交数据待核验" description={item.verification_issue || "缺少完整原始成交证据"} />}
 			<div style={{ marginTop: 14, padding: 12, background: "#fafafa", borderRadius: 8 }}>
+				<div style={{ paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid #e8e8e8" }}>
+					<Text strong>战法特点：</Text>
+					<div>
+						{familyNames[performance.strategy_family || ""] || performance.strategy_family || "未记录"}
+						{performance.settlement_label ? ` · ${performance.settlement_label}` : ""}
+						{performance.entry_buffer_pct == null ? "" : ` · 最大追价 ${performance.entry_buffer_pct.toFixed(2)}%`}
+						{performance.min_risk_reward_ratio == null ? "" : ` · 最低盈亏比 ${performance.min_risk_reward_ratio.toFixed(2)}`}
+					</div>
+					<div style={{ marginTop: 6 }}><Text strong>战法综合表现：</Text></div>
+					<div>
+						{`固定周期胜率 ${percent(performance.win_rate_pct)} · 近${performance.recent_sample_count}笔胜率 ${percent(performance.recent_win_rate_pct)} · 综合质量分 ${performance.quality_score?.toFixed(1) ?? "未验证"}`}
+					</div>
+					<div>
+						{`该战法保本胜率 ${percent(performance.break_even_win_rate_pct)} · 胜率安全边际 ${performance.win_rate_edge_pct == null ? "未验证" : `${performance.win_rate_edge_pct >= 0 ? "+" : ""}${performance.win_rate_edge_pct.toFixed(2)}个百分点`}`}
+					</div>
+					<div>
+						{`成熟样本 ${performance.sample_count} 笔（前向 ${performance.forward_sample_count} 笔）`}
+						{performance.win_rate_ci95_pct ? ` · 胜率95%区间 ${performance.win_rate_ci95_pct[0].toFixed(1)}%–${performance.win_rate_ci95_pct[1].toFixed(1)}%` : ""}
+					</div>
+					<div>
+						{`成本后平均收益 ${percent(performance.estimated_net_avg_return_pct)} · 盈利因子 ${performance.profit_factor?.toFixed(2) ?? "未验证"} · ${trustNames[performance.trust_status || ""] || "可信度未验证"}${performance.trust_score == null ? "" : ` ${performance.trust_score.toFixed(1)}分`}`}
+					</div>
+					{performance.trust_reason && <Text type="secondary">{performance.trust_reason}</Text>}
+				</div>
 				<Space wrap>
 					<Text strong>是否值得跟投：</Text>
 					<Tag color={!stale && follow.status === "consider" ? "red" : "default"}>{label}</Tag>
@@ -114,7 +156,7 @@ export default function StrategyBuyAlerts({ userId }: { userId: string }) {
 			</Space>
 			{failed && <Alert style={{ marginTop: 12 }} type="warning" showIcon message="今日买入更新失败" description={mismatch ? "服务器与本地日期不一致，请校准时间后刷新。" : "暂时保留已读取的当天成交，新买入可能尚未显示；跟投判断等待刷新。"} />}
 			{query.data?.warnings?.map(warning => <Alert key={warning} style={{ marginTop: 8 }} type="warning" showIcon message={warning} />)}
-			{items.length > 0 && <div style={{ marginTop: 10, marginBottom: 12 }}><Text type="secondary">手数按100股折算。跟投结论是基于当前信号、价格和风控的条件复核，请结合自身持仓判断。</Text></div>}
+			{items.length > 0 && <div style={{ marginTop: 10, marginBottom: 12 }}><Text type="secondary">手数按100股折算。跟投结论综合战法自身结算周期、历史胜率与样本可信度、当前信号、价格和风控；请结合自身持仓判断。</Text></div>}
 			<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 460px), 1fr))", gap: 12 }} aria-live="polite" aria-relevant="additions text">
 				{items.map(item => <BuyCard key={`${item.portfolio_id}:${item.trade_id}`} item={item} now={now} unavailable={failed} />)}
 			</div>
