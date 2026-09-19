@@ -507,12 +507,12 @@ export default function Home() {
 												{decisionStatus && decisionStatus !== "not_run" && (
 													<Tooltip title={decisionReason || "策略决策详情"}>
 														<Tag
-															color={decisionStatus === "traded" ? "green" : "default"}
+															color={decisionStatus === "traded" ? "green" : decisionStatus === "blocked" || decisionStatus === "failed" ? "red" : "default"}
 															style={{ marginTop: 5, marginInlineEnd: 0, whiteSpace: "normal", lineHeight: "18px" }}
 														>
 															{decisionStatus === "traded"
 																? `本轮成交 ${s.last_trade_count || 0} 笔`
-																: `本轮0笔：${decisionReason || "未触发交易条件"}`}
+																: `本轮${s.last_trade_count || 0}笔：${decisionReason || "未触发交易条件"}`}
 														</Tag>
 													</Tooltip>
 												)}
