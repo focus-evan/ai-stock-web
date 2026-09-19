@@ -2,6 +2,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { syncLibrary } from "./sync-research-library.mjs";
 
@@ -15,7 +16,7 @@ const hash = value => createHash("sha256").update(value).digest("hex");
 
 function run(command, args, options = {}) {
 	const result = spawnSync(command, args, { cwd: project, encoding: "utf8", timeout: 180000, maxBuffer: 24 * 1024 * 1024, windowsHide: true, ...options });
-	if (result.error || result.status !== 0) throw new Error(`${command} failed: ${result.error?.message || result.stderr || result.stdout}`);
+	if (result.error || result.status !== 0) throw new Error(`${command} failed: ${(result.error?.message || result.stderr || result.stdout).slice(0, 3000)}`);
 	return result.stdout.trim();
 }
 function filesUnder(root, prefix = "") {
@@ -57,10 +58,11 @@ try {
 			const revision = run("git", ["rev-parse", "HEAD"]);
 			const request = { base: baseline.base, files: all, revision };
 			fs.writeFileSync(path.join(temporary, "_publish-request.json"), JSON.stringify(request));
-			const list = path.join(temporary, "files.txt");
-			fs.writeFileSync(list, changed.join("\n") + "\n");
+			const list = path.join(temporary, "files.json");
+			fs.writeFileSync(list, JSON.stringify(changed));
 			const bundle = path.join(temporary, "bundle.tar.gz");
-			run("tar", ["-czf", bundle, "-C", library, "-T", list, "-C", temporary, "_publish-request.json"]);
+			const python = process.env.RESEARCH_PYTHON || (process.platform === "win32" ? path.join(os.homedir(), ".cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe") : "python3");
+			run(python, ["scripts/pack-research-library.py", library, path.join(temporary, "_publish-request.json"), bundle, list]);
 			console.log(`[research] uploading ${changed.length} changed files (${Math.ceil(fs.statSync(bundle).size / 1024)} KiB)`);
 			run("scp", [...sshOptions, bundle, `${target}:${remote}/incoming/${id}.tar.gz`]);
 			const result = JSON.parse(run("ssh", [...sshOptions, target, `python3 ${remote}/activate-research-library.py activate ${remote}/incoming/${id}.tar.gz`]));
