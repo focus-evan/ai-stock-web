@@ -2,6 +2,7 @@ import type { PortfolioStockAnalysis } from "#src/api/strategy";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { ShortTermSection } from "./index";
+import { getShortTermSummary } from "./shortTermSummary";
 
 afterEach(cleanup);
 const stock: PortfolioStockAnalysis = {
@@ -56,8 +57,15 @@ const stock: PortfolioStockAnalysis = {
 describe("short-term portfolio card", () => {
 	it("renders computed daily indicators independently of the current quote", () => {
 		render(<ShortTermSection stock={stock} />);
+		expect(screen.getByText("出现走弱信号，先控风险")).toBeVisible();
+		expect(screen.getByText("先别加仓；已有持仓重点检查减仓条件。")).toBeVisible();
+		expect(screen.getByText("HK$550.00")).toBeVisible();
+		expect(screen.getByText("HK$580.00")).toBeVisible();
+		const details = screen.getByText("展开技术明细").closest("details");
+		expect(details).not.toHaveAttribute("open");
 		expect(screen.getByText(/分析收盘价 HK\$562.000/)).toBeInTheDocument();
 		expect(screen.getByText(/MA\s*16\s*·\s*HK\$580.000/)).toBeInTheDocument();
+		expect(details).toContainElement(screen.getByText(/MA\s*16\s*·\s*HK\$580.000/));
 		expect(screen.getByText(/1.40 倍/)).toBeInTheDocument();
 		expect(screen.getByText(/连续两日跌破 MA16/)).toBeInTheDocument();
 		expect(screen.queryByText(/888/)).not.toBeInTheDocument();
@@ -65,12 +73,30 @@ describe("short-term portfolio card", () => {
 	});
 	it("marks stale evidence and retains the analysis date", () => {
 		render(<ShortTermSection stock={{ ...stock, short_term: { ...stock.short_term!, status: "stale", stale: true } }} />);
+		expect(screen.getByText("数据待更新，先等等")).toBeVisible();
+		expect(screen.queryByText("下方观察")).not.toBeInTheDocument();
+		expect(screen.queryByText("出现走弱信号，先控风险")).not.toBeInTheDocument();
 		expect(screen.getByText(/不能确认当前交易信号/)).toBeInTheDocument();
 		expect(screen.getByText(/2026-09-08/)).toBeInTheDocument();
 	});
 	it("asks for regeneration of legacy reports instead of presenting old guidance as technical", () => {
 		render(<ShortTermSection stock={{ ...stock, short_term: undefined }} />);
 		expect(screen.getByText(/旧版基本面报告/)).toBeInTheDocument();
-		expect(screen.queryByText("短线价量解析")).not.toBeInTheDocument();
+		expect(screen.queryByText("短线重点")).not.toBeInTheDocument();
+	});
+	it.each([
+		["等待转强", "还没转强，先等等"],
+		["趋势观察", "趋势仍在，等买点"],
+		["偏离过大", "涨得偏快，别追高"],
+		["条件成立 · 待复核", "出现机会，先复核"],
+	])("translates %s without inventing a stronger trading instruction", (verdict, title) => {
+		expect(getShortTermSummary({ ...stock.short_term!, verdict }).title).toBe(title);
+	});
+	it("gives unavailable data and risk priority over positive signals", () => {
+		const positive = { ...stock.short_term!, verdict: "条件成立 · 待复核" };
+		expect(getShortTermSummary({ ...positive, stale: true }).ready).toBe(false);
+		expect(getShortTermSummary({ ...positive, close: Number.NaN }).ready).toBe(false);
+		expect(getShortTermSummary({ ...positive, status: "invalid" }).title).toBe("数据待核验，先等等");
+		expect(getShortTermSummary({ ...positive, signals: [{ ...positive.signals[0], state: "风险触发" }] }).title).toBe("出现走弱信号，先控风险");
 	});
 });

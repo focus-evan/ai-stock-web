@@ -24,6 +24,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { getShortTermSummary } from "./shortTermSummary";
 
 const { Text, Paragraph } = Typography;
 
@@ -69,123 +70,156 @@ function currencyBreakdown(
 	return values.join(" / ") || "-";
 }
 
-/* ========== Mini Sparkline ========== */
+/* ========== Short-term summary ========== */
 export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
 	const t = stock.short_term;
 	if (!t) {
 		return <Alert type="info" showIcon message="这是旧版基本面报告，请点击重新分析生成短线解析。" />;
 	}
-	const price = (v: number | null) => v == null ? "数据不足" : `${currencySymbol(stock)}${v.toFixed(3)}`;
+	const price = (v: number | null, detailed = false) => v == null || !Number.isFinite(v) || v <= 0 ? "待核验" : `${currencySymbol(stock)}${v.toFixed(detailed || v < 1 ? 3 : 2)}`;
+	const summary = getShortTermSummary(t);
+	const trendPrice = t.moving_averages.find(ma => ma.period === 16)?.value ?? null;
+	const belowSupport = t.close != null && t.support_5 != null && t.close < t.support_5;
 	return (
-		<div style={{ fontSize: 12, lineHeight: 1.7 }}>
-			<Text strong>短线价量解析</Text>
-			<div style={{ color: "#8c8c8c", margin: "4px 0 12px" }}>
-				{t.timeframe}
+		<section aria-label="短线重点" style={{ fontSize: 13, lineHeight: 1.6 }}>
+			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
+				<Text strong>短线重点</Text>
+				<Text type="secondary" style={{ fontSize: 11 }}>看未来 1–10 个交易日</Text>
+			</div>
+			<div style={{ color: "#8c8c8c", fontSize: 11, margin: "4px 0 12px" }}>
+				{t.as_of || "日期待更新"}
 				{" "}
-				· 收盘截至
-				{t.as_of || "未知"}
-				{" "}
-				·
-				{t.bar_count}
-				{" "}
-				根日线
-				<br />
-				分析收盘价
-				{" "}
+				收盘
 				{price(t.close)}
 				{" "}
 				·
-				{" "}
-				{t.adjustment === "qfq" ? "前复权" : t.adjustment === "raw" ? "不复权" : "复权口径未知"}
-				<br />
-				顶部报价与日线分析时间独立；以下均线位置按分析收盘价判断。
+				{t.adjustment === "qfq" ? "前复权" : t.adjustment === "raw" ? "不复权" : "价格口径待核验"}
 			</div>
-			{t.status !== "ready" && <Alert type="warning" showIcon message="日线待更新或核验，不能确认当前交易信号" style={{ marginBottom: 12 }} />}
-			<div style={{ background: "#fafafa", borderRadius: 8, padding: 12, marginBottom: 12 }}>
-				<Text strong>是否站上均线</Text>
-				<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 8 }}>
-					{t.moving_averages.map(ma => (
-						<div key={ma.period}>
-							<div>
-								MA
-								{ma.period}
-								{" "}
-								·
-								{price(ma.value)}
-							</div>
-							<Tag color={ma.position === "站上" ? "blue" : ma.position === "跌破" ? "orange" : "default"}>{ma.position}</Tag>
-							<span>{ma.slope}</span>
-						</div>
-					))}
-				</div>
+			<div style={{ background: summary.background, borderLeft: `3px solid ${summary.color}`, borderRadius: 8, padding: "12px 14px" }}>
+				<div style={{ color: summary.color, fontSize: 17, fontWeight: 700 }}>{summary.title}</div>
+				<div style={{ color: "#595959", marginTop: 5 }}>{summary.reason}</div>
 				<div style={{ marginTop: 8 }}>
-					MA16 乖离：
-					{fmtMetric(t.bias16_pct)}
+					<Text strong>怎么做：</Text>
+					{summary.action}
 				</div>
 			</div>
-			<div style={{ background: "#f0f5ff", borderRadius: 8, padding: 12, marginBottom: 12 }}>
-				<Text strong>量能与关键价位</Text>
-				<div>
-					相对前 5 日均量：
-					{fmtMetric(t.volume_ratio_5, " 倍")}
-					{" "}
-					·
-					{t.volume_label}
-				</div>
-				<div style={{ color: "#8c8c8c" }}>本日完整成交量 ÷ 前 5 日均量，不含本日；不是盘中量比。</div>
-				<div>
-					前 20 日高点：
-					{price(t.resistance_20)}
-				</div>
-				<div>
-					前 5 日低点：
-					{price(t.support_5)}
-				</div>
-				<div>
-					ATR14：
-					{price(t.atr14)}
-				</div>
-				<div>
-					收盘价 − 1.5×ATR：
-					{price(t.atr_reference)}
-				</div>
-				<div style={{ color: "#8c8c8c" }}>高低点均不含本日；ATR 线只作波动风险参考。</div>
-			</div>
-			{t.signals.map(signal => (
-				<div key={signal.name} style={{ borderBottom: "1px solid #f0f0f0", padding: "10px 0" }}>
-					<Text strong>{signal.name}</Text>
-					<Tag style={{ marginLeft: 6 }} color={signal.state === "风险触发" ? "red" : signal.state === "条件成立" ? "blue" : "default"}>{signal.state}</Tag>
-					<div style={{ marginTop: 6 }}>{signal.evidence}</div>
-					<div style={{ marginTop: 6 }}>
-						<Text strong>触发条件：</Text>
-						{signal.trigger}
+			{summary.ready && (
+				<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 12 }}>
+					<div style={{ background: "#fafafa", padding: "10px 12px", borderRadius: 8 }}>
+						<Text type="secondary">{belowSupport ? "已跌破低点" : "下方观察"}</Text>
+						<div style={{ fontSize: 18, fontWeight: 600, overflowWrap: "anywhere" }}>{price(t.support_5)}</div>
+						<div style={{ color: "#8c8c8c", fontSize: 11 }}>{belowSupport ? "已低于近 5 日低点，留意风险" : "近 5 日低点，跌破需警惕"}</div>
 					</div>
-					<div style={{ marginTop: 6 }}>
-						<Text strong type="danger">失效条件：</Text>
-						{signal.invalidation}
+					<div style={{ background: "#fafafa", padding: "10px 12px", borderRadius: 8 }}>
+						<Text type="secondary">{summary.trendLabel}</Text>
+						<div style={{ fontSize: 18, fontWeight: 600, overflowWrap: "anywhere" }}>{price(trendPrice)}</div>
+						<div style={{ color: "#8c8c8c", fontSize: 11 }}>{summary.trendHint}</div>
 					</div>
-				</div>
-			))}
-			{t.warnings.length > 0 && (
-				<div style={{ marginTop: 12, color: "#ad6800" }}>
-					{t.warnings.map(w => (
-						<div key={w}>
-							•
-							{w}
-						</div>
-					))}
 				</div>
 			)}
-			<details style={{ marginTop: 12, color: "#8c8c8c" }}>
-				<summary>方法依据与数据口径</summary>
-				<div>{t.rule_note}</div>
-				<div>
-					行情来源：
-					{t.source}
+			<div style={{ color: "#8c8c8c", fontSize: 11, marginTop: 10 }}>{summary.note}</div>
+			<details style={{ marginTop: 12 }}>
+				<summary style={{ cursor: "pointer", color: "#595959", padding: "6px 0" }}>展开技术明细</summary>
+				<div style={{ color: "#8c8c8c", margin: "8px 0" }}>
+					分析收盘价
+					{" "}
+					{price(t.close, true)}
+					{" "}
+					·
+					{" "}
+					{t.bar_count}
+					{" "}
+					根日线；与顶部报价时间独立。
+					{!summary.ready && "以下只作历史参考，不能确认当前交易信号。"}
 				</div>
-				{t.sources.map(source => <div key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.name}</a></div>)}
+				<div style={{ background: "#fafafa", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+					<Text strong>是否站上均线</Text>
+					<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 8 }}>
+						{t.moving_averages.map(ma => (
+							<div key={ma.period}>
+								<div>
+									MA
+									{ma.period}
+									{" "}
+									·
+									{price(ma.value, true)}
+								</div>
+								<Tag color={ma.position === "站上" ? "blue" : ma.position === "跌破" ? "orange" : "default"}>{ma.position}</Tag>
+								<span>{ma.slope}</span>
+							</div>
+						))}
+					</div>
+					<div style={{ marginTop: 8 }}>
+						MA16 乖离：
+						{fmtMetric(t.bias16_pct)}
+					</div>
+				</div>
+				<div style={{ background: "#f0f5ff", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+					<Text strong>量能与关键价位</Text>
+					<div>
+						相对前 5 日均量：
+						{fmtMetric(t.volume_ratio_5, " 倍")}
+						{" "}
+						·
+						{t.volume_label}
+					</div>
+					<div style={{ color: "#8c8c8c" }}>本日完整成交量 ÷ 前 5 日均量，不含本日；不是盘中量比。</div>
+					<div>
+						前 20 日高点：
+						{price(t.resistance_20, true)}
+					</div>
+					<div>
+						前 5 日低点：
+						{price(t.support_5, true)}
+					</div>
+					<div>
+						ATR14：
+						{price(t.atr14, true)}
+					</div>
+					<div>
+						收盘价 − 1.5×ATR：
+						{price(t.atr_reference, true)}
+					</div>
+					<div style={{ color: "#8c8c8c" }}>高低点均不含本日；ATR 线只作波动风险参考。</div>
+				</div>
+				{t.signals.map(signal => (
+					<div key={signal.name} style={{ borderBottom: "1px solid #f0f0f0", padding: "10px 0" }}>
+						<Text strong>{signal.name}</Text>
+						<Tag style={{ marginLeft: 6 }} color={signal.state === "风险触发" ? "red" : signal.state === "条件成立" ? "blue" : "default"}>{signal.state}</Tag>
+						<div style={{ marginTop: 6 }}>{signal.evidence}</div>
+						<div style={{ marginTop: 6 }}>
+							<Text strong>触发条件：</Text>
+							{signal.trigger}
+						</div>
+						<div style={{ marginTop: 6 }}>
+							<Text strong type="danger">失效条件：</Text>
+							{signal.invalidation}
+						</div>
+					</div>
+				))}
+				{t.warnings.length > 0 && (
+					<div style={{ marginTop: 12, color: "#ad6800" }}>
+						{t.warnings.map(w => (
+							<div key={w}>
+								•
+								{w}
+							</div>
+						))}
+					</div>
+				)}
+				<details style={{ marginTop: 12, color: "#8c8c8c" }}>
+					<summary>方法依据与数据口径</summary>
+					<div>{t.rule_note}</div>
+					<div>
+						行情来源：
+						{t.source}
+					</div>
+					{t.sources.map(source => <div key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.name}</a></div>)}
+				</details>
+				<div style={{ marginTop: 12 }}>{t.guidance}</div>
+				{stock.verdict_reason && <div style={{ marginTop: 6 }}>{stock.verdict_reason}</div>}
 			</details>
-		</div>
+		</section>
 	);
 };
 
@@ -332,32 +366,6 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 				<ShortTermSection stock={stock} />
 			</div>
 
-			{/* Footer: 操作指导 */}
-			<div style={{
-				background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
-				padding: "10px 18px",
-				borderTop: "1px solid rgba(255,255,255,0.05)",
-			}}
-			>
-				<Space size={4} style={{ marginBottom: 4 }}>
-					<ThunderboltOutlined style={{ color: "#faad14", fontSize: 12 }} />
-					<Text style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>操作指导</Text>
-				</Space>
-				<Paragraph style={{
-					fontSize: 12,
-					color: "rgba(255,255,255,0.85)",
-					margin: 0,
-					lineHeight: "18px",
-				}}
-				>
-					{stock.short_term?.guidance || "重新分析后查看短线触发与失效条件"}
-				</Paragraph>
-				{stock.short_term && stock.verdict_reason && (
-					<div style={{ marginTop: 6, padding: "6px 10px", background: "rgba(255,255,255,0.06)", borderRadius: 6, borderLeft: "3px solid #a78bfa" }}>
-						<Text style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: "16px" }}>{stock.verdict_reason}</Text>
-					</div>
-				)}
-			</div>
 		</Card>
 	);
 };
