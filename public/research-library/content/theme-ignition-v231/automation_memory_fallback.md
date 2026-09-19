@@ -1,5 +1,41 @@
 # v231 automation memory fallback
 
+## 2026-09-19 08:58:55 CST
+- 9/18 defensive forecast missed: five-stock pool +2.46% versus CSI300 and role hit 80%. TLM rose only by the 5-point cap to 23; fundamentals unchanged.
+- Saturday main narrative: advanced-packaging leadership and CPO second confirmation; NSS 94 / FID 83 / TLM 23 / risk 84.
+- Candidates unchanged: 中际旭创、亨通光电、中瓷电子、剑桥科技、共进股份. U.S. chips remained firm but 10Y returned near 5%.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260919_085855.html/.json; HTML SHA-256 98D43D759BC8536DB8B71F35230388C83CAD37F78CD43A93115A61B38E76E6EE.
+
+## 2026-09-18 10:41:28 CST
+- 9/17 breadth-continuation forecast missed: pool +0.24% relative to CSI300, but role hit fell to 40%; TLM cut to 18.
+- Main narrative: A-share AI-hardware role divergence and overseas chip relay test; NSS 92 / FID 78 / TLM 18 / risk 88.
+- Candidates unchanged: 中际旭创、亨通光电、中瓷电子、剑桥科技、共进股份. Do not let a minority-driven positive average hide weak rear names.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260918_104128.html/.json; HTML SHA-256 7427A66B417434B1BD5C3B755A658D265A56FB2F13D71E438E9728B7F34692DB.
+
+## 2026-09-17 10:11:40 CST
+- 9/16 calibration hit: all five CPO transmission anchors fulfilled roles and averaged +5.04% versus CSI300. TLM rose to 36 without changing fundamental/S-five-factor scores.
+- Main narrative: CPO, PCB and semiconductor breadth confirmation; NSS 93 / FID 90 / TLM 36 / risk 84. Fed +25bp limits chase-high room.
+- Candidates: 中际旭创、亨通光电、中瓷电子、剑桥科技、共进股份; original roles restored.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260917_101140.html/.json; HTML SHA-256 15E34509EA13ED3D06E3EF4D4B28B8FD6203BB69A2A7D4DFEE069BA7FF51C713.
+
+## 2026-09-16 10:26:12 CST
+- 9/14 calibration of the 9/13 forecast hit defensively: old CPO pool -0.37% versus CSI300, role hit 40%; no synthetic 9/15 calibration.
+- Main narrative: domestic semiconductor equipment/advanced-packaging ignition with CPO transmission unconfirmed; NSS 91 / FID 82 / TLM 10 / risk 89.
+- Existing five verified CPO names remain only transmission anchors, not a forced pure-equipment pool. Overseas SOX selloff and 10Y yield near 5% cap participation.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260916_102612.html/.json; HTML SHA-256 75CAF5AEA4EB935347FA62A56941AE58BA924941A0D157F57B06FBAC737C1C21.
+
+## 2026-09-13 07:01:29 CST
+- Sunday observation; no new market sample. Prior 9/11 defensive hit remains, with -0.29% candidate relative return and 40% role hit rate.
+- Main narrative: AI hardware / CPO core concentration and Monday validation; NSS 84 / FID 66 / TLM 5 / risk 93.
+- Candidates unchanged: 中际旭创、亨通光电、中瓷电子、剑桥科技、共进股份. Correct-date CLS pre-07:00 evidence remained unavailable and was explicitly marked as a gap.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260913_070129.html/.json; HTML SHA-256 B0730210197089FFBFED584B703D575339BA0EE71A58E2E0378F891021877F20.
+
+## 2026-09-12 18:04:25 CST
+- 9/11 calibration hit the defensive direction: candidate pool averaged -0.29% relative to CSI300 and role hit rate remained 40%; TLM was reduced to 6 without changing V2.3.1/S-five-factor fundamentals.
+- Saturday observation main narrative: AI hardware / CPO core concentration with weekend risk easing; NSS 85 / FID 68 / TLM 6 / risk 92.
+- Candidates: 中际旭创、亨通光电、中瓷电子、剑桥科技、共进股份. Overseas rebound is only a risk buffer and requires Monday A-share breadth/relative-strength confirmation.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260912_180425.html/.json; HTML SHA-256 7FF6E9155965BF215C336BBF140F3D795168A7043F5E8C8A0CBFBAEFE5EF16F4.
+
 ## Current output-root override
 
 - Effective 2026-08-31, the canonical output root is `D:\Evan\html\theme-ignition-v231`.
@@ -69,6 +105,25 @@
 - Main narrative: AI-hardware multi-branch retreat versus policy buffer; NSS 87 / FID 78 / risk 96.
 - Legacy duplicate-risk/stale Top3 strings were corrected by structured post-processing.
 - Outputs: latest.html/latest.json and archive theme_ignition_v231_20260907_100129.html/.json; HTML SHA-256 C8438ECD65E69557BDC511F711DD5614FDEE3F550F591ECFD0CF30723FD31121.
+
+## 2026-09-08 07:04:43 CST
+- 9/7 defensive forecast missed: five anchors averaged +7.28% relative to CSI300. Defensive comparable samples reached 5 with 80% hit rate.
+- Added bounded domestic multi-branch reversal rule; tactical TLM adjustment capped at +4, base weights unchanged.
+- Main narrative: CPO/PCB/storage first-explosion re-ignition; NSS 93 / FID 92 / TLM 52 / risk 64.
+- Original CPO roles restored; stale liquid-cooling mismatch warning removed.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260908_070443.html/.json; HTML SHA-256 B88AD5A6986C42022BF664BE0A19D8B0186887C1540B7C03DACC170C37D8A4EB.
+
+## 2026-09-09 10:09:32 CST
+- 9/8 forward calibration hit: candidate mean relative +1.47%, role hit 60%; domestic multi-branch reversal rule passed first check.
+- Config loads automatically; one tactical adjustment active, base weights unchanged.
+- Main narrative: CPO second-day support and chip rotation; NSS 91 / FID 86 / TLM 38 / risk 72.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260909_100932.html/.json; HTML SHA-256 208119F0D92A00EA5091E5B37399B6849870984FDB23AED2E08F2452DDB4F9AE.
+
+## 2026-09-10 10:34:28 CST
+- 9/9 forward calibration hit: candidate mean relative +0.76%, role hit 60%; multi-branch reversal rule passed second check.
+- Main narrative: CPO third-day continuation/high-level divergence; NSS 90 / FID 80 / TLM 30 / risk 78.
+- Active config version 2026-09-08-reversal-breadth-v1; base weights unchanged.
+- Outputs: latest.html/latest.json and archive theme_ignition_v231_20260910_103428.html/.json; HTML SHA-256 BD05DEB1B1B419777F9CFB90A97AEE4DF6C67C636926EAEBBBEB06B47840406C.
 
 ## 2026-08-27 calibration-loop upgrade
 - Added immutable outcome calibration using candidate OHLC and CSI300-relative results; separates narrative direction, role fulfillment, and executable trigger validity.

@@ -4,6 +4,7 @@ import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { load } from "cheerio";
+import { reportMetadata } from "./research-metadata.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const categories = [
@@ -150,6 +151,7 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 	const versionOf = filename => fs.existsSync(path.join(destination, filename)) ? hash(fs.readFileSync(path.join(destination, filename))).slice(0, 12) : "1";
 	const readerCssVersion = versionOf("_ui/reader.css");
 	const readerJsVersion = versionOf("_ui/reader.js");
+	const freshnessVersion = versionOf("_ui/freshness.js");
 	const allFiles = walk(source);
 	const included = allFiles.filter(shouldInclude).sort();
 	const fileSet = new Set(included);
@@ -172,8 +174,9 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 				const title = compact($("title").first().text() || $("h1").first().text() || path.basename(relative));
 				const text = compact($("h1, h2, h3, p, time, .meta, .subtitle").map((_, node) => $(node).text()).get().join(" "));
 				const description = compact($('meta[name="description"]').attr("content") || $("header p, .hero p, main > p, p").first().text() || details[2]).slice(0, 180);
-				const date = findReportDate(relative, title, text);
-				entries.push({ id: relative, title, description, collection: group, category: details[1], date, modifiedAt: fs.statSync(path.join(source, relative)).mtime.toISOString(), href: `content/${encodePath(publishedPath(relative))}`, searchText: text.slice(0, 1000), isArchive: /(?:archive\/|backup|before[_-]|\.bak\.)/i.test(relative) || (!/^(index|latest)\.html?$/i.test(path.basename(relative)) && Boolean(date)) });
+				const metadata = reportMetadata(source, relative, findReportDate(relative, title, text));
+				const date = metadata.reportDate || findReportDate(relative, title, text);
+				entries.push({ id: relative, title, description, collection: group, category: details[1], date, ...metadata, modifiedAt: fs.statSync(path.join(source, relative)).mtime.toISOString(), href: `content/${encodePath(publishedPath(relative))}`, searchText: text.slice(0, 1000), isArchive: /(?:archive\/|backup|before[_-]|\.bak\.)/i.test(relative) || (!/^(index|latest)\.html?$/i.test(path.basename(relative)) && Boolean(date)) });
 				for (const node of $("a[href], img[src], script[src], link[href], iframe[src], source[src]").toArray()) {
 					const element = $(node);
 					const attribute = element.attr("href") !== undefined ? "href" : "src";
@@ -198,6 +201,13 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 				$("head").append(`<link rel="stylesheet" href="${root}_ui/reader.css?v=${readerCssVersion}">`);
 				$("body").prepend(`<nav class="rl-reader-toolbar" aria-label="报告导航"><a class="rl-reader-home" href="${root}index.html">← 内容中心</a><a class="rl-reader-collection" href="${root}index.html?collection=${encodeURIComponent(group)}&view=reports">${escapeHtml(details[0])}</a><button type="button" data-reader-font aria-label="放大正文字号" aria-pressed="false">字号 A+</button><button type="button" data-reader-top>回顶部 ↑</button></nav>`);
 				$("body").append(`<script src="${root}_ui/reader.js?v=${readerJsVersion}" defer></script>`);
+				if (metadata.refreshPolicy) {
+					const banner = $('<div class="rl-report-freshness" role="status"></div>');
+					banner.attr("data-report-metadata", JSON.stringify({ id: relative, ...metadata }));
+					banner.text(`报告日期：${date || "未标注"}${metadata.marketDataDate ? ` ｜ 行情日期：${metadata.marketDataDate}` : ""}${metadata.refreshPolicy.paused ? " ｜ 已暂停自动更新" : ""}`);
+					$(".rl-reader-toolbar").after(banner);
+					$("body").append(`<script type="module" src="${root}_ui/freshness.js?v=${freshnessVersion}"></script>`);
+				}
 				output = $.html();
 			}
 			else if (/\.(?:jsonl?|csv|tsv|md|txt|pdf)$/i.test(relative) || isManualAttachment(relative)) {
@@ -209,7 +219,7 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 		const pages = entries.filter(entry => entry.collection === group);
 		const details = collections[group] || [group, "engineering", "专题报告与相关资料。"];
 		const landing = pages.find(entry => entry.id === `${group}/latest.html`) || pages.find(entry => entry.id === `${group}/index.html`) || pages[0];
-		return { id: group, title: details[0], category: details[1], description: details[2], pageCount: pages.length, attachmentCount: attachments.filter(entry => entry.collection === group).length, href: landing?.href || null, date: landing?.date || null };
+		return { id: group, title: details[0], category: details[1], description: details[2], pageCount: pages.length, attachmentCount: attachments.filter(entry => entry.collection === group).length, href: landing?.href || null, date: landing?.date || null, reportDate: landing?.reportDate, generatedAt: landing?.generatedAt, marketDataDate: landing?.marketDataDate, refreshPolicy: landing?.refreshPolicy };
 	});
 	const managedFiles = [...new Set([...(merge ? previous.files.filter(relative => !fileSet.has(relative) || publishedPath(relative) === relative) : []), ...included.map(publishedPath)])].sort();
 	const managedSet = new Set(managedFiles);

@@ -1,0 +1,39 @@
+{
+  "QQQ": [
+    {
+      "date": "2026-09-09",
+      "close": 716.31
+    },
+    {
+      "date": "2026-09-10",
+      "close": 708.69
+    },
+    {
+      "date": "2026-09-11",
+      "close": 714.88
+    },
+    {
+      "date": "2026-09-14",
+      "close": 709.18
+    },
+    {
+      "date": "2026-09-15",
+      "close": 704.54
+    }
+  ],
+  "SOXX": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "SMH": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "BABA": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "^TNX": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "DX-Y.NYB": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  }
+}

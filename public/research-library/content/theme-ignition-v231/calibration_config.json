@@ -1,0 +1,19 @@
+{
+  "version": "2026-09-08-reversal-breadth-v1",
+  "effective_from": "2026-09-08",
+  "evidence": {
+    "comparable_defensive_samples": 5,
+    "rolling_direction_hit_rate": 0.8,
+    "latest_error": "2026-09-07 defensive miss; five-anchor equal-weight relative return +7.28%"
+  },
+  "base_weights_changed": false,
+  "tactical_rules": [
+    {
+      "id": "domestic_multi_branch_reversal_confirmation",
+      "when": "At least three AI-hardware branches expand together and at least three of five anchors outperform CSI300 in the completed session",
+      "effect": "Treat domestic breadth as independent reversal confirmation even when overseas market is closed or mixed",
+      "max_tlm_adjustment_points": 4,
+      "requires_next_session_validation": true
+    }
+  ]
+}

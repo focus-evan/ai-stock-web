@@ -31,7 +31,7 @@ for (const entry of catalog.entries) {
 	}
 	if (fs.existsSync(path.join(source, entry.id))) {
 		const original = load(fs.readFileSync(path.join(source, entry.id), "utf8"));
-		document(".rl-reader-toolbar").remove();
+		document(".rl-reader-toolbar, .rl-report-freshness").remove();
 		const text = document("body").text().replace(/\s+/g, " ").trim();
 		const originalText = original("body").text().replace(/\s+/g, " ").trim();
 		if (text !== originalText) alteredText.push(entry.id);

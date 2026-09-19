@@ -1,0 +1,20 @@
+{
+  "QQQ": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "SOXX": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "SMH": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "BABA": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "^TNX": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  },
+  "DX-Y.NYB": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=20)\"))"
+  }
+}

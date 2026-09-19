@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-09-16T10:28:37+08:00",
+  "review_window": "用2026-09-16盘中可得行情，对2026-09-16 06:00报告的判断做当日表现验证；这不是收盘复盘。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 8,
+    "useful_but_conservative": 0,
+    "repair_upgrade": 0,
+    "underestimated_risk": 2,
+    "effective_or_useful": 8,
+    "needs_calibration": 2,
+    "main_read": "9/16盘中验证显示红色防守暂时成立：宁德-H继续跌至500下方，组合最大风险未缓解；新易盛收回400附近但未确认413，澜起仍低于200；雅克、联瑞、铖昌有边际修复。今日逻辑维持先控风险、不追反抽。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "橙色",
+      "morning_judgement": "利空",
+      "morning_close": 397.01,
+      "review_price_date": "2026-09-16",
+      "review_close": 410.53,
+      "review_move_pct": 3.41,
+      "verification": "有效",
+      "trigger_check": "仍在硬观察位448下方",
+      "logic_adjustment": "表现符合修复观察，不需要放大成基本面利空。"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性偏利空",
+      "morning_close": 187.83,
+      "review_price_date": "2026-09-16",
+      "review_close": 190.3,
+      "review_move_pct": 1.32,
+      "verification": "有效",
+      "trigger_check": "仍在硬观察位200下方",
+      "logic_adjustment": "表现符合修复观察，不需要放大成基本面利空。"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "橙色",
+      "morning_judgement": "利空",
+      "morning_close": 279.4,
+      "review_price_date": "2026-09-16",
+      "review_close": 281.83,
+      "review_move_pct": 0.87,
+      "verification": "修复失败，需下调",
+      "trigger_check": "跌破最低观察支撑290",
+      "logic_adjustment": "橙色修复失败后应下调为红色或提高减仓优先级。"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "橙色",
+      "morning_judgement": "利空",
+      "morning_close": 330.6,
+      "review_price_date": "2026-09-16",
+      "review_close": 339.1,
+      "review_move_pct": 2.57,
+      "verification": "有效",
+      "trigger_check": "仍在硬观察位350下方",
+      "logic_adjustment": "表现符合修复观察，不需要放大成基本面利空。"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "橙色",
+      "morning_judgement": "利空",
+      "morning_close": 59.84,
+      "review_price_date": "2026-09-16",
+      "review_close": 60.25,
+      "review_move_pct": 0.69,
+      "verification": "有效",
+      "trigger_check": "仍在硬观察位64下方",
+      "logic_adjustment": "表现符合修复观察，不需要放大成基本面利空。"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 516.0,
+      "review_price_date": "2026-09-16",
+      "review_close": 490.6,
+      "review_move_pct": -4.92,
+      "verification": "有效",
+      "trigger_check": "跌破最低观察支撑560",
+      "logic_adjustment": "走势没有推翻风险判断，继续用关键位确认替代情绪判断。"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性偏利空",
+      "morning_close": 107.2,
+      "review_price_date": "2026-09-16",
+      "review_close": 107.0,
+      "review_move_pct": -0.19,
+      "verification": "修复失败，需下调",
+      "trigger_check": "跌破最低观察支撑108",
+      "logic_adjustment": "橙色修复失败后应下调为红色或提高减仓优先级。"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "黄色",
+      "morning_judgement": "中性偏利多",
+      "morning_close": 133.17,
+      "review_price_date": "2026-09-16",
+      "review_close": 135.4,
+      "review_move_pct": 1.67,
+      "verification": "有效",
+      "trigger_check": "已触及/收复硬观察位135",
+      "logic_adjustment": "低波动观察成立，暂不调整。"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 179.49,
+      "review_price_date": "2026-09-16",
+      "review_close": 183.51,
+      "review_move_pct": 2.24,
+      "verification": "有效",
+      "trigger_check": "已触及/收复硬观察位180",
+      "logic_adjustment": "表现符合修复观察，不需要放大成基本面利空。"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "黄色",
+      "morning_judgement": "中性",
+      "morning_close": 98.36,
+      "review_price_date": "2026-09-16",
+      "review_close": 99.91,
+      "review_move_pct": 1.58,
+      "verification": "有效",
+      "trigger_check": "已触及/收复硬观察位98",
+      "logic_adjustment": "低波动观察成立，暂不调整。"
+    }
+  ],
+  "logic_corrections": [
+    "9月16日盘中验证显示红色防守口径仍然必要：宁德-H继续下破，新易盛只是收回400附近但未确认413，强项集中在雅克、联瑞、铖昌。",
+    "新易盛盘中从397反弹到410附近，说明400有修复尝试，但413/448未确认前仍不能追。",
+    "澜起科技盘中反弹到190附近但仍低于200/210，继续区分财报利多与交易修复。",
+    "联瑞新材盘中继续站在180上方，是少数修复项，但高位筹码压力仍需保留。",
+    "若当日收盘宁德-H不能收回500/516，组合总阀门仍不应降级；只有新易盛收413、澜起收200、宁德-H收回516同时改善，才考虑红色观察。"
+  ]
+}

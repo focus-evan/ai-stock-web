@@ -55,3 +55,4 @@ id_rsa*
 # Logs
 *.log
 logs/
+research-library/publish-state/

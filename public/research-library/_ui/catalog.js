@@ -1,3 +1,5 @@
+import { reportStatus } from "./freshness.js?v=20260919";
+
 const PAGE_SIZE = 24;
 const html = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;").replaceAll("'", "&#39;");
 export const safeHref = value => typeof value === "string" && value.startsWith("content/") && !/\.\.|[<>"'\\]|%2e|%2f|%5c/i.test(value) ? value : "#";
@@ -37,7 +39,7 @@ export async function startLibrary() {
 	const sort = document.querySelector("#sort");
 	const archives = document.querySelector("#archives");
 	document.querySelector("#library-stats").innerHTML = [[catalog.collections.length, "专题入口"], [catalog.entries.length, "报告页面"], [catalog.attachments.length, "资料附件"]].map(([count, label]) => `<div><span class="stat-number">${count.toLocaleString("zh-CN")}</span><span class="stat-label">${label}</span></div>`).join("");
-	document.querySelector("#sync-date").textContent = `内容同步于 ${new Date(catalog.syncedAt).toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" })}`;
+	document.querySelector("#sync-date").textContent = `内容同步于 ${new Date(catalog.syncedAt).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false })}`;
 	function update(next, replace = false) {
 		state = { ...state, page: 1, ...next };
 		const params = new URLSearchParams();
@@ -86,6 +88,17 @@ export async function startLibrary() {
 		else if (state.view === "collections")
 			results.innerHTML = `<div class="collection-grid">${visible.map(item => `<article class="collection-card" data-category="${html(item.category)}"><a class="collection-card-main" href="${item.href ? html(safeHref(item.href)) : `?collection=${encodeURIComponent(item.id)}&view=attachments`}"><div class="collection-label"><span>${html(categoryNames[item.category])}</span><span class="collection-symbol" aria-hidden="true">${categorySymbols[item.category] || "研"}</span></div><h2>${html(item.title)}</h2><p>${html(item.description)}</p></a><div class="collection-card-footer"><span>${item.pageCount} 篇报告${item.attachmentCount ? ` · ${item.attachmentCount} 份资料` : ""}</span><a href="?collection=${encodeURIComponent(item.id)}&view=${item.pageCount ? "reports" : "attachments"}" data-collection="${html(item.id)}" data-collection-view="${item.pageCount ? "reports" : "attachments"}">浏览全部 <span aria-hidden="true">→</span></a></div></article>`).join("")}</div>`;
 		else results.innerHTML = `<div class="report-list">${visible.map(item => state.view === "reports" ? `<a class="report-row" href="${html(safeHref(item.href))}"><div class="report-date">${item.date ? html(item.date) : "日期未标注"}${/\/latest\.html$/.test(item.id) ? "<br><strong>专题当前页</strong>" : ""}</div><div class="report-body"><h2>${html(item.title)}</h2><p>${html(item.description)}</p><div class="report-meta"><span class="report-tag">${html(names[item.collection] || "原始目录")}</span>${item.isArchive ? "<span class=\"report-tag\">历史记录</span>" : ""}</div></div><span class="report-arrow" aria-hidden="true">↗</span></a>` : `<a class="report-row attachment-row" href="${html(safeHref(item.href))}" target="_blank" rel="noopener"><div class="report-date">${html(item.type)}</div><div class="report-body"><h2>${html(item.title)}</h2><p class="file-path">${html(item.id)}</p><div class="report-meta"><span>${html(names[item.collection] || "资料")}</span><span>· ${fileSize(item.bytes)}</span><span>· 新窗口查看</span></div></div><span class="report-arrow" aria-hidden="true">↗</span></a>`).join("")}</div>`;
+		if (state.view === "collections") {
+			results.querySelectorAll(".collection-card").forEach((card, index) => {
+				const item = visible[index];
+				if (!item.refreshPolicy) return;
+				const status = reportStatus(item);
+				const badge = document.createElement("p");
+				badge.className = `report-freshness report-freshness-${status.state}`;
+				badge.textContent = `${item.date || "日期未知"} · ${status.text}`;
+				card.querySelector(".collection-card-main").append(badge);
+			});
+		}
 		document.querySelector("#pagination").innerHTML = pageCount > 1 ? `<button type="button" data-page="${state.page - 1}" ${state.page === 1 ? "disabled" : ""}>← 上一页</button><span>${state.page} / ${pageCount}</span><button type="button" data-page="${state.page + 1}" ${state.page === pageCount ? "disabled" : ""}>下一页 →</button>` : "";
 	}
 	let timer;
@@ -125,6 +138,22 @@ export async function startLibrary() {
 		render();
 	});
 	render();
+	setInterval(async () => {
+		try {
+			const response = await fetch("catalog.json", { cache: "no-store" });
+			if (!response.ok) return;
+			const latest = await response.json();
+			if (latest.fingerprint !== catalog.fingerprint) {
+				const hint = document.querySelector("#sync-date");
+				hint.textContent = "有新的报告，点击刷新内容中心";
+				hint.setAttribute("role", "button");
+				hint.tabIndex = 0;
+				hint.onclick = () => location.reload();
+				hint.onkeydown = event => { if (["Enter", " "].includes(event.key)) location.reload(); };
+			}
+			render();
+		} catch { /* Keep the downloaded catalog available offline. */ }
+	}, 60000);
 }
 
 if (typeof document !== "undefined" && document.querySelector("#library-stats"))

@@ -27,7 +27,13 @@ corepack pnpm research:sync --source "D:/another-report-root"
 
 也可设置 `RESEARCH_SOURCE_DIR`。默认自动识别 Windows 的 `D:/Evan/html` 或 macOS/Linux 的 `~/html`。`--merge` 更新同名文件并保留其他来源与旧资料；不带该参数是单来源镜像，会移除该来源之外的受管资料，多来源使用时请带 `--merge`。`pnpm dev` 和 `pnpm build` 在来源目录存在时会先合并同步一次；来源不存在时使用仓库内已同步的快照，因此 Linux 构建与发布不依赖 Windows 盘符。`RESEARCH_SYNC=0` 可强制验证并使用仓库快照。
 
-自动化继续写原目录，开发服务启动前、构建前或手动同步时刷新内容。运行中的开发服务不会自动监听外部目录；自动化完成后再次执行同步并刷新页面即可。生产内容需要随下一次前端发布更新，不会因本机原目录变化自动上线。
+每日自动化统一写 `D:\Evan\html`。报告、JSON、归档验证完成后运行 `node scripts/publish-research-library.mjs`；该命令合并保留所有来源，验证正文与链接，只上传变化的静态文件，切换内容发布指针并核验公网。无需重建或重启前端、后端。`--check` 仅同步并验证本地文件。当前 Windows 运行目录为 `D:\Evan\Codes\.codex-release-worktrees\ai-stock-web-20260919-research-publish`；该目录也是自动化使用的持久发布工作区，不要作为临时目录清理。
+
+五个在用报告任务在报告成功生成后执行发布收尾；每30分钟的心跳检查用于漏跑补偿。无变化不上传、不通知；失败保留上一版并报告错误。财报公告追踪保持用户要求的暂停状态。机器及 Codex 需在线才能运行本地生成与补偿，网页过期提示独立按北京时间计算。
+
+生产内容目录 `/var/www/html/financial-data-platform-main/research-library` 指向 `/data/research-library-publisher/current`。每次发布在 `releases/` 保留上版；哈希不匹配、来源并发变化、漏掉线上专题或探测失败均中止或回滚。`last-publish.json` 记录版本和回滚点；锁文件防止并发发布。后续整站 `deploy-main.sh` 会保留此独立内容指针。首次安装只上传 `scripts/activate-research-library.py` 到专用发布目录；SSH 使用现有密钥，不存密码。
+
+报告日期优先读取对应 `latest.json` 的生成时间，行情日期单独显示；历史页不会套用今天的日期。每日模块显示当前、等待新一期或暂停状态；周末不误报工作日晨报过期，节假日请结合报告说明。页面每分钟检查是否有新一期并提示刷新，不在阅读时强制跳转。
 
 ## 文件与边界
 
@@ -41,7 +47,7 @@ corepack pnpm research:sync --source "D:/another-report-root"
 
 报告正文中的判断、时间和数据保留；网页副本只改写本地资源链接、加入导航和阅读适配。日期优先从报告标题和路径提取，不把搬迁时间当作研究日期。缺失或指向内容库之外的本机文件链接会明确提示不可用，完整清单见同步报告；不会冒充可从手机访问的本机路径。
 
-这些是随前端发布的静态资源。`/research-center` 沿用工作台路由权限，但静态 HTML/附件本身并不受前端登录页保护。如部署环境需要保护运维文档、持仓等资料，应在服务器层为整个 `/research-library/` 路径配置访问控制，不能把 React 菜单权限当作文件访问控制。远程更新需要提交同步后的内容快照、推送 Git 并按生产发布流程部署。
+这些是可独立发布的静态资源。`/research-center` 沿用工作台路由权限，但静态 HTML/附件本身并不受前端登录页保护；现有服务器访问控制保持不变。发布脚本及基线快照提交到 Git，日常增量通过上述独立内容发布链路上线。
 
 ## 验证
 

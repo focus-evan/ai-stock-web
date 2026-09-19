@@ -19,7 +19,7 @@ failed_web_root="${web_root}.failed-${timestamp}"
 info() { printf '[INFO] %s\n' "$1"; }
 fail() { printf '[ERROR] %s\n' "$1" >&2; exit 1; }
 
-for tool in curl git nginx; do
+for tool in curl git nginx tar; do
   command -v "$tool" >/dev/null 2>&1 || fail "required tool is missing: $tool"
 done
 
@@ -68,7 +68,14 @@ test -f "build/$asset_relative" || fail "referenced build asset is missing: $ass
 test ! -e "$stage_root" || fail "staging root already exists: $stage_root"
 test ! -e "$rollback_web_root" || fail "rollback root already exists: $rollback_web_root"
 mkdir -p "$stage_root"
-cp -a build/. "$stage_root/"
+content_current=/data/research-library-publisher/current
+if [ -L "$content_current" ]; then
+  test -f "$content_current/catalog.json" || fail 'independently published research catalog is missing'
+  tar -C build --exclude='./research-library' -cf - . | tar -C "$stage_root" -xf -
+  ln -s "$content_current" "$stage_root/research-library"
+else
+  cp -a build/. "$stage_root/"
+fi
 find "$stage_root" -type d -exec chmod 0755 {} +
 find "$stage_root" -type f -exec chmod 0644 {} +
 test -f "$stage_root/index.html" || fail 'staged index.html is missing'
