@@ -1,7 +1,10 @@
 import type { PortfolioStockAnalysis } from "#src/api/strategy";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { ConfigProvider } from "antd";
 import { afterEach, describe, expect, it } from "vitest";
 import { ShortTermSection } from "./index";
+import { getShortTermStatus } from "./shortTermStatuses";
+import { ShortTermStatusGuide } from "./ShortTermStatusGuide";
 import { getShortTermSummary } from "./shortTermSummary";
 
 afterEach(cleanup);
@@ -98,5 +101,28 @@ describe("short-term portfolio card", () => {
 		expect(getShortTermSummary({ ...positive, close: Number.NaN }).ready).toBe(false);
 		expect(getShortTermSummary({ ...positive, status: "invalid" }).title).toBe("数据待核验，先等等");
 		expect(getShortTermSummary({ ...positive, signals: [{ ...positive.signals[0], state: "风险触发" }] }).title).toBe("出现走弱信号，先控风险");
+	});
+	it("opens all seven state meanings and highlights the current observation state", async () => {
+		render(<ConfigProvider theme={{ token: { motion: false } }}><ShortTermStatusGuide analysis={{ ...stock.short_term!, verdict: "等待转强" }} /></ConfigProvider>);
+		expect(screen.getByText("等待转强 · 观望")).toBeVisible();
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		fireEvent.click(screen.getByRole("button", { name: "查看全部短线状态说明" }));
+		const dialog = screen.getByRole("dialog");
+		await waitFor(() => expect(within(dialog).getByText("等待转强", { exact: true })).toBeVisible());
+		for (const value of ["等待转强", "趋势观察", "条件成立 · 待复核", "偏离过大", "优先控险", "等待数据", "等待核验"]) {
+			expect(within(dialog).getByText(value, { exact: true })).toBeVisible();
+		}
+		expect(within(dialog).getByText("等待转强", { exact: true }).closest("[aria-current=\"true\"]")).not.toBeNull();
+		expect(within(dialog).getByText(/不是分数/)).toBeVisible();
+		fireEvent.click(screen.getByRole("button", { name: "Close" }));
+		await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+	});
+	it("uses data and risk overrides in the header instead of an obsolete positive badge", () => {
+		const positive = { ...stock.short_term!, verdict: "条件成立 · 待复核" };
+		expect(getShortTermStatus({ ...positive, status: "insufficient" })?.value).toBe("等待数据");
+		expect(getShortTermStatus({ ...positive, stale: true })?.value).toBe("等待核验");
+		expect(getShortTermStatus({ ...positive, status: "invalid" })?.value).toBe("等待核验");
+		expect(getShortTermStatus({ ...positive, signals: [{ ...positive.signals[0], state: "风险触发" }] })?.value).toBe("优先控险");
+		expect(getShortTermStatus({ ...positive, verdict: "unknown" })).toBeUndefined();
 	});
 });

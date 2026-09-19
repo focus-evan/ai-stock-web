@@ -24,6 +24,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { ShortTermStatusGuide } from "./ShortTermStatusGuide";
 import { getShortTermSummary } from "./shortTermSummary";
 
 const { Text, Paragraph } = Typography;
@@ -335,29 +336,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 							<Tag color="orange" style={{ margin: 0, fontSize: 10 }}>非实时行情</Tag>
 						</Tooltip>
 					)}
-					{stock.short_term && stock.action_verdict && (
-						<Tag style={{
-							margin: 0,
-							fontSize: 12,
-							fontWeight: 800,
-							padding: "2px 12px",
-							lineHeight: "20px",
-							borderRadius: 4,
-							background: stock.action_verdict === "买入"
-								? "#ff4d4f"
-								: stock.action_verdict === "卖出"
-									? "#52c41a"
-									: stock.action_verdict === "继续持有"
-										? "#1890ff"
-										: "#faad14",
-							border: "none",
-							color: "#fff",
-						}}
-						>
-							{stock.action_verdict === "买入" ? "🔥 " : stock.action_verdict === "卖出" ? "⚠️ " : stock.action_verdict === "继续持有" ? "💎 " : "👀 "}
-							{stock.action_verdict}
-						</Tag>
-					)}
+					{stock.short_term && <ShortTermStatusGuide analysis={stock.short_term} />}
 				</div>
 			</div>
 

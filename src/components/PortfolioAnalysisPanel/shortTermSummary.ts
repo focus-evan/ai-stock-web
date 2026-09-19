@@ -1,8 +1,9 @@
 import type { PortfolioShortTermAnalysis } from "#src/api/strategy";
+import { isShortTermReady } from "./shortTermStatuses";
 
 // Translate existing rule results; do not calculate a new trading signal here.
 export function getShortTermSummary(t: PortfolioShortTermAnalysis) {
-	const ready = t.status === "ready" && !t.stale && t.close != null && Number.isFinite(t.close) && t.close > 0;
+	const ready = isShortTermReady(t);
 	const trend = t.moving_averages.find(ma => ma.period === 16);
 	const aboveTrend = trend?.position === "站上";
 	const belowTrend = trend?.position === "跌破";
