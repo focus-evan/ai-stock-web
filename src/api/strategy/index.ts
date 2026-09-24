@@ -1914,3 +1914,12 @@ export function fetchTodayStrategyBuys(signal?: AbortSignal) {
 	return request.get("strategy/today-buys", { signal, timeout: 25000 })
 		.json<{ status: string, data: TodayStrategyBuys | null, message?: string }>();
 }
+
+export type StrategyBuyRecord = StrategyBuyAlert | (Omit<StrategyBuyAlert, "follow"> & { follow: null });
+export interface StrategyBuysByDate extends Omit<TodayStrategyBuys, "items"> {
+	items: StrategyBuyRecord[]
+}
+export function fetchStrategyBuysByDate(tradingDate: string, signal?: AbortSignal) {
+	return request.get("strategy/buys", { searchParams: { trading_date: tradingDate }, signal, timeout: 25000 })
+		.json<{ status: string, data: StrategyBuysByDate | null, message?: string }>();
+}

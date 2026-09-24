@@ -1,13 +1,14 @@
 import type { StrategyBuyAlert, TodayStrategyBuys } from "#src/api/strategy";
-import { fetchTodayStrategyBuys } from "#src/api/strategy";
+import { fetchStrategyBuysByDate, fetchTodayStrategyBuys } from "#src/api/strategy";
 import { useUserStore } from "#src/store/user";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import ShortTermTradeAlerts from "../src/components/short-term-trade-alerts";
 
-vi.mock("#src/api/strategy", () => ({ fetchTodayStrategyBuys: vi.fn(), fetchStrategyTradeJournal: vi.fn() }));
+vi.mock("#src/api/strategy", () => ({ fetchTodayStrategyBuys: vi.fn(), fetchStrategyBuysByDate: vi.fn(), fetchStrategyTradeJournal: vi.fn() }));
 const fetchBuys = vi.mocked(fetchTodayStrategyBuys);
+const fetchHistory = vi.mocked(fetchStrategyBuysByDate);
 let client: QueryClient;
 const day = "2026-09-16";
 function item(id = 1): StrategyBuyAlert {
@@ -65,6 +66,8 @@ beforeEach(() => {
 	vi.clearAllMocks();
 	useUserStore.setState({ id: "7" });
 	fetchBuys.mockResolvedValue(response());
+	fetchHistory.mockReset();
+	fetchHistory.mockResolvedValue(response([], "2026-09-15"));
 });
 afterEach(() => {
 	cleanup();
@@ -154,4 +157,69 @@ it("clears old owner data on account change and logout", async () => {
 		useUserStore.setState({ id: "" });
 	});
 	expect(screen.queryByLabelText("全部战法今日模拟买入")).not.toBeInTheDocument();
+});
+
+it("queries a historical date with each strategy's price, shares and reason and no current follow verdict", async () => {
+	fetchBuys.mockResolvedValue(response([item()]));
+	const historical = { ...item(2), buy_date: "2026-09-15", bought_at: "2026-09-15 09:50:00", buy_price: 8.75, buy_quantity: 8700, buy_reason: "历史成交原因" };
+	fetchHistory.mockResolvedValue(response([historical, { ...historical, trade_id: 3, strategy_type: "a_share_leader_tactics", stock_name: "历史龙头" }], "2026-09-15"));
+	mount();
+	await tick();
+	expect(screen.getByLabelText("查询买入日期")).toHaveValue(day);
+	fireEvent.click(screen.getByRole("button", { name: "前一天" }));
+	await tick();
+	expect(fetchHistory).toHaveBeenCalledWith("2026-09-15", expect.any(AbortSignal));
+	expect(screen.getByText("2026-09-15 模拟买入 · 2 笔 · 2 个战法")).toBeInTheDocument();
+	expect(screen.getAllByText("买入价格 ¥8.7500")).toHaveLength(2);
+	expect(screen.getAllByText("买入 87 手（8,700 股）")).toHaveLength(2);
+	expect(screen.getAllByText("历史成交原因")).toHaveLength(2);
+	expect(screen.queryByText("买入价格 ¥10.1250")).not.toBeInTheDocument();
+	expect(screen.queryByText("可考虑跟投")).not.toBeInTheDocument();
+	expect(screen.queryByText("是否值得跟投：")).not.toBeInTheDocument();
+	await tick(30000);
+	expect(fetchHistory).toHaveBeenCalledTimes(1);
+});
+
+it("returns to today and resumes live updates", async () => {
+	mount();
+	await tick();
+	expect(screen.getByRole("button", { name: "后一天" })).toBeDisabled();
+	fireEvent.click(screen.getByRole("button", { name: "前一天" }));
+	await tick();
+	expect(screen.getByText("全部14个战法 · 2026-09-15 暂无模拟买入")).toBeInTheDocument();
+	fireEvent.click(screen.getByRole("button", { name: "回到今天" }));
+	await tick();
+	expect(screen.getByLabelText("查询买入日期")).toHaveValue(day);
+	const calls = fetchBuys.mock.calls.length;
+	await tick(15000);
+	expect(fetchBuys.mock.calls.length).toBeGreaterThan(calls);
+});
+
+it("does not show an old date's late response after selecting another date", async () => {
+	let resolveOld: (value: ReturnType<typeof response>) => void = () => {};
+	fetchHistory.mockImplementationOnce(() => new Promise((resolve) => {
+		resolveOld = resolve;
+	}));
+	fetchHistory.mockResolvedValueOnce(response([], "2026-09-14"));
+	mount();
+	await tick();
+	fireEvent.click(screen.getByRole("button", { name: "前一天" }));
+	await tick();
+	fireEvent.click(screen.getByRole("button", { name: "前一天" }));
+	await tick();
+	await act(async () => resolveOld(response([{ ...item(), buy_date: "2026-09-15" }], "2026-09-15")));
+	await tick();
+	expect(screen.getByLabelText("查询买入日期")).toHaveValue("2026-09-14");
+	expect(screen.getByText("全部14个战法 · 2026-09-14 暂无模拟买入")).toBeInTheDocument();
+	expect(screen.queryByText("买入价格 ¥10.1250")).not.toBeInTheDocument();
+});
+
+it("shows historical query failures distinctly from an empty date", async () => {
+	fetchHistory.mockRejectedValue(new Error("offline"));
+	mount();
+	await tick();
+	fireEvent.click(screen.getByRole("button", { name: "前一天" }));
+	await tick();
+	expect(screen.getByText("历史买入查询失败")).toBeInTheDocument();
+	expect(screen.queryByText("全部14个战法 · 2026-09-15 暂无模拟买入")).not.toBeInTheDocument();
 });
