@@ -17,6 +17,7 @@ const names: Record<StrategyFollowType, string> = {
 	moving_average: "均线战法",
 	northbound: "北向资金",
 	trend_momentum: "趋势动量",
+	adaptive_confluence: "情绪催化自适应",
 	combined: "综合战法",
 	yangjia_emotion_cycle: "炒股养家情绪周期",
 	kobe92_cycle_speculation: "92科比周期投机",

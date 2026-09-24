@@ -49,6 +49,13 @@ const STRATEGY_CONFIG: Record<string, {
 	gradient: string
 	order: number
 }> = {
+	adaptive_confluence: {
+		label: "情绪催化自适应",
+		emoji: "研",
+		tagColor: "cyan",
+		gradient: "linear-gradient(135deg, #006d75 0%, #36cfc9 100%)",
+		order: 15,
+	},
 	dragon_head: {
 		label: "龙头战法",
 		emoji: "🐉",
@@ -507,7 +514,7 @@ function StrategyGroup({
 							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>平均评分</div>
 							<div style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
 								<StarFilled style={{ color: "#ffd700", marginRight: 4, fontSize: 14 }} />
-								{stats.avgScore}
+								{strategyType === "adaptive_confluence" ? "未评级" : stats.avgScore}
 							</div>
 						</div>
 						<div style={{
@@ -613,15 +620,12 @@ function ReviewRow({
 						<Text strong>{review.trading_date}</Text>
 					</Space>
 					<Tag
-						color={score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
+						color={review.strategy_type === "adaptive_confluence" ? "default" : score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
 						style={{ borderRadius: 12, minWidth: 70, textAlign: "center" }}
 					>
 						<StarFilled style={{ marginRight: 2 }} />
 						{" "}
-						{score}
-						分 ·
-						{" "}
-						{scoreLevel(score)}
+						{review.strategy_type === "adaptive_confluence" ? "前向验证 · 未评级" : `${score}分 · ${scoreLevel(score)}`}
 					</Tag>
 				</Space>
 				<Space size="large">
@@ -682,7 +686,7 @@ function ReviewDetail({ review }: { review: ReviewItem }) {
 				<Col xs={6}>
 					<Statistic
 						title="综合评级"
-						value={scoreLevel(score)}
+						value={review.strategy_type === "adaptive_confluence" ? "未评级" : scoreLevel(score)}
 						valueStyle={{ color: scoreColor(score), fontSize: 18, fontWeight: 700 }}
 						prefix={<TrophyOutlined />}
 					/>

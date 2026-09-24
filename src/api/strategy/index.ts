@@ -1524,7 +1524,7 @@ export function recordUnwindTrade(watchlistId: number, payload: RecordUnwindTrad
 		.json<{ status: string, data: { trade_id: number, account: UnwindPlan }, message: string }>();
 }
 
-export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined" | SkillTacticsStrategyType;
+export type StrategyFollowType = "dragon_head" | "emotion_relay" | "northbound" | "overnight" | "event_driven" | "breakthrough" | "volume_price" | "moving_average" | "trend_momentum" | "combined" | "adaptive_confluence" | SkillTacticsStrategyType;
 
 export interface StrategyFollowItem {
 	evidence_origin?: string
