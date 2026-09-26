@@ -1,11 +1,11 @@
 import type { DragonEntrySignal, DragonHeadFollowItem, DragonHeadFollowStock, DragonThemeV2, RelayStock } from "#src/api/strategy";
-
 import {
 	fetchDragonHeadFollow,
 	fetchEmotionRelayFollow,
 	triggerDragonHeadFollow,
 	triggerEmotionRelayFollow,
 } from "#src/api/strategy";
+
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import {
 	AlertOutlined,
@@ -42,6 +42,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text } = Typography;
 
@@ -562,7 +563,7 @@ export function FollowPanel({
 
 	if (loading && !latest) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Skeleton active paragraph={{ rows: 3 }} />
 				<div style={{ marginTop: 24 }}>
 					<Skeleton active paragraph={{ rows: 8 }} />
@@ -632,7 +633,7 @@ export function FollowPanel({
 
 	return (
 		<div>
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+			<div className="app-page-hero strategy-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 				<Space align="center">
 					{strategyIcon}
 					<Title level={5} style={{ margin: 0 }}>

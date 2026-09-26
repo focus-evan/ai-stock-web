@@ -1,10 +1,10 @@
 import type { ReviewItem } from "#src/api/portfolio";
-
 import {
 	fetchPortfolioList,
 	fetchReviews,
 	triggerReview,
 } from "#src/api/portfolio";
+
 import {
 	BookOutlined,
 	BulbOutlined,
@@ -38,6 +38,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -53,105 +54,105 @@ const STRATEGY_CONFIG: Record<string, {
 		label: "情绪催化自适应",
 		emoji: "研",
 		tagColor: "cyan",
-		gradient: "linear-gradient(135deg, #006d75 0%, #36cfc9 100%)",
+		gradient: "var(--app-hero)",
 		order: 15,
 	},
 	dragon_head: {
 		label: "龙头战法",
 		emoji: "🐉",
 		tagColor: "magenta",
-		gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+		gradient: "var(--app-hero)",
 		order: 1,
 	},
 	emotion_relay: {
 		label: "情绪接力",
 		emoji: "⚡",
 		tagColor: "purple",
-		gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+		gradient: "var(--app-hero)",
 		order: 2,
 	},
 	yangjia_emotion_cycle: {
 		label: "炒股养家情绪周期",
 		emoji: "养",
 		tagColor: "red",
-		gradient: "linear-gradient(135deg, #ff7875 0%, #d4380d 100%)",
+		gradient: "var(--app-hero)",
 		order: 3,
 	},
 	kobe92_cycle_speculation: {
 		label: "92科比周期投机",
 		emoji: "92",
 		tagColor: "geekblue",
-		gradient: "linear-gradient(135deg, #597ef7 0%, #722ed1 100%)",
+		gradient: "var(--app-hero)",
 		order: 4,
 	},
 	a_share_leader_tactics: {
 		label: "陈小群龙头战法",
 		emoji: "龙",
 		tagColor: "volcano",
-		gradient: "linear-gradient(135deg, #ff7a45 0%, #cf1322 100%)",
+		gradient: "var(--app-hero)",
 		order: 5,
 	},
 	beijing_chaogu_first_board: {
 		label: "北京炒家首板",
 		emoji: "首",
 		tagColor: "orange",
-		gradient: "linear-gradient(135deg, #ffc53d 0%, #fa541c 100%)",
+		gradient: "var(--app-hero)",
 		order: 6,
 	},
 	event_driven: {
 		label: "事件驱动",
 		emoji: "📡",
 		tagColor: "orange",
-		gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+		gradient: "var(--app-hero)",
 		order: 7,
 	},
 	breakthrough: {
 		label: "突破战法",
 		emoji: "🚀",
 		tagColor: "volcano",
-		gradient: "linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)",
+		gradient: "var(--app-hero)",
 		order: 8,
 	},
 	volume_price: {
 		label: "量价关系",
 		emoji: "📊",
 		tagColor: "geekblue",
-		gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+		gradient: "var(--app-hero)",
 		order: 9,
 	},
 	overnight: {
 		label: "隔夜施工法",
 		emoji: "🌙",
 		tagColor: "purple",
-		gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)",
+		gradient: "var(--app-hero)",
 		order: 10,
 	},
 	moving_average: {
 		label: "均线战法",
 		emoji: "📈",
 		tagColor: "green",
-		gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+		gradient: "var(--app-hero)",
 		order: 11,
 	},
 	combined: {
 		label: "综合战法",
 		emoji: "🎯",
 		tagColor: "gold",
-		gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
+		gradient: "var(--app-hero)",
 		order: 12,
 	},
 	trend_momentum: {
 		label: "趋势动量",
 		emoji: "🔥",
 		tagColor: "red",
-		gradient: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
+		gradient: "var(--app-hero)",
 		order: 13,
 	},
 	northbound: {
 		label: "北向资金",
 		emoji: "🧭",
 		tagColor: "blue",
-		gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
+		gradient: "var(--app-hero)",
 		order: 14,
 	},
 };
@@ -160,7 +161,7 @@ const DEFAULT_STRATEGY = {
 	label: "未知战法",
 	emoji: "❓",
 	tagColor: "default" as string,
-	gradient: "linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%)",
+	gradient: "var(--app-hero)",
 	order: 99,
 };
 
@@ -334,18 +335,20 @@ export default function PortfolioReview() {
 	};
 
 	return (
-		<div style={{ padding: "24px", maxWidth: 1200, margin: "0 auto" }}>
+		<div className="strategy-workspace" style={{ padding: "24px", maxWidth: 1200, margin: "0 auto" }}>
 			{/* 页头 */}
-			<div style={{
-				display: "flex",
-				justifyContent: "space-between",
-				alignItems: "center",
-				marginBottom: 24,
-			}}
+			<div
+				className="app-page-hero strategy-heading"
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+					marginBottom: 24,
+				}}
 			>
 				<div>
 					<Title level={3} style={{ margin: 0 }}>
-						<BookOutlined style={{ marginRight: 8, color: "#722ed1" }} />
+						<BookOutlined style={{ marginRight: 8, color: "#ffb0c0" }} />
 						每日复盘
 					</Title>
 					<Text type="secondary">GPT-5.2 智能分析交易优劣 · 按战法归类查看所有历史复盘</Text>
@@ -363,7 +366,7 @@ export default function PortfolioReview() {
 					size="small"
 					style={{
 						marginBottom: 24,
-						background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+						background: "var(--app-hero)",
 						border: "none",
 					}}
 				>

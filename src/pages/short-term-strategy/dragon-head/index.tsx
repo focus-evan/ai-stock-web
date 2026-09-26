@@ -41,6 +41,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -485,7 +486,7 @@ export default function DragonHead() {
 	];
 
 	if (loading && !data) {
-		return <BasicContent><div style={{ padding: 24 }}><Skeleton active paragraph={{ rows: 10 }} /></div></BasicContent>;
+		return <BasicContent><div className="strategy-workspace" style={{ padding: 24 }}><Skeleton active paragraph={{ rows: 10 }} /></div></BasicContent>;
 	}
 
 	if (error && !data) {
@@ -506,7 +507,7 @@ export default function DragonHead() {
 					children: (
 						<BasicContent>
 							<div style={{ paddingBottom: 24 }}>
-								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+								<div className="app-page-hero strategy-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 									<Space align="center">
 										<CrownOutlined style={{ fontSize: 24, color: "#f5222d" }} />
 										<Title level={4} style={{ margin: 0 }}>龙头战法 · 今日重点</Title>

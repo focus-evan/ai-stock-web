@@ -1,0 +1,22 @@
+.personal-center-page { width: 100%; max-width: 1280px; margin-inline: auto; }
+.personal-profile-card { width: 100%; max-width: 880px; margin-inline: auto; }
+.personal-center-intro { margin-bottom: 24px; }
+.personal-profile-form { width: 100%; max-width: 680px; }
+.personal-settings-hero { padding: 26px 28px; margin-bottom: 24px; }
+.personal-settings-hero > .ant-space { font-size: 26px; }
+.personal-settings-hero h1 { margin: 0; font-size: 28px; font-weight: 750; }
+.personal-settings-hero p { margin: 12px 0 0; color: #f3d8df; line-height: 1.8; }
+.personal-settings-card { height: 100%; }
+.personal-settings-card .ant-card-head-title .anticon { color: var(--app-accent-text); }
+.personal-settings-theme > ul:first-child { margin-bottom: 24px; }
+.personal-settings-theme > ul:first-child > li { flex: 1; min-width: 0; }
+.personal-settings-theme > ul:first-child dd { display: flex; align-items: center; justify-content: center; padding-inline: 12px; margin-inline: 0; }
+.personal-settings-card .outline-blue-600, .personal-settings-card .dark\:outline-blue-700 { outline-color: var(--app-accent); }
+.personal-settings-card [class*="before:hover:outline-blue"]::before { outline-color: var(--app-accent); }
+@media (max-width: 767px) {
+  .personal-settings-hero { padding: 22px 20px; margin-bottom: 18px; }
+  .personal-settings-hero h1 { font-size: 23px; }
+  .personal-settings-card > .ant-card-body, .personal-profile-card > .ant-card-body { padding: 16px; }
+  .personal-settings-theme > .flex { gap: 8px; flex-wrap: wrap; }
+  .personal-settings-theme .ant-input-number { width: 64px; }
+}

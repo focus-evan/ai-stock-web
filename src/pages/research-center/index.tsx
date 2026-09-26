@@ -5,7 +5,7 @@ import "./style.css";
 export default function ResearchCenter() {
 	return (
 		<section className="research-center" aria-label="研究与知识库">
-			<div className="research-center-heading">
+			<div className="research-center-heading app-page-hero">
 				<div>
 					<h1>研究与知识库</h1>
 					<p>每日雷达、个股研究、策略复盘与方法沉淀</p>

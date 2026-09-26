@@ -12,3 +12,6 @@
 
 /* keepalive 组件样式 */
 @import './keep-alive.css';
+
+/* Product-wide visual hierarchy and responsive surfaces. */
+@import './product.css';

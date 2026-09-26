@@ -1,6 +1,6 @@
 import type { EventDrivenData, EventStockRecommendation } from "#src/api/strategy";
-
 import type { ColumnsType } from "antd/es/table";
+
 import { fetchEventDrivenRecommendations } from "#src/api/strategy";
 import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
@@ -44,6 +44,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -465,7 +466,7 @@ export default function EventDriven() {
 	if (loading && !data) {
 		return (
 			<BasicContent>
-				<div style={{ padding: 24 }}>
+				<div className="strategy-workspace" style={{ padding: 24 }}>
 					<Skeleton active paragraph={{ rows: 2 }} />
 					<div style={{ marginTop: 24 }}>
 						<Skeleton active paragraph={{ rows: 8 }} />
@@ -551,6 +552,7 @@ export default function EventDriven() {
 							<div style={{ padding: "0 0 24px 0" }}>
 								{/* Header */}
 								<div
+									className="app-page-hero strategy-heading"
 									style={{
 										display: "flex",
 										justifyContent: "space-between",
@@ -559,7 +561,7 @@ export default function EventDriven() {
 									}}
 								>
 									<Space align="center">
-										<RadarChartOutlined style={{ fontSize: 24, color: "#722ed1" }} />
+										<RadarChartOutlined style={{ fontSize: 24, color: "#ffb0c0" }} />
 										<Title level={4} style={{ margin: 0 }}>
 											事件驱动推荐 V1.1
 										</Title>
@@ -806,7 +808,7 @@ export default function EventDriven() {
 								{/* ===== Top 5 重要事件（核心展示区，置于推荐列表上方）===== */}
 								{data.top_events && data.top_events.length > 0 && (
 									<Card
-										style={{ marginBottom: 16, border: "1px solid #722ed115", background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" }}
+										style={{ marginBottom: 16, border: "1px solid #722ed115", background: "var(--app-hero)" }}
 										styles={{ body: { padding: "16px 20px" } }}
 										title={(
 											<Space>

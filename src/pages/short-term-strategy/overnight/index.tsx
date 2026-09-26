@@ -4,10 +4,11 @@ import { fetchOvernightRecommendations, refreshOvernightRecommendations } from "
 import { BasicContent } from "#src/components/basic-content";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
-
 import { AlertOutlined, LineChartOutlined, MoonOutlined, ReloadOutlined, RiseOutlined, SafetyOutlined, StockOutlined } from "@ant-design/icons";
+
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -286,18 +287,19 @@ const OvernightPage: React.FC = () => {
 		if (!payload || payload.recommendations.length === 0) {
 			return (
 				<BasicContent>
-					<div style={{ padding: 24 }}>
+					<div className="strategy-workspace" style={{ padding: 24 }}>
 						<Card
+							className="app-page-hero strategy-page-hero"
 							bordered={false}
 							style={{
 								marginBottom: 24,
-								background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+								background: "var(--app-hero)",
 								borderRadius: 12,
 							}}
 						>
 							<Row gutter={[24, 16]} align="middle">
-								<Col span={14}>
-									<Space align="center">
+								<Col xs={24} xl={14}>
+									<Space align="center" wrap>
 										<MoonOutlined style={{ fontSize: 32, color: "#ffd93d" }} />
 										<div>
 											<Title level={3} style={{ margin: 0, color: "#fff" }}>
@@ -309,7 +311,7 @@ const OvernightPage: React.FC = () => {
 										</div>
 									</Space>
 								</Col>
-								<Col span={10} style={{ textAlign: "right" }}>
+								<Col xs={24} xl={10} style={{ textAlign: "right" }}>
 									<Button
 										type="primary"
 										size="large"
@@ -317,13 +319,13 @@ const OvernightPage: React.FC = () => {
 										loading={refreshing}
 										onClick={handleRefresh}
 										style={{
-											background: "linear-gradient(135deg, #ffd93d 0%, #ff9a00 100%)",
+											background: "var(--app-accent)",
 											border: "none",
 											fontWeight: "bold",
 											height: 44,
 											paddingInline: 28,
 											borderRadius: 8,
-											boxShadow: "0 4px 15px rgba(255, 217, 61, 0.4)",
+											boxShadow: "0 5px 18px rgba(207, 35, 62, 0.25)",
 										}}
 									>
 										{refreshing ? `AI筛选中 ${refreshSeconds}s...` : "立即筛选推荐"}
@@ -389,11 +391,11 @@ const OvernightPage: React.FC = () => {
 
 		return (
 			<BasicContent>
-				<div style={{ padding: 24 }}>
-					<Card bordered={false} style={{ marginBottom: 24, background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)", borderRadius: 12 }}>
+				<div className="strategy-workspace" style={{ padding: 24 }}>
+					<Card className="app-page-hero strategy-page-hero" bordered={false} style={{ marginBottom: 24, background: "var(--app-hero)", borderRadius: 12 }}>
 						<Row gutter={[24, 16]} align="middle">
-							<Col span={12}>
-								<Space align="center">
+							<Col xs={24} xl={12}>
+								<Space align="center" wrap>
 									<MoonOutlined style={{ fontSize: 32, color: "#ffd93d" }} />
 									<div>
 										<Title level={3} style={{ margin: 0, color: "#fff" }}>🌙 隔夜施工法</Title>
@@ -411,7 +413,7 @@ const OvernightPage: React.FC = () => {
 									</Button>
 								</Space>
 							</Col>
-							<Col span={12}>
+							<Col xs={24} xl={12}>
 								<Row gutter={16} justify="end">
 									<Col><Statistic title={<span style={{ color: "rgba(255,255,255,0.65)" }}>候选股</span>} value={payload.total} valueStyle={{ color: "#ffd93d", fontWeight: "bold" }} suffix="只" /></Col>
 									<Col><Statistic title={<span style={{ color: "rgba(255,255,255,0.65)" }}>AI增强</span>} value={payload.llm_enhanced ? "已增强" : "基础"} valueStyle={{ color: payload.llm_enhanced ? "#52c41a" : "#faad14", fontWeight: "bold" }} /></Col>
@@ -429,9 +431,9 @@ const OvernightPage: React.FC = () => {
 					</Card>
 
 					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-						<Col xs={24} md={8}><Card><Statistic title="候选股" value={payload.total} valueStyle={{ color: "#0f3460" }} /></Card></Col>
-						<Col xs={24} md={8}><Card><Statistic title="强烈推荐" value={payload.recommendations.filter(item => item.recommendation_level === "强烈推荐").length} valueStyle={{ color: "#f5222d" }} /></Card></Col>
-						<Col xs={24} md={8}><Card><Statistic title="推荐" value={payload.recommendations.filter(item => item.recommendation_level === "推荐").length} valueStyle={{ color: "#fa8c16" }} /></Card></Col>
+						<Col xs={24} md={8}><Card className="app-metric-card"><Statistic title="候选股" value={payload.total} valueStyle={{ color: "#0f3460" }} /></Card></Col>
+						<Col xs={24} md={8}><Card className="app-metric-card"><Statistic title="强烈推荐" value={payload.recommendations.filter(item => item.recommendation_level === "强烈推荐").length} valueStyle={{ color: "#f5222d" }} /></Card></Col>
+						<Col xs={24} md={8}><Card className="app-metric-card"><Statistic title="推荐" value={payload.recommendations.filter(item => item.recommendation_level === "推荐").length} valueStyle={{ color: "#fa8c16" }} /></Card></Col>
 					</Row>
 
 					<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
@@ -673,7 +675,7 @@ const OvernightPage: React.FC = () => {
 
 	if (loading) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Skeleton active paragraph={{ rows: 2 }} />
 				<Skeleton active paragraph={{ rows: 8 }} />
 			</div>
@@ -682,7 +684,7 @@ const OvernightPage: React.FC = () => {
 
 	if (error) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Alert message="加载失败" description={error} type="error" showIcon action={<a onClick={fetchData}>重试</a>} />
 			</div>
 		);

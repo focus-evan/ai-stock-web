@@ -19,6 +19,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import "#src/pages/home/business.css";
 
 const { Search } = Input;
 
@@ -133,6 +134,7 @@ export default function ShareholdersPage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card"
 				title={(
 					<Space>
 						<TeamOutlined />
@@ -153,7 +155,7 @@ export default function ShareholdersPage() {
 					<Search
 						placeholder={t("stock.enterStockCodePlaceholder", { defaultValue: "Enter stock code (e.g., 600000)" })}
 						onSearch={handleSearch}
-						style={{ width: 400 }}
+						style={{ width: "min(400px, 100%)" }}
 						enterButton={(
 							<Button type="primary" icon={<SearchOutlined />}>
 								{t("common.search", { defaultValue: "Search" })}

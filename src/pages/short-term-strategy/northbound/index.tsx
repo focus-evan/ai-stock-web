@@ -3,10 +3,11 @@ import type { ColumnsType } from "antd/es/table";
 import { fetchNorthboundRecommendations, refreshNorthboundRecommendations } from "#src/api/strategy";
 import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
-
 import { BankOutlined, DollarOutlined, ReloadOutlined } from "@ant-design/icons";
+
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -239,7 +240,7 @@ const NorthboundPage: React.FC = () => {
 
 	if (loading) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Skeleton active paragraph={{ rows: 2 }} />
 				<Skeleton active paragraph={{ rows: 8 }} />
 			</div>
@@ -248,7 +249,7 @@ const NorthboundPage: React.FC = () => {
 
 	if (error) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Alert
 					message="加载失败"
 					description={error}
@@ -289,18 +290,19 @@ const NorthboundPage: React.FC = () => {
 					key: "main",
 					label: "北向资金",
 					children: (
-						<div style={{ padding: 24 }}>
+						<div className="strategy-workspace" style={{ padding: 24 }}>
 							<Card
+								className="app-page-hero strategy-page-hero"
 								bordered={false}
 								style={{
 									marginBottom: 24,
-									background: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)",
+									background: "var(--app-hero)",
 									borderRadius: 12,
 								}}
 							>
 								<Row gutter={[24, 16]} align="middle">
-									<Col span={12}>
-										<Space align="center">
+									<Col xs={24} xl={12}>
+										<Space align="center" wrap>
 											<BankOutlined style={{ fontSize: 32, color: "#fff" }} />
 											<div>
 												<Title level={3} style={{ margin: 0, color: "#fff" }}>北向资金</Title>
@@ -324,7 +326,7 @@ const NorthboundPage: React.FC = () => {
 											</Button>
 										</Space>
 									</Col>
-									<Col span={12}>
+									<Col xs={24} xl={12}>
 										<Row gutter={16} justify="end">
 											<Col>
 												<Statistic

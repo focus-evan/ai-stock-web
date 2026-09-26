@@ -1,5 +1,4 @@
 import type { SchedulerTask } from "#src/api/system";
-
 import {
 	addSchedulerUser,
 	getSchedulerStatus,
@@ -7,6 +6,7 @@ import {
 	removeSchedulerUser,
 	updateSchedulerUser,
 } from "#src/api/system";
+
 import { BasicContent } from "#src/components/basic-content";
 import {
 	CheckCircleOutlined,
@@ -42,6 +42,7 @@ import {
 	Typography,
 } from "antd";
 import { useState } from "react";
+import "#src/pages/home/business.css";
 
 const { Text } = Typography;
 
@@ -441,6 +442,7 @@ export default function SchedulerPage() {
 			<Space direction="vertical" style={{ width: "100%" }} size="large">
 				{/* ==================== 用户配置管理 ==================== */}
 				<Card
+					className="business-section-card"
 					title={(
 						<Space>
 							<SettingOutlined />
@@ -463,6 +465,7 @@ export default function SchedulerPage() {
 						style={{
 							display: "flex",
 							gap: 12,
+							flexWrap: "wrap",
 							alignItems: "center",
 							marginBottom: 16,
 							padding: "12px 16px",

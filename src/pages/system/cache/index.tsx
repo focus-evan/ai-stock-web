@@ -1,11 +1,11 @@
 import type { RecommendationCacheRecent, RecommendationCacheStat } from "#src/api/system";
-
 import {
 	clearCache,
 	clearRecommendationCache,
 	getCacheStats,
 	getRecommendationCache,
 } from "#src/api/system";
+
 import { BasicContent } from "#src/components/basic-content";
 import {
 	ClearOutlined,
@@ -32,6 +32,7 @@ import {
 	Typography,
 } from "antd";
 import { useState } from "react";
+import "#src/pages/home/business.css";
 
 const { Text } = Typography;
 
@@ -164,9 +165,10 @@ export default function CachePage() {
 			<Space direction="vertical" style={{ width: "100%" }} size="large">
 				{/* ==================== 推荐缓存管理 ==================== */}
 				<Card
+					className="business-section-card"
 					title={(
 						<Space>
-							<RocketOutlined style={{ color: "#722ed1" }} />
+							<RocketOutlined style={{ color: "#ffb9c5" }} />
 							<span>策略推荐缓存</span>
 						</Space>
 					)}
@@ -201,7 +203,7 @@ export default function CachePage() {
 										size="small"
 										style={{
 											borderRadius: 10,
-											background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+											background: "var(--app-accent-soft)",
 										}}
 									>
 										<div style={{ marginBottom: 8 }}>{strategyTag(stat.strategy_type)}</div>
@@ -210,7 +212,7 @@ export default function CachePage() {
 												<Statistic title="记录数" value={stat.total_records} valueStyle={{ fontSize: 18 }} />
 											</Col>
 											<Col span={8}>
-												<Statistic title="推荐股票" value={stat.total_stocks} valueStyle={{ fontSize: 18, color: "#1890ff" }} />
+												<Statistic title="推荐股票" value={stat.total_stocks} valueStyle={{ fontSize: 18, color: "var(--app-accent-text)" }} />
 											</Col>
 											<Col span={8}>
 												<Text type="secondary" style={{ fontSize: 11 }}>

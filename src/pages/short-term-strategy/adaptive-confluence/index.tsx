@@ -6,6 +6,7 @@ import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { Alert, Button, Card, Col, Descriptions, Empty, message, Row, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Text, Paragraph, Title } = Typography;
 const STRATEGY = "adaptive_confluence";
@@ -48,7 +49,7 @@ export default function AdaptiveConfluence() {
 	return (
 		<BasicContent>
 			<Space direction="vertical" size="large" style={{ width: "100%" }}>
-				<Row justify="space-between" align="middle">
+				<Row className="app-page-hero strategy-heading" gutter={[16, 16]} justify="space-between" align="middle">
 					<Col>
 						<Title level={3} style={{ margin: 0 }}>情绪催化自适应</Title>
 						<Text type="secondary">市场情绪 → 消息催化 → 缩量回撤转强 → 可成交确认 → 完整交易复盘</Text>

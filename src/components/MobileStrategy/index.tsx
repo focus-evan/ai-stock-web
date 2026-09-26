@@ -10,6 +10,7 @@ import {
 	Typography,
 } from "antd";
 import React from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Text } = Typography;
 
@@ -52,7 +53,7 @@ export function MobilePageSkeleton() {
 			<Skeleton active paragraph={{ rows: 3 }} />
 			<div style={{ marginTop: 16 }}>
 				{[1, 2, 3].map(i => (
-					<div key={i} style={{ marginBottom: 12, borderRadius: 12, overflow: "hidden", background: "#fff", padding: "12px 16px" }}>
+					<div key={i} style={{ marginBottom: 12, borderRadius: 12, overflow: "hidden", background: "var(--app-surface)", padding: "12px 16px" }}>
 						<Skeleton active paragraph={{ rows: 2 }} />
 					</div>
 				))}
@@ -84,11 +85,13 @@ export function MobilePageHeader({
 	onRefresh,
 }: MobilePageHeaderProps) {
 	return (
-		<div style={{
-			background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)",
-			padding: "16px",
-			paddingTop: "env(safe-area-inset-top, 16px)",
-		}}
+		<div
+			className="mobile-strategy-hero"
+			style={{
+				background: "var(--app-hero)",
+				padding: "16px",
+				paddingTop: "max(env(safe-area-inset-top), 24px)",
+			}}
 		>
 			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
 				<div>
@@ -104,14 +107,13 @@ export function MobilePageHeader({
 						)}
 					</Space>
 					{subtitle && (
-						<Text style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", display: "block", marginTop: 4, marginLeft: 30 }}>
+						<Text style={{ fontSize: 12, color: "rgba(255,255,255,0.76)", display: "block", marginTop: 4, marginLeft: 30 }}>
 							{subtitle}
 						</Text>
 					)}
 					{date && (
 						<Tag
-							color="geekblue"
-							style={{ marginTop: 8, marginLeft: 30, fontSize: 12 }}
+							style={{ marginTop: 8, marginLeft: 30, fontSize: 12, background: "rgba(255,255,255,0.12)", color: "#fff", borderColor: "rgba(255,255,255,0.2)" }}
 						>
 							📅
 							{" "}
@@ -192,8 +194,9 @@ export function MobileStockCard({ stock, extraContent }: MobileStockCardProps) {
 	return (
 		<div style={{
 			borderRadius: 14,
-			border: `1.5px solid ${ls.border}`,
-			background: "#fff",
+			border: "1px solid var(--app-border)",
+			borderTop: `3px solid ${ls.border}`,
+			background: "var(--app-surface)",
 			marginBottom: 12,
 			overflow: "hidden",
 		}}
@@ -288,7 +291,7 @@ export function MobileStockCard({ stock, extraContent }: MobileStockCardProps) {
 			{/* 推荐理由 */}
 			{reason && (
 				<div style={{ padding: "10px 14px", borderBottom: advice ? "1px solid #f0f0f0" : undefined }}>
-					<Text style={{ fontSize: 12, color: "#595959", lineHeight: "18px", display: "block" }}>
+					<Text style={{ fontSize: 12, color: "var(--app-muted)", lineHeight: "18px", display: "block" }}>
 						💡
 						{" "}
 						{reason}
@@ -300,10 +303,10 @@ export function MobileStockCard({ stock, extraContent }: MobileStockCardProps) {
 			{advice && (
 				<div style={{
 					padding: "10px 14px",
-					background: "linear-gradient(90deg, #eef2ff 0%, #e0e7ff 100%)",
+					background: "var(--app-accent-soft)",
 				}}
 				>
-					<Text style={{ fontSize: 12, color: "#4338ca", lineHeight: "18px", display: "block" }}>
+					<Text style={{ fontSize: 12, color: "var(--app-accent-text)", lineHeight: "18px", display: "block" }}>
 						📋
 						{" "}
 						{advice}
@@ -336,7 +339,7 @@ export function MobileStatRow({ items }: MobileStatRowProps) {
 	return (
 		<div style={{
 			display: "flex",
-			background: "#fff",
+			background: "var(--app-surface)",
 			borderRadius: 12,
 			padding: "12px 0",
 			margin: "0 16px 12px",
@@ -348,11 +351,13 @@ export function MobileStatRow({ items }: MobileStatRowProps) {
 					key={i}
 					style={{
 						flex: 1,
+						minWidth: 0,
+						overflowWrap: "anywhere",
 						textAlign: "center",
 						borderRight: i < items.length - 1 ? "1px solid #f0f0f0" : undefined,
 					}}
 				>
-					<Text style={{ fontSize: 20, fontWeight: 700, color: item.color || "#1677ff", display: "block", lineHeight: 1.2 }}>
+					<Text style={{ fontSize: 20, fontWeight: 700, color: item.color || "var(--app-text)", display: "block", lineHeight: 1.2 }}>
 						{item.value}
 					</Text>
 					<Text type="secondary" style={{ fontSize: 11, marginTop: 2, display: "block" }}>
@@ -417,7 +422,7 @@ export function MobileStrategyContainer({ loading, children }: MobileStrategyCon
 	return (
 		<div style={{
 			minHeight: "100vh",
-			background: "#f5f7fa",
+			background: "var(--app-canvas, #f7f5f5)",
 			overflowY: "auto",
 			WebkitOverflowScrolling: "touch",
 		}}
@@ -453,8 +458,8 @@ export function SectionTitle({ children }: { children: React.ReactNode }) {
 			margin: "8px 16px 8px",
 		}}
 		>
-			<div style={{ width: 3, height: 14, background: "#1677ff", borderRadius: 2, marginRight: 8 }} />
-			<Text strong style={{ fontSize: 13, color: "#262626" }}>{children}</Text>
+			<div style={{ width: 3, height: 14, background: "var(--app-accent)", borderRadius: 2, marginRight: 8 }} />
+			<Text strong style={{ fontSize: 13, color: "var(--app-text)" }}>{children}</Text>
 		</div>
 	);
 }

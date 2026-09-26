@@ -8,7 +8,6 @@ import type {
 	StockPnlItem,
 } from "#src/api/portfolio";
 import type { ColumnsType } from "antd/es/table";
-
 import {
 	createPortfolio,
 	fetchFollowList,
@@ -22,6 +21,7 @@ import {
 	triggerFollowRecommendation,
 	triggerRebalance,
 } from "#src/api/portfolio";
+
 import { BasicContent } from "#src/components/basic-content";
 import OptimizationComparison from "#src/components/optimization-comparison";
 import PortfolioAuditPanel from "#src/components/portfolio-audit";
@@ -70,6 +70,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text } = Typography;
 
@@ -908,9 +909,9 @@ export default function PortfolioDashboard() {
 
 	return (
 		<BasicContent>
-			<div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+			<div className="app-page-hero strategy-heading" style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 				<Space>
-					<FundOutlined style={{ fontSize: 24, color: "#722ed1" }} />
+					<FundOutlined style={{ fontSize: 24, color: "#ffb0c0" }} />
 					<Title level={4} style={{ margin: 0 }}>模拟交易</Title>
 					<Tag color="purple" icon={<ExperimentOutlined />}>GPT-5.2 驱动</Tag>
 				</Space>
@@ -980,11 +981,11 @@ export default function PortfolioDashboard() {
 							<>
 								{/* ==================== 资产概览 ==================== */}
 								<Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-									<Col xs={24} sm={6}>
+									<Col xs={24} sm={12} xl={6}>
 										<Card
 											style={{
 												borderRadius: 12,
-												background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+												background: "var(--app-hero)",
 												border: "none",
 											}}
 											styles={{ body: { padding: "20px 24px" } }}
@@ -999,7 +1000,7 @@ export default function PortfolioDashboard() {
 											/>
 										</Card>
 									</Col>
-									<Col xs={24} sm={6}>
+									<Col xs={24} sm={12} xl={6}>
 										<Card
 											style={{
 												borderRadius: 12,
@@ -1034,11 +1035,11 @@ export default function PortfolioDashboard() {
 											</Text>
 										</Card>
 									</Col>
-									<Col xs={24} sm={6}>
+									<Col xs={24} sm={12} xl={6}>
 										<Card
 											style={{
 												borderRadius: 12,
-												background: "linear-gradient(135deg, #13c2c2 0%, #006d75 100%)",
+												background: "#292126",
 												border: "none",
 											}}
 											styles={{ body: { padding: "20px 24px" } }}
@@ -1053,11 +1054,11 @@ export default function PortfolioDashboard() {
 											/>
 										</Card>
 									</Col>
-									<Col xs={24} sm={6}>
+									<Col xs={24} sm={12} xl={6}>
 										<Card
 											style={{
 												borderRadius: 12,
-												background: "linear-gradient(135deg, #faad14 0%, #d48806 100%)",
+												background: "#292126",
 												border: "none",
 											}}
 											styles={{ body: { padding: "20px 24px" } }}
@@ -1160,7 +1161,7 @@ export default function PortfolioDashboard() {
 											)}
 										</Space>
 									)}
-									style={{ marginBottom: 16, borderRadius: 8, background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" }}
+									style={{ marginBottom: 16, borderRadius: 8, background: "var(--app-hero)" }}
 									styles={{ body: { padding: "16px 24px" } }}
 									bordered={false}
 								>

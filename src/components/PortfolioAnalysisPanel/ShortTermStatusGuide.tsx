@@ -31,8 +31,8 @@ export function ShortTermStatusGuide({ analysis }: { analysis: PortfolioShortTer
 					{" "}
 					种状态：5 种行情判断、2 种数据状态。这是当前状态，不是分数，也不一定逐级变化。
 				</Typography.Paragraph>
-				<div style={{ padding: "10px 12px", borderRadius: 8, background: current?.background || "#f5f5f5", marginBottom: 12 }}>
-					<Typography.Text strong>
+				<div style={{ padding: "10px 12px", borderRadius: 8, background: current?.background || "#f5f5f5", color: "#333", marginBottom: 12 }}>
+					<Typography.Text strong style={{ color: "#333" }}>
 						当前：
 						{current?.value || "状态待确认"}
 					</Typography.Text>
@@ -46,14 +46,14 @@ export function ShortTermStatusGuide({ analysis }: { analysis: PortfolioShortTer
 								<div
 									key={state.value}
 									aria-current={current?.value === state.value ? "true" : undefined}
-									style={{ padding: "8px 10px", borderRadius: 6, marginTop: 4, background: current?.value === state.value ? state.background : undefined, border: current?.value === state.value ? `1px solid ${state.color}` : "1px solid #f0f0f0" }}
+									style={{ padding: "8px 10px", borderRadius: 6, marginTop: 4, background: current?.value === state.value ? state.background : undefined, border: current?.value === state.value ? `1px solid ${state.color}` : "1px solid var(--app-border)" }}
 								>
 									<div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
-										<Typography.Text strong style={{ color: state.color }}>{state.value}</Typography.Text>
-										<Typography.Text type="secondary" style={{ fontSize: 12 }}>{state.stage}</Typography.Text>
+										<Typography.Text strong style={{ color: current?.value === state.value ? state.color : "var(--app-text)" }}>{state.value}</Typography.Text>
+										<Typography.Text type="secondary" style={{ fontSize: 12, color: current?.value === state.value ? "#595959" : "var(--app-muted)" }}>{state.stage}</Typography.Text>
 										{current?.value === state.value && <Tag color="blue" style={{ margin: 0 }}>当前</Tag>}
 									</div>
-									<div style={{ marginTop: 3, fontSize: 13, color: "#595959" }}>{state.meaning}</div>
+									<div style={{ marginTop: 3, fontSize: 13, color: current?.value === state.value ? "#595959" : "var(--app-muted)" }}>{state.meaning}</div>
 								</div>
 							))}
 						</section>

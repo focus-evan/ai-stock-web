@@ -1,0 +1,43 @@
+/* Shared by the business pages; content and semantic status colors remain independent. */
+.business-section-card > .ant-card-head {
+  min-height: 82px;
+  padding: 18px 24px;
+  border-bottom: 0;
+  background: var(--app-hero);
+  color: #fff;
+}
+.business-section-card > .ant-card-head .ant-card-head-title { font-size: 20px; font-weight: 700; white-space: normal; }
+.business-section-card > .ant-card-head .ant-card-head-title .anticon { color: #ffb9c5; }
+.business-section-card > .ant-card-head .ant-card-extra { color: #f9e9ee; }
+.business-section-card > .ant-card-head .ant-card-extra .ant-typography { color: #f9e9ee; }
+.business-section-card > .ant-card-body { min-width: 0; }
+.business-section-card .ant-table-wrapper { overflow-x: auto; }
+.business-chat-card { min-height: 520px; }
+.business-chat-card > .ant-card-body { min-height: 0; }
+.business-inline-hero.app-page-hero { padding: 26px 28px; }
+.business-inline-hero { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.business-inline-hero .ant-typography, .business-inline-hero .ant-statistic-title { color: #f9e9ee; }
+.business-inline-hero .ant-statistic-content { color: #fff; }
+.business-inline-hero h1, .business-inline-hero h2, .business-inline-hero h3, .business-inline-hero h4 { color: #fff; }
+@media (max-width: 767px) {
+  .business-section-card > .ant-card-head { padding: 16px; }
+  .business-section-card > .ant-card-head .ant-card-head-wrapper { align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+  .business-section-card > .ant-card-head .ant-card-head-title { flex-basis: 100%; font-size: 18px; }
+  .business-section-card > .ant-card-head .ant-card-extra { margin-inline-start: 0; max-width: 100%; }
+  .business-section-card > .ant-card-head .ant-card-extra > .ant-space { flex-wrap: wrap; }
+  .business-section-card > .ant-card-body { padding: 16px; }
+  .business-chat-card { min-height: 600px; }
+  .business-inline-hero { gap: 16px; }
+  .business-inline-hero.app-page-hero { padding: 22px 20px; }
+}
+
+.business-data-page .ant-pro-table-list-toolbar { background: var(--app-hero); border-radius: 16px 16px 0 0; padding: 4px 18px; }
+.business-data-page .ant-pro-table-list-toolbar-title { color: #fff; font-size: 20px; font-weight: 700; }
+.business-data-page .ant-pro-table-list-toolbar-setting-item { color: #f9e9ee; }
+.business-data-page .ant-pro-table-list-toolbar-container { gap: 14px; flex-wrap: wrap; }
+.business-data-page .ant-pro-table-list-toolbar-right { flex-wrap: wrap; }
+.business-data-page .ant-pro-table-list-toolbar-actions .ant-space { flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .business-inline-hero * { transition: none; }
+}

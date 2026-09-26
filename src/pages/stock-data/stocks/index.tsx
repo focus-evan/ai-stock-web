@@ -22,6 +22,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import "#src/pages/home/business.css";
 
 const { Search } = Input;
 
@@ -150,6 +151,7 @@ export default function StocksPage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card"
 				title={(
 					<Space>
 						<StockOutlined />
@@ -167,7 +169,7 @@ export default function StocksPage() {
 						<Search
 							placeholder={t("stock.searchPlaceholder", { defaultValue: "Search by code or name" })}
 							onSearch={handleSearch}
-							style={{ width: 300 }}
+							style={{ width: "min(300px, 100%)" }}
 							enterButton={<SearchOutlined />}
 						/>
 						<Select

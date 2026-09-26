@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import "#src/pages/home/business.css";
 import "./styles.css";
 
 const { TextArea } = Input;
@@ -321,6 +322,7 @@ export default function FreeStylePage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card business-chat-card"
 				title={(
 					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 						<MessageOutlined />
@@ -332,14 +334,14 @@ export default function FreeStylePage() {
 						{t("ai.clearSession", { defaultValue: "清空会话" })}
 					</Button>
 				)}
-				style={{ height: "calc(100vh - 200px)", display: "flex", flexDirection: "column" }}
+				style={{ height: "calc(100dvh - 180px)", display: "flex", flexDirection: "column" }}
 				bodyStyle={{ flex: 1, display: "flex", flexDirection: "column", padding: 0 }}
 			>
 				{/* 分栏展示区域 */}
 				<div className="split-container">
 					<Row gutter={16} style={{ flex: 1, margin: 0, height: "100%" }}>
 						{/* 左侧：自由问答历史 */}
-						<Col span={12} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+						<Col xs={24} md={12} className="free-style-panel" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<div className="panel-header">
 								<MessageOutlined />
 								{" "}
@@ -406,7 +408,7 @@ export default function FreeStylePage() {
 						</Col>
 
 						{/* 右侧：卡片问答历史 */}
-						<Col span={12} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+						<Col xs={24} md={12} className="free-style-panel" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
 							<div className="panel-header panel-header-cards">
 								<CreditCardOutlined />
 								{" "}

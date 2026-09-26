@@ -5,13 +5,13 @@ import type {
 	ShadowStockReport,
 	ShadowStockTrack,
 } from "#src/api/shadow-stock";
-
 import {
 	fetchShadowStockDashboard,
 	fetchShadowStockReportHistory,
 	fetchShadowStockReportStatus,
 	refreshShadowStockReport,
 } from "#src/api/shadow-stock";
+
 import { BasicContent } from "#src/components/basic-content";
 import {
 	BankOutlined,
@@ -49,6 +49,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -85,13 +86,7 @@ const TRACK_ICONS = [
 	<RiseOutlined key="ri" />,
 ];
 
-const TRACK_GRADIENTS = [
-	"linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-	"linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-	"linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-	"linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-	"linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-];
+const TRACK_GRADIENTS = ["var(--app-hero)"];
 
 function formatValuation(v: number): string {
 	if (v > 0)
@@ -261,7 +256,7 @@ export default function ShadowStockPage() {
 		return (
 			<BasicContent className="h-full" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 				<Result
-					icon={<RocketOutlined style={{ color: "#667eea", fontSize: 72 }} />}
+					icon={<RocketOutlined style={{ color: "var(--app-accent-text)", fontSize: 72 }} />}
 					title="影子股套利分析"
 					subTitle="暂无分析数据，点击下方按钮生成第一份影子股报告"
 					extra={(
@@ -279,10 +274,10 @@ export default function ShadowStockPage() {
 			<Spin spinning={loading} tip="加载中...">
 				<div style={{ padding: "0 4px" }}>
 					{/* 顶部信息栏 */}
-					<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 8, marginBottom: 16 }}>
+					<div className="app-page-hero business-inline-hero" style={{ marginBottom: 20 }}>
 						<div style={{ minWidth: 0 }}>
 							<Title level={4} style={{ margin: 0, marginBottom: 4, fontSize: 18 }}>
-								<RocketOutlined style={{ marginRight: 8, color: "#667eea" }} />
+								<RocketOutlined style={{ marginRight: 8, color: "#ffb9c5" }} />
 								影子股套利策略
 							</Title>
 							{dashboard?.report && (
@@ -336,14 +331,14 @@ export default function ShadowStockPage() {
 									minWidth: 120,
 									flex: "0 0 auto",
 									cursor: "pointer",
-									border: selectedTrackId === null ? "2px solid #667eea" : "1px solid #f0f0f0",
+									border: selectedTrackId === null ? "2px solid var(--app-accent)" : "1px solid #f0f0f0",
 									borderRadius: 12,
-									background: selectedTrackId === null ? "linear-gradient(135deg, #667eea22 0%, #764ba222 100%)" : undefined,
+									background: selectedTrackId === null ? "var(--app-accent-soft)" : undefined,
 									transition: "all 0.3s ease",
 								}}
 								bodyStyle={{ padding: "12px 16px", textAlign: "center" }}
 							>
-								<BankOutlined style={{ fontSize: 24, color: "#667eea", marginBottom: 4 }} />
+								<BankOutlined style={{ fontSize: 24, color: "var(--app-accent-text)", marginBottom: 4 }} />
 								<div style={{ fontWeight: 600 }}>全部赛道</div>
 								<Text type="secondary" style={{ fontSize: 12 }}>
 									{`${dashboard?.top_ipo_targets?.length || 0} 个标的`}
@@ -421,7 +416,7 @@ export default function ShadowStockPage() {
 											</Tag>
 										</Descriptions.Item>
 										<Descriptions.Item label="重要性评分">
-											<Progress percent={selectedTarget.importance_score} size="small" strokeColor="#667eea" style={{ width: 100 }} />
+											<Progress percent={selectedTarget.importance_score} size="small" strokeColor="var(--app-accent)" style={{ width: 100 }} />
 										</Descriptions.Item>
 									</Descriptions>
 
@@ -592,7 +587,7 @@ function TrackCard({ track, index, isSelected, targetCount, onClick }: TrackCard
 				minWidth: 150,
 				flex: "0 0 auto",
 				cursor: "pointer",
-				border: isSelected ? "2px solid #667eea" : "1px solid #f0f0f0",
+				border: isSelected ? "2px solid var(--app-accent)" : "1px solid #f0f0f0",
 				borderRadius: 12,
 				overflow: "hidden",
 				transition: "all 0.3s ease",
@@ -622,7 +617,7 @@ function TrackCard({ track, index, isSelected, targetCount, onClick }: TrackCard
 					percent={track.heat_score}
 					showInfo={false}
 					size="small"
-					strokeColor={TRACK_GRADIENTS[index % TRACK_GRADIENTS.length]}
+					strokeColor="var(--app-accent)"
 				/>
 				<Text type="secondary" style={{ fontSize: 11 }}>
 					{`${targetCount} 个IPO标的`}
@@ -651,8 +646,8 @@ function IPOTargetCard({ target, isSelected, onClick }: IPOTargetCardProps) {
 				padding: "12px 16px",
 				cursor: "pointer",
 				borderBottom: "1px solid #f5f5f5",
-				background: isSelected ? "#f0f5ff" : "transparent",
-				borderLeft: isSelected ? "3px solid #667eea" : "3px solid transparent",
+				background: isSelected ? "var(--app-accent-soft)" : "transparent",
+				borderLeft: isSelected ? "3px solid var(--app-accent)" : "3px solid transparent",
 				transition: "all 0.2s ease",
 			}}
 			onMouseEnter={(e) => {

@@ -26,6 +26,7 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { ShortTermStatusGuide } from "./ShortTermStatusGuide";
 import { getShortTermSummary } from "./shortTermSummary";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Text, Paragraph } = Typography;
 
@@ -87,7 +88,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 				<Text strong>短线重点</Text>
 				<Text type="secondary" style={{ fontSize: 11 }}>看未来 1–10 个交易日</Text>
 			</div>
-			<div style={{ color: "#8c8c8c", fontSize: 11, margin: "4px 0 12px" }}>
+			<div style={{ color: "var(--app-muted)", fontSize: 11, margin: "4px 0 12px" }}>
 				{t.as_of || "日期待更新"}
 				{" "}
 				收盘
@@ -96,32 +97,32 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 				·
 				{t.adjustment === "qfq" ? "前复权" : t.adjustment === "raw" ? "不复权" : "价格口径待核验"}
 			</div>
-			<div style={{ background: summary.background, borderLeft: `3px solid ${summary.color}`, borderRadius: 8, padding: "12px 14px" }}>
+			<div style={{ background: summary.background, color: "#333", borderLeft: `3px solid ${summary.color}`, borderRadius: 8, padding: "12px 14px" }}>
 				<div style={{ color: summary.color, fontSize: 17, fontWeight: 700 }}>{summary.title}</div>
 				<div style={{ color: "#595959", marginTop: 5 }}>{summary.reason}</div>
 				<div style={{ marginTop: 8 }}>
-					<Text strong>怎么做：</Text>
+					<Text strong style={{ color: "#333" }}>怎么做：</Text>
 					{summary.action}
 				</div>
 			</div>
 			{summary.ready && (
 				<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 12 }}>
-					<div style={{ background: "#fafafa", padding: "10px 12px", borderRadius: 8 }}>
+					<div style={{ background: "var(--app-surface-alt)", padding: "10px 12px", borderRadius: 8 }}>
 						<Text type="secondary">{belowSupport ? "已跌破低点" : "下方观察"}</Text>
 						<div style={{ fontSize: 18, fontWeight: 600, overflowWrap: "anywhere" }}>{price(t.support_5)}</div>
-						<div style={{ color: "#8c8c8c", fontSize: 11 }}>{belowSupport ? "已低于近 5 日低点，留意风险" : "近 5 日低点，跌破需警惕"}</div>
+						<div style={{ color: "var(--app-muted)", fontSize: 11 }}>{belowSupport ? "已低于近 5 日低点，留意风险" : "近 5 日低点，跌破需警惕"}</div>
 					</div>
-					<div style={{ background: "#fafafa", padding: "10px 12px", borderRadius: 8 }}>
+					<div style={{ background: "var(--app-surface-alt)", padding: "10px 12px", borderRadius: 8 }}>
 						<Text type="secondary">{summary.trendLabel}</Text>
 						<div style={{ fontSize: 18, fontWeight: 600, overflowWrap: "anywhere" }}>{price(trendPrice)}</div>
-						<div style={{ color: "#8c8c8c", fontSize: 11 }}>{summary.trendHint}</div>
+						<div style={{ color: "var(--app-muted)", fontSize: 11 }}>{summary.trendHint}</div>
 					</div>
 				</div>
 			)}
-			<div style={{ color: "#8c8c8c", fontSize: 11, marginTop: 10 }}>{summary.note}</div>
+			<div style={{ color: "var(--app-muted)", fontSize: 11, marginTop: 10 }}>{summary.note}</div>
 			<details style={{ marginTop: 12 }}>
-				<summary style={{ cursor: "pointer", color: "#595959", padding: "6px 0" }}>展开技术明细</summary>
-				<div style={{ color: "#8c8c8c", margin: "8px 0" }}>
+				<summary style={{ cursor: "pointer", color: "var(--app-text)", padding: "6px 0" }}>展开技术明细</summary>
+				<div style={{ color: "var(--app-muted)", margin: "8px 0" }}>
 					分析收盘价
 					{" "}
 					{price(t.close, true)}
@@ -133,7 +134,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 					根日线；与顶部报价时间独立。
 					{!summary.ready && "以下只作历史参考，不能确认当前交易信号。"}
 				</div>
-				<div style={{ background: "#fafafa", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+				<div style={{ background: "var(--app-surface-alt)", borderRadius: 8, padding: 12, marginBottom: 12 }}>
 					<Text strong>是否站上均线</Text>
 					<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 8, marginTop: 8 }}>
 						{t.moving_averages.map(ma => (
@@ -155,7 +156,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 						{fmtMetric(t.bias16_pct)}
 					</div>
 				</div>
-				<div style={{ background: "#f0f5ff", borderRadius: 8, padding: 12, marginBottom: 12 }}>
+				<div style={{ background: "var(--app-accent-soft)", borderRadius: 8, padding: 12, marginBottom: 12 }}>
 					<Text strong>量能与关键价位</Text>
 					<div>
 						相对前 5 日均量：
@@ -164,7 +165,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 						·
 						{t.volume_label}
 					</div>
-					<div style={{ color: "#8c8c8c" }}>本日完整成交量 ÷ 前 5 日均量，不含本日；不是盘中量比。</div>
+					<div style={{ color: "var(--app-muted)" }}>本日完整成交量 ÷ 前 5 日均量，不含本日；不是盘中量比。</div>
 					<div>
 						前 20 日高点：
 						{price(t.resistance_20, true)}
@@ -181,10 +182,10 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 						收盘价 − 1.5×ATR：
 						{price(t.atr_reference, true)}
 					</div>
-					<div style={{ color: "#8c8c8c" }}>高低点均不含本日；ATR 线只作波动风险参考。</div>
+					<div style={{ color: "var(--app-muted)" }}>高低点均不含本日；ATR 线只作波动风险参考。</div>
 				</div>
 				{t.signals.map(signal => (
-					<div key={signal.name} style={{ borderBottom: "1px solid #f0f0f0", padding: "10px 0" }}>
+					<div key={signal.name} style={{ borderBottom: "1px solid var(--app-border)", padding: "10px 0" }}>
 						<Text strong>{signal.name}</Text>
 						<Tag style={{ marginLeft: 6 }} color={signal.state === "风险触发" ? "red" : signal.state === "条件成立" ? "blue" : "default"}>{signal.state}</Tag>
 						<div style={{ marginTop: 6 }}>{signal.evidence}</div>
@@ -208,7 +209,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 						))}
 					</div>
 				)}
-				<details style={{ marginTop: 12, color: "#8c8c8c" }}>
+				<details style={{ marginTop: 12, color: "var(--app-muted)" }}>
 					<summary>方法依据与数据口径</summary>
 					<div>{t.rule_note}</div>
 					<div>
@@ -228,6 +229,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
 	return (
 		<Card
+			className="portfolio-stock-card"
 			bordered={false}
 			style={{
 				borderRadius: 12,
@@ -243,7 +245,8 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 		>
 			{/* Header */}
 			<div style={{
-				background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+				background: "#292126",
+				borderTop: "3px solid var(--app-accent)",
 				padding: "14px 18px",
 				color: "#fff",
 			}}
@@ -271,30 +274,32 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 				</div>
 
 				{/* 持仓信息条 */}
-				<div style={{
-					display: "grid",
-					gridTemplateColumns: "1fr 1fr 1fr 1fr",
-					gap: 4,
-					marginTop: 10,
-					background: "rgba(0,0,0,0.15)",
-					borderRadius: 6,
-					padding: "8px 10px",
-				}}
+				<div
+					className="portfolio-stock-metrics"
+					style={{
+						display: "grid",
+						gridTemplateColumns: "1fr 1fr 1fr 1fr",
+						gap: 4,
+						marginTop: 10,
+						background: "rgba(0,0,0,0.15)",
+						borderRadius: 6,
+						padding: "8px 10px",
+					}}
 				>
 					<div style={{ textAlign: "center" }}>
-						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>成本价</div>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.72)" }}>成本价</div>
 						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
 							{stock.buy_price > 0 ? `${currencySymbol(stock)}${stock.buy_price.toFixed(2)}` : "-"}
 						</div>
 					</div>
 					<div style={{ textAlign: "center" }}>
-						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>持有</div>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.72)" }}>持有</div>
 						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
 							{stock.buy_shares > 0 ? `${stock.buy_shares}股` : "-"}
 						</div>
 					</div>
 					<div style={{ textAlign: "center" }}>
-						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>市值</div>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.72)" }}>市值</div>
 						<div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
 							{stock.current_price > 0 && stock.buy_shares > 0
 								? `${currencySymbol(stock)}${(stock.current_price * stock.buy_shares).toFixed(0)}`
@@ -302,7 +307,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 						</div>
 					</div>
 					<div style={{ textAlign: "center" }}>
-						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>盈亏</div>
+						<div style={{ fontSize: 10, color: "rgba(255,255,255,0.72)" }}>盈亏</div>
 						<div style={{
 							fontSize: 13,
 							fontWeight: 700,
@@ -502,22 +507,23 @@ const PortfolioAnalysisPanel: React.FC = () => {
 			{generating && <Alert type="info" showIcon message="正在后台生成持仓分析，通常需要数分钟。完成后自动更新，刷新页面也可继续查看进度。" style={{ marginTop: 16 }} />}
 			{jobNotice && <Alert type="warning" showIcon message={jobNotice} style={{ marginTop: 16 }} />}
 			<Card
+				className="app-page-hero portfolio-overview"
 				bordered={false}
 				style={{
 					borderRadius: 12,
 					marginTop: 20,
 					overflow: "hidden",
-					background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
+					background: "var(--app-hero)",
 				}}
 				styles={{ body: { padding: "20px 28px" } }}
 			>
-				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+				<div className="portfolio-overview-toolbar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 					<Space size={12}>
-						<FundProjectionScreenOutlined style={{ fontSize: 24, color: "#a78bfa" }} />
+						<FundProjectionScreenOutlined style={{ fontSize: 24, color: "#ffa3b4" }} />
 						<div>
 							<Text style={{ color: "#fff", fontSize: 18, fontWeight: 700 }}>整体持仓分析</Text>
 							<div>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>
 									日线价量计算 · 均线趋势 / 量价确认 / ATR 风险
 								</Text>
 							</div>
@@ -544,7 +550,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 							loading={generating}
 							onClick={handleGenerate}
 							style={{
-								background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+								background: "var(--app-accent)",
 								border: "none",
 								color: "#fff",
 								borderRadius: 6,
@@ -558,45 +564,45 @@ const PortfolioAnalysisPanel: React.FC = () => {
 
 				{/* 总览 */}
 				{hasData && (
-					<Row gutter={16}>
-						<Col span={4}>
+					<Row className="portfolio-overview-metrics" gutter={[16, 22]}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>持仓数量</Text>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>持仓数量</Text>
 								<div style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>{stocks.length}</div>
 							</div>
 						</Col>
-						<Col span={4}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总成本</Text>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>分币种总成本</Text>
 								<div style={{ color: "#fff", fontSize: 17, fontWeight: 700 }}>
 									{totalCost}
 								</div>
 							</div>
 						</Col>
-						<Col span={4}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总市值</Text>
-								<div style={{ color: "#e0d4ff", fontSize: 17, fontWeight: 700 }}>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>分币种总市值</Text>
+								<div style={{ color: "#fff", fontSize: 17, fontWeight: 700 }}>
 									{totalValue}
 								</div>
 							</div>
 						</Col>
-						<Col span={4}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>分币种总盈亏</Text>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>分币种总盈亏</Text>
 								<div style={{
 									fontSize: 17,
 									fontWeight: 700,
-									color: "#e0d4ff",
+									color: "#fff",
 								}}
 								>
 									{totalPnl}
 								</div>
 							</div>
 						</Col>
-						<Col span={4}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>平均盈亏</Text>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>平均盈亏</Text>
 								<div style={{
 									fontSize: 22,
 									fontWeight: 700,
@@ -608,9 +614,9 @@ const PortfolioAnalysisPanel: React.FC = () => {
 								</div>
 							</div>
 						</Col>
-						<Col span={4}>
+						<Col xs={12} md={8} xl={4}>
 							<div style={{ textAlign: "center" }}>
-								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>盈/亏</Text>
+								<Text style={{ color: "rgba(255,255,255,0.72)", fontSize: 11 }}>盈/亏</Text>
 								<div style={{ fontSize: 22, fontWeight: 700 }}>
 									<span style={{ color: "#ff7875" }}>{stocks.filter(s => (s.pnl_pct || 0) > 0).length}</span>
 									<span style={{ color: "rgba(255,255,255,0.3)", margin: "0 4px" }}>/</span>
@@ -628,7 +634,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 						padding: "12px 16px",
 						background: "rgba(255,255,255,0.06)",
 						borderRadius: 8,
-						borderLeft: "3px solid #a78bfa",
+						borderLeft: "3px solid #ff859d",
 					}}
 					>
 						<Paragraph style={{
@@ -670,7 +676,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 								</div>
 							)}
 							{sentimentTrigger.trigger_reason && (
-								<div style={{ marginTop: 4, fontSize: 12, color: "#8c8c8c" }}>
+								<div style={{ marginTop: 4, fontSize: 12, color: "var(--app-muted)" }}>
 									触发原因:
 									{" "}
 									{sentimentTrigger.trigger_reason}
@@ -712,7 +718,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 							onClick={handleGenerate}
 							loading={generating}
 							style={{
-								background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+								background: "var(--app-accent)",
 								border: "none",
 								borderRadius: 6,
 							}}

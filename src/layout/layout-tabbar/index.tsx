@@ -196,7 +196,7 @@ export default function LayoutTabbar() {
 	}, [location, currentRoute, setActiveKey, addTab]);
 
 	return (
-		<div className={classes.tabsContainer}>
+		<div className={clsx(classes.tabsContainer, "app-tabbar")}>
 			<Tabs
 				className={clsx(
 					classes.resetTabs,

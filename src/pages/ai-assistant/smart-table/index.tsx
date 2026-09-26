@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import "#src/pages/home/business.css";
 import "./styles.css";
 
 const { TextArea } = Input;
@@ -307,6 +308,7 @@ export default function SmartTablePage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card business-chat-card"
 				title={(
 					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 						<TableOutlined />
@@ -318,7 +320,7 @@ export default function SmartTablePage() {
 						{t("ai.clearSession", { defaultValue: "清空会话" })}
 					</Button>
 				)}
-				style={{ height: "calc(100vh - 200px)", display: "flex", flexDirection: "column" }}
+				style={{ height: "calc(100dvh - 180px)", display: "flex", flexDirection: "column" }}
 				bodyStyle={{ flex: 1, display: "flex", flexDirection: "column", padding: 0 }}
 			>
 				<div className="qa-messages-container" style={{ flex: 1, overflowY: "auto", padding: "16px" }}>

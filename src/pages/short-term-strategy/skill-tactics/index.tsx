@@ -45,6 +45,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -643,9 +644,9 @@ export default function SkillTacticsPage() {
 
 	return (
 		<BasicContent>
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+			<div className="app-page-hero strategy-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
 				<Space>
-					<ThunderboltOutlined style={{ color: "#1677ff", fontSize: 24 }} />
+					<ThunderboltOutlined style={{ color: "#ffb0c0", fontSize: 24 }} />
 					<div>
 						<Title level={4} style={{ margin: 0 }}>短线四法跟踪</Title>
 						<Text type="secondary">读取 MySQL 中最近一次任务结果；只有定时任务或刷新按钮会重新生成并写入缓存。</Text>

@@ -373,7 +373,7 @@ export default function StockAnalysisPage() {
 	};
 	return (
 		<AnalysisSurface className="sa-workspace">
-			<header className="sa-workspace-header">
+			<header className="sa-workspace-header app-page-hero">
 				<div>
 					<span className="sa-eyebrow">股票研究工作台</span>
 					<h1>个股分析</h1>

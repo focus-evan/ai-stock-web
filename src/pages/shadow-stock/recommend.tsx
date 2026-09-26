@@ -343,24 +343,24 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 
 function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 	const typeColors: Record<string, string> = {
-		小马拉大车: "#eb2f96",
-		产业链协同: "#722ed1",
-		综合: "#1890ff",
+		小马拉大车: "#ffb9c5",
+		产业链协同: "#ffcda8",
+		综合: "#fff1f4",
 	};
 
 	return (
 		<Card
 			style={{
 				borderRadius: 16,
-				background: "linear-gradient(135deg, #141414 0%, #1f1f1f 50%, #262626 100%)",
+				background: "var(--app-hero)",
 				border: "none",
 				marginBottom: 24,
 			}}
 			styles={{ body: { padding: "24px 32px" } }}
 		>
-			<Row gutter={24} align="middle">
+			<Row gutter={[24, 20]} align="middle">
 				<Col flex="auto">
-					<div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+					<div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
 						<Title level={3} style={{ margin: 0, color: "#fff", fontWeight: 700 }}>
 							🏆 影子股每日推荐
 						</Title>
@@ -370,12 +370,12 @@ function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 							</Text>
 						)}
 					</div>
-					<Text style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, marginTop: 4, display: "block" }}>
+					<Text style={{ color: "#efd3db", fontSize: 13, marginTop: 4, display: "block" }}>
 						基于重估价值法，挖掘小马拉大车 & 产业链协同两大维度，每日精选 Top 10 影子股
 					</Text>
 				</Col>
 				<Col>
-					<Row gutter={32}>
+					<Row gutter={[24, 16]}>
 						{/* 类型分布 */}
 						{Object.entries(data.type_distribution || {}).map(([type, count]) => (
 							<Col key={type}>
@@ -389,7 +389,7 @@ function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 									>
 										{count}
 									</div>
-									<div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+									<div style={{ fontSize: 12, color: "#efd3db" }}>
 										{TYPE_CONFIG[type]?.icon || "📊"}
 										{" "}
 										{type}
@@ -409,7 +409,7 @@ function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 									>
 										{count}
 									</div>
-									<div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+									<div style={{ fontSize: 12, color: "#efd3db" }}>
 										{level}
 										级
 									</div>
@@ -522,7 +522,7 @@ export default function ShadowStockRecommendPage() {
 							style={{
 								borderRadius: 8,
 								fontWeight: 600,
-								background: "linear-gradient(135deg, #1890ff, #096dd9)",
+								background: "var(--app-accent)",
 								border: "none",
 							}}
 						>
@@ -584,7 +584,7 @@ export default function ShadowStockRecommendPage() {
 											height: 44,
 											paddingInline: 32,
 											fontWeight: 600,
-											background: "linear-gradient(135deg, #1890ff, #096dd9)",
+											background: "var(--app-accent)",
 											border: "none",
 										}}
 									>

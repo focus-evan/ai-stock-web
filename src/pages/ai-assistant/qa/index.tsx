@@ -6,6 +6,7 @@ import { useRequest } from "ahooks";
 import { Button, Card, Empty, Input, message, Space, Spin, Switch, Tag } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import "#src/pages/home/business.css";
 import "./styles.css";
 
 const { TextArea } = Input;
@@ -115,6 +116,7 @@ export default function QAPage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card business-chat-card"
 				title={(
 					<Space>
 						<RobotOutlined />
@@ -135,7 +137,7 @@ export default function QAPage() {
 						</Button>
 					</Space>
 				)}
-				style={{ height: "calc(100vh - 200px)", display: "flex", flexDirection: "column" }}
+				style={{ height: "calc(100dvh - 180px)", display: "flex", flexDirection: "column" }}
 				bodyStyle={{ flex: 1, display: "flex", flexDirection: "column", padding: 0 }}
 			>
 				<div className="qa-messages-container" style={{ flex: 1, overflowY: "auto", padding: "16px" }}>

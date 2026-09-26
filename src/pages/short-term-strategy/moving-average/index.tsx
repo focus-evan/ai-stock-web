@@ -5,8 +5,9 @@ import RecommendationHistory from "#src/components/RecommendationHistory";
 import StrategyFollowTab from "#src/components/strategy-follow-tab";
 import { CheckCircleOutlined, LineChartOutlined, ReloadOutlined, SwapOutlined } from "@ant-design/icons";
 import { Alert, Badge, Button, Card, Col, Empty, message, Row, Skeleton, Space, Statistic, Table, Tabs, Tag, Typography } from "antd";
-
 import React, { useEffect, useState } from "react";
+
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -273,7 +274,7 @@ const MovingAveragePage: React.FC = () => {
 
 	if (loading) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Skeleton active paragraph={{ rows: 2 }} />
 				<Skeleton active paragraph={{ rows: 8 }} />
 			</div>
@@ -282,7 +283,7 @@ const MovingAveragePage: React.FC = () => {
 
 	if (error) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Alert
 					message="加载失败"
 					description={error}
@@ -316,7 +317,7 @@ const MovingAveragePage: React.FC = () => {
 		};
 
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Card>
 					<Empty description="暂无均线信号" image={Empty.PRESENTED_IMAGE_SIMPLE}>
 						<Text type="secondary">当前暂无符合条件的均线信号股，请在交易时段查看</Text>
@@ -338,18 +339,19 @@ const MovingAveragePage: React.FC = () => {
 					key: "main",
 					label: "均线战法",
 					children: (
-						<div style={{ padding: 24 }}>
+						<div className="strategy-workspace" style={{ padding: 24 }}>
 							<Card
+								className="app-page-hero strategy-page-hero"
 								bordered={false}
 								style={{
 									marginBottom: 24,
-									background: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+									background: "var(--app-hero)",
 									borderRadius: 12,
 								}}
 							>
 								<Row gutter={[24, 16]} align="middle">
-									<Col span={12}>
-										<Space align="center">
+									<Col xs={24} xl={12}>
+										<Space align="center" wrap>
 											<LineChartOutlined style={{ fontSize: 32, color: "#fff" }} />
 											<div>
 												<Title level={3} style={{ margin: 0, color: "#fff" }}>均线战法</Title>
@@ -373,7 +375,7 @@ const MovingAveragePage: React.FC = () => {
 											</Button>
 										</Space>
 									</Col>
-									<Col span={12}>
+									<Col xs={24} xl={12}>
 										<Row gutter={16} justify="end">
 											<Col>
 												<Statistic

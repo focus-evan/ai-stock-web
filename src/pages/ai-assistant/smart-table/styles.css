@@ -3,7 +3,8 @@
 .table-data-container {
 	margin-top: 16px;
 	padding: 16px;
-	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	background: var(--app-accent-soft);
+	color: var(--app-text);
 	border-radius: 8px;
 	border: 1px solid #e8e8e8;
 }
@@ -12,7 +13,7 @@
 	display: flex;
 	align-items: center;
 	font-size: 16px;
-	color: #1890ff;
+	color: var(--app-accent-text);
 	margin-bottom: 8px;
 }
 
@@ -86,13 +87,13 @@
 }
 
 .qa-message-user .qa-message-avatar {
-	background: #1890ff;
+	background: var(--app-accent);
 	color: white;
 	margin-right: 12px;
 }
 
 .qa-message-assistant .qa-message-avatar {
-	background: #52c41a;
+	background: var(--app-hero);
 	color: white;
 	margin-left: 12px;
 }
@@ -111,7 +112,7 @@
 }
 
 .qa-message-user .qa-message-text {
-	background: #1890ff;
+	background: var(--app-accent);
 	color: white;
 	border-bottom-left-radius: 2px;
 }
@@ -174,4 +175,13 @@
 	padding: 8px 12px;
 	border-radius: 6px;
 	overflow: auto;
+}
+@media (max-width: 767px) {
+  .business-chat-card .qa-message-content { max-width: calc(100% - 44px); min-width: 0; }
+  .business-chat-card .qa-message-avatar { width: 32px; height: 32px; font-size: 17px; }
+  .business-chat-card .qa-message-text { padding: 10px 12px; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+  .business-chat-card .qa-message-metadata { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .business-chat-card .qa-message, .business-chat-card .styled-card { animation: none; transition: none; }
 }

@@ -30,6 +30,7 @@ import {
 	Tag,
 	Typography,
 } from "antd";
+import "#src/pages/home/business.css";
 
 const { Text } = Typography;
 
@@ -137,6 +138,7 @@ export default function MonitorPage() {
 			<Space direction="vertical" style={{ width: "100%" }} size="large">
 				{/* ==================== 系统健康总览 ==================== */}
 				<Card
+					className="business-section-card"
 					title={(
 						<Space>
 							<DashboardOutlined />

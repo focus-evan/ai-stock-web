@@ -10,7 +10,7 @@ const config = {
 	refreshData: (limit = 13) => refreshNorthboundRecommendations(limit),
 	getStocks: (data: any) => data?.recommendations || [],
 	getStats: (data: any) => [
-		{ label: "推荐总数", value: data?.total ?? 0, color: "#1677ff" },
+		{ label: "推荐总数", value: data?.total ?? 0, color: "var(--app-text)" },
 		{ label: "净流入", value: data?.market_overview?.net_inflow != null ? `${(data.market_overview.net_inflow / 1e8).toFixed(1)}亿` : "-", color: "#ff4d4f" },
 		{ label: "AI增强", value: data?.llm_enhanced ? "✅" : "●", color: "#52c41a" },
 	],

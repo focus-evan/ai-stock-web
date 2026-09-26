@@ -161,15 +161,15 @@ function PnlCard({ info }: { info: FollowUpPnlInfo }) {
 function AnalysisResult({ analysis, pnl }: { analysis: FollowUpAnalysis, pnl: FollowUpPnlInfo }) {
 	return (
 		<div>
-			<div style={{ background: "linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%)", borderRadius: 10, padding: "12px 16px", marginBottom: 14, border: "1px solid #d3adf7" }}>
+			<div style={{ background: "var(--app-accent-soft)", borderRadius: 10, padding: "12px 16px", marginBottom: 14, border: "1px solid var(--app-border)" }}>
 				<div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-					<ThunderboltOutlined style={{ color: "#722ed1" }} />
-					<Text strong style={{ color: "#722ed1" }}>核心决策</Text>
+					<ThunderboltOutlined style={{ color: "var(--app-accent-text)" }} />
+					<Text strong style={{ color: "var(--app-accent-text)" }}>核心决策</Text>
 					<Tag color={decisionColor(analysis.core_decision)} style={{ margin: 0, fontWeight: 700, fontSize: 13 }}>
 						{analysis.core_decision}
 					</Tag>
 				</div>
-				<Text style={{ fontSize: 13, color: "#434343" }}>{analysis.decision_reason}</Text>
+				<Text style={{ fontSize: 13, color: "var(--app-text)" }}>{analysis.decision_reason}</Text>
 			</div>
 			<Alert type="info" showIcon icon={<BulbOutlined />} message={analysis.summary} style={{ marginBottom: 14, borderRadius: 8 }} />
 			<PnlCard info={pnl} />
@@ -237,7 +237,7 @@ function HistoryPanel({ stockCode }: { stockCode: string }) {
 	if (loading) {
 		return (
 			<div style={{ textAlign: "center", paddingTop: 40 }}>
-				<Spin indicator={<LoadingOutlined style={{ fontSize: 24, color: "#722ed1" }} spin />} />
+				<Spin indicator={<LoadingOutlined style={{ fontSize: 24, color: "var(--app-accent-text)" }} spin />} />
 			</div>
 		);
 	}
@@ -323,7 +323,7 @@ function HistoryPanel({ stockCode }: { stockCode: string }) {
 							)}
 							{/* 操作摘要 */}
 							{rec.analysis_result?.summary && (
-								<div style={{ marginTop: 4, padding: "4px 8px", background: "#f5f3ff", borderRadius: 4, fontSize: 12, color: "#722ed1" }}>
+								<div style={{ marginTop: 4, padding: "4px 8px", background: "var(--app-accent-soft)", borderRadius: 4, fontSize: 12, color: "var(--app-accent-text)" }}>
 									💡
 									{" "}
 									{rec.analysis_result.summary}
@@ -420,7 +420,7 @@ const FollowUpModal: React.FC<Props> = ({
 						<>
 							{/* 原始推荐参考 */}
 							{(originalBuyPrice || originalTargetPrice || originalStopLoss) && (
-								<div style={{ background: "#f5f3ff", borderRadius: 8, padding: "8px 14px", marginBottom: 14, border: "1px solid #d3adf7" }}>
+								<div style={{ background: "var(--app-accent-soft)", borderRadius: 8, padding: "8px 14px", marginBottom: 14, border: "1px solid var(--app-border)" }}>
 									<Text type="secondary" style={{ fontSize: 11 }}>原始推荐参考价格</Text>
 									<div style={{ display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }}>
 										{originalBuyPrice && (
@@ -522,8 +522,8 @@ const FollowUpModal: React.FC<Props> = ({
 					{/* Step 1: 加载中 */}
 					{step === 1 && (
 						<div style={{ textAlign: "center", padding: "40px 0" }}>
-							<Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "#722ed1" }} spin />} />
-							<div style={{ marginTop: 14, color: "#722ed1", fontWeight: 600 }}>AI 正在深度分析持仓状况...</div>
+							<Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--app-accent-text)" }} spin />} />
+							<div style={{ marginTop: 14, color: "var(--app-accent-text)", fontWeight: 600 }}>AI 正在深度分析持仓状况...</div>
 							<Text type="secondary" style={{ fontSize: 12 }}>获取实时行情 · 计算盈亏 · 生成操作方案（约10-30秒）</Text>
 						</div>
 					)}
@@ -566,11 +566,11 @@ const FollowUpModal: React.FC<Props> = ({
 			onCancel={handleClose}
 			title={(
 				<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-					<DollarOutlined style={{ color: "#722ed1" }} />
+					<DollarOutlined style={{ color: "var(--app-accent-text)" }} />
 					<span>
 						跟投分析 —
 						{" "}
-						<span style={{ color: "#722ed1" }}>{stockName || stockCode}</span>
+						<span style={{ color: "var(--app-accent-text)" }}>{stockName || stockCode}</span>
 					</span>
 				</div>
 			)}

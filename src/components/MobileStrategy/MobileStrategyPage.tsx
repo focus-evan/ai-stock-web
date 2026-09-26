@@ -79,7 +79,7 @@ export function MobileStrategyPage({ config }: Props) {
 	const stocks = data ? config.getStocks(data) : [];
 
 	const defaultStats = (d: any) => [
-		{ label: "推荐总数", value: d?.total ?? stocks.length, color: "#1677ff" },
+		{ label: "推荐总数", value: d?.total ?? stocks.length, color: "var(--app-text)" },
 		{ label: "强烈推荐", value: stocks.filter((s: any) => s.recommendation_level === "强烈推荐").length, color: "#ff4d4f" },
 		{ label: "AI增强", value: d?.llm_enhanced ? "✅" : "●", color: "#52c41a" },
 	];
@@ -88,7 +88,7 @@ export function MobileStrategyPage({ config }: Props) {
 
 	if (loading) {
 		return (
-			<div style={{ minHeight: "100vh", background: "#f5f7fa", display: "flex", alignItems: "center", justifyContent: "center" }}>
+			<div style={{ minHeight: "100vh", background: "var(--app-canvas, #f7f5f5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
 				<Spin tip="加载中..." />
 			</div>
 		);

@@ -1,5 +1,5 @@
-/* eslint-disable react/no-array-index-key */
 import type { RecommendationHistoryItem, SkillTacticsStrategyType } from "#src/api/strategy";
+/* eslint-disable react/no-array-index-key */
 import { fetchRecommendationHistory, fetchSkillTacticsSignalHistory } from "#src/api/strategy";
 import WatchlistModal from "#src/components/WatchlistModal";
 import {
@@ -28,6 +28,7 @@ import {
 } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import FollowUpModal from "./FollowUpModal";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Text } = Typography;
 
@@ -209,11 +210,11 @@ const RecommendationHistory: React.FC<Props> = ({
 					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
 						{/* 左侧：标题 + 总数 */}
 						<Space size={8}>
-							<HistoryOutlined style={{ color: "#722ed1", fontSize: 18 }} />
+							<HistoryOutlined style={{ color: "var(--app-accent-text)", fontSize: 18 }} />
 							<Text strong style={{ fontSize: 15 }}>{title}</Text>
 							<Badge
 								count={sortedDates.length}
-								style={{ backgroundColor: "#722ed1" }}
+								style={{ backgroundColor: "var(--app-accent)" }}
 								overflowCount={99}
 								title={`共 ${sortedDates.length} 天记录`}
 							/>
@@ -262,7 +263,7 @@ const RecommendationHistory: React.FC<Props> = ({
 					justifyContent: "space-between",
 					marginBottom: 16,
 					padding: "8px 16px",
-					background: "linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)",
+					background: "var(--app-accent-soft)",
 					borderRadius: 8,
 					flexWrap: "wrap",
 					gap: 8,
@@ -271,8 +272,8 @@ const RecommendationHistory: React.FC<Props> = ({
 					<Space size={12} wrap>
 						{sessionInfo && <Tag color={sessionInfo.color}>{sessionInfo.label}</Tag>}
 						<Space size={4}>
-							<StockOutlined style={{ color: "#722ed1" }} />
-							<Text strong style={{ color: "#722ed1" }}>
+							<StockOutlined style={{ color: "var(--app-accent-text)" }} />
+							<Text strong style={{ color: "var(--app-accent-text)" }}>
 								{allStocks.length}
 								{" "}
 								条信号 /
@@ -497,10 +498,10 @@ const RecommendationHistory: React.FC<Props> = ({
 												<div style={{
 													margin: "0 10px 10px",
 													padding: "6px 10px",
-													background: "linear-gradient(90deg, #eef2ff 0%, #e0e7ff 100%)",
+													background: "var(--app-accent-soft)",
 													borderRadius: 6,
 													fontSize: 12,
-													color: "#4338ca",
+													color: "var(--app-accent-text)",
 													lineHeight: "18px",
 												}}
 												>
@@ -560,7 +561,7 @@ const RecommendationHistory: React.FC<Props> = ({
 														size="small"
 														icon={<ThunderboltOutlined />}
 														style={{
-															background: "linear-gradient(90deg, #722ed1 0%, #9254de 100%)",
+															background: "var(--app-accent)",
 															borderColor: "transparent",
 															color: "#fff",
 															borderRadius: 6,

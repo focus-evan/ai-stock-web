@@ -99,7 +99,7 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    background: #1890ff;
+    background: var(--app-accent);
     color: white;
     border-radius: 50%;
     font-size: 12px;
@@ -133,7 +133,7 @@
     gap: 8px;
     font-size: 14px;
     font-weight: 600;
-    color: #722ed1;
+    color: var(--app-accent);
     margin-bottom: 8px;
 }
 
@@ -229,13 +229,13 @@
 }
 
 .qa-message-user .qa-message-avatar {
-    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    background: var(--app-accent);
     color: white;
     margin-right: 16px;
 }
 
 .qa-message-assistant .qa-message-avatar {
-    background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+    background: var(--app-hero);
     color: white;
     margin-left: 16px;
 }
@@ -256,10 +256,10 @@
 }
 
 .qa-message-user .qa-message-text {
-    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    background: var(--app-accent);
     color: white;
     border-bottom-left-radius: 4px;
-    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(150, 25, 48, 0.15);
 }
 
 .qa-message-assistant .qa-message-text {
@@ -320,4 +320,13 @@
     padding: 12px 16px;
     border-radius: 8px;
     overflow: auto;
+}
+@media (max-width: 767px) {
+  .business-chat-card .qa-message-content { max-width: calc(100% - 44px); min-width: 0; }
+  .business-chat-card .qa-message-avatar { width: 32px; height: 32px; font-size: 17px; }
+  .business-chat-card .qa-message-text { padding: 10px 12px; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+  .business-chat-card .qa-message-metadata { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .business-chat-card .qa-message, .business-chat-card .styled-card { animation: none; transition: none; }
 }

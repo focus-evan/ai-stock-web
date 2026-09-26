@@ -40,6 +40,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Link, Text } = Typography;
 
@@ -405,10 +406,10 @@ export default function UnwindTrackingPanel() {
 			/>
 
 			<Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="自动跟踪持仓" value={plans.length} suffix="只" /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="仍低于有效成本" value={losingCount} suffix="只" valueStyle={{ color: "#389e0d" }} /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="已实现降本" value={cumulativeReduction} valueStyle={{ color: "#cf1322" }} /></Card></Col>
-				<Col xs={12} md={6}><Card size="small"><Statistic title="滚动资金池" value={cashPool} /></Card></Col>
+				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="自动跟踪持仓" value={plans.length} suffix="只" /></Card></Col>
+				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="仍低于有效成本" value={losingCount} suffix="只" valueStyle={{ color: "#389e0d" }} /></Card></Col>
+				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="已实现降本" value={cumulativeReduction} valueStyle={{ color: "#cf1322" }} /></Card></Col>
+				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="滚动资金池" value={cashPool} /></Card></Col>
 			</Row>
 
 			{!plans.length

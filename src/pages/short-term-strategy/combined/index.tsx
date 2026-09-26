@@ -34,8 +34,9 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
-
 import React, { useEffect, useState } from "react";
+
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text } = Typography;
 
@@ -466,7 +467,7 @@ const CombinedPage: React.FC = () => {
 
 	if (loading) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Skeleton active paragraph={{ rows: 2 }} />
 				<Skeleton active paragraph={{ rows: 8 }} />
 			</div>
@@ -475,7 +476,7 @@ const CombinedPage: React.FC = () => {
 
 	if (error) {
 		return (
-			<div style={{ padding: 24 }}>
+			<div className="strategy-workspace" style={{ padding: 24 }}>
 				<Alert
 					message="加载失败"
 					description={error}
@@ -500,19 +501,20 @@ const CombinedPage: React.FC = () => {
 	const sourceStrategies = data?.source_strategies ?? {};
 
 	return (
-		<div style={{ padding: 24 }}>
+		<div className="strategy-workspace" style={{ padding: 24 }}>
 			{/* 顶部 Banner */}
 			<Card
+				className="app-page-hero strategy-page-hero"
 				bordered={false}
 				style={{
 					marginBottom: 24,
-					background: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
+					background: "var(--app-hero)",
 					borderRadius: 12,
 				}}
 			>
 				<Row gutter={[24, 16]} align="middle">
-					<Col span={12}>
-						<Space align="center">
+					<Col xs={24} xl={12}>
+						<Space align="center" wrap>
 							<MergeCellsOutlined style={{ fontSize: 32, color: "#fff" }} />
 							<div>
 								<Title level={3} style={{ margin: 0, color: "#fff" }}>综合战法</Title>
@@ -536,7 +538,7 @@ const CombinedPage: React.FC = () => {
 							</Button>
 						</Space>
 					</Col>
-					<Col span={12}>
+					<Col xs={24} xl={12}>
 						<Row gutter={16} justify="end">
 							<Col>
 								<Statistic

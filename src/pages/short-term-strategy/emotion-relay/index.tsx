@@ -32,6 +32,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -236,7 +237,7 @@ export default function EmotionRelayPage() {
 					label: "今日重点",
 					children: (
 						<BasicContent>
-							<div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+							<div className="app-page-hero strategy-heading" style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 								<Space>
 									<HeartOutlined style={{ fontSize: 24, color: "#f5222d" }} />
 									<Title level={4} style={{ margin: 0 }}>情绪接力 · 今日重点</Title>

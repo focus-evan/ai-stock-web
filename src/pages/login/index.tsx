@@ -1,10 +1,8 @@
 import type { FormComponentMapType } from "./form-mode-context";
 
 // import hero from "#src/assets/svg/hero.svg?url";
-import Banner from "#src/assets/svg/banner.svg?react";
 import logo from "#src/assets/svg/logo.svg?url";
 import { useLayoutMenu } from "#src/hooks/use-layout-menu";
-import { usePreferences } from "#src/hooks/use-preferences";
 import LayoutFooter from "#src/layout/layout-footer";
 import { LanguageButton } from "#src/layout/layout-header/components/language-button";
 import { ThemeButton } from "#src/layout/layout-header/components/theme-button";
@@ -18,15 +16,12 @@ import {
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import { FORM_COMPONENT_MAP } from "./constants";
 import { FormModeContext } from "./form-mode-context";
 
 export default function Login() {
-	const { isDark } = usePreferences();
 	const { token } = theme.useToken();
-	const { t } = useTranslation();
 	const screens = Grid.useBreakpoint();
 	const [formMode, setFormMode] = useState<FormComponentMapType>("login");
 	const { pageLayout, layoutButtonTrigger } = useLayoutMenu();
@@ -36,6 +31,7 @@ export default function Login() {
 	const providedValue = useMemo(() => ({ formMode, setFormMode }), [formMode, setFormMode]);
 	return (
 		<div
+			className="app-login"
 			style={{
 				backgroundColor: token.colorBgContainer,
 			}}
@@ -67,19 +63,28 @@ export default function Login() {
 						sm={0}
 						lg={15}
 						style={{
-							backgroundImage: `radial-gradient(${token.colorBgContainer}, ${isDark ? token.colorBgBlur : token.colorPrimaryBg})`,
+							background: "var(--app-hero)",
 						}}
-						className={clsx({ hidden: isAlignCenter })}
+						className={clsx("app-login-visual", { hidden: isAlignCenter })}
 					>
 						<div className="flex flex-col items-center justify-center h-full gap-3">
-							<Banner
-								className="h-64 motion-safe:animate-bounceInDownOutUp"
-							/>
-							<div className="text-xl text-colorTextSecondary mt-6 font-sans lg:text-2xl">
-								{t("authority.pageTitle")}
-							</div>
-							<div className="text-colorTextTertiary mt-2">
-								{t("authority.pageDescription")}
+							<div className="app-login-intro">
+								<span className="app-login-eyebrow">AI STOCK / INTELLIGENCE</span>
+								<h2>
+									洞察先一步。
+									<br />
+									决策更清晰。
+								</h2>
+								<p>
+									聚合行情、策略与研究，
+									<br />
+									把复杂信息，化为有依据的判断。
+								</p>
+								<svg className="app-login-lines" viewBox="0 0 520 130" aria-hidden="true">
+									<path d="M0 110H520M0 65H520M0 20H520" stroke="white" strokeOpacity=".08" />
+									<path d="M0 115L70 94L125 101L180 62L245 73L300 36L350 51L405 18L460 34L520 4" fill="none" stroke="#f4647d" strokeWidth="3" />
+									<path d="M0 122L70 113L125 117L180 98L245 94L300 72L350 74L405 53L460 60L520 36" fill="none" stroke="white" strokeOpacity=".23" strokeWidth="2" />
+								</svg>
 							</div>
 						</div>
 					</Col>
@@ -88,7 +93,7 @@ export default function Login() {
 						xs={24}
 						sm={24}
 						lg={isAlignCenter ? 24 : 9}
-						className="relative flex flex-col justify-center px-6 py-10 xl:px-8"
+						className="app-login-form relative flex flex-col justify-center px-6 py-10 xl:px-8"
 						style={isAlignCenter || (!screens.xl && !screens.xxl && !screens.lg)
 							? {
 								backgroundImage: `radial-gradient(${token.colorBgContainer}, ${token.colorPrimaryBg})`,

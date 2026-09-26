@@ -31,6 +31,7 @@ import {
 	Typography,
 } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -218,7 +219,7 @@ function CompanyCard({ company }: { company: AggCompany }) {
 			styles={{ body: { padding: "10px 14px" } }}
 		>
 			{/* 头部 */}
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 6 }}>
 				<Space size={6} align="center">
 					<RocketOutlined style={{ color: "#667eea" }} />
 					<Text strong style={{ fontSize: 14 }}>{company.company_name}</Text>
@@ -444,7 +445,7 @@ export default function ShadowStockAggregate() {
 		<BasicContent className="h-full">
 			<div style={{ padding: "0 4px" }}>
 				{/* 顶部 */}
-				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+				<div className="app-page-hero business-inline-hero" style={{ marginBottom: 20 }}>
 					<div>
 						<Title level={4} style={{ margin: 0, marginBottom: 2 }}>
 							<TrophyFilled style={{ marginRight: 8, color: "#faad14" }} />
@@ -458,15 +459,15 @@ export default function ShadowStockAggregate() {
 						</Text>
 					</div>
 					<Row gutter={24}>
-						<Col><Statistic title="赛道" value={data.total_tracks} valueStyle={{ color: "#fa8c16", fontSize: 20 }} suffix="个" /></Col>
-						<Col><Statistic title="IPO标的" value={data.total_companies} valueStyle={{ color: "#52c41a", fontSize: 20 }} suffix="家" /></Col>
-						<Col><Statistic title="影子股" value={totalShadow} valueStyle={{ color: "#1677ff", fontSize: 20 }} suffix="只" /></Col>
+						<Col><Statistic title="赛道" value={data.total_tracks} valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }} suffix="个" /></Col>
+						<Col><Statistic title="IPO标的" value={data.total_companies} valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }} suffix="家" /></Col>
+						<Col><Statistic title="影子股" value={totalShadow} valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }} suffix="只" /></Col>
 					</Row>
 				</div>
 
 				{/* 筛选器 */}
 				<Card size="small" style={{ marginBottom: 12, borderRadius: 10 }} styles={{ body: { padding: "10px 14px" } }}>
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
 						<Space size={10} wrap>
 							<Input
 								placeholder="IPO公司名称"

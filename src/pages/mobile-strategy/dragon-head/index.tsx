@@ -81,7 +81,7 @@ export default function MobileDragonHead() {
 						{/* 统计 */}
 						<div style={{ marginTop: 12 }}>
 							<MobileStatRow items={[
-								{ label: "推荐总数", value: data.total || data.recommendations.length, color: "#1677ff" },
+								{ label: "推荐总数", value: data.total || data.recommendations.length, color: "var(--app-text)" },
 								{ label: "强烈推荐", value: strongCount, color: "#ff4d4f" },
 								{ label: "最高连板", value: `${maxDays}天`, color: "#fa541c" },
 							]}

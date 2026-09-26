@@ -52,8 +52,9 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 			}}
 		>
 			<header
+				data-shell-theme={isFixedDarkTheme ? "dark" : "light"}
 				className={cn(
-					"flex-shrink-0 flex gap-5 justify-between items-center transition-all md:px-4",
+					"app-header flex-shrink-0 flex gap-5 justify-between items-center transition-all md:px-4",
 					{ "overflow-hidden": isMaximize },
 					className,
 				)}
@@ -68,6 +69,7 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 						? (
 							<Button
 								type="text"
+								aria-label="展开或收起导航"
 								icon={sidebarCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
 								onClick={() => setPreferences("sidebarCollapsed", !sidebarCollapsed)}
 								className="h-full"
@@ -80,7 +82,7 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 					{children}
 				</div>
 
-				<div className="flex items-center">
+				<div className="app-header-tools flex items-center">
 					<BranchBadge />
 					<GlobalSearch />
 					<Preferences {...buttonProps} />

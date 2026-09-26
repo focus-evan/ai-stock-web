@@ -2,6 +2,7 @@ import type { LanguageType } from "#src/locales";
 import type { PreferencesState, ThemeType } from "./types";
 
 import { SIDE_NAVIGATION } from "#src/layout/widgets/preferences/blocks/layout/constants";
+import { BRAND_PRIMARY, BRAND_RADIUS } from "#src/styles/theme/brand";
 import { getAppNamespace } from "#src/utils/get-app-namespace";
 
 import { create } from "zustand";
@@ -27,9 +28,9 @@ export const DEFAULT_PREFERENCES = {
 	theme: "auto",
 	colorBlindMode: false,
 	colorGrayMode: false,
-	themeRadius: 6,
-	builtinTheme: "blue",
-	themeColorPrimary: "#1677ff",
+	themeRadius: BRAND_RADIUS,
+	builtinTheme: "red",
+	themeColorPrimary: BRAND_PRIMARY,
 
 	/* ================== Animation ================== */
 	transitionProgress: true,
@@ -57,7 +58,7 @@ export const DEFAULT_PREFERENCES = {
 	sidebarCollapseShowTitle: true,
 	sidebarExtraCollapsedWidth: 48,
 	firstColumnWidthInTwoColumnNavigation: 80,
-	sidebarTheme: "light",
+	sidebarTheme: "dark",
 	accordion: true,
 
 	/* ================== Footer ================== */
@@ -69,6 +70,18 @@ export const DEFAULT_PREFERENCES = {
 	ICPNumber: "",
 	ICPLink: "",
 } satisfies PreferencesState;
+
+/** Upgrade the visual defaults once without losing language, tabs or layout choices. */
+export function migrateBrandPreferences(persisted: unknown) {
+	const previous = persisted && typeof persisted === "object" ? persisted as Partial<PreferencesState> : {};
+	return {
+		...previous,
+		builtinTheme: "red" as const,
+		themeColorPrimary: BRAND_PRIMARY,
+		themeRadius: previous.themeRadius === 6 || previous.themeRadius == null ? BRAND_RADIUS : previous.themeRadius,
+		sidebarTheme: "dark" as const,
+	};
+}
 
 /**
  * 偏好设置操作接口
@@ -140,6 +153,10 @@ export const usePreferencesStore = create<
 				});
 			},
 		}),
-		{ name: getAppNamespace("preferences") },
+		{
+			name: getAppNamespace("preferences"),
+			version: 1,
+			migrate: migrateBrandPreferences,
+		},
 	),
 );

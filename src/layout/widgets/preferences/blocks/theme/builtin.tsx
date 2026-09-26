@@ -2,6 +2,7 @@ import type { BuiltinThemeType } from "#src/store/preferences/types";
 import type { ColorPickerProps } from "antd";
 
 import { usePreferencesStore } from "#src/store/preferences";
+import { BRAND_PRIMARY } from "#src/styles/theme/brand";
 import { cn } from "#src/utils/cn";
 
 import { ColorPicker } from "antd";
@@ -14,14 +15,14 @@ export function BuiltinTheme() {
 		themeColorPrimary,
 		setPreferences,
 	} = usePreferencesStore();
-	const [color, setColor] = useState(builtinTheme === "custom" ? themeColorPrimary : "#1677ff");
+	const [color, setColor] = useState(themeColorPrimary);
 	const { t } = useTranslation();
 
 	const builtinThemePresets = [
 		{
 			label: t("preferences.theme.builtin.red"),
 			value: "red",
-			color: "#f5222d",
+			color: BRAND_PRIMARY,
 		},
 		{
 			label: t("preferences.theme.builtin.volcano"),

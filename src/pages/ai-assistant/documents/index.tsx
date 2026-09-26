@@ -40,6 +40,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import "#src/pages/home/business.css";
 
 export default function DocumentsPage() {
 	const { t } = useTranslation();
@@ -260,6 +261,7 @@ export default function DocumentsPage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card"
 				title={(
 					<Space>
 						<FolderOutlined />

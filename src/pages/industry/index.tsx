@@ -36,6 +36,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -260,7 +261,7 @@ export default function IndustryAnalysis() {
 							key={comp.id}
 							size="small"
 							style={{
-								background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+								background: "var(--app-accent-soft)",
 								border: "none",
 							}}
 							styles={{ body: { padding: "16px" } }}
@@ -270,23 +271,23 @@ export default function IndustryAnalysis() {
 									<Tag color={patternInfo.color} style={{ fontSize: 14, padding: "4px 12px" }}>
 										{patternInfo.text}
 									</Tag>
-									<Text style={{ color: "rgba(255,255,255,0.85)", fontSize: 13 }}>
+									<Text style={{ color: "var(--app-text)", fontSize: 13 }}>
 										{patternInfo.desc}
 									</Text>
 								</Space>
-								<Paragraph style={{ color: "rgba(255,255,255,0.95)", margin: 0, fontSize: 13 }}>
+								<Paragraph style={{ color: "var(--app-text)", margin: 0, fontSize: 13 }}>
 									{comp.description}
 								</Paragraph>
 								{comp.key_factors && (
 									<div>
-										<Text strong style={{ color: "#fff", fontSize: 12 }}>关键要素：</Text>
-										<Text style={{ color: "rgba(255,255,255,0.85)", fontSize: 12 }}>{comp.key_factors}</Text>
+										<Text strong style={{ color: "var(--app-text)", fontSize: 12 }}>关键要素：</Text>
+										<Text style={{ color: "var(--app-text)", fontSize: 12 }}>{comp.key_factors}</Text>
 									</div>
 								)}
 								{comp.trends && (
 									<div>
-										<Text strong style={{ color: "#fff", fontSize: 12 }}>发展趋势：</Text>
-										<Text style={{ color: "rgba(255,255,255,0.85)", fontSize: 12 }}>{comp.trends}</Text>
+										<Text strong style={{ color: "var(--app-text)", fontSize: 12 }}>发展趋势：</Text>
+										<Text style={{ color: "var(--app-text)", fontSize: 12 }}>{comp.trends}</Text>
 									</div>
 								)}
 							</Space>
@@ -338,7 +339,7 @@ export default function IndustryAnalysis() {
 								title="市场份额"
 								value={company.market_share || 0}
 								suffix="%"
-								valueStyle={{ fontSize: 20, color: "#1890ff" }}
+								valueStyle={{ fontSize: 20, color: "var(--app-accent-text)" }}
 							/>
 						</Col>
 						<Col span={12}>
@@ -377,14 +378,14 @@ export default function IndustryAnalysis() {
 					{company.logic && (
 						<div
 							style={{
-								background: "#f0f5ff",
+								background: "var(--app-accent-soft)",
 								padding: "12px",
 								borderRadius: 8,
-								borderLeft: "3px solid #1890ff",
+								borderLeft: "3px solid var(--app-accent)",
 							}}
 						>
-							<Text strong style={{ fontSize: 13, color: "#1890ff" }}>💡 投资逻辑</Text>
-							<Paragraph style={{ margin: "4px 0 0 0", fontSize: 13, color: "#333" }}>
+							<Text strong style={{ fontSize: 13, color: "var(--app-accent-text)" }}>💡 投资逻辑</Text>
+							<Paragraph style={{ margin: "4px 0 0 0", fontSize: 13, color: "var(--app-text)" }}>
 								{company.logic}
 							</Paragraph>
 						</div>
@@ -432,7 +433,7 @@ export default function IndustryAnalysis() {
 											value={tech.market_size}
 											suffix="亿元"
 											prefix={<DollarOutlined />}
-											valueStyle={{ fontSize: 24, color: "#1890ff" }}
+											valueStyle={{ fontSize: 24, color: "var(--app-accent-text)" }}
 										/>
 									)}
 									{tech.growth_rate && (
@@ -463,7 +464,7 @@ export default function IndustryAnalysis() {
 					{tech.specs && tech.specs.length > 0 && (
 						<div>
 							<Title level={4} style={{ marginBottom: 16 }}>
-								<ThunderboltOutlined style={{ marginRight: 8, color: "#1890ff" }} />
+								<ThunderboltOutlined style={{ marginRight: 8, color: "var(--app-accent-text)" }} />
 								技术规格演进
 							</Title>
 							{renderSpecsTimeline(tech.specs)}
@@ -673,12 +674,12 @@ export default function IndustryAnalysis() {
 				style={{
 					borderRadius: 16,
 					marginBottom: 24,
-					background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+					background: "var(--app-hero)",
 					border: "none",
 				}}
 				styles={{ body: { padding: "32px" } }}
 			>
-				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+				<div className="business-inline-hero">
 					<div>
 						<Title level={2} style={{ margin: 0, color: "#fff" }}>
 							产业调研与分析

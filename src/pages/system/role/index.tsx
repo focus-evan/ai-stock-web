@@ -1,21 +1,22 @@
 import type { RoleItemType } from "#src/api/system/role";
 import type { ActionType, ProColumns, ProCoreActionType } from "@ant-design/pro-components";
-
 import { fetchDeleteRoleItem, fetchMenuByRoleId, fetchRoleList, fetchRoleMenu } from "#src/api/system/role";
+
 import { BasicButton } from "#src/components/basic-button";
 import { BasicContent } from "#src/components/basic-content";
 import { BasicTable } from "#src/components/basic-table";
 import { accessControlCodes, useAccess } from "#src/hooks/use-access";
 import { handleTree } from "#src/utils/tree";
-
 import { PlusCircleOutlined } from "@ant-design/icons";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button, Popconfirm } from "antd";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import { Detail } from "./components/detail";
+
 import { getConstantColumns } from "./constants";
+import "#src/pages/home/business.css";
 
 export default function Role() {
 	const { t } = useTranslation();
@@ -110,7 +111,7 @@ export default function Role() {
 		actionRef.current?.reload();
 	};
 	return (
-		<BasicContent className="h-full">
+		<BasicContent className="h-full business-data-page">
 			<BasicTable<RoleItemType>
 				adaptive
 				columns={columns}

@@ -33,6 +33,8 @@ import {
 import ReactECharts from "echarts-for-react";
 
 import { strategyExecutionStatus } from "./strategy-status";
+import "./business.css";
+import "./style.css";
 
 const { Text } = Typography;
 
@@ -86,7 +88,7 @@ function profitColor(v: number): string {
 	if (v > 0)
 		return "#ff4d4f";
 	if (v < 0)
-		return "#52c41a";
+		return "var(--home-loss-color, #15803d)";
 	return "#8c8c8c";
 }
 
@@ -318,79 +320,81 @@ export default function Home() {
 	];
 
 	return (
-		<BasicContent>
+		<BasicContent className="home-dashboard">
 			<Space direction="vertical" style={{ width: "100%" }} size="middle">
-				<ResearchEntry />
+				<section className="app-page-hero home-workspace-hero">
+					<div>
+						<span className="home-eyebrow">AI STOCK · 策略总览</span>
+						<h1>投资策略工作台</h1>
+						<p>聚焦组合表现、持仓变化与策略信号。</p>
+					</div>
+					<Button type="primary" icon={<ReloadOutlined />} onClick={refresh} loading={loading}>刷新总览</Button>
+				</section>
 				{/* ==================== 总览指标卡片 ==================== */}
 				<Row gutter={[16, 16]}>
 					<Col xs={24} sm={12} lg={6}>
 						<Card
-							style={{ borderRadius: 12, background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
+							className="app-metric-card home-summary-card home-summary-primary"
 							styles={{ body: { padding: "20px 24px" } }}
 						>
 							<Statistic
-								title={<span style={{ color: "rgba(255,255,255,0.85)" }}>总资产</span>}
+								title={<span className="home-metric-label">总资产</span>}
 								value={overview.total_asset || 0}
 								precision={2}
 								prefix={<DollarOutlined />}
-								valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }}
-								suffix={<Text style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>元</Text>}
+								valueStyle={{ fontSize: 28, fontWeight: 750 }}
+								suffix={<Text className="home-metric-unit">元</Text>}
 							/>
 						</Card>
 					</Col>
 					<Col xs={24} sm={12} lg={6}>
 						<Card
-							style={{
-								borderRadius: 12,
-								background: (overview.total_profit || 0) >= 0
-									? "linear-gradient(135deg, #eb3349 0%, #f45c43 100%)"
-									: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
-							}}
+							className="app-metric-card home-summary-card"
 							styles={{ body: { padding: "20px 24px" } }}
 						>
 							<Statistic
-								title={<span style={{ color: "rgba(255,255,255,0.85)" }}>总收益</span>}
+								title={<span className="home-metric-label">总收益</span>}
 								value={overview.total_profit || 0}
 								precision={2}
 								prefix={(overview.total_profit || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-								valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }}
-								suffix={<Text style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>元</Text>}
+								valueStyle={{ color: profitColor(overview.total_profit || 0), fontSize: 28, fontWeight: 750 }}
+								suffix={<Text className="home-metric-unit">元</Text>}
 							/>
 						</Card>
 					</Col>
 					<Col xs={24} sm={12} lg={6}>
 						<Card
-							style={{ borderRadius: 12, background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" }}
+							className="app-metric-card home-summary-card"
 							styles={{ body: { padding: "20px 24px" } }}
 						>
 							<Statistic
-								title={<span style={{ color: "rgba(255,255,255,0.85)" }}>总收益率</span>}
+								title={<span className="home-metric-label">总收益率</span>}
 								value={overview.total_profit_pct || 0}
 								precision={2}
 								prefix={<RiseOutlined />}
-								valueStyle={{ color: "#fff", fontSize: 24, fontWeight: 700 }}
-								suffix={<Text style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>%</Text>}
+								valueStyle={{ color: profitColor(overview.total_profit_pct || 0), fontSize: 28, fontWeight: 750 }}
+								suffix={<Text className="home-metric-unit">%</Text>}
 							/>
 						</Card>
 					</Col>
 					<Col xs={24} sm={12} lg={6}>
 						<Card
-							style={{ borderRadius: 12, background: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)" }}
+							className="app-metric-card home-summary-card"
 							styles={{ body: { padding: "20px 24px" } }}
 						>
-							<Space split={<span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>}>
+							<Space split={<span style={{ color: "var(--app-border)" }}>|</span>}>
 								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.85)" }}>持仓</span>}
+									title={<span className="home-metric-label">持仓</span>}
 									value={overview.positions_count || 0}
 									prefix={<StockOutlined />}
-									valueStyle={{ color: "#fff", fontSize: 22, fontWeight: 700 }}
+									valueStyle={{ fontSize: 24, fontWeight: 700 }}
 									suffix="只"
 								/>
 								<Statistic
-									title={<span style={{ color: "rgba(255,255,255,0.85)" }}>组合</span>}
+									title={<span className="home-metric-label">组合</span>}
 									value={overview.portfolios_count || 0}
 									prefix={<PieChartOutlined />}
-									valueStyle={{ color: "#fff", fontSize: 22, fontWeight: 700 }}
+									valueStyle={{ fontSize: 24, fontWeight: 700 }}
 									suffix="个"
 								/>
 							</Space>
@@ -398,22 +402,28 @@ export default function Home() {
 					</Col>
 				</Row>
 
+				<ResearchEntry />
+
 				{/* ==================== 各策略组合卡片 ==================== */}
+				<div className="home-section-heading">
+					<h2>策略组合</h2>
+					<Text type="secondary">资产、收益与最新执行状态</Text>
+				</div>
 				<Row gutter={[16, 16]}>
 					{strategySummary.map((s: any) => {
 						const cfg = STRATEGY_CONFIG[s.strategy_type] || {};
 						const sPositions: any[] = s.positions || [];
 						const executionStatus = strategyExecutionStatus(s);
 						return (
-							<Col xs={24} md={8} key={s.strategy_type}>
+							<Col xs={24} lg={12} xxl={8} key={s.strategy_type}>
 								<Card
 									style={{
 										borderRadius: 12,
-										borderTop: `3px solid ${cfg.color}`,
+										borderTop: "3px solid var(--app-accent)",
 									}}
 									styles={{ body: { padding: "16px 20px" } }}
 								>
-									<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+									<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
 										<Space>
 											<span style={{ fontSize: 20 }}>{cfg.icon}</span>
 											<Text strong style={{ fontSize: 15 }}>{cfg.label}</Text>
@@ -480,7 +490,7 @@ export default function Home() {
 											return null;
 										return (
 											<div style={{ marginBottom: 10 }}>
-												<div style={{ display: "flex", gap: 12, fontSize: 11, color: "#bfbfbf", flexWrap: "wrap" }}>
+												<div style={{ display: "flex", gap: 12, fontSize: 11, color: "var(--app-muted)", flexWrap: "wrap" }}>
 													{lastRunAt && (
 														<Tooltip title="最近一次策略交易决策或收益结算时间">
 															<span>
@@ -532,6 +542,7 @@ export default function Home() {
 											{sPositions.map((pos: any) => (
 												<div
 													key={pos.stock_code}
+													className="home-position-row"
 													style={{
 														display: "flex",
 														justifyContent: "space-between",
@@ -619,7 +630,7 @@ export default function Home() {
 						<Card
 							title={(
 								<Space>
-									<FundOutlined style={{ color: "#1890ff" }} />
+									<FundOutlined style={{ color: "var(--app-accent-text)" }} />
 									<span>收益曲线 (30天)</span>
 								</Space>
 							)}
@@ -637,7 +648,7 @@ export default function Home() {
 						<Card
 							title={(
 								<Space>
-									<PieChartOutlined style={{ color: "#722ed1" }} />
+									<PieChartOutlined style={{ color: "var(--app-accent-text)" }} />
 									<span>资产分布</span>
 								</Space>
 							)}
@@ -686,7 +697,7 @@ export default function Home() {
 												{recGenAt && <Text type="secondary" style={{ fontSize: 10 }}>{String(recGenAt).slice(5, 16)}</Text>}
 											</Space>
 										)}
-										style={{ borderRadius: 10, borderLeft: `3px solid ${cfg.color}` }}
+										style={{ borderRadius: 12, borderLeft: "3px solid var(--app-accent)" }}
 									>
 										{recs.length === 0
 											? <Empty description={emptyDescription} image={Empty.PRESENTED_IMAGE_SIMPLE} />

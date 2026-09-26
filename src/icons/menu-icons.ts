@@ -30,10 +30,13 @@ import {
 	LockOutlined,
 	MenuOutlined,
 	MergeCellsOutlined,
+	MergeOutlined,
 	MessageOutlined,
 	MinusSquareOutlined,
+	MobileOutlined,
 	MoonOutlined,
 	NodeExpandOutlined,
+	PieChartOutlined,
 	RadarChartOutlined,
 	RiseOutlined,
 	RobotOutlined,
@@ -52,6 +55,7 @@ import {
 	ThunderboltOutlined,
 	UnorderedListOutlined,
 	UserOutlined,
+	WarningOutlined,
 } from "@ant-design/icons";
 import { EmbeddedIcon, ExternalIcon, OutsidePageIcon, ProfileCardIcon } from "./local-icons";
 import { RiAccountCircleLine, RiReactjsLine, RiUserSettingsLine } from "./ri";
@@ -112,6 +116,9 @@ export const menuIcons: Record<string, any> = {
 	MoonOutlined,
 	SearchOutlined,
 	MergeCellsOutlined,
+	MergeOutlined,
+	MobileOutlined,
+	PieChartOutlined,
 	BankOutlined,
 	FireOutlined,
 	LinkOutlined,
@@ -120,4 +127,5 @@ export const menuIcons: Record<string, any> = {
 	StopOutlined,
 	MinusSquareOutlined,
 	ExperimentOutlined,
+	WarningOutlined,
 };

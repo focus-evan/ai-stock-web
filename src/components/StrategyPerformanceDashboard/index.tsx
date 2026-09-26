@@ -36,6 +36,7 @@ import {
 } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -675,7 +676,7 @@ export default function StrategyPerformanceDashboard() {
 	return (
 		<Spin spinning={loading}>
 			<Space direction="vertical" size={16} style={{ width: "100%" }}>
-				<div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+				<div className="strategy-panel-heading" style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
 					<div>
 						<Title level={4} style={{ margin: 0 }}>战法胜率与周度自进化</Title>
 						<Text type="secondary">
@@ -740,7 +741,7 @@ export default function StrategyPerformanceDashboard() {
 							<Card
 								bordered={false}
 								style={{
-									background: "linear-gradient(135deg, #1f1c4d 0%, #4c3494 58%, #7b5bd6 100%)",
+									background: "var(--app-hero)",
 									color: "#fff",
 									overflow: "hidden",
 								}}
@@ -780,10 +781,10 @@ export default function StrategyPerformanceDashboard() {
 						)}
 
 						<Row gutter={[12, 12]}>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="可跟投" value={data.trusted_strategy_count} suffix="个战法" prefix={<CheckCircleOutlined />} valueStyle={{ color: data.trusted_strategy_count > 0 ? "#389e0d" : "#8c8c8c" }} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="小仓验证" value={data.canary_strategy_count} suffix="个战法" prefix={<ExperimentOutlined />} valueStyle={{ color: "#1677ff" }} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="禁用跟投" value={data.disabled_strategy_count} suffix="个战法" prefix={<WarningOutlined />} valueStyle={{ color: data.disabled_strategy_count > 0 ? "#cf1322" : undefined }} /></Card></Col>
-							<Col xs={12} lg={6}><Card size="small"><Statistic title="成熟交易样本" value={data.total_trade_samples} prefix={<SafetyCertificateOutlined />} /></Card></Col>
+							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="可跟投" value={data.trusted_strategy_count} suffix="个战法" prefix={<CheckCircleOutlined />} valueStyle={{ color: data.trusted_strategy_count > 0 ? "#389e0d" : "#8c8c8c" }} /></Card></Col>
+							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="小仓验证" value={data.canary_strategy_count} suffix="个战法" prefix={<ExperimentOutlined />} valueStyle={{ color: "#1677ff" }} /></Card></Col>
+							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="禁用跟投" value={data.disabled_strategy_count} suffix="个战法" prefix={<WarningOutlined />} valueStyle={{ color: data.disabled_strategy_count > 0 ? "#cf1322" : undefined }} /></Card></Col>
+							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="成熟交易样本" value={data.total_trade_samples} prefix={<SafetyCertificateOutlined />} /></Card></Col>
 						</Row>
 
 						<Row gutter={[16, 16]}>

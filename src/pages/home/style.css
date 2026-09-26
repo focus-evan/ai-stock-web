@@ -1,0 +1,28 @@
+.home-workspace-hero { padding: 26px 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.home-workspace-hero h1 { margin: 6px 0 8px; font-size: clamp(24px, 2.4vw, 34px); font-weight: 760; letter-spacing: -.6px; color: #fff; }
+.home-workspace-hero p { margin: 0; color: #f3d8df; font-size: 14px; }
+.home-eyebrow { color: #ffb9c5; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.home-summary-card { height: 100%; border-radius: 16px; }
+.home-summary-card .ant-statistic-content { font-variant-numeric: tabular-nums; letter-spacing: -.6px; }
+.home-metric-label { color: var(--app-muted); font-size: 13px; }
+.home-metric-unit { color: var(--app-muted); font-size: 12px; }
+.home-summary-primary { background: var(--app-hero); border-color: transparent; }
+.home-summary-primary .ant-statistic-content { color: #fff; }
+.home-summary-primary .home-metric-label, .home-summary-primary .home-metric-unit { color: #f3d8df; }
+.home-section-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 2px 0; }
+.home-section-heading h2 { margin: 0; font-size: 20px; font-weight: 700; color: var(--app-text); }
+.home-dashboard .ant-card-head-title { white-space: normal; }
+.home-dashboard .ant-card-head-title > .ant-space { flex-wrap: wrap; }
+@media (max-width: 767px) { .home-workspace-hero { padding: 22px 20px; gap: 18px; } .home-workspace-hero .ant-btn { min-height: 40px; } .home-summary-card .ant-card-body { padding: 18px !important; } }
+
+.home-dashboard .ant-table-wrapper { overflow-x: auto; }
+@media (max-width: 575px) {
+  .home-position-row { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 12px !important; }
+  .home-position-row > div { min-width: 0 !important; }
+  .home-position-row > div:nth-child(3) { text-align: left !important; }
+}
+
+.home-dashboard { --home-loss-color: #15803d; }
+html.dark .home-dashboard { --home-loss-color: #65c98a; }
+/* These rows keep a fixed light background in both modes. */
+.home-position-row { --home-loss-color: #15803d; }

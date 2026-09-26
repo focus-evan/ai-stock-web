@@ -97,7 +97,7 @@ export default function LayoutContent() {
 		<main
 			id={ELEMENT_ID_MAIN_CONTENT}
 			ref={contentElement}
-			className="relative overflow-y-auto overflow-x-hidden grow"
+			className="app-main relative overflow-y-auto overflow-x-hidden grow"
 			style={
 				{
 					backgroundColor: colorBgLayout,

@@ -30,6 +30,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Text, Paragraph } = Typography;
 
@@ -85,11 +86,11 @@ const StrategyAnalysisCard: React.FC<{ sa: StrategyAnalysis }> = ({ sa }) => (
 			{sa.analysis}
 		</Paragraph>
 		<div style={{
-			background: "linear-gradient(90deg, #eef2ff 0%, #e0e7ff 100%)",
+			background: "var(--app-accent-soft)",
 			borderRadius: 4,
 			padding: "4px 8px",
 			fontSize: 12,
-			color: "#4338ca",
+			color: "var(--app-accent-text)",
 			fontWeight: 500,
 		}}
 		>
@@ -155,7 +156,7 @@ const GuidanceDetail: React.FC<{ record: WatchlistGuidanceRecord }> = ({ record 
 
 		{/* 综合决策 */}
 		<div style={{
-			background: "linear-gradient(135deg, #722ed1 0%, #9254de 100%)",
+			background: "var(--app-accent)",
 			borderRadius: 8,
 			padding: "10px 14px",
 			color: "#fff",
@@ -443,7 +444,7 @@ const WatchlistPanel: React.FC<Props> = () => {
 										<div style={{
 											margin: "0 10px 8px",
 											padding: "8px 10px",
-											background: "linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)",
+											background: "var(--app-accent-soft)",
 											borderRadius: 6,
 											fontSize: 12,
 										}}
@@ -468,7 +469,7 @@ const WatchlistPanel: React.FC<Props> = () => {
 													{lg.trading_session}
 												</Text>
 											</div>
-											<Text style={{ fontSize: 11, color: "#595959" }}>{lg.overall_summary}</Text>
+											<Text style={{ fontSize: 11, color: "var(--app-text)" }}>{lg.overall_summary}</Text>
 										</div>
 									)}
 
@@ -480,7 +481,7 @@ const WatchlistPanel: React.FC<Props> = () => {
 											icon={guidanceLoading === item.id ? <LoadingOutlined /> : <ThunderboltOutlined />}
 											loading={guidanceLoading === item.id}
 											style={{
-												background: "linear-gradient(90deg, #722ed1 0%, #9254de 100%)",
+												background: "var(--app-accent)",
 												borderColor: "transparent",
 												color: "#fff",
 												borderRadius: 6,

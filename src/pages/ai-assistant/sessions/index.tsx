@@ -11,6 +11,7 @@ import {
 import { useRequest } from "ahooks";
 import { Button, Card, message, Popconfirm, Space, Table, Tag } from "antd";
 import { useTranslation } from "react-i18next";
+import "#src/pages/home/business.css";
 
 export default function SessionsPage() {
 	const { t } = useTranslation();
@@ -151,6 +152,7 @@ export default function SessionsPage() {
 	return (
 		<BasicContent>
 			<Card
+				className="business-section-card"
 				title={(
 					<Space>
 						<MessageOutlined />

@@ -11,9 +11,9 @@ const config = {
 	refreshData: (limit = 13) => refreshCombinedRecommendations(limit),
 	getStocks: (data: any) => data?.recommendations || [],
 	getStats: (data: any) => [
-		{ label: "推荐总数", value: data?.total ?? 0, color: "#1677ff" },
+		{ label: "推荐总数", value: data?.total ?? 0, color: "var(--app-text)" },
 		{ label: "强烈推荐", value: (data?.recommendations || []).filter((s: any) => s.recommendation_level === "强烈推荐").length, color: "#ff4d4f" },
-		{ label: "来源策略", value: data?.source_strategies?.length ?? "-", color: "#722ed1" },
+		{ label: "来源策略", value: data?.source_strategies?.length ?? "-", color: "var(--app-text)" },
 	],
 	renderAlert: (data: any) => data?.market_analysis
 		? (
