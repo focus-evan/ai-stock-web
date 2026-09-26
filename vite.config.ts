@@ -137,9 +137,14 @@ export default defineConfig({
 	build: {
 		// Generate license file after build
 		license: true,
+		manifest: true,
 		outDir: "build",
 		sourcemap: false,
 		rollupOptions: {
+			input: {
+				"index": "index.html",
+				"research-theme": "src/research-theme.ts",
+			},
 			output: {
 				manualChunks: {
 					react: ["react", "react-dom", "react-router"],
