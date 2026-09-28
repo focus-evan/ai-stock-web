@@ -1239,6 +1239,7 @@ export interface PortfolioShortTermAnalysis {
 }
 
 export interface PortfolioStockAnalysis {
+	capital_tracking?: import("./portfolioCapitalTypes").CapitalStockCard
 	short_term?: PortfolioShortTermAnalysis
 	stock_code: string
 	stock_name: string
@@ -1293,6 +1294,7 @@ export interface PortfolioStockAnalysis {
 }
 
 export interface PortfolioAnalysisData {
+	capital_tracking?: import("./portfolioCapitalTypes").PortfolioCapitalTracking
 	analysis_version?: string
 	stocks: PortfolioStockAnalysis[]
 	total: number
