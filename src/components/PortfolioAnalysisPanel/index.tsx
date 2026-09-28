@@ -1,4 +1,5 @@
 import type { PortfolioAnalysisData, PortfolioStockAnalysis } from "#src/api/strategy";
+import type { CapitalEvidence } from "#src/api/strategy/portfolioCapitalTypes";
 import { fetchPortfolioAnalysis, fetchPortfolioAnalysisJob, triggerPortfolioAnalysis } from "#src/api/strategy";
 import {
 	ClockCircleOutlined,
@@ -24,6 +25,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { CapitalStockSection, CapitalTrackingOverview } from "./CapitalTracking";
 import { ShortTermStatusGuide } from "./ShortTermStatusGuide";
 import { getShortTermSummary } from "./shortTermSummary";
 
@@ -225,7 +227,7 @@ export const ShortTermSection: React.FC<{ stock: PortfolioStockAnalysis }> = ({ 
 };
 
 /* ========== Stock Card ========== */
-const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock }) => {
+const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis, evidence?: CapitalEvidence[] }> = ({ stock, evidence }) => {
 	return (
 		<Card
 			bordered={false}
@@ -343,6 +345,7 @@ const StockAnalysisCard: React.FC<{ stock: PortfolioStockAnalysis }> = ({ stock 
 			{/* Body */}
 			<div style={{ padding: "12px 18px" }}>
 				<ShortTermSection stock={stock} />
+				<CapitalStockSection card={stock.capital_tracking} evidence={evidence} />
 			</div>
 
 		</Card>
@@ -518,7 +521,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 							<Text style={{ color: "#fff", fontSize: 18, fontWeight: 700 }}>整体持仓分析</Text>
 							<div>
 								<Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>
-									日线价量计算 · 均线趋势 / 量价确认 / ATR 风险
+									日线价量 · 大盘与板块 · 资金证据 · 持仓复核
 								</Text>
 							</div>
 						</div>
@@ -644,6 +647,8 @@ const PortfolioAnalysisPanel: React.FC = () => {
 				)}
 			</Card>
 
+			{hasData && !generating && <CapitalTrackingOverview data={data?.capital_tracking} />}
+
 			{/* 盘前情绪预警触发标记 */}
 			{sentimentTrigger && sentimentTrigger.triggered_by_sentiment && (
 				<Alert
@@ -693,7 +698,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 				<Card bordered={false} style={{ borderRadius: 12, marginTop: 16, textAlign: "center", padding: 40 }}>
 					<Spin size="large" />
 					<div style={{ marginTop: 16 }}>
-						<Text type="secondary">正在生成短线解析（获取日线 + 计算量价指标），请稍候...</Text>
+						<Text type="secondary">正在获取日线、核验资金与公告证据；部分来源缺失时会保留可用分析...</Text>
 					</div>
 					<Progress percent={99} status="active" showInfo={false} style={{ maxWidth: 300, margin: "16px auto 0" }} />
 				</Card>
@@ -728,7 +733,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 				<Row gutter={[16, 16]} style={{ marginTop: 16 }}>
 					{stocks.map(stock => (
 						<Col key={stock.stock_code} xs={24} md={12} xl={8}>
-							<StockAnalysisCard stock={stock} />
+							<StockAnalysisCard stock={stock} evidence={data?.capital_tracking?.evidence} />
 						</Col>
 					))}
 				</Row>
