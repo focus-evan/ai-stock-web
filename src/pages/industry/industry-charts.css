@@ -1,0 +1,20 @@
+.industry-score-chart { margin: 0 0 22px; }
+.industry-score-row { display: grid; grid-template-columns: minmax(120px, 210px) minmax(80px, 1fr) 56px; gap: 14px; align-items: center; padding: 8px 0; min-height: 36px; }
+.industry-score-name { font-size: 13px; line-height: 1.5; }
+.industry-score-row strong { text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; }
+.industry-score-track { height: 18px; background: #f0f2f5; border-radius: 4px; overflow: hidden; }
+.industry-score-fill { height: 100%; background: #cf183b; border-radius: 4px; }
+.industry-score-chart figcaption { color: #77808d; font-size: 12px; margin-top: 10px; }
+.industry-trend-chart { margin: 4px 0 16px; }
+.industry-trend-chart figcaption { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; font-size: 13px; }
+.industry-trend-chart figcaption span { display: inline-flex; align-items: center; gap: 8px; }
+.industry-trend-chart figcaption i { display: inline-block; width: 20px; height: 3px; }
+.industry-trend-scroll { overflow-x: auto; }
+.industry-trend-chart svg { display: block; width: 100%; min-width: 460px; height: 280px; }
+.industry-trend-chart text { fill: #68717e; font: 12px system-ui, sans-serif; }
+.industry-chart-empty { color: #77808d; padding: 12px 0; }
+@media (max-width: 600px) {
+  .industry-score-row { grid-template-columns: 112px minmax(50px, 1fr) 46px; gap: 8px; }
+  .industry-score-name, .industry-score-row strong { font-size: 12px; }
+}
+.industry-analysis-stack > .ant-space-item { width: 100%; min-width: 0; max-width: 100%; }
