@@ -46,6 +46,7 @@ export function generateMenuItemsFromRoutes(routeList: AppRouteRecordRaw[]) {
 					menuItem.icon = createElement(menuIcons[iconName]);
 				}
 				else {
+					menuItem.icon = createElement(menuIcons.AppstoreOutlined);
 					console.warn(
 						`menu-icon: icon "${iconName}" not found in src/icons/menu-icons.ts file`,
 					);

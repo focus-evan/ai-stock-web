@@ -49,6 +49,9 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { formatMetric } from "./data";
+import { pollReport } from "./poll-report";
+import { useLatestRequest } from "./use-latest-request";
 import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -89,9 +92,7 @@ const TRACK_ICONS = [
 const TRACK_GRADIENTS = ["var(--app-hero)"];
 
 function formatValuation(v: number): string {
-	if (v > 0)
-		return `${v}亿`;
-	return "未估算";
+	return formatMetric(v, 1, "亿", true);
 }
 
 function formatConfidence(c: string): string {
@@ -99,7 +100,7 @@ function formatConfidence(c: string): string {
 		return "高确信";
 	if (c === "medium")
 		return "中确信";
-	return "低确信";
+	return c === "low" ? "低确信" : "待核验";
 }
 
 function getElasticityColor(v: number): string {
@@ -115,7 +116,7 @@ function formatRiskText(v: string): string {
 		return "低";
 	if (v === "medium")
 		return "中";
-	return "高";
+	return v === "high" ? "高" : "待核验";
 }
 
 function formatBizColor(v: string): string {
@@ -130,104 +131,88 @@ function formatBizColor(v: string): string {
  *  主组件
  * ========================================================= */
 export default function ShadowStockPage() {
-	const [dashboard, setDashboard] = useState<ShadowStockDashboardResponse | null>(null);
-	const [loading, setLoading] = useState(true);
+	const { data: dashboard, loading, error: loadError, run: runDashboard } = useLatestRequest<ShadowStockDashboardResponse>();
+	const { data: historyResponse, run: runHistory } = useLatestRequest<{ data: ShadowStockReport[] }>();
 	const [refreshing, setRefreshing] = useState(false);
+	const [refreshError, setRefreshError] = useState<string | null>(null);
 	const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
-	const [selectedTarget, setSelectedTarget] = useState<ShadowStockIPOTarget | null>(null);
-	const [reportHistory, setReportHistory] = useState<ShadowStockReport[]>([]);
-	const [selectedBatchId, setSelectedBatchId] = useState<string | undefined>(undefined);
+	const [selectedTargetId, setSelectedTargetId] = useState<number | null>(null);
+	const [selectedBatchId, setSelectedBatchId] = useState<string | undefined>();
+	const refreshController = useRef<AbortController | null>(null);
+	const reportHistory = historyResponse?.data || [];
 
 	const loadData = useCallback(async (batchId?: string) => {
-		setLoading(true);
-		try {
-			const resp = await fetchShadowStockDashboard(
-				batchId ? { batch_id: batchId } : undefined,
-			);
-			setDashboard(resp);
-			setSelectedTarget(null);
-			if (resp.top_ipo_targets?.length)
-				setSelectedTarget(resp.top_ipo_targets[0]);
+		const resp = await runDashboard(signal => fetchShadowStockDashboard(batchId ? { batch_id: batchId } : undefined, signal));
+		if (resp) {
+			setSelectedTrackId(null);
+			setSelectedTargetId(resp.status === "ok" ? resp.top_ipo_targets?.[0]?.id || null : null);
 		}
-		catch {
-			// silently handle
-		}
-		finally {
-			setLoading(false);
-		}
-	}, []);
-
-	const loadHistory = useCallback(async () => {
-		try {
-			const resp = await fetchShadowStockReportHistory({ page: 1, page_size: 50 });
-			if (resp.data?.length) {
-				setReportHistory(resp.data.filter(r => r.status === "completed"));
-			}
-		}
-		catch {
-			// silently handle
-		}
-	}, []);
+	}, [runDashboard]);
+	const loadHistory = useCallback(() => runHistory(signal => fetchShadowStockReportHistory({ page: 1, page_size: 50 }, signal)), [runHistory]);
 
 	useEffect(() => {
-		loadData();
-		loadHistory();
+		void loadData();
+		void loadHistory();
+		return () => refreshController.current?.abort();
 	}, [loadData, loadHistory]);
 
-	const handleRefresh = async () => {
-		setRefreshing(true);
-		try {
-			const resp = await refreshShadowStockReport();
-			message.info(resp.message || "刷新已启动");
-			const batchId = resp.batch_id;
-			if (!batchId) {
-				message.warning("刷新已启动，但后端未返回批次号，请稍后手动刷新页面");
-				setRefreshing(false);
-				return;
-			}
+	const watchReport = useCallback(async (batchId: string, controller: AbortController) => {
+		const status = await pollReport(signal => fetchShadowStockReportStatus(batchId, signal), controller.signal);
+		if (controller.signal.aborted)
+			return;
+		if (status.status === "completed") {
+			setSelectedBatchId(batchId);
+			await Promise.all([loadData(batchId), loadHistory()]);
+			if (!controller.signal.aborted)
+				message.success("影子股报告刷新完成");
+		}
+		else {
+			throw new Error(status.error || status.message || (status.status === "not_found" ? "报告批次不存在，请重新查询" : "影子股报告刷新失败"));
+		}
+	}, [loadData, loadHistory]);
 
-			let timeout: ReturnType<typeof setTimeout> | undefined;
-			const poll = setInterval(async () => {
-				try {
-					const status = await fetchShadowStockReportStatus(batchId);
-					if (status.status === "completed") {
-						const d = await fetchShadowStockDashboard({ batch_id: batchId });
-						if (d.status === "ok") {
-							setDashboard(d);
-							setSelectedBatchId(batchId);
-							setSelectedTrackId(null);
-							setSelectedTarget(d.top_ipo_targets?.[0] || null);
-						}
-						await loadHistory();
-						setRefreshing(false);
-						clearInterval(poll);
-						if (timeout)
-							clearTimeout(timeout);
-						message.success("影子股报告刷新完成");
-					}
-					else if (status.status === "failed") {
-						setRefreshing(false);
-						clearInterval(poll);
-						if (timeout)
-							clearTimeout(timeout);
-						message.error(status.error || "影子股报告刷新失败");
-					}
-				}
-				catch {
-					/* ignore */
-				}
-			}, 10000);
-			timeout = setTimeout(() => {
-				clearInterval(poll);
+	const startRefresh = useCallback(async (existingBatchId?: string) => {
+		if (refreshController.current && !refreshController.current.signal.aborted)
+			return;
+		const controller = new AbortController();
+		refreshController.current = controller;
+		setRefreshing(true);
+		setRefreshError(null);
+		try {
+			let batchId = existingBatchId;
+			if (!batchId) {
+				const resp = await refreshShadowStockReport(controller.signal);
+				if (controller.signal.aborted)
+					return;
+				if (resp.status === "failed")
+					throw new Error(resp.error || resp.message || "刷新启动失败");
+				batchId = resp.batch_id;
+				if (!batchId)
+					throw new Error("后端未返回批次号，请重新查询状态");
+				message.info(resp.message || "刷新已启动");
+			}
+			await watchReport(batchId, controller);
+		}
+		catch (error) {
+			if (!controller.signal.aborted)
+				setRefreshError(error instanceof Error ? error.message : "刷新状态查询失败，请重试");
+		}
+		finally {
+			if (!controller.signal.aborted)
 				setRefreshing(false);
-				message.warning("影子股报告仍在后台生成，请稍后从历史批次中查看");
-			}, 900000);
+			if (refreshController.current === controller)
+				refreshController.current = null;
 		}
-		catch {
-			message.error("刷新启动失败");
-			setRefreshing(false);
-		}
+	}, [watchReport]);
+	const handleRefresh = () => {
+		void startRefresh();
 	};
+
+	const runningBatchId = dashboard?.running_report?.batch_id || (dashboard?.report?.status === "running" ? dashboard.report.batch_id : undefined);
+	useEffect(() => {
+		if (runningBatchId)
+			void startRefresh(runningBatchId);
+	}, [runningBatchId, startRefresh]);
 
 	const filteredTargets = useMemo(() => {
 		if (!dashboard?.top_ipo_targets)
@@ -236,6 +221,8 @@ export default function ShadowStockPage() {
 			return dashboard.top_ipo_targets;
 		return dashboard.top_ipo_targets.filter(t => t.track_id === selectedTrackId);
 	}, [dashboard, selectedTrackId]);
+
+	const selectedTarget = useMemo(() => filteredTargets.find(target => target.id === selectedTargetId) || filteredTargets[0] || null, [filteredTargets, selectedTargetId]);
 
 	const selectedHoldings = useMemo(() => {
 		return selectedTarget?.holdings || [];
@@ -246,23 +233,34 @@ export default function ShadowStockPage() {
 	// 移动端点击IPO标的后，自动滚动到详情面板
 	useEffect(() => {
 		if (selectedTarget && detailRef.current && window.innerWidth < 992) {
-			setTimeout(() => {
+			const timer = setTimeout(() => {
 				detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 			}, 100);
+			return () => clearTimeout(timer);
 		}
 	}, [selectedTarget]);
 
-	if (!loading && (!dashboard || dashboard.status === "no_data")) {
+	if (!loading && (loadError || !dashboard || dashboard.status !== "ok")) {
 		return (
 			<BasicContent className="h-full" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 				<Result
 					icon={<RocketOutlined style={{ color: "var(--app-accent-text)", fontSize: 72 }} />}
 					title="影子股套利分析"
-					subTitle="暂无分析数据，点击下方按钮生成第一份影子股报告"
+					subTitle={loadError || refreshError || dashboard?.message || (refreshing ? "报告正在后台生成，可停留本页等待完成" : "暂无可展示的完整报告")}
 					extra={(
-						<Button type="primary" size="large" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh}>
-							生成影子股报告
-						</Button>
+						<Space wrap>
+							{selectedBatchId && (
+								<Button onClick={() => {
+									setSelectedBatchId(undefined);
+									void loadData();
+								}}
+								>
+									查看最新完整报告
+								</Button>
+							)}
+							<Button onClick={() => { void loadData(selectedBatchId); }} loading={loading}>重新查询</Button>
+							<Button type="primary" size="large" icon={<ReloadOutlined />} loading={refreshing} onClick={handleRefresh}>生成影子股报告</Button>
+						</Space>
 					)}
 				/>
 			</BasicContent>
@@ -273,6 +271,8 @@ export default function ShadowStockPage() {
 		<BasicContent className="h-full">
 			<Spin spinning={loading} tip="加载中...">
 				<div style={{ padding: "0 4px" }}>
+					{refreshError && <Alert type="warning" showIcon message={refreshError} style={{ marginBottom: 12 }} />}
+					<Alert type="info" showIcon message="影子股估值研究：股权估值占比不是预期收益或股价涨幅，需结合持股证据、摊薄、账面价值和退出约束核验。" style={{ marginBottom: 12 }} />
 					{/* 顶部信息栏 */}
 					<div className="app-page-hero business-inline-hero" style={{ marginBottom: 20 }}>
 						<div style={{ minWidth: 0 }}>
@@ -301,6 +301,8 @@ export default function ShadowStockPage() {
 							{reportHistory.length > 1 && (
 								<Select
 									value={selectedBatchId || dashboard?.batch_id}
+									disabled={refreshing}
+									aria-label="历史报告批次"
 									style={{ width: "min(220px, 50vw)" }}
 									placeholder="选择历史报告"
 									suffixIcon={<HistoryOutlined />}
@@ -311,7 +313,8 @@ export default function ShadowStockPage() {
 									}}
 									options={reportHistory.map((r, idx) => ({
 										value: r.batch_id,
-										label: `${r.created_at ? new Date(r.created_at).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "未知"} (${r.track_count}赛道/${r.target_count}标的)${idx === 0 ? " 最新" : ""}`,
+										disabled: r.status !== "completed",
+										label: `${r.created_at ? new Date(r.created_at).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "未知"} (${r.track_count}赛道/${r.target_count}标的)${r.status === "running" ? " 生成中" : r.status === "failed" ? " 失败" : idx === 0 ? " 最新" : ""}`,
 									}))}
 								/>
 							)}
@@ -379,7 +382,7 @@ export default function ShadowStockPage() {
 										key={target.id}
 										target={target}
 										isSelected={selectedTarget?.id === target.id}
-										onClick={() => setSelectedTarget(target)}
+										onClick={() => setSelectedTargetId(target.id)}
 									/>
 								))}
 							</Card>
@@ -409,12 +412,14 @@ export default function ShadowStockPage() {
 											</Text>
 										</Descriptions.Item>
 										<Descriptions.Item label="估值方法">{selectedTarget.valuation_method || "-"}</Descriptions.Item>
-										<Descriptions.Item label="行业PE">{formatValuation(selectedTarget.industry_pe)}</Descriptions.Item>
+										<Descriptions.Item label="行业PE">{formatMetric(selectedTarget.industry_pe, 1, "倍", true)}</Descriptions.Item>
 										<Descriptions.Item label="IPO状态">
 											<Tag color={IPO_STATUS_MAP[selectedTarget.ipo_status]?.color || "#999"}>
 												{selectedTarget.ipo_status}
 											</Tag>
 										</Descriptions.Item>
+										<Descriptions.Item label="进展日期">{selectedTarget.progress_date || "未提供"}</Descriptions.Item>
+										<Descriptions.Item label="资料来源" span={3}>{selectedTarget.data_source || "未提供，待核验"}</Descriptions.Item>
 										<Descriptions.Item label="重要性评分">
 											<Progress percent={selectedTarget.importance_score} size="small" strokeColor="var(--app-accent)" style={{ width: 100 }} />
 										</Descriptions.Item>
@@ -515,22 +520,22 @@ function getHoldingsColumns() {
 			render: (v: number) => (v > 0 ? v.toFixed(1) : "-"),
 		},
 		{
-			title: "预期收益(亿)",
+			title: "股权估值(亿)",
 			dataIndex: "expected_gain",
 			key: "gain",
 			width: 110,
 			align: "right" as const,
-			render: (v: number) => (
-				<Text style={{ color: v > 0 ? "#52c41a" : undefined }}>
-					{v > 0 ? `+${v.toFixed(2)}` : "-"}
+			render: (v: number, row: ShadowStockHolding) => (
+				<Text>
+					{row.calculation_available === false ? "待核验" : formatMetric(v, 2, "", true)}
 				</Text>
 			),
 		},
 		{
 			title: (
-				<Tooltip title="市值弹性 = 预期收益 / 自身市值 × 折价系数。越高表示IPO上市对该股的股价推动力越大。">
+				<Tooltip title="折价股权估值占比 = IPO股权估值 / 持有人市值 × 折价系数；未扣除原有账面价值，不代表收益率或股价上涨空间。">
 					<span>
-						{"市值弹性 "}
+						{"折价估值占比 "}
 						<InfoCircleOutlined />
 					</span>
 				</Tooltip>
@@ -541,11 +546,17 @@ function getHoldingsColumns() {
 			align: "right" as const,
 			defaultSortOrder: "descend" as const,
 			sorter: (a: ShadowStockHolding, b: ShadowStockHolding) => a.adjusted_gain_ratio - b.adjusted_gain_ratio,
-			render: (v: number) => (
+			render: (v: number, row: ShadowStockHolding) => (
 				<Text strong style={{ color: getElasticityColor(v), fontSize: 15 }}>
-					{v > 0 ? `${v.toFixed(1)}%` : "-"}
+					{row.calculation_available === false ? "待核验" : formatMetric(v, 1, "%")}
 				</Text>
 			),
+		},
+		{
+			title: "证据与计算",
+			key: "evidence",
+			width: 220,
+			render: (_: unknown, row: ShadowStockHolding) => <Tooltip title={[row.evidence_text, row.evidence_source_url, row.evidence_confidence ? `证据置信：${row.evidence_confidence}` : "", ...(row.calculation_issues || [])].filter(Boolean).join("；") || "未提供持股证据"}><span>{row.calculation_available === false ? "计算条件不足" : row.evidence_text && row.evidence_source_url && row.verified_at ? `记录于 ${row.verified_at}` : "证据待核验"}</span></Tooltip>,
 		},
 		{
 			title: "风险",
@@ -637,7 +648,7 @@ interface IPOTargetCardProps {
 }
 
 function IPOTargetCard({ target, isSelected, onClick }: IPOTargetCardProps) {
-	const statusInfo = IPO_STATUS_MAP[target.ipo_status] || { step: 0, color: "#999" };
+	const statusInfo = IPO_STATUS_MAP[target.ipo_status] || { step: -1, color: "#999" };
 
 	return (
 		<div

@@ -2,6 +2,18 @@
  * 影子股套利策略 — TypeScript 类型定义
  */
 
+export interface CalculationEvidence {
+	calculation_available?: boolean
+	calculation_issues?: string[]
+	equity_value_label?: string
+	evidence_status?: string
+	data_source?: string
+	verified_at?: string | null
+	evidence_source_url?: string
+	evidence_text?: string
+	evidence_confidence?: string
+}
+
 // ======================== 热门赛道 ========================
 
 export interface ShadowStockTrack {
@@ -49,7 +61,7 @@ export interface ShadowStockIPOTarget {
 
 // ======================== 影子股持股关系 ========================
 
-export interface ShadowStockHolding {
+export interface ShadowStockHolding extends CalculationEvidence {
 	id: number
 	ipo_target_id: number
 	holder_name: string
@@ -92,6 +104,7 @@ export interface ShadowStockDashboardResponse {
 	status: string
 	batch_id?: string
 	report?: ShadowStockReport
+	running_report?: ShadowStockReport | null
 	tracks?: ShadowStockTrack[]
 	top_ipo_targets?: ShadowStockIPOTarget[]
 	next_refresh_at?: string
@@ -145,7 +158,7 @@ export interface ShadowStockReportHistoryResponse {
 
 // ======================== 历史聚合 ========================
 
-export interface AggShadowStock {
+export interface AggShadowStock extends CalculationEvidence {
 	holder_name: string
 	holder_stock_code: string
 	holding_ratio: number
@@ -165,6 +178,9 @@ export interface AggCompany {
 	latest_progress: string
 	data_source: string
 	appear_count: number
+	batch_id?: string
+	last_seen_at?: string
+	progress_date?: string | null
 	shadow_stocks: AggShadowStock[]
 }
 
@@ -188,7 +204,10 @@ export interface ShadowStockAggregateResponse {
 
 // ======================== 影子股每日推荐 ========================
 
-export interface ShadowStockRecommendation {
+export interface ShadowStockRecommendation extends CalculationEvidence {
+	recommendation_available?: boolean
+	eligibility_issues?: string[]
+	is_historical?: boolean
 	id: number
 	rank: number
 	holder_name: string
@@ -226,6 +245,10 @@ export interface ShadowStockRecommendation {
 export interface ShadowStockRecommendResponse {
 	status: string
 	recommend_date: string | null
+	excluded_count?: number
+	historical_only?: boolean
+	rejected_count?: number
+	rejection_reasons?: Record<string, number>
 	total: number
 	type_distribution: Record<string, number>
 	level_distribution: Record<string, number>

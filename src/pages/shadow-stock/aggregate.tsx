@@ -1,4 +1,5 @@
 import type { AggCompany, AggShadowStock, AggTrack, ShadowStockAggregateResponse } from "#src/api/shadow-stock";
+import type { ShadowDimensionItem } from "./data";
 import { fetchShadowStockAggregate } from "#src/api/shadow-stock";
 import { BasicContent } from "#src/components/basic-content";
 import {
@@ -11,7 +12,9 @@ import {
 	TrophyFilled,
 } from "@ant-design/icons";
 import {
+	Alert,
 	Badge,
+	Button,
 	Card,
 	Col,
 	Collapse,
@@ -30,7 +33,9 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { buildShadowDimension, filterAggregateTracks, formatMetric, metricValue } from "./data";
+import { useLatestRequest } from "./use-latest-request";
 import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -53,73 +58,7 @@ const STATUS_COLOR: Record<string, string> = {
 };
 
 const RISK_COLOR: Record<string, string> = { low: "green", medium: "orange", high: "red" };
-const RISK_LABEL: Record<string, string> = { low: "低", medium: "中", high: "高" };
-
-/** 影子股维度数据 */
-interface ShadowDimensionItem {
-	holder_name: string
-	holder_stock_code: string
-	holder_market_cap: number
-	holder_main_business: string
-	risk_level: string
-	linked_companies: Array<{
-		company_name: string
-		ipo_status: string
-		track_name: string
-		holding_ratio: number
-		holding_type: string
-		gain_ratio: number
-	}>
-	linked_count: number
-	max_ratio: number
-	avg_gain: number
-}
-
-function buildShadowDimension(tracks: AggTrack[]): ShadowDimensionItem[] {
-	const map = new Map<string, ShadowDimensionItem>();
-	for (const track of tracks) {
-		for (const co of track.companies) {
-			for (const ss of co.shadow_stocks) {
-				const key = ss.holder_stock_code || ss.holder_name;
-				if (!map.has(key)) {
-					map.set(key, {
-						holder_name: ss.holder_name,
-						holder_stock_code: ss.holder_stock_code,
-						holder_market_cap: ss.holder_market_cap,
-						holder_main_business: ss.holder_main_business,
-						risk_level: ss.risk_level,
-						linked_companies: [],
-						linked_count: 0,
-						max_ratio: 0,
-						avg_gain: 0,
-					});
-				}
-				const item = map.get(key)!;
-				if (ss.holder_market_cap > 0)
-					item.holder_market_cap = ss.holder_market_cap;
-				if (ss.holder_main_business)
-					item.holder_main_business = ss.holder_main_business;
-				item.linked_companies.push({
-					company_name: co.company_name,
-					ipo_status: co.ipo_status,
-					track_name: track.track_name,
-					holding_ratio: ss.holding_ratio,
-					holding_type: ss.holding_type,
-					gain_ratio: ss.gain_ratio,
-				});
-			}
-		}
-	}
-	const result: ShadowDimensionItem[] = [];
-	for (const item of map.values()) {
-		item.linked_count = item.linked_companies.length;
-		item.max_ratio = Math.max(...item.linked_companies.map(c => c.holding_ratio));
-		item.avg_gain = item.linked_companies.reduce((s, c) => s + c.gain_ratio, 0) / item.linked_count;
-		result.push(item);
-	}
-	result.sort((a, b) => b.linked_count - a.linked_count || b.max_ratio - a.max_ratio);
-	return result;
-}
+const RISK_LABEL: Record<string, string> = { low: "低", medium: "中", high: "高", unknown: "待核验" };
 
 function extractStatuses(tracks: AggTrack[]): string[] {
 	const s = new Set<string>();
@@ -156,7 +95,7 @@ function getHoldingCols() {
 			sorter: (a: AggShadowStock, b: AggShadowStock) => a.holding_ratio - b.holding_ratio,
 			render: (v: number) => (
 				<Text strong style={{ color: v >= 10 ? "#ff4d4f" : v >= 5 ? "#fa8c16" : undefined }}>
-					{v.toFixed(2)}
+					{formatMetric(v, 2)}
 					%
 				</Text>
 			),
@@ -175,13 +114,13 @@ function getHoldingCols() {
 			width: 80,
 			align: "right" as const,
 			sorter: (a: AggShadowStock, b: AggShadowStock) => a.holder_market_cap - b.holder_market_cap,
-			render: (v: number) => v > 0 ? v.toFixed(1) : "-",
+			render: (v: number) => v > 0 ? formatMetric(v, 1) : "-",
 		},
 		{
 			title: (
-				<Tooltip title="市值弹性 = 预期收益 / 自身市值">
+				<Tooltip title="股权估值占比 = IPO股权估值 / 持有人市值；不是收益率或股价涨幅">
 					<span>
-						弹性
+						估值占比
 						<InfoCircleOutlined />
 					</span>
 				</Tooltip>
@@ -191,7 +130,7 @@ function getHoldingCols() {
 			width: 80,
 			align: "right" as const,
 			sorter: (a: AggShadowStock, b: AggShadowStock) => a.gain_ratio - b.gain_ratio,
-			render: (v: number) => <Text strong style={{ color: v >= 5 ? "#ff4d4f" : v >= 2 ? "#fa8c16" : undefined }}>{v > 0 ? `${v.toFixed(1)}%` : "-"}</Text>,
+			render: (v: number, row: AggShadowStock) => <Text strong>{row.calculation_available === false ? "待核验" : formatMetric(v, 1, "%")}</Text>,
 		},
 		{
 			title: "主营业务",
@@ -205,7 +144,7 @@ function getHoldingCols() {
 			dataIndex: "risk_level",
 			key: "risk",
 			width: 60,
-			render: (v: string) => <Tag color={RISK_COLOR[v]}>{RISK_LABEL[v] || "中"}</Tag>,
+			render: (v: string) => <Tag color={RISK_COLOR[v]}>{RISK_LABEL[v] || "待核验"}</Tag>,
 		},
 	];
 }
@@ -219,8 +158,8 @@ function CompanyCard({ company }: { company: AggCompany }) {
 			styles={{ body: { padding: "10px 14px" } }}
 		>
 			{/* 头部 */}
-			<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 6 }}>
-				<Space size={6} align="center">
+			<div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+				<Space size={6} align="center" wrap>
 					<RocketOutlined style={{ color: "#667eea" }} />
 					<Text strong style={{ fontSize: 14 }}>{company.company_name}</Text>
 					<Tag color={STATUS_COLOR[company.ipo_status] || "default"}>{company.ipo_status}</Tag>
@@ -236,7 +175,7 @@ function CompanyCard({ company }: { company: AggCompany }) {
 						<Text type="secondary" style={{ fontSize: 12 }}>
 							估值
 							{" "}
-							<Text strong style={{ color: "#1677ff" }}>{company.expected_valuation.toFixed(0)}</Text>
+							<Text strong style={{ color: "#1677ff" }}>{formatMetric(company.expected_valuation, 0)}</Text>
 							{" "}
 							亿
 						</Text>
@@ -244,6 +183,14 @@ function CompanyCard({ company }: { company: AggCompany }) {
 				</Space>
 			</div>
 
+			<Paragraph type="secondary" style={{ fontSize: 12 }}>
+				资料来源：
+				{company.data_source || "未提供，待核验"}
+				{" "}
+				· 进展日期：
+				{company.progress_date || "未提供"}
+				{company.last_seen_at ? ` · 快照：${company.last_seen_at}` : ""}
+			</Paragraph>
 			{company.latest_progress && (
 				<Paragraph type="secondary" style={{ fontSize: 12, margin: "0 0 6px 0" }} ellipsis={{ rows: 2, expandable: true, symbol: "展开" }}>
 					{company.latest_progress}
@@ -254,7 +201,7 @@ function CompanyCard({ company }: { company: AggCompany }) {
 				<Table<AggShadowStock>
 					dataSource={company.shadow_stocks}
 					columns={getHoldingCols()}
-					rowKey="holder_stock_code"
+					rowKey={row => row.holder_stock_code || row.holder_name}
 					pagination={false}
 					size="small"
 					scroll={{ x: 700 }}
@@ -266,26 +213,16 @@ function CompanyCard({ company }: { company: AggCompany }) {
 
 // ==================== 主页面 ====================
 export default function ShadowStockAggregate() {
-	const [data, setData] = useState<ShadowStockAggregateResponse | null>(null);
-	const [loading, setLoading] = useState(true);
+	const { data, loading, error, run } = useLatestRequest<ShadowStockAggregateResponse>();
+	const loadData = useCallback(() => run(signal => fetchShadowStockAggregate(signal)), [run]);
 	const [activeTab, setActiveTab] = useState("ipo");
 	const [searchCompany, setSearchCompany] = useState("");
 	const [searchShadow, setSearchShadow] = useState("");
 	const [filterStatus, setFilterStatus] = useState<string[]>([]);
 
 	useEffect(() => {
-		(async () => {
-			try {
-				setData(await fetchShadowStockAggregate());
-			}
-			catch (e) {
-				console.error("Aggregate fetch failed", e);
-			}
-			finally {
-				setLoading(false);
-			}
-		})();
-	}, []);
+		void loadData();
+	}, [loadData]);
 
 	const statusOptions = useMemo(() => {
 		if (!data?.tracks)
@@ -293,43 +230,9 @@ export default function ShadowStockAggregate() {
 		return extractStatuses(data.tracks).map(s => ({ label: s, value: s }));
 	}, [data]);
 
-	// IPO维度筛选
-	const filteredTracks = useMemo(() => {
-		if (!data?.tracks)
-			return [];
-		const kw = searchCompany.trim().toLowerCase();
-		const skw = searchShadow.trim().toLowerCase();
-		return data.tracks
-			.map((track) => {
-				const companies = track.companies.filter((c) => {
-					if (filterStatus.length > 0 && !filterStatus.includes(c.ipo_status))
-						return false;
-					if (kw && !c.company_name.toLowerCase().includes(kw))
-						return false;
-					if (skw && !c.shadow_stocks.some(s => s.holder_name.toLowerCase().includes(skw) || s.holder_stock_code.toLowerCase().includes(skw)))
-						return false;
-					return true;
-				});
-				return { ...track, companies, company_count: companies.length };
-			})
-			.filter(t => t.companies.length > 0);
-	}, [data, searchCompany, searchShadow, filterStatus]);
-
-	// 影子股维度
-	const shadowItems = useMemo(() => {
-		if (!data?.tracks)
-			return [];
-		let items = buildShadowDimension(data.tracks);
-		const skw = searchShadow.trim().toLowerCase();
-		const kw = searchCompany.trim().toLowerCase();
-		if (skw)
-			items = items.filter(i => i.holder_name.toLowerCase().includes(skw) || i.holder_stock_code.toLowerCase().includes(skw));
-		if (kw)
-			items = items.filter(i => i.linked_companies.some(c => c.company_name.toLowerCase().includes(kw)));
-		if (filterStatus.length > 0)
-			items = items.filter(i => i.linked_companies.some(c => filterStatus.includes(c.ipo_status)));
-		return items;
-	}, [data, searchShadow, searchCompany, filterStatus]);
+	const filteredTracks = useMemo(() => filterAggregateTracks(data?.tracks || [], searchCompany, searchShadow, filterStatus), [data, searchCompany, searchShadow, filterStatus]);
+	const shadowItems = useMemo(() => buildShadowDimension(filteredTracks), [filteredTracks]);
+	const totalShadow = useMemo(() => buildShadowDimension(data?.tracks || []).length, [data]);
 
 	// 影子股维度 - 展开行列
 	const linkedCols = [
@@ -338,12 +241,12 @@ export default function ShadowStockAggregate() {
 		{ title: "赛道", dataIndex: "track_name", key: "track", width: 100, render: (v: string) => <Tag color="orange">{v}</Tag> },
 		{ title: "持股", dataIndex: "holding_ratio", key: "ratio", width: 80, align: "right" as const, render: (v: number) => (
 			<Text strong>
-				{v.toFixed(2)}
+				{formatMetric(v, 2)}
 				%
 			</Text>
 		) },
 		{ title: "方式", dataIndex: "holding_type", key: "type", width: 80, render: (v: string) => <Tag>{v}</Tag> },
-		{ title: "弹性", dataIndex: "gain_ratio", key: "gain", width: 70, align: "right" as const, render: (v: number) => v > 0 ? `${v.toFixed(1)}%` : "-" },
+		{ title: "估值占比", dataIndex: "gain_ratio", key: "gain", width: 100, align: "right" as const, render: (v: number, row: ShadowDimensionItem["linked_companies"][number]) => row.calculation_available === false ? "待核验" : formatMetric(v, 1, "%") },
 	];
 
 	// 影子股维度 - 主表列
@@ -369,7 +272,7 @@ export default function ShadowStockAggregate() {
 			align: "center" as const,
 			sorter: (a: ShadowDimensionItem, b: ShadowDimensionItem) => a.linked_count - b.linked_count,
 			defaultSortOrder: "descend" as const,
-			render: (v: number) => <Badge count={v} style={{ background: v >= 3 ? "#f5222d" : v >= 2 ? "#fa8c16" : "#1677ff" }} />,
+			render: (v: number) => <Badge count={v} style={{ background: metricValue(v) >= 3 ? "#f5222d" : v >= 2 ? "#fa8c16" : "#1677ff" }} />,
 		},
 		{
 			title: "最高持股",
@@ -380,7 +283,7 @@ export default function ShadowStockAggregate() {
 			sorter: (a: ShadowDimensionItem, b: ShadowDimensionItem) => a.max_ratio - b.max_ratio,
 			render: (v: number) => (
 				<Text strong style={{ color: v >= 10 ? "#f5222d" : v >= 5 ? "#fa8c16" : undefined }}>
-					{v.toFixed(2)}
+					{formatMetric(v, 2)}
 					%
 				</Text>
 			),
@@ -392,23 +295,23 @@ export default function ShadowStockAggregate() {
 			width: 90,
 			align: "right" as const,
 			sorter: (a: ShadowDimensionItem, b: ShadowDimensionItem) => a.holder_market_cap - b.holder_market_cap,
-			render: (v: number) => v > 0 ? v.toFixed(1) : "-",
+			render: (v: number) => v > 0 ? formatMetric(v, 1) : "-",
 		},
 		{
-			title: "均弹性",
+			title: "平均估值占比",
 			dataIndex: "avg_gain",
 			key: "gain",
 			width: 80,
 			align: "right" as const,
-			sorter: (a: ShadowDimensionItem, b: ShadowDimensionItem) => a.avg_gain - b.avg_gain,
-			render: (v: number) => v > 0
+			sorter: (a: ShadowDimensionItem, b: ShadowDimensionItem) => metricValue(a.avg_gain) - metricValue(b.avg_gain),
+			render: (v: number | null) => v !== null
 				? (
 					<Text style={{ color: v >= 3 ? "#f5222d" : undefined }}>
-						{v.toFixed(1)}
+						{formatMetric(v, 1)}
 						%
 					</Text>
 				)
-				: "-",
+				: "待核验",
 		},
 		{
 			title: "主营业务",
@@ -422,7 +325,7 @@ export default function ShadowStockAggregate() {
 			dataIndex: "risk_level",
 			key: "risk",
 			width: 60,
-			render: (v: string) => <Tag color={RISK_COLOR[v]}>{RISK_LABEL[v] || "中"}</Tag>,
+			render: (v: string) => <Tag color={RISK_COLOR[v]}>{RISK_LABEL[v] || "待核验"}</Tag>,
 		},
 	];
 
@@ -434,11 +337,21 @@ export default function ShadowStockAggregate() {
 		);
 	}
 
-	if (!data || data.status !== "ok" || !data.tracks?.length) {
-		return <BasicContent><Empty description="暂无历史聚合数据" style={{ marginTop: 80 }} /></BasicContent>;
+	if (error || !data || data.status !== "ok" || !data.tracks?.length) {
+		return (
+			<BasicContent>
+				<Empty description={error || data?.message || "暂无历史聚合数据"} style={{ marginTop: 80 }}>
+					<Button onClick={() => {
+						void loadData();
+					}}
+					>
+						重新查询
+					</Button>
+				</Empty>
+			</BasicContent>
+		);
 	}
 
-	const totalShadow = buildShadowDimension(data.tracks).length;
 	const filteredCount = activeTab === "ipo" ? filteredTracks.reduce((s, t) => s + t.company_count, 0) : shadowItems.length;
 
 	return (
@@ -465,9 +378,10 @@ export default function ShadowStockAggregate() {
 					</Row>
 				</div>
 
+				<Alert type="info" showIcon message="每家 IPO 使用最近完整快照；同一 IPO 跨赛道仅计一次关联。估值占比不代表预期收益，历史出现次数不等于独立证据。" style={{ marginBottom: 12 }} />
 				{/* 筛选器 */}
 				<Card size="small" style={{ marginBottom: 12, borderRadius: 10 }} styles={{ body: { padding: "10px 14px" } }}>
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+					<div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", alignItems: "center" }}>
 						<Space size={10} wrap>
 							<Input
 								placeholder="IPO公司名称"
@@ -521,9 +435,9 @@ export default function ShadowStockAggregate() {
 							),
 							children: (
 								<Collapse
-									defaultActiveKey={filteredTracks.slice(0, 3).map((_, i) => String(i))}
-									items={filteredTracks.map((track, idx) => ({
-										key: String(idx),
+									defaultActiveKey={filteredTracks.slice(0, 3).map(track => track.track_name)}
+									items={filteredTracks.map(track => ({
+										key: track.track_name,
 										style: { marginBottom: 8, borderRadius: 8 },
 										label: (
 											<Space size={8}>
@@ -531,7 +445,7 @@ export default function ShadowStockAggregate() {
 												<Text strong style={{ fontSize: 14 }}>{track.track_name}</Text>
 												<Tag color="orange">
 													热度
-													{track.heat_score.toFixed(0)}
+													{formatMetric(track.heat_score, 0)}
 												</Tag>
 												<Tag color="green">
 													{track.company_count}
@@ -583,9 +497,9 @@ export default function ShadowStockAggregate() {
 											{" "}
 											只
 										</Descriptions.Item>
-										<Descriptions.Item label="高弹性(≥3%)">
+										<Descriptions.Item label="平均估值占比(≥3%)">
 											<Text strong style={{ color: "#1677ff" }}>
-												{shadowItems.filter(i => i.avg_gain >= 3).length}
+												{shadowItems.filter(i => metricValue(i.avg_gain) >= 3).length}
 											</Text>
 											{" "}
 											只

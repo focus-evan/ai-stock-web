@@ -1,3 +1,4 @@
+import type { IndustryAnalysisBatch } from "./quant-analysis";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	ApiOutlined,
@@ -11,6 +12,7 @@ import {
 	FireOutlined,
 	LineChartOutlined,
 	RiseOutlined,
+	RobotOutlined,
 	RocketOutlined,
 	SafetyOutlined,
 	StarOutlined,
@@ -36,6 +38,7 @@ import {
 	Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import QuantAnalysis from "./quant-analysis";
 import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -111,6 +114,7 @@ interface IndustryChain {
 	code: string
 	description: string
 	layers: IndustryLayer[]
+	analysis?: IndustryAnalysisBatch | null
 }
 
 // 图标映射
@@ -120,7 +124,7 @@ const iconMap: Record<string, React.ReactNode> = {
 	RocketOutlined: <RocketOutlined />,
 	BlockOutlined: <BlockOutlined />,
 	NodeIndexOutlined: <ApiOutlined />,
-	RobotOutlined: <RocketOutlined />,
+	RobotOutlined: <RobotOutlined />,
 	RadarChartOutlined: <LineChartOutlined />,
 	LockOutlined: <SafetyOutlined />,
 	AimOutlined: <BulbOutlined />,
@@ -158,14 +162,20 @@ export default function IndustryAnalysis() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [chainData, setChainData] = useState<IndustryChain | null>(null);
+	const [chains, setChains] = useState<{ code: string, name: string }[]>([]);
 
-	const fetchIndustryChain = async (chainCode: string) => {
+	const fetchIndustryChain = async (chainCode: string, signal: AbortSignal) => {
 		setLoading(true);
 		setError(null);
+		setChainData(null);
 
 		try {
-			const response = await fetch(`/api/industry/chains/${chainCode}`);
+			const response = await fetch(`/api/industry/chains/${encodeURIComponent(chainCode)}`, { signal });
+			if (!response.ok)
+				throw new Error(`HTTP ${response.status}`);
 			const data = await response.json();
+			if (signal.aborted)
+				return;
 
 			if (data.success) {
 				setChainData(data.data);
@@ -175,16 +185,36 @@ export default function IndustryAnalysis() {
 			}
 		}
 		catch (err) {
-			setError(`请求失败: ${err}`);
+			if (!signal.aborted)
+				setError(`请求失败: ${err}`);
 		}
 		finally {
-			setLoading(false);
+			if (!signal.aborted)
+				setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		fetchIndustryChain(activeTab);
+		const controller = new AbortController();
+		fetchIndustryChain(activeTab, controller.signal);
+		return () => controller.abort();
 	}, [activeTab]);
+
+	useEffect(() => {
+		const controller = new AbortController();
+		fetch("/api/industry/chains", { signal: controller.signal })
+			.then(async (response) => {
+				if (!response.ok)
+					throw new Error(`HTTP ${response.status}`);
+				return response.json();
+			})
+			.then((result) => {
+				if (!controller.signal.aborted && result.success)
+					setChains(result.data);
+			})
+			.catch(() => {});
+		return () => controller.abort();
+	}, []);
 
 	// 渲染技术规格时间线
 	const renderSpecsTimeline = (specs: TechSpec[]) => {
@@ -337,16 +367,16 @@ export default function IndustryAnalysis() {
 						<Col span={12}>
 							<Statistic
 								title="市场份额"
-								value={company.market_share || 0}
-								suffix="%"
+								value={company.market_share == null ? "待核验" : company.market_share}
+								suffix={company.market_share == null ? undefined : "%"}
 								valueStyle={{ fontSize: 20, color: "var(--app-accent-text)" }}
 							/>
 						</Col>
 						<Col span={12}>
 							<Statistic
 								title="实力评分"
-								value={company.strength_score || 0}
-								suffix="/ 10"
+								value={company.strength_score == null ? "待核验" : company.strength_score}
+								suffix={company.strength_score == null ? undefined : "/ 10"}
 								valueStyle={{ fontSize: 20, color: "#52c41a" }}
 							/>
 						</Col>
@@ -601,71 +631,23 @@ export default function IndustryAnalysis() {
 		);
 	};
 
-	// 主渲染
-	if (loading) {
-		return (
-			<BasicContent>
-				<div style={{ textAlign: "center", padding: "100px 0" }}>
-					<Spin size="large" tip="加载产业链数据..." />
-				</div>
-			</BasicContent>
-		);
-	}
-
-	if (error) {
-		return (
-			<BasicContent>
-				<Alert
-					message="加载失败"
-					description={error}
-					type="error"
-					showIcon
-					style={{ marginBottom: 16 }}
-				/>
-			</BasicContent>
-		);
-	}
-
-	if (!chainData) {
-		return (
-			<BasicContent>
-				<Empty description="暂无数据" />
-			</BasicContent>
-		);
-	}
-
-	const tabItems = [
-		{
-			key: "ai",
-			label: (
-				<span>
-					<ApiOutlined />
-					{" "}
-					AI 产业链
-				</span>
-			),
-		},
-		{
-			key: "aerospace",
-			label: (
-				<span>
-					<RocketOutlined />
-					{" "}
-					商业航天
-				</span>
-			),
-		},
-		{
-			key: "quantum",
-			label: (
-				<span>
-					<BlockOutlined />
-					{" "}
-					量子经济
-				</span>
-			),
-		},
+	const fallbackChains = [
+		{ code: "ai", name: "AI产业链" },
+		{ code: "aerospace", name: "商业航天" },
+		{ code: "quantum", name: "量子经济" },
+		{ code: "humanoid_robot", name: "人形机器人" },
 	];
+	const tabItems = (chains.length ? chains : fallbackChains).map(chain => ({
+		key: chain.code,
+		label: (
+			<span aria-label={chain.name}>
+				<Space>
+					{chain.code === "humanoid_robot" ? <RobotOutlined aria-hidden /> : <AppstoreOutlined aria-hidden />}
+					{chain.name}
+				</Space>
+			</span>
+		),
+	}));
 
 	return (
 		<BasicContent>
@@ -685,7 +667,7 @@ export default function IndustryAnalysis() {
 							产业调研与分析
 						</Title>
 						<Text style={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}>
-							2026年最新主线赛道全景图谱与核心标的映射
+							利润池与产业映射 · 季度五维数据验证 · 同行PK与减法
 						</Text>
 					</div>
 					<Tag
@@ -708,16 +690,21 @@ export default function IndustryAnalysis() {
 				/>
 			</div>
 
-			{/* 产业链内容 */}
-			<div>
-				{chainData.layers && chainData.layers.length > 0
-					? (
-						chainData.layers.map(layer => renderLayerContent(layer))
-					)
-					: (
-						<Empty description="暂无层级数据" />
-					)}
-			</div>
+			{/* 请求失败和空数据时保留产业切换入口 */}
+			{loading
+				? <div style={{ textAlign: "center", padding: "60px 0" }}><Spin size="large" /></div>
+				: error
+					? <Alert type="error" showIcon message="加载失败" description={error} />
+					: chainData
+						? (
+							<>
+								<QuantAnalysis key={activeTab} analysis={chainData.analysis} />
+								<Alert type="info" showIcon message="产业链研究映射" description="以下静态技术规格、市场份额与实力分保留为历史研究资料，尚未核验当前有效性；不进入本批S量化评分。" style={{ marginBottom: 24 }} />
+								{chainData.layers?.length ? chainData.layers.map(layer => renderLayerContent(layer)) : <Empty description="该产业尚无公司映射" />}
+							</>
+						)
+						: <Empty description="暂无数据" />}
+
 		</BasicContent>
 	);
 }

@@ -5,6 +5,7 @@ import {
 } from "#src/api/shadow-stock";
 
 import {
+	Alert,
 	Badge,
 	Button,
 	Card,
@@ -21,15 +22,17 @@ import {
 	Typography,
 } from "antd";
 import dayjs from "dayjs";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { formatMetric, metricValue } from "./data";
+import { useLatestRequest } from "./use-latest-request";
 
 const { Title, Text, Paragraph } = Typography;
 
 // ======================== 样式常量 ========================
 
 const LEVEL_CONFIG: Record<string, { color: string, bg: string, label: string, glow: string }> = {
-	S: { color: "#faad14", bg: "linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%)", label: "S级·强烈推荐", glow: "0 0 20px rgba(250,173,20,0.3)" },
-	A: { color: "#1890ff", bg: "linear-gradient(135deg, #e6f7ff 0%, #d6eaff 100%)", label: "A级·优质推荐", glow: "0 0 15px rgba(24,144,255,0.2)" },
+	S: { color: "#faad14", bg: "linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%)", label: "S级·重点研究", glow: "0 0 20px rgba(250,173,20,0.3)" },
+	A: { color: "#1890ff", bg: "linear-gradient(135deg, #e6f7ff 0%, #d6eaff 100%)", label: "A级·优先关注", glow: "0 0 15px rgba(24,144,255,0.2)" },
 	B: { color: "#52c41a", bg: "linear-gradient(135deg, #f6ffed 0%, #e8ffe0 100%)", label: "B级·可关注", glow: "0 0 10px rgba(82,196,26,0.15)" },
 	C: { color: "#8c8c8c", bg: "linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)", label: "C级·观望", glow: "none" },
 };
@@ -50,7 +53,7 @@ const RISK_COLORS: Record<string, string> = {
 
 function ScoreBreakdown({ rec }: { rec: ShadowStockRecommendation }) {
 	const dimensions = [
-		{ label: "弹性", score: rec.elasticity_score, max: 30, color: "#1890ff" },
+		{ label: "估值", score: rec.elasticity_score, max: 30, color: "#1890ff" },
 		{ label: "安全", score: rec.safety_score, max: 25, color: "#52c41a" },
 		{ label: "进度", score: rec.ipo_progress_score, max: 20, color: "#722ed1" },
 		{ label: "热度", score: rec.track_heat_score, max: 15, color: "#eb2f96" },
@@ -64,10 +67,10 @@ function ScoreBreakdown({ rec }: { rec: ShadowStockRecommendation }) {
 					<div style={{ width: 52, textAlign: "center" }}>
 						<Progress
 							type="circle"
-							percent={Math.round((d.score / d.max) * 100)}
+							percent={Math.max(0, Math.min(100, Math.round((metricValue(d.score) / d.max) * 100)))}
 							size={40}
 							strokeColor={d.color}
-							format={() => d.score.toFixed(0)}
+							format={() => formatMetric(d.score, 0)}
 							strokeWidth={8}
 						/>
 						<div style={{ fontSize: 10, color: "#8c8c8c", marginTop: 2 }}>{d.label}</div>
@@ -82,6 +85,7 @@ function ScoreBreakdown({ rec }: { rec: ShadowStockRecommendation }) {
 
 function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 	const level = LEVEL_CONFIG[rec.recommend_level] || LEVEL_CONFIG.C;
+	const historical = rec.is_historical || rec.recommendation_available === false;
 	const typeConf = TYPE_CONFIG[rec.recommend_type] || TYPE_CONFIG["综合"];
 	const riskColor = RISK_COLORS[rec.risk_level] || RISK_COLORS.medium;
 
@@ -139,7 +143,7 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 						border: "none",
 					}}
 				>
-					{level.label}
+					{historical ? "历史评分快照" : level.label}
 				</Tag>
 			</div>
 
@@ -187,15 +191,15 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 
 			{/* 核心数据 */}
 			<Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
-				<Col span={6}>
+				<Col xs={12} sm={6}>
 					<div style={{ textAlign: "center", padding: "8px 0" }}>
 						<div style={{ fontSize: 22, fontWeight: 700, color: level.color }}>
-							{rec.total_score.toFixed(1)}
+							{formatMetric(rec.total_score, 1)}
 						</div>
 						<div style={{ fontSize: 11, color: "#8c8c8c" }}>综合评分</div>
 					</div>
 				</Col>
-				<Col span={6}>
+				<Col xs={12} sm={6}>
 					<div style={{ textAlign: "center", padding: "8px 0" }}>
 						<div style={{
 							fontSize: 22,
@@ -203,26 +207,23 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 							color: rec.adjusted_gain_ratio > 15 ? "#f5222d" : rec.adjusted_gain_ratio > 5 ? "#fa8c16" : "#595959",
 						}}
 						>
-							{rec.adjusted_gain_ratio.toFixed(1)}
-							%
+							{rec.calculation_available === false ? "待核验" : formatMetric(rec.adjusted_gain_ratio, 1, "%")}
 						</div>
-						<div style={{ fontSize: 11, color: "#8c8c8c" }}>市值弹性</div>
+						<div style={{ fontSize: 11, color: "#8c8c8c" }}>折价估值占比</div>
 					</div>
 				</Col>
-				<Col span={6}>
+				<Col xs={12} sm={6}>
 					<div style={{ textAlign: "center", padding: "8px 0" }}>
 						<div style={{ fontSize: 22, fontWeight: 700, color: "#595959" }}>
-							{rec.holder_market_cap.toFixed(0)}
-							<span style={{ fontSize: 12, fontWeight: 400 }}>亿</span>
+							{formatMetric(rec.holder_market_cap, 0, "亿", true)}
 						</div>
 						<div style={{ fontSize: 11, color: "#8c8c8c" }}>影子股市值</div>
 					</div>
 				</Col>
-				<Col span={6}>
+				<Col xs={12} sm={6}>
 					<div style={{ textAlign: "center", padding: "8px 0" }}>
 						<div style={{ fontSize: 22, fontWeight: 700, color: "#595959" }}>
-							{rec.holding_ratio.toFixed(2)}
-							%
+							{formatMetric(rec.holding_ratio, 2, "%", true)}
 						</div>
 						<div style={{ fontSize: 11, color: "#8c8c8c" }}>持股比例</div>
 					</div>
@@ -280,6 +281,15 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 				</div>
 			)}
 
+			<Paragraph type="secondary" style={{ fontSize: 12 }}>
+				证据：
+				{rec.evidence_text || "未提供持股证据摘要"}
+				{" "}
+				· 证据记录时间：
+				{rec.verified_at || "未提供"}
+				{rec.evidence_source_url ? ` · 来源：${rec.evidence_source_url}` : ""}
+			</Paragraph>
+			{rec.eligibility_issues?.length ? <Alert type="warning" message={rec.eligibility_issues.join("；")} style={{ marginBottom: 12 }} /> : null}
 			{/* 风险 & IPO信息 */}
 			<div style={{
 				display: "flex",
@@ -289,27 +299,26 @@ function RecommendCard({ rec }: { rec: ShadowStockRecommendation }) {
 				gap: 8,
 			}}
 			>
-				<Space size={6}>
+				<Space size={6} wrap>
 					<Tag style={{ borderRadius: 6 }}>
 						IPO:
-						{rec.ipo_status || "辅导中"}
+						{rec.ipo_status || "待核验"}
 					</Tag>
 					<Tag style={{ borderRadius: 6 }}>
 						估值
-						{rec.expected_valuation.toFixed(0)}
-						亿
+						{formatMetric(rec.expected_valuation, 0, "亿", true)}
 					</Tag>
 					<Tag style={{ borderRadius: 6 }}>
 						{rec.holding_type}
 					</Tag>
 				</Space>
 
-				<Space size={6}>
+				<Space size={6} wrap>
 					<Badge
 						color={riskColor}
 						text={(
 							<Text style={{ fontSize: 12, color: riskColor }}>
-								{rec.risk_level === "low" ? "低风险" : rec.risk_level === "high" ? "高风险" : "中风险"}
+								{rec.risk_level === "low" ? "低风险" : rec.risk_level === "high" ? "高风险" : rec.risk_level === "medium" ? "中风险" : "风险待核验"}
 							</Text>
 						)}
 					/>
@@ -371,7 +380,7 @@ function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 						)}
 					</div>
 					<Text style={{ color: "#efd3db", fontSize: 13, marginTop: 4, display: "block" }}>
-						基于重估价值法，挖掘小马拉大车 & 产业链协同两大维度，每日精选 Top 10 影子股
+						基于持股证据和估值条件筛选，最多展示 10 只；条件不足时保留空缺。
 					</Text>
 				</Col>
 				<Col>
@@ -426,53 +435,60 @@ function StatsBar({ data }: { data: ShadowStockRecommendResponse }) {
 // ======================== 主页面 ========================
 
 export default function ShadowStockRecommendPage() {
-	const [data, setData] = useState<ShadowStockRecommendResponse | null>(null);
-	const [loading, setLoading] = useState(false);
+	const { data, loading, error, run } = useLatestRequest<ShadowStockRecommendResponse>();
+	const generationController = useRef<AbortController | null>(null);
 	const [generating, setGenerating] = useState(false);
 	const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
 
-	const loadData = useCallback(async (dateStr?: string) => {
-		setLoading(true);
-		try {
-			const resp = await fetchShadowStockRecommendations(
-				dateStr ? { date: dateStr } : undefined,
-			);
-			setData(resp);
-		}
-		catch (err) {
-			console.error("Load recommendations failed:", err);
-			message.error("加载推荐数据失败");
-		}
-		finally {
-			setLoading(false);
-		}
-	}, []);
+	const loadData = useCallback((dateStr?: string) => run(signal => fetchShadowStockRecommendations(dateStr ? { date: dateStr } : undefined, signal)), [run]);
 
 	useEffect(() => {
 		loadData(selectedDate);
 	}, [loadData, selectedDate]);
 
+	useEffect(() => () => generationController.current?.abort(), []);
+
 	const handleGenerate = async () => {
+		if (generationController.current)
+			return;
+		const controller = new AbortController();
+		generationController.current = controller;
 		setGenerating(true);
 		try {
-			const resp = await generateShadowStockRecommendations();
+			const resp = await generateShadowStockRecommendations(controller.signal);
+			if (controller.signal.aborted)
+				return;
 			if (resp.status === "completed") {
-				message.success(`推荐生成成功，共 ${resp.count} 只影子股`);
-				await loadData(selectedDate);
+				message.success(`推荐生成完成，共 ${resp.count ?? 0} 只影子股`);
+				if (selectedDate)
+					setSelectedDate(undefined);
+				else
+					await loadData();
 			}
-			else if (resp.status === "no_data") {
-				message.warning(resp.message || "暂无影子股数据");
+			else if (resp.status === "no_data" || resp.status === "no_eligible") {
+				message.warning(resp.message || "暂无符合条件的影子股数据");
+				if (selectedDate)
+					setSelectedDate(undefined);
+				else
+					await loadData();
+			}
+			else if (resp.status === "running") {
+				message.info(resp.message || "推荐正在后台生成，请稍后刷新查看");
 			}
 			else {
 				message.error(resp.error || resp.message || "生成失败");
 			}
 		}
 		catch (err) {
-			console.error("Generate failed:", err);
-			message.error("生成推荐失败");
+			if (!controller.signal.aborted) {
+				console.error("Generate failed:", err);
+				message.error("生成推荐失败，请刷新检查结果后再重试");
+			}
 		}
 		finally {
-			setGenerating(false);
+			if (!controller.signal.aborted)
+				setGenerating(false);
+			generationController.current = null;
 		}
 	};
 
@@ -481,6 +497,18 @@ export default function ShadowStockRecommendPage() {
 
 	return (
 		<div style={{ padding: "0 16px 32px" }}>
+			<Alert type="info" showIcon message="股权估值占比不是投资收益率；研究排序不代表买入信号。仅展示符合证据及计算条件的候选，不强凑数量。" style={{ marginBottom: 12 }} />
+			{error && <Alert type="error" showIcon message={error} style={{ marginBottom: 12 }} />}
+			{data?.historical_only && <Alert type="warning" showIcon message="当前为历史评分快照，不代表今天仍符合推荐条件。" style={{ marginBottom: 12 }} />}
+			{data?.message && <Alert type={data.status === "error" || data.status === "failed" ? "error" : "info"} message={data.message} style={{ marginBottom: 12 }} />}
+			{!!data?.excluded_count && (
+				<Text type="secondary">
+					已过滤
+					{data.excluded_count}
+					{" "}
+					条不符合当前条件的记录
+				</Text>
+			)}
 			{/* 统计头部 */}
 			{hasData && data && <StatsBar data={data} />}
 
@@ -495,9 +523,12 @@ export default function ShadowStockRecommendPage() {
 				styles={{ body: { padding: "12px 20px" } }}
 			>
 				<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-					<Space>
+					<Space wrap>
 						<Text strong>📅 选择日期：</Text>
 						<DatePicker
+							aria-label="推荐日期"
+							disabled={generating}
+							disabledDate={date => date.isAfter(dayjs(), "day")}
 							value={selectedDate ? dayjs(selectedDate) : undefined}
 							onChange={d => setSelectedDate(d ? d.format("YYYY-MM-DD") : undefined)}
 							allowClear
@@ -569,7 +600,7 @@ export default function ShadowStockRecommendPage() {
 												{data?.message || "暂无影子股推荐数据"}
 											</Text>
 											<Text type="secondary" style={{ fontSize: 13 }}>
-												每天凌晨 6:00 自动生成推荐，也可点击下方按钮手动生成
+												自动任务按调度配置运行，也可手动生成今日推荐；历史日期不会被重写
 											</Text>
 										</Space>
 									)}
