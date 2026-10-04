@@ -95,6 +95,7 @@ function profitColor(val: number): string {
 /** 策略名称 */
 const STRATEGY_NAMES: Record<string, string> = {
 	adaptive_confluence: "情绪催化自适应",
+	industry_ai: "AI产业研究自进化",
 	dragon_head: "龙头战法",
 	emotion_relay: "情绪接力",
 	event_driven: "事件驱动",
@@ -1372,6 +1373,7 @@ export default function PortfolioDashboard() {
 						rules={[{ required: true, message: "请选择策略" }]}
 					>
 						<Radio.Group buttonStyle="solid">
+							<Radio.Button value="industry_ai">AI产业研究自进化</Radio.Button>
 							<Radio.Button value="adaptive_confluence">情绪催化自适应</Radio.Button>
 							<Radio.Button value="dragon_head">🐉 龙头战法</Radio.Button>
 							<Radio.Button value="emotion_relay">⚡ 情绪接力</Radio.Button>

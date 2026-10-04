@@ -50,6 +50,7 @@ const STRATEGY_CONFIG: Record<string, {
 	gradient: string
 	order: number
 }> = {
+	industry_ai: { label: "AI产业研究自进化", emoji: "研", tagColor: "red", gradient: "var(--app-hero)", order: 16 },
 	adaptive_confluence: {
 		label: "情绪催化自适应",
 		emoji: "研",
@@ -517,7 +518,7 @@ function StrategyGroup({
 							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>平均评分</div>
 							<div style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
 								<StarFilled style={{ color: "#ffd700", marginRight: 4, fontSize: 14 }} />
-								{strategyType === "adaptive_confluence" ? "未评级" : stats.avgScore}
+								{["adaptive_confluence", "industry_ai"].includes(strategyType) ? "未评级" : stats.avgScore}
 							</div>
 						</div>
 						<div style={{
@@ -623,12 +624,12 @@ function ReviewRow({
 						<Text strong>{review.trading_date}</Text>
 					</Space>
 					<Tag
-						color={review.strategy_type === "adaptive_confluence" ? "default" : score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
+						color={["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "default" : score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
 						style={{ borderRadius: 12, minWidth: 70, textAlign: "center" }}
 					>
 						<StarFilled style={{ marginRight: 2 }} />
 						{" "}
-						{review.strategy_type === "adaptive_confluence" ? "前向验证 · 未评级" : `${score}分 · ${scoreLevel(score)}`}
+						{["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "前向验证 · 未评级" : `${score}分 · ${scoreLevel(score)}`}
 					</Tag>
 				</Space>
 				<Space size="large">
@@ -689,7 +690,7 @@ function ReviewDetail({ review }: { review: ReviewItem }) {
 				<Col xs={6}>
 					<Statistic
 						title="综合评级"
-						value={review.strategy_type === "adaptive_confluence" ? "未评级" : scoreLevel(score)}
+						value={["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "未评级" : scoreLevel(score)}
 						valueStyle={{ color: scoreColor(score), fontSize: 18, fontWeight: 700 }}
 						prefix={<TrophyOutlined />}
 					/>

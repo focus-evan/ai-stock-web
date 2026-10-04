@@ -27,6 +27,13 @@
 .industry-evidence { max-width: 360px; overflow-wrap: anywhere; font-size: 13px; }
 .industry-review-fields { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 16px 0; }
 .industry-review-card .ant-alert { margin-bottom: 12px; }
+.industry-ai-status { margin: 16px 0; }
+.industry-ai-status .ant-card-head-title, .industry-ai-judgment .ant-card-head-title { white-space: normal; }
+.industry-ai-reason-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 12px; }
+.industry-ai-reason-grid section { background: var(--ant-color-fill-quaternary, #f7f8fa); padding: 14px; border-radius: 10px; overflow-wrap: anywhere; }
+.industry-ai-evolution { display: grid; gap: 16px; min-width: 0; }
+.industry-ai-evolution .industry-research-stats > div { display: block; }
+@media (max-width: 600px) { .industry-ai-reason-grid { grid-template-columns: 1fr; } .industry-ai-status .ant-card-head, .industry-ai-status .ant-card-body { padding: 14px; } }
 .industry-review-card > .ant-card-body > .ant-btn { margin-top: 8px; }
 .s-industry-workbench > .ant-alert { margin-bottom: 12px; }
 @media (max-width: 800px) { .industry-fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .industry-competition-grid { grid-template-columns: 1fr; } }

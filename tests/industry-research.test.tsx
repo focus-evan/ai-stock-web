@@ -1,11 +1,27 @@
+import type { AIResearchState } from "../src/api/industry-ai";
 import type { IndustryResearch, ResearchReview } from "../src/pages/industry/research-model";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
+import { fetchIndustryAI, fetchIndustryAIStrategy } from "../src/api/industry-ai";
 import Industry from "../src/pages/industry";
 import { parseReviews, reviewIsCurrent, reviewStorageKey, safeEvidenceUrl } from "../src/pages/industry/research-model";
 import ResearchWorkbench from "../src/pages/industry/research-workbench";
 import fixture from "./fixtures/industry-research.json";
 
+vi.mock("#src/api/industry-ai", () => ({ fetchIndustryAI: vi.fn(), fetchIndustryAIStrategy: vi.fn(), refreshIndustryAI: vi.fn() }));
+const aiState: AIResearchState = {
+	current: true,
+	latest: { run_id: "ai-1", status: "completed", started_at: "2026-10-04T10:00:00+08:00", output: {
+		summary: "AI正在以经营兑现证据判断计算环节",
+		sectors: [{ subject_id: "11", name: "计算", decision: "focus", quality_score: 75, thesis: "营收与利润同步改善，进入优先研究范围", counterargument: "行业份额仍须新增证据验证", next_check: "自动核对下一季度财报和交付公告", evidence_ids: ["finance-1"], gate_issues: [] }],
+		companies: [],
+		learning_applied: [],
+		research_review: { settled: 0, confirmed: 0, contradicted: 0, status: "forward_validation" },
+	}, evidence: [{ id: "finance-1", title: "公司财报", kind: "financial", as_of: "2026-08-01" }] },
+	attempt: { run_id: "ai-1", status: "completed", started_at: "2026-10-04T10:00:00+08:00", finished_at: "2026-10-04T10:01:00+08:00" },
+	history: [],
+	reviews: [],
+};
 const user = vi.hoisted(() => ({ id: "research-user" }));
 vi.mock("#src/store/user", () => ({ useUserStore: (select: (state: { id: string }) => unknown) => select(user) }));
 vi.mock("#src/components/basic-content", () => ({ BasicContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div> }));
@@ -15,6 +31,8 @@ const saved: ResearchReview = { sectorId: "11", snapshotKey: research.snapshot_k
 const props = { chainCode: "ai", research, analysis: fixture.analysis, legacy: () => <div>历史技术资料</div> };
 
 beforeEach(() => {
+	vi.mocked(fetchIndustryAI).mockResolvedValue({ data: structuredClone(aiState) });
+	vi.mocked(fetchIndustryAIStrategy).mockResolvedValue({ data: { name: "AI产业研究自进化", version: "v1", recommendations: [], evolution: null, evolution_history: [], runtime: { scheduler_running: true, loop_running: true, research_times: ["07:50", "17:30"], entry_windows: [] } } });
 	localStorage.clear();
 	user.id = "research-user";
 });
@@ -24,63 +42,42 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 });
 
-it("requires a reason and a review condition, then restores account-scoped research", () => {
-	const view = render(<ResearchWorkbench {...props} />);
-	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
-	expect(screen.getByText("请写明取舍理由和下一次验证或重新纳入的条件。")).toBeInTheDocument();
-	expect(localStorage.getItem(key)).toBeNull();
-	fireEvent.change(screen.getByRole("textbox", { name: "取舍理由" }), { target: { value: saved.reason } });
-	fireEvent.change(screen.getByRole("textbox", { name: "下一次验证条件" }), { target: { value: saved.signal } });
-	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
-	expect(parseReviews(localStorage.getItem(key))["11"].reason).toBe(saved.reason);
-	view.unmount();
-	render(<ResearchWorkbench {...props} />);
-	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue(saved.reason);
-});
-
-it("retains old reasons but makes a changed snapshot pending until reviewed", () => {
+it("replaces manual notes with server-backed AI judgments and leaves old local notes untouched", async () => {
 	localStorage.setItem(key, JSON.stringify({ version: 1, entries: [saved] }));
-	render(<ResearchWorkbench {...props} research={{ ...research, snapshot_key: "new-batch" }} />);
-	expect(screen.getByText("1 条历史取舍需要复核")).toBeInTheDocument();
-	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue(saved.reason);
-	expect(screen.getByRole("button", { name: /计算.*个人取舍待复核/ })).toBeInTheDocument();
-	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
-	expect(screen.queryByText("1 条历史取舍需要复核")).not.toBeInTheDocument();
-	expect(parseReviews(localStorage.getItem(key))["11"].snapshotKey).toBe("new-batch");
-});
-
-it("does not carry another account or industry's drafts across identity changes", () => {
-	localStorage.setItem(key, JSON.stringify({ version: 1, entries: [saved] }));
-	const view = render(<ResearchWorkbench {...props} />);
-	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue(saved.reason);
-	user.id = "another-user";
-	view.rerender(<ResearchWorkbench {...props} />);
-	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue("");
-	user.id = "research-user";
-	view.rerender(<ResearchWorkbench {...props} chainCode="quantum" />);
-	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue("");
-});
-
-it("preserves corrupt local storage and offers export instead of silently overwriting it", () => {
-	localStorage.setItem(key, "not-json");
+	const original = localStorage.getItem(key);
 	render(<ResearchWorkbench {...props} />);
-	expect(screen.getByText(/本机记录暂时无法读取/)).toBeInTheDocument();
-	fireEvent.change(screen.getByRole("textbox", { name: "取舍理由" }), { target: { value: saved.reason } });
-	fireEvent.change(screen.getByRole("textbox", { name: "下一次验证条件" }), { target: { value: saved.signal } });
-	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
-	expect(localStorage.getItem(key)).toBe("not-json");
-	expect(screen.getByRole("button", { name: "导出研究记录" })).toBeInTheDocument();
+	expect(await screen.findByText("营收与利润同步改善，进入优先研究范围")).toBeInTheDocument();
+	expect(screen.queryByRole("button", { name: "保存研究记录" })).not.toBeInTheDocument();
+	expect(screen.queryByRole("textbox", { name: "取舍理由" })).not.toBeInTheDocument();
+	expect(screen.getByRole("tab", { name: "AI复盘与自进化" })).toBeInTheDocument();
+	expect(localStorage.getItem(key)).toBe(original);
+	expect(screen.getByRole("button", { name: /计算.*AI：优先深研/ })).toBeInTheDocument();
 });
 
-it("saves a separate company decision after competition research", { timeout: 10000 }, async () => {
+it("shows interrupted runs and historical judgments without treating them as current", async () => {
+	vi.mocked(fetchIndustryAI).mockResolvedValue({ data: { ...structuredClone(aiState), current: false, attempt: { run_id: "r2", status: "failed", started_at: "2026-10-04T12:00:00+08:00", error: "自动复核失败，新买暂停" } } });
 	render(<ResearchWorkbench {...props} />);
-	fireEvent.click(screen.getByRole("tab", { name: "竞争格局 → 焦点 → 优势" }));
-	expect(await screen.findByText("公司优势如何对应竞争焦点")).toBeInTheDocument();
-	fireEvent.change(screen.getByRole("textbox", { name: "取舍理由" }), { target: { value: "优势需与同行交付比较" } });
-	fireEvent.change(screen.getByRole("textbox", { name: "下一次验证条件" }), { target: { value: "观察下季客户回款" } });
-	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
-	expect(parseReviews(localStorage.getItem(key))["11/company/000001"].reason).toBe("优势需与同行交付比较");
-	expect(parseReviews(localStorage.getItem(key))["11"]).toBeUndefined();
+	expect(await screen.findByText("自动复核失败，新买暂停")).toBeInTheDocument();
+	expect(screen.getByText("历史判断 · 新买暂停")).toBeInTheDocument();
+	expect(screen.getByText("营收与利润同步改善，进入优先研究范围")).toBeInTheDocument();
+});
+
+it("does not request a manual note when no AI report exists", async () => {
+	vi.mocked(fetchIndustryAI).mockResolvedValue({ data: { current: false, latest: null, attempt: null, history: [], reviews: [] } });
+	render(<ResearchWorkbench {...props} />);
+	await waitFor(() => expect(fetchIndustryAI).toHaveBeenCalled());
+	expect(screen.getByText("等待首轮自动研究")).toBeInTheDocument();
+	expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+	expect(screen.getByRole("button", { name: "立即AI复核" })).toBeInTheDocument();
+});
+
+it("shows sample limits and the simulation link instead of a fabricated win rate", async () => {
+	render(<ResearchWorkbench {...props} />);
+	await screen.findByText("营收与利润同步改善，进入优先研究范围");
+	fireEvent.click(screen.getByRole("tab", { name: "AI复盘与自进化" }));
+	expect(await screen.findByText(/至少 60 轮、20 个入场日期/)).toBeInTheDocument();
+	expect(screen.getByRole("link", { name: "查看模拟组合" })).toHaveAttribute("href", "#/short-term-strategy/portfolio");
+	expect(screen.getByText("还没有晚于判断时间的新财报，不提前计算准确率")).toBeInTheDocument();
 });
 
 it("keeps future quarter and market values out of financial validation", async () => {

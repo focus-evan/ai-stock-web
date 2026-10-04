@@ -11,6 +11,7 @@ export const STRATEGIES: Record<string, { label: string, color: string }> = {
 	moving_average: { label: "均线战法", color: "#ad607a" },
 	northbound: { label: "北向资金", color: "#8a6caa" },
 	trend_momentum: { label: "趋势动量", color: "#ab7656" },
+	industry_ai: { label: "AI产业研究自进化", color: "#c82042" },
 	adaptive_confluence: { label: "情绪催化自适应", color: "#168987" },
 	combined: { label: "综合战法", color: "#8e792e" },
 	yangjia_emotion_cycle: { label: "炒股养家情绪周期", color: "#ad607a" },
