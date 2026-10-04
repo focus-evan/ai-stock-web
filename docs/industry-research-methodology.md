@@ -5,6 +5,8 @@
 ## 交互
 
 - 选择产业和细分环节，查看一级/二级结构、规模/增长/天花板/供需政策/周期/价值贡献及证据缺口。
+- 全景页直接展示选中环节的公司、营收、归母净利、同比和利润率；桌面导航与数据并排，手机优先显示经营数据卡片。默认选中有财务样本的环节。
+- 数据状态和个人取舍分别显示：有数据时显示“财务已载入”，已有个人记录另标注其处理结果或待复核。确实没有关联公司的环节明确显示资料缺口，不将其余有数据环节一起标成“待研究”。
 - 沿竞争格局、竞争焦点、优势证据研究公司；同行、上下游、地域和第二增长曲线按行业选用。
 - 赛道与公司分别记录优先深研、继续观察、暂时排除；理由和下一次验证/重新纳入条件必填，可附来源链接。
 - 财务仅显示当前环节且通过后台日期/口径检查的样本。保留经营指标与跨期图，移除赛道平均分和前3排名；旧量化分标为参考、旧标签标为批次初筛标记。
@@ -20,4 +22,4 @@
 
 ## 验证
 
-`node node_modules/vitest/vitest.mjs run tests/industry.test.tsx tests/industry-research.test.tsx tests/industry-charts.test.tsx`，以及 TypeScript 检查、变更文件 ESLint 与生产构建。fixture 全部为标注的示例，不能作为产业事实。
+`node node_modules/vitest/vitest.mjs run tests/industry.test.tsx tests/industry-research.test.tsx tests/industry-charts.test.tsx --testTimeout=15000`，以及 TypeScript 检查、变更文件 ESLint 与生产构建。提交的 fixture 全部为标注的示例，不能作为产业事实。布局验收另使用线上产业快照，在隔离浏览器中检查多环节布局和真实公司数字是否可见；不向生产账号写入记录。

@@ -1,5 +1,5 @@
 import type { IndustryResearch, ResearchReview } from "../src/pages/industry/research-model";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import Industry from "../src/pages/industry";
 import { parseReviews, reviewIsCurrent, reviewStorageKey, safeEvidenceUrl } from "../src/pages/industry/research-model";
@@ -43,7 +43,7 @@ it("retains old reasons but makes a changed snapshot pending until reviewed", ()
 	render(<ResearchWorkbench {...props} research={{ ...research, snapshot_key: "new-batch" }} />);
 	expect(screen.getByText("1 条历史取舍需要复核")).toBeInTheDocument();
 	expect(screen.getByRole("textbox", { name: "取舍理由" })).toHaveValue(saved.reason);
-	expect(screen.getByRole("button", { name: /计算.*待研究/ })).toBeInTheDocument();
+	expect(screen.getByRole("button", { name: /计算.*个人取舍待复核/ })).toBeInTheDocument();
 	fireEvent.click(screen.getByRole("button", { name: "保存研究记录" }));
 	expect(screen.queryByText("1 条历史取舍需要复核")).not.toBeInTheDocument();
 	expect(parseReviews(localStorage.getItem(key))["11"].snapshotKey).toBe("new-batch");
@@ -117,4 +117,38 @@ it("validates links and keeps retired records exportable without treating blank 
 	expect(reviewStorageKey("", "ai")).toBeNull();
 	expect(reviewIsCurrent({ ...saved, reason: " " }, research.snapshot_key)).toBe(false);
 	expect(parseReviews(JSON.stringify({ version: 1, entries: [{ ...saved, sectorId: "retired" }] })).retired.reason).toBe(saved.reason);
+});
+
+it("shows company financial values on the initial panorama without a research note", () => {
+	render(<ResearchWorkbench {...props} />);
+	const table = within(screen.getByRole("table"));
+	expect(table.getByText("示例公司")).toBeInTheDocument();
+	expect(table.getByText("10.00")).toBeInTheDocument();
+	expect(table.getByText("2.00")).toBeInTheDocument();
+	expect(table.getByText("30.00%")).toBeInTheDocument();
+	expect(screen.getByRole("button", { name: /计算.*财务已载入/ })).toBeInTheDocument();
+	expect(screen.queryByText("待研究 / 待复核", { selector: ".ant-tag" })).not.toBeInTheDocument();
+});
+
+it("starts with an available sector and distinguishes a genuinely empty mapping", () => {
+	render(<ResearchWorkbench {...props} research={{ ...research, sectors: [research.sectors[1], research.sectors[0]] }} />);
+	expect(screen.getByText("计算 · 公司与经营数据")).toBeInTheDocument();
+	fireEvent.click(screen.getByRole("button", { name: /应用软件.*资料缺口/ }));
+	expect(screen.getByText(/此环节尚未建立公司关联/)).toBeInTheDocument();
+	expect(screen.queryByRole("table")).not.toBeInTheDocument();
+});
+
+it("does not expose rejected financial values in the initial overview", () => {
+	const changed = structuredClone(research);
+	changed.sectors[0].companies[0].observation.financial_status = "needs_evidence";
+	changed.sectors[0].companies[0].observation.metrics.revenue = 999999;
+	render(<ResearchWorkbench {...props} research={changed} />);
+	expect(screen.queryByText(/999999/)).not.toBeInTheDocument();
+	expect(screen.getByText("1 家公司财务尚未对齐")).toBeInTheDocument();
+});
+
+it("opens detailed financial verification from the overview", async () => {
+	render(<ResearchWorkbench {...props} />);
+	fireEvent.click(screen.getByRole("button", { name: "完整财务与趋势" }));
+	expect(await screen.findByText("公司五维PK · 最新单季度")).toBeInTheDocument();
 });

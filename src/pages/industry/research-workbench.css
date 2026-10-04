@@ -35,3 +35,28 @@
   .industry-research-toolbar { flex-direction: column; align-items: stretch; }
   .industry-research-toolbar label:nth-child(2) { flex: none; max-width: none; }
 }
+
+/* Keep the selected data alongside the outline; tall navigation must not push it below the fold. */
+.industry-overview-layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); grid-template-areas: "outline detail"; align-items: start; gap: 18px; }
+.industry-overview-main { grid-area: detail; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.industry-overview-layout .industry-panorama-grid { grid-area: outline; grid-template-columns: 1fr; gap: 10px; margin: 0; }
+.industry-overview-layout .industry-panorama-grid .ant-card-body { padding: 10px; }
+.industry-overview-layout .industry-sector-list button { padding: 10px; gap: 5px; }
+.industry-selected-data .ant-card-head-wrapper { flex-wrap: wrap; }
+.industry-selected-data .ant-card-head-title { white-space: normal; }
+.industry-selected-data .ant-table-cell { font-variant-numeric: tabular-nums; }
+.industry-overview-clues { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ant-color-border-secondary, #e6e9ef); }
+.industry-overview-clues .ant-typography { margin-top: 8px; margin-bottom: 0; }
+.industry-overview-mobile { display: none; }
+@media (max-width: 1100px) { .industry-overview-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "detail" "outline"; } .industry-overview-layout .industry-panorama-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+@media (max-width: 600px) {
+ .industry-overview-table { display: none; }
+ .industry-overview-mobile { display: flex; flex-direction: column; gap: 12px; }
+ .industry-overview-mobile section { border: 1px solid var(--ant-color-border-secondary, #e6e9ef); border-radius: 10px; padding: 12px; }
+ .industry-overview-mobile dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 12px 0; }
+ .industry-overview-mobile dt { color: var(--ant-color-text-secondary, #626b79); font-size: 12px; }
+ .industry-overview-mobile dd { margin: 3px 0 0; font-size: 17px; font-weight: 600; }
+ .industry-overview-layout .industry-panorama-grid { grid-template-columns: 1fr; }
+ .industry-overview-main .ant-card-head { padding: 0 14px; }
+ .industry-overview-main .ant-card-body { padding: 14px; }
+}

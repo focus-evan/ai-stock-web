@@ -3,9 +3,10 @@ import type { IndustryAnalysisBatch } from "./quant-analysis";
 import type { IndustryResearch, ResearchCompany, ResearchDecision, ResearchReview, ResearchReviews, ResearchSector } from "./research-model";
 import { useUserStore } from "#src/store/user";
 import { Alert, Button, Card, Collapse, Descriptions, Empty, Input, Select, Table, Tabs, Tag, Typography } from "antd";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import QuantAnalysis from "./quant-analysis";
 import { decisionLabels, parseReviews, reviewIsCurrent, reviewStorageKey, safeEvidenceUrl, validateReview } from "./research-model";
+import SectorOverview from "./sector-overview";
 import "./research-workbench.css";
 
 const { Paragraph, Text, Title } = Typography;
@@ -115,7 +116,14 @@ function Workspace({ chainCode, research, analysis, legacy, userId }: Props & { 
 	const [storageError, setStorageError] = useState(initial.error);
 	const [notice, setNotice] = useState("");
 	const [filter, setFilter] = useState("all");
-	const [selectedId, setSelectedId] = useState(research.sectors[0]?.id);
+	const [selectedId, setSelectedId] = useState((research.sectors.find(s => s.financial_count > 0) || research.sectors.find(s => s.companies.length > 0) || research.sectors[0])?.id);
+	const [activeResearchTab, setActiveResearchTab] = useState("panorama");
+	const overviewRef = useRef<HTMLDivElement>(null);
+	const selectSector = (id: string) => {
+		setSelectedId(id);
+		if (activeResearchTab === "panorama")
+			requestAnimationFrame(() => overviewRef.current?.scrollIntoView?.({ block: "start" }));
+	};
 	const visible = research.sectors.filter((sector) => {
 		const review = reviews[sector.id];
 		const current = reviewIsCurrent(review, research.snapshot_key);
@@ -201,59 +209,69 @@ function Workspace({ chainCode, research, analysis, legacy, userId }: Props & { 
 				</label>
 				<label>
 					选择细分环节
-					<Select aria-label="选择细分环节" showSearch optionFilterProp="label" value={selected?.id} onChange={setSelectedId} options={visible.map(s => ({ value: s.id, label: `${s.layer_name} / ${s.name}` }))} />
+					<Select aria-label="选择细分环节" showSearch optionFilterProp="label" value={selected?.id} onChange={selectSector} options={visible.map(s => ({ value: s.id, label: `${s.layer_name} / ${s.name}` }))} />
 				</label>
 				<Text type="secondary">取舍记录按账号保存在此设备，可导出留档。</Text>
 			</div>
 			<Tabs
 				className="industry-research-tabs"
+				activeKey={activeResearchTab}
+				onChange={setActiveResearchTab}
 				items={[
 					{ key: "panorama", label: "全景与取舍", children: (
-						<>
-							<div className="industry-panorama-grid">
-								{Array.from(new Set(research.sectors.map(s => s.layer_name))).map(layer => (
+						<div className="industry-overview-layout">
+							<div className="industry-overview-main" ref={overviewRef}>
+								{selected
+									? (
+										<>
+											<SectorOverview sector={selected} period={research.report_period} onOpen={setActiveResearchTab} />
+											<Collapse items={[{ key: "research-gaps", label: "行业规模、成长空间与资料缺口", children: (
+												<>
+													<div className="industry-fact-grid">
+														{selected.facts.map(f => (
+															<section key={f.key}>
+																<Text strong>{f.label}</Text>
+																<p>{f.value ? `${f.value}（历史字段，来源与单位待核验）` : "待补证据"}</p>
+																<Text type="secondary">{f.question}</Text>
+															</section>
+														))}
+													</div>
+													<ul className="industry-research-list">{selected.gaps.map(g => <li key={g}>{g}</li>)}</ul>
+												</>
+											) }]}
+											/>
+											<ReviewForm key={`${selected.id}:${reviews[selected.id]?.updatedAt || ""}:${research.snapshot_key}`} sector={selected} previous={reviews[selected.id]} snapshotKey={research.snapshot_key} onSave={save} />
+										</>
+									)
+									: <Empty description="当前范围没有待展示的环节" />}
+							</div>
+							<aside className="industry-panorama-grid" aria-label="产业全景导航">
+								{Array.from(new Set(visible.map(s => s.layer_name))).map(layer => (
 									<Card key={layer} size="small" title={layer}>
 										<div className="industry-sector-list">
 											{visible.filter(s => s.layer_name === layer).map(s => (
-												<button type="button" aria-pressed={selected?.id === s.id} className={selected?.id === s.id ? "is-selected" : ""} key={s.id} onClick={() => setSelectedId(s.id)}>
+												<button type="button" aria-pressed={selected?.id === s.id} className={selected?.id === s.id ? "is-selected" : ""} key={s.id} onClick={() => selectSector(s.id)}>
 													<strong>{s.name}</strong>
 													<span>
-														{s.companies.length}
-														{" "}
-														家映射 ·
-														{" "}
-														{s.financial_count}
-														{" "}
-														家财务样本
+														{s.companies.slice(0, 3).map(c => c.stock_name).join("、") || "公司关联缺失"}
+														{s.companies.length > 3 ? "等" : ""}
 													</span>
-													{reviewIsCurrent(reviews[s.id], research.snapshot_key) ? <Tag color={colors[reviews[s.id].decision]}>{decisionLabels[reviews[s.id].decision]}</Tag> : <Tag>待研究 / 待复核</Tag>}
+													<Tag color={s.financial_count ? "blue" : "default"}>{s.financial_count ? `${s.financial_count} 家财务已载入` : s.companies.length ? "公司已关联 · 财务待补" : "资料缺口"}</Tag>
+													{reviews[s.id] && (reviewIsCurrent(reviews[s.id], research.snapshot_key)
+														? (
+															<Tag color={colors[reviews[s.id].decision]}>
+																个人取舍：
+																{decisionLabels[reviews[s.id].decision]}
+															</Tag>
+														)
+														: <Tag color="orange">个人取舍待复核</Tag>)}
 												</button>
 											))}
 										</div>
 									</Card>
 								))}
-							</div>
-							{selected
-								? (
-									<>
-										<Card title={`${selected.name} · 赛道基本马步`}>
-											<Paragraph>{selected.description || "产品边界与产业位置尚待补充。"}</Paragraph>
-											<div className="industry-fact-grid">
-												{selected.facts.map(f => (
-													<section key={f.key}>
-														<Text strong>{f.label}</Text>
-														<p>{f.value ? `${f.value}（历史字段，来源与单位待核验）` : "待补证据"}</p>
-														<Text type="secondary">{f.question}</Text>
-													</section>
-												))}
-											</div>
-										</Card>
-										<Card title="下一步先补什么"><ul className="industry-research-list">{selected.gaps.map(g => <li key={g}>{g}</li>)}</ul></Card>
-										<ReviewForm key={`${selected.id}:${reviews[selected.id]?.updatedAt || ""}:${research.snapshot_key}`} sector={selected} previous={reviews[selected.id]} snapshotKey={research.snapshot_key} onSave={save} />
-									</>
-								)
-								: <Empty description="当前范围没有待展示的环节" />}
-						</>
+							</aside>
+						</div>
 					) },
 					{ key: "competition", label: "竞争格局 → 焦点 → 优势", children: selected
 						? (
