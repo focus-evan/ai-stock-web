@@ -1,6 +1,6 @@
 import { Alert, Card, Select, Space, Table, Tag, Typography } from "antd";
 import { useState } from "react";
-import { QuarterTrendChart, SectorScoreChart } from "./industry-charts";
+import { QuarterTrendChart } from "./industry-charts";
 
 interface Quarter {
 	period: string
@@ -65,11 +65,11 @@ export default function QuantAnalysis({ analysis }: { analysis?: IndustryAnalysi
 			<Alert
 				type="info"
 				showIcon
-				message={`S老师季度五维 · 截至 ${analysis.cutoff} · 报告期 ${analysis.report_period}`}
+				message={`季度经营诊断 · 截至 ${analysis.cutoff} · 报告期 ${analysis.report_period}`}
 				description={(
 					<>
 						<div>{analysis.methodology}</div>
-						<div>合并财务用于经营验证；保留/观察/剔除为研究筛选，须再核验利润池、国产替代、护城河及新业务兑现阶段。</div>
+						<div>合并财务用于经营验证。量化分和批次初筛标记只提示待研究问题，不自动决定研究取舍或仓位。仍需解释行业差异、现金流与主题业务贡献。</div>
 						<Typography.Text type="secondary">
 							批次
 							{analysis.batch_id}
@@ -81,34 +81,6 @@ export default function QuantAnalysis({ analysis }: { analysis?: IndustryAnalysi
 				? <Alert type="warning" showIcon message="公司池尚未建立，当前产业数分未完成" description="需要先建立有来源的产业链公司映射，再拉取财务并做同行PK。" />
 				: (
 					<>
-						<Card
-							title="赛道经营数据PK · 合并财务口径"
-							extra={(
-								<Tag>
-									{analysis.companies.length}
-									{" "}
-									家公司 ·
-									{" "}
-									{analysis.sectors.length}
-									{" "}
-									个环节
-								</Tag>
-							)}
-						>
-							<SectorScoreChart sectors={analysis.sectors} />
-							<Table
-								size="small"
-								rowKey="name"
-								pagination={false}
-								dataSource={analysis.sectors}
-								columns={[
-									{ title: "赛道", dataIndex: "name" },
-									{ title: "公司数", dataIndex: "company_count" },
-									{ title: "均分", dataIndex: "average_score", render: display },
-									{ title: "满足保留条件的前3", dataIndex: "top3", render: (names: string[]) => names.join("、") || "暂无" },
-								]}
-							/>
-						</Card>
 						<Card title="公司五维PK · 最新单季度">
 							<Table
 								size="small"
@@ -128,8 +100,8 @@ export default function QuantAnalysis({ analysis }: { analysis?: IndustryAnalysi
 								columns={[
 									{ title: "公司", fixed: "left", render: (_: unknown, row: QuantCompany) => `${row.stock_name} ${row.stock_code}` },
 									{ title: "赛道", render: (_: unknown, row: QuantCompany) => row.sectors.join("、") },
-									{ title: "S量化分", dataIndex: "score", render: display },
-									{ title: "结论", dataIndex: "label", render: (label: string) => <Tag color={label === "保留" ? "green" : label.includes("剔除") ? "red" : "orange"}>{label}</Tag> },
+									{ title: "参考量化分", dataIndex: "score", render: display },
+									{ title: "批次初筛标记", dataIndex: "label", render: (label: string) => <Tag color={label === "保留" ? "green" : label.includes("剔除") ? "red" : "orange"}>{label}</Tag> },
 									{ title: "报告期", render: (_: unknown, row: QuantCompany) => row.latest.period || "缺失" },
 									...metrics.map(([key, title]) => ({ title, render: (_: unknown, row: QuantCompany) => showMetric(row.latest, key) })),
 									{ title: "市值(亿)", render: (_: unknown, row: QuantCompany) => display(row.market.market_cap) },

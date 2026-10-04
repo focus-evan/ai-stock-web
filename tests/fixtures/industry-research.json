@@ -1,0 +1,361 @@
+{
+	"id": 1,
+	"code": "ai",
+	"layers": [
+		{
+			"id": 1,
+			"name": "基础设施",
+			"code": "infra",
+			"technologies": [
+				{
+					"id": 11,
+					"code": "compute",
+					"name": "计算",
+					"market_size": "123.4",
+					"companies": [
+						{
+							"stock_code": "000001",
+							"stock_name": "示例公司",
+							"market": "A",
+							"competitive_advantage": "历史优势描述",
+							"strength_score": 99,
+							"investment_level": "high"
+						},
+						{
+							"stock_code": "000001",
+							"stock_name": "示例公司",
+							"market": "A",
+							"competitive_advantage": "历史优势描述",
+							"strength_score": 99,
+							"investment_level": "high"
+						}
+					],
+					"competition": [
+						{
+							"description": "历史格局",
+							"key_factors": "[\"交付\", \"成本\"]",
+							"barriers": "客户认证"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "应用",
+			"code": "apps",
+			"technologies": [
+				{
+					"id": 12,
+					"name": "应用软件",
+					"code": "software",
+					"companies": []
+				}
+			]
+		}
+	],
+	"analysis": {
+		"batch_id": "test-1",
+		"cutoff": "2026-10-03",
+		"report_period": "2026-06-30",
+		"companies": [
+			{
+				"stock_code": "000001",
+				"score": 99,
+				"label": "保留",
+				"source_label": "示例公告",
+				"source_url": "https://example.com/report",
+				"mapping_scope": "收入贡献待核实",
+				"latest": {
+					"period": "2026-06-30",
+					"disclosed_at": "2026-08-28",
+					"revenue": 10,
+					"net_profit": 2,
+					"revenue_growth": 30,
+					"profit_growth": 40,
+					"gross_margin": 50,
+					"net_margin": 20
+				},
+				"market": {
+					"date": "2026-09-30",
+					"market_cap": 100,
+					"pe_ttm": 30
+				},
+				"stock_name": "示例公司",
+				"sectors": [
+					"计算"
+				],
+				"issues": [],
+				"quarters": [
+					{
+						"period": "2026-06-30",
+						"disclosed_at": "2026-08-28",
+						"revenue": 10,
+						"net_profit": 2,
+						"revenue_growth": 30,
+						"profit_growth": 40,
+						"gross_margin": 50,
+						"net_margin": 20
+					}
+				]
+			}
+		],
+		"methodology": "测试用经营诊断，不作为投资结论",
+		"limitations": [
+			"示例数据，仅用于测试"
+		],
+		"sectors": [
+			{
+				"name": "计算",
+				"average_score": 99,
+				"top3": [
+					"示例公司"
+				],
+				"company_count": 1
+			}
+		]
+	},
+	"name": "AI产业链",
+	"research": {
+		"methodology_version": "s-industry-research-v1",
+		"snapshot_key": "3827c1d07e8f5b5f4499ef6e",
+		"question": "算力、存力与运力的瓶颈如何变化，需求能否传导到有效交付和企业利润？",
+		"cutoff": "2026-10-03",
+		"report_period": "2026-06-30",
+		"batch_id": "test-1",
+		"summary": {
+			"layer_count": 2,
+			"sector_count": 2,
+			"company_count": 1,
+			"financial_company_count": 1
+		},
+		"sectors": [
+			{
+				"id": "11",
+				"code": "compute",
+				"name": "计算",
+				"layer_name": "基础设施",
+				"layer_code": "infra",
+				"description": "",
+				"evidence_status": "历史资料待核验",
+				"financial_count": 1,
+				"mapping_source_count": 1,
+				"facts": [
+					{
+						"key": "size",
+						"label": "市场规模",
+						"value": "123.4",
+						"question": "口径、年份、地域和产品边界是否一致？"
+					},
+					{
+						"key": "growth",
+						"label": "赛道增速",
+						"value": "",
+						"question": "增长来自量、价还是结构变化，能持续多久？"
+					},
+					{
+						"key": "ceiling",
+						"label": "成长天花板",
+						"value": "",
+						"question": "渗透率、替代空间与商业化条件能支持多大规模？"
+					},
+					{
+						"key": "drivers",
+						"label": "需求 / 供给 / 政策",
+						"value": "",
+						"question": "分别列证据，并检查供给扩张、替代路线和政策约束的抵消作用。"
+					},
+					{
+						"key": "cycle",
+						"label": "阶段与周期",
+						"value": "",
+						"question": "当前与下一阶段在比什么，原有优势会不会改变？"
+					},
+					{
+						"key": "value",
+						"label": "价值量与利润",
+						"value": "",
+						"question": "价值贡献落在哪一环，利润如何分配，资本投入和回款是否匹配？"
+					}
+				],
+				"competition": {
+					"landscape": [
+						"历史格局"
+					],
+					"focus": [
+						"交付",
+						"成本"
+					],
+					"barriers": [
+						"客户认证"
+					],
+					"status": "已有描述仅作研究线索，需补日期、来源与对手比较"
+				},
+				"companies": [
+					{
+						"stock_code": "000001",
+						"stock_name": "示例公司",
+						"market": "A",
+						"products": "",
+						"advantage_clue": "历史优势描述",
+						"position_clue": "",
+						"observation": {
+							"financial_status": "available",
+							"financial_gaps": [],
+							"period": "2026-06-30",
+							"disclosed_at": "2026-08-28",
+							"metrics": {
+								"revenue": 10.0,
+								"net_profit": 2.0,
+								"revenue_growth": 30.0,
+								"profit_growth": 40.0,
+								"gross_margin": 50.0,
+								"net_margin": 20.0,
+								"roe": null
+							},
+							"diagnostics": [
+								"已有经营数据，仍需用现金流、应收、存货及合同负债交叉验证"
+							],
+							"mapping_source": "示例公告",
+							"source_url": "https://example.com/report",
+							"mapping_scope": "收入贡献待核实",
+							"market": {
+								"date": "2026-09-30",
+								"market_cap": 100.0,
+								"pe_ttm": 30.0
+							},
+							"valuation_status": "待验证成长、历史区间与安全边际",
+							"business_scope": "上市公司合并报表，不能直接代表该产业分部"
+						}
+					}
+				],
+				"gaps": [
+					"市场规模、增速、天花板的时间与口径",
+					"需求、供给、政策传导及阶段变化",
+					"环节价值量和可持续利润分配",
+					"竞争焦点与企业优势的对照证据"
+				],
+				"next_step": "先补产业证据，再结合公司经营与估值形成取舍理由",
+				"monitoring": [
+					"行业：需求、有效供给、技术路线或政策执行是否改变",
+					"公司：客户验证、交付、主题业务收入与利润贡献是否兑现",
+					"财报：季检与年检时串联现金流、应收、存货、合同负债",
+					"估值：价格变化是否改变原有成长假设和安全边际"
+				]
+			},
+			{
+				"id": "12",
+				"code": "software",
+				"name": "应用软件",
+				"layer_name": "应用",
+				"layer_code": "apps",
+				"description": "",
+				"evidence_status": "历史资料待核验",
+				"financial_count": 0,
+				"mapping_source_count": 0,
+				"facts": [
+					{
+						"key": "size",
+						"label": "市场规模",
+						"value": "",
+						"question": "口径、年份、地域和产品边界是否一致？"
+					},
+					{
+						"key": "growth",
+						"label": "赛道增速",
+						"value": "",
+						"question": "增长来自量、价还是结构变化，能持续多久？"
+					},
+					{
+						"key": "ceiling",
+						"label": "成长天花板",
+						"value": "",
+						"question": "渗透率、替代空间与商业化条件能支持多大规模？"
+					},
+					{
+						"key": "drivers",
+						"label": "需求 / 供给 / 政策",
+						"value": "",
+						"question": "分别列证据，并检查供给扩张、替代路线和政策约束的抵消作用。"
+					},
+					{
+						"key": "cycle",
+						"label": "阶段与周期",
+						"value": "",
+						"question": "当前与下一阶段在比什么，原有优势会不会改变？"
+					},
+					{
+						"key": "value",
+						"label": "价值量与利润",
+						"value": "",
+						"question": "价值贡献落在哪一环，利润如何分配，资本投入和回款是否匹配？"
+					}
+				],
+				"competition": {
+					"landscape": [],
+					"focus": [],
+					"barriers": [],
+					"status": "已有描述仅作研究线索，需补日期、来源与对手比较"
+				},
+				"companies": [],
+				"gaps": [
+					"市场规模、增速、天花板的时间与口径",
+					"需求、供给、政策传导及阶段变化",
+					"环节价值量和可持续利润分配",
+					"竞争焦点与企业优势的对照证据",
+					"公司财务样本或统一报告期尚未补齐"
+				],
+				"next_step": "先补产业证据，再结合公司经营与估值形成取舍理由",
+				"monitoring": [
+					"行业：需求、有效供给、技术路线或政策执行是否改变",
+					"公司：客户验证、交付、主题业务收入与利润贡献是否兑现",
+					"财报：季检与年检时串联现金流、应收、存货、合同负债",
+					"估值：价格变化是否改变原有成长假设和安全边际"
+				]
+			}
+		],
+		"methods": [
+			{
+				"id": "history",
+				"name": "历史与阶段",
+				"purpose": "解释格局如何形成，检查下一阶段的竞争焦点是否变化。"
+			},
+			{
+				"id": "policy",
+				"name": "政策全景",
+				"purpose": "串联政策时间线，核对适用对象、执行条件与产业传导。"
+			},
+			{
+				"id": "science",
+				"name": "科普与替代",
+				"purpose": "先理解产品解决的问题，再验证技术替代和商业化条件。"
+			},
+			{
+				"id": "benchmark",
+				"name": "标杆企业",
+				"purpose": "比较领先企业与行业平均水平，核实能力、客户和交付差距。"
+			},
+			{
+				"id": "competition",
+				"name": "多维竞争",
+				"purpose": "从格局到焦点再到优势，按行业选用同行、上下游、地域扩张、第二增长曲线等角度。"
+			},
+			{
+				"id": "financial",
+				"name": "财务诊断",
+				"purpose": "通过同行与跨期比较发现问题，再回到经营机制解释。"
+			}
+		],
+		"principles": [
+			"先恢复全景，再做赛道与公司减法，对少数候选继续深研",
+			"先识别竞争焦点，再检验公司优势；维度按行业选择",
+			"定性与定量往返验证，分数不直接决定取舍或仓位",
+			"好产业、好公司、好价格分别判断，持续做季检与年检"
+		],
+		"limitations": [
+			"产业目录缺少逐条时点与来源，市场数字和竞争描述仍待核验",
+			"财务样本只验证公司经营；不能推断主题业务纯度或产业利润份额",
+			"现有数据不足以自动给出赛道淘汰、买入或仓位结论"
+		]
+	}
+}

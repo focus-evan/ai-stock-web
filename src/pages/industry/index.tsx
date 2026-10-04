@@ -1,4 +1,5 @@
 import type { IndustryAnalysisBatch } from "./quant-analysis";
+import type { IndustryResearch } from "./research-model";
 import { BasicContent } from "#src/components/basic-content";
 import {
 	ApiOutlined,
@@ -39,6 +40,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import QuantAnalysis from "./quant-analysis";
+import ResearchWorkbench from "./research-workbench";
 import "#src/pages/home/business.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -115,6 +117,7 @@ interface IndustryChain {
 	description: string
 	layers: IndustryLayer[]
 	analysis?: IndustryAnalysisBatch | null
+	research?: IndustryResearch | null
 }
 
 // 图标映射
@@ -285,7 +288,7 @@ export default function IndustryAnalysis() {
 		return (
 			<Space direction="vertical" style={{ width: "100%" }} size="middle">
 				{competition.map((comp) => {
-					const patternInfo = patternConfig[comp.pattern_type];
+					const patternInfo = patternConfig[comp.pattern_type] || { text: "格局待核验", color: "default", desc: "需补充竞争格局依据" };
 					return (
 						<Card
 							key={comp.id}
@@ -664,10 +667,10 @@ export default function IndustryAnalysis() {
 				<div className="business-inline-hero">
 					<div>
 						<Title level={2} style={{ margin: 0, color: "#fff" }}>
-							产业调研与分析
+							产业分析 · 全景梳理
 						</Title>
 						<Text style={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}>
-							利润池与产业映射 · 季度五维数据验证 · 同行PK与减法
+							全景拆解 · 赛道取舍 · 竞争研究 · 财务验证 · 估值与跟踪
 						</Text>
 					</div>
 					<Tag
@@ -696,13 +699,17 @@ export default function IndustryAnalysis() {
 				: error
 					? <Alert type="error" showIcon message="加载失败" description={error} />
 					: chainData
-						? (
-							<>
-								<QuantAnalysis key={activeTab} analysis={chainData.analysis} />
-								<Alert type="info" showIcon message="产业链研究映射" description="以下静态技术规格、市场份额与实力分保留为历史研究资料，尚未核验当前有效性；不进入本批S量化评分。" style={{ marginBottom: 24 }} />
-								{chainData.layers?.length ? chainData.layers.map(layer => renderLayerContent(layer)) : <Empty description="该产业尚无公司映射" />}
-							</>
-						)
+						? chainData.research
+							? (
+								<ResearchWorkbench chainCode={activeTab} research={chainData.research} analysis={chainData.analysis} legacy={() => <>{chainData.layers?.length ? chainData.layers.map(layer => renderLayerContent(layer)) : <Empty description="该产业尚无公司映射" />}</>} />
+							)
+							: (
+								<>
+									<QuantAnalysis key={activeTab} analysis={chainData.analysis} />
+									<Alert type="info" showIcon message="产业链研究映射" description="以下静态技术规格、市场份额与实力分保留为历史研究资料，尚未核验当前有效性；不进入本批S量化评分。" style={{ marginBottom: 24 }} />
+									{chainData.layers?.length ? chainData.layers.map(layer => renderLayerContent(layer)) : <Empty description="该产业尚无公司映射" />}
+								</>
+							)
 						: <Empty description="暂无数据" />}
 
 		</BasicContent>
