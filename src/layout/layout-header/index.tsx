@@ -8,8 +8,8 @@ import { Preferences } from "#src/layout/widgets/preferences";
 import { useTabsStore } from "#src/store/tabs";
 import { cn } from "#src/utils/cn";
 
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { theme as antdTheme, Button, ConfigProvider, theme } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined, MoreOutlined } from "@ant-design/icons";
+import { theme as antdTheme, Button, ConfigProvider, Popover, Space, theme } from "antd";
 
 import { headerHeight } from "../constants";
 import { BranchBadge } from "./components/branch-badge";
@@ -54,7 +54,7 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 			<header
 				data-shell-theme={isFixedDarkTheme ? "dark" : "light"}
 				className={cn(
-					"app-header flex-shrink-0 flex gap-5 justify-between items-center transition-all md:px-4",
+					"app-header flex-shrink-0 flex gap-2 md:gap-5 justify-between items-center transition-all px-2 md:px-4",
 					{ "overflow-hidden": isMaximize },
 					className,
 				)}
@@ -68,8 +68,9 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 					isMobile
 						? (
 							<Button
+								aria-label={sidebarCollapsed ? "关闭功能导航" : "打开功能导航"}
+								aria-expanded={sidebarCollapsed}
 								type="text"
-								aria-label="展开或收起导航"
 								icon={sidebarCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
 								onClick={() => setPreferences("sidebarCollapsed", !sidebarCollapsed)}
 								className="h-full"
@@ -83,12 +84,27 @@ export default function LayoutHeader({ className, children }: LayoutHeaderProps)
 				</div>
 
 				<div className="app-header-tools flex items-center">
-					<BranchBadge />
+					{!isMobile && <BranchBadge />}
 					<GlobalSearch />
-					<Preferences {...buttonProps} />
+					{!isMobile && <Preferences {...buttonProps} />}
 					<ThemeButton {...buttonProps} />
-					<LanguageButton {...buttonProps} />
-					<FullscreenButton {...buttonProps} target={document.documentElement} />
+					{!isMobile && <LanguageButton {...buttonProps} />}
+					{!isMobile && <FullscreenButton {...buttonProps} target={document.documentElement} />}
+					{isMobile && (
+						<Popover
+							trigger="click"
+							placement="bottomRight"
+							title="更多工具"
+							content={(
+								<Space>
+									<Preferences {...buttonProps} />
+									<LanguageButton {...buttonProps} />
+								</Space>
+							)}
+						>
+							<Button aria-label="更多工具" type="text" icon={<MoreOutlined />} {...buttonProps} />
+						</Popover>
+					)}
 					<NotificationContainer {...buttonProps} />
 					<UserMenu {...buttonProps} />
 				</div>

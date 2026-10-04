@@ -151,25 +151,26 @@ export function GlobalSearch() {
 	 * @zh 快捷键打开搜索面板
 	 * @en Shortcut key to open the search panel
 	 */
-	useKeyPress(["meta.K"], () => {
+	useKeyPress(["meta.K", "ctrl.K"], (event) => {
+		event.preventDefault();
 		if (!open) {
 			setOpen(true);
 		}
 	});
 
 	/** key enter */
-	function handleEnter(isExternalLink?: boolean) {
-		if (resultOptions.length === 0 || activeKey === "")
+	function handleEnter(_isExternalLink?: boolean, selectedKey = activeKey) {
+		if (!open || resultOptions.length === 0 || selectedKey === "")
 			return;
-		if (!searchHistory?.includes(activeKey)) {
-			setSearchHistory([...(searchHistory ?? []), activeKey]);
+		if (!searchHistory?.includes(selectedKey)) {
+			setSearchHistory([...(searchHistory ?? []), selectedKey]);
 		}
 		handleClose();
-		if (isExternalLink) {
-			window.open(activeKey);
+		if (/^https?:\/\//.test(selectedKey)) {
+			window.open(selectedKey, "_blank", "noopener,noreferrer");
 		}
 		else {
-			navigate(activeKey);
+			navigate(selectedKey);
 		}
 	}
 
@@ -182,11 +183,14 @@ export function GlobalSearch() {
 		if (!keyword.length && Array.isArray(searchHistory)) {
 			setResultOptions(searchMenuList.filter(item => searchHistory?.includes(item.key)));
 		}
-	}, [keyword, searchHistory]);
+	}, [keyword, searchHistory, searchMenuList]);
 
 	return (
 		<>
-			<div
+			<button
+				type="button"
+				aria-label="搜索功能菜单"
+				aria-expanded={open}
 				onClick={() => setOpen(open => !open)}
 				className="group flex justify-center items-center gap-2 md:bg-colorBgLayout px-3 py-1.5 rounded-full cursor-pointer text-colorTextSecondary hover:text-colorText md:mr-2.5"
 			>
@@ -195,10 +199,10 @@ export function GlobalSearch() {
 					{t("common.search")}
 				</span>
 				<span className="bg-colorBgContainer relative hidden rounded-sm rounded-r-xl px-1.5 py-1 text-xs leading-none group-hover:opacity-100 md:block">
-					&#x2318;
+					Ctrl / ⌘
 					<kbd>K</kbd>
 				</span>
-			</div>
+			</button>
 
 			<Modal
 				open={open}
@@ -238,7 +242,7 @@ export function GlobalSearch() {
 					},
 					content: {
 						padding: 0,
-						height: isMobile ? "100vh" : undefined,
+						height: isMobile ? "100dvh" : undefined,
 						display: isMobile ? "flex" : "block",
 						flexDirection: isMobile ? "column" : "row",
 					},
@@ -268,7 +272,7 @@ export function GlobalSearch() {
 									<SearchPanel
 										key={item.key}
 										active={item.key === activeKey}
-										enter={handleEnter}
+										enter={isLink => handleEnter(isLink, item.key)}
 										removeHistoryItem={removeHistoryItem}
 										setActiveKey={setActiveKey}
 										menuItem={item}

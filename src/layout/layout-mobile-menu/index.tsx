@@ -17,9 +17,6 @@ const useStyles = createUseStyles({
 				paddingTop: "1em",
 			},
 		},
-		"& .ant-drawer-header": {
-			display: "none",
-		},
 	},
 });
 
@@ -35,6 +32,7 @@ export default function LayoutMobileMenu() {
 		isMobile
 			? (
 				<Drawer
+					title="功能导航"
 					styles={{
 						body: {
 							backgroundColor: isFixedDarkTheme ? Menu?.darkItemBg : Menu?.itemBg,
@@ -42,7 +40,7 @@ export default function LayoutMobileMenu() {
 					}}
 					open={sidebarCollapsed}
 					placement="left"
-					width="clamp(200px, 50vw, 210px)"
+					width="min(300px, 86vw)"
 					className={cn(classes.drawerStyles)}
 					onClose={() => setPreferences("sidebarCollapsed", false)}
 				>
@@ -50,7 +48,10 @@ export default function LayoutMobileMenu() {
 						<LayoutMenu
 							autoExpandCurrentMenu
 							menus={sideNavItems}
-							handleMenuSelect={handleMenuSelect}
+							handleMenuSelect={(key, mode) => {
+								handleMenuSelect(key, mode);
+								setPreferences("sidebarCollapsed", false);
+							}}
 						/>
 					</Scrollbar>
 				</Drawer>

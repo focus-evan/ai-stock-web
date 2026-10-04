@@ -2,7 +2,7 @@ import type { StrategyBuyRecord, StrategyFollowType } from "#src/api/strategy";
 import { fetchStrategyBuysByDate, fetchTodayStrategyBuys } from "#src/api/strategy";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
-import { Alert, Button, DatePicker, Space, Tag, Typography } from "antd";
+import { Alert, Button, DatePicker, Space, Tag, theme, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { beijingTradeDate } from "../short-term-trade-alerts/data";
@@ -47,6 +47,7 @@ const trustNames: Record<string, string> = {
 };
 
 function BuyCard({ item, now, unavailable }: { item: StrategyBuyRecord, now: number, unavailable: boolean }) {
+	const { token } = theme.useToken();
 	const follow = item.follow;
 	const expires = follow ? Date.parse(follow.expires_at) : Number.NaN;
 	const expired = !Number.isFinite(expires) || now >= expires;
@@ -56,7 +57,7 @@ function BuyCard({ item, now, unavailable }: { item: StrategyBuyRecord, now: num
 	const performance = follow?.strategy_performance;
 	const lots = quantity == null ? "未记录" : `${(quantity / 100).toLocaleString("zh-CN", { maximumFractionDigits: 2 })} 手（${quantity.toLocaleString("zh-CN")} 股）`;
 	return (
-		<article style={{ padding: 16, background: "#fff", border: "1px solid #ffa39e", borderRadius: 10, minWidth: 0, overflowWrap: "anywhere" }}>
+		<article style={{ padding: 16, background: token.colorBgContainer, border: `1px solid ${token.colorErrorBorder}`, borderRadius: 10, minWidth: 0, overflowWrap: "anywhere" }}>
 			<Text strong style={{ color: "#cf1322", fontSize: 21 }}>{`${names[item.strategy_type] || item.strategy_type} · ${item.stock_name}（${item.stock_code}）`}</Text>
 			<div style={red}>{`买入价格 ${price(item.buy_price)}`}</div>
 			<div style={red}>{`买入 ${lots}`}</div>
@@ -109,6 +110,7 @@ function BuyCard({ item, now, unavailable }: { item: StrategyBuyRecord, now: num
 }
 
 export default function StrategyBuyAlerts({ userId }: { userId: string }) {
+	const { token } = theme.useToken();
 	const [now, setNow] = useState(Date.now);
 	const [online, setOnline] = useState(() => navigator.onLine);
 	const [selectedDay, setSelectedDay] = useState<string | null>(null);
@@ -152,10 +154,10 @@ export default function StrategyBuyAlerts({ userId }: { userId: string }) {
 	const failed = query.isError || mismatch || !online;
 	const strategyCount = new Set(items.map(item => item.strategy_type)).size;
 	const dateLabel = isToday ? "今日" : `${day} `;
-	const title = items.length ? `${dateLabel}模拟买入 · ${items.length} 笔 · ${strategyCount} 个战法` : failed ? `${dateLabel}模拟买入检查未完成` : query.isPending ? `正在检查全部战法${dateLabel}买入…` : `全部${query.data?.strategy_count || 14}个战法 · ${dateLabel}暂无模拟买入`;
+	const title = items.length ? `${dateLabel}模拟买入 · ${items.length} 笔 · ${strategyCount} 个战法` : failed ? `${dateLabel}模拟买入检查未完成` : query.isPending ? `正在检查全部战法${dateLabel}买入…` : `全部${query.data?.strategy_count ?? Object.keys(names).length}个战法 · ${dateLabel}暂无模拟买入`;
 	const selectDate = (value: string) => setSelectedDay(value === today ? null : value);
 	return (
-		<section aria-label={isToday ? "全部战法今日模拟买入" : "全部战法历史模拟买入"} style={{ margin: "16px 16px 0", padding: 16, borderRadius: 12, border: `2px solid ${items.length ? "#ff4d4f" : "#d9d9d9"}`, background: items.length ? "#fff1f0" : "#fff" }}>
+		<section aria-label={isToday ? "全部战法今日模拟买入" : "全部战法历史模拟买入"} style={{ margin: "16px 16px 0", padding: items.length || failed ? 16 : "12px 16px", borderRadius: 12, border: `1px solid ${items.length ? token.colorErrorBorder : token.colorBorderSecondary}`, background: items.length ? token.colorErrorBg : token.colorBgContainer }}>
 			<Space wrap style={{ width: "100%", justifyContent: "space-between" }}>
 				<Text strong style={{ color: items.length ? "#cf1322" : undefined, fontSize: items.length ? 24 : 14 }}>{title}</Text>
 				<Space wrap>

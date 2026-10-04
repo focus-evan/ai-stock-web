@@ -1,3 +1,4 @@
+import type { DashboardResponse } from "./dashboard";
 import type {
 	CreatePortfolioRequest,
 	FollowDetailResponse,
@@ -20,8 +21,8 @@ export * from "./types";
  */
 export function fetchDashboard() {
 	return request
-		.get("portfolio/dashboard", { timeout: 30000 })
-		.json<any>();
+		.get("portfolio/dashboard", { timeout: 30000, retry: 0 })
+		.json<DashboardResponse>();
 }
 
 /**

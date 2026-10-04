@@ -13,7 +13,14 @@
 }
 
 #root {
-	height: 100vh;
+	height: 100dvh;
+}
+
+/* Keep wide financial tables inside their own scroll area on narrow screens. */
+#basic-content { min-width: 0; }
+button:focus-visible, a:focus-visible { outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
 }
 
 img {

@@ -100,6 +100,14 @@ it("finds new buys on the next poll and preserves each fill", async () => {
 	expect(screen.getByText("买入价格 ¥10.2000")).toBeInTheDocument();
 	expect(screen.getByText("第二笔确认")).toBeInTheDocument();
 });
+it("uses the configured strategy count when an older response omits it", async () => {
+	const result = response();
+	delete (result.data as Partial<TodayStrategyBuys>).strategy_count;
+	fetchBuys.mockResolvedValue(result);
+	mount();
+	await tick();
+	expect(screen.getByText("全部15个战法 · 今日暂无模拟买入")).toBeInTheDocument();
+});
 it("expires a positive verdict even when polling returns the same old assessment", async () => {
 	fetchBuys.mockResolvedValue(response([item()]));
 	mount();

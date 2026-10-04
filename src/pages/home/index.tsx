@@ -1,817 +1,329 @@
-import type { EChartsOption } from "echarts";
-
+import type { DashboardPosition, DashboardStrategy, DashboardTrade, Metric } from "#src/api/portfolio/dashboard";
+import type { CSSProperties } from "react";
 import { fetchDashboard } from "#src/api/portfolio";
 import { BasicContent } from "#src/components/basic-content";
-import ResearchEntry from "#src/components/research-entry";
-import {
-	ArrowDownOutlined,
-	ArrowUpOutlined,
-	DollarOutlined,
-	FundOutlined,
-	PieChartOutlined,
-	ReloadOutlined,
-	RiseOutlined,
-	StockOutlined,
-	SwapOutlined,
-	ThunderboltOutlined,
-} from "@ant-design/icons";
+import { ArrowRightOutlined, BookOutlined, FundOutlined, HistoryOutlined, ReadOutlined, ReloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
-import {
-	Badge,
-	Button,
-	Card,
-	Col,
-	Empty,
-	Row,
-	Space,
-	Statistic,
-	Table,
-	Tag,
-	Tooltip,
-	Typography,
-} from "antd";
-import ReactECharts from "echarts-for-react";
-
+import { Alert, Badge, Button, Card, Empty, Input, Select, Skeleton, Space, Table, Tabs, Tag, theme, Typography } from "antd";
+import { lazy, Suspense, useState } from "react";
+import { Link, useLocation } from "react-router";
+import { dashboardFromResponse, filterStrategies, formatMetric, formatTime, metricClass, needsAttention, recommendationState, STRATEGIES, strategyName } from "./data";
 import { strategyExecutionStatus } from "./strategy-status";
 import "./business.css";
 import "./style.css";
 
+const Performance = lazy(() => import("./performance"));
 const { Text } = Typography;
+const shortcuts = [
+	{ path: "/market-intelligence", title: "每日重点情报", description: "看变化，核对来源", icon: <ReadOutlined /> },
+	{ path: "/short-term-strategy/portfolio", title: "策略组合", description: "查看持仓与执行", icon: <FundOutlined /> },
+	{ path: "/short-term-strategy/review", title: "复盘中心", description: "核对成交与判断", icon: <HistoryOutlined /> },
+	{ path: "/research-center", title: "研究与知识库", description: "雷达、深度与方法", icon: <BookOutlined /> },
+];
 
-// ===================== 策略配置 =====================
-const HOME_STRATEGIES = [
-	"dragon_head",
-	"emotion_relay",
-	"event_driven",
-	"breakthrough",
-	"volume_price",
-	"overnight",
-	"moving_average",
-	"northbound",
-	"trend_momentum",
-	"adaptive_confluence",
-	"combined",
-	"yangjia_emotion_cycle",
-	"kobe92_cycle_speculation",
-	"a_share_leader_tactics",
-	"beijing_chaogu_first_board",
-] as const;
-
-const HOME_STRATEGY_SET = new Set<string>(HOME_STRATEGIES);
-
-const STRATEGY_CONFIG: Record<string, { label: string, icon: string, color: string, gradient: string }> = {
-	dragon_head: { label: "龙头战法", icon: "🐉", color: "#eb2f96", gradient: "linear-gradient(135deg, #eb2f96 0%, #f759ab 100%)" },
-	emotion_relay: { label: "情绪接力", icon: "⚡", color: "#7c3aed", gradient: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)" },
-	event_driven: { label: "事件驱动", icon: "📡", color: "#fa8c16", gradient: "linear-gradient(135deg, #fa8c16 0%, #ffc53d 100%)" },
-	breakthrough: { label: "突破战法", icon: "🚀", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #b37feb 100%)" },
-	volume_price: { label: "量价关系", icon: "📊", color: "#13c2c2", gradient: "linear-gradient(135deg, #13c2c2 0%, #36cfc9 100%)" },
-	overnight: { label: "隔夜施工法", icon: "🌙", color: "#0f3460", gradient: "linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)" },
-	moving_average: { label: "均线战法", icon: "📈", color: "#f5222d", gradient: "linear-gradient(135deg, #f5222d 0%, #ff7875 100%)" },
-	northbound: { label: "北向资金", icon: "🏦", color: "#722ed1", gradient: "linear-gradient(135deg, #722ed1 0%, #eb2f96 100%)" },
-	adaptive_confluence: { label: "情绪催化自适应", icon: "研", color: "#08979c", gradient: "linear-gradient(135deg, #006d75 0%, #36cfc9 100%)" },
-	trend_momentum: { label: "趋势动量", icon: "📐", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #ffc53d 100%)" },
-	combined: { label: "综合战法", icon: "🎯", color: "#d4a017", gradient: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)" },
-	yangjia_emotion_cycle: { label: "炒股养家情绪周期", icon: "养", color: "#ff4d4f", gradient: "linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%)" },
-	kobe92_cycle_speculation: { label: "92科比周期投机", icon: "92", color: "#597ef7", gradient: "linear-gradient(135deg, #597ef7 0%, #9254de 100%)" },
-	a_share_leader_tactics: { label: "陈小群龙头战法", icon: "陈", color: "#fa541c", gradient: "linear-gradient(135deg, #fa541c 0%, #cf1322 100%)" },
-	beijing_chaogu_first_board: { label: "北京炒家首板", icon: "首", color: "#faad14", gradient: "linear-gradient(135deg, #faad14 0%, #fa8c16 100%)" },
-};
-
-function formatMoney(v: number): string {
-	if (Math.abs(v) >= 10000) {
-		return `${(v / 10000).toFixed(2)}万`;
-	}
-	return v.toFixed(2);
-}
-
-function profitColor(v: number): string {
-	if (v > 0)
-		return "#ff4d4f";
-	if (v < 0)
-		return "var(--home-loss-color, #15803d)";
-	return "#8c8c8c";
-}
-
-function formatDashboardTime(value: unknown): string {
-	if (!value)
-		return "";
-	const text = String(value).replace("T", " ");
-	return text.length >= 16 ? text.slice(5, 16) : text.slice(0, 10);
+function NumberValue({ value, suffix = "", signed = false }: { value: Metric, suffix?: string, signed?: boolean }) {
+	return <span className={`wb-number ${signed ? metricClass(value) : ""}`}>{formatMetric(value, suffix, signed)}</span>;
 }
 
 export default function Home() {
-	const { data: dashData, loading, refresh } = useRequest(
-		async () => {
-			const res = await fetchDashboard();
-			return res?.data || res?.result?.data || {};
-		},
-		{ pollingInterval: 60000 },
-	);
+	const { token } = theme.useToken();
+	const { pathname } = useLocation();
+	const [keyword, setKeyword] = useState("");
+	const [filter, setFilter] = useState("all");
+	const [tab, setTab] = useState("strategies");
+	const [receivedAt, setReceivedAt] = useState<string>();
+	const { data, error, loading, refresh } = useRequest(async () => dashboardFromResponse(await fetchDashboard()), {
+		pollingInterval: pathname === "/home" ? 60000 : 0,
+		pollingWhenHidden: false,
+		pollingErrorRetryCount: 2,
+		onSuccess: () => setReceivedAt(new Date().toLocaleTimeString("zh-CN", { hour12: false, timeZone: "Asia/Shanghai" })),
+	});
+	const strategies = data?.strategy_summary || [];
+	const attention = strategies.filter(needsAttention);
+	const filtered = filterStrategies(strategies, keyword, filter);
+	const positions = data?.positions || [];
+	const overview = data?.overview;
+	const quality = data?.data_quality;
+	const styles = {
+		"--wb-bg": token.colorBgContainer,
+		"--wb-soft": token.colorFillAlter,
+		"--wb-border": token.colorBorderSecondary,
+		"--wb-text": token.colorText,
+		"--wb-muted": token.colorTextSecondary,
+		"--wb-primary": token.colorPrimary,
+		"--wb-primary-bg": token.colorPrimaryBg,
+		"--wb-up": token.colorError,
+		"--wb-down": token.colorSuccess,
+	} as CSSProperties;
+	const strategyColumns = [
+		{ title: "策略 / 组合", key: "name", width: 190, render: (_: unknown, s: DashboardStrategy) => (
+			<div>
+				<strong>{strategyName(s.strategy_type)}</strong>
+				<div className="wb-muted wb-small">{s.name || `组合 #${s.portfolio_id}`}</div>
+			</div>
+		) },
+		{ title: "执行状态", key: "state", width: 180, render: (_: unknown, s: DashboardStrategy) => {
+			const state = strategyExecutionStatus(s);
 
-	const overview = dashData?.overview || {};
-	const strategySummary: any[] = (dashData?.strategy_summary || [])
-		.filter((s: any) => HOME_STRATEGY_SET.has(s.strategy_type));
-	const positions: any[] = (dashData?.positions || [])
-		.filter((p: any) => HOME_STRATEGY_SET.has(p.strategy_type));
-	const recentTrades: any[] = (dashData?.recent_trades || [])
-		.filter((t: any) => HOME_STRATEGY_SET.has(t.strategy_type));
-	const performance: Record<string, any[]> = Object.fromEntries(
-		Object.entries(dashData?.performance || {})
-			.filter(([strategy]) => HOME_STRATEGY_SET.has(strategy)),
-	) as Record<string, any[]>;
-	const recommendations: Record<string, any> = dashData?.recommendations || {};
-
-	// ============= 收益曲线 ECharts =============
-	const perfOption: EChartsOption = (() => {
-		const series: any[] = [];
-		const allDates = new Set<string>();
-
-		for (const [st, data] of Object.entries(performance)) {
-			if (!Array.isArray(data) || data.length === 0)
-				continue;
-			const cfg = STRATEGY_CONFIG[st];
-			if (!cfg)
-				continue;
-			const dates = data.map((d: any) => d.trading_date || d.date || "");
-			const values = data.map((d: any) => d.total_profit_pct ?? d.profit_pct ?? 0);
-			for (const dd of dates)
-				allDates.add(dd);
-			series.push({
-				name: cfg?.label || st,
-				type: "line",
-				smooth: true,
-				symbol: "circle",
-				symbolSize: 4,
-				lineStyle: { width: 2.5 },
-				areaStyle: { opacity: 0.08 },
-				data: dates.map((d: string, i: number) => [d, values[i]]),
-				itemStyle: { color: cfg?.color || "#722ed1" },
-			});
-		}
-
-		if (series.length === 0) {
-			return { title: { text: "暂无收益数据", left: "center", top: "center", textStyle: { color: "#bbb", fontSize: 14 } } };
-		}
-
-		const sortedDates = [...allDates].sort();
-
-		return {
-			tooltip: {
-				trigger: "axis",
-				axisPointer: { type: "cross" },
-				formatter: (params: any) => {
-					if (!Array.isArray(params))
-						return "";
-					let html = `<div style="font-weight:600;margin-bottom:4px">${params[0]?.axisValueLabel || ""}</div>`;
-					for (const p of params) {
-						const val = Number(p.value?.[1] ?? 0).toFixed(2);
-						const clr = Number(val) >= 0 ? "#ff4d4f" : "#52c41a";
-						html += `<div>${p.marker} ${p.seriesName}: <span style="color:${clr};font-weight:600">${val}%</span></div>`;
-					}
-					return html;
-				},
-			},
-			legend: { data: series.map(s => s.name), bottom: 0 },
-			grid: { left: 50, right: 20, top: 20, bottom: 40 },
-			xAxis: {
-				type: "category",
-				data: sortedDates,
-				axisLabel: { fontSize: 11, formatter: (v: string) => v.slice(5) },
-			},
-			yAxis: {
-				type: "value",
-				axisLabel: { formatter: "{value}%" },
-				splitLine: { lineStyle: { type: "dashed", opacity: 0.3 } },
-			},
-			series,
-		};
-	})();
-
-	// ============= 资产饼图 =============
-	const pieOption: EChartsOption = (() => {
-		if (strategySummary.length === 0) {
-			return { title: { text: "暂无数据", left: "center", top: "center", textStyle: { color: "#bbb", fontSize: 14 } } };
-		}
-		return {
-			tooltip: {
-				trigger: "item",
-				formatter: (p: any) => `${p.name}<br/>资产: ¥${formatMoney(p.value)}<br/>占比: ${p.percent?.toFixed(1)}%`,
-			},
-			legend: { bottom: 0 },
-			series: [{
-				type: "pie",
-				radius: ["40%", "70%"],
-				avoidLabelOverlap: true,
-				itemStyle: { borderRadius: 6, borderColor: "#fff", borderWidth: 2 },
-				label: { show: false },
-				emphasis: { label: { show: true, fontSize: 14, fontWeight: "bold" } },
-				data: strategySummary.map((s: any) => ({
-					name: STRATEGY_CONFIG[s.strategy_type]?.label || s.strategy_type,
-					value: s.total_asset,
-					itemStyle: { color: STRATEGY_CONFIG[s.strategy_type]?.color },
-				})),
-			}],
-		};
-	})();
-
-	// ============= 持仓列表 =============
+			return <Badge status={state.status} text={state.text} />;
+		} },
+		{ title: "总资产（元）", dataIndex: "total_asset", align: "right" as const, width: 140, render: (v: Metric) => <NumberValue value={v} /> },
+		{ title: "累计收益率", dataIndex: "total_profit_pct", align: "right" as const, width: 125, sorter: (a: DashboardStrategy, b: DashboardStrategy) => (a.total_profit_pct ?? -Infinity) - (b.total_profit_pct ?? -Infinity), render: (v: Metric) => <NumberValue value={v} suffix="%" signed /> },
+		{ title: "持仓笔数", dataIndex: "positions_count", align: "right" as const, width: 90, render: (v?: number) => v ?? "—" },
+		{ title: "最近决策 / 结算", key: "updated", width: 155, render: (_: unknown, s: DashboardStrategy) => <span className="wb-muted wb-small">{formatTime(s.last_run_at || s.last_run_date)}</span> },
+	];
 	const positionColumns = [
-		{
-			title: "股票",
-			key: "stock",
-			render: (_: any, r: any) => (
-				<div>
-					<Text strong>{r.stock_name || "-"}</Text>
-					<br />
-					<Text type="secondary" style={{ fontSize: 12 }}>{r.stock_code || ""}</Text>
-				</div>
-			),
-		},
-		{
-			title: "策略",
-			dataIndex: "strategy_type",
-			key: "strategy_type",
-			render: (s: string) => (
-				<Tag color={STRATEGY_CONFIG[s]?.color}>
-					{STRATEGY_CONFIG[s]?.icon}
-					{" "}
-					{STRATEGY_CONFIG[s]?.label}
-				</Tag>
-			),
-		},
-		{
-			title: "持仓数量",
-			dataIndex: "quantity",
-			key: "quantity",
-			align: "right" as const,
-		},
-		{
-			title: "成本价",
-			dataIndex: "avg_cost",
-			key: "avg_cost",
-			align: "right" as const,
-			render: (v: number) => v?.toFixed(2),
-		},
-		{
-			title: "现价",
-			dataIndex: "current_price",
-			key: "current_price",
-			align: "right" as const,
-			render: (v: number) => v?.toFixed(2),
-		},
-		{
-			title: "盈亏",
-			dataIndex: "unrealized_pnl",
-			key: "unrealized_pnl",
-			align: "right" as const,
-			render: (v: number) => (
-				<Text style={{ color: profitColor(v || 0), fontWeight: 600 }}>
-					{(v || 0) > 0 ? "+" : ""}
-					{formatMoney(v || 0)}
-				</Text>
-			),
-		},
+		{ title: "股票", key: "stock", width: 150, render: (_: unknown, p: DashboardPosition) => (
+			<div>
+				<strong>{p.stock_name || p.stock_code}</strong>
+				<div className="wb-muted wb-small">{p.stock_code}</div>
+			</div>
+		) },
+		{ title: "策略 / 组合", key: "strategy", width: 190, render: (_: unknown, p: DashboardPosition) => (
+			<div>
+				{strategyName(p.strategy_type)}
+				<div className="wb-muted wb-small">{p.portfolio_name}</div>
+			</div>
+		) },
+		{ title: "数量", dataIndex: "quantity", align: "right" as const, width: 90 },
+		{ title: "成本价", dataIndex: "avg_cost", align: "right" as const, width: 100, render: (v: Metric) => <NumberValue value={v} /> },
+		{ title: "参考价格", key: "price", align: "right" as const, width: 135, render: (_: unknown, p: DashboardPosition) => (
+			<div>
+				<NumberValue value={p.current_price} />
+				<div className="wb-muted wb-small">{p.quote_refreshed ? "行情快照" : p.quote_refreshed === false ? "存储价格" : "来源待核验"}</div>
+			</div>
+		) },
+		{ title: "持仓盈亏（元）", key: "profit", align: "right" as const, width: 140, render: (_: unknown, p: DashboardPosition) => <NumberValue value={p.profit ?? p.unrealized_pnl} signed /> },
 	];
-
-	// ============= 交易记录列表 =============
 	const tradeColumns = [
-		{
-			title: "日期",
-			dataIndex: "trade_date",
-			key: "trade_date",
-			width: 100,
-			render: (d: string) => <Text style={{ fontSize: 12 }}>{String(d).slice(0, 10)}</Text>,
-		},
-		{
-			title: "股票",
-			key: "stock",
-			render: (_: any, r: any) => <Text>{r.stock_name || r.stock_code}</Text>,
-		},
-		{
-			title: "方向",
-			dataIndex: "action",
-			key: "action",
-			width: 60,
-			render: (a: string) => (
-				<Tag color={a === "buy" ? "red" : "green"} style={{ margin: 0 }}>
-					{a === "buy" ? "买入" : "卖出"}
-				</Tag>
-			),
-		},
-		{
-			title: "数量",
-			dataIndex: "quantity",
-			key: "quantity",
-			align: "right" as const,
-		},
-		{
-			title: "价格",
-			dataIndex: "price",
-			key: "price",
-			align: "right" as const,
-			render: (v: number) => `¥${v?.toFixed(2)}`,
-		},
-		{
-			title: "策略",
-			dataIndex: "strategy_type",
-			key: "strategy_type",
-			render: (s: string) => <Tag color={STRATEGY_CONFIG[s]?.color}>{STRATEGY_CONFIG[s]?.icon}</Tag>,
-		},
+		{ title: "成交时间", key: "time", width: 170, render: (_: unknown, t: DashboardTrade) => formatTime(t.created_at || t.trade_date) },
+		{ title: "股票", key: "stock", width: 170, render: (_: unknown, t: DashboardTrade) => (
+			<div>
+				{t.stock_name || t.stock_code}
+				<div className="wb-muted wb-small">{t.stock_code}</div>
+			</div>
+		) },
+		{ title: "方向", key: "direction", width: 90, render: (_: unknown, t: DashboardTrade) => {
+			const d = t.direction || t.action;
+
+			return <Tag color={d === "buy" ? "red" : d === "sell" ? "green" : "default"}>{d === "buy" ? "买入" : d === "sell" ? "卖出" : "待核验"}</Tag>;
+		} },
+		{ title: "数量", dataIndex: "quantity", align: "right" as const, width: 90 },
+		{ title: "成交价", dataIndex: "price", align: "right" as const, width: 100, render: (v: Metric) => <NumberValue value={v} /> },
+		{ title: "策略", dataIndex: "strategy_type", width: 180, render: strategyName },
 	];
 
-	return (
-		<BasicContent className="home-dashboard">
-			<Space direction="vertical" style={{ width: "100%" }} size="middle">
-				<section className="app-page-hero home-workspace-hero">
-					<div>
-						<span className="home-eyebrow">AI STOCK · 策略总览</span>
-						<h1>投资策略工作台</h1>
-						<p>聚焦组合表现、持仓变化与策略信号。</p>
+	const tabs = data
+		? [
+			{ key: "strategies", label: `策略组合 · ${strategies.length}`, children: (
+				<>
+					<div className="wb-toolbar">
+						<Input aria-label="搜索策略或组合" placeholder="搜索策略或组合" prefix={<SearchOutlined />} value={keyword} allowClear onChange={e => setKeyword(e.target.value)} />
+						<Select aria-label="筛选执行状态" value={filter} onChange={setFilter} options={[{ value: "all", label: "全部状态" }, { value: "attention", label: "需要关注" }, { value: "holding", label: "有持仓" }, { value: "paused", label: "已暂停" }]} />
+						<Text type="secondary">
+							{filtered.length}
+							{" "}
+							/
+							{" "}
+							{strategies.length}
+							{" "}
+							个组合
+						</Text>
+						{(keyword || filter !== "all") && (
+							<Button
+								type="link"
+								onClick={() => {
+									setKeyword("");
+									setFilter("all");
+								}}
+							>
+								重置筛选
+							</Button>
+						)}
 					</div>
-					<Button type="primary" icon={<ReloadOutlined />} onClick={refresh} loading={loading}>刷新总览</Button>
-				</section>
-				{/* ==================== 总览指标卡片 ==================== */}
-				<Row gutter={[16, 16]}>
-					<Col xs={24} sm={12} lg={6}>
-						<Card
-							className="app-metric-card home-summary-card home-summary-primary"
-							styles={{ body: { padding: "20px 24px" } }}
-						>
-							<Statistic
-								title={<span className="home-metric-label">总资产</span>}
-								value={overview.total_asset || 0}
-								precision={2}
-								prefix={<DollarOutlined />}
-								valueStyle={{ fontSize: 28, fontWeight: 750 }}
-								suffix={<Text className="home-metric-unit">元</Text>}
-							/>
-						</Card>
-					</Col>
-					<Col xs={24} sm={12} lg={6}>
-						<Card
-							className="app-metric-card home-summary-card"
-							styles={{ body: { padding: "20px 24px" } }}
-						>
-							<Statistic
-								title={<span className="home-metric-label">总收益</span>}
-								value={overview.total_profit || 0}
-								precision={2}
-								prefix={(overview.total_profit || 0) >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-								valueStyle={{ color: profitColor(overview.total_profit || 0), fontSize: 28, fontWeight: 750 }}
-								suffix={<Text className="home-metric-unit">元</Text>}
-							/>
-						</Card>
-					</Col>
-					<Col xs={24} sm={12} lg={6}>
-						<Card
-							className="app-metric-card home-summary-card"
-							styles={{ body: { padding: "20px 24px" } }}
-						>
-							<Statistic
-								title={<span className="home-metric-label">总收益率</span>}
-								value={overview.total_profit_pct || 0}
-								precision={2}
-								prefix={<RiseOutlined />}
-								valueStyle={{ color: profitColor(overview.total_profit_pct || 0), fontSize: 28, fontWeight: 750 }}
-								suffix={<Text className="home-metric-unit">%</Text>}
-							/>
-						</Card>
-					</Col>
-					<Col xs={24} sm={12} lg={6}>
-						<Card
-							className="app-metric-card home-summary-card"
-							styles={{ body: { padding: "20px 24px" } }}
-						>
-							<Space split={<span style={{ color: "var(--app-border)" }}>|</span>}>
-								<Statistic
-									title={<span className="home-metric-label">持仓</span>}
-									value={overview.positions_count || 0}
-									prefix={<StockOutlined />}
-									valueStyle={{ fontSize: 24, fontWeight: 700 }}
-									suffix="只"
-								/>
-								<Statistic
-									title={<span className="home-metric-label">组合</span>}
-									value={overview.portfolios_count || 0}
-									prefix={<PieChartOutlined />}
-									valueStyle={{ fontSize: 24, fontWeight: 700 }}
-									suffix="个"
-								/>
-							</Space>
-						</Card>
-					</Col>
-				</Row>
-
-				<ResearchEntry />
-
-				{/* ==================== 各策略组合卡片 ==================== */}
-				<div className="home-section-heading">
-					<h2>策略组合</h2>
-					<Text type="secondary">资产、收益与最新执行状态</Text>
-				</div>
-				<Row gutter={[16, 16]}>
-					{strategySummary.map((s: any) => {
-						const cfg = STRATEGY_CONFIG[s.strategy_type] || {};
-						const sPositions: any[] = s.positions || [];
-						const executionStatus = strategyExecutionStatus(s);
-						return (
-							<Col xs={24} lg={12} xxl={8} key={s.strategy_type}>
-								<Card
-									style={{
-										borderRadius: 12,
-										borderTop: "3px solid var(--app-accent)",
-									}}
-									styles={{ body: { padding: "16px 20px" } }}
-								>
-									<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
-										<Space>
-											<span style={{ fontSize: 20 }}>{cfg.icon}</span>
-											<Text strong style={{ fontSize: 15 }}>{cfg.label}</Text>
-										</Space>
-										<Badge
-											status={executionStatus.status}
-											text={<Text type="secondary" style={{ fontSize: 12 }}>{executionStatus.text}</Text>}
-										/>
-									</div>
-									<Row gutter={[8, 8]}>
-										<Col span={8}>
-											<Statistic
-												title="总资产"
-												value={s.total_asset}
-												precision={0}
-												prefix="¥"
-												valueStyle={{ fontSize: 15, fontWeight: 600 }}
-											/>
-										</Col>
-										<Col span={8}>
-											<Statistic
-												title="总收益"
-												value={s.total_profit}
-												precision={0}
-												prefix={s.total_profit > 0 ? <ArrowUpOutlined /> : s.total_profit < 0 ? <ArrowDownOutlined /> : null}
-												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.total_profit) }}
-											/>
-										</Col>
-										<Col span={8}>
-											<Statistic
-												title="今日收益"
-												value={s.daily_profit || 0}
-												precision={0}
-												prefix={s.daily_profit > 0 ? <ArrowUpOutlined /> : s.daily_profit < 0 ? <ArrowDownOutlined /> : null}
-												valueStyle={{ fontSize: 15, fontWeight: 600, color: profitColor(s.daily_profit || 0) }}
-											/>
-										</Col>
-									</Row>
-									<div style={{ display: "flex", gap: 16, margin: "8px 0 4px", fontSize: 12, color: "#8c8c8c" }}>
-										<span>
-											收益率:
-											<Text style={{ color: profitColor(s.total_profit_pct), fontSize: 12, fontWeight: 600 }}>
-												{s.total_profit_pct >= 0 ? "+" : ""}
-												{Number(s.total_profit_pct || 0).toFixed(2)}
-												%
-											</Text>
-										</span>
-										<span>
-											持仓:
-											{s.positions_count}
-											只
-										</span>
-									</div>
-									{/* 最后交易时间 + 推荐更新时间 */}
-									{(() => {
-										const recInfo = recommendations[s.strategy_type];
-										const lastRunDate = s.last_run_date || s.last_trade_date;
-										const lastRunAt = s.last_run_at || lastRunDate;
-										const lastActualTradeAt = s.last_actual_trade_at || s.last_actual_trade_date;
-										const recAt = recInfo?.generated_at || recInfo?.trading_date;
-										const decisionStatus = s.decision_status;
-										const decisionReason = s.decision_reason;
-										if (!lastRunAt && !lastActualTradeAt && !recAt)
-											return null;
-										return (
-											<div style={{ marginBottom: 10 }}>
-												<div style={{ display: "flex", gap: 12, fontSize: 11, color: "var(--app-muted)", flexWrap: "wrap" }}>
-													{lastRunAt && (
-														<Tooltip title="最近一次策略交易决策或收益结算时间">
-															<span>
-																🧠 决策:
-																{formatDashboardTime(lastRunAt)}
-															</span>
-														</Tooltip>
-													)}
-													{lastActualTradeAt && (
-														<Tooltip title="最近一次真实买卖成交时间">
-															<span>
-																💱 成交:
-																{formatDashboardTime(lastActualTradeAt)}
-															</span>
-														</Tooltip>
-													)}
-													{recAt && (
-														<Tooltip title="推荐数据生成时间">
-															<span>
-																📡 推荐:
-																{formatDashboardTime(recAt)}
-															</span>
-														</Tooltip>
-													)}
-												</div>
-												{decisionStatus && decisionStatus !== "not_run" && (
-													<Tooltip title={decisionReason || "策略决策详情"}>
-														<Tag
-															color={decisionStatus === "traded" ? "green" : decisionStatus === "blocked" || decisionStatus === "failed" ? "red" : "default"}
-															style={{ marginTop: 5, marginInlineEnd: 0, whiteSpace: "normal", lineHeight: "18px" }}
-														>
-															{decisionStatus === "traded"
-																? `本轮成交 ${s.last_trade_count || 0} 笔`
-																: `本轮${s.last_trade_count || 0}笔：${decisionReason || "未触发交易条件"}`}
-														</Tag>
-													</Tooltip>
-												)}
-											</div>
-										);
-									})()}
-									{/* 持仓股票列表 */}
-									{sPositions.length > 0 && (
-										<div style={{
-											borderTop: "1px solid #f0f0f0",
-											paddingTop: 10,
-										}}
-										>
-											<Text type="secondary" style={{ fontSize: 11, marginBottom: 6, display: "block" }}>📋 当前持仓</Text>
-											{sPositions.map((pos: any) => (
-												<div
-													key={pos.stock_code}
-													className="home-position-row"
-													style={{
-														display: "flex",
-														justifyContent: "space-between",
-														alignItems: "center",
-														padding: "6px 8px",
-														marginBottom: 4,
-														borderRadius: 6,
-														background: "#fafafa",
-														fontSize: 13,
-													}}
-												>
-													<div style={{ flex: "0 0 auto", minWidth: 80 }}>
-														<Text strong style={{ fontSize: 13 }}>{pos.stock_name}</Text>
-														<br />
-														<Text type="secondary" style={{ fontSize: 10 }}>{pos.stock_code}</Text>
-													</div>
-													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 60 }}>
-														<Text style={{ fontSize: 12 }}>
-															¥
-															{Number(pos.current_price || 0).toFixed(2)}
-														</Text>
-													</div>
-													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 75 }}>
-														<Tooltip title="今日收益（基于昨收）">
-															<div>
-																<Text style={{ color: profitColor(pos.daily_profit || 0), fontSize: 12, fontWeight: 600 }}>
-																	{(pos.daily_profit || 0) >= 0 ? "+" : ""}
-																	{formatMoney(pos.daily_profit || 0)}
-																</Text>
-																<br />
-																<Text style={{ color: profitColor(pos.daily_profit_pct || 0), fontSize: 10 }}>
-																	今日
-																	{" "}
-																	{(pos.daily_profit_pct || 0) >= 0 ? "+" : ""}
-																	{Number(pos.daily_profit_pct || 0).toFixed(2)}
-																	%
-																</Text>
-															</div>
-														</Tooltip>
-													</div>
-													<div style={{ textAlign: "right", flex: "0 0 auto", minWidth: 75 }}>
-														<Tooltip title="整体收益（基于成本）">
-															<div>
-																<Text style={{ color: profitColor(pos.profit || 0), fontSize: 12, fontWeight: 600 }}>
-																	{(pos.profit || 0) >= 0 ? "+" : ""}
-																	{formatMoney(pos.profit || 0)}
-																</Text>
-																<br />
-																<Text style={{ color: profitColor(pos.profit_pct || 0), fontSize: 10 }}>
-																	总
-																	{" "}
-																	{(pos.profit_pct || 0) >= 0 ? "+" : ""}
-																	{Number(pos.profit_pct || 0).toFixed(2)}
-																	%
-																</Text>
-															</div>
-														</Tooltip>
-													</div>
-												</div>
-											))}
-										</div>
-									)}
-									{sPositions.length === 0 && (
-										<div style={{
-											borderTop: "1px solid #f0f0f0",
-											paddingTop: 10,
-											textAlign: "center",
-										}}
-										>
-											<Text type="secondary" style={{ fontSize: 12 }}>暂无持仓</Text>
-											{!s.last_actual_trade_at && !s.last_actual_trade_date && Number(s.total_profit || 0) === 0 && (
-												<div style={{ marginTop: 4, fontSize: 11, color: "#8c8c8c" }}>尚无实时模拟成交，收益样本为空</div>
-											)}
-										</div>
-									)}
-								</Card>
-							</Col>
-						);
-					})}
-				</Row>
-
-				{/* ==================== 收益曲线 + 资产饼图 ==================== */}
-				<Row gutter={[16, 16]}>
-					<Col xs={24} lg={16}>
-						<Card
-							title={(
-								<Space>
-									<FundOutlined style={{ color: "var(--app-accent-text)" }} />
-									<span>收益曲线 (30天)</span>
+					<Table<DashboardStrategy>
+						rowKey="portfolio_id"
+						dataSource={filtered}
+						columns={strategyColumns}
+						size="middle"
+						scroll={{ x: 950 }}
+						pagination={{ pageSize: 8, hideOnSinglePage: true, showSizeChanger: false }}
+						locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={strategies.length ? "没有匹配的组合，可重置筛选" : "尚无模拟组合，可前往策略组合创建"} /> }}
+						expandable={{ expandedRowRender: s => (
+							<div className="wb-detail">
+								<p>
+									<strong>最近决策：</strong>
+									{s.decision_reason || "尚无可核验的决策记录"}
+								</p>
+								<Space wrap size="large">
+									<span>
+										累计收益
+										<NumberValue value={s.total_profit} signed />
+									</span>
+									<span>
+										持仓当日浮动
+										<NumberValue value={s.daily_profit_available === true ? s.daily_profit : undefined} signed />
+									</span>
+									<span>
+										最近模拟成交
+										{formatTime(s.last_actual_trade_at || s.last_actual_trade_date)}
+									</span>
 								</Space>
-							)}
-							extra={<Button icon={<ReloadOutlined />} onClick={refresh} loading={loading} size="small">刷新</Button>}
-							style={{ borderRadius: 12 }}
-						>
-							<ReactECharts
-								option={perfOption}
-								style={{ height: 320 }}
-								opts={{ renderer: "svg" }}
-							/>
-						</Card>
-					</Col>
-					<Col xs={24} lg={8}>
-						<Card
-							title={(
-								<Space>
-									<PieChartOutlined style={{ color: "var(--app-accent-text)" }} />
-									<span>资产分布</span>
-								</Space>
-							)}
-							style={{ borderRadius: 12 }}
-						>
-							<ReactECharts
-								option={pieOption}
-								style={{ height: 320 }}
-								opts={{ renderer: "svg" }}
-							/>
-						</Card>
-					</Col>
-				</Row>
-
-				{/* ==================== 各策略推荐股票 ==================== */}
-				<Card
-					title={(
-						<Space>
-							<ThunderboltOutlined style={{ color: "#faad14" }} />
-							<span>今日推荐选股</span>
-						</Space>
-					)}
-					style={{ borderRadius: 12 }}
-				>
-					<Row gutter={[16, 16]}>
-						{HOME_STRATEGIES.map((st) => {
-							const cfg = STRATEGY_CONFIG[st];
-							const recData = recommendations[st];
-							// Backend returns {stocks: [...], generated_at, trading_date} or legacy array
-							const recs = Array.isArray(recData) ? recData : (Array.isArray(recData?.stocks) ? recData.stocks : []);
-							const recGenAt = recData?.generated_at;
-							const emptyDescription = recData?.source_status?.status === "unavailable"
-								? "取数失败，等待自动重试"
-								: recData && recData?.is_current_trading_date === false
-									? "今日尚未刷新"
-									: "今日无合格信号";
+							</div>
+						) }}
+					/>
+					<div className="wb-table-footer">
+						<span>展开组合可查看决策原因、收益与最近模拟成交。</span>
+						<Link to="/short-term-strategy/portfolio">
+							管理策略组合
+							<ArrowRightOutlined />
+						</Link>
+					</div>
+				</>
+			) },
+			{ key: "signals", label: "推荐观察", children: (
+				<>
+					<p className="wb-muted">各策略最近一次推荐快照；交易日与数据状态分别标注。</p>
+					<div className="wb-recommendations">
+						{Object.entries(STRATEGIES).map(([key, cfg]) => {
+							const rec = recommendationState(data.recommendations?.[key]);
 							return (
-								<Col xs={24} sm={12} md={8} lg={6} key={st}>
-									<Card
-										size="small"
-										title={(
-											<Space>
-												<span>{cfg.icon}</span>
-												<Text strong>{cfg.label}</Text>
-												<Tag color={cfg.color}>Top 5</Tag>
-												{recGenAt && <Text type="secondary" style={{ fontSize: 10 }}>{String(recGenAt).slice(5, 16)}</Text>}
-											</Space>
-										)}
-										style={{ borderRadius: 12, borderLeft: "3px solid var(--app-accent)" }}
-									>
-										{recs.length === 0
-											? <Empty description={emptyDescription} image={Empty.PRESENTED_IMAGE_SIMPLE} />
-											: (
-												<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-													{recs.map((rec: any, idx: number) => (
-														<div
-															key={rec.stock_code || idx}
-															style={{
-																display: "flex",
-																justifyContent: "space-between",
-																alignItems: "center",
-																padding: "8px 12px",
-																background: idx % 2 === 0 ? "#fafafa" : "#fff",
-																borderRadius: 6,
-															}}
-														>
-															<Space>
-																<Badge
-																	count={idx + 1}
-																	style={{
-																		backgroundColor: idx < 3 ? cfg.color : "#d9d9d9",
-																		fontSize: 11,
-																	}}
-																/>
-																<div>
-																	<Text strong style={{ fontSize: 13 }}>
-																		{rec.stock_name || rec.name || "-"}
-																	</Text>
-																	<br />
-																	<Text type="secondary" style={{ fontSize: 11 }}>
-																		{rec.stock_code || rec.code || ""}
-																	</Text>
-																</div>
-															</Space>
-															<div style={{ textAlign: "right" }}>
-																{rec.score != null && (
-																	<Tooltip title="推荐评分">
-																		<Tag color={cfg.color} style={{ margin: 0, fontSize: 12 }}>
-																			{Number(rec.score).toFixed(0)}
-																			分
-																		</Tag>
-																	</Tooltip>
-																)}
-																{rec.reason && (
-																	<Tooltip title={rec.reason}>
-																		<Text type="secondary" style={{ fontSize: 11, marginLeft: 4, cursor: "pointer" }}>
-																			💬
-																		</Text>
-																	</Tooltip>
-																)}
-															</div>
+								<article className="wb-rec" key={key}>
+									<div className="wb-rec-heading">
+										<h3>{cfg.label}</h3>
+										<Tag color={rec.tone}>{rec.label}</Tag>
+									</div>
+									<div className="wb-muted wb-small">
+										生成时间：
+										{formatTime(rec.data.generated_at || rec.data.trading_date)}
+									</div>
+									<p className="wb-muted wb-small">{rec.description}</p>
+									{rec.stocks.length
+										? (
+											<ol>
+												{rec.stocks.map(stock => (
+													<li key={stock.stock_code || stock.code || stock.stock_name || stock.name || stock.reason}>
+														<div>
+															<strong>{stock.stock_name || stock.name || "未命名股票"}</strong>
+															<span className="wb-muted wb-small">
+																{" "}
+																{stock.stock_code || stock.code}
+															</span>
+															{stock.reason && <p className="wb-muted wb-small">{stock.reason}</p>}
 														</div>
-													))}
-												</div>
-											)}
-									</Card>
-								</Col>
+														<span className="wb-number wb-small">{formatMetric(stock.score, "分")}</span>
+													</li>
+												))}
+											</ol>
+										)
+										: <div className="wb-rec-empty">{rec.label}</div>}
+								</article>
 							);
 						})}
-					</Row>
-				</Card>
+					</div>
+				</>
+			) },
+			{ key: "positions", label: `持仓明细 · ${positions.length}`, children: <Table<DashboardPosition> rowKey={p => `${p.portfolio_id ?? p.strategy_type}-${p.id ?? p.stock_code}`} dataSource={positions} columns={positionColumns} scroll={{ x: 850 }} pagination={{ pageSize: 10, hideOnSinglePage: true, showSizeChanger: false }} locale={{ emptyText: <Empty description="当前暂无持仓" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} /> },
+			{ key: "trades", label: "最近成交", children: (
+				<>
+					<p className="wb-muted">最近 10 笔模拟成交。完整交易记录请进入策略组合查看。</p>
+					<Table<DashboardTrade> rowKey={t => `${t.portfolio_id ?? t.strategy_type}-${t.id ?? [t.stock_code, t.created_at || t.trade_date, t.direction || t.action, t.quantity, t.price].join("-")}`} dataSource={data.recent_trades} columns={tradeColumns} scroll={{ x: 820 }} pagination={false} locale={{ emptyText: <Empty description="尚无模拟成交记录" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} />
+				</>
+			) },
+			{ key: "performance", label: "收益曲线", children: <Suspense fallback={<Skeleton active />}><Performance data={data} /></Suspense> },
+		]
+		: [];
 
-				{/* ==================== 持仓 + 交易 ==================== */}
-				<Row gutter={[16, 16]}>
-					<Col xs={24} lg={14}>
-						<Card
-							title={(
-								<Space>
-									<StockOutlined style={{ color: "#52c41a" }} />
-									<span>当前持仓</span>
-									<Tag>
-										{positions.length}
-										{" "}
-										只
-									</Tag>
-								</Space>
-							)}
-							style={{ borderRadius: 12 }}
-						>
-							<Table
-								columns={positionColumns}
-								dataSource={positions}
-								rowKey={(r: any) => `${r.stock_code}-${r.strategy_type}`}
-								pagination={false}
-								size="small"
-								scroll={{ x: 600 }}
-								locale={{ emptyText: <Empty description="暂无持仓" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
-							/>
-						</Card>
-					</Col>
-					<Col xs={24} lg={10}>
-						<Card
-							title={(
-								<Space>
-									<SwapOutlined style={{ color: "#fa8c16" }} />
-									<span>最近交易</span>
-								</Space>
-							)}
-							style={{ borderRadius: 12 }}
-						>
-							<Table
-								columns={tradeColumns}
-								dataSource={recentTrades}
-								rowKey={(r: any, i: any) => `${r.stock_code}-${r.trade_date}-${i}`}
-								pagination={false}
-								size="small"
-								scroll={{ x: 500 }}
-								locale={{ emptyText: <Empty description="暂无交易记录" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
-							/>
-						</Card>
-					</Col>
-				</Row>
-			</Space>
+	return (
+		<BasicContent className="workbench" style={styles}>
+			<header className="wb-heading">
+				<div>
+					<div className="wb-eyebrow">AI STOCK / WORKSPACE</div>
+					<h1>
+						研究工作台
+						<Tag>模拟交易</Tag>
+					</h1>
+					<p>先检查执行与数据，再看组合表现和候选机会。</p>
+				</div>
+				<div className="wb-refresh">
+					<span className="wb-muted wb-small" role="status">{loading ? "正在更新数据…" : error ? "更新失败" : receivedAt ? `最近读取 ${receivedAt}` : "等待数据"}</span>
+					<Button aria-label="刷新数据" icon={<ReloadOutlined />} onClick={refresh} loading={loading}>刷新数据</Button>
+				</div>
+			</header>
+			<nav className="wb-shortcuts" aria-label="常用研究入口">
+				{shortcuts.map(item => (
+					<Link key={item.path} to={item.path} className="wb-shortcut">
+						<span className="wb-shortcut-icon">{item.icon}</span>
+						<span>
+							<strong>{item.title}</strong>
+							<small>{item.description}</small>
+						</span>
+						<ArrowRightOutlined />
+					</Link>
+				))}
+			</nav>
+			{error && <Alert type="error" showIcon message="工作台数据更新失败" description={data ? "当前保留上次成功读取的快照，请重试后再做判断。" : "暂时无法读取组合信息，资产和收益尚不可用。"} action={<Button aria-label="重试" onClick={refresh} loading={loading}>重试</Button>} />}
+			{!data && !error && <Card><Skeleton active paragraph={{ rows: 6 }} /></Card>}
+			{data && (
+				<>
+					{quality && quality.stored_price_positions > 0 && <Alert type="warning" showIcon message={`${quality.stored_price_positions} 笔持仓使用存储价格`} description="本次行情未完整获取，资产与盈亏可能滞后；请在持仓明细中核对价格来源。" />}
+					{!quality && <Alert type="info" showIcon message="行情覆盖信息待核验" description="当前接口未提供价格来源覆盖信息，组合金额按返回快照展示。" />}
+					<section className="wb-metrics" aria-label="组合资产概览">
+						<MetricCard label="模拟总资产" value={overview?.total_asset} note={`${overview?.portfolios_count ?? strategies.length} 个组合 · 各组合独立资金汇总`} primary />
+						<MetricCard label="累计收益" value={overview?.total_profit} note="总资产减初始资金 · 元" signed />
+						<MetricCard label="累计收益率" value={overview?.total_profit_pct} suffix="%" note="按初始资金加权 · 非策略简单平均" signed />
+						<MetricCard label="可用现金" value={overview?.available_cash} note={`${overview?.positions_count ?? positions.length} 笔持仓 · 同一股票可属于多个组合`} />
+					</section>
+					<section className="wb-attention" aria-label="执行概况">
+						<div>
+							<span className="wb-eyebrow">执行概况</span>
+							<h2>{attention.length ? `${attention.length} 个组合需要关注` : "暂无已识别的执行异常"}</h2>
+							<p>{attention.length ? "优先检查数据恢复与执行阻断原因。" : "根据最近返回的执行记录汇总，空仓和暂停各有独立状态。"}</p>
+						</div>
+						<div className="wb-attention-counts">
+							{[{ key: "attention", label: "需要关注", count: attention.length }, { key: "holding", label: "持仓组合", count: strategies.filter(s => Number(s.positions_count) > 0).length }, { key: "paused", label: "已暂停", count: strategies.filter(s => !s.auto_trade).length }].map(item => (
+								<button
+									key={item.key}
+									type="button"
+									aria-pressed={tab === "strategies" && filter === item.key}
+									onClick={() => {
+										setFilter(item.key);
+										setTab("strategies");
+									}}
+								>
+									<strong>{item.count}</strong>
+									<span>{item.label}</span>
+								</button>
+							))}
+						</div>
+					</section>
+					<Card className="wb-main-card">
+						<Tabs
+							activeKey={tab}
+							onChange={setTab}
+							items={tabs}
+						/>
+					</Card>
+					<footer className="wb-footnote">
+						<span>
+							数据快照：
+							{formatTime(data.generated_at)}
+							（北京时间）
+						</span>
+						<span>模拟结果用于观察与复盘，不代表实际成交或未来收益。</span>
+					</footer>
+				</>
+			)}
 		</BasicContent>
+	);
+}
+
+function MetricCard({ label, value, note, primary = false, signed = false, suffix = "" }: { label: string, value: Metric, note: string, primary?: boolean, signed?: boolean, suffix?: string }) {
+	return (
+		<article className={`wb-metric${primary ? " wb-metric-primary" : ""}`}>
+			<div className="wb-metric-label">{label}</div>
+			<div className="wb-metric-value"><NumberValue value={value} suffix={suffix} signed={signed} /></div>
+			<p>{note}</p>
+		</article>
 	);
 }

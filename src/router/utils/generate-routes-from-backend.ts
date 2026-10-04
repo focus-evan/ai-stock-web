@@ -13,6 +13,10 @@ const ExceptionUnknownComponent = lazy(() => import("#src/pages/exception/unknow
  */
 const pageModules = import.meta.glob([
 	"/src/pages/**/*.tsx",
+	// Test modules are not routes; importing them also ships the test runner.
+	"!/src/pages/**/__tests__/**",
+	"!/src/pages/**/*.test.tsx",
+	"!/src/pages/**/*.spec.tsx",
 	// Exclude exception pages from lazy loading
 	"!/src/pages/exception/**/*.tsx",
 ]);

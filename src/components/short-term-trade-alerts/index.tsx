@@ -1,7 +1,7 @@
 import { useUserStore } from "#src/store/user";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useQueries } from "@tanstack/react-query";
-import { Alert, Button, Space, Tag, Typography } from "antd";
+import { Alert, Button, Space, Tag, theme, Typography } from "antd";
 import { useEffect, useState } from "react";
 import StrategyBuyAlerts from "../strategy-buy-alerts";
 import { beijingTradeDate, loadTacticTradeCycles, SHORT_TERM_TACTICS, showTradeAlertsOnPath, todayTradeAlerts } from "./data";
@@ -12,6 +12,7 @@ const quantityText = (value: number | null) => value == null || !Number.isFinite
 const redText = { color: "#cf1322", fontSize: "clamp(22px, 2.3vw, 32px)", fontWeight: 800, lineHeight: 1.6 };
 
 function LiveTradeAlerts({ userId }: { userId: string }) {
+	const { token } = theme.useToken();
 	const [day, setDay] = useState(beijingTradeDate);
 	useEffect(() => {
 		const timer = window.setInterval(() => setDay(beijingTradeDate()), 15000);
@@ -40,7 +41,7 @@ function LiveTradeAlerts({ userId }: { userId: string }) {
 	const fetching = results.some(result => result.isFetching);
 
 	return (
-		<section aria-label="短线四法成交提醒" style={{ margin: "16px 16px 0", padding: 16, borderRadius: 12, border: `2px solid ${events.length ? "#ff4d4f" : "#d9d9d9"}`, background: events.length ? "#fff1f0" : "#fff" }}>
+		<section aria-label="短线四法成交提醒" style={{ margin: "16px 16px 0", padding: 16, borderRadius: 12, border: `1px solid ${events.length ? token.colorErrorBorder : token.colorBorderSecondary}`, background: events.length ? token.colorErrorBg : token.colorBgContainer }}>
 			<Space wrap style={{ width: "100%", justifyContent: "space-between", marginBottom: events.length ? 12 : 0 }}>
 				<Text strong style={{ color: events.length ? "#cf1322" : undefined, fontSize: events.length ? 24 : 14 }}>
 					{events.length ? `短线四法 · 今日模拟成交 ${events.length} 笔` : loading ? "正在检查短线四法成交…" : failed.length ? "短线四法成交检查未完成" : "短线四法 · 今日暂无模拟成交"}
@@ -56,7 +57,7 @@ function LiveTradeAlerts({ userId }: { userId: string }) {
 			{failed.length > 0 && <Alert type="warning" showIcon style={{ marginTop: 8, marginBottom: 12 }} message={`${failed.join("、")}更新失败`} description="该战法暂时保留上次成功读取的当天记录，可能有新成交未显示，请重试。" />}
 			<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 460px), 1fr))", gap: 12 }} aria-live="polite" aria-relevant="additions text">
 				{events.map(({ id, tactic, cycle, execution }) => (
-					<article key={id} style={{ padding: "12px 16px", background: "#fff", border: "1px solid #ffa39e", borderRadius: 8 }}>
+					<article key={id} style={{ padding: "12px 16px", background: token.colorBgContainer, border: `1px solid ${token.colorErrorBorder}`, borderRadius: 8 }}>
 						<Space wrap>
 							<Text strong style={{ fontSize: 20, color: "#cf1322" }}>
 								{tactic.name}

@@ -28,6 +28,15 @@ export function SearchPanel({ menuItem, active, enter, setActiveKey, showCloseBu
 		<>
 			<li
 				data-search-item={menuItem.key}
+				role="button"
+				tabIndex={0}
+				onKeyDown={(event) => {
+					if (event.key === "Enter" || event.key === " ") {
+						event.preventDefault();
+						event.stopPropagation();
+						enter(isExternalLink);
+					}
+				}}
 				onMouseEnter={() => {
 					handleMouseEnter(menuItem.key);
 				}}
@@ -46,6 +55,7 @@ export function SearchPanel({ menuItem, active, enter, setActiveKey, showCloseBu
 					<div className="flex items-center gap-2">
 						<div className="opacity-50">{menuItem.key}</div>
 						<Button
+							aria-label="删除这条搜索历史"
 							className={clsx(
 								{ hidden: !showCloseButton },
 								active ? "text-colorBgContainer!" : "text-colorText!",
