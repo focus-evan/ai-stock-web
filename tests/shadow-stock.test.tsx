@@ -167,6 +167,26 @@ describe("report polling", () => {
 });
 const dashboard = { status: "ok", batch_id: "batch", tracks: [{ id: 1, track_name: "芯片", heat_score: 60 }, { id: 2, track_name: "机器人", heat_score: 50 }], top_ipo_targets: [{ id: 1, track_id: 1, company_name: "甲IPO", industry_pe: 30, expected_valuation: 100, importance_score: 60, ipo_status: "已受理", holdings: [], data_source: "交易所公告", progress_date: "2026-09-18" }, { id: 2, track_id: 2, company_name: "乙IPO", industry_pe: 20, expected_valuation: 50, importance_score: 50, ipo_status: "状态未知", holdings: [] }] } as unknown as ShadowStockDashboardResponse;
 describe("shadow stock page behavior", () => {
+	it("renders legacy comparable names and partial metrics without undefined or invented values", async () => {
+		vi.mocked(fetchShadowStockDashboard).mockResolvedValue({
+			...dashboard,
+			top_ipo_targets: [{ ...dashboard.top_ipo_targets![0], comparable_companies: [
+				"三星电子",
+				"SK海力士及Solidigm",
+				"铠侠控股",
+				"SanDisk",
+				"美光科技",
+				{ name: "完整资料", market_cap: 120, pe: "25" },
+				{ name: "部分资料", pe: null },
+			] }],
+		});
+		render(<ShadowStockPage />);
+		expect(await screen.findByText("三星电子（市值待补充，PE 待补充）")).toBeInTheDocument();
+		for (const name of ["SK海力士及Solidigm", "铠侠控股", "SanDisk", "美光科技", "部分资料"])
+			expect(screen.getByText(`${name}（市值待补充，PE 待补充）`)).toBeInTheDocument();
+		expect(screen.getByText("完整资料（市值120亿，PE 25x）")).toBeInTheDocument();
+		expect(screen.queryByText(/undefined|NaN|\[object Object\]/)).not.toBeInTheDocument();
+	});
 	it("uses PE multiples, shows provenance, and keeps detail within selected track", async () => {
 		vi.mocked(fetchShadowStockDashboard).mockResolvedValue(dashboard);
 		render(<ShadowStockPage />);

@@ -32,8 +32,8 @@ export interface ShadowStockTrack {
 
 export interface ComparableCompany {
 	name: string
-	market_cap: string
-	pe: string
+	market_cap?: string | number | null
+	pe?: string | number | null
 }
 
 export interface ShadowStockIPOTarget {
@@ -50,7 +50,7 @@ export interface ShadowStockIPOTarget {
 	latest_progress: string
 	progress_date: string | null
 	industry_pe: number
-	comparable_companies: ComparableCompany[] | null
+	comparable_companies: (ComparableCompany | string)[] | null
 	importance_score: number
 	data_source: string
 	batch_id: string

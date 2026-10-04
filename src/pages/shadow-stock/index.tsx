@@ -49,6 +49,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { formatComparableMetric, normalizeComparableCompanies } from "./comparables";
 import { formatMetric } from "./data";
 import { pollReport } from "./poll-report";
 import { useLatestRequest } from "./use-latest-request";
@@ -223,6 +224,7 @@ export default function ShadowStockPage() {
 	}, [dashboard, selectedTrackId]);
 
 	const selectedTarget = useMemo(() => filteredTargets.find(target => target.id === selectedTargetId) || filteredTargets[0] || null, [filteredTargets, selectedTargetId]);
+	const comparableCompanies = useMemo(() => normalizeComparableCompanies(selectedTarget?.comparable_companies), [selectedTarget]);
 
 	const selectedHoldings = useMemo(() => {
 		return selectedTarget?.holdings || [];
@@ -446,13 +448,13 @@ export default function ShadowStockPage() {
 										locale={{ emptyText: "暂无影子股数据" }}
 									/>
 
-									{selectedTarget.comparable_companies && selectedTarget.comparable_companies.length > 0 && (
+									{comparableCompanies.length > 0 && (
 										<div style={{ marginTop: 16 }}>
 											<Text type="secondary" strong>可比公司参考：</Text>
 											<div style={{ display: "flex", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
-												{selectedTarget.comparable_companies.map(c => (
-													<Tag key={c.name} color="blue">
-														{`${c.name}（市值${c.market_cap}亿，PE ${c.pe}x）`}
+												{comparableCompanies.map((c, index) => (
+													<Tag key={`${c.name}-${index}`} color="blue">
+														{`${c.name}（市值${formatComparableMetric(c.market_cap, "亿")}，PE ${formatComparableMetric(c.pe, "x")}）`}
 													</Tag>
 												))}
 											</div>
