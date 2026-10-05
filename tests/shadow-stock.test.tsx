@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, renderHook, screen, waitFor } from "@t
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchShadowStockDashboard, fetchShadowStockRecommendations, fetchShadowStockReportHistory, fetchShadowStockReportStatus, generateShadowStockRecommendations, refreshShadowStockReport } from "../src/api/shadow-stock";
 import ShadowStockPage from "../src/pages/shadow-stock";
-import { buildShadowDimension, filterAggregateTracks, formatMetric } from "../src/pages/shadow-stock/data";
+import { buildShadowDimension, filterAggregateTracks, formatMetric, isListedIPOStatus } from "../src/pages/shadow-stock/data";
 import { pollReport } from "../src/pages/shadow-stock/poll-report";
 import ShadowStockRecommendPage from "../src/pages/shadow-stock/recommend";
 import { useLatestRequest } from "../src/pages/shadow-stock/use-latest-request";
@@ -41,6 +41,20 @@ afterEach(() => {
 	vi.useRealTimers();
 });
 describe("shadow stock aggregation", () => {
+	it("excludes listed IPOs in both dimensions while retaining listed shareholders of unlisted issuers", () => {
+		const tracks = [track("芯片", [company("已上市发行人", "已上市"), company("未上市发行人", "已受理", [holder({ holder_name: "上市股东" })])])];
+		const filtered = filterAggregateTracks(tracks, "", "", []);
+		expect(filtered[0].company_count).toBe(1);
+		expect(buildShadowDimension(tracks)).toHaveLength(1);
+		expect(buildShadowDimension(tracks)[0].holder_name).toBe("上市股东");
+		expect(isListedIPOStatus("已发行待上市")).toBe(false);
+		expect(isListedIPOStatus("上市委审核")).toBe(false);
+		expect(isListedIPOStatus("已上市后再融资窗口")).toBe(true);
+	});
+	it("finds retained issuers by their merged historical names", () => {
+		const c = { ...company("长江存储控股股份有限公司", "已问询"), company_aliases: ["长江存储科技控股有限责任公司"] };
+		expect(filterAggregateTracks([track("存储", [c])], "科技控股", "", [])[0].company_count).toBe(1);
+	});
 	it("does not invent zero for missing/nonfinite metrics and uses the supplied unit", () => {
 		expect(formatMetric(null)).toBe("待核验");
 		expect(formatMetric(Number.NaN)).toBe("待核验");

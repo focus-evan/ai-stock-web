@@ -50,7 +50,7 @@ import {
 } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { formatComparableMetric, normalizeComparableCompanies } from "./comparables";
-import { formatMetric } from "./data";
+import { formatMetric, isListedIPOStatus } from "./data";
 import { pollReport } from "./poll-report";
 import { useLatestRequest } from "./use-latest-request";
 import "#src/pages/home/business.css";
@@ -219,8 +219,8 @@ export default function ShadowStockPage() {
 		if (!dashboard?.top_ipo_targets)
 			return [];
 		if (selectedTrackId === null)
-			return dashboard.top_ipo_targets;
-		return dashboard.top_ipo_targets.filter(t => t.track_id === selectedTrackId);
+			return dashboard.top_ipo_targets.filter(t => !isListedIPOStatus(t.ipo_status));
+		return dashboard.top_ipo_targets.filter(t => t.track_id === selectedTrackId && !isListedIPOStatus(t.ipo_status));
 	}, [dashboard, selectedTrackId]);
 
 	const selectedTarget = useMemo(() => filteredTargets.find(target => target.id === selectedTargetId) || filteredTargets[0] || null, [filteredTargets, selectedTargetId]);

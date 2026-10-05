@@ -378,7 +378,15 @@ export default function ShadowStockAggregate() {
 					</Row>
 				</div>
 
-				<Alert type="info" showIcon message="每家 IPO 使用最近完整快照；同一 IPO 跨赛道仅计一次关联。估值占比不代表预期收益，历史出现次数不等于独立证据。" style={{ marginBottom: 12 }} />
+				<Alert
+					type={data.listing_review?.status === "cached_or_seed_only" ? "warning" : "info"}
+					showIcon
+					message="已上市发行人已退出本页、仪表盘和每日推荐；公司别名合并后只保留最近完整快照。"
+					description={data.listing_review
+						? `上市核验：${data.listing_review.checked_at ? new Date(data.listing_review.checked_at).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false }) : "名录待更新"}。已剔除 ${data.listing_review.excluded_listed_count} 条已上市记录、${data.listing_review.excluded_unidentified_count} 条主体不明记录，归并 ${data.listing_review.merged_alias_count} 条别名。其余审核进度、持股及估值仍为历史快照，估值占比不代表预期收益。`
+						: "审核进度、持股与估值仍为历史快照，估值占比不代表预期收益。"}
+					style={{ marginBottom: 12 }}
+				/>
 				{/* 筛选器 */}
 				<Card size="small" style={{ marginBottom: 12, borderRadius: 10 }} styles={{ body: { padding: "10px 14px" } }}>
 					<div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", alignItems: "center" }}>

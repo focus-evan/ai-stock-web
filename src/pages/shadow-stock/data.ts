@@ -1,5 +1,12 @@
 import type { AggTrack } from "#src/api/shadow-stock";
 
+export function isListedIPOStatus(value: unknown): boolean {
+	if (typeof value !== "string")
+		return false;
+	const status = value.trim().toLowerCase();
+	return status.startsWith("已上市") || ["已发行上市", "上市交易", "listed", "normally_listed", "listing_completed", "delisted"].includes(status);
+}
+
 export function formatMetric(value: unknown, digits = 1, suffix = "", positiveOnly = false): string {
 	return typeof value === "number" && Number.isFinite(value) && (!positiveOnly || value > 0)
 		? `${value.toFixed(digits)}${suffix}`
@@ -40,6 +47,8 @@ export function buildShadowDimension(tracks: AggTrack[]): ShadowDimensionItem[] 
 	const holders = new Map<string, ShadowDimensionItem>();
 	for (const track of tracks) {
 		for (const company of track.companies) {
+			if (isListedIPOStatus(company.ipo_status))
+				continue;
 			for (const holding of company.shadow_stocks) {
 				const code = holding.holder_stock_code?.trim().toUpperCase() || "";
 				const key = code || holding.holder_name?.trim();
@@ -98,7 +107,8 @@ export function filterAggregateTracks(tracks: AggTrack[], companyQuery: string, 
 	const holderKeyword = holderQuery.trim().toLowerCase();
 	return tracks.map((track) => {
 		const companies = track.companies.filter(company =>
-			(!companyKeyword || company.company_name.toLowerCase().includes(companyKeyword))
+			!isListedIPOStatus(company.ipo_status)
+			&& (!companyKeyword || [company.company_name, ...(company.company_aliases || [])].some(name => name.toLowerCase().includes(companyKeyword)))
 			&& (!statuses.length || statuses.includes(company.ipo_status)),
 		).map(company => ({
 			...company,

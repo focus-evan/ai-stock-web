@@ -170,6 +170,9 @@ export interface AggShadowStock extends CalculationEvidence {
 }
 
 export interface AggCompany {
+	issuer_key?: string
+	source_company_name?: string
+	company_aliases?: string[]
 	company_name: string
 	ipo_status: string
 	target_market: string
@@ -200,6 +203,15 @@ export interface ShadowStockAggregateResponse {
 	total_companies: number
 	total_reports: number
 	message?: string
+	listing_review?: {
+		checked_at?: string | null
+		status: string
+		excluded_listed_count: number
+		excluded_listed_issuers: number
+		excluded_unidentified_count: number
+		merged_alias_count: number
+		auto_refresh_running?: boolean
+	}
 }
 
 // ======================== 影子股每日推荐 ========================
