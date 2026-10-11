@@ -13,6 +13,23 @@ const { Title, Text, Paragraph } = Typography;
 const stamp = (s?: string) => s ? new Date(s).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false }) : "—";
 const direction = (s: string) => <Tag color={s === "bullish" ? "red" : s === "bearish" ? "green" : "default"}>{directionNames[s] || s}</Tag>;
 
+function sourceLink(payload: ResearchReport["payload"], label = evidenceNames[payload.evidence_level] || "打开来源") {
+	const href = safeLink(payload.source_url);
+	return href
+		? (
+			<a href={href} target="_blank" rel="noopener noreferrer" title="在新窗口打开原文或来源页面">
+				{label}
+				<span aria-hidden="true"> ↗</span>
+			</a>
+		)
+		: (
+			<Text type="secondary">
+				{label}
+				（链接不可用）
+			</Text>
+		);
+}
+
 export default function InstitutionalResearchPage() {
 	const [institution, setInstitution] = useState("");
 	const [keyword, setKeyword] = useState("");
@@ -67,7 +84,7 @@ export default function InstitutionalResearchPage() {
 			<>
 				<Button type="link" style={{ padding: 0, whiteSpace: "normal", height: "auto", textAlign: "left" }} onClick={() => setSelected(r.id)}>{r.payload.title}</Button>
 				<Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 4 }}>{r.payload.summary}</Paragraph>
-				<Tag>{evidenceNames[r.payload.evidence_level]}</Tag>
+				<Tag>{sourceLink(r.payload)}</Tag>
 				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? r.payload.evidence_level === "reprint" ? "公开转载已核验" : r.payload.verification_method === "pdf_catalog" ? "PDF原文核验" : "原文证据已核验" : "待核验"}</Tag>
 			</>
 		) },
@@ -368,9 +385,9 @@ export default function InstitutionalResearchPage() {
 						)}
 						<Space wrap>
 							{direction(report.payload.direction)}
-							<Tag>{evidenceNames[report.payload.evidence_level]}</Tag>
+							<Tag>{sourceLink(report.payload)}</Tag>
 							<Tag>{report.payload.verified ? "已核验" : "待核验"}</Tag>
-							<a href={safeLink(report.payload.source_url)} target="_blank" rel="noreferrer">打开来源</a>
+							{sourceLink(report.payload, "打开来源")}
 						</Space>
 						{groupTag(report.institution)}
 						<Descriptions size="small" column={1} items={[{ key: "published", label: report.payload.publication_basis === "month_bound" ? "月份上界（保守观察依据）" : report.payload.publication_basis === "public_disclosure" ? "公开披露 / 更新时点（观察依据）" : report.payload.catalog_published_at ? "公开收录日（观察依据）" : report.payload.time_precision === "unknown" ? "来源时间（原报告待核验）" : "报告发布时间", children: stamp(report.published_at) }, { key: "original-date", label: "原文落款日期", children: report.payload.report_date || report.payload.publication_month || "待核验" }, { key: "seen", label: "首次入库", children: stamp(report.first_seen_at) }, { key: "id", label: "报告 ID", children: <Text copyable>{report.id}</Text> }]} />

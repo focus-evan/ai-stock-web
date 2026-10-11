@@ -56,6 +56,10 @@ afterEach(() => {
 describe("institutional research", () => {
 	it("shows holding impact as inference and opens its evidence", async () => {
 		mount();
+		const source = await screen.findByRole("link", { name: "媒体转载" });
+		expect(source).toHaveAttribute("href", report.payload.source_url);
+		expect(source).toHaveAttribute("target", "_blank");
+		expect(source).toHaveAttribute("rel", "noopener noreferrer");
 		fireEvent.click(await screen.findByRole("tab", { name: "每日持仓影响" }));
 		expect(await screen.findByText("测试中的产业链成本压力")).toBeInTheDocument();
 		expect(screen.getByText("报告甲：成本压力")).toBeInTheDocument();
@@ -64,6 +68,20 @@ describe("institutional research", () => {
 		fireEvent.click(screen.getByRole("button", { name: "查看报告与证据" }));
 		expect(await screen.findByText("尚未核对原报告时间，保留证据，暂不做历史检验")).toBeInTheDocument();
 		expect(screen.getByRole("link", { name: "打开来源" })).toHaveAttribute("href", report.payload.source_url);
+	}, 60000);
+	it("links original articles and PDFs and marks invalid source links unavailable", async () => {
+		const original = { ...report, id: "original", payload: { ...report.payload, title: "原站测试文章", evidence_level: "original" as const, source_url: "https://example.com/original" } };
+		const pdf = { ...original, id: "pdf", payload: { ...original.payload, title: "原文测试PDF", source_url: "https://example.com/report.pdf" } };
+		const invalid = { ...report, id: "invalid", payload: { ...report.payload, title: "无效来源测试", source_url: "javascript:alert(1)" } };
+		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, reports: [original, pdf, invalid] } });
+		vi.mocked(fetchInstitutionalReport).mockResolvedValue({ data: invalid });
+		mount();
+		const links = await screen.findAllByRole("link", { name: "机构原站 / 原文" });
+		expect(links.map(link => link.getAttribute("href"))).toEqual([original.payload.source_url, pdf.payload.source_url]);
+		expect(screen.getByText("媒体转载（链接不可用）")).toBeInTheDocument();
+		fireEvent.click(screen.getByRole("button", { name: "无效来源测试" }));
+		expect(await screen.findByText("打开来源（链接不可用）")).toBeInTheDocument();
+		expect(screen.queryByRole("link", { name: "打开来源" })).not.toBeInTheDocument();
 	}, 60000);
 	it("never describes a holdings API failure as no exposure", async () => {
 		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, holdings: [], holdings_status: "unavailable" } });
