@@ -102,6 +102,13 @@ export default function InstitutionalResearchPage() {
 					<Tag>{impact.relation === "direct" ? "机构直接点名" : "产业链推断"}</Tag>
 					<Text>{names[impact.institution || ""]}</Text>
 				</Space>
+				{impact.title && <div style={{ marginTop: 8 }}><Text strong>{impact.title}</Text></div>}
+				{impact.summary && (
+					<Paragraph style={{ marginTop: 8, marginBottom: 8 }}>
+						<Text type="secondary">报告要点（摘要）：</Text>
+						{impact.summary}
+					</Paragraph>
+				)}
 				<Paragraph style={{ marginTop: 8 }}>{impact.mechanism}</Paragraph>
 				{impact.published_at && (
 					<div>
@@ -186,7 +193,7 @@ export default function InstitutionalResearchPage() {
 							</Col>
 						</Row>
 						<Alert type="info" showIcon message={data.coverage_note} />
-						{latest && <Alert showIcon type={latest.status === "failed" ? "error" : latest.status === "partial" ? "warning" : "info"} message={`最近任务：${statusNames[latest.status] || latest.status} · ${stamp(latest.started_at)}`} description={[latest.error, ...(latest.payload.errors || []), ...((latest.payload.review?.errors || []).map(e => e.reason))].filter(Boolean).slice(0, 4).join("；") || `新增 ${latest.payload.new_reports || 0} 篇，更新 ${latest.payload.review?.completed || 0} 个行情观察`} />}
+						{latest && <Alert showIcon type={latest.status === "failed" ? "error" : latest.status === "partial" ? "warning" : "info"} message={`最近任务：${statusNames[latest.status] || latest.status} · ${stamp(latest.started_at)}`} description={[latest.error, ...(latest.payload.errors || []), ...((latest.payload.review?.errors || []).map(e => e.reason))].filter(Boolean).slice(0, 4).join("；") || `新增 ${latest.payload.new_reports || 0} 篇，修订 ${latest.payload.corrected_reports || 0} 篇关联说明，更新 ${latest.payload.review?.completed || 0} 个行情观察`} />}
 						<Tabs
 							defaultActiveKey="history"
 							items={[

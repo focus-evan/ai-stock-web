@@ -10,6 +10,7 @@ export interface ResearchImpact {
 	watch_next: string
 	report_id?: string
 	title?: string
+	summary?: string
 	institution?: string
 	published_at?: string
 }
@@ -68,9 +69,9 @@ export interface ResearchReport {
 export interface ResearchOverview {
 	reports: ResearchReport[]
 	scorecards: { institution: string, direction: string, direction_basis: string, evidence_level?: string, publication_basis?: string, sessions: number, cohort: string, samples: number, hit_rate: number, excess_hit_rate: number | null, mean_excess_return: number, sample_warning: string }[]
-	history: { id: string, status: string, started_at: string, error?: string, payload: { sources?: { source_id: string, source_name: string, status: string, count: number, errors?: string[] }[], errors?: string[], new_reports?: number, review?: { completed: number, errors: { report_id: string, reason: string }[] } } }[]
+	history: { id: string, status: string, started_at: string, error?: string, payload: { sources?: { source_id: string, source_name: string, status: string, count: number, errors?: string[] }[], errors?: string[], new_reports?: number, corrected_reports?: number, review?: { completed: number, errors: { report_id: string, reason: string }[] } } }[]
 	sources: { id: string, name: string, pages: string[], limitations: string, group?: string, enabled?: boolean }[]
-	diagnostics?: { archived: number, verified: number, observed: number, unknown_time: number, eligible: number, focus_verified?: number, focus_covered?: number }
+	diagnostics?: { archived: number, stored_versions?: number, hidden_versions?: number, verified: number, observed: number, unknown_time: number, eligible: number, focus_verified?: number, focus_covered?: number }
 	institution_coverage?: { institution: string, name: string, group: string, archived: number, verified: number, original_verified?: number, reprint_verified?: number, related_reports?: number, observed: number, eligible_samples: number, unknown_time: number, waiting: number, reason: string, latest_report_id?: string }[]
 	runtime: { enabled: boolean, running: boolean, time: string, timezone: string }
 	holdings_status: string

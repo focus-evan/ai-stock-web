@@ -32,7 +32,7 @@ const initial: ResearchOverview = {
 	runtime: { enabled: true, running: true, time: "07:45", timezone: "Asia/Shanghai" },
 	holdings_status: "ok",
 	holdings_as_of: "2026-10-11T08:00:00+08:00",
-	holdings: [{ symbol: "sz300502", name: "新易盛", shares: 100, impacts: [{ ...report.payload.impacts[0], report_id: "r1", institution: "morgan_stanley" }] }],
+	holdings: [{ symbol: "sz300502", name: "新易盛", shares: 100, impacts: [{ ...report.payload.impacts[0], report_id: "r1", institution: "morgan_stanley", title: "报告甲：成本压力", summary: "原报告只讨论采购成本压力" }] }],
 	fresh_report_ids: ["r1"],
 	coverage_note: "覆盖有限，无匹配不代表无风险",
 	record_limit: 500,
@@ -58,6 +58,8 @@ describe("institutional research", () => {
 		mount();
 		fireEvent.click(await screen.findByRole("tab", { name: "每日持仓影响" }));
 		expect(await screen.findByText("测试中的产业链成本压力")).toBeInTheDocument();
+		expect(screen.getByText("报告甲：成本压力")).toBeInTheDocument();
+		expect(screen.getByText("原报告只讨论采购成本压力")).toBeInTheDocument();
 		expect(screen.getByText("产业链推断")).toBeInTheDocument();
 		fireEvent.click(screen.getByRole("button", { name: "查看报告与证据" }));
 		expect(await screen.findByText("尚未核对原报告时间，保留证据，暂不做历史检验")).toBeInTheDocument();
