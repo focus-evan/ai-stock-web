@@ -32,7 +32,7 @@ export default function InstitutionalResearchPage() {
 	const names = Object.fromEntries((data?.sources || []).map(s => [s.id, s.name]));
 	const groupFor = (id: string) => data?.sources.find(s => s.id === id)?.group || "focus";
 	const groupTag = (id: string) => <Tag color={groupFor(id) === "focus" ? "blue" : "default"}>{groupFor(id) === "focus" ? "重点机构" : "补充公开源"}</Tag>;
-	const reports = filterReports(data?.reports || [], institution, keyword).filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup);
+	const reports = filterReports(data?.reports || [], institution, keyword).filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup).sort((a, b) => Number(b.payload.verified) - Number(a.payload.verified));
 	const report = detail.data?.data;
 	const review = report?.review;
 	const latest = data?.history[0];
