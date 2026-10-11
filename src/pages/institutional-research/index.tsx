@@ -1,5 +1,5 @@
 import type { ResearchImpact, ResearchReport } from "#src/api/institutional-research";
-import { backfillInstitutionalResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
+import { backfillFocusResearch, backfillInstitutionalResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { BasicContent } from "#src/components/basic-content";
 import { useUserStore } from "#src/store/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -16,7 +16,7 @@ const direction = (s: string) => <Tag color={s === "bullish" ? "red" : s === "be
 export default function InstitutionalResearchPage() {
 	const [institution, setInstitution] = useState("");
 	const [keyword, setKeyword] = useState("");
-	const [sourceGroup, setSourceGroup] = useState("");
+	const [sourceGroup, setSourceGroup] = useState("focus");
 	const [selected, setSelected] = useState<string | null>(null);
 	const [importing, setImporting] = useState(false);
 	const [draft, setDraft] = useState<ResearchReport | null>(null);
@@ -32,14 +32,14 @@ export default function InstitutionalResearchPage() {
 	const names = Object.fromEntries((data?.sources || []).map(s => [s.id, s.name]));
 	const groupFor = (id: string) => data?.sources.find(s => s.id === id)?.group || "focus";
 	const groupTag = (id: string) => <Tag color={groupFor(id) === "focus" ? "blue" : "default"}>{groupFor(id) === "focus" ? "重点机构" : "补充公开源"}</Tag>;
-	const reports = filterReports(data?.reports || [], institution, keyword);
+	const reports = filterReports(data?.reports || [], institution, keyword).filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup);
 	const report = detail.data?.data;
 	const review = report?.review;
 	const latest = data?.history[0];
-	async function refresh(backfill = false) {
+	async function refresh(backfill: boolean | "focus" = false) {
 		setStarting(true);
 		try {
-			const result = await (backfill ? backfillInstitutionalResearch() : refreshInstitutionalResearch());
+			const result = await (backfill === "focus" ? backfillFocusResearch() : backfill ? backfillInstitutionalResearch() : refreshInstitutionalResearch());
 			message.info(result.status === "started" ? "采集和历史检验已开始" : result.status === "busy" ? "已有任务运行，正在查看进度" : "短时间内已运行，请稍后重试");
 			await client.invalidateQueries({ queryKey: ["institutional-research"] });
 		}
@@ -49,7 +49,7 @@ export default function InstitutionalResearchPage() {
 	const columns = [
 		{ title: "发布 / 机构", key: "source", width: 185, render: (_: unknown, r: ResearchReport) => (
 			<>
-				<div>{r.payload.report_date || stamp(r.published_at)}</div>
+				<div>{r.payload.time_precision === "month" ? `${r.payload.publication_month}（仅知月份）` : r.payload.report_date || stamp(r.published_at)}</div>
 				{r.payload.catalog_published_at && (
 					<div>
 						<Text type="secondary">
@@ -68,7 +68,7 @@ export default function InstitutionalResearchPage() {
 				<Button type="link" style={{ padding: 0, whiteSpace: "normal", height: "auto", textAlign: "left" }} onClick={() => setSelected(r.id)}>{r.payload.title}</Button>
 				<Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 4 }}>{r.payload.summary}</Paragraph>
 				<Tag>{evidenceNames[r.payload.evidence_level]}</Tag>
-				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? r.payload.verification_method === "pdf_catalog" ? "PDF原文核验" : "已核验" : "待核验"}</Tag>
+				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? r.payload.evidence_level === "reprint" ? "公开转载已核验" : r.payload.verification_method === "pdf_catalog" ? "PDF原文核验" : "原文证据已核验" : "待核验"}</Tag>
 			</>
 		) },
 		{ title: "判断", key: "direction", width: 120, render: (_: unknown, r: ResearchReport) => (
@@ -88,10 +88,10 @@ export default function InstitutionalResearchPage() {
 							超额
 							{percent(h.excess_return)}
 						</Text>
-						<div>{h.direction_match == null ? "无明确方向" : h.direction_match ? "方向一致" : "方向不一致"}</div>
+						<div>{!r.review?.eligible ? "关联走势，不计命中率" : h.direction_match == null ? "无明确方向" : h.direction_match ? "方向一致" : "方向不一致"}</div>
 					</>
 				)
-				: <Text type="secondary">{r.payload.time_precision === "unknown" ? "待核对报告时间" : statusNames[h?.status || "pending"]}</Text>;
+				: <Text type="secondary">{!r.payload.evaluation_symbol ? "未指定A股检验标的" : r.payload.time_precision === "unknown" ? "待核对报告时间" : statusNames[h?.status || "pending"]}</Text>;
 		} },
 	];
 	function impactCard(impact: ResearchImpact, index: number) {
@@ -103,6 +103,14 @@ export default function InstitutionalResearchPage() {
 					<Text>{names[impact.institution || ""]}</Text>
 				</Space>
 				<Paragraph style={{ marginTop: 8 }}>{impact.mechanism}</Paragraph>
+				{impact.published_at && (
+					<div>
+						<Text type="secondary">
+							观点观察依据：
+							{stamp(impact.published_at)}
+						</Text>
+					</div>
+				)}
 				<Text type="secondary">
 					下一项核验：
 					{impact.watch_next}
@@ -131,7 +139,8 @@ export default function InstitutionalResearchPage() {
 									>
 										录入历史研报
 									</Button>
-									<Button disabled={starting || latest?.status === "running"} onClick={() => refresh(true)}>补采持仓近一年研报</Button>
+									<Button disabled={starting || latest?.status === "running"} onClick={() => refresh("focus")}>补入重点机构历史</Button>
+									<Button disabled={starting || latest?.status === "running"} onClick={() => refresh(true)}>补采国内券商持仓研报</Button>
 									<Button type="primary" loading={starting || latest?.status === "running"} onClick={() => refresh()}>采集并更新检验</Button>
 								</>
 							)}
@@ -145,13 +154,13 @@ export default function InstitutionalResearchPage() {
 						<Row gutter={[12, 12]}>
 							<Col xs={12} lg={6}>
 								<Card>
-									<Statistic title="归档报告" value={data.reports.length} />
+									<Statistic title="重点机构已核验证据" value={data.diagnostics?.focus_verified ?? 0} />
 									<Text type="secondary">
-										已核验
-										{data.diagnostics?.verified ?? data.reports.filter(r => r.payload.verified).length}
+										覆盖重点机构
+										{data.diagnostics?.focus_covered ?? 0}
 										{" "}
-										篇 · 行情观察
-										{data.diagnostics?.observed ?? 0}
+										/ 11家 · 全部归档
+										{data.reports.length}
 										{" "}
 										篇
 									</Text>
@@ -178,145 +187,158 @@ export default function InstitutionalResearchPage() {
 						</Row>
 						<Alert type="info" showIcon message={data.coverage_note} />
 						{latest && <Alert showIcon type={latest.status === "failed" ? "error" : latest.status === "partial" ? "warning" : "info"} message={`最近任务：${statusNames[latest.status] || latest.status} · ${stamp(latest.started_at)}`} description={[latest.error, ...(latest.payload.errors || []), ...((latest.payload.review?.errors || []).map(e => e.reason))].filter(Boolean).slice(0, 4).join("；") || `新增 ${latest.payload.new_reports || 0} 篇，更新 ${latest.payload.review?.completed || 0} 个行情观察`} />}
-						<Tabs items={[
-							{ key: "daily", label: "每日持仓影响", children: (
-								<Space direction="vertical" style={{ width: "100%" }}>
-									<Text type="secondary">
-										读取当前账号自选盯盘中尚未清仓、股数大于0的持仓；同步于
-										{stamp(data.holdings_as_of)}
-										。影响方向是研究判断，等待业务数据确认。
-									</Text>
-									{data.holdings_status !== "ok"
-										? <Alert type="error" message="持仓读取失败，无法判断影响范围" />
-										: !data.holdings.length
-											? <Empty description="当前账号尚无有效持仓，请先维护自选盯盘" />
-											: (
-												<Row gutter={[16, 16]}>
-													{data.holdings.map(h => (
-														<Col xs={24} xl={12} key={h.symbol}>
-															<Card
-																title={`${h.name} · ${h.symbol}`}
-																extra={(
-																	<Tag>
-																		{h.impacts.length}
+						<Tabs
+							defaultActiveKey="history"
+							items={[
+								{ key: "daily", label: "每日持仓影响", children: (
+									<Space direction="vertical" style={{ width: "100%" }}>
+										<Text type="secondary">
+											读取当前账号自选盯盘中尚未清仓、股数大于0的持仓；同步于
+											{stamp(data.holdings_as_of)}
+											。影响方向是研究判断，等待业务数据确认。
+										</Text>
+										{data.holdings_status !== "ok"
+											? <Alert type="error" message="持仓读取失败，无法判断影响范围" />
+											: !data.holdings.length
+												? <Empty description="当前账号尚无有效持仓，请先维护自选盯盘" />
+												: (
+													<Row gutter={[16, 16]}>
+														{data.holdings.map(h => (
+															<Col xs={24} xl={12} key={h.symbol}>
+																<Card
+																	title={`${h.name} · ${h.symbol}`}
+																	extra={(
+																		<Tag>
+																			{h.impacts.length}
+																			{" "}
+																			条相关证据
+																		</Tag>
+																	)}
+																>
+																	{h.impacts.length ? h.impacts.map(impactCard) : <Text type="secondary">近48小时已采集资料中未发现匹配；不等于没有风险。</Text>}
+																	{!!h.recent_focus_impacts?.length && (
+																		<>
+																			<Title level={5}>最近核验的重点观点（历史参考）</Title>
+																			<Text type="secondary">按实际披露日期排列，不表示今日新增或观点仍然有效。</Text>
+																			{h.recent_focus_impacts.map(impactCard)}
+																		</>
+																	)}
+																</Card>
+															</Col>
+														))}
+													</Row>
+												)}
+										<Title level={5}>近48小时报告与其他相关股票</Title>
+										<Table
+											rowKey="id"
+											columns={columns}
+											dataSource={data.reports.filter(r => data.fresh_report_ids.includes(r.id))}
+											scroll={{ x: 800 }}
+											expandable={{ expandedRowRender: r => r.payload.impacts.length
+												? (
+													<List
+														dataSource={r.payload.impacts}
+														renderItem={i => (
+															<List.Item>
+																<Space wrap>
+																	<Text strong>
+																		{i.name}
 																		{" "}
-																		条相关证据
-																	</Tag>
-																)}
-															>
-																{h.impacts.length ? h.impacts.map(impactCard) : <Text type="secondary">近48小时已采集资料中未发现匹配；不等于没有风险。</Text>}
-															</Card>
-														</Col>
-													))}
-												</Row>
-											)}
-									<Title level={5}>近48小时报告与其他相关股票</Title>
-									<Table
-										rowKey="id"
-										columns={columns}
-										dataSource={data.reports.filter(r => data.fresh_report_ids.includes(r.id))}
-										scroll={{ x: 800 }}
-										expandable={{ expandedRowRender: r => r.payload.impacts.length
-											? (
-												<List
-													dataSource={r.payload.impacts}
-													renderItem={i => (
-														<List.Item>
-															<Space wrap>
-																<Text strong>
-																	{i.name}
-																	{" "}
-																	{i.symbol}
-																</Text>
-																{direction(i.direction)}
-																<Text>{i.mechanism}</Text>
-															</Space>
-														</List.Item>
-													)}
-												/>
-											)
-											: <Text type="secondary">暂无可核验的个股映射</Text> }}
-									/>
-								</Space>
-							) },
-							{ key: "history", label: "历史研报与走势", children: (
-								<Space direction="vertical" style={{ width: "100%" }}>
-									<Space wrap>
-										<Select aria-label="机构筛选" style={{ width: 200 }} value={institution} onChange={setInstitution} options={[{ value: "", label: "全部机构" }, ...data.sources.map(s => ({ value: s.id, label: s.name }))]} />
-										<Input.Search aria-label="搜索历史报告" placeholder="标题、代码或股票名称" value={keyword} onChange={e => setKeyword(e.target.value)} style={{ width: 280 }} />
+																		{i.symbol}
+																	</Text>
+																	{direction(i.direction)}
+																	<Text>{i.mechanism}</Text>
+																</Space>
+															</List.Item>
+														)}
+													/>
+												)
+												: <Text type="secondary">暂无可核验的个股映射</Text> }}
+										/>
 									</Space>
-									<Text type="secondary">
-										最多展示最近
-										{data.record_limit}
-										{" "}
-										篇。1/5/20/60 个交易日分别观察；未到期不计失败，缺失行情不填零。
-									</Text>
-									<Table rowKey="id" columns={columns} dataSource={reports} scroll={{ x: 800 }} />
-								</Space>
-							) },
-							{ key: "scores", label: "机构历史匹配度", children: (
-								<Space direction="vertical" style={{ width: "100%" }}>
-									<Alert type="warning" showIcon message="仅统计已核验、有明确方向且观察到期的报告；看多与看空、历史补录与事前留档分开。匹配不代表因果或可交易收益。" />
-									<Select aria-label="来源分组" style={{ width: 230 }} value={sourceGroup} onChange={setSourceGroup} options={[{ value: "", label: "全部来源（分组显示）" }, { value: "focus", label: "11家重点机构" }, { value: "supplemental", label: "补充公开源" }]} />
-									<Title level={5}>样本覆盖与数据缺口</Title>
-									<Table
-										rowKey="institution"
-										pagination={false}
-										scroll={{ x: 820 }}
-										dataSource={(data.institution_coverage || []).filter(r => !sourceGroup || r.group === sourceGroup)}
-										columns={[
-											{ title: "机构", dataIndex: "name" },
-											{ title: "来源分组", dataIndex: "institution", render: groupTag },
-											{ title: "归档", dataIndex: "archived" },
-											{ title: "原文核验", dataIndex: "verified" },
-											{ title: "行情观察", dataIndex: "observed" },
-											{ title: "有效方向样本", dataIndex: "eligible_samples" },
-											{ title: "当前缺口", dataIndex: "reason" },
-										]}
-									/>
-									<Title level={5}>已到期窗口的走势匹配</Title>
-									<Text type="secondary">公开PDF与目录交叉核验；目录收录日可能晚于原文落款，按收录日后首个交易日开盘保守观察。短窗口匹配不能代替原评级完整期限的检验。</Text>
-									<Table
-										rowKey={r => `${r.institution}-${r.direction}-${r.sessions}-${r.cohort}-${r.direction_basis}`}
-										dataSource={data.scorecards.filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup)}
-										locale={{ emptyText: <Empty description={`尚无符合条件的到期样本。已归档 ${data.reports.length} 篇，原文核验 ${data.diagnostics?.verified ?? 0} 篇；请查看上方各机构缺口，或补采持仓历史研报。`} /> }}
-										scroll={{ x: 950 }}
-										columns={[
-											{ title: "机构", dataIndex: "institution", render: v => names[v] },
-											{ title: "来源分组", dataIndex: "institution", key: "group", render: groupTag },
-											{ title: "观点", dataIndex: "direction", render: direction },
-											{ title: "观察交易日", dataIndex: "sessions" },
-											{ title: "留档类型", dataIndex: "cohort", render: v => v === "prospective" ? "事前留档" : "历史补录" },
-											{ title: "到期样本", dataIndex: "samples" },
-											{ title: "方向匹配", dataIndex: "hit_rate", render: v => `${v}%` },
-											{ title: "评级口径", dataIndex: "direction_basis", render: v => v === "relative" ? "相对表现" : "绝对涨跌" },
-											{ title: "相对大盘匹配", dataIndex: "excess_hit_rate", render: v => v == null ? "—" : `${v}%` },
-											{ title: "平均超额收益", dataIndex: "mean_excess_return", render: percent },
-											{ title: "样本说明", dataIndex: "sample_warning" },
-										]}
-									/>
-								</Space>
-							) },
-							{ key: "sources", label: "来源与运行记录", children: (
-								<Space direction="vertical" style={{ width: "100%" }}>
-									<Table
-										rowKey="id"
-										pagination={false}
-										dataSource={data.sources}
-										columns={[{ title: "机构", dataIndex: "name" }, { title: "本轮状态", key: "status", render: (_, s) => {
-											const state = latest?.payload.sources?.find(x => x.source_id === s.id);
-											return (
-												<>
-													<Tag>{s.group === "supplemental" ? "历史公开原文补采" : state ? statusNames[state.status] || state.status : "尚未采集"}</Tag>
-													<Text type="secondary">{state?.errors?.join("；")}</Text>
-												</>
-											);
-										} }, { title: "覆盖范围", dataIndex: "limitations" }]}
-									/>
-									<Table rowKey="id" dataSource={data.history} columns={[{ title: "任务开始", dataIndex: "started_at", render: stamp }, { title: "状态", dataIndex: "status", render: v => statusNames[v] || v }, { title: "错误", dataIndex: "error" }]} />
-								</Space>
-							) },
-						]}
+								) },
+								{ key: "history", label: "重点机构观点与走势", children: (
+									<Space direction="vertical" style={{ width: "100%" }}>
+										<Space wrap>
+											<Select aria-label="历史来源分组" style={{ width: 190 }} value={sourceGroup} onChange={setSourceGroup} options={[{ value: "focus", label: "11家重点机构" }, { value: "supplemental", label: "补充公开源" }, { value: "", label: "全部来源" }]} />
+											<Select aria-label="机构筛选" style={{ width: 200 }} value={institution} onChange={setInstitution} options={[{ value: "", label: "全部机构" }, ...data.sources.map(s => ({ value: s.id, label: s.name }))]} />
+											<Input.Search aria-label="搜索历史报告" placeholder="标题、代码或股票名称" value={keyword} onChange={e => setKeyword(e.target.value)} style={{ width: 280 }} />
+										</Space>
+										<Text type="secondary">
+											最多展示最近
+											{data.record_limit}
+											{" "}
+											篇。1/5/20/60 个交易日分别观察；未到期不计失败，缺失行情不填零。
+										</Text>
+										<Table rowKey="id" columns={columns} dataSource={reports} scroll={{ x: 800 }} />
+									</Space>
+								) },
+								{ key: "scores", label: "机构历史匹配度", children: (
+									<Space direction="vertical" style={{ width: "100%" }}>
+										<Alert type="warning" showIcon message="仅统计已核验、有明确方向且观察到期的报告；看多与看空、历史补录与事前留档分开。匹配不代表因果或可交易收益。" />
+										<Select aria-label="来源分组" style={{ width: 230 }} value={sourceGroup} onChange={setSourceGroup} options={[{ value: "", label: "全部来源（分组显示）" }, { value: "focus", label: "11家重点机构" }, { value: "supplemental", label: "补充公开源" }]} />
+										<Title level={5}>样本覆盖与数据缺口</Title>
+										<Table
+											rowKey="institution"
+											pagination={false}
+											scroll={{ x: 820 }}
+											dataSource={(data.institution_coverage || []).filter(r => !sourceGroup || r.group === sourceGroup)}
+											columns={[
+												{ title: "机构", dataIndex: "name" },
+												{ title: "来源分组", dataIndex: "institution", render: groupTag },
+												{ title: "归档", dataIndex: "archived" },
+												{ title: "原站 / PDF核验", key: "original", render: (_, r) => r.original_verified ?? r.verified },
+												{ title: "可靠转载核验", dataIndex: "reprint_verified", render: v => v ?? 0 },
+												{ title: "行情观察", dataIndex: "observed" },
+												{ title: "有效方向样本", dataIndex: "eligible_samples" },
+												{ title: "当前缺口", dataIndex: "reason" },
+												{ title: "研究内容", key: "open", render: (_, r) => r.latest_report_id ? <Button type="link" onClick={() => setSelected(r.latest_report_id!)}>查看最新核验观点</Button> : "—" },
+											]}
+										/>
+										<Title level={5}>已到期窗口的走势匹配</Title>
+										<Text type="secondary">公开PDF与目录交叉核验；目录收录日可能晚于原文落款，按收录日后首个交易日开盘保守观察。短窗口匹配不能代替原评级完整期限的检验。</Text>
+										<Table
+											rowKey={r => `${r.institution}-${r.direction}-${r.sessions}-${r.cohort}-${r.direction_basis}-${r.evidence_level}-${r.publication_basis}`}
+											dataSource={data.scorecards.filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup)}
+											locale={{ emptyText: <Empty description={`尚无符合条件的到期样本。已归档 ${data.reports.length} 篇，原文核验 ${data.diagnostics?.verified ?? 0} 篇；请查看上方各机构缺口，或补采持仓历史研报。`} /> }}
+											scroll={{ x: 950 }}
+											columns={[
+												{ title: "机构", dataIndex: "institution", render: v => names[v] },
+												{ title: "来源分组", dataIndex: "institution", key: "group", render: groupTag },
+												{ title: "证据类型", dataIndex: "evidence_level", render: v => evidenceNames[v] || "原文" },
+												{ title: "观点", dataIndex: "direction", render: direction },
+												{ title: "观察交易日", dataIndex: "sessions" },
+												{ title: "留档类型", dataIndex: "cohort", render: v => v === "prospective" ? "事前留档" : "历史补录" },
+												{ title: "到期样本", dataIndex: "samples" },
+												{ title: "方向匹配", dataIndex: "hit_rate", render: v => `${v}%` },
+												{ title: "评级口径", dataIndex: "direction_basis", render: v => v === "relative" ? "相对表现" : "绝对涨跌" },
+												{ title: "相对大盘匹配", dataIndex: "excess_hit_rate", render: v => v == null ? "—" : `${v}%` },
+												{ title: "平均超额收益", dataIndex: "mean_excess_return", render: percent },
+												{ title: "样本说明", dataIndex: "sample_warning" },
+											]}
+										/>
+									</Space>
+								) },
+								{ key: "sources", label: "来源与运行记录", children: (
+									<Space direction="vertical" style={{ width: "100%" }}>
+										<Table
+											rowKey="id"
+											pagination={false}
+											dataSource={data.sources}
+											columns={[{ title: "机构", dataIndex: "name" }, { title: "本轮状态", key: "status", render: (_, s) => {
+												const state = latest?.payload.sources?.find(x => x.source_id === s.id);
+												return (
+													<>
+														<Tag>{s.group === "supplemental" ? "历史公开原文补采" : state ? statusNames[state.status] || state.status : "尚未采集"}</Tag>
+														<Text type="secondary">{state?.errors?.join("；")}</Text>
+													</>
+												);
+											} }, { title: "覆盖范围", dataIndex: "limitations" }]}
+										/>
+										<Table rowKey="id" dataSource={data.history} columns={[{ title: "任务开始", dataIndex: "started_at", render: stamp }, { title: "状态", dataIndex: "status", render: v => statusNames[v] || v }, { title: "错误", dataIndex: "error" }]} />
+									</Space>
+								) },
+							]}
 						/>
 					</>
 				)}
@@ -344,7 +366,7 @@ export default function InstitutionalResearchPage() {
 							<a href={safeLink(report.payload.source_url)} target="_blank" rel="noreferrer">打开来源</a>
 						</Space>
 						{groupTag(report.institution)}
-						<Descriptions size="small" column={1} items={[{ key: "published", label: report.payload.catalog_published_at ? "公开收录日（观察依据）" : report.payload.time_precision === "unknown" ? "来源发布时间（原报告待核验）" : "报告发布时间", children: stamp(report.published_at) }, { key: "original-date", label: "原文落款日期", children: report.payload.report_date || "待核验" }, { key: "seen", label: "首次入库", children: stamp(report.first_seen_at) }, { key: "id", label: "报告 ID", children: <Text copyable>{report.id}</Text> }]} />
+						<Descriptions size="small" column={1} items={[{ key: "published", label: report.payload.publication_basis === "month_bound" ? "月份上界（保守观察依据）" : report.payload.publication_basis === "public_disclosure" ? "公开披露 / 更新时点（观察依据）" : report.payload.catalog_published_at ? "公开收录日（观察依据）" : report.payload.time_precision === "unknown" ? "来源时间（原报告待核验）" : "报告发布时间", children: stamp(report.published_at) }, { key: "original-date", label: "原文落款日期", children: report.payload.report_date || report.payload.publication_month || "待核验" }, { key: "seen", label: "首次入库", children: stamp(report.first_seen_at) }, { key: "id", label: "报告 ID", children: <Text copyable>{report.id}</Text> }]} />
 						{!!report.payload.verification_notes?.length && <Alert type="info" message="原文核验与观察口径" description={report.payload.verification_notes.join("；")} />}
 						<Paragraph>{report.payload.summary}</Paragraph>
 						{review
@@ -393,7 +415,7 @@ export default function InstitutionalResearchPage() {
 									</Card>
 								</>
 							)
-							: <Alert type="info" message={report.payload.time_precision === "unknown" ? "尚未核对原报告时间，保留证据，暂不做历史检验" : "尚未生成行情检验，请运行更新"} />}
+							: <Alert type="info" message={!report.payload.evaluation_symbol ? "该观点未指定A股检验标的，不能移用境外市场观点计算A股命中率；可查看持仓关联。" : report.payload.time_precision === "unknown" ? "尚未核对原报告时间，保留证据，暂不做历史检验" : "尚未生成行情检验，请运行更新"} />}
 						{report.payload.impacts.map(i => (
 							<Card key={`${i.symbol}-${i.relation}-${i.evidence_quote}`} size="small" title={`${i.name} · ${i.relation === "direct" ? "直接点名" : "产业链推断"}`}>
 								<Paragraph>{i.mechanism}</Paragraph>

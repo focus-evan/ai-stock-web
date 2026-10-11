@@ -11,6 +11,7 @@ export interface ResearchImpact {
 	report_id?: string
 	title?: string
 	institution?: string
+	published_at?: string
 }
 export interface ResearchReview {
 	as_of: string
@@ -51,6 +52,8 @@ export interface ResearchReport {
 		verification_notes?: string[]
 		report_date?: string | null
 		catalog_published_at?: string | null
+		publication_basis?: string
+		publication_month?: string | null
 		benchmark: string
 		direction_basis?: string
 		published_at?: string
@@ -64,15 +67,15 @@ export interface ResearchReport {
 }
 export interface ResearchOverview {
 	reports: ResearchReport[]
-	scorecards: { institution: string, direction: string, direction_basis: string, sessions: number, cohort: string, samples: number, hit_rate: number, excess_hit_rate: number | null, mean_excess_return: number, sample_warning: string }[]
+	scorecards: { institution: string, direction: string, direction_basis: string, evidence_level?: string, publication_basis?: string, sessions: number, cohort: string, samples: number, hit_rate: number, excess_hit_rate: number | null, mean_excess_return: number, sample_warning: string }[]
 	history: { id: string, status: string, started_at: string, error?: string, payload: { sources?: { source_id: string, source_name: string, status: string, count: number, errors?: string[] }[], errors?: string[], new_reports?: number, review?: { completed: number, errors: { report_id: string, reason: string }[] } } }[]
 	sources: { id: string, name: string, pages: string[], limitations: string, group?: string, enabled?: boolean }[]
-	diagnostics?: { archived: number, verified: number, observed: number, unknown_time: number, eligible: number }
-	institution_coverage?: { institution: string, name: string, group: string, archived: number, verified: number, observed: number, eligible_samples: number, unknown_time: number, waiting: number, reason: string }[]
+	diagnostics?: { archived: number, verified: number, observed: number, unknown_time: number, eligible: number, focus_verified?: number, focus_covered?: number }
+	institution_coverage?: { institution: string, name: string, group: string, archived: number, verified: number, original_verified?: number, reprint_verified?: number, related_reports?: number, observed: number, eligible_samples: number, unknown_time: number, waiting: number, reason: string, latest_report_id?: string }[]
 	runtime: { enabled: boolean, running: boolean, time: string, timezone: string }
 	holdings_status: string
 	holdings_as_of: string
-	holdings: { symbol: string, name: string, shares: number, impacts: ResearchImpact[] }[]
+	holdings: { symbol: string, name: string, shares: number, impacts: ResearchImpact[], recent_focus_impacts?: ResearchImpact[] }[]
 	fresh_report_ids: string[]
 	coverage_note: string
 	record_limit: number
@@ -81,4 +84,5 @@ export const fetchInstitutionalResearch = () => request.get("institutional-resea
 export const fetchInstitutionalReport = (id: string) => request.get(`institutional-research/reports/${encodeURIComponent(id)}`, { retry: 0 }).json<{ data: ResearchReport }>();
 export const refreshInstitutionalResearch = () => request.post("institutional-research/refresh", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const backfillInstitutionalResearch = () => request.post("institutional-research/backfill", { retry: 0 }).json<{ status: string, run_id?: string }>();
+export const backfillFocusResearch = () => request.post("institutional-research/backfill-focus", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const importInstitutionalReport = (json: Record<string, unknown>) => request.post("institutional-research/reports", { json, retry: 0 }).json<{ id: string }>();

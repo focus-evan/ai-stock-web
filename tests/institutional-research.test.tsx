@@ -8,7 +8,7 @@ import InstitutionalResearchPage from "../src/pages/institutional-research";
 import { filterReports, percent, safeLink } from "../src/pages/institutional-research/data";
 import { ensureInstitutionalResearchRoute } from "../src/router/utils/ensure-institutional-research-route";
 
-vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), importInstitutionalReport: vi.fn() }));
+vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), backfillFocusResearch: vi.fn(), importInstitutionalReport: vi.fn() }));
 vi.mock("#src/store/user", () => ({ useUserStore: (selector: (s: { roles: string[], username: string }) => unknown) => selector({ roles: ["admin"], username: "admin" }) }));
 vi.mock("#src/components/basic-content", () => ({ BasicContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div> }));
 vi.mock("echarts-for-react", () => ({ default: () => <div>行情走势图</div> }));
@@ -56,6 +56,7 @@ afterEach(() => {
 describe("institutional research", () => {
 	it("shows holding impact as inference and opens its evidence", async () => {
 		mount();
+		fireEvent.click(await screen.findByRole("tab", { name: "每日持仓影响" }));
 		expect(await screen.findByText("测试中的产业链成本压力")).toBeInTheDocument();
 		expect(screen.getByText("产业链推断")).toBeInTheDocument();
 		fireEvent.click(screen.getByRole("button", { name: "查看报告与证据" }));
@@ -65,6 +66,7 @@ describe("institutional research", () => {
 	it("never describes a holdings API failure as no exposure", async () => {
 		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, holdings: [], holdings_status: "unavailable" } });
 		mount();
+		fireEvent.click(await screen.findByRole("tab", { name: "每日持仓影响" }));
 		expect(await screen.findByText("持仓读取失败，无法判断影响范围")).toBeInTheDocument();
 		expect(screen.queryByText("当前账号尚无有效持仓，请先维护自选盯盘")).not.toBeInTheDocument();
 	});
@@ -76,7 +78,14 @@ describe("institutional research", () => {
 		expect(await screen.findByText("1条原报告时间待核验；1条原文待核验")).toBeInTheDocument();
 		expect(screen.getByText(/尚无符合条件的到期样本/)).toBeInTheDocument();
 		expect(screen.queryByText("100%")).not.toBeInTheDocument();
-	});
+	}, 20000);
+	it("opens focus history first and separates original evidence from disclosures", async () => {
+		mount();
+		expect(await screen.findByRole("tab", { name: "重点机构观点与走势" })).toHaveAttribute("aria-selected", "true");
+		fireEvent.click(screen.getByRole("tab", { name: "机构历史匹配度" }));
+		expect(await screen.findByText("原站 / PDF核验")).toBeInTheDocument();
+		expect(screen.getByText("可靠转载核验")).toBeInTheDocument();
+	}, 20000);
 	it("manual refresh joins the existing job", async () => {
 		vi.mocked(refreshInstitutionalResearch).mockResolvedValue({ status: "busy", run_id: "run1" });
 		mount();
