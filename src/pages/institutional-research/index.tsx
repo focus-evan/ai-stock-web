@@ -16,6 +16,7 @@ const direction = (s: string) => <Tag color={s === "bullish" ? "red" : s === "be
 export default function InstitutionalResearchPage() {
 	const [institution, setInstitution] = useState("");
 	const [keyword, setKeyword] = useState("");
+	const [sourceGroup, setSourceGroup] = useState("");
 	const [selected, setSelected] = useState<string | null>(null);
 	const [importing, setImporting] = useState(false);
 	const [draft, setDraft] = useState<ResearchReport | null>(null);
@@ -29,6 +30,8 @@ export default function InstitutionalResearchPage() {
 	const detail = useQuery({ queryKey: ["institutional-report", selected], queryFn: () => fetchInstitutionalReport(selected!), enabled: !!selected });
 	const data = query.data?.data;
 	const names = Object.fromEntries((data?.sources || []).map(s => [s.id, s.name]));
+	const groupFor = (id: string) => data?.sources.find(s => s.id === id)?.group || "focus";
+	const groupTag = (id: string) => <Tag color={groupFor(id) === "focus" ? "blue" : "default"}>{groupFor(id) === "focus" ? "重点机构" : "补充公开源"}</Tag>;
 	const reports = filterReports(data?.reports || [], institution, keyword);
 	const report = detail.data?.data;
 	const review = report?.review;
@@ -46,9 +49,18 @@ export default function InstitutionalResearchPage() {
 	const columns = [
 		{ title: "发布 / 机构", key: "source", width: 185, render: (_: unknown, r: ResearchReport) => (
 			<>
-				<div>{stamp(r.published_at)}</div>
+				<div>{r.payload.report_date || stamp(r.published_at)}</div>
+				{r.payload.catalog_published_at && (
+					<div>
+						<Text type="secondary">
+							公开收录
+							{r.payload.catalog_published_at.slice(0, 10)}
+						</Text>
+					</div>
+				)}
 				{r.payload.time_precision === "unknown" && <div><Text type="secondary">来源时间，原报告时间待核验</Text></div>}
 				<Text type="secondary">{names[r.institution]}</Text>
+				<div>{groupTag(r.institution)}</div>
 			</>
 		) },
 		{ title: "报告与当时观点", key: "title", render: (_: unknown, r: ResearchReport) => (
@@ -56,7 +68,7 @@ export default function InstitutionalResearchPage() {
 				<Button type="link" style={{ padding: 0, whiteSpace: "normal", height: "auto", textAlign: "left" }} onClick={() => setSelected(r.id)}>{r.payload.title}</Button>
 				<Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 4 }}>{r.payload.summary}</Paragraph>
 				<Tag>{evidenceNames[r.payload.evidence_level]}</Tag>
-				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? "已核验" : "待核验"}</Tag>
+				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? r.payload.verification_method === "pdf_catalog" ? "PDF原文核验" : "已核验" : "待核验"}</Tag>
 			</>
 		) },
 		{ title: "判断", key: "direction", width: 120, render: (_: unknown, r: ResearchReport) => (
@@ -131,9 +143,32 @@ export default function InstitutionalResearchPage() {
 				{data && (
 					<>
 						<Row gutter={[12, 12]}>
-							<Col xs={12} lg={6}><Card><Statistic title="归档报告" value={data.reports.length} /></Card></Col>
+							<Col xs={12} lg={6}>
+								<Card>
+									<Statistic title="归档报告" value={data.reports.length} />
+									<Text type="secondary">
+										已核验
+										{data.diagnostics?.verified ?? data.reports.filter(r => r.payload.verified).length}
+										{" "}
+										篇 · 行情观察
+										{data.diagnostics?.observed ?? 0}
+										{" "}
+										篇
+									</Text>
+								</Card>
+							</Col>
 							<Col xs={12} lg={6}><Card><Statistic title="近48小时公开资料" value={data.fresh_report_ids.length} /></Card></Col>
-							<Col xs={12} lg={6}><Card><Statistic title="涉及当前持仓" value={data.holdings.filter(h => h.impacts.length).length} suffix="只" /></Card></Col>
+							<Col xs={12} lg={6}>
+								<Card>
+									<Statistic title="近48小时涉及持仓" value={data.holdings.filter(h => h.impacts.length).length} suffix="只" />
+									<Text type="secondary">
+										已读取当前持仓
+										{data.holdings.length}
+										{" "}
+										只
+									</Text>
+								</Card>
+							</Col>
 							<Col xs={12} lg={6}>
 								<Card>
 									<Statistic title="每日采集（北京时间）" value={data.runtime.time} />
@@ -222,12 +257,33 @@ export default function InstitutionalResearchPage() {
 							{ key: "scores", label: "机构历史匹配度", children: (
 								<Space direction="vertical" style={{ width: "100%" }}>
 									<Alert type="warning" showIcon message="仅统计已核验、有明确方向且观察到期的报告；看多与看空、历史补录与事前留档分开。匹配不代表因果或可交易收益。" />
+									<Select aria-label="来源分组" style={{ width: 230 }} value={sourceGroup} onChange={setSourceGroup} options={[{ value: "", label: "全部来源（分组显示）" }, { value: "focus", label: "11家重点机构" }, { value: "supplemental", label: "补充公开源" }]} />
+									<Title level={5}>样本覆盖与数据缺口</Title>
+									<Table
+										rowKey="institution"
+										pagination={false}
+										scroll={{ x: 820 }}
+										dataSource={(data.institution_coverage || []).filter(r => !sourceGroup || r.group === sourceGroup)}
+										columns={[
+											{ title: "机构", dataIndex: "name" },
+											{ title: "来源分组", dataIndex: "institution", render: groupTag },
+											{ title: "归档", dataIndex: "archived" },
+											{ title: "原文核验", dataIndex: "verified" },
+											{ title: "行情观察", dataIndex: "observed" },
+											{ title: "有效方向样本", dataIndex: "eligible_samples" },
+											{ title: "当前缺口", dataIndex: "reason" },
+										]}
+									/>
+									<Title level={5}>已到期窗口的走势匹配</Title>
+									<Text type="secondary">公开PDF与目录交叉核验；目录收录日可能晚于原文落款，按收录日后首个交易日开盘保守观察。短窗口匹配不能代替原评级完整期限的检验。</Text>
 									<Table
 										rowKey={r => `${r.institution}-${r.direction}-${r.sessions}-${r.cohort}-${r.direction_basis}`}
-										dataSource={data.scorecards}
+										dataSource={data.scorecards.filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup)}
+										locale={{ emptyText: <Empty description={`尚无符合条件的到期样本。已归档 ${data.reports.length} 篇，原文核验 ${data.diagnostics?.verified ?? 0} 篇；请查看上方各机构缺口，或补采持仓历史研报。`} /> }}
 										scroll={{ x: 950 }}
 										columns={[
 											{ title: "机构", dataIndex: "institution", render: v => names[v] },
+											{ title: "来源分组", dataIndex: "institution", key: "group", render: groupTag },
 											{ title: "观点", dataIndex: "direction", render: direction },
 											{ title: "观察交易日", dataIndex: "sessions" },
 											{ title: "留档类型", dataIndex: "cohort", render: v => v === "prospective" ? "事前留档" : "历史补录" },
@@ -251,7 +307,7 @@ export default function InstitutionalResearchPage() {
 											const state = latest?.payload.sources?.find(x => x.source_id === s.id);
 											return (
 												<>
-													<Tag>{state ? statusNames[state.status] || state.status : "尚未采集"}</Tag>
+													<Tag>{s.group === "supplemental" ? "历史公开原文补采" : state ? statusNames[state.status] || state.status : "尚未采集"}</Tag>
 													<Text type="secondary">{state?.errors?.join("；")}</Text>
 												</>
 											);
@@ -287,7 +343,9 @@ export default function InstitutionalResearchPage() {
 							<Tag>{report.payload.verified ? "已核验" : "待核验"}</Tag>
 							<a href={safeLink(report.payload.source_url)} target="_blank" rel="noreferrer">打开来源</a>
 						</Space>
-						<Descriptions size="small" column={1} items={[{ key: "published", label: report.payload.time_precision === "unknown" ? "来源发布时间（原报告待核验）" : "报告发布时间", children: stamp(report.published_at) }, { key: "seen", label: "首次入库", children: stamp(report.first_seen_at) }, { key: "id", label: "报告 ID", children: <Text copyable>{report.id}</Text> }]} />
+						{groupTag(report.institution)}
+						<Descriptions size="small" column={1} items={[{ key: "published", label: report.payload.catalog_published_at ? "公开收录日（观察依据）" : report.payload.time_precision === "unknown" ? "来源发布时间（原报告待核验）" : "报告发布时间", children: stamp(report.published_at) }, { key: "original-date", label: "原文落款日期", children: report.payload.report_date || "待核验" }, { key: "seen", label: "首次入库", children: stamp(report.first_seen_at) }, { key: "id", label: "报告 ID", children: <Text copyable>{report.id}</Text> }]} />
+						{!!report.payload.verification_notes?.length && <Alert type="info" message="原文核验与观察口径" description={report.payload.verification_notes.join("；")} />}
 						<Paragraph>{report.payload.summary}</Paragraph>
 						{review
 							? (

@@ -46,7 +46,11 @@ export interface ResearchReport {
 		verified: boolean
 		scope: string
 		direction: string
-		evaluation_symbol: string
+		evaluation_symbol: string | null
+		verification_method?: string
+		verification_notes?: string[]
+		report_date?: string | null
+		catalog_published_at?: string | null
 		benchmark: string
 		direction_basis?: string
 		published_at?: string
@@ -62,7 +66,9 @@ export interface ResearchOverview {
 	reports: ResearchReport[]
 	scorecards: { institution: string, direction: string, direction_basis: string, sessions: number, cohort: string, samples: number, hit_rate: number, excess_hit_rate: number | null, mean_excess_return: number, sample_warning: string }[]
 	history: { id: string, status: string, started_at: string, error?: string, payload: { sources?: { source_id: string, source_name: string, status: string, count: number, errors?: string[] }[], errors?: string[], new_reports?: number, review?: { completed: number, errors: { report_id: string, reason: string }[] } } }[]
-	sources: { id: string, name: string, pages: string[], limitations: string }[]
+	sources: { id: string, name: string, pages: string[], limitations: string, group?: string, enabled?: boolean }[]
+	diagnostics?: { archived: number, verified: number, observed: number, unknown_time: number, eligible: number }
+	institution_coverage?: { institution: string, name: string, group: string, archived: number, verified: number, observed: number, eligible_samples: number, unknown_time: number, waiting: number, reason: string }[]
 	runtime: { enabled: boolean, running: boolean, time: string, timezone: string }
 	holdings_status: string
 	holdings_as_of: string

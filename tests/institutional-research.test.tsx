@@ -25,6 +25,8 @@ const report: ResearchReport = {
 const initial: ResearchOverview = {
 	reports: [report],
 	scorecards: [],
+	diagnostics: { archived: 1, verified: 0, observed: 0, unknown_time: 1, eligible: 0 },
+	institution_coverage: [{ institution: "morgan_stanley", name: "摩根士丹利", group: "focus", archived: 1, verified: 0, observed: 0, eligible_samples: 0, unknown_time: 1, waiting: 0, reason: "1条原报告时间待核验；1条原文待核验" }],
 	history: [{ id: "run1", status: "partial", started_at: "2026-10-11T00:00:00Z", payload: { sources: [{ source_id: "morgan_stanley", source_name: "摩根士丹利", status: "failed", count: 0, errors: ["访问失败"] }], errors: [], new_reports: 1 } }],
 	sources: [{ id: "morgan_stanley", name: "摩根士丹利", pages: [], limitations: "仅公开信息" }],
 	runtime: { enabled: true, running: true, time: "07:45", timezone: "Asia/Shanghai" },
@@ -71,6 +73,8 @@ describe("institutional research", () => {
 		fireEvent.click(await screen.findByRole("tab", { name: "来源与运行记录" }));
 		expect(await screen.findByText("访问失败")).toBeInTheDocument();
 		fireEvent.click(screen.getByRole("tab", { name: "机构历史匹配度" }));
+		expect(await screen.findByText("1条原报告时间待核验；1条原文待核验")).toBeInTheDocument();
+		expect(screen.getByText(/尚无符合条件的到期样本/)).toBeInTheDocument();
 		expect(screen.queryByText("100%")).not.toBeInTheDocument();
 	});
 	it("manual refresh joins the existing job", async () => {
