@@ -1,5 +1,5 @@
 import type { ResearchOverview, ResearchReport } from "#src/api/institutional-research";
-import { fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
+import { backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { App, ConfigProvider } from "antd";
@@ -8,7 +8,7 @@ import InstitutionalResearchPage from "../src/pages/institutional-research";
 import { filterReports, percent, safeLink } from "../src/pages/institutional-research/data";
 import { ensureInstitutionalResearchRoute } from "../src/router/utils/ensure-institutional-research-route";
 
-vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), backfillFocusResearch: vi.fn(), importInstitutionalReport: vi.fn() }));
+vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), backfillFocusResearch: vi.fn(), backfillPublicResearch: vi.fn(), importInstitutionalReport: vi.fn() }));
 vi.mock("#src/store/user", () => ({ useUserStore: (selector: (s: { roles: string[], username: string }) => unknown) => selector({ roles: ["admin"], username: "admin" }) }));
 vi.mock("#src/components/basic-content", () => ({ BasicContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div> }));
 vi.mock("echarts-for-react", () => ({ default: () => <div>行情走势图</div> }));
@@ -54,6 +54,21 @@ afterEach(() => {
 });
 
 describe("institutional research", () => {
+	it("shows recent news and opinions alongside older verified reports and starts public backfill", async () => {
+		const news: ResearchReport = { ...report, id: "news", published_at: "2026-10-11T08:00:00+08:00", payload: { ...report.payload, title: "近期机构新闻消息", content_type: "news", evaluation_symbol: null, direction: "uncertain" } };
+		const opinion: ResearchReport = { ...report, id: "opinion", payload: { ...report.payload, title: "分析师公开采访", content_type: "opinion" } };
+		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, reports: [{ ...report, payload: { ...report.payload, verified: true } }, news, opinion] } });
+		vi.mocked(backfillPublicResearch).mockResolvedValue({ status: "started" });
+		mount();
+		expect(await screen.findByRole("button", { name: "近期机构新闻消息" })).toBeInTheDocument();
+		expect(screen.getByRole("button", { name: "分析师公开采访" })).toBeInTheDocument();
+		expect(screen.getAllByRole("row")[1]).toHaveTextContent("近期机构新闻消息");
+		fireEvent.click(screen.getByRole("button", { name: "补采重点机构近30天公开资料" }));
+		await waitFor(() => expect(backfillPublicResearch).toHaveBeenCalledWith(""));
+		expect(filterReports([report, news, opinion], "", "", "report")).toEqual([report]);
+		expect(filterReports([report, news, opinion], "", "", "news")).toEqual([news]);
+		expect(filterReports([report, news, opinion], "", "", "opinion")).toEqual([opinion]);
+	}, 60000);
 	it("shows holding impact as inference and opens its evidence", async () => {
 		mount();
 		const source = await screen.findByRole("link", { name: "媒体转载" });

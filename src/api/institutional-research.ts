@@ -39,6 +39,7 @@ export interface ResearchReport {
 	content_hash: string
 	payload: {
 		title: string
+		content_type?: "report" | "opinion" | "news"
 		report_key: string
 		summary: string
 		source_url: string
@@ -86,4 +87,5 @@ export const fetchInstitutionalReport = (id: string) => request.get(`institution
 export const refreshInstitutionalResearch = () => request.post("institutional-research/refresh", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const backfillInstitutionalResearch = () => request.post("institutional-research/backfill", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const backfillFocusResearch = () => request.post("institutional-research/backfill-focus", { retry: 0 }).json<{ status: string, run_id?: string }>();
+export const backfillPublicResearch = (institution?: string) => request.post("institutional-research/backfill-public", { json: { days: 30, institution: institution || null }, retry: 0 }).json<{ status: string, run_id?: string }>();
 export const importInstitutionalReport = (json: Record<string, unknown>) => request.post("institutional-research/reports", { json, retry: 0 }).json<{ id: string }>();

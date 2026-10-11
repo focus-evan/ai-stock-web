@@ -1,12 +1,12 @@
 import type { ResearchImpact, ResearchReport } from "#src/api/institutional-research";
-import { backfillFocusResearch, backfillInstitutionalResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
+import { backfillFocusResearch, backfillInstitutionalResearch, backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { BasicContent } from "#src/components/basic-content";
 import { useUserStore } from "#src/store/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, App, Button, Card, Col, Descriptions, Drawer, Empty, Input, List, Row, Select, Space, Spin, Statistic, Table, Tabs, Tag, Typography } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useState } from "react";
-import { directionNames, evidenceNames, filterReports, percent, safeLink, statusNames } from "./data";
+import { contentTypeNames, directionNames, evidenceNames, filterReports, percent, safeLink, statusNames } from "./data";
 import { ImportDialog } from "./import-dialog";
 
 const { Title, Text, Paragraph } = Typography;
@@ -33,6 +33,7 @@ function sourceLink(payload: ResearchReport["payload"], label = evidenceNames[pa
 export default function InstitutionalResearchPage() {
 	const [institution, setInstitution] = useState("");
 	const [keyword, setKeyword] = useState("");
+	const [contentType, setContentType] = useState("");
 	const [sourceGroup, setSourceGroup] = useState("focus");
 	const [selected, setSelected] = useState<string | null>(null);
 	const [importing, setImporting] = useState(false);
@@ -49,14 +50,14 @@ export default function InstitutionalResearchPage() {
 	const names = Object.fromEntries((data?.sources || []).map(s => [s.id, s.name]));
 	const groupFor = (id: string) => data?.sources.find(s => s.id === id)?.group || "focus";
 	const groupTag = (id: string) => <Tag color={groupFor(id) === "focus" ? "blue" : "default"}>{groupFor(id) === "focus" ? "重点机构" : "补充公开源"}</Tag>;
-	const reports = filterReports(data?.reports || [], institution, keyword).filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup).sort((a, b) => Number(b.payload.verified) - Number(a.payload.verified));
+	const reports = filterReports(data?.reports || [], institution, keyword, contentType).filter(r => !sourceGroup || groupFor(r.institution) === sourceGroup).sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
 	const report = detail.data?.data;
 	const review = report?.review;
 	const latest = data?.history[0];
-	async function refresh(backfill: boolean | "focus" = false) {
+	async function refresh(backfill: boolean | "focus" | "public" = false) {
 		setStarting(true);
 		try {
-			const result = await (backfill === "focus" ? backfillFocusResearch() : backfill ? backfillInstitutionalResearch() : refreshInstitutionalResearch());
+			const result = await (backfill === "public" ? backfillPublicResearch(institution) : backfill === "focus" ? backfillFocusResearch() : backfill ? backfillInstitutionalResearch() : refreshInstitutionalResearch());
 			message.info(result.status === "started" ? "采集和历史检验已开始" : result.status === "busy" ? "已有任务运行，正在查看进度" : "短时间内已运行，请稍后重试");
 			await client.invalidateQueries({ queryKey: ["institutional-research"] });
 		}
@@ -75,15 +76,16 @@ export default function InstitutionalResearchPage() {
 						</Text>
 					</div>
 				)}
-				{r.payload.time_precision === "unknown" && <div><Text type="secondary">来源时间，原报告时间待核验</Text></div>}
+				{r.payload.time_precision === "unknown" && <div><Text type="secondary">{r.payload.content_type && r.payload.content_type !== "report" ? "来源时间，内容待核验" : "来源时间，原报告时间待核验"}</Text></div>}
 				<Text type="secondary">{names[r.institution]}</Text>
 				<div>{groupTag(r.institution)}</div>
 			</>
 		) },
-		{ title: "报告与当时观点", key: "title", render: (_: unknown, r: ResearchReport) => (
+		{ title: "研报、观点与消息", key: "title", render: (_: unknown, r: ResearchReport) => (
 			<>
 				<Button type="link" style={{ padding: 0, whiteSpace: "normal", height: "auto", textAlign: "left" }} onClick={() => setSelected(r.id)}>{r.payload.title}</Button>
 				<Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 4 }}>{r.payload.summary}</Paragraph>
+				<Tag>{contentTypeNames[r.payload.content_type || "report"]}</Tag>
 				<Tag>{sourceLink(r.payload)}</Tag>
 				<Tag color={r.payload.verified ? "blue" : "orange"}>{r.payload.verified ? r.payload.evidence_level === "reprint" ? "公开转载已核验" : r.payload.verification_method === "pdf_catalog" ? "PDF原文核验" : "原文证据已核验" : "待核验"}</Tag>
 			</>
@@ -108,7 +110,7 @@ export default function InstitutionalResearchPage() {
 						<div>{!r.review?.eligible ? "关联走势，不计命中率" : h.direction_match == null ? "无明确方向" : h.direction_match ? "方向一致" : "方向不一致"}</div>
 					</>
 				)
-				: <Text type="secondary">{!r.payload.evaluation_symbol ? "未指定A股检验标的" : r.payload.time_precision === "unknown" ? "待核对报告时间" : statusNames[h?.status || "pending"]}</Text>;
+				: <Text type="secondary">{r.payload.content_type === "news" ? "新闻归档，不计命中率" : !r.payload.evaluation_symbol ? "未指定A股检验标的" : r.payload.time_precision === "unknown" ? "待核对报告时间" : statusNames[h?.status || "pending"]}</Text>;
 		} },
 	];
 	function impactCard(impact: ResearchImpact, index: number) {
@@ -148,8 +150,8 @@ export default function InstitutionalResearchPage() {
 			<Space direction="vertical" size="large" style={{ width: "100%" }}>
 				<Row justify="space-between" gutter={[16, 16]} align="middle">
 					<Col>
-						<Title level={3} style={{ margin: 0 }}>机构研报研究</Title>
-						<Text type="secondary">保留机构当时的判断，用真实行情检验，跟踪对持仓的影响</Text>
+						<Title level={3} style={{ margin: 0 }}>机构观点与消息</Title>
+						<Text type="secondary">汇集公开研报、策略观点、采访发言与新闻快讯，跟踪对持仓的影响</Text>
 					</Col>
 					<Col>
 						<Space wrap>
@@ -161,7 +163,7 @@ export default function InstitutionalResearchPage() {
 										setImporting(true);
 									}}
 									>
-										录入历史研报
+										录入历史资料
 									</Button>
 									<Button disabled={starting || latest?.status === "running"} onClick={() => refresh("focus")}>补入重点机构历史</Button>
 									<Button disabled={starting || latest?.status === "running"} onClick={() => refresh(true)}>补采国内券商持仓研报</Button>
@@ -286,8 +288,11 @@ export default function InstitutionalResearchPage() {
 										<Space wrap>
 											<Select aria-label="历史来源分组" style={{ width: 190 }} value={sourceGroup} onChange={setSourceGroup} options={[{ value: "focus", label: "11家重点机构" }, { value: "supplemental", label: "补充公开源" }, { value: "", label: "全部来源" }]} />
 											<Select aria-label="机构筛选" style={{ width: 200 }} value={institution} onChange={setInstitution} options={[{ value: "", label: "全部机构" }, ...data.sources.map(s => ({ value: s.id, label: s.name }))]} />
+											<Select aria-label="内容类型" style={{ width: 170 }} value={contentType} onChange={setContentType} options={[{ value: "", label: "全部内容类型" }, ...Object.entries(contentTypeNames).map(([value, label]) => ({ value, label }))]} />
 											<Input.Search aria-label="搜索历史报告" placeholder="标题、代码或股票名称" value={keyword} onChange={e => setKeyword(e.target.value)} style={{ width: 280 }} />
+											{admin && <Button disabled={starting || latest?.status === "running" || (!!institution && groupFor(institution) !== "focus")} onClick={() => refresh("public")}>{institution ? `补采${names[institution]}近30天公开资料` : "补采重点机构近30天公开资料"}</Button>}
 										</Space>
+										<Text type="secondary">研报、公开观点和新闻消息全部展示，按发布时间排序；待核验内容保留标记，新闻事实不计观点命中率。</Text>
 										<Text type="secondary">
 											最多展示最近
 											{data.record_limit}
@@ -385,6 +390,7 @@ export default function InstitutionalResearchPage() {
 						)}
 						<Space wrap>
 							{direction(report.payload.direction)}
+							<Tag>{contentTypeNames[report.payload.content_type || "report"]}</Tag>
 							<Tag>{sourceLink(report.payload)}</Tag>
 							<Tag>{report.payload.verified ? "已核验" : "待核验"}</Tag>
 							{sourceLink(report.payload, "打开来源")}
@@ -440,7 +446,7 @@ export default function InstitutionalResearchPage() {
 									</Card>
 								</>
 							)
-							: <Alert type="info" message={!report.payload.evaluation_symbol ? "该观点未指定A股检验标的，不能移用境外市场观点计算A股命中率；可查看持仓关联。" : report.payload.time_precision === "unknown" ? "尚未核对原报告时间，保留证据，暂不做历史检验" : "尚未生成行情检验，请运行更新"} />}
+							: <Alert type="info" message={report.payload.content_type === "news" ? "新闻事实已归档，不计机构观点命中率。" : !report.payload.evaluation_symbol ? "该观点未指定A股检验标的，不能移用境外市场观点计算A股命中率；可查看持仓关联。" : report.payload.time_precision === "unknown" ? "尚未核对原报告时间，保留证据，暂不做历史检验" : "尚未生成行情检验，请运行更新"} />}
 						{report.payload.impacts.map(i => (
 							<Card key={`${i.symbol}-${i.relation}-${i.evidence_quote}`} size="small" title={`${i.name} · ${i.relation === "direct" ? "直接点名" : "产业链推断"}`}>
 								<Paragraph>{i.mechanism}</Paragraph>

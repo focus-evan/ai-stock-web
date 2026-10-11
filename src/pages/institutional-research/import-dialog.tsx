@@ -2,6 +2,7 @@ import type { ResearchReport } from "#src/api/institutional-research";
 import { importInstitutionalReport } from "#src/api/institutional-research";
 import { Alert, App, Checkbox, Form, Input, InputNumber, Modal, Select } from "antd";
 import { useEffect, useState } from "react";
+import { contentTypeNames } from "./data";
 
 export function ImportDialog({ open, sources, draft, onClose, onSaved }: { open: boolean, sources: { id: string, name: string }[], draft?: ResearchReport | null, onClose: () => void, onSaved: () => void }) {
 	const [form] = Form.useForm();
@@ -21,8 +22,10 @@ export function ImportDialog({ open, sources, draft, onClose, onSaved }: { open:
 			setSaving(true);
 			await importInstitutionalReport({
 				...values,
+				evaluation_symbol: values.evaluation_symbol || null,
+				...(values.content_type === "news" ? { direction: "uncertain", rating: null, target_price: null, evaluation_symbol: null } : {}),
 				published_at: `${values.published_at}:00+08:00`,
-				target_price: values.target_price || null,
+				target_price: values.content_type === "news" ? null : values.target_price || null,
 				target_basis_date: values.target_basis_date || null,
 				target_deadline: values.target_deadline || null,
 				supersedes: values.supersedes || null,
@@ -40,12 +43,13 @@ export function ImportDialog({ open, sources, draft, onClose, onSaved }: { open:
 		finally { setSaving(false); }
 	}
 	return (
-		<Modal title="录入历史研报" open={open} onCancel={onClose} onOk={save} confirmLoading={saving} width={720} okText="保存原始观点">
+		<Modal title="录入历史资料" open={open} onCancel={onClose} onOk={save} confirmLoading={saving} width={720} okText="保存原始观点">
 			<Alert type="info" showIcon message="保存后保留原始版本；修订稿使用新的报告编号。确认原始观点、日期和标的后才能计入统计。" style={{ marginBottom: 16 }} />
-			<Form form={form} layout="vertical" initialValues={{ institution: "morgan_stanley", scope: "stock", direction: "uncertain", evidence_level: "reprint", time_precision: "date", benchmark: "sh000300", verified: false }}>
+			<Form form={form} layout="vertical" initialValues={{ institution: "morgan_stanley", content_type: "report", scope: "stock", direction: "uncertain", evidence_level: "reprint", time_precision: "date", benchmark: "sh000300", verified: false }}>
 				<Form.Item name="institution" label="发布机构" rules={[{ required: true }]}><Select options={sources.map(s => ({ value: s.id, label: s.name }))} /></Form.Item>
+				<Form.Item name="content_type" label="内容类型"><Select options={Object.entries(contentTypeNames).map(([value, label]) => ({ value, label }))} /></Form.Item>
 				<Form.Item name="report_key" label="原始报告编号或原始标题＋日期（同一报告转载共用）" rules={[{ required: true, min: 3 }]}><Input /></Form.Item>
-				<Form.Item name="title" label="报告标题" rules={[{ required: true, min: 3 }]}><Input /></Form.Item>
+				<Form.Item name="title" label="资料标题" rules={[{ required: true, min: 3 }]}><Input /></Form.Item>
 				<Form.Item name="source_url" label="来源链接" rules={[{ required: true, type: "url" }]}><Input /></Form.Item>
 				<Form.Item name="published_at" label="首次发布时间（北京时间，仅知日期可填 00:00）" rules={[{ required: true }]}><Input type="datetime-local" /></Form.Item>
 				<Form.Item name="time_precision" label="时间依据"><Select options={[{ value: "minute", label: "已核对具体时刻" }, { value: "date", label: "仅有日期，下一交易日开盘起算" }, { value: "unknown", label: "仅知转载时间，不计命中率" }]} /></Form.Item>
@@ -53,7 +57,7 @@ export function ImportDialog({ open, sources, draft, onClose, onSaved }: { open:
 				<Form.Item name="content" label="原文或转载正文" rules={[{ required: true, min: 20 }]}><Input.TextArea rows={5} maxLength={80000} /></Form.Item>
 				<Form.Item name="summary" label="当时观点与验证条件" rules={[{ required: true, min: 5 }]}><Input.TextArea rows={2} /></Form.Item>
 				<Form.Item name="scope" label="研究范围"><Select options={[{ value: "stock", label: "个股" }, { value: "sector", label: "板块（代表股不计板块命中率）" }, { value: "market", label: "A股大盘" }]} /></Form.Item>
-				<Form.Item name="evaluation_symbol" label="检验标的代码（如 sz300502 / sh000300）" rules={[{ required: true, pattern: /^(sh|sz|bj)\d{6}$/ }]}><Input /></Form.Item>
+				<Form.Item name="evaluation_symbol" label="检验标的代码（可空，如 sz300502 / sh000300）" rules={[{ pattern: /^(sh|sz|bj)\d{6}$/ }]}><Input /></Form.Item>
 				<Form.Item name="direction" label="原始方向"><Select options={[{ value: "bullish", label: "看多" }, { value: "bearish", label: "看空" }, { value: "mixed", label: "分化" }, { value: "uncertain", label: "不明确" }]} /></Form.Item>
 				<Form.Item name="direction_basis" label="评级口径" initialValue="absolute"><Select options={[{ value: "absolute", label: "绝对涨跌方向" }, { value: "relative", label: "相对对照指数表现（如跑赢大盘）" }]} /></Form.Item>
 				<Form.Item name="benchmark" label="对照指数"><Select options={[{ value: "sh000300", label: "沪深300" }, { value: "sh000001", label: "上证指数" }, { value: "sz399006", label: "创业板指" }]} /></Form.Item>
