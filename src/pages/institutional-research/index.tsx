@@ -383,6 +383,7 @@ export default function InstitutionalResearchPage() {
 										。
 									</Text>
 									{!!review.curve?.length && <ReactECharts option={{ tooltip: { trigger: "axis", valueFormatter: (v: number) => percent(v) }, legend: { data: ["检验标的", "对照指数"] }, grid: { left: 60, right: 25, bottom: 55 }, xAxis: { type: "category", data: review.curve.map(p => p.date) }, yAxis: { type: "value", axisLabel: { formatter: "{value}%" } }, series: [{ name: "检验标的", type: "line", data: review.curve.map(p => p.stock), showSymbol: false }, { name: "对照指数", type: "line", data: review.curve.map(p => p.benchmark), showSymbol: false }] }} style={{ height: 300 }} />}
+									{review.event_reaction && <Alert type="info" message={`事件日 ${review.event_reaction.date}：标的 ${percent(review.event_reaction.stock_return)}，对照指数 ${percent(review.event_reaction.benchmark_return)}`} description={review.event_reaction.note} />}
 									<Table size="small" pagination={false} rowKey="sessions" dataSource={review.horizons} columns={[{ title: "交易日", dataIndex: "sessions" }, { title: "状态", dataIndex: "status", render: v => statusNames[v] || v }, { title: "涨跌", dataIndex: "stock_return", render: percent }, { title: "超额收益", dataIndex: "excess_return", render: percent }, { title: "最大浮亏", dataIndex: "max_loss", render: percent }]} />
 									<Card size="small" title="目标价检验">
 										<Paragraph>
