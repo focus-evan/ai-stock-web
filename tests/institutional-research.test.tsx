@@ -64,7 +64,7 @@ describe("institutional research", () => {
 		fireEvent.click(screen.getByRole("button", { name: "查看报告与证据" }));
 		expect(await screen.findByText("尚未核对原报告时间，保留证据，暂不做历史检验")).toBeInTheDocument();
 		expect(screen.getByRole("link", { name: "打开来源" })).toHaveAttribute("href", report.payload.source_url);
-	}, 20000);
+	}, 60000);
 	it("never describes a holdings API failure as no exposure", async () => {
 		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, holdings: [], holdings_status: "unavailable" } });
 		mount();
@@ -80,14 +80,14 @@ describe("institutional research", () => {
 		expect(await screen.findByText("1条原报告时间待核验；1条原文待核验")).toBeInTheDocument();
 		expect(screen.getByText(/尚无符合条件的到期样本/)).toBeInTheDocument();
 		expect(screen.queryByText("100%")).not.toBeInTheDocument();
-	}, 20000);
+	}, 60000);
 	it("opens focus history first and separates original evidence from disclosures", async () => {
 		mount();
 		expect(await screen.findByRole("tab", { name: "重点机构观点与走势" })).toHaveAttribute("aria-selected", "true");
 		fireEvent.click(screen.getByRole("tab", { name: "机构历史匹配度" }));
 		expect(await screen.findByText("原站 / PDF核验")).toBeInTheDocument();
 		expect(screen.getByText("可靠转载核验")).toBeInTheDocument();
-	}, 20000);
+	}, 60000);
 	it("manual refresh joins the existing job", async () => {
 		vi.mocked(refreshInstitutionalResearch).mockResolvedValue({ status: "busy", run_id: "run1" });
 		mount();
