@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, App, Button, Card, Col, Drawer, Empty, Input, List, Row, Select, Space, Spin, Statistic, Switch, Table, Tabs, Tag, Typography } from "antd";
 import { useMemo, useState } from "react";
 import { evidenceLabel, filterArticles, formatTime, impactLabel, isRunning, priorityLabel, safeHref, statusLabel } from "./data";
+import VolumeCard from "./volume-card";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -112,6 +113,7 @@ export default function MarketIntelligencePage() {
 					<Col xs={12} lg={6}><Card size="small"><Statistic title="来源响应" value={coverage ? `${coverage.responded} / ${coverage.enabled}` : "—"} /></Card></Col>
 					<Col xs={12} lg={6}><Card size="small"><Statistic title="原文待核验" value={articles.filter(a => a.evidence_level === "summary" || a.freshness === "unknown").length} /></Card></Col>
 				</Row>
+				{!historical && <VolumeCard />}
 				<Tabs
 					activeKey={tab}
 					onChange={setTab}

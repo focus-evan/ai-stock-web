@@ -11,6 +11,7 @@ import { ensureMarketIntelligenceRoute } from "../src/router/utils/ensure-market
 
 vi.mock("#src/api/market-intelligence", () => ({ fetchIntelligence: vi.fn(), fetchIntelligenceRun: vi.fn(), refreshIntelligence: vi.fn(), setIntelligenceSource: vi.fn() }));
 vi.mock("#src/store/user", () => ({ useUserStore: (selector: (s: { roles: string[] }) => unknown) => selector({ roles: ["user"] }) }));
+vi.mock("../src/pages/market-intelligence/volume-card", () => ({ default: () => <div>A股量能分析</div> }));
 vi.mock("#src/components/basic-content", () => ({ BasicContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div> }));
 
 const evidence: IntelligenceArticle = { id: "e1", source_id: "pbc", source_name: "央行", category: "policy", title: "政策原文标题", url: "https://www.pbc.gov.cn/article", published_at: "2026-09-28T08:00:00+08:00", fetched_at: "2026-09-28T09:00:00+08:00", publisher: "央行", content: "真实抓取的证据全文", evidence_level: "official", freshness: "current", duplicate_source_ids: [], is_new: true };
