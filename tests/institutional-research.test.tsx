@@ -1,5 +1,5 @@
 import type { ResearchOverview, ResearchReport } from "#src/api/institutional-research";
-import { backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, refreshInstitutionalResearch } from "#src/api/institutional-research";
+import { backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, rebuildHoldingAssociations, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { App, ConfigProvider } from "antd";
@@ -8,7 +8,7 @@ import InstitutionalResearchPage from "../src/pages/institutional-research";
 import { filterReports, percent, safeLink } from "../src/pages/institutional-research/data";
 import { ensureInstitutionalResearchRoute } from "../src/router/utils/ensure-institutional-research-route";
 
-vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), backfillFocusResearch: vi.fn(), backfillPublicResearch: vi.fn(), importInstitutionalReport: vi.fn() }));
+vi.mock("#src/api/institutional-research", () => ({ fetchInstitutionalResearch: vi.fn(), fetchInstitutionalReport: vi.fn(), refreshInstitutionalResearch: vi.fn(), backfillInstitutionalResearch: vi.fn(), backfillFocusResearch: vi.fn(), backfillPublicResearch: vi.fn(), rebuildHoldingAssociations: vi.fn(), importInstitutionalReport: vi.fn() }));
 vi.mock("#src/store/user", () => ({ useUserStore: (selector: (s: { roles: string[], username: string }) => unknown) => selector({ roles: ["admin"], username: "admin" }) }));
 vi.mock("#src/components/basic-content", () => ({ BasicContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div> }));
 vi.mock("echarts-for-react", () => ({ default: () => <div>行情走势图</div> }));
@@ -54,6 +54,29 @@ afterEach(() => {
 });
 
 describe("institutional research", () => {
+	it("opens personalized bull and bear conditions from a message and filters unrelated messages", async () => {
+		const own = { ...report.payload.impacts[0], report_id: report.id, analysis_origin: "system_inference" as const, relation: "macro", bull_case: "需求落地时存在支持", bear_case: "高利率对估值形成压力", horizon: "短期估值", verified: false };
+		const linked = { ...report, holding_impacts: [own], holding_impact_status: "matched" as const };
+		const unrelated = { ...report, id: "unrelated", payload: { ...report.payload, title: "不相关的机构消息" }, holding_impacts: [], holding_impact_status: "no_match" as const };
+		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, reports: [linked, unrelated] } });
+		vi.mocked(rebuildHoldingAssociations).mockResolvedValue({ status: "started" });
+		mount();
+		expect(await screen.findByText("新易盛 · 偏利空")).toBeInTheDocument();
+		fireEvent.click(screen.getByRole("checkbox", { name: "只看持仓相关" }));
+		expect(screen.queryByRole("button", { name: "不相关的机构消息" })).not.toBeInTheDocument();
+		fireEvent.click(screen.getByRole("button", { name: "查看持仓多空与条件" }));
+		expect(await screen.findByText("我的持仓多空分析")).toBeInTheDocument();
+		expect(screen.getByText("系统影响推演")).toBeInTheDocument();
+		expect(screen.getByText("需求落地时存在支持")).toBeInTheDocument();
+		expect(screen.getByText("高利率对估值形成压力")).toBeInTheDocument();
+	}, 60000);
+	it("can rebuild associations without recollecting articles", async () => {
+		vi.mocked(rebuildHoldingAssociations).mockResolvedValue({ status: "started" });
+		mount();
+		fireEvent.click(await screen.findByRole("button", { name: "更新近30天持仓关联" }));
+		await waitFor(() => expect(rebuildHoldingAssociations).toHaveBeenCalledWith(""));
+		expect(refreshInstitutionalResearch).not.toHaveBeenCalled();
+	});
 	it("shows recent news and opinions alongside older verified reports and starts public backfill", async () => {
 		const news: ResearchReport = { ...report, id: "news", published_at: "2026-10-11T08:00:00+08:00", payload: { ...report.payload, title: "近期机构新闻消息", content_type: "news", evaluation_symbol: null, direction: "uncertain" } };
 		const opinion: ResearchReport = { ...report, id: "opinion", payload: { ...report.payload, title: "分析师公开采访", content_type: "opinion" } };

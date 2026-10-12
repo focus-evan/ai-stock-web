@@ -1,6 +1,7 @@
 import type { PortfolioAnalysisData, PortfolioStockAnalysis } from "#src/api/strategy";
 import type { CapitalEvidence } from "#src/api/strategy/portfolioCapitalTypes";
 import { fetchPortfolioAnalysis, fetchPortfolioAnalysisJob, triggerPortfolioAnalysis } from "#src/api/strategy";
+import InstitutionalHoldingEvidence from "#src/components/institutional-holding-evidence";
 import {
 	ClockCircleOutlined,
 	FundProjectionScreenOutlined,
@@ -654,6 +655,7 @@ const PortfolioAnalysisPanel: React.FC = () => {
 			</Card>
 
 			{hasData && !generating && <CapitalTrackingOverview data={data?.capital_tracking} />}
+			<InstitutionalHoldingEvidence />
 
 			{/* 盘前情绪预警触发标记 */}
 			{sentimentTrigger && sentimentTrigger.triggered_by_sentiment && (

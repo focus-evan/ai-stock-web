@@ -126,3 +126,4 @@ describe("short-term portfolio card", () => {
 		expect(getShortTermStatus({ ...positive, verdict: "unknown" })).toBeUndefined();
 	});
 });
+vi.mock("#src/components/institutional-holding-evidence", () => ({ default: () => null }));
