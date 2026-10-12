@@ -81,3 +81,48 @@ export const fetchIntelligence = () => request.get("market-intelligence", { igno
 export const fetchIntelligenceRun = (id: string) => request.get(`market-intelligence/runs/${encodeURIComponent(id)}`, { ignoreLoading: true }).json<{ data: IntelligenceRun }>();
 export const refreshIntelligence = () => request.post("market-intelligence/refresh", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const setIntelligenceSource = (id: string, enabled: boolean) => request.patch(`market-intelligence/sources/${encodeURIComponent(id)}`, { json: { enabled }, retry: 0 }).json<{ status: string }>();
+
+export interface VolumeObservation {
+	trade_date: string
+	as_of: string
+	observed_at: string
+	phase: string
+	checkpoint: string
+	scope: string
+	amount: number
+	comparison_pct: number | null
+	comparison_label: string
+	average_5: number | null
+	average_20: number | null
+	vs_average_5_pct: number | null
+	vs_average_20_pct: number | null
+	estimated_close_amount: number | null
+	estimate_note: string
+	headline: string
+	meaning: string
+	summary: string
+	continuity: string
+	next_watch: string
+	method: string
+	indices: { name: string, change_pct: number | null }[]
+	limitations: string[]
+	sources: { name: string, url: string }[]
+	daily_history: { date: string, amount: number }[]
+}
+export interface VolumeOverview {
+	latest: VolumeObservation | null
+	history: VolumeObservation[]
+	stale: boolean
+	market_phase: string
+	last_attempt: { slot: string, status: string, updated_at: string, error: string | null } | null
+	runtime: {
+		enabled: boolean
+		running: boolean
+		next_run_at: string | null
+		calendar_known: boolean
+		checkpoints: { time: string, name: string, purpose: string }[]
+		catch_up: string
+	}
+}
+export const fetchVolume = () => request.get("market-intelligence/volume", { ignoreLoading: true }).json<{ data: VolumeOverview }>();
+export const refreshVolume = () => request.post("market-intelligence/volume/refresh", { retry: 0, timeout: 90000 }).json<{ status: string, error?: string }>();
