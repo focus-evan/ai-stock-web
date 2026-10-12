@@ -111,3 +111,4 @@ describe("portfolio capital evidence", () => {
 		expect(screen.getByText("价格仍在计划范围")).toBeInTheDocument();
 	});
 });
+vi.mock("#src/components/institutional-holding-evidence", () => ({ default: () => null }));

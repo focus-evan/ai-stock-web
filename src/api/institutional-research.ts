@@ -13,6 +13,14 @@ export interface ResearchImpact {
 	summary?: string
 	institution?: string
 	published_at?: string
+	analyzed_at?: string | null
+	analysis_origin?: "institution_view" | "system_inference" | null
+	bull_case?: string
+	bear_case?: string
+	horizon?: string
+	verified?: boolean
+	source_url?: string
+	content_type?: string
 }
 export interface ResearchReview {
 	as_of: string
@@ -37,6 +45,8 @@ export interface ResearchReport {
 	published_at: string
 	first_seen_at: string
 	content_hash: string
+	holding_impacts?: ResearchImpact[]
+	holding_impact_status?: "matched" | "no_match" | "pending" | "no_positions" | "unavailable"
 	payload: {
 		title: string
 		content_type?: "report" | "opinion" | "news"
@@ -88,4 +98,5 @@ export const refreshInstitutionalResearch = () => request.post("institutional-re
 export const backfillInstitutionalResearch = () => request.post("institutional-research/backfill", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const backfillFocusResearch = () => request.post("institutional-research/backfill-focus", { retry: 0 }).json<{ status: string, run_id?: string }>();
 export const backfillPublicResearch = (institution?: string) => request.post("institutional-research/backfill-public", { json: { days: 30, institution: institution || null }, retry: 0 }).json<{ status: string, run_id?: string }>();
+export const rebuildHoldingAssociations = (institution?: string) => request.post("institutional-research/rebuild-associations", { json: { days: 30, institution: institution || null }, retry: 0 }).json<{ status: string, run_id?: string }>();
 export const importInstitutionalReport = (json: Record<string, unknown>) => request.post("institutional-research/reports", { json, retry: 0 }).json<{ id: string }>();

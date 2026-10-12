@@ -3,6 +3,8 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import PortfolioAnalysisPanel from "./index";
 
+vi.mock("#src/components/institutional-holding-evidence", () => ({ default: () => null }));
+
 vi.mock("#src/api/strategy", () => ({
 	fetchPortfolioAnalysis: vi.fn(),
 	fetchPortfolioAnalysisJob: vi.fn(),
