@@ -1,3 +1,10 @@
+export const researchGroups = [
+	{ key: "macro", label: "宏观环境", layers: ["macro"] },
+	{ key: "fundamental", label: "基本面", layers: ["industry", "company", "valuation"] },
+	{ key: "technical", label: "技术面", layers: ["technical"] },
+	{ key: "chips", label: "筹码与拥挤度", layers: ["chips"] },
+];
+
 export function finiteNumber(value: unknown): number | null {
 	if (value === null || value === undefined || (typeof value !== "number" && typeof value !== "string") || (typeof value === "string" && !value.trim()))
 		return null;

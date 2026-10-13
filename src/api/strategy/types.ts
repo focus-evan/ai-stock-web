@@ -755,12 +755,92 @@ export interface StopLossInfo {
 	description: string
 }
 
+export interface ResearchLayer {
+	key: "macro" | "industry" | "company" | "valuation" | "technical" | "chips"
+	title: string
+	question: string
+	status: string
+	conclusion: string
+	key_points: string[]
+	risks: string[]
+	watch_points: string[]
+	invalidation: string[]
+	data_gaps: string[]
+	sources: { title?: string, url?: string, date?: string }[]
+}
+export interface ChipCost {
+	as_of?: string
+	cost_90_low?: number | null
+	cost_90_high?: number | null
+	cost_70_low?: number | null
+	cost_70_high?: number | null
+	concentration_90_pct?: number | null
+	concentration_70_pct?: number | null
+	profit_ratio_pct?: number | null
+	average_cost?: number | null
+}
+export interface ResearchReport {
+	version: string
+	as_of?: string
+	headline: string
+	key_reasons: string[]
+	key_risks: string[]
+	layers: ResearchLayer[]
+	boundary: string
+	data_snapshot: {
+		warnings?: string[]
+		macro?: { benchmark?: string, as_of?: string, close?: number | null, ma20?: number | null, ma60?: number | null, sentiment_stale?: boolean, sentiment?: { trading_date?: string, limit_up_count?: number | null, limit_down_count?: number | null, up_down_ratio?: number | null, limit_up_premium?: number | null, signal_text?: string }, limitations?: string[] }
+		technical?: Record<string, string | number | boolean | null>
+		valuation?: Record<string, string | number | null>
+		financials?: { period?: string, source?: string, revenue_single_quarter?: string, profit_single_quarter?: string, gross_margin_reported?: string, net_margin_reported?: string, cash_flow_reported?: string, roe_reported?: string, basis?: string }[]
+		chips?: {
+			holder_history: { as_of: string, count: number }[]
+			holder_change_pct?: number | null
+			share_capital_comparable?: boolean
+			ownership_trend: string
+			top10_float_pct?: number | null
+			top10_as_of?: string | null
+			top10_basis?: string
+			cost: ChipCost
+			cost_history?: ChipCost[]
+			concentration_change_20_sessions_pp?: number | null
+			cost_trend: string
+			turnover_rate_pct?: number | null
+			volume_ratio_5d?: number | null
+			price_vs_ma20_pct?: number | null
+			return_20_sessions_pct?: number | null
+			as_of?: string
+			method?: string
+			limitations?: string[]
+		}
+	}
+}
+export interface ResearchComparison {
+	previous_id: number
+	previous_at?: string
+	previous_action?: string
+	current_action?: string
+	note: string
+	changes: { key: string, title: string, previous?: string, current?: string, previous_status: string, current_status: string, changed: boolean }[]
+}
+export interface ResearchOverview {
+	version: string
+	headline?: string
+	layers: Pick<ResearchLayer, "key" | "title" | "status" | "conclusion">[]
+}
+
 /** 个股综合分析结果 */
 export interface StockAnalysisData {
 	stock_code: string
 	stock_name: string
 	market_date: string
 	framework_version?: string
+	research_report?: ResearchReport
+	research_comparison?: ResearchComparison
+	history_id?: number
+	history_saved?: boolean
+	history_error?: string
+	snapshot_hash?: string
 	action: "买入" | "持有" | "卖出" | "观望" | string
 	confidence: number
 	score: number

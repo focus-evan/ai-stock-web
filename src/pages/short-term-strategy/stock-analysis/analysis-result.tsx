@@ -3,8 +3,9 @@ import WatchlistModal from "#src/components/WatchlistModal";
 import { StarOutlined } from "@ant-design/icons";
 import { Alert, Button, Progress, Space, Tabs, Tag } from "antd";
 import { useState } from "react";
-import { actionTone, finiteNumber, numberText, priceText } from "./data";
+import { actionTone, finiteNumber, numberText, priceText, researchGroups } from "./data";
 import { Copy, ResultSource, Section, TextList } from "./presentation";
+import { ResearchComparisonView, ResearchLayers, ResearchOverviewCards } from "./research-report";
 
 function PriceRange({ value, market }: {
 	value?: {
@@ -29,13 +30,14 @@ export default function AnalysisResult({ data, historical = false }: {
 	historical?: boolean
 }) {
 	const [watchlistOpen, setWatchlistOpen] = useState(false);
+	const [activeLayer, setActiveLayer] = useState("overview");
 	const market = data.market || (/^\d{5}$/.test(data.stock_code) ? "hk" : "a");
 	const veto = data.veto_checks?.veto_triggered === true;
 	const downgraded = data.llm_enhanced === false;
 	const change = finiteNumber(data.change_pct);
 	const score = finiteNumber(data.score);
 	const confidence = finiteNumber(data.confidence);
-	const warnings: string[] = Array.isArray(data.market_data?.warnings) ? data.market_data.warnings.filter((item: unknown) => typeof item === "string") : [];
+	const warnings: string[] = data.research_report?.data_snapshot.warnings || (Array.isArray(data.market_data?.warnings) ? data.market_data.warnings.filter((item: unknown) => typeof item === "string") : []);
 	const dimensions = data.dimension_scores || [];
 	const summary = (
 		<div className="sa-overview-grid">
@@ -363,7 +365,7 @@ export default function AnalysisResult({ data, historical = false }: {
 			</div>
 			<p className="sa-snapshot-note">
 				以上价格与涨跌幅属于分析时快照，未随当前行情刷新。
-				{historical ? "历史记录未保存完整原始行情包。" : ""}
+				{historical ? data.research_report?.version === "stock-research-v1" ? "本页按当时保存的研究和证据摘要展示。" : "早期记录未保存完整分层证据。" : ""}
 			</p>
 			{data.quadrant_classification && (
 				<div className="sa-classification">
@@ -375,12 +377,17 @@ export default function AnalysisResult({ data, historical = false }: {
 					{data.quadrant_classification.summary && <Copy text={data.quadrant_classification.summary} />}
 				</div>
 			)}
+			<ResearchOverviewCards report={data.research_report} onSelect={setActiveLayer} />
+			<p className="sa-framework-note">宏观管环境 → 基本面看赛道、公司与价格 → 技术面找时机 → 筹码与拥挤度检查持仓和交易热度。</p>
 			<Tabs
 				className="sa-result-tabs"
-				defaultActiveKey="overview"
+				activeKey={activeLayer}
+				onChange={setActiveLayer}
 				items={[
 					{ key: "overview", label: "结论与计划", children: summary },
-					{ key: "research", label: "研究依据", children: research },
+					...researchGroups.map(group => ({ key: group.key, label: group.label, children: <ResearchLayers report={data.research_report} group={group.key} /> })),
+					{ key: "comparison", label: "变化对比", children: <ResearchComparisonView comparison={data.research_comparison} /> },
+					{ key: "research", label: "评分与补充", children: research },
 					{ key: "risk", label: "风险与反证", children: risk },
 					{ key: "strategies", label: "战法信号", children: (
 						<Section title="战法与推荐缓存" subtitle="信号与命中数是两个口径">

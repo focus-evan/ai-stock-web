@@ -475,6 +475,7 @@ export function fetchStockAnalysis(stock: string) {
 	return request
 		.get("strategy/stock-analysis", {
 			searchParams: { stock },
+			retry: 0, // 分析会追加历史，网络自动重试可能生成多份快照。
 			timeout: 360000, // 6分钟：覆盖后端5分钟LLM超时及数据准备开销
 		})
 		.json<StockAnalysisResponse>();
@@ -499,6 +500,12 @@ export function fetchAnalysisDetail(id: number) {
 	return request
 		.get(`strategy/stock-analysis/history/${id}`, { timeout: 15000 })
 		.json<{ status: string, data: any }>();
+}
+
+/** 保存失败后重试原始快照，不重新分析。 */
+export function retrySaveStockAnalysis(data: StockAnalysisResponse["data"]) {
+	return request.post("strategy/stock-analysis/history/save", { json: data, timeout: 15000 })
+		.json<{ status: string, data: { history_id: number, history_saved: boolean } }>();
 }
 
 /**

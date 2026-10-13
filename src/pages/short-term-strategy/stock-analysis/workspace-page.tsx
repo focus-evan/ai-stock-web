@@ -1,6 +1,7 @@
+import type { ResearchOverview } from "#src/api/strategy/types";
 import type { ColumnsType } from "antd/es/table";
 import type { AnalysisData } from "./presentation";
-import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis } from "#src/api/strategy";
+import { deleteAnalysisRecord, fetchAnalysisDetail, fetchAnalysisHistory, fetchStockAnalysis, retrySaveStockAnalysis } from "#src/api/strategy";
 import PortfolioAnalysisPanel from "#src/components/PortfolioAnalysisPanel";
 import StrategyPerformanceDashboard from "#src/components/StrategyPerformanceDashboard";
 import UnwindTrackingPanel from "#src/components/UnwindTrackingPanel";
@@ -12,6 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import AnalysisResult from "./analysis-result";
 import { actionTone, finiteNumber, numberText, priceText } from "./data";
 import { AnalysisSurface, ResultSource } from "./presentation";
+import { ResearchStatus } from "./research-report";
 import "./stock-analysis.css";
 
 type HistoryRecord = Omit<Partial<AnalysisData>, "llm_enhanced"> & {
@@ -19,11 +21,14 @@ type HistoryRecord = Omit<Partial<AnalysisData>, "llm_enhanced"> & {
 	stock_code: string
 	stock_name: string
 	llm_enhanced?: boolean | number
+	research_overview?: ResearchOverview
 };
 type TabKey = "analyze" | "history" | "performance" | "watchlist" | "portfolio" | "unwind";
 const storageKey = "stock_analysis_active_tab";
 const validTabs: TabKey[] = ["analyze", "history", "performance", "watchlist", "portfolio", "unwind"];
 function initialTab(): TabKey {
+	if (new URLSearchParams(window.location.search).get("tab") === "history")
+		return "history";
 	try {
 		const saved = sessionStorage.getItem(storageKey) as TabKey;
 		return validTabs.includes(saved) ? saved : "analyze";
@@ -32,15 +37,16 @@ function initialTab(): TabKey {
 		return "analyze";
 	}
 }
-export function HistoryTab() {
+export function HistoryTab({ initialFilter = "", initialId }: { initialFilter?: string, initialId?: number } = {}) {
 	const screens = Grid.useBreakpoint();
 	const [items, setItems] = useState<HistoryRecord[]>([]);
 	const [total, setTotal] = useState(0);
 	const [page, setPage] = useState(1);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [search, setSearch] = useState("");
-	const [filter, setFilter] = useState("");
+	const [search, setSearch] = useState(initialFilter);
+	const [filter, setFilter] = useState(initialFilter);
+	const [view, setView] = useState("timeline");
 	const [detail, setDetail] = useState<AnalysisData | null>(null);
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailLoading, setDetailLoading] = useState(false);
@@ -84,7 +90,7 @@ export function HistoryTab() {
 	useEffect(() => () => {
 		detailRequest.current++;
 	}, []);
-	const viewDetail = async (id: number) => {
+	const viewDetail = useCallback(async (id: number) => {
 		const request = ++detailRequest.current;
 		setDetail(null);
 		setDetailError("");
@@ -106,7 +112,11 @@ export function HistoryTab() {
 			if (request === detailRequest.current)
 				setDetailLoading(false);
 		}
-	};
+	}, []);
+	useEffect(() => {
+		if (initialId && initialId > 0)
+			void viewDetail(initialId);
+	}, [initialId, viewDetail]);
 	const removeRecord = (record: HistoryRecord) => modal.confirm({
 		title: `删除 ${record.stock_name} 的这条分析记录？`,
 		content: "只删除该历史分析记录，不影响自选和持仓。",
@@ -192,9 +202,10 @@ export function HistoryTab() {
 								条
 							</span>
 						</h2>
-						<p>保留每次判断的时间与依据；表中价格为分析时快照。</p>
+						<p>每次分析独立留存：宏观、赛道、公司、估值、技术面、筹码与拥挤度。选择股票后连续回看。</p>
 					</div>
 					<div className="sa-history-tools">
+						<Segmented aria-label="历史展示方式" value={view} onChange={value => setView(String(value))} options={[{ value: "timeline", label: "分析时间线" }, { value: "table", label: "列表" }]} />
 						<Input.Search
 							aria-label="按股票代码筛选历史"
 							placeholder="按股票代码筛选"
@@ -231,64 +242,122 @@ export function HistoryTab() {
 					</div>
 				)}
 				{error && <Alert message={error} type="error" showIcon action={<Button onClick={() => loadHistory(page)}>重试</Button>} />}
-				{screens.md === false
+				{view === "timeline"
 					? (
 						<Spin spinning={loading}>
-							<div className="sa-mobile-history">
+							<div className="sa-analysis-timeline">
 								{items.length
 									? items.map(row => (
 										<article key={row.id}>
-											<div className="sa-mobile-stock">
-												<button type="button" className="sa-stock-link" onClick={() => viewDetail(row.id)}>
-													<strong>{row.stock_name}</strong>
-													<small>{row.stock_code}</small>
-												</button>
-												<span className={`sa-action-label sa-action-${actionTone(row.action)}`}>
-													{row.action || "未提供"}
-													{" "}
-													·
-													{" "}
-													{row.risk_level || "未标注"}
-													风险
-												</span>
+											<div className="sa-timeline-heading">
+												<div>
+													<time>{row.analyzed_at?.replace("T", " ") || "时间未标注"}</time>
+													<h3>
+														{row.stock_name}
+														{" "}
+														<small>{row.stock_code}</small>
+													</h3>
+												</div>
+												<Space wrap>
+													<span className={`sa-action-label sa-action-${actionTone(row.action)}`}>{row.action || "未提供"}</span>
+													<Tag>
+														{row.risk_level || "未提供"}
+														风险
+													</Tag>
+													<span>
+														分析时价
+														{priceText(row.current_price, /^\d{5}$/.test(row.stock_code) ? "hk" : "a")}
+													</span>
+												</Space>
 											</div>
-											<div className="sa-mobile-metrics">
-												<div>
-													<span>综合评分</span>
-													<b>{finiteNumber(row.score) !== null && Number(row.score) >= 0 && Number(row.score) <= 100 ? `${numberText(row.score, 0)} / 100` : "待核验"}</b>
-												</div>
-												<div>
-													<span>分析时价</span>
-													<b>{priceText(row.current_price, /^\d{5}$/.test(row.stock_code) ? "hk" : "a")}</b>
-												</div>
-												<div>
-													<span>生成方式</span>
-													<ResultSource value={row.llm_enhanced} />
-												</div>
+											<p className="sa-timeline-summary">{row.research_overview?.headline || row.summary || "早期记录，打开报告查看原始结论。"}</p>
+											<div className="sa-timeline-layers">
+												{row.research_overview?.layers.length
+													? row.research_overview.layers.map(layer => (
+														<div key={layer.key}>
+															<span>{layer.title}</span>
+															<ResearchStatus value={layer.status} />
+															<p>{layer.conclusion}</p>
+														</div>
+													))
+													: <span className="sa-muted">该次为早期报告，部分分析层未记录。</span>}
 											</div>
-											<div className="sa-mobile-footer">
-												<span>{row.analyzed_at?.replace("T", " ")}</span>
-												<Button type="link" onClick={() => viewDetail(row.id)}>查看报告</Button>
-												<Dropdown
-													trigger={["click"]}
-													menu={{ items: [{ key: "watch", label: "加入自选盯盘" }, { key: "delete", label: "删除记录", danger: true }], onClick: ({ key }) => {
-														if (key === "watch")
-															setWatchlistTarget(row);
-														else if (key === "delete")
-															removeRecord(row);
-													} }}
+											<Space wrap>
+												<Button type="primary" onClick={() => viewDetail(row.id)}>查看报告</Button>
+												<Button onClick={() => {
+													setSearch(row.stock_code);
+													setFilter(row.stock_code);
+												}}
 												>
-													<Button type="text" icon={<MoreOutlined />} aria-label={`${row.stock_name}更多操作`} />
-												</Dropdown>
-											</div>
+													只看这只股票
+												</Button>
+												<Button href={`/short-term-strategy/stock-analysis?tab=history&stock_code=${row.stock_code}&analysis_id=${row.id}`}>打开历史页面</Button>
+											</Space>
 										</article>
 									))
-									: <Empty description="暂无历史分析" />}
+									: <Empty description={filter ? "该股票暂无历史分析" : "暂无历史分析，先创建一份报告"} />}
 							</div>
-							<Pagination size="small" simple current={page} total={total} pageSize={20} hideOnSinglePage onChange={nextPage => loadHistory(nextPage)} />
+							<Pagination current={page} total={total} pageSize={20} hideOnSinglePage showSizeChanger={false} onChange={nextPage => loadHistory(nextPage)} />
 						</Spin>
 					)
-					: <Table columns={columns} dataSource={items} rowKey="id" loading={loading} scroll={{ x: 1125 }} size="middle" locale={{ emptyText: <Empty description={filter ? "该股票暂无历史分析" : "暂无历史分析，先输入股票创建一份报告"} /> }} pagination={{ current: page, total, pageSize: 20, showSizeChanger: false, hideOnSinglePage: true, onChange: nextPage => loadHistory(nextPage), showTotal: count => `共 ${count} 条分析记录` }} />}
+					: screens.md === false
+						? (
+							<Spin spinning={loading}>
+								<div className="sa-mobile-history">
+									{items.length
+										? items.map(row => (
+											<article key={row.id}>
+												<div className="sa-mobile-stock">
+													<button type="button" className="sa-stock-link" onClick={() => viewDetail(row.id)}>
+														<strong>{row.stock_name}</strong>
+														<small>{row.stock_code}</small>
+													</button>
+													<span className={`sa-action-label sa-action-${actionTone(row.action)}`}>
+														{row.action || "未提供"}
+														{" "}
+														·
+														{" "}
+														{row.risk_level || "未标注"}
+														风险
+													</span>
+												</div>
+												<div className="sa-mobile-metrics">
+													<div>
+														<span>综合评分</span>
+														<b>{finiteNumber(row.score) !== null && Number(row.score) >= 0 && Number(row.score) <= 100 ? `${numberText(row.score, 0)} / 100` : "待核验"}</b>
+													</div>
+													<div>
+														<span>分析时价</span>
+														<b>{priceText(row.current_price, /^\d{5}$/.test(row.stock_code) ? "hk" : "a")}</b>
+													</div>
+													<div>
+														<span>生成方式</span>
+														<ResultSource value={row.llm_enhanced} />
+													</div>
+												</div>
+												<div className="sa-mobile-footer">
+													<span>{row.analyzed_at?.replace("T", " ")}</span>
+													<Button type="link" onClick={() => viewDetail(row.id)}>查看报告</Button>
+													<Dropdown
+														trigger={["click"]}
+														menu={{ items: [{ key: "watch", label: "加入自选盯盘" }, { key: "delete", label: "删除记录", danger: true }], onClick: ({ key }) => {
+															if (key === "watch")
+																setWatchlistTarget(row);
+															else if (key === "delete")
+																removeRecord(row);
+														} }}
+													>
+														<Button type="text" icon={<MoreOutlined />} aria-label={`${row.stock_name}更多操作`} />
+													</Dropdown>
+												</div>
+											</article>
+										))
+										: <Empty description="暂无历史分析" />}
+								</div>
+								<Pagination size="small" simple current={page} total={total} pageSize={20} hideOnSinglePage onChange={nextPage => loadHistory(nextPage)} />
+							</Spin>
+						)
+						: <Table columns={columns} dataSource={items} rowKey="id" loading={loading} scroll={{ x: 1125 }} size="middle" locale={{ emptyText: <Empty description={filter ? "该股票暂无历史分析" : "暂无历史分析，先输入股票创建一份报告"} /> }} pagination={{ current: page, total, pageSize: 20, showSizeChanger: false, hideOnSinglePage: true, onChange: nextPage => loadHistory(nextPage), showTotal: count => `共 ${count} 条分析记录` }} />}
 				<p className="sa-table-note">缓存命中只表示进入推荐名单的数量；生成方式帮助区分模型结果与规则降级。</p>
 			</div>
 			<Drawer
@@ -318,6 +387,11 @@ export default function StockAnalysisPage() {
 	const [error, setError] = useState("");
 	const [elapsed, setElapsed] = useState(0);
 	const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
+	const [savingHistory, setSavingHistory] = useState(false);
+	const savingHistoryRequest = useRef(false);
+	const query = new URLSearchParams(window.location.search);
+	const initialCode = query.get("stock_code") || "";
+	const initialId = Number(query.get("analysis_id"));
 	const running = useRef(false);
 	const analysisRequest = useRef(0);
 	const workspace = activeTab === "performance" ? "performance" : ["watchlist", "portfolio", "unwind"].includes(activeTab) ? "tracking" : "research";
@@ -371,13 +445,36 @@ export default function StockAnalysisPage() {
 			}
 		}
 	};
+	const retryHistory = async () => {
+		if (!data || savingHistoryRequest.current)
+			return;
+		savingHistoryRequest.current = true;
+		const frozen = data;
+		const generation = analysisRequest.current;
+		setSavingHistory(true);
+		try {
+			const response = await retrySaveStockAnalysis(data);
+			if (response.status !== "success")
+				throw new Error("保存未完成");
+			setData(previous => analysisRequest.current === generation && previous && previous.stock_code === frozen.stock_code && previous.analyzed_at === frozen.analyzed_at && previous.snapshot_hash === frozen.snapshot_hash ? { ...previous, history_saved: true, history_id: response.data.history_id, history_error: undefined } : previous);
+			setHistoryRefreshKey(key => key + 1);
+			message.success("原始分析快照已保存");
+		}
+		catch {
+			message.error("历史保存失败，本次报告仍可查看，请稍后重试。");
+		}
+		finally {
+			savingHistoryRequest.current = false;
+			setSavingHistory(false);
+		}
+	};
 	return (
 		<AnalysisSurface className="sa-workspace">
 			<header className="sa-workspace-header app-page-hero">
 				<div>
 					<span className="sa-eyebrow">股票研究工作台</span>
 					<h1>个股分析</h1>
-					<p>先看结论和风险，再展开研究依据。</p>
+					<p>先看重点，再按宏观、基本面、技术面、筹码与拥挤度逐层判断。</p>
 				</div>
 				<div className="sa-search">
 					<div className="sa-search-controls">
@@ -425,7 +522,7 @@ export default function StockAnalysisPage() {
 								<div>
 									<span>02</span>
 									<h3>研究依据</h3>
-									<p>六维分析、催化与反证</p>
+									<p>宏观、赛道、公司、估值、技术、筹码</p>
 								</div>
 								<div>
 									<span>03</span>
@@ -436,10 +533,21 @@ export default function StockAnalysisPage() {
 							<Button icon={<HistoryOutlined />} onClick={() => selectTab("history")}>查看历史记录</Button>
 						</div>
 					)}
-					{data && !loading && <AnalysisResult key={`${data.stock_code}-${data.analyzed_at}`} data={data} />}
+					{data && !loading && (
+						<>
+							{data.history_saved === false && <Alert type="warning" showIcon message="分析已完成，历史尚未保存" description={data.history_error || "请重试保存原始快照。"} action={<Button loading={savingHistory} onClick={retryHistory}>重试保存</Button>} />}
+							{data.history_saved && data.history_id && (
+								<div className="sa-save-status">
+									已保存独立分析快照 ·
+									<a href={`/short-term-strategy/stock-analysis?tab=history&stock_code=${data.stock_code}&analysis_id=${data.history_id}`}>打开本次历史分析</a>
+								</div>
+							)}
+							<AnalysisResult key={`${data.stock_code}-${data.analyzed_at}`} data={data} />
+						</>
+					)}
 				</>
 			)}
-			{activeTab === "history" && <HistoryTab key={historyRefreshKey} />}
+			{activeTab === "history" && <HistoryTab key={historyRefreshKey} initialFilter={/^\d{5,6}$/.test(initialCode) ? initialCode : ""} initialId={Number.isInteger(initialId) && initialId > 0 ? initialId : undefined} />}
 			{activeTab === "watchlist" && <WatchlistPanel />}
 			{activeTab === "portfolio" && <PortfolioAnalysisPanel />}
 			{activeTab === "unwind" && <UnwindTrackingPanel />}
