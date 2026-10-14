@@ -105,9 +105,9 @@ function LiveTradeAlerts({ userId }: { userId: string }) {
 							{" "}
 							· 本笔模拟成交
 						</Text>
-						{(execution.verification_status !== "verified" || cycle.verification_status === "anomalous") && (
+						{(execution.verification_status !== "verified" || cycle.verification_status !== "verified") && (
 							<div style={{ marginTop: 6 }}>
-								<Tag color="orange">成交数据待核验</Tag>
+								<Tag color="orange">{cycle.verification_status === "repaired" ? "账目已修复，不计战绩" : "成交数据待核验"}</Tag>
 								<Text type="secondary">{execution.verification_issue || cycle.verification_issues.join("；") || "成交记录缺少完整证据"}</Text>
 							</div>
 						)}

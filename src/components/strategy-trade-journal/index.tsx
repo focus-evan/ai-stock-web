@@ -5,7 +5,7 @@ import { Alert, Button, Empty, Segmented, Space, Table, Tag, Tooltip, Typography
 import { useEffect, useState } from "react";
 
 const { Text } = Typography;
-const labels = { holding: "持仓中", partial: "部分卖出", closed: "已清仓", incomplete: "记录待核验" };
+const labels = { holding: "持仓中", partial: "部分卖出", closed: "已清仓", incomplete: "买卖账目不完整" };
 const colors = { holding: "blue", partial: "gold", closed: "default", incomplete: "orange" };
 const priceText = (value: number | null) => value == null ? "—" : `¥${value.toFixed(4)}`;
 const quantityText = (value: number | null) => value == null ? "未记录" : `${value.toLocaleString("zh-CN")} 股`;
@@ -55,9 +55,9 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 			<Space direction="vertical" size={4}>
 				<Tag color={colors[item.status]}>{labels[item.status]}</Tag>
 				{item.verification_status !== "verified" && (
-					<Tooltip title={item.verification_issues?.join("；")}>
+					<Tooltip title={[...item.issues, ...(item.verification_issues || [])].join("；")}>
 						<Tag color={item.verification_status === "anomalous" ? "red" : "orange"}>
-							{item.verification_status === "anomalous" ? "价格异常，收益待核验" : "历史成交待核验"}
+							{item.verification_status === "repaired" ? "账目已修复，不计战绩" : item.verification_status === "anomalous" ? "价格异常，收益待核验" : item.issues.length ? "股数或记录不一致" : "缺少原始成交证据"}
 						</Tag>
 					</Tooltip>
 				)}
@@ -86,7 +86,7 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 						{ label: "全部交易", value: "all" },
 						{ label: "持仓中", value: "holding" },
 						{ label: "已清仓", value: "closed" },
-						{ label: "记录待核验", value: "incomplete" },
+						{ label: "核验与修复记录", value: "incomplete" },
 					]}
 				/>
 				<Button icon={<ReloadOutlined />} loading={loading} onClick={() => setRevision(value => value + 1)}>刷新交易记录</Button>
@@ -116,6 +116,13 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 							{data.summary.unverified}
 						</Tag>
 					)}
+					{(data.summary.repaired || 0) > 0 && (
+						<Tag color="orange">
+							已修复
+							{" "}
+							{data.summary.repaired}
+						</Tag>
+					)}
 					{data.summary.excluded_reconstruction_count > 0 && (
 						<Text type="secondary">
 							已排除
@@ -131,10 +138,11 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 					type="warning"
 					showIcon
 					style={{ marginBottom: 12 }}
-					message={(data?.summary.anomalous || 0) > 0 ? `发现 ${data?.summary.anomalous} 条价格异常记录，收益待核验` : "部分历史成交缺少完整证据，收益待核验"}
-					description="价格、股数及买卖原因按原账展示。缺少原始成交盘口的记录不能认定为有效收益；请展开查看核验说明。"
+					message={(data?.summary.anomalous || 0) > 0 ? `发现 ${data?.summary.anomalous} 条价格异常记录，收益待核验` : "部分交易账目或成交证据未通过核验"}
+					description="请展开查看具体原因。账目不完整、缺少盘口证据及已修复记录均不能作为有效战绩或跟投依据。"
 				/>
 			)}
+			{(data?.summary.repaired || 0) > 0 && <Alert type="warning" showIcon style={{ marginBottom: 12 }} message="异常账目已修复，原始记录已归档" description="修复后的股数与资金用于对账，不代表原交易有效；已清仓的旧买入不再作为跟投依据。" />}
 			{error
 				? <Alert type="error" showIcon message={error} action={<Button onClick={() => setRevision(value => value + 1)}>重试</Button>} />
 				: (

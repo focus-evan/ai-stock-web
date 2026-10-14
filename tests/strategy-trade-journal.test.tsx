@@ -98,6 +98,17 @@ describe("strategy executed trade journal", () => {
 		}
 	});
 
+	it("distinguishes repaired accounting from verified performance", async () => {
+		const result = response([{ ...cycle, verification_status: "repaired", performance_eligible: false, verification_issues: ["超量卖出已修复"] }]);
+		result.data.summary.unverified = 0;
+		Object.assign(result.data.summary, { repaired: 1 });
+		fetchJournal.mockResolvedValue(result);
+		render(<StrategyTradeJournal strategyType="emotion_relay" />);
+		expect(await screen.findByText("账目已修复，不计战绩")).toBeInTheDocument();
+		expect(screen.getByText("异常账目已修复，原始记录已归档")).toBeInTheDocument();
+		expect(screen.queryByText("缺少原始成交证据")).not.toBeInTheDocument();
+	});
+
 	it("does not let a late response from another strategy replace current records", async () => {
 		let finish: (value: ReturnType<typeof response>) => void = () => {};
 		fetchJournal.mockImplementationOnce(() => new Promise((resolve) => {
