@@ -12,7 +12,6 @@ import {
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
-	ClockCircleOutlined,
 	ReloadOutlined,
 	SafetyOutlined,
 	SwapOutlined,
@@ -40,6 +39,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
+import ExecutionStatus from "./ExecutionStatus";
 import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Link, Text } = Typography;
@@ -253,18 +253,22 @@ export default function UnwindTrackingPanel() {
 	const [savingTrade, setSavingTrade] = useState(false);
 	const [form] = Form.useForm<TradeFormValues>();
 	const autoRefreshAttempted = useRef(false);
+	const loadSequence = useRef(0);
+	const [pollFailed, setPollFailed] = useState(false);
 
 	const loadData = useCallback(async (allowInitialRefresh = true) => {
 		setLoading(true);
+		const requestId = ++loadSequence.current;
 		try {
 			const response = await fetchUnwindPlans(10);
+			if (requestId !== loadSequence.current)
+				return;
+			setPollFailed(false);
 			const items = response.data?.items || [];
 			setPlans(items);
 			setMethod(response.data?.method || null);
 			const needsInitialAnalysis = items.length > 0 && items.some(item =>
-				!item.latest_analysis
-				|| !item.latest_analysis.execution_steps?.length
-				|| !item.latest_analysis.currency_symbol,
+				!item.execution?.plan,
 			);
 			if (allowInitialRefresh && needsInitialAnalysis && !autoRefreshAttempted.current) {
 				autoRefreshAttempted.current = true;
@@ -285,12 +289,40 @@ export default function UnwindTrackingPanel() {
 		loadData();
 	}, [loadData]);
 
+	useEffect(() => {
+		let alive = true;
+		let pending = false;
+		const timer = window.setInterval(async () => {
+			if (pending || document.hidden)
+				return;
+			pending = true;
+			const requestId = ++loadSequence.current;
+			try {
+				const response = await fetchUnwindPlans(10);
+				if (alive && requestId === loadSequence.current) {
+					setPlans(response.data?.items || []);
+					setMethod(response.data?.method || null);
+					setPollFailed(false);
+				}
+			}
+			catch {
+				if (alive)
+					setPollFailed(true);
+			}
+			finally { pending = false; }
+		}, 30000);
+		return () => {
+			alive = false;
+			window.clearInterval(timer);
+		};
+	}, []);
+
 	const handleRefresh = async (watchlistId?: number) => {
 		setRefreshing(watchlistId || "all");
 		try {
 			const response = await refreshUnwindPlans(watchlistId);
 			if (response.data.errors?.length)
-				message.warning(`已更新${response.data.total}只，${response.data.errors.length}只行情暂不可用`);
+				message.warning(`已更新${response.data.total}只，${response.data.errors.length}项未就绪，请查看当前动作`);
 			else
 				message.success(response.message || "今日分析已更新");
 			await loadData(false);
@@ -304,7 +336,7 @@ export default function UnwindTrackingPanel() {
 	};
 
 	const openTrade = (plan: UnwindPlan, side: "sell" | "buy") => {
-		const analysis = plan.latest_analysis;
+		const analysis = plan.execution?.plan || plan.latest_analysis;
 		const lotSize = analysis?.lot_size || 100;
 		form.setFieldsValue({
 			shares: side === "sell" ? (analysis?.sell_shares || lotSize) : plan.open_sold_shares,
@@ -348,6 +380,7 @@ export default function UnwindTrackingPanel() {
 		}
 	};
 
+	const tradeAnalysis = tradeTarget?.plan.execution?.plan || tradeTarget?.plan.latest_analysis;
 	const cumulativeReduction = formatCurrencyTotals(plans, "cumulative_cost_reduction");
 	const cashPool = formatCurrencyTotals(plans, "cash_pool");
 	const losingCount = plans.filter(item => (item.latest_analysis?.pnl_pct ?? 0) < 0).length;
@@ -405,6 +438,7 @@ export default function UnwindTrackingPanel() {
 				style={{ borderRadius: 10, marginBottom: 16 }}
 			/>
 
+			{pollFailed && <Alert type="warning" showIcon message="页面更新暂时失败；旧触发提示到期后自动失效，请等待重新连接" style={{ marginBottom: 12 }} />}
 			<Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
 				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="自动跟踪持仓" value={plans.length} suffix="只" /></Card></Col>
 				<Col xs={12} md={6}><Card className="app-metric-card" size="small"><Statistic title="仍低于有效成本" value={losingCount} suffix="只" valueStyle={{ color: "#389e0d" }} /></Card></Col>
@@ -422,10 +456,13 @@ export default function UnwindTrackingPanel() {
 				)
 				: (
 					<Space direction="vertical" size={16} style={{ width: "100%" }}>
-						{plans.map((plan) => {
+						{[...plans].sort((a, b) => {
+							const priority = { BUY_BACK: 0, SELL: 1, WAIT: 2 };
+							return priority[a.execution?.signal?.action || "WAIT"] - priority[b.execution?.signal?.action || "WAIT"];
+						}).map((plan) => {
 							const analysis = plan.latest_analysis;
 							const currencySymbol = planCurrencySymbol(plan);
-							const lotSize = analysis?.lot_size || 100;
+							const lotSize = plan.execution?.plan?.lot_size || analysis?.lot_size || 100;
 							const pnl = analysis?.pnl_pct ?? 0;
 							const pnlColor = pnl >= 0 ? "#cf1322" : "#389e0d";
 							return (
@@ -439,8 +476,14 @@ export default function UnwindTrackingPanel() {
 											<SwapOutlined style={{ color: "#722ed1" }} />
 											<Text strong style={{ fontSize: 16 }}>{plan.stock_name}</Text>
 											<Text type="secondary">{plan.stock_code}</Text>
-											{analysis && <Tag color={decisionColors[analysis.decision] || "blue"}>{analysis.decision_label}</Tag>}
-											{analysis?.position_mode_label && <Tag>{analysis.position_mode_label}</Tag>}
+											{plan.execution?.plan && (
+												<Tag>
+													{plan.execution.plan.trading_date}
+													{" "}
+													预案
+												</Tag>
+											)}
+											{(plan.execution?.plan?.position_mode_label || analysis?.position_mode_label) && <Tag>{plan.execution?.plan?.position_mode_label || analysis?.position_mode_label}</Tag>}
 											{plan.open_sold_shares > 0 && (
 												<Tag color="geekblue">
 													已卖待回
@@ -461,116 +504,103 @@ export default function UnwindTrackingPanel() {
 										</Button>
 									)}
 								>
+									<ExecutionStatus data={plan.execution} currency={currencySymbol} />
 									<Row gutter={[12, 12]}>
 										<Col xs={12} sm={8} md={4}><Statistic title="原始成本" value={plan.baseline_cost_price} precision={2} prefix={currencySymbol} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="有效成本" value={plan.effective_cost} precision={2} prefix={currencySymbol} valueStyle={{ color: "#722ed1" }} /></Col>
-										<Col xs={12} sm={8} md={4}><Statistic title="最新价" value={analysis?.technical.current_price || 0} precision={2} prefix={currencySymbol} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title="盘后参考价" value={analysis?.technical.current_price || 0} precision={2} prefix={currencySymbol} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="距有效成本" value={pnl} precision={2} suffix="%" valueStyle={{ color: pnlColor }} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="当前/原始股数" value={`${plan.current_shares}/${plan.baseline_shares}`} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="滚动资金" value={plan.cash_pool} precision={2} prefix={currencySymbol} /></Col>
 									</Row>
 
-									{analysis
-										? (
-											<>
-												<div style={{
-													marginTop: 14,
-													padding: "12px 14px",
-													borderRadius: 9,
-													background: analysis.decision === "BUY_BACK" ? "#fff1f0" : analysis.decision === "SELL_SLICE" ? "#fff7e6" : "#f5f5f5",
-												}}
-												>
-													<Row gutter={[16, 10]} align="middle">
-														<Col xs={24} md={15}>
-															<Space direction="vertical" size={3}>
-																<Space>
-																	{analysis.decision === "BUY_BACK"
-																		? <ArrowUpOutlined style={{ color: "#cf1322" }} />
-																		: <ArrowDownOutlined style={{ color: "#d46b08" }} />}
-																	<Text strong>{analysis.decision_label}</Text>
+									<details style={{ marginTop: 14 }}>
+										<summary style={{ cursor: "pointer" }}>盘后技术分析与参考条件（不是当前操作信号）</summary>
+										{analysis
+											? (
+												<>
+													<div style={{
+														marginTop: 14,
+														padding: "12px 14px",
+														borderRadius: 9,
+														background: analysis.decision === "BUY_BACK" ? "#fff1f0" : analysis.decision === "SELL_SLICE" ? "#fff7e6" : "#f5f5f5",
+													}}
+													>
+														<Row gutter={[16, 10]} align="middle">
+															<Col xs={24} md={15}>
+																<Space direction="vertical" size={3}>
+																	<Space>
+																		{analysis.decision === "BUY_BACK"
+																			? <ArrowUpOutlined style={{ color: "#cf1322" }} />
+																			: <ArrowDownOutlined style={{ color: "#d46b08" }} />}
+																		<Text strong>{analysis.decision_label}</Text>
+																	</Space>
+																	<Text>{analysis.reason}</Text>
+																	<Text type="danger">
+																		<WarningOutlined />
+																		{" "}
+																		{analysis.invalid_condition}
+																	</Text>
 																</Space>
-																<Text>{analysis.reason}</Text>
-																<Text type="danger">
-																	<WarningOutlined />
-																	{" "}
-																	{analysis.invalid_condition}
-																</Text>
-															</Space>
-														</Col>
-														<Col xs={24} md={9}>
-															<Space wrap>
-																{analysis.sell_zone_low != null && (
-																	<Tag color="orange">
-																		候选卖区
-																		{" "}
-																		{money(analysis.sell_zone_low, currencySymbol)}
-																		-
-																		{money(analysis.sell_zone_high, currencySymbol)}
-																	</Tag>
-																)}
-																{analysis.sell_shares > 0 && (
+															</Col>
+															<Col xs={24} md={9}>
+																<Space wrap>
+																	{analysis.sell_zone_low != null && (
+																		<Tag color="orange">
+																			候选卖区
+																			{" "}
+																			{money(analysis.sell_zone_low, currencySymbol)}
+																			-
+																			{money(analysis.sell_zone_high, currencySymbol)}
+																		</Tag>
+																	)}
+																	{analysis.sell_shares > 0 && (
+																		<Tag>
+																			建议滚动
+																			{" "}
+																			{analysis.sell_shares}
+																			股
+																		</Tag>
+																	)}
+																	{analysis.buyback_price != null && (
+																		<Tag color="red">
+																			买回不高于
+																			{" "}
+																			{money(analysis.buyback_price, currencySymbol)}
+																		</Tag>
+																	)}
 																	<Tag>
-																		建议滚动
+																		最小价差
 																		{" "}
-																		{analysis.sell_shares}
-																		股
+																		{analysis.min_spread_pct}
+																		%
 																	</Tag>
-																)}
-																{analysis.buyback_price != null && (
-																	<Tag color="red">
-																		买回不高于
-																		{" "}
-																		{money(analysis.buyback_price, currencySymbol)}
-																	</Tag>
-																)}
-																<Tag>
-																	最小价差
-																	{" "}
-																	{analysis.min_spread_pct}
-																	%
-																</Tag>
-															</Space>
-														</Col>
-													</Row>
-												</div>
+																</Space>
+															</Col>
+														</Row>
+													</div>
 
-												<ExecutionGuide analysis={analysis} />
-												<div style={{ marginTop: 12 }}><AnalysisDetails analysis={analysis} /></div>
+													<ExecutionGuide analysis={analysis} />
+													<div style={{ marginTop: 12 }}><AnalysisDetails analysis={analysis} /></div>
 
-												<Space wrap style={{ marginTop: 14 }}>
-													<Button
-														icon={<ArrowDownOutlined />}
-														disabled={plan.open_sold_shares > 0 || analysis.sell_shares < lotSize || analysis.decision !== "SELL_SLICE"}
-														onClick={() => openTrade(plan, "sell")}
-													>
-														{analysis.position_mode === "ONE_LOT_FULL_ROTATION" ? "记录整手卖出" : "记录已卖出"}
-													</Button>
-													<Button
-														type="primary"
-														danger
-														icon={<ArrowUpOutlined />}
-														disabled={plan.open_sold_shares < lotSize || analysis.decision !== "BUY_BACK"}
-														onClick={() => openTrade(plan, "buy")}
-													>
-														记录已买回
-													</Button>
-													<Text type="secondary">
-														<ClockCircleOutlined />
-														{" "}
-														{analysis.next_check}
-													</Text>
-												</Space>
-											</>
-										)
-										: (
-											<Alert
-												type="info"
-												showIcon
-												message="暂无日线分析"
-												description="点击“更新”拉取至少16个交易日行情并生成首份计划。"
-												style={{ marginTop: 12 }}
-											/>
-										)}
+												</>
+											)
+											: (
+												<Alert
+													type="info"
+													showIcon
+													message="暂无日线分析"
+													description="点击“更新”拉取至少16个交易日行情并生成首份计划。"
+													style={{ marginTop: 12 }}
+												/>
+											)}
+
+									</details>
+									<Space wrap style={{ marginTop: 14 }}>
+										<Button disabled={plan.open_sold_shares > 0 || plan.current_shares < lotSize} onClick={() => openTrade(plan, "sell")}>录入已成交卖出</Button>
+										<Button disabled={plan.open_sold_shares < lotSize} onClick={() => openTrade(plan, "buy")}>录入已成交买回</Button>
+										<Text type="secondary">只录入券商已成交记录；按钮不会下单，未录入卖出前不会提示买回。</Text>
+									</Space>
 
 									{(plan.analysis_history.length > 0 || plan.trades.length > 0) && (
 										<Collapse
@@ -647,9 +677,9 @@ export default function UnwindTrackingPanel() {
 							type={tradeTarget.side === "sell" ? "warning" : "info"}
 							showIcon
 							message={tradeTarget.side === "sell"
-								? tradeTarget.plan.latest_analysis?.position_mode === "ONE_LOT_FULL_ROTATION"
+								? tradeAnalysis?.position_mode === "ONE_LOT_FULL_ROTATION"
 									? "只记录已经实际成交的卖单；一手整手回转会暂时清空该股票，存在卖出后踏空风险。"
-									: `只记录已经实际成交的卖单；系统将至少保留${tradeTarget.plan.latest_analysis?.core_floor_shares || 0}股。`
+									: `只记录已经实际成交的卖单；系统将至少保留${tradeAnalysis?.core_floor_shares || 0}股。`
 								: `只能使用滚动资金池${money(tradeTarget.plan.cash_pool, planCurrencySymbol(tradeTarget.plan))}，最多买回${tradeTarget.plan.open_sold_shares}股。`}
 							style={{ marginBottom: 16 }}
 						/>
@@ -662,15 +692,15 @@ export default function UnwindTrackingPanel() {
 										rules={[
 											{ required: true, message: "请输入股数" },
 											{
-												validator: (_, value) => value > 0 && value % (tradeTarget.plan.latest_analysis?.lot_size || 100) === 0
+												validator: (_, value) => value > 0 && value % (tradeAnalysis?.lot_size || 100) === 0
 													? Promise.resolve()
-													: Promise.reject(new Error(`必须为${tradeTarget.plan.latest_analysis?.lot_size || 100}股的整数倍`)),
+													: Promise.reject(new Error(`必须为${tradeAnalysis?.lot_size || 100}股的整数倍`)),
 											},
 										]}
 									>
 										<InputNumber
-											min={tradeTarget.plan.latest_analysis?.lot_size || 100}
-											step={tradeTarget.plan.latest_analysis?.lot_size || 100}
+											min={tradeAnalysis?.lot_size || 100}
+											step={tradeAnalysis?.lot_size || 100}
 											precision={0}
 											style={{ width: "100%" }}
 										/>

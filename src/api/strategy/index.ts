@@ -1480,6 +1480,33 @@ export interface UnwindPlan {
 	latest_analysis?: UnwindAnalysis | null
 	analysis_history: UnwindAnalysisRecord[]
 	trades: UnwindTrade[]
+	execution?: UnwindExecution
+}
+
+export interface UnwindSignal {
+	action: "WAIT" | "SELL" | "BUY_BACK"
+	label: string
+	reason: string
+	shares: number
+	limit_price?: number | null
+	target_price?: number
+	buyback_target_price?: number
+	planned_shares?: number
+	checked_at?: string
+	valid_until?: string
+	phase?: string
+	invalid_conditions?: string[]
+	requires_manual_confirmation?: boolean
+	quote?: { price?: number, bid?: number, ask?: number, as_of?: string, source?: string }
+}
+
+export interface UnwindExecution {
+	plan?: (UnwindAnalysis & { trading_date: string, basis_date: string, generated_at: string, origin: string, confirmation: string }) | null
+	signal: UnwindSignal
+	events: Array<UnwindSignal>
+	review?: { reviewed_at: string, trade_count: number, fees: number, realized_reduction: number, pending_buyback_shares: number, note: string } | null
+	server_time?: string
+	refresh_seconds?: number
 }
 
 export interface UnwindMethod {
@@ -1508,7 +1535,7 @@ export function refreshUnwindPlans(watchlistId?: number) {
 	if (watchlistId)
 		searchParams.watchlist_id = watchlistId;
 	return request
-		.post("strategy/combined/watchlist/unwind-plans/refresh", {
+		.post("strategy/combined/watchlist/unwind-plans/execution/refresh", {
 			searchParams,
 			timeout: 180000,
 		})
