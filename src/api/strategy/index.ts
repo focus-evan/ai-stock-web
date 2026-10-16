@@ -1959,3 +1959,30 @@ export function fetchStrategyBuysByDate(tradingDate: string, signal?: AbortSigna
 	return request.get("strategy/buys", { searchParams: { trading_date: tradingDate }, signal, timeout: 25000 })
 		.json<{ status: string, data: StrategyBuysByDate | null, message?: string }>();
 }
+
+export type StrategyTradePerformance = StrategyBuyAlert["follow"]["strategy_performance"];
+export interface StrategySellRecord extends Pick<StrategyBuyAlert, "trade_id" | "portfolio_id" | "portfolio_name" | "strategy_type" | "stock_code" | "stock_name" | "verification_status" | "verification_issue"> {
+	sell_date: string
+	sold_at: string
+	sell_price: number | null
+	sell_quantity: number | null
+	sell_lots: number | null
+	sell_reason: string | null
+	sell_amount: number | null
+	profit: number | null
+	profit_pct: number | null
+	strategy_performance: StrategyTradePerformance | null
+	exit_policy: {
+		stop_loss_pct: number | null
+		take_profit_pct: number | null
+		take_profit_sell_pct: number
+		rules: string[]
+	} | null
+}
+export interface StrategySellsByDate extends Omit<TodayStrategyBuys, "items"> {
+	items: StrategySellRecord[]
+}
+export function fetchStrategySellsByDate(tradingDate: string, signal?: AbortSignal) {
+	return request.get("strategy/sells", { searchParams: { trading_date: tradingDate }, signal, timeout: 25000 })
+		.json<{ status: string, data: StrategySellsByDate | null, message?: string }>();
+}
