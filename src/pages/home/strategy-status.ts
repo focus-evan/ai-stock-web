@@ -3,12 +3,15 @@ interface StrategyState {
 	positions_count?: number
 	decision_status?: string
 	decision_reason?: string
+	history_status?: string
 }
 
 export function strategyExecutionStatus(state: StrategyState): {
 	status: "default" | "processing" | "warning" | "error"
 	text: string
 } {
+	if (state.history_status === "price_anomaly" || state.decision_status === "history_review")
+		return { status: "warning", text: "历史价格待核验" };
 	if (!state.auto_trade)
 		return { status: "default", text: "已暂停" };
 	if (state.decision_status === "expired")
@@ -16,7 +19,13 @@ export function strategyExecutionStatus(state: StrategyState): {
 	if (state.decision_status === "not_scheduled")
 		return { status: "default", text: "未纳入调度" };
 	if (state.decision_status === "blocked")
-		return { status: "error", text: "执行被阻断" };
+		return { status: "error", text: "委托未通过校验" };
+	if (state.decision_status === "traded_with_rejections")
+		return { status: "warning", text: "已成交，部分委托未执行" };
+	if (state.decision_status === "waiting_signal")
+		return { status: "default", text: Number(state.positions_count) > 0 ? "持仓中，开仓条件未满足" : "等待入场条件" };
+	if (state.decision_status === "not_run")
+		return { status: "default", text: "尚无执行记录" };
 	if (state.decision_status === "partial")
 		return { status: "processing", text: "部分成交，继续检查" };
 	if (state.decision_status === "data_unavailable")

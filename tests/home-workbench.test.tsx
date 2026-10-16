@@ -48,6 +48,22 @@ describe("workbench data semantics", () => {
 });
 
 describe("workbench interactions", () => {
+	it("keeps original history prominent and shows the new account separately on expansion", async () => {
+		const data = fixture();
+		data.overview.scope = "original_account_lifetime";
+		data.overview.history_anomaly_count = 1;
+		Object.assign(data.strategy_summary[0], { total_asset: 1236846.43, total_profit_pct: 23.6846, initial_capital: 1000000, inception_at: "2026-07-05 22:42:14", history_status: "price_anomaly", history_trade_count: 26, additional_accounts: [{ portfolio_id: 49, name: "前向验证账户", strategy_type: "dragon_head", total_asset: 1000000, total_profit: 0, total_profit_pct: 0, inception_at: "2026-10-16 15:04:05", history_trade_count: 0, auto_trade: 1, decision_status: "not_run" }] });
+		vi.mocked(fetchDashboard).mockResolvedValue({ status: "success", data });
+		open();
+		expect(await screen.findByText("1,236,846.43")).toBeVisible();
+		expect(screen.getByText("异常账面值")).toBeVisible();
+		expect(screen.getByText("历史价格待核验")).toBeVisible();
+		expect(screen.queryByText("前向验证账户")).not.toBeInTheDocument();
+		fireEvent.click(document.querySelector(".ant-table-row-expand-icon") as HTMLElement);
+		expect(await screen.findByText("前向验证账户")).toBeVisible();
+		expect(screen.getByText(/不并入原始账户累计值/)).toBeVisible();
+		expect(screen.getByText("1,000,000.00")).toBeVisible();
+	});
 	it("shows a recoverable error without a fictitious zero-value account", async () => {
 		vi.mocked(fetchDashboard).mockResolvedValue({ status: "error", data: fixture() });
 		open();

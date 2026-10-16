@@ -21,6 +21,12 @@ export interface DashboardStrategy {
 	portfolio_id: number
 	strategy_type: string
 	name?: string
+	initial_capital?: Metric
+	inception_at?: string
+	history_status?: "price_anomaly" | "book_history"
+	history_trade_count?: number
+	today_trade_count?: number
+	additional_accounts?: DashboardStrategy[]
 	total_asset?: Metric
 	available_cash?: Metric
 	total_profit?: Metric
@@ -81,6 +87,9 @@ export interface DashboardPerformance {
 export interface DashboardData {
 	generated_at?: string
 	overview: {
+		scope?: "original_account_lifetime"
+		additional_accounts_count?: number
+		history_anomaly_count?: number
 		total_asset?: Metric
 		total_initial?: Metric
 		total_profit?: Metric

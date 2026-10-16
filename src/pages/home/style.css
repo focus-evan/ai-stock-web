@@ -26,3 +26,14 @@
 @media(max-width:1199px){.workbench{padding:20px}.wb-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}.wb-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.wb-recommendations{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:767px){.workbench{padding:14px;gap:14px}.wb-heading h1{font-size:24px}.wb-heading{align-items:flex-start;gap:12px}.wb-refresh{width:100%}.wb-shortcuts{gap:8px}.wb-shortcut{padding:12px;gap:8px}.wb-shortcut-icon{font-size:17px;padding:7px}.wb-shortcut strong{font-size:12px}.wb-shortcut small{font-size:10px}.wb-shortcut>.anticon{display:none}.wb-metrics{gap:10px}.wb-metric{padding:16px 13px}.wb-metric-primary{padding-top:14px}.wb-metric-value{font-size:21px;letter-spacing:-.5px}.wb-metric p{font-size:10px}.wb-attention{flex-direction:column;align-items:stretch;gap:14px;padding:18px}.wb-attention h2{font-size:18px}.wb-attention-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.wb-attention-counts button{min-width:0;padding:10px 4px}.wb-attention-counts strong{font-size:22px}.wb-main-card>.ant-card-body{padding:4px 12px 14px}.wb-toolbar{gap:10px}.wb-toolbar .ant-input-affix-wrapper{max-width:none;width:100%}.wb-toolbar .ant-select{flex:1}.wb-main-card .ant-tabs-tab{font-size:13px}.wb-recommendations{grid-template-columns:minmax(0,1fr)}.wb-chart{height:300px}.wb-footnote{gap:3px}.wb-table-footer{gap:8px}.wb-detail{padding:4px 0}}
 @media(prefers-reduced-motion:reduce){.wb-shortcut{transition:none}}
+.wb-account-history {
+	margin-top: 18px;
+}
+
+.wb-secondary-account {
+	margin-top: 10px;
+	padding: 14px;
+	border: 1px solid var(--wb-border);
+	border-radius: 8px;
+	background: var(--wb-soft);
+}

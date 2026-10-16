@@ -14,8 +14,15 @@ describe("portfolio execution status", () => {
 });
 
 it("distinguishes infrastructure blocks from discipline and historical accounts", () => {
-	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "blocked" }).text).toBe("执行被阻断");
+	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "blocked" }).text).toBe("委托未通过校验");
 	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "data_unavailable" }).text).toBe("数据待恢复");
 	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "not_scheduled" }).text).toBe("未纳入调度");
 	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "partial" }).text).toBe("部分成交，继续检查");
+});
+
+it("separates history review and unmet entry conditions from an execution failure", () => {
+	expect(strategyExecutionStatus({ auto_trade: 0, history_status: "price_anomaly" }).text).toBe("历史价格待核验");
+	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "waiting_signal" }).text).toBe("等待入场条件");
+	expect(strategyExecutionStatus({ auto_trade: 1, positions_count: 1, decision_status: "waiting_signal" }).text).toBe("持仓中，开仓条件未满足");
+	expect(strategyExecutionStatus({ auto_trade: 1, decision_status: "traded_with_rejections" }).text).toBe("已成交，部分委托未执行");
 });

@@ -60,6 +60,25 @@ export default function Home() {
 			<div>
 				<strong>{strategyName(s.strategy_type)}</strong>
 				<div className="wb-muted wb-small">{s.name || `组合 #${s.portfolio_id}`}</div>
+				{s.inception_at && (
+					<div className="wb-muted wb-small">
+						自
+						{s.inception_at.slice(0, 10)}
+						{" "}
+						建账 · 本金
+						{formatMetric(s.initial_capital)}
+						{" "}
+						元
+					</div>
+				)}
+				{!!s.additional_accounts?.length && (
+					<Tag>
+						另有
+						{s.additional_accounts.length}
+						{" "}
+						个后建账户
+					</Tag>
+				)}
 			</div>
 		) },
 		{ title: "执行状态", key: "state", width: 180, render: (_: unknown, s: DashboardStrategy) => {
@@ -67,8 +86,18 @@ export default function Home() {
 
 			return <Badge status={state.status} text={state.text} />;
 		} },
-		{ title: "总资产（元）", dataIndex: "total_asset", align: "right" as const, width: 140, render: (v: Metric) => <NumberValue value={v} /> },
-		{ title: "累计收益率", dataIndex: "total_profit_pct", align: "right" as const, width: 125, sorter: (a: DashboardStrategy, b: DashboardStrategy) => (a.total_profit_pct ?? -Infinity) - (b.total_profit_pct ?? -Infinity), render: (v: Metric) => <NumberValue value={v} suffix="%" signed /> },
+		{ title: "总资产（元）", dataIndex: "total_asset", align: "right" as const, width: 140, render: (v: Metric, s: DashboardStrategy) => (
+			<div>
+				<NumberValue value={v} />
+				{s.history_status === "price_anomaly" && <div><Tag color="orange">异常账面值</Tag></div>}
+			</div>
+		) },
+		{ title: "历史累计收益率", dataIndex: "total_profit_pct", align: "right" as const, width: 135, sorter: (a: DashboardStrategy, b: DashboardStrategy) => (a.total_profit_pct ?? -Infinity) - (b.total_profit_pct ?? -Infinity), render: (v: Metric, s: DashboardStrategy) => (
+			<div>
+				<NumberValue value={v} suffix="%" signed={s.history_status !== "price_anomaly"} />
+				{s.history_status === "price_anomaly" && <div className="wb-muted wb-small">价格待核验</div>}
+			</div>
+		) },
 		{ title: "持仓笔数", dataIndex: "positions_count", align: "right" as const, width: 90, render: (v?: number) => v ?? "—" },
 		{ title: "最近决策 / 结算", key: "updated", width: 155, render: (_: unknown, s: DashboardStrategy) => <span className="wb-muted wb-small">{formatTime(s.last_run_at || s.last_run_date)}</span> },
 	];
@@ -117,6 +146,7 @@ export default function Home() {
 		? [
 			{ key: "strategies", label: `策略组合 · ${strategies.length}`, children: (
 				<>
+					{overview?.scope === "original_account_lifetime" && <p className="wb-muted">按各战法最早账户展示自建账以来的累计账目。本金只计一次，空仓后仍保留历史盈亏；后建验证账户独立列在展开详情。</p>}
 					<div className="wb-toolbar">
 						<Input aria-label="搜索策略或组合" placeholder="搜索策略或组合" prefix={<SearchOutlined />} value={keyword} allowClear onChange={e => setKeyword(e.target.value)} />
 						<Select aria-label="筛选执行状态" value={filter} onChange={setFilter} options={[{ value: "all", label: "全部状态" }, { value: "attention", label: "需要关注" }, { value: "holding", label: "有持仓" }, { value: "paused", label: "已暂停" }]} />
@@ -152,6 +182,16 @@ export default function Home() {
 						expandable={{ expandedRowRender: s => (
 							<div className="wb-detail">
 								<p>
+									历史交易记录：
+									{s.history_trade_count ?? "—"}
+									{" "}
+									笔 · 今日成交：
+									{s.today_trade_count ?? "—"}
+									{" "}
+									笔
+								</p>
+								{s.history_status === "price_anomaly" && <Alert type="warning" showIcon message="历史成交价格异常" description="以上金额保留原始账面累计值，尚不能视作有效战绩。核验更正前不以新账户本金覆盖历史。" />}
+								<p>
 									<strong>最近决策：</strong>
 									{s.decision_reason || "尚无可核验的决策记录"}
 								</p>
@@ -169,6 +209,49 @@ export default function Home() {
 										{formatTime(s.last_actual_trade_at || s.last_actual_trade_date)}
 									</span>
 								</Space>
+								{!!s.additional_accounts?.length && (
+									<div className="wb-account-history">
+										<strong>后建独立账户</strong>
+										<p className="wb-muted">下列账户各自另设本金，其资产和收益单独展示，不并入原始账户累计值。</p>
+										{s.additional_accounts.map(account => (
+											<div key={account.portfolio_id} className="wb-secondary-account">
+												<strong>{account.name || `账户 #${account.portfolio_id}`}</strong>
+												<p className="wb-muted">
+													{formatTime(account.inception_at)}
+													{" "}
+													建账 ·
+													{" "}
+													{account.history_trade_count ?? "—"}
+													{" "}
+													笔历史交易 ·
+													{" "}
+													{strategyExecutionStatus(account).text}
+												</p>
+												<Space wrap>
+													<span>
+														资产
+														<NumberValue value={account.total_asset} />
+													</span>
+													<span>
+														累计盈亏
+														<NumberValue value={account.total_profit} signed />
+													</span>
+													<span>
+														收益率
+														<NumberValue value={account.total_profit_pct} suffix="%" signed />
+													</span>
+													<span>
+														持仓
+														{account.positions_count ?? "—"}
+														{" "}
+														笔
+													</span>
+												</Space>
+												<p>{account.decision_reason || "尚无执行记录"}</p>
+											</div>
+										))}
+									</div>
+								)}
 							</div>
 						) }}
 					/>
@@ -269,11 +352,12 @@ export default function Home() {
 					{quality && quality.stored_price_positions > 0 && <Alert type="warning" showIcon message={`${quality.stored_price_positions} 笔持仓使用存储价格`} description="本次行情未完整获取，资产与盈亏可能滞后；请在持仓明细中核对价格来源。" />}
 					{!quality && <Alert type="info" showIcon message="行情覆盖信息待核验" description="当前接口未提供价格来源覆盖信息，组合金额按返回快照展示。" />}
 					<section className="wb-metrics" aria-label="组合资产概览">
-						<MetricCard label="模拟总资产" value={overview?.total_asset} note={`${overview?.portfolios_count ?? strategies.length} 个组合 · 各组合独立资金汇总`} primary />
-						<MetricCard label="累计收益" value={overview?.total_profit} note="总资产减初始资金 · 元" signed />
+						<MetricCard label={overview?.history_anomaly_count ? "模拟账面总资产（待核验）" : "模拟总资产"} value={overview?.total_asset} note={`${overview?.portfolios_count ?? strategies.length} 个原始账户 · 后建账户单列`} primary />
+						<MetricCard label="累计收益" value={overview?.total_profit} note={overview?.history_anomaly_count ? "含历史异常账面值，待核验 · 元" : "自建账以来总资产减原始本金 · 元"} signed />
 						<MetricCard label="累计收益率" value={overview?.total_profit_pct} suffix="%" note="按初始资金加权 · 非策略简单平均" signed />
 						<MetricCard label="可用现金" value={overview?.available_cash} note={`${overview?.positions_count ?? positions.length} 笔持仓 · 同一股票可属于多个组合`} />
 					</section>
+					{!!overview?.history_anomaly_count && <Alert type="warning" showIcon message={`${overview.history_anomaly_count} 个原始账户存在历史价格异常`} description="总览包含这些账户的原始账面金额，不能据此认定有效收益；异常账户已在下表标明。其他账户的历史盈亏继续正常展示。" />}
 					<section className="wb-attention" aria-label="执行概况">
 						<div>
 							<span className="wb-eyebrow">执行概况</span>

@@ -31,7 +31,7 @@ export default function Performance({ data }: { data: DashboardData }) {
 	return usable.length
 		? (
 			<>
-				<p className="wb-chart-note">最近 30 个结算记录。每个组合独立展示；缺失日期留空，收益样本从实际记录开始。</p>
+				<p className="wb-chart-note">原始账户自建账以来的全部账面结算记录；缺失日期留空。历史价格异常账户的曲线仅供核对，不代表有效战绩。</p>
 				<ReactECharts className="wb-chart" option={option} notMerge opts={{ renderer: "svg" }} />
 			</>
 		)
