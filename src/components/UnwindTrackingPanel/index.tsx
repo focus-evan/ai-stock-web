@@ -7,7 +7,7 @@ import type {
 import {
 	fetchUnwindPlans,
 	recordUnwindTrade,
-	refreshUnwindPlans,
+	refreshUnwindExecution,
 } from "#src/api/strategy";
 import {
 	ArrowDownOutlined,
@@ -40,6 +40,10 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { freshUnwindQuote, quoteTimestamp } from "./price-alerts";
+import PriceMonitor from "./PriceMonitor";
+import { activeUnwindAnalysis, beijingTime, strategyTime } from "./strategy-time";
+import { StrategyDateOverview, StrategyDateStamp } from "./StrategyDate";
 import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Link, Text } = Typography;
@@ -72,7 +76,7 @@ function money(value?: number | null, symbol = "¥") {
 }
 
 function planCurrencySymbol(plan: UnwindPlan) {
-	return plan.latest_analysis?.currency_symbol || (/^\d{5}$/.test(plan.stock_code) ? "HK$" : "¥");
+	return activeUnwindAnalysis(plan)?.currency_symbol || (/^\d{5}$/.test(plan.stock_code) ? "HK$" : "¥");
 }
 
 function formatCurrencyTotals(plans: UnwindPlan[], field: "cash_pool" | "cumulative_cost_reduction") {
@@ -132,7 +136,7 @@ function AnalysisDetails({ analysis }: { analysis: UnwindAnalysis }) {
 	);
 }
 
-function ExecutionGuide({ analysis }: { analysis: UnwindAnalysis }) {
+function ExecutionGuide({ analysis, historical }: { analysis: UnwindAnalysis, historical: boolean }) {
 	const symbol = analysis.currency_symbol || "¥";
 	const steps = analysis.execution_steps || [];
 	if (!steps.length)
@@ -142,7 +146,7 @@ function ExecutionGuide({ analysis }: { analysis: UnwindAnalysis }) {
 		<div style={{ marginTop: 14, border: "1px solid #d9d9d9", borderRadius: 10, overflow: "hidden" }}>
 			<div style={{ padding: "10px 14px", background: "#fafafa", display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
 				<Space wrap>
-					<Text strong>具体执行计划</Text>
+					<Text strong>{historical ? "历史 / 待核验计划 · 请勿直接照此操作" : "具体执行计划 · 触发条件成立后再操作"}</Text>
 					<Tag color={analysis.market === "hk" ? "geekblue" : "red"}>{analysis.market_label || (analysis.market === "hk" ? "港股" : "A股")}</Tag>
 					{analysis.position_mode_label && (
 						<Tag color={analysis.requires_manual_confirmation ? "volcano" : "blue"}>
@@ -249,18 +253,29 @@ export default function UnwindTrackingPanel() {
 	const [refreshing, setRefreshing] = useState<number | "all" | null>(null);
 	const [plans, setPlans] = useState<UnwindPlan[]>([]);
 	const [method, setMethod] = useState<UnwindMethod | null>(null);
+	const [now, setNow] = useState(() => new Date());
+	const [loadError, setLoadError] = useState("");
+	const [failedRefreshIds, setFailedRefreshIds] = useState<number[]>([]);
 	const [tradeTarget, setTradeTarget] = useState<{ plan: UnwindPlan, side: "sell" | "buy" } | null>(null);
 	const [savingTrade, setSavingTrade] = useState(false);
 	const [form] = Form.useForm<TradeFormValues>();
 	const autoRefreshAttempted = useRef(false);
+	const receiveMonitoredPlans = useCallback((items: UnwindPlan[]) => {
+		setPlans(items);
+		setNow(new Date());
+	}, []);
 
 	const loadData = useCallback(async (allowInitialRefresh = true) => {
 		setLoading(true);
 		try {
 			const response = await fetchUnwindPlans(10);
+			if (response.status !== "success")
+				throw new Error("读取策略失败，请重试");
 			const items = response.data?.items || [];
 			setPlans(items);
 			setMethod(response.data?.method || null);
+			setNow(new Date());
+			setLoadError("");
 			const needsInitialAnalysis = items.length > 0 && items.some(item =>
 				!item.latest_analysis
 				|| !item.latest_analysis.execution_steps?.length
@@ -268,13 +283,15 @@ export default function UnwindTrackingPanel() {
 			);
 			if (allowInitialRefresh && needsInitialAnalysis && !autoRefreshAttempted.current) {
 				autoRefreshAttempted.current = true;
-				const refreshed = await refreshUnwindPlans();
+				const refreshed = await refreshUnwindExecution();
 				if (refreshed.data.total > 0)
 					await loadData(false);
 			}
 		}
 		catch (error: any) {
-			message.error(await getErrorMessage(error, "加载解套跟踪失败"));
+			const detail = await getErrorMessage(error, "加载解套跟踪失败");
+			setLoadError(detail);
+			message.error(detail);
 		}
 		finally {
 			setLoading(false);
@@ -283,19 +300,26 @@ export default function UnwindTrackingPanel() {
 
 	useEffect(() => {
 		loadData();
+		const timer = window.setInterval(() => setNow(new Date()), 30000);
+		return () => window.clearInterval(timer);
 	}, [loadData]);
 
 	const handleRefresh = async (watchlistId?: number) => {
 		setRefreshing(watchlistId || "all");
 		try {
-			const response = await refreshUnwindPlans(watchlistId);
+			const response = await refreshUnwindExecution(watchlistId);
+			setFailedRefreshIds(previous => [...new Set([
+				...previous.filter(id => watchlistId != null && id !== watchlistId),
+				...(response.data.errors || []).flatMap(error => plans.filter(plan => plan.watchlist_id === error.watchlist_id || plan.stock_code === error.stock_code).map(plan => plan.watchlist_id)),
+			])]);
 			if (response.data.errors?.length)
 				message.warning(`已更新${response.data.total}只，${response.data.errors.length}只行情暂不可用`);
 			else
-				message.success(response.message || "今日分析已更新");
+				message.success("分析已刷新，请核对各股票的策略日期与生成时间");
 			await loadData(false);
 		}
 		catch (error: any) {
+			setFailedRefreshIds(previous => [...new Set([...previous, ...(watchlistId ? [watchlistId] : plans.map(plan => plan.watchlist_id))])]);
 			message.error(await getErrorMessage(error, "刷新失败"));
 		}
 		finally {
@@ -304,7 +328,7 @@ export default function UnwindTrackingPanel() {
 	};
 
 	const openTrade = (plan: UnwindPlan, side: "sell" | "buy") => {
-		const analysis = plan.latest_analysis;
+		const analysis = activeUnwindAnalysis(plan);
 		const lotSize = analysis?.lot_size || 100;
 		form.setFieldsValue({
 			shares: side === "sell" ? (analysis?.sell_shares || lotSize) : plan.open_sold_shares,
@@ -364,11 +388,21 @@ export default function UnwindTrackingPanel() {
 
 	return (
 		<div style={{ marginTop: 20 }}>
+			<StrategyDateOverview
+				plans={plans}
+				now={now}
+				unavailable={Boolean(loadError) || refreshing !== null || failedRefreshIds.length > 0}
+				action={(
+					<Button type="primary" icon={<ReloadOutlined />} loading={refreshing !== null || loading} onClick={() => handleRefresh()}>更新全部策略</Button>
+				)}
+			/>
+			{loadError && <Alert type="error" showIcon message="策略读取失败，暂勿按旧快照操作" description={loadError} action={<Button onClick={() => loadData(false)}>重试读取</Button>} style={{ marginBottom: 16 }} />}
+			<PriceMonitor onPlans={receiveMonitoredPlans} />
 			<Alert
 				showIcon
 				type="warning"
 				icon={<SafetyOutlined />}
-				message={method?.name || "底仓保护反T（先卖后买）"}
+				message={`通用规则 · ${method?.name || "底仓保护反T（先卖后买）"}`}
 				description={(
 					<div>
 						<div>{method?.capital_rule || "先卖已有可用仓位，再用卖出资金低价买回，不追加资金。"}</div>
@@ -393,15 +427,6 @@ export default function UnwindTrackingPanel() {
 						<div style={{ marginTop: 4 }}><Text type="danger">{method?.risk_notice}</Text></div>
 					</div>
 				)}
-				action={(
-					<Button
-						icon={<ReloadOutlined />}
-						loading={refreshing === "all"}
-						onClick={() => handleRefresh()}
-					>
-						刷新全部
-					</Button>
-				)}
 				style={{ borderRadius: 10, marginBottom: 16 }}
 			/>
 
@@ -423,7 +448,11 @@ export default function UnwindTrackingPanel() {
 				: (
 					<Space direction="vertical" size={16} style={{ width: "100%" }}>
 						{plans.map((plan) => {
-							const analysis = plan.latest_analysis;
+							const analysis = activeUnwindAnalysis(plan);
+							const time = strategyTime(analysis, now);
+							const quote = freshUnwindQuote(plan, now);
+							const quoteAt = quoteTimestamp(plan.execution?.signal.quote?.as_of);
+							const unavailable = Boolean(loadError) || failedRefreshIds.includes(plan.watchlist_id) || refreshing === "all" || refreshing === plan.watchlist_id;
 							const currencySymbol = planCurrencySymbol(plan);
 							const lotSize = analysis?.lot_size || 100;
 							const pnl = analysis?.pnl_pct ?? 0;
@@ -439,7 +468,12 @@ export default function UnwindTrackingPanel() {
 											<SwapOutlined style={{ color: "#722ed1" }} />
 											<Text strong style={{ fontSize: 16 }}>{plan.stock_name}</Text>
 											<Text type="secondary">{plan.stock_code}</Text>
-											{analysis && <Tag color={decisionColors[analysis.decision] || "blue"}>{analysis.decision_label}</Tag>}
+											{analysis && (
+												<Tag color={time.current && !unavailable ? decisionColors[analysis.decision] || "blue" : "default"}>
+													{!time.current || unavailable ? "快照判断：" : ""}
+													{analysis.decision_label}
+												</Tag>
+											)}
 											{analysis?.position_mode_label && <Tag>{analysis.position_mode_label}</Tag>}
 											{plan.open_sold_shares > 0 && (
 												<Tag color="geekblue">
@@ -461,10 +495,12 @@ export default function UnwindTrackingPanel() {
 										</Button>
 									)}
 								>
+									<StrategyDateStamp plan={plan} now={now} unavailable={unavailable} />
+									{plan.execution && <Alert type={quote ? "info" : "warning"} showIcon style={{ marginBottom: 14 }} message={quote ? `本次监测价 ${money(quote.price, currencySymbol)} · 行情时间 ${beijingTime(quote.at)}` : "盘中报价待更新 / 已过期，不据旧报价操作"} description={`${plan.execution.signal.reason}${quoteAt && !quote ? `；上次行情时间 ${beijingTime(quoteAt)}` : ""}`} />}
 									<Row gutter={[12, 12]}>
 										<Col xs={12} sm={8} md={4}><Statistic title="原始成本" value={plan.baseline_cost_price} precision={2} prefix={currencySymbol} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="有效成本" value={plan.effective_cost} precision={2} prefix={currencySymbol} valueStyle={{ color: "#722ed1" }} /></Col>
-										<Col xs={12} sm={8} md={4}><Statistic title="最新价" value={analysis?.technical.current_price || 0} precision={2} prefix={currencySymbol} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title="分析快照价" value={analysis?.technical.current_price || 0} precision={2} prefix={currencySymbol} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="距有效成本" value={pnl} precision={2} suffix="%" valueStyle={{ color: pnlColor }} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="当前/原始股数" value={`${plan.current_shares}/${plan.baseline_shares}`} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="滚动资金" value={plan.cash_pool} precision={2} prefix={currencySymbol} /></Col>
@@ -534,7 +570,7 @@ export default function UnwindTrackingPanel() {
 													</Row>
 												</div>
 
-												<ExecutionGuide analysis={analysis} />
+												<ExecutionGuide analysis={analysis} historical={!time.current || unavailable} />
 												<div style={{ marginTop: 12 }}><AnalysisDetails analysis={analysis} /></div>
 
 												<Space wrap style={{ marginTop: 14 }}>
@@ -647,9 +683,9 @@ export default function UnwindTrackingPanel() {
 							type={tradeTarget.side === "sell" ? "warning" : "info"}
 							showIcon
 							message={tradeTarget.side === "sell"
-								? tradeTarget.plan.latest_analysis?.position_mode === "ONE_LOT_FULL_ROTATION"
+								? activeUnwindAnalysis(tradeTarget.plan)?.position_mode === "ONE_LOT_FULL_ROTATION"
 									? "只记录已经实际成交的卖单；一手整手回转会暂时清空该股票，存在卖出后踏空风险。"
-									: `只记录已经实际成交的卖单；系统将至少保留${tradeTarget.plan.latest_analysis?.core_floor_shares || 0}股。`
+									: `只记录已经实际成交的卖单；系统将至少保留${activeUnwindAnalysis(tradeTarget.plan)?.core_floor_shares || 0}股。`
 								: `只能使用滚动资金池${money(tradeTarget.plan.cash_pool, planCurrencySymbol(tradeTarget.plan))}，最多买回${tradeTarget.plan.open_sold_shares}股。`}
 							style={{ marginBottom: 16 }}
 						/>
@@ -662,15 +698,15 @@ export default function UnwindTrackingPanel() {
 										rules={[
 											{ required: true, message: "请输入股数" },
 											{
-												validator: (_, value) => value > 0 && value % (tradeTarget.plan.latest_analysis?.lot_size || 100) === 0
+												validator: (_, value) => value > 0 && value % (activeUnwindAnalysis(tradeTarget.plan)?.lot_size || 100) === 0
 													? Promise.resolve()
-													: Promise.reject(new Error(`必须为${tradeTarget.plan.latest_analysis?.lot_size || 100}股的整数倍`)),
+													: Promise.reject(new Error(`必须为${activeUnwindAnalysis(tradeTarget.plan)?.lot_size || 100}股的整数倍`)),
 											},
 										]}
 									>
 										<InputNumber
-											min={tradeTarget.plan.latest_analysis?.lot_size || 100}
-											step={tradeTarget.plan.latest_analysis?.lot_size || 100}
+											min={activeUnwindAnalysis(tradeTarget.plan)?.lot_size || 100}
+											step={activeUnwindAnalysis(tradeTarget.plan)?.lot_size || 100}
 											precision={0}
 											style={{ width: "100%" }}
 										/>

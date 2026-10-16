@@ -11,6 +11,12 @@ vi.mock("#src/components/WatchlistModal", () => ({ default: () => null }));
 vi.mock("#src/components/WatchlistPanel", () => ({ default: () => <div>自选内容</div> }));
 vi.mock("#src/components/PortfolioAnalysisPanel", () => ({ default: () => <div>持仓内容</div> }));
 vi.mock("#src/components/UnwindTrackingPanel", () => ({ default: () => <div>解套内容</div> }));
+vi.mock("#src/components/WildmanDailyPanel", () => ({ default: ({ onOpenLedger }: { onOpenLedger: () => void }) => (
+	<div>
+		野人每日指导内容
+		<button onClick={onOpenLedger}>打开解套成交账本</button>
+	</div>
+) }));
 vi.mock("#src/components/StrategyPerformanceDashboard", () => ({ default: () => <div>绩效内容</div> }));
 function report(extra: Partial<AnalysisData> = {}): AnalysisData {
 	return { stock_code: "301566", stock_name: "测试股票", market: "a", market_date: "2026-09-23", action: "观望", confidence: 76, score: 64, risk_level: "高", summary: "研究结论测试", strategies_hit: 0, strategies_total: 10, llm_enhanced: true, analyzed_at: "2026-09-23 14:34:15", current_price: 27.29, change_pct: 0, strategy_analysis: [], buy_point: { price_low: 0, price_high: 0, description: "" }, sell_point: { price_low: 0, price_high: 0, description: "" }, stop_loss: { price: 0, description: "" }, position_advice: "等待", ...extra };
@@ -30,6 +36,14 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 describe("stock analysis presentation and request lifecycle", () => {
+	it("opens the wildman daily tab through a shareable link and returns to the existing trade ledger", () => {
+		window.history.replaceState({}, "", "/#/short-term-strategy/stock-analysis?tab=wildman");
+		render(<StockAnalysisPage />);
+		expect(screen.getByText("野人每日指导内容")).toBeInTheDocument();
+		expect(screen.getByRole("tab", { name: "跟踪与持仓" })).toHaveAttribute("aria-selected", "true");
+		fireEvent.click(screen.getByText("打开解套成交账本"));
+		expect(screen.getByText("解套内容")).toBeInTheDocument();
+	});
 	it("shows six research layers and distinguishes holder concentration from cost and crowding", () => {
 		const data = report({ research_report: {
 			version: "stock-research-v1",
