@@ -61,10 +61,10 @@ describe("institutional research", () => {
 		vi.mocked(fetchInstitutionalResearch).mockResolvedValue({ data: { ...initial, reports: [linked, unrelated] } });
 		vi.mocked(rebuildHoldingAssociations).mockResolvedValue({ status: "started" });
 		mount();
-		expect(await screen.findByText("新易盛 · 偏利空")).toBeInTheDocument();
+		expect(await screen.findByText("新易盛 · 偏空")).toBeInTheDocument();
 		fireEvent.click(screen.getByRole("checkbox", { name: "只看持仓相关" }));
 		expect(screen.queryByRole("button", { name: "不相关的机构消息" })).not.toBeInTheDocument();
-		fireEvent.click(screen.getByRole("button", { name: "查看持仓多空与条件" }));
+		fireEvent.click(screen.getByRole("button", { name: "查看偏向、依据与反转条件" }));
 		expect(await screen.findByText("我的持仓多空分析")).toBeInTheDocument();
 		expect(screen.getByText("系统影响推演")).toBeInTheDocument();
 		expect(screen.getByText("需求落地时存在支持")).toBeInTheDocument();

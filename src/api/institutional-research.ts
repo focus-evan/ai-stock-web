@@ -1,6 +1,18 @@
 import { request } from "#src/utils/request";
 
 export interface ResearchImpact {
+	net_bias?: {
+		direction: "bullish" | "bearish" | "neutral" | "uncertain"
+		horizon: "short_term" | "medium_term" | "long_term"
+		channel: "sentiment_valuation" | "earnings_orders" | "costs" | "liquidity" | "uncertain"
+		strength: "weak" | "moderate" | "strong" | "not_applicable"
+		confidence: "low" | "medium" | "high"
+		reason: string
+		evidence_quote: string
+		reversal_condition: string
+		condition?: string
+		longer_term?: string
+	} | null
 	symbol: string
 	name: string
 	direction: string

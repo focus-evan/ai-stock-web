@@ -21,7 +21,7 @@ export default function InstitutionalHoldingEvidence() {
 						<Space wrap>
 							<Typography.Text strong>{`${h.name} · ${h.symbol}`}</Typography.Text>
 							{Object.entries(impactNames).map(([key, name]) => {
-								const count = h.impacts.filter(i => i.direction === key).length;
+								const count = h.impacts.filter(i => (i.net_bias?.direction ?? i.direction) === key).length;
 								return count ? <Tag key={key}>{`${name} ${count}条`}</Tag> : null;
 							})}
 							{!h.impacts.length && <Tag>暂未发现明确关联</Tag>}

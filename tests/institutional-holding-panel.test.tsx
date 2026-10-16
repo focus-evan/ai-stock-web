@@ -1,5 +1,6 @@
 import { fetchInstitutionalResearch } from "#src/api/institutional-research";
 import InstitutionalHoldingEvidence from "#src/components/institutional-holding-evidence";
+import { impactBiasLabel, ImpactCard } from "#src/components/institutional-holding-evidence/ImpactCard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
@@ -33,4 +34,14 @@ it("does not present failed holdings reads as no bearish exposure", async () => 
 	mount();
 	expect(await screen.findByText("持仓消息读取失败，不能据此判断没有风险")).toBeInTheDocument();
 	expect(screen.queryByText("当前账号没有有效持仓")).not.toBeInTheDocument();
+});
+
+it("leads with the short-term bias while retaining its condition and longer-term counterweight", () => {
+	const impact = { symbol: "sz300502", name: "新易盛", direction: "mixed", relation: "industry_chain", analysis_origin: "system_inference" as const, mechanism: "数据中心监管通过建设节奏影响光模块需求", evidence_quote: "短期算力链偏利空", watch_next: "核验客户建设计划", bull_case: "中长期需求仍有支撑", bear_case: "短期监管风险", net_bias: { direction: "bearish" as const, channel: "sentiment_valuation" as const, horizon: "short_term" as const, strength: "moderate" as const, confidence: "medium" as const, reason: "监管风险先影响短期估值，长期需求不能抵消当前扰动", evidence_quote: "短期算力链偏利空", condition: "数据中心监管限制升级", longer_term: "中长期需求仍有支撑", reversal_condition: "监管缓和且客户建设恢复" } };
+	render(<ImpactCard impact={impact} />);
+	expect(screen.getByText("短期偏空")).toBeInTheDocument();
+	expect(screen.getByText("数据中心监管限制升级")).toBeInTheDocument();
+	expect(screen.getByText("监管缓和且客户建设恢复")).toBeInTheDocument();
+	expect(screen.queryByText("多空并存")).not.toBeInTheDocument();
+	expect(impactBiasLabel({ ...impact, net_bias: null })).toBe("偏向待复核");
 });

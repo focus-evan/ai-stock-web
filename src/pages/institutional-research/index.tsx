@@ -1,7 +1,7 @@
 import type { ResearchImpact, ResearchReport } from "#src/api/institutional-research";
 import { backfillFocusResearch, backfillInstitutionalResearch, backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, rebuildHoldingAssociations, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { BasicContent } from "#src/components/basic-content";
-import { ImpactCard, impactNames } from "#src/components/institutional-holding-evidence/ImpactCard";
+import { impactBiasColor, impactBiasLabel, ImpactCard } from "#src/components/institutional-holding-evidence/ImpactCard";
 import { useUserStore } from "#src/store/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, App, Button, Card, Checkbox, Col, Descriptions, Drawer, Empty, Input, List, Row, Select, Space, Spin, Statistic, Table, Tabs, Tag, Typography } from "antd";
@@ -96,9 +96,9 @@ export default function InstitutionalResearchPage() {
 		{ title: "我的持仓影响", key: "holdings", width: 330, render: (_: unknown, r: ResearchReport) => r.holding_impacts?.length
 			? (
 				<>
-					<Space wrap>{r.holding_impacts.map(i => <Tag key={`${i.symbol}-${i.relation}`} color={i.direction === "bullish" ? "red" : i.direction === "bearish" ? "green" : "default"}>{`${i.name} · ${impactNames[i.direction] || i.direction}`}</Tag>)}</Space>
-					<Paragraph ellipsis={{ rows: 2 }} style={{ marginTop: 8, marginBottom: 0 }}>{r.holding_impacts[0].mechanism}</Paragraph>
-					<Button type="link" onClick={() => setSelected(r.id)}>查看持仓多空与条件</Button>
+					<Space wrap>{r.holding_impacts.map(i => <Tag key={`${i.symbol}-${i.relation}`} color={impactBiasColor(i)} title={i.net_bias?.reason}>{`${i.name} · ${impactBiasLabel(i)}`}</Tag>)}</Space>
+					<Paragraph ellipsis={{ rows: 2 }} style={{ marginTop: 8, marginBottom: 0 }}>{r.holding_impacts[0].net_bias?.reason || r.holding_impacts[0].mechanism}</Paragraph>
+					<Button type="link" onClick={() => setSelected(r.id)}>查看偏向、依据与反转条件</Button>
 				</>
 			)
 			: <Text type="secondary">{{ unavailable: "持仓读取失败", no_positions: "当前无有效持仓", no_match: "已分析，暂未发现明确关联", pending: "待更新持仓关联", matched: "—" }[r.holding_impact_status || "pending"]}</Text> },
@@ -255,7 +255,7 @@ export default function InstitutionalResearchPage() {
 																		{" "}
 																		{i.symbol}
 																	</Text>
-																	{direction(i.direction)}
+																	<Tag color={impactBiasColor(i)}>{impactBiasLabel(i)}</Tag>
 																	<Text>{i.mechanism}</Text>
 																</Space>
 															</List.Item>
