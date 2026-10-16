@@ -4,7 +4,6 @@ import {
 	fetchReviews,
 	triggerReview,
 } from "#src/api/portfolio";
-
 import {
 	BookOutlined,
 	BulbOutlined,
@@ -20,6 +19,7 @@ import {
 	TrophyOutlined,
 	WarningOutlined,
 } from "@ant-design/icons";
+
 import {
 	Button,
 	Card,
@@ -38,6 +38,7 @@ import {
 	Typography,
 } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { meanReviewScore, reviewRatingLabel } from "./review-status";
 import "#src/pages/short-term-strategy/strategy-visuals.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -290,16 +291,15 @@ export default function PortfolioReview() {
 	const strategyStats = useMemo(() => {
 		const stats: Record<string, {
 			count: number
-			avgScore: number
+			avgScore: number | null
 			totalProfit: number
 			latestDate: string
 		}> = {};
 		for (const [type, items] of groupedReviews) {
-			const totalScore = items.reduce((acc, r) => acc + (r.overall_score || 0), 0);
 			const totalProfit = items.reduce((acc, r) => acc + (r.daily_profit || 0), 0);
 			stats[type] = {
 				count: items.length,
-				avgScore: items.length > 0 ? Math.round(totalScore / items.length) : 0,
+				avgScore: meanReviewScore(items),
 				totalProfit: Math.round(totalProfit * 100) / 100,
 				latestDate: items.length > 0 ? items[0].trading_date : "-",
 			};
@@ -461,7 +461,7 @@ function StrategyGroup({
 }: {
 	strategyType: string
 	reviews: ReviewItem[]
-	stats: { count: number, avgScore: number, totalProfit: number, latestDate: string }
+	stats: { count: number, avgScore: number | null, totalProfit: number, latestDate: string }
 	totalCount: number
 	currentPage: number
 	onPageChange: (page: number) => void
@@ -518,7 +518,7 @@ function StrategyGroup({
 							<div style={{ color: "rgba(255,255,255,0.7)", fontSize: 11 }}>平均评分</div>
 							<div style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1.2 }}>
 								<StarFilled style={{ color: "#ffd700", marginRight: 4, fontSize: 14 }} />
-								{["adaptive_confluence", "industry_ai"].includes(strategyType) ? "未评级" : stats.avgScore}
+								{stats.avgScore ?? "未评级"}
 							</div>
 						</div>
 						<div style={{
@@ -624,12 +624,12 @@ function ReviewRow({
 						<Text strong>{review.trading_date}</Text>
 					</Space>
 					<Tag
-						color={["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "default" : score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
+						color={reviewRatingLabel(review) ? "default" : score >= 80 ? "success" : score >= 60 ? "processing" : score >= 40 ? "warning" : "error"}
 						style={{ borderRadius: 12, minWidth: 70, textAlign: "center" }}
 					>
 						<StarFilled style={{ marginRight: 2 }} />
 						{" "}
-						{["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "前向验证 · 未评级" : `${score}分 · ${scoreLevel(score)}`}
+						{reviewRatingLabel(review) ?? `${score}分 · ${scoreLevel(score)}`}
 					</Tag>
 				</Space>
 				<Space size="large">
@@ -690,17 +690,19 @@ function ReviewDetail({ review }: { review: ReviewItem }) {
 				<Col xs={6}>
 					<Statistic
 						title="综合评级"
-						value={["adaptive_confluence", "industry_ai"].includes(review.strategy_type) ? "未评级" : scoreLevel(score)}
+						value={reviewRatingLabel(review) ?? scoreLevel(score)}
 						valueStyle={{ color: scoreColor(score), fontSize: 18, fontWeight: 700 }}
 						prefix={<TrophyOutlined />}
 					/>
-					<Progress
-						percent={score}
-						showInfo={false}
-						strokeColor={scoreColor(score)}
-						size="small"
-						style={{ marginTop: 4 }}
-					/>
+					{!reviewRatingLabel(review) && (
+						<Progress
+							percent={score}
+							showInfo={false}
+							strokeColor={scoreColor(score)}
+							size="small"
+							style={{ marginTop: 4 }}
+						/>
+					)}
 				</Col>
 				<Col xs={6}>
 					<Statistic

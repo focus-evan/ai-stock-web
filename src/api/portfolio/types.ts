@@ -164,6 +164,7 @@ export interface PortfolioResponse {
 
 /** 复盘记录 */
 export interface ReviewItem {
+	strategy_effectiveness?: { status?: string, scored?: boolean } | null
 	id?: number
 	portfolio_id: number
 	strategy_type: "dragon_head" | "emotion_relay" | "event_driven" | "breakthrough" | "volume_price" | "overnight" | "moving_average" | "northbound" | "trend_momentum" | "combined" | "adaptive_confluence" | "industry_ai"

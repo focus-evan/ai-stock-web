@@ -12,7 +12,6 @@ import {
 	ClockCircleOutlined,
 	ExperimentOutlined,
 	ReloadOutlined,
-	SafetyCertificateOutlined,
 	TrophyFilled,
 	WarningOutlined,
 } from "@ant-design/icons";
@@ -63,6 +62,18 @@ type TrustedDashboardItem = StrategyPerformanceDashboardItem & {
 		hard_data_quality_issue_count?: number
 		cash_residual?: number
 		asset_residual?: number
+		account_return_verified?: boolean
+		drawdown_verified?: boolean
+		summary_quality_issue_count?: number
+		historical_quality_issue_count?: number
+		forward_validation?: {
+			start_date?: string | null
+			account_return_pct?: number | null
+			max_drawdown_pct?: number | null
+			data_quality_passed?: boolean
+			drawdown_verified?: boolean
+			clean_forward_days?: number
+		}
 	}
 	trade: StrategyPerformanceDashboardItem["trade"] & {
 		estimated_net_avg_return_pct?: number
@@ -87,6 +98,8 @@ type TrustedDashboard = DashboardData & {
 	trusted_strategy_count: number
 	canary_strategy_count: number
 	disabled_strategy_count: number
+	observe_strategy_count?: number
+	total_forward_samples?: number
 	statistical_best_strategy_type?: string | null
 	strategies: TrustedDashboardItem[]
 	methodology: DashboardData["methodology"] & {
@@ -121,7 +134,7 @@ const TREND_LABELS: Record<string, { label: string, color: string }> = {
 
 const TRUST_LABELS: Record<TrustStatus, { label: string, color: string }> = {
 	disabled: { label: "禁用跟投", color: "red" },
-	observe: { label: "仅观察", color: "gold" },
+	observe: { label: "验证不足 · 观察中", color: "gold" },
 	canary: { label: "小仓验证", color: "blue" },
 	trusted: { label: "可跟投", color: "green" },
 };
@@ -428,6 +441,21 @@ export default function StrategyPerformanceDashboard() {
 				const detail = (
 					<Space direction="vertical" style={{ maxWidth: 360 }}>
 						<Text strong>准入检查</Text>
+						{!!paper?.historical_quality_issue_count && (
+							<Text type="warning">
+								历史账户另有
+								{paper.historical_quality_issue_count}
+								{" "}
+								项核验问题，历史记录保留且不计入新账户验证。
+							</Text>
+						)}
+						{!!paper?.summary_quality_issue_count && (
+							<Text type="warning">
+								{paper.summary_quality_issue_count}
+								{" "}
+								个日汇总未通过核验，相关回撤不用于跟投准入。
+							</Text>
+						)}
 						{(item.trust_failures?.length ? item.trust_failures : [item.trust_reason]).map(reason => <Text key={reason}>{reason}</Text>)}
 						{Object.entries(paper?.data_quality_issue_counts || {}).map(([code, count]) => (
 							<Text key={code}>
@@ -570,24 +598,34 @@ export default function StrategyPerformanceDashboard() {
 				const paper = item.paper_validation;
 				if (!paper?.has_paper_account)
 					return <Tag>缺少账户</Tag>;
+				const forward = paper.forward_validation;
+				const forwardPassed = forward?.data_quality_passed === true;
+				const verifiedReturn = forwardPassed ? forward?.account_return_pct : paper.account_return_verified === false ? null : paper.account_return_pct;
+				const verifiedDrawdown = forwardPassed ? forward?.drawdown_verified ? forward.max_drawdown_pct : null : paper.drawdown_verified === false ? null : paper.max_drawdown_pct;
 				return (
 					<Space direction="vertical" size={2}>
 						<Space size={4}>
 							<Tag color={paper.data_quality_status === "insufficient_evidence" ? "gold" : paper.data_quality_status === "no_trades" || paper.data_quality_passed == null ? "default" : paper.data_quality_passed ? "green" : "red"}>
 								{paper.data_quality_status === "insufficient_evidence" ? "证据不足" : paper.data_quality_status === "no_trades" ? "尚无实测交易" : paper.data_quality_passed == null ? "待核验" : paper.data_quality_passed ? "数据通过" : "数据异常"}
 							</Tag>
-							<Text style={{ color: returnColor(paper.account_return_pct) }}>
-								{formatPct(paper.account_return_pct)}
+							<Text style={{ color: returnColor(verifiedReturn) }}>
+								{verifiedReturn == null ? "收益未核验" : formatPct(verifiedReturn)}
 							</Text>
 						</Space>
 						<Text type="secondary" style={{ fontSize: 12 }}>
 							回撤
 							{" "}
-							{formatPct(paper.max_drawdown_pct)}
+							{verifiedDrawdown == null ? "待核验" : formatPct(verifiedDrawdown)}
 							{" · 已验证交易日 "}
 							{paper.clean_forward_days ?? 0}
 							天
 						</Text>
+						{forward?.start_date && (
+							<Text type="secondary" style={{ fontSize: 12 }}>
+								前向验证起点：
+								{forward.start_date}
+							</Text>
+						)}
 					</Space>
 				);
 			},
@@ -784,8 +822,9 @@ export default function StrategyPerformanceDashboard() {
 							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="可跟投" value={data.trusted_strategy_count} suffix="个战法" prefix={<CheckCircleOutlined />} valueStyle={{ color: data.trusted_strategy_count > 0 ? "#389e0d" : "#8c8c8c" }} /></Card></Col>
 							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="小仓验证" value={data.canary_strategy_count} suffix="个战法" prefix={<ExperimentOutlined />} valueStyle={{ color: "#1677ff" }} /></Card></Col>
 							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="禁用跟投" value={data.disabled_strategy_count} suffix="个战法" prefix={<WarningOutlined />} valueStyle={{ color: data.disabled_strategy_count > 0 ? "#cf1322" : undefined }} /></Card></Col>
-							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="成熟交易样本" value={data.total_trade_samples} prefix={<SafetyCertificateOutlined />} /></Card></Col>
+							<Col xs={12} lg={6}><Card className="app-metric-card" size="small"><Statistic title="验证不足 · 观察中" value={data.observe_strategy_count ?? data.strategies.filter(item => item.trust_status === "observe").length} suffix="个战法" prefix={<ClockCircleOutlined />} /></Card></Col>
 						</Row>
+						<Alert type="info" showIcon message={`成熟推荐样本 ${data.total_trade_samples} 个，其中前向留存 ${data.total_forward_samples ?? 0} 个。其余为历史研究样本；推荐收益不等于实际成交收益，跟投仍需独立账户验证。`} />
 
 						<Row gutter={[16, 16]}>
 							<Col xs={24} xl={14}>
