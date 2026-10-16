@@ -1,0 +1,33 @@
+.unwind-date-overview,
+.unwind-strategy-time {
+	--date-accent: #9a4d08;
+	--date-bg: #fff7e6;
+	--date-border: #ffd591;
+	color: #382814;
+	background: var(--date-bg);
+	border: 1px solid var(--date-border);
+	border-left: 5px solid var(--date-accent);
+	border-radius: 12px;
+	padding: 18px 20px;
+	margin-bottom: 16px;
+}
+.unwind-date-current { --date-accent: #0958d9; --date-bg: #f0f5ff; --date-border: #adc6ff; color: #152d50; }
+.unwind-date-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.unwind-date-eyebrow { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.unwind-date-value { display: block; color: var(--date-accent); font-size: clamp(23px, 3vw, 30px); font-weight: 800; line-height: 1.3; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.unwind-date-status { display: inline-block; border-radius: 6px; padding: 4px 9px; background: var(--date-accent); color: #fff; font-size: 13px; font-weight: 700; }
+.unwind-date-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 12px; font-size: 13px; }
+.unwind-date-meta strong { font-variant-numeric: tabular-nums; }
+.unwind-date-note { margin: 10px 0 0; font-size: 13px; line-height: 1.7; }
+.unwind-strategy-time { padding: 14px 16px; }
+.unwind-strategy-time .unwind-date-value { font-size: 24px; }
+@media (max-width: 575px) {
+	.unwind-date-overview, .unwind-strategy-time { padding: 14px 12px; }
+	.unwind-date-meta { flex-direction: column; gap: 5px; }
+}
+.unwind-price-monitor { padding: 16px 20px; border: 1px solid #b7d4ff; border-radius: 12px; background: #fff; color: #152d50; margin-bottom: 16px; }
+.unwind-price-hit { border: 1px solid #ffd591; background: #fffaf0; color: #382814; border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+.unwind-price-hit p { margin: 8px 0 0; line-height: 1.65; }
+.unwind-global-monitor-button { position: fixed; right: 24px; bottom: 24px; z-index: 1001; box-shadow: 0 4px 16px #17223426; border-color: #91caff; color: #0958d9; }
+.unwind-global-alert .ant-modal-title { color: #a8071a; font-size: 20px; }
+@media (max-width: 575px) { .unwind-global-monitor-button { right: 12px; bottom: 16px; } }

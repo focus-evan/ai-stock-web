@@ -1,5 +1,6 @@
 import { AntdApp } from "#src/components/antd-app";
 import { JSSThemeProvider } from "#src/components/jss-theme-provider";
+import GlobalPriceMonitor from "#src/components/UnwindTrackingPanel/GlobalPriceMonitor";
 import { usePreferences } from "#src/hooks/use-preferences";
 import { useScrollToHash } from "#src/hooks/use-scroll-to-hash";
 import { AppVersionMonitor } from "#src/layout/widgets/version-monitor";
@@ -149,6 +150,7 @@ export default function App() {
 			>
 				<AntdApp>
 					<JSSThemeProvider>
+						<GlobalPriceMonitor />
 						<Suspense fallback={null}>
 							{enableCheckUpdates ? <AppVersionMonitor checkUpdatesInterval={checkUpdatesInterval} /> : null}
 							<RouterProvider router={router} />

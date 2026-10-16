@@ -7,6 +7,7 @@ import StrategyPerformanceDashboard from "#src/components/StrategyPerformanceDas
 import UnwindTrackingPanel from "#src/components/UnwindTrackingPanel";
 import WatchlistModal from "#src/components/WatchlistModal";
 import WatchlistPanel from "#src/components/WatchlistPanel";
+import WildmanDailyPanel from "#src/components/WildmanDailyPanel";
 import { DeleteOutlined, HistoryOutlined, MoreOutlined, ReloadOutlined, SearchOutlined, StarOutlined } from "@ant-design/icons";
 import { Alert, Button, Drawer, Dropdown, Empty, Grid, Input, message, Modal, Pagination, Segmented, Skeleton, Space, Spin, Table, Tabs, Tag } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -23,12 +24,17 @@ type HistoryRecord = Omit<Partial<AnalysisData>, "llm_enhanced"> & {
 	llm_enhanced?: boolean | number
 	research_overview?: ResearchOverview
 };
-type TabKey = "analyze" | "history" | "performance" | "watchlist" | "portfolio" | "unwind";
+type TabKey = "analyze" | "history" | "performance" | "watchlist" | "portfolio" | "unwind" | "wildman";
 const storageKey = "stock_analysis_active_tab";
-const validTabs: TabKey[] = ["analyze", "history", "performance", "watchlist", "portfolio", "unwind"];
+const validTabs: TabKey[] = ["analyze", "history", "performance", "watchlist", "portfolio", "unwind", "wildman"];
+function workspaceQuery() {
+	const hashQuery = window.location.hash.indexOf("?");
+	return new URLSearchParams(hashQuery >= 0 ? window.location.hash.slice(hashQuery + 1) : window.location.search);
+}
 function initialTab(): TabKey {
-	if (new URLSearchParams(window.location.search).get("tab") === "history")
-		return "history";
+	const requested = workspaceQuery().get("tab") as TabKey;
+	if (validTabs.includes(requested))
+		return requested;
 	try {
 		const saved = sessionStorage.getItem(storageKey) as TabKey;
 		return validTabs.includes(saved) ? saved : "analyze";
@@ -389,12 +395,12 @@ export default function StockAnalysisPage() {
 	const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
 	const [savingHistory, setSavingHistory] = useState(false);
 	const savingHistoryRequest = useRef(false);
-	const query = new URLSearchParams(window.location.search);
+	const query = workspaceQuery();
 	const initialCode = query.get("stock_code") || "";
 	const initialId = Number(query.get("analysis_id"));
 	const running = useRef(false);
 	const analysisRequest = useRef(0);
-	const workspace = activeTab === "performance" ? "performance" : ["watchlist", "portfolio", "unwind"].includes(activeTab) ? "tracking" : "research";
+	const workspace = activeTab === "performance" ? "performance" : ["watchlist", "portfolio", "unwind", "wildman"].includes(activeTab) ? "tracking" : "research";
 	const selectTab = useCallback((key: TabKey) => {
 		setActiveTab(key);
 		try {
@@ -491,7 +497,7 @@ export default function StockAnalysisPage() {
 					<span className="sa-muted">{loading ? `正在分析 ${submittedStock} · 已等待 ${elapsed} 秒` : "研究结果与历史快照"}</span>
 				</div>
 			)}
-			{workspace === "tracking" && <div className="sa-subnav"><Segmented value={activeTab} onChange={key => selectTab(key as TabKey)} options={[{ value: "watchlist", label: "自选盯盘" }, { value: "portfolio", label: "整体持仓" }, { value: "unwind", label: "解套跟踪" }]} /></div>}
+			{workspace === "tracking" && <div className="sa-subnav"><Segmented value={activeTab} onChange={key => selectTab(key as TabKey)} options={[{ value: "watchlist", label: "自选盯盘" }, { value: "portfolio", label: "整体持仓" }, { value: "unwind", label: "解套跟踪" }, { value: "wildman", label: "野人每日解套" }]} /></div>}
 			{activeTab === "analyze" && (
 				<>
 					{loading && (
@@ -551,6 +557,7 @@ export default function StockAnalysisPage() {
 			{activeTab === "watchlist" && <WatchlistPanel />}
 			{activeTab === "portfolio" && <PortfolioAnalysisPanel />}
 			{activeTab === "unwind" && <UnwindTrackingPanel />}
+			{activeTab === "wildman" && <WildmanDailyPanel onOpenLedger={() => selectTab("unwind")} />}
 			{activeTab === "performance" && <StrategyPerformanceDashboard />}
 		</AnalysisSurface>
 	);

@@ -1383,6 +1383,12 @@ export interface UnwindExecutionStep {
 }
 
 export interface UnwindAnalysis {
+	trading_date?: string
+	basis_date?: string
+	valid_until?: string
+	baseline_shares?: number
+	baseline_cost_price?: number
+	confirmation?: string
 	strategy_version?: string
 	method: string
 	capital_rule: string
@@ -1495,6 +1501,8 @@ export interface UnwindSignal {
 	checked_at?: string
 	valid_until?: string
 	phase?: string
+	account_version?: string
+	invalidated?: boolean
 	invalid_conditions?: string[]
 	requires_manual_confirmation?: boolean
 	quote?: { price?: number, bid?: number, ask?: number, as_of?: string, source?: string }
@@ -1507,6 +1515,15 @@ export interface UnwindExecution {
 	review?: { reviewed_at: string, trade_count: number, fees: number, realized_reduction: number, pending_buyback_shares: number, note: string } | null
 	server_time?: string
 	refresh_seconds?: number
+}
+
+export function refreshUnwindExecution(watchlistId?: number) {
+	return request.post("strategy/combined/watchlist/unwind-plans/execution/refresh", {
+		searchParams: watchlistId ? { watchlist_id: watchlistId } : {},
+		timeout: 90000,
+		retry: 0,
+	})
+		.json<{ status: "success" | "partial", data: { total: number, errors: Array<{ watchlist_id?: number, stock_code?: string, message: string }> } }>();
 }
 
 export interface UnwindMethod {

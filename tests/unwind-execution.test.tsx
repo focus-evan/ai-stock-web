@@ -7,7 +7,7 @@ import { effectiveSignal } from "../src/components/UnwindTrackingPanel/execution
 import ExecutionStatus from "../src/components/UnwindTrackingPanel/ExecutionStatus";
 
 const at = "2026-10-15T10:10:00+08:00";
-vi.mock("#src/api/strategy", () => ({ fetchUnwindPlans: vi.fn(), recordUnwindTrade: vi.fn(), refreshUnwindPlans: vi.fn() }));
+vi.mock("#src/api/strategy", () => ({ fetchUnwindPlans: vi.fn(), recordUnwindTrade: vi.fn(), refreshUnwindPlans: vi.fn(), refreshUnwindExecution: vi.fn() }));
 const fixture: UnwindExecution = {
 	server_time: at,
 	signal: { action: "SELL", label: "卖出", reason: "两次行情已确认", phase: "intraday", shares: 200, limit_price: 11, checked_at: at, valid_until: "2026-10-15T10:12:00+08:00", quote: { price: 11.1, as_of: at, source: "fixture" }, invalid_conditions: ["突破11.5取消卖出"] },
