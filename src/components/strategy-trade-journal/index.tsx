@@ -1,8 +1,9 @@
 import type { StrategyFollowType, StrategyTradeCycle, StrategyTradeJournalData, StrategyTradeStatus } from "#src/api/strategy";
 import { fetchStrategyTradeJournal } from "#src/api/strategy";
 import { ReloadOutlined } from "@ant-design/icons";
-import { Alert, Button, Empty, Segmented, Space, Table, Tag, Tooltip, Typography } from "antd";
+import { Alert, Button, Empty, Grid, Segmented, Space, Table, Tag, Tooltip, Typography } from "antd";
 import { useEffect, useState } from "react";
+import ClosedPnl from "./closed-pnl";
 
 const { Text } = Typography;
 const labels = { holding: "持仓中", partial: "部分卖出", closed: "已清仓", incomplete: "买卖账目不完整" };
@@ -12,6 +13,7 @@ const quantityText = (value: number | null) => value == null ? "未记录" : `${
 const reasonText = (value: string | null) => value || "未记录";
 
 export default function StrategyTradeJournal({ strategyType }: { strategyType: StrategyFollowType }) {
+	const screens = Grid.useBreakpoint();
 	const [status, setStatus] = useState<StrategyTradeStatus>("all");
 	const [page, setPage] = useState(1);
 	const [revision, setRevision] = useState(0);
@@ -42,7 +44,7 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 
 	const reasonCell = (value: string) => <div title={value} style={{ whiteSpace: "pre-wrap", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{value}</div>;
 	const columns = [
-		{ title: "股票", key: "stock", width: 170, render: (_: unknown, item: StrategyTradeCycle) => (
+		{ title: "股票", key: "stock", width: 150, fixed: screens.md ? "left" as const : undefined, render: (_: unknown, item: StrategyTradeCycle) => (
 			<>
 				<Text strong>{item.stock_name}</Text>
 				<br />
@@ -51,6 +53,7 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 				<Text type="secondary" style={{ fontSize: 12 }}>{item.portfolio_name}</Text>
 			</>
 		) },
+		{ title: "单股清仓盈亏", key: "pnl", width: 210, fixed: screens.md ? "left" as const : undefined, render: (_: unknown, item: StrategyTradeCycle) => <ClosedPnl item={item} /> },
 		{ title: "状态", key: "status", width: 180, render: (_: unknown, item: StrategyTradeCycle) => (
 			<Space direction="vertical" size={4}>
 				<Tag color={colors[item.status]}>{labels[item.status]}</Tag>
@@ -92,7 +95,7 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 				<Button icon={<ReloadOutlined />} loading={loading} onClick={() => setRevision(value => value + 1)}>刷新交易记录</Button>
 			</Space>
 			<Text type="secondary" style={{ display: "block", marginBottom: 12 }}>
-				每条记录对应一次建仓到清仓。分批成交时显示首次买入日期、最近卖出日期、各方向成交均价和累计股数；展开可查看每笔成交的日期、价格、数量和原因。
+				每条记录对应一次建仓到清仓，盈亏按本轮逐笔买卖金额与留存费用汇总。分批成交显示成交均价和累计股数；展开可查看明细，鼠标停留盈亏可查看计算口径。
 			</Text>
 			{data && (
 				<Space wrap style={{ marginBottom: 12 }}>
@@ -151,7 +154,7 @@ export default function StrategyTradeJournal({ strategyType }: { strategyType: S
 						loading={loading}
 						columns={columns}
 						dataSource={data?.items || []}
-						scroll={{ x: 1670 }}
+						scroll={{ x: 1860 }}
 						locale={{ emptyText: <Empty description={status === "all" ? "暂无实际模拟成交，买入成交后自动记录" : "暂无符合条件的交易记录"} /> }}
 						pagination={{ current: page, pageSize: 20, total: data?.total || 0, showSizeChanger: false, onChange: setPage }}
 						expandable={{

@@ -1850,6 +1850,8 @@ export function triggerStrategyFollowSnapshot(strategyType?: StrategyFollowType)
 export type StrategyTradeStatus = "all" | "holding" | "closed" | "incomplete";
 export type StrategyTradeVerification = "verified" | "unverified" | "anomalous" | "repaired";
 export interface StrategyTradeExecution {
+	amount?: number | null
+	estimated_cost?: number | null
 	trade_id: number
 	direction: "buy" | "sell"
 	date: string | null
@@ -1860,6 +1862,15 @@ export interface StrategyTradeExecution {
 	verification_issue: string | null
 }
 export interface StrategyTradeCycle {
+	pnl?: {
+		basis: "net_estimated_costs" | "gross_costs_missing" | "unavailable"
+		amount: number | null
+		return_pct: number | null
+		gross_profit: number | null
+		estimated_cost: number | null
+		buy_amount: number | null
+		sell_amount: number | null
+	}
 	id: string
 	portfolio_id: number
 	portfolio_name: string

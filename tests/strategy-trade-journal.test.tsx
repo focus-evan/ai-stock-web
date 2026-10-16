@@ -37,6 +37,7 @@ const cycle: StrategyTradeCycle = {
 	sell_count: 1,
 	remaining_quantity: 0,
 	issues: [],
+	pnl: { basis: "net_estimated_costs", amount: 117500, return_pct: 23.18, gross_profit: 118750, estimated_cost: 1250, buy_amount: 506250, sell_amount: 625000 },
 	executions: [
 		{ trade_id: 1, direction: "buy" as const, date: "2026-09-07", price: 10.125, quantity: 50000, verification_status: "verified", verification_issue: null, reason: "回封确认后买入" },
 		{ trade_id: 2, direction: "sell" as const, date: "2026-09-08", price: 12.5, quantity: 50000, verification_status: "verified", verification_issue: null, reason: "承接转弱止盈" },
@@ -62,6 +63,9 @@ describe("strategy executed trade journal", () => {
 		expect(screen.getByText("¥10.1250")).toBeInTheDocument();
 		expect(screen.getByText("¥12.5000")).toBeInTheDocument();
 		expect(screen.getAllByText("50,000 股")).toHaveLength(2);
+		expect(screen.getByRole("columnheader", { name: "单股清仓盈亏" })).toBeInTheDocument();
+		expect(screen.getByText("+¥117,500.00")).toBeInTheDocument();
+		expect(screen.getByText("+23.18%")).toBeInTheDocument();
 		fireEvent.click(screen.getByRole("button", { name: /expand row|展开行/i }));
 		expect(await screen.findByText("剩余持仓：0 股")).toBeInTheDocument();
 		expect(screen.getAllByText("承接转弱止盈")).toHaveLength(2);
@@ -77,6 +81,8 @@ describe("strategy executed trade journal", () => {
 		expect(within(row).getByText("0 股")).toBeInTheDocument();
 		expect(within(row).getByText("—")).toBeInTheDocument();
 		expect(within(row).queryByText("¥0.0000")).not.toBeInTheDocument();
+		expect(within(row).getByText("未清仓，暂不结算本轮盈亏")).toBeInTheDocument();
+		expect(within(row).queryByText("+¥117,500.00")).not.toBeInTheDocument();
 	});
 
 	it("flags the original anomalous record without inventing a corrected fill", async () => {
@@ -87,6 +93,8 @@ describe("strategy executed trade journal", () => {
 		expect(screen.getByText("¥2.0000")).toBeInTheDocument();
 		expect(screen.getByText("硬性止盈：盈利245.5%")).toBeInTheDocument();
 		expect(screen.getAllByText("50,000 股")).toHaveLength(2);
+		expect(screen.getByText("盈亏待核验")).toBeInTheDocument();
+		expect(screen.queryByText("+¥117,500.00")).not.toBeInTheDocument();
 	});
 
 	it("uses the executed journal by default for every strategy", async () => {
@@ -107,6 +115,19 @@ describe("strategy executed trade journal", () => {
 		expect(await screen.findByText("账目已修复，不计战绩")).toBeInTheDocument();
 		expect(screen.getByText("异常账目已修复，原始记录已归档")).toBeInTheDocument();
 		expect(screen.queryByText("缺少原始成交证据")).not.toBeInTheDocument();
+		expect(screen.getByText("修复账目 · 不计战绩")).toBeInTheDocument();
+	});
+
+	it("highlights a closed loss and distinguishes fee-incomplete book profit", async () => {
+		fetchJournal.mockResolvedValue(response([{ ...cycle, pnl: { ...cycle.pnl!, amount: -13462.75, return_pct: -4.34 } }]));
+		const view = render(<StrategyTradeJournal strategyType="overnight" />);
+		expect(await screen.findByText("−¥13,462.75")).toBeInTheDocument();
+		expect(screen.getByText("-4.34%")).toBeInTheDocument();
+		view.unmount();
+		fetchJournal.mockResolvedValue(response([{ ...cycle, verification_status: "unverified", performance_eligible: false, pnl: { ...cycle.pnl!, basis: "gross_costs_missing", estimated_cost: null } }]));
+		render(<StrategyTradeJournal strategyType="overnight" />);
+		expect(await screen.findByText("清仓账面盈亏")).toBeInTheDocument();
+		expect(screen.getByText("费用未齐 · 待核验")).toBeInTheDocument();
 	});
 
 	it("does not let a late response from another strategy replace current records", async () => {
