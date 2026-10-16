@@ -8,20 +8,25 @@ const money = (value: number | null) => value == null || !Number.isFinite(value)
 
 export default function SellCard({ item, unavailable }: { item: StrategySellRecord, unavailable: boolean }) {
 	const { token } = theme.useToken();
+	const hasProfit = item.profit != null && Number.isFinite(item.profit);
+	const profitable = (item.profit ?? 0) > 0;
+	const color = hasProfit ? (profitable ? red.color : token.colorSuccessText) : token.colorTextSecondary;
+	const borderColor = hasProfit ? (profitable ? token.colorErrorBorder : token.colorSuccessBorder) : token.colorBorderSecondary;
+	const emphasis = { ...red, color };
 	const policy = item.exit_policy;
 	const quantity = item.sell_quantity;
 	const lots = quantity == null ? "未记录" : `${(quantity / 100).toLocaleString("zh-CN", { maximumFractionDigits: 2 })} 手（${quantity.toLocaleString("zh-CN")} 股）`;
 	return (
-		<article style={{ padding: 16, background: token.colorBgContainer, border: `1px solid ${token.colorErrorBorder}`, borderRadius: 10, minWidth: 0, overflowWrap: "anywhere" }}>
-			<Text strong style={{ color: "#cf1322", fontSize: 21 }}>{`${names[item.strategy_type] || item.strategy_type} · ${item.stock_name}（${item.stock_code}）`}</Text>
-			<div style={red}>{`卖出价格 ${price(item.sell_price)}`}</div>
-			<div style={red}>{`卖出 ${lots}`}</div>
+		<article style={{ padding: 16, background: token.colorBgContainer, border: `1px solid ${borderColor}`, borderRadius: 10, minWidth: 0, overflowWrap: "anywhere" }}>
+			<Text strong style={{ color, fontSize: 21 }}>{`${names[item.strategy_type] || item.strategy_type} · ${item.stock_name}（${item.stock_code}）`}</Text>
+			<div style={emphasis}>{`卖出价格 ${price(item.sell_price)}`}</div>
+			<div style={emphasis}>{`卖出 ${lots}`}</div>
 			<Text type="secondary">{`${stamp(item.sold_at || item.sell_date)} · ${item.portfolio_name} · 本笔模拟成交`}</Text>
 			<div style={{ marginTop: 12, whiteSpace: "pre-wrap" }}>
 				<Text strong>卖出理由：</Text>
 				{item.sell_reason || "原始成交未记录原因"}
 			</div>
-			<div style={{ marginTop: 8 }}>{`本笔成交金额 ${money(item.sell_amount)} · 已记录盈亏 ${money(item.profit)} · 已记录收益率 ${item.profit_pct == null ? "未记录" : percent(item.profit_pct)}`}</div>
+			<div style={{ marginTop: 8, color }}>{`本笔成交金额 ${money(item.sell_amount)} · 已记录盈亏 ${money(item.profit)} · 已记录收益率 ${item.profit_pct == null ? "未记录" : percent(item.profit_pct)}`}</div>
 			{item.verification_status !== "verified" && <Alert style={{ marginTop: 8 }} type="warning" showIcon message="成交数据待核验" description={item.verification_issue || "缺少完整原始成交证据，已记录盈亏尚未核验"} />}
 			{(item.strategy_performance || policy) && (
 				<div style={{ marginTop: 14, padding: 12, background: token.colorFillAlter, borderRadius: 8 }}>
