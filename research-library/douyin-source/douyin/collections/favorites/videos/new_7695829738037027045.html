@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>我的收藏 - REA与Agent驱动的软件复刻流程</title><link rel="stylesheet" href="../../../assets/site.css"></head><body><header><div class="wrap"><p class="crumb"><a href="../../../index.html">抖音主页</a></p><h1>我的收藏 - REA与Agent驱动的软件复刻流程</h1></div></header><main><div class="wrap"><div class="actions"><a class="button" href="../index.html">返回收藏概览</a><a class="button" href="../../../index.html">返回抖音主页</a><a class="button primary" href="https://www.douyin.com/note/7695829738037027045">打开抖音原帖</a></div><section class="card"><div class="card-head"><div><h2>REA与Agent驱动的软件复刻流程</h2><div class="meta"><span class="pill">作者 阿东玩AI（练薄肌版）</span><span class="pill">发布时间 2026-10-13 01:09:52</span><span class="pill">aweme_id 7695829738037027045</span><span class="pill good">图文OCR完成 · 文案已复核</span></div></div></div><p><a href="https://www.douyin.com/user/MS4wLjABAAAAFqjHp1IIOVdpXdbIzlROaoS1wLpWCfz442x6s2MLaJU">打开作者主页</a></p><h3>重点摘要</h3><ol><li>作者介绍REA通过MCP连接逆向工具，让Claude Code、Codex等Agent分析二进制、Electron、APK和网站。</li><li>其组合方案用REA做证据化逆向、replica-skill串起11步复刻流程，并强调clean-room重建和只分析有权处理的软件。</li><li>作者认为代码壁垒下降后，业务理解、客户关系和服务能力更难复制。</li></ol><details open><summary>整理后的文本</summary><pre>【发布正文】
+agent克隆一切软件。阿东这两天在 GitHub 上看到 REA 火了，14 万星。它干的事很直接：让 Claude Code、Codex 这些 Agent 读懂没有源码的二进制，再把功能复刻出来。 过去四十年，软件价值一部分押在「源码不可得」上，REA 动摇的正是这个前提。 我自己试了下，最实用的组合是 REA + replica-skill + Claude Code/Codex——一个拆二进制，一个跑完从逆向到上线的 11 步流水线。 代码壁垒在快速下降，但业务理解、客户关系，才是真难复制的东西。 maybe后边去当销售、做硬件、搞营销，maybe。 阿东，大模型算法工程师，OPC创业者。 #rea #agent #github #agent #我要上热门🔥
+
+【图片 1】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，
+Agent
+就能克隆一切软件
+这两天，GitHub上有一个叫REA（ReVerSe
+Engineer Anything)
+的项目火了。
+火到什么程度？截至10月12日，它的仓库页面
+显示已经有14万颗星。
+REA：逆向一切
+通过一个MCP服务，逆向分析二进制文件、应用程序和运行时行为。
+看到喜欢的功能，弄清它的工作原理，深入到二进制层面。
+npm
+v6.4.0
+MCP
+tool catalog
+ Node.js
+requirements
+Skills 2.8K
+license
+MIT
+Discord
+2.2konli
+GITHUBTRENDING
+#1 Repository Of The Day
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 2】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+项目：！
+github.com/morluto/rea
+它干的事情，用GitHubREADME的原话说就
+是：“通过Agent逆向分析一切，从应用行为一路
+深入到原生二进制层面。
+简单说，就是利用
+Claude Code、Codex 等 Al
+编程智能体，通过 MCP 接入 Ghidra、Hopper
+等逆向工具，让Agent能分析没有源码的软件
+追踪功能列表，并根据分析结果编写相似功能。
+REA investigation flow
+Follow-up question
+1.Ask
+2. Inspect &amp; trace
+3.Read the evidence
+4.Usewhat youlearn
+Your agent + local target
+REA
+Code/references/
+Your agent
+unknowns
+App/binary/browser
+CLI/MCP
+Explain/implement/test
+Analysis tools
+Local analysis adapters
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 3】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+过去四十年，软件的价值逻辑有一部分建立在
+“源
+码不可得”这个前提上：
+我写了代码，编译成二进
+制，你拿不到，所以你得买我的。REA动摇的正
+是这个前提
+星一当AI能读懂二进制、能追调用
+链、能生成重构代码，“拿不到源码
+这件事，还
+能挡住谁？
+这显然会改变整个行业的游戏规则。
+那些躺在过
+去成绩上、不积极投入产品、也不持续快速更新的
+公司，问题已经不再是
+“会不会有人克隆你”，而
+是“什么时候被克隆，以及克隆你的人会不会跑得
+更快”。
+这些订阅制都该消失。贪得无厌，真让人无语。
+软件完蛋了。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 4】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+REA本身，它改变的不是
+“软件有没有价值”，而
+是“软件的价值靠什么支撑”。
+我总结了一套工作流
+看完REA的热度之后，我自己也去试了试，发现
+单靠REA能把“看懂”这件事做得不错，但要从
+看懂”一路做到“做出一个能用的项目”，还需
+要再叠一层完整的复刻流水线。
+目前我总结下来最实用的组合是：
+REA + replica-skill + Claude Code /
+Codex
+REA负责深度逆向：没有源码也能拆二进制、
+Electron、APK、网站等，输出带证据的分析结
+果。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 5】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+replica-skill负责完整流水线：11个串联
+Skill，把复刻拆成逆向→架构→设计→构建
+→后端→测试→对比→品牌→上线，并且
+强调clean-room（重建功能，不直接抄代
+码）。
+ClaudeCode/Codex作为执行引l擎。
+这套组合的核心不是
+“一键完美克隆”，而是把过
+去需要专业逆向+产品+开发协作的工作，压缩
+成一个人加Agent可以推进的流程。
+代码层面的壁垒确实在快速下降，但业务理解、客
+户关系和服务能力，依然是真正难复制的部分。
+后边我真的准备去打螺丝了，去干营销，去干销
+售，未尝可知。。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 6】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+快速复刻项目：组合架构与产出路径
+REAxreplica-skillx网站克隆模板，由ClaudeCode/Codex执行，产出clean-room重建项目
+输入·目标项目
+桌面/原生/混合应用
+Web网站/WebApp
+已有源码（理解后重写）
+按场景选择工具组合
+工具组合
+REA
+replica-skill
+网站克隆模板
+核心逆向引擎
+完整复刻流水线
+Web专用
+拆解二进制/Electron/APK/
+·11个Skill串联
+一行命令/clone-website&lt;url&gt;
+网站/.NET
+·逆向→架构→设计→构建→
+输出Next.js16+shadcn+
+·无源码也能输出证据
+后端
+Tailwind
+证据交给Agent复现
+→测试→对比→品牌→上线
+多站点并行、像素级对比
+morluto/rea
+Jakeschincariol/replica-skill
+JCodesMore/wsprfme
+由执行引擎驱动全部环节
+执行引擎
+Claude Code
+Codex
+执行逆向分析、复刻流水线与克隆命令
+→
+产出·clean-room重建项目
+重建功能，不复制所有物一不抄代码、不抄logo、不抄文案
+法律风险相对可控；只分析你有权分析的软件
+多搜索、多动手、多思考
+Vibe Anything</pre></details><details><summary>初始提取文本</summary><pre>【发布正文】
+agent克隆一切软件。阿东这两天在 GitHub 上看到 REA 火了，14 万星。它干的事很直接：让 Claude Code、Codex 这些 Agent 读懂没有源码的二进制，再把功能复刻出来。 过去四十年，软件价值一部分押在「源码不可得」上，REA 动摇的正是这个前提。 我自己试了下，最实用的组合是 REA + replica-skill + Claude Code/Codex——一个拆二进制，一个跑完从逆向到上线的 11 步流水线。 代码壁垒在快速下降，但业务理解、客户关系，才是真难复制的东西。 maybe后边去当销售、做硬件、搞营销，maybe。 阿东，大模型算法工程师，OPC创业者。 #rea #agent #github #agent #我要上热门🔥
+
+【图片 1】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，
+Agent
+就能克隆一切软件
+这两天，GitHub上有一个叫REA（ReVerSe
+Engineer Anything)
+的项目火了。
+火到什么程度？截至10月12日，它的仓库页面
+显示已经有14万颗星。
+REA：逆向一切
+通过一个MCP服务，逆向分析二进制文件、应用程序和运行时行为。
+看到喜欢的功能，弄清它的工作原理，深入到二进制层面。
+npm
+v6.4.0
+MCP
+tool catalog
+ Node.js
+requirements
+Skills 2.8K
+license
+MIT
+Discord
+2.2konli
+GITHUBTRENDING
+#1 Repository Of The Day
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 2】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+项目：！
+github.com/morluto/rea
+它干的事情，用GitHubREADME的原话说就
+是：“通过Agent逆向分析一切，从应用行为一路
+深入到原生二进制层面。
+简单说，就是利用
+Claude Code、Codex 等 Al
+编程智能体，通过 MCP 接入 Ghidra、Hopper
+等逆向工具，让Agent能分析没有源码的软件
+追踪功能列表，并根据分析结果编写相似功能。
+REA investigation flow
+Follow-up question
+1.Ask
+2. Inspect &amp; trace
+3.Read the evidence
+4.Usewhat youlearn
+Your agent + local target
+REA
+Code/references/
+Your agent
+unknowns
+App/binary/browser
+CLI/MCP
+Explain/implement/test
+Analysis tools
+Local analysis adapters
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 3】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+过去四十年，软件的价值逻辑有一部分建立在
+“源
+码不可得”这个前提上：
+我写了代码，编译成二进
+制，你拿不到，所以你得买我的。REA动摇的正
+是这个前提
+星一当AI能读懂二进制、能追调用
+链、能生成重构代码，“拿不到源码
+这件事，还
+能挡住谁？
+这显然会改变整个行业的游戏规则。
+那些躺在过
+去成绩上、不积极投入产品、也不持续快速更新的
+公司，问题已经不再是
+“会不会有人克隆你”，而
+是“什么时候被克隆，以及克隆你的人会不会跑得
+更快”。
+这些订阅制都该消失。贪得无厌，真让人无语。
+软件完蛋了。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 4】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+REA本身，它改变的不是
+“软件有没有价值”，而
+是“软件的价值靠什么支撑”。
+我总结了一套工作流
+看完REA的热度之后，我自己也去试了试，发现
+单靠REA能把“看懂”这件事做得不错，但要从
+看懂”一路做到“做出一个能用的项目”，还需
+要再叠一层完整的复刻流水线。
+目前我总结下来最实用的组合是：
+REA + replica-skill + Claude Code /
+Codex
+REA负责深度逆向：没有源码也能拆二进制、
+Electron、APK、网站等，输出带证据的分析结
+果。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 5】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+replica-skill负责完整流水线：11个串联
+Skill，把复刻拆成逆向→架构→设计→构建
+→后端→测试→对比→品牌→上线，并且
+强调clean-room（重建功能，不直接抄代
+码）。
+ClaudeCode/Codex作为执行引l擎。
+这套组合的核心不是
+“一键完美克隆”，而是把过
+去需要专业逆向+产品+开发协作的工作，压缩
+成一个人加Agent可以推进的流程。
+代码层面的壁垒确实在快速下降，但业务理解、客
+户关系和服务能力，依然是真正难复制的部分。
+后边我真的准备去打螺丝了，去干营销，去干销
+售，未尝可知。。
+多搜索、多动手、多思考
+Vibe Anything
+
+【图片 6】
+阿东玩AI
+2026/10/13
+@阿东的大模型实验室
+无需源码，Agent就能克隆一切软件
+快速复刻项目：组合架构与产出路径
+REAxreplica-skillx网站克隆模板，由ClaudeCode/Codex执行，产出clean-room重建项目
+输入·目标项目
+桌面/原生/混合应用
+Web网站/WebApp
+已有源码（理解后重写）
+按场景选择工具组合
+工具组合
+REA
+replica-skill
+网站克隆模板
+核心逆向引擎
+完整复刻流水线
+Web专用
+拆解二进制/Electron/APK/
+·11个Skill串联
+一行命令/clone-website&lt;url&gt;
+网站/.NET
+·逆向→架构→设计→构建→
+输出Next.js16+shadcn+
+·无源码也能输出证据
+后端
+Tailwind
+证据交给Agent复现
+→测试→对比→品牌→上线
+多站点并行、像素级对比
+morluto/rea
+Jakeschincariol/replica-skill
+JCodesMore/wsprfme
+由执行引擎驱动全部环节
+执行引擎
+Claude Code
+Codex
+执行逆向分析、复刻流水线与克隆命令
+→
+产出·clean-room重建项目
+重建功能，不复制所有物一不抄代码、不抄logo、不抄文案
+法律风险相对可控；只分析你有权分析的软件
+多搜索、多动手、多思考
+Vibe Anything</pre></details><p class="sub">收藏来源：阿东玩AI（练薄肌版）。正文由发布文字和原图OCR整理；专名、数字、政策、行情和收益自述未作独立事实核验，存疑处以原帖为准。 · 复核时间 2026-10-14 14:50:06</p></section><div class="actions"><a class="button" href="../index.html">返回收藏概览</a><a class="button" href="../../../index.html">返回抖音主页</a><a class="button primary" href="https://www.douyin.com/note/7695829738037027045">打开抖音原帖</a></div></div></main></body></html>

@@ -1,0 +1,3720 @@
+{
+  "account": "宇菠萝",
+  "slug": "yu-bo-luo",
+  "generated_at": "2026-09-07T00:04:57+08:00",
+  "as_of": "2026-09-07",
+  "summary": {
+    "videos": 65,
+    "generated": 65,
+    "preserved_manual": 0,
+    "verdict_counts": {
+      "观察中": 57,
+      "部分验证": 2,
+      "已验证": 4,
+      "未验证": 2
+    },
+    "scored_videos": 8,
+    "average_score": 62.5
+  },
+  "entries": [
+    {
+      "aweme_id": "7682361511919467194",
+      "published_at": "2026-09-06 18:21:22",
+      "title": "另外,我觉得下周的市场可能风险会比较大一点,这次出来也是为了让自己强制空舱,规避风险",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "中等",
+      "summary": "另外,我觉得下周的市场可能风险会比较大一点,这次出来也是为了让自己强制空舱,规避风险：观察中，暂不评分；按后续5个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "观察期不足",
+          "claim": "另外,我觉得下周的市场可能风险会比较大一点,这次出来也是为了让自己强制空舱,规避风险",
+          "finding": "后续5个交易日的代理行情结果：上证综指为观察期不足。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "5d",
+              "evidence": "上证综指：后续5个交易日数据不足",
+              "data": null
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-09-06"
+    },
+    {
+      "aweme_id": "7679755183001935793",
+      "published_at": "2026-08-30 17:47:25",
+      "title": "这时候在财报公布前,就会有利空的预期,就有可能会下跌",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "这时候在财报公布前,就会有利空的预期,就有可能会下跌：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "这时候在财报公布前,就会有利空的预期,就有可能会下跌",
+          "finding": "后续3个交易日的代理行情结果：上证综指为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-09-02）：收盘 -0.27%，区间最高 +1.09%，区间最低 -0.65%",
+              "data": {
+                "end_date": "2026-09-02",
+                "end_close": 3941.386,
+                "close_return_pct": -0.27,
+                "max_high": 3995.175,
+                "max_high_return_pct": 1.09,
+                "min_low": 3926.5039,
+                "min_low_return_pct": -0.65
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-30"
+    },
+    {
+      "aweme_id": "7679377899884196273",
+      "published_at": "2026-08-29 17:23:24",
+      "title": "背离之后还有可能继续背离",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "背离之后还有可能继续背离：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "背离之后还有可能继续背离",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-09-02）：收盘 -0.27%，区间最高 +1.09%，区间最低 -0.65%",
+              "data": {
+                "end_date": "2026-09-02",
+                "end_close": 3941.386,
+                "close_return_pct": -0.27,
+                "max_high": 3995.175,
+                "max_high_return_pct": 1.09,
+                "min_low": 3926.5039,
+                "min_low_return_pct": -0.65
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-29"
+    },
+    {
+      "aweme_id": "7678672769513829753",
+      "published_at": "2026-08-27 19:47:09",
+      "title": "你要是听了我的卖飞了或者亏钱了,那你不得骂死我",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "你要是听了我的卖飞了或者亏钱了,那你不得骂死我：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "你要是听了我的卖飞了或者亏钱了,那你不得骂死我",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-09-01）：收盘 +0.59%，区间最高 +0.98%，区间最低 -0.76%",
+              "data": {
+                "end_date": "2026-09-01",
+                "end_close": 3979.8879,
+                "close_return_pct": 0.59,
+                "max_high": 3995.175,
+                "max_high_return_pct": 0.98,
+                "min_low": 3926.5039,
+                "min_low_return_pct": -0.76
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-27"
+    },
+    {
+      "aweme_id": "7678209618425746105",
+      "published_at": "2026-08-26 14:03:23",
+      "title": "在这波股灾里边有一些逻辑很硬的,但是因为股灾被错杀的票,在股灾结入之后,极大概率会出现报复性反弹",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "在这波股灾里边有一些逻辑很硬的,但是因为股灾被错杀的票,在股灾结入之后,极大概率会出现报复性反弹：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "在这波股灾里边有一些逻辑很硬的,但是因为股灾被错杀的票,在股灾结入之后,极大概率会出现报复性反弹",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-31）：收盘 +1.89%，区间最高 +1.89%，区间最低 -0.08%",
+              "data": {
+                "end_date": "2026-08-31",
+                "end_close": 3986.2981,
+                "close_return_pct": 1.89,
+                "max_high": 3986.2981,
+                "max_high_return_pct": 1.89,
+                "min_low": 3909.312,
+                "min_low_return_pct": -0.08
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-26"
+    },
+    {
+      "aweme_id": "7677847135761146737",
+      "published_at": "2026-08-25 14:24:55",
+      "title": "这个事是这样的,批量出现抱子顶和对子顶的时候不是百分之百都会下跌,它只是说有下跌调整的可能",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "未验证",
+      "score": 0,
+      "confidence": "中等",
+      "summary": "这个事是这样的,批量出现抱子顶和对子顶的时候不是百分之百都会下跌,它只是说有下跌调整的可能：未验证，0分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不支持",
+          "claim": "这个事是这样的,批量出现抱子顶和对子顶的时候不是百分之百都会下跌,它只是说有下跌调整的可能",
+          "finding": "后续3个交易日的代理行情结果：上证综指为不支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-28）：收盘 +1.61%，区间最高 +2.08%，区间最低 -0.20%",
+              "data": {
+                "end_date": "2026-08-28",
+                "end_close": 3952.179,
+                "close_return_pct": 1.61,
+                "max_high": 3970.3101,
+                "max_high_return_pct": 2.08,
+                "min_low": 3881.741,
+                "min_low_return_pct": -0.2
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-25"
+    },
+    {
+      "aweme_id": "7677159125256132273",
+      "published_at": "2026-08-23 18:05:28",
+      "title": "而如果在单边上涨的行情里边做顺势追涨,大概率就不会出现追高变埋的情况",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "而如果在单边上涨的行情里边做顺势追涨,大概率就不会出现追高变埋的情况：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "而如果在单边上涨的行情里边做顺势追涨,大概率就不会出现追高变埋的情况",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-26）：收盘 +0.19%，区间最高 +0.54%，区间最低 -1.39%",
+              "data": {
+                "end_date": "2026-08-26",
+                "end_close": 3912.5229,
+                "close_return_pct": 0.19,
+                "max_high": 3926.4351,
+                "max_high_return_pct": 0.54,
+                "min_low": 3850.863,
+                "min_low_return_pct": -1.39
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-23"
+    },
+    {
+      "aweme_id": "7675579045488424379",
+      "published_at": "2026-08-19 12:10:10",
+      "title": "他不一样？他哪次不一样？",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "他不一样？他哪次不一样？：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "他不一样？他哪次不一样？",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-24）：收盘 -0.32%，区间最高 +0.79%，区间最低 -1.00%",
+              "data": {
+                "end_date": "2026-08-24",
+                "end_close": 3882.0081,
+                "close_return_pct": -0.32,
+                "max_high": 3925.062,
+                "max_high_return_pct": 0.79,
+                "min_low": 3855.3521,
+                "min_low_return_pct": -1.0
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-19"
+    },
+    {
+      "aweme_id": "7675160560494107889",
+      "published_at": "2026-08-18 08:38:00",
+      "title": "接下来短线可能有一波小退潮，尤其是机器人相关方向",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "接下来短线可能有一波小退潮，尤其是机器人相关方向：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "接下来短线可能有一波小退潮，尤其是机器人相关方向",
+          "finding": "后续3个交易日的代理行情结果：机器人ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "robot",
+              "proxy_name": "机器人ETF",
+              "proxy_role": "机器人与物理AI代理",
+              "horizon": "3d",
+              "evidence": "机器人ETF（后续3个交易日至2026-08-21）：收盘 -7.53%，区间最高 -1.40%，区间最低 -9.12%",
+              "data": {
+                "end_date": "2026-08-21",
+                "end_close": 0.994,
+                "close_return_pct": -7.53,
+                "max_high": 1.06,
+                "max_high_return_pct": -1.4,
+                "min_low": 0.977,
+                "min_low_return_pct": -9.12
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：机器人ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159770.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "robot"
+      ],
+      "published_date": "2026-08-18"
+    },
+    {
+      "aweme_id": "7674931804856634107",
+      "published_at": "2026-08-17 17:50:18",
+      "title": "很简单,你以前大概率没经历过这种结构性牛市吧",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "很简单,你以前大概率没经历过这种结构性牛市吧：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "很简单,你以前大概率没经历过这种结构性牛市吧",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-20）：收盘 -1.98%，区间最高 +0.29%，区间最低 -2.59%",
+              "data": {
+                "end_date": "2026-08-20",
+                "end_close": 3903.7209,
+                "close_return_pct": -1.98,
+                "max_high": 3994.1809,
+                "max_high_return_pct": 0.29,
+                "min_low": 3879.5791,
+                "min_low_return_pct": -2.59
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-17"
+    },
+    {
+      "aweme_id": "7674582816126137509",
+      "published_at": "2026-08-16 19:16:04",
+      "title": "而如果你是在熊市进场的,没有经历过牛市的疯狂上涨,那么你在牛市里边就很有可能会经常的卖飞,然后踏空",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "而如果你是在熊市进场的,没有经历过牛市的疯狂上涨,那么你在牛市里边就很有可能会经常的卖飞,然后踏空：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "而如果你是在熊市进场的,没有经历过牛市的疯狂上涨,那么你在牛市里边就很有可能会经常的卖飞,然后踏空",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-08-19）：收盘 -0.83%，区间最高 +1.71%，区间最低 -1.21%",
+              "data": {
+                "end_date": "2026-08-19",
+                "end_close": 3894.4221,
+                "close_return_pct": -0.83,
+                "max_high": 3994.1809,
+                "max_high_return_pct": 1.71,
+                "min_low": 3879.5791,
+                "min_low_return_pct": -1.21
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-08-16"
+    },
+    {
+      "aweme_id": "7674201316368982373",
+      "published_at": "2026-08-15 18:35:35",
+      "title": "发人深省的小故事",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "发人深省的小故事：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "发人深省的小故事",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "aerospace",
+              "proxy_name": "航天ETF",
+              "proxy_role": "商业航天代理",
+              "horizon": "3d",
+              "evidence": "航天ETF（后续3个交易日至2026-08-19）：收盘 -4.14%，区间最高 +3.33%，区间最低 -4.37%",
+              "data": {
+                "end_date": "2026-08-19",
+                "end_close": 0.834,
+                "close_return_pct": -4.14,
+                "max_high": 0.899,
+                "max_high_return_pct": 3.33,
+                "min_low": 0.832,
+                "min_low_return_pct": -4.37
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：航天ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159267.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "aerospace"
+      ],
+      "published_date": "2026-08-15"
+    },
+    {
+      "aweme_id": "7664741660006664625",
+      "published_at": "2026-07-21 06:47:48",
+      "title": "否极泰来的转折就在这两天，下半年吃饭行情大概率开始",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "未验证",
+      "score": 0,
+      "confidence": "中等",
+      "summary": "否极泰来的转折就在这两天，下半年吃饭行情大概率开始：未验证，0分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不支持",
+          "claim": "否极泰来的转折就在这两天，下半年吃饭行情大概率开始",
+          "finding": "后续3个交易日的代理行情结果：上证综指为不支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-24）：收盘 -1.30%，区间最高 +0.52%，区间最低 -1.44%",
+              "data": {
+                "end_date": "2026-07-24",
+                "end_close": 3814.198,
+                "close_return_pct": -1.3,
+                "max_high": 3884.4351,
+                "max_high_return_pct": 0.52,
+                "min_low": 3808.636,
+                "min_low_return_pct": -1.44
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-21"
+    },
+    {
+      "aweme_id": "7658632311379131057",
+      "published_at": "2026-07-04 19:39:57",
+      "title": "如果你有丰富的经验,有很高的认知,你能看懂接下来的大概率走势",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果你有丰富的经验,有很高的认知,你能看懂接下来的大概率走势：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果你有丰富的经验,有很高的认知,你能看懂接下来的大概率走势",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-08）：收盘 -1.80%，区间最高 +0.41%，区间最低 -1.87%",
+              "data": {
+                "end_date": "2026-07-08",
+                "end_close": 3970.8799,
+                "close_return_pct": -1.8,
+                "max_high": 4060.0691,
+                "max_high_return_pct": 0.41,
+                "min_low": 3967.9131,
+                "min_low_return_pct": -1.87
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-04"
+    },
+    {
+      "aweme_id": "7657854814488334778",
+      "published_at": "2026-07-02 17:22:53",
+      "title": "科技这波调整应该刚开始",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "科技这波调整应该刚开始：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "科技这波调整应该刚开始",
+          "finding": "后续3个交易日的代理行情结果：芯片产业ETF为支持、5G通信ETF为支持、软件ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-07-07）：收盘 -0.38%，区间最高 +3.46%，区间最低 -4.17%",
+              "data": {
+                "end_date": "2026-07-07",
+                "end_close": 3.659,
+                "close_return_pct": -0.38,
+                "max_high": 3.8,
+                "max_high_return_pct": 3.46,
+                "min_low": 3.52,
+                "min_low_return_pct": -4.17
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-07）：收盘 -1.88%，区间最高 +4.99%，区间最低 -4.58%",
+              "data": {
+                "end_date": "2026-07-07",
+                "end_close": 1.199,
+                "close_return_pct": -1.88,
+                "max_high": 1.283,
+                "max_high_return_pct": 4.99,
+                "min_low": 1.166,
+                "min_low_return_pct": -4.58
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-07-07）：收盘 -5.05%，区间最高 +1.01%，区间最低 -5.34%",
+              "data": {
+                "end_date": "2026-07-07",
+                "end_close": 0.658,
+                "close_return_pct": -5.05,
+                "max_high": 0.7,
+                "max_high_return_pct": 1.01,
+                "min_low": 0.656,
+                "min_low_return_pct": -5.34
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "semiconductor",
+        "communication",
+        "software"
+      ],
+      "published_date": "2026-07-02"
+    },
+    {
+      "aweme_id": "7657506332488684145",
+      "published_at": "2026-07-01 18:50:34",
+      "title": "当美联储开始加息的时候,美债这种低风险固定收益类的资产,收益率会变高,可能也会到4%到5%.",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "当美联储开始加息的时候,美债这种低风险固定收益类的资产,收益率会变高,可能也会到4%到5%.：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "当美联储开始加息的时候,美债这种低风险固定收益类的资产,收益率会变高,可能也会到4%到5%.",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-06）：收盘 -1.73%，区间最高 -0.46%，区间最低 -2.60%",
+              "data": {
+                "end_date": "2026-07-06",
+                "end_close": 4041.238,
+                "close_return_pct": -1.73,
+                "max_high": 4093.678,
+                "max_high_return_pct": -0.46,
+                "min_low": 4005.4141,
+                "min_low_return_pct": -2.6
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-01"
+    },
+    {
+      "aweme_id": "7657159724568212657",
+      "published_at": "2026-06-30 20:25:34",
+      "title": "第三个例子,如果某个阶段市场每天都是几十个跌停的票,那不用想了,这个阶段大概率是在退潮",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "第三个例子,如果某个阶段市场每天都是几十个跌停的票,那不用想了,这个阶段大概率是在退潮：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "第三个例子,如果某个阶段市场每天都是几十个跌停的票,那不用想了,这个阶段大概率是在退潮",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-03）：收盘 -1.24%，区间最高 +1.19%，区间最低 -1.84%",
+              "data": {
+                "end_date": "2026-07-03",
+                "end_close": 4043.6431,
+                "close_return_pct": -1.24,
+                "max_high": 4143.313,
+                "max_high_return_pct": 1.19,
+                "min_low": 4019.2151,
+                "min_low_return_pct": -1.84
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-30"
+    },
+    {
+      "aweme_id": "7656283794156960699",
+      "published_at": "2026-06-28 11:46:29",
+      "title": "如果有问题可以评论区里问,我会挑点先的来回答,觉得永远店也特别关注",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果有问题可以评论区里问,我会挑点先的来回答,觉得永远店也特别关注：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果有问题可以评论区里问,我会挑点先的来回答,觉得永远店也特别关注",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-01）：收盘 +2.12%，区间最高 +2.88%，区间最低 -0.86%",
+              "data": {
+                "end_date": "2026-07-01",
+                "end_close": 4112.4448,
+                "close_return_pct": 2.12,
+                "max_high": 4143.313,
+                "max_high_return_pct": 2.88,
+                "min_low": 3992.552,
+                "min_low_return_pct": -0.86
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-28"
+    },
+    {
+      "aweme_id": "7655996535590631025",
+      "published_at": "2026-06-27 17:11:48",
+      "title": "选票要不要考虑流通市值大小？",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "选票要不要考虑流通市值大小？：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "选票要不要考虑流通市值大小？",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-01）：收盘 +2.12%，区间最高 +2.88%，区间最低 -0.86%",
+              "data": {
+                "end_date": "2026-07-01",
+                "end_close": 4112.4448,
+                "close_return_pct": 2.12,
+                "max_high": 4143.313,
+                "max_high_return_pct": 2.88,
+                "min_low": 3992.552,
+                "min_low_return_pct": -0.86
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-27"
+    },
+    {
+      "aweme_id": "7655271587503199665",
+      "published_at": "2026-06-25 18:18:37",
+      "title": "我说是呗大夫说那原因找着了啊这叫焦虑躯体化其实我这个焦虑躯体化的症状好多年了啊从二十多岁炒股的时候开始如果某个阶段压力比较大的时候身体要么就这不舒服要么就那不舒服啊去医院检查查不出原因身体各种治病一切正常我当时不懂这叫焦虑躯体化啊我就当做是",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "我说是呗大夫说那原因找着了啊这叫焦虑躯体化其实我这个焦虑躯体化的症状好多年了啊从二十多岁炒股的时候开始如果某个阶段压力比较大的时候身体要么就这不舒服要么就那不舒服啊去医院检查查不出原因身体各种治病一切正常我当时不懂这叫焦虑躯体化啊我就当做是：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "我说是呗大夫说那原因找着了啊这叫焦虑躯体化其实我这个焦虑躯体化的症状好多年了啊从二十多岁炒股的时候开始如果某个阶段压力比较大的时候身体要么就这不舒服要么就那不舒服啊去医院检查查不出原因身体各种治病一切正常我当时不懂这叫焦虑躯体化啊我就当做是",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-30）：收盘 -0.63%，区间最高 -0.50%，区间最低 -3.10%",
+              "data": {
+                "end_date": "2026-06-30",
+                "end_close": 4094.397,
+                "close_return_pct": -0.63,
+                "max_high": 4099.7798,
+                "max_high_return_pct": -0.5,
+                "min_low": 3992.552,
+                "min_low_return_pct": -3.1
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-25"
+    },
+    {
+      "aweme_id": "7654888104922967397",
+      "published_at": "2026-06-24 17:30:31",
+      "title": "就是一旦某只票出现A原因,它就有可能涨停",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "就是一旦某只票出现A原因,它就有可能涨停：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "就是一旦某只票出现A原因,它就有可能涨停",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-29）：收盘 -0.90%，区间最高 +0.54%，区间最低 -2.88%",
+              "data": {
+                "end_date": "2026-06-29",
+                "end_close": 4073.9021,
+                "close_return_pct": -0.9,
+                "max_high": 4133.0981,
+                "max_high_return_pct": 0.54,
+                "min_low": 3992.552,
+                "min_low_return_pct": -2.88
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-24"
+    },
+    {
+      "aweme_id": "7654537632361736945",
+      "published_at": "2026-06-23 18:50:26",
+      "title": "否则你什么都不懂的话做长线不也跟赌卫没区别吗",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "否则你什么都不懂的话做长线不也跟赌卫没区别吗：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "否则你什么都不懂的话做长线不也跟赌卫没区别吗",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-26）：收盘 -1.92%，区间最高 +0.65%，区间最低 -2.40%",
+              "data": {
+                "end_date": "2026-06-26",
+                "end_close": 4027.2649,
+                "close_return_pct": -1.92,
+                "max_high": 4133.0981,
+                "max_high_return_pct": 0.65,
+                "min_low": 4007.8589,
+                "min_low_return_pct": -2.4
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-23"
+    },
+    {
+      "aweme_id": "7654176991290536825",
+      "published_at": "2026-06-22 19:31:02",
+      "title": "如果连等的耐心都没有,那还拿什么长线呢,对吧",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果连等的耐心都没有,那还拿什么长线呢,对吧：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果连等的耐心都没有,那还拿什么长线呢,对吧",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-25）：收盘 -1.03%，区间最高 +0.29%，区间最低 -2.10%",
+              "data": {
+                "end_date": "2026-06-25",
+                "end_close": 4120.2808,
+                "close_return_pct": -1.03,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 0.29,
+                "min_low": 4075.4919,
+                "min_low_return_pct": -2.1
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-22"
+    },
+    {
+      "aweme_id": "7653771821851111857",
+      "published_at": "2026-06-21 17:18:46",
+      "title": "否则你不关注风险,迟早要被市场给淘汰的",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "否则你不关注风险,迟早要被市场给淘汰的：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "否则你不关注风险,迟早要被市场给淘汰的",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-24）：收盘 +0.50%，区间最高 +2.07%，区间最低 -0.50%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 4110.813,
+                "close_return_pct": 0.5,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 2.07,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.5
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-21"
+    },
+    {
+      "aweme_id": "7652661450682816613",
+      "published_at": "2026-06-18 17:29:58",
+      "title": "如果以我现在的认知,我只有一万块钱,我大概率不会考虑直接通过股市翻身",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果以我现在的认知,我只有一万块钱,我大概率不会考虑直接通过股市翻身：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果以我现在的认知,我只有一万块钱,我大概率不会考虑直接通过股市翻身",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-24）：收盘 +0.50%，区间最高 +2.07%，区间最低 -0.50%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 4110.813,
+                "close_return_pct": 0.5,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 2.07,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.5
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-18"
+    },
+    {
+      "aweme_id": "7652219077867667385",
+      "published_at": "2026-06-17 12:53:19",
+      "title": "只要有人的地方,就有人情事故和利益纠葛",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "只要有人的地方,就有人情事故和利益纠葛：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "只要有人的地方,就有人情事故和利益纠葛",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-23）：收盘 -0.04%，区间最高 +1.64%，区间最低 -0.92%",
+              "data": {
+                "end_date": "2026-06-23",
+                "end_close": 4106.251,
+                "close_return_pct": -0.04,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 1.64,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.92
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-17"
+    },
+    {
+      "aweme_id": "7651800416553142779",
+      "published_at": "2026-06-16 09:48:42",
+      "title": "这周三美联储利率决议,新的美联储主席第一次上任之后的第一次发言,如果他是很鹰派激进缩表的话,那周四全世界的金融市场都会很难看",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "这周三美联储利率决议,新的美联储主席第一次上任之后的第一次发言,如果他是很鹰派激进缩表的话,那周四全世界的金融市场都会很难看：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "这周三美联储利率决议,新的美联储主席第一次上任之后的第一次发言,如果他是很鹰派激进缩表的话,那周四全世界的金融市场都会很难看",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-22）：收盘 +1.74%，区间最高 +1.77%，区间最低 -0.53%",
+              "data": {
+                "end_date": "2026-06-22",
+                "end_close": 4163.0972,
+                "close_return_pct": 1.74,
+                "max_high": 4164.418,
+                "max_high_return_pct": 1.77,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.53
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-16"
+    },
+    {
+      "aweme_id": "7651176265181190513",
+      "published_at": "2026-06-14 17:26:41",
+      "title": "但是有这种人不代表说你一定也可以,举个最简单的例子,很多人他做大都是需要赶上一波牛市的,如果没有牛市,他可能市值就会上下坐点梯,盈做不大",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "但是有这种人不代表说你一定也可以,举个最简单的例子,很多人他做大都是需要赶上一波牛市的,如果没有牛市,他可能市值就会上下坐点梯,盈做不大：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "但是有这种人不代表说你一定也可以,举个最简单的例子,很多人他做大都是需要赶上一波牛市的,如果没有牛市,他可能市值就会上下坐点梯,盈做不大",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-17）：收盘 +1.90%，区间最高 +1.95%，区间最低 +0.48%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 4108.0762,
+                "close_return_pct": 1.9,
+                "max_high": 4109.958,
+                "max_high_return_pct": 1.95,
+                "min_low": 4051.0649,
+                "min_low_return_pct": 0.48
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-14"
+    },
+    {
+      "aweme_id": "7650820384539815601",
+      "published_at": "2026-06-13 18:25:42",
+      "title": "这时候我就要找机会止损跑路,如果我买进去之后,买的票跟着市场一起反弹了,这就是符合预期,符合预期就可以拿着",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "这时候我就要找机会止损跑路,如果我买进去之后,买的票跟着市场一起反弹了,这就是符合预期,符合预期就可以拿着：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "这时候我就要找机会止损跑路,如果我买进去之后,买的票跟着市场一起反弹了,这就是符合预期,符合预期就可以拿着",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-17）：收盘 +1.90%，区间最高 +1.95%，区间最低 +0.48%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 4108.0762,
+                "close_return_pct": 1.9,
+                "max_high": 4109.958,
+                "max_high_return_pct": 1.95,
+                "min_low": 4051.0649,
+                "min_low_return_pct": 0.48
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-13"
+    },
+    {
+      "aweme_id": "7650426261781370233",
+      "published_at": "2026-06-12 16:56:14",
+      "title": "如果有问题,可以在评论区里问,我会跳有代表性的来回答",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果有问题,可以在评论区里问,我会跳有代表性的来回答：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果有问题,可以在评论区里问,我会跳有代表性的来回答",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-17）：收盘 +1.90%，区间最高 +1.95%，区间最低 +0.48%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 4108.0762,
+                "close_return_pct": 1.9,
+                "max_high": 4109.958,
+                "max_high_return_pct": 1.95,
+                "min_low": 4051.0649,
+                "min_low_return_pct": 0.48
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-12"
+    },
+    {
+      "aweme_id": "7650071715753741221",
+      "published_at": "2026-06-11 18:00:27",
+      "title": "如果货币政策转向紧缩了,那结构牛可能就真没了",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果货币政策转向紧缩了,那结构牛可能就真没了：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果货币政策转向紧缩了,那结构牛可能就真没了",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-16）：收盘 +2.63%，区间最高 +2.93%，区间最低 +0.53%",
+              "data": {
+                "end_date": "2026-06-16",
+                "end_close": 4091.8921,
+                "close_return_pct": 2.63,
+                "max_high": 4103.9258,
+                "max_high_return_pct": 2.93,
+                "min_low": 4008.177,
+                "min_low_return_pct": 0.53
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-11"
+    },
+    {
+      "aweme_id": "7649721448478840433",
+      "published_at": "2026-06-10 19:21:14",
+      "title": "下跌过程中随便一个反抽就想把我忽悠进去,那是不可能的",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "下跌过程中随便一个反抽就想把我忽悠进去,那是不可能的：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "下跌过程中随便一个反抽就想把我忽悠进去,那是不可能的",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-15）：收盘 +2.59%，区间最高 +2.60%，区间最低 -0.87%",
+              "data": {
+                "end_date": "2026-06-15",
+                "end_close": 4096.4722,
+                "close_return_pct": 2.59,
+                "max_high": 4097.166,
+                "max_high_return_pct": 2.6,
+                "min_low": 3958.437,
+                "min_low_return_pct": -0.87
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-10"
+    },
+    {
+      "aweme_id": "7649394717242841073",
+      "published_at": "2026-06-10 11:30:00",
+      "title": "所以这条视频相当于是给资产体量较大的老铁们提个醒,如果你刚入市就连续赚钱,千万不要盲目自信,一定要保持理性,否则你一定会吃大亏,再打跟头",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "所以这条视频相当于是给资产体量较大的老铁们提个醒,如果你刚入市就连续赚钱,千万不要盲目自信,一定要保持理性,否则你一定会吃大亏,再打跟头：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "所以这条视频相当于是给资产体量较大的老铁们提个醒,如果你刚入市就连续赚钱,千万不要盲目自信,一定要保持理性,否则你一定会吃大亏,再打跟头",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-15）：收盘 +2.59%，区间最高 +2.60%，区间最低 -0.87%",
+              "data": {
+                "end_date": "2026-06-15",
+                "end_close": 4096.4722,
+                "close_return_pct": 2.59,
+                "max_high": 4097.166,
+                "max_high_return_pct": 2.6,
+                "min_low": 3958.437,
+                "min_low_return_pct": -0.87
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-10"
+    },
+    {
+      "aweme_id": "7649230332004306149",
+      "published_at": "2026-06-09 11:35:23",
+      "title": "我个人认为是两方面原因,第一个原因认知,体量越大的相对认知就越高,它就越能抓住市场运行的底层逻辑和低性原理,而体量越小的可能认知就越不行,我举个例子啊,现在很多小伞都会关注一个指标叫筹码风,很多人天天抱着这个指标去分析什么主力成本,还分析的",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "我个人认为是两方面原因,第一个原因认知,体量越大的相对认知就越高,它就越能抓住市场运行的底层逻辑和低性原理,而体量越小的可能认知就越不行,我举个例子啊,现在很多小伞都会关注一个指标叫筹码风,很多人天天抱着这个指标去分析什么主力成本,还分析的：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "我个人认为是两方面原因,第一个原因认知,体量越大的相对认知就越高,它就越能抓住市场运行的底层逻辑和低性原理,而体量越小的可能认知就越不行,我举个例子啊,现在很多小伞都会关注一个指标叫筹码风,很多人天天抱着这个指标去分析什么主力成本,还分析的",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-12）：收盘 +0.54%，区间最高 +1.25%，区间最低 -1.29%",
+              "data": {
+                "end_date": "2026-06-12",
+                "end_close": 4031.5129,
+                "close_return_pct": 0.54,
+                "max_high": 4060.271,
+                "max_high_return_pct": 1.25,
+                "min_low": 3958.437,
+                "min_low_return_pct": -1.29
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-09"
+    },
+    {
+      "aweme_id": "7648855815998545649",
+      "published_at": "2026-06-08 11:22:10",
+      "title": "那么多利空Buff跌下一块的,不跌的可能性很小",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "那么多利空Buff跌下一块的,不跌的可能性很小：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "那么多利空Buff跌下一块的,不跌的可能性很小",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-11）：收盘 +0.70%，区间最高 +1.30%，区间最低 -0.09%",
+              "data": {
+                "end_date": "2026-06-11",
+                "end_close": 3987.0149,
+                "close_return_pct": 0.7,
+                "max_high": 4010.8721,
+                "max_high_return_pct": 1.3,
+                "min_low": 3955.908,
+                "min_low_return_pct": -0.09
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-08"
+    },
+    {
+      "aweme_id": "7648632500348231537",
+      "published_at": "2026-06-07 20:55:34",
+      "title": "错过这次机会,后边可能就没有机会了",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "错过这次机会,后边可能就没有机会了：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "错过这次机会,后边可能就没有机会了",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-10）：收盘 -0.86%，区间最高 -0.42%，区间最低 -2.48%",
+              "data": {
+                "end_date": "2026-06-10",
+                "end_close": 3993.2261,
+                "close_return_pct": -0.86,
+                "max_high": 4010.8721,
+                "max_high_return_pct": -0.42,
+                "min_low": 3927.853,
+                "min_low_return_pct": -2.48
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-07"
+    },
+    {
+      "aweme_id": "7647892305777416121",
+      "published_at": "2026-06-05 21:03:14",
+      "title": "如果避不开几跌,你赚再多都得吐出去,穿不进兜里",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果避不开几跌,你赚再多都得吐出去,穿不进兜里：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果避不开几跌,你赚再多都得吐出去,穿不进兜里",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-10）：收盘 -0.86%，区间最高 -0.42%，区间最低 -2.48%",
+              "data": {
+                "end_date": "2026-06-10",
+                "end_close": 3993.2261,
+                "close_return_pct": -0.86,
+                "max_high": 4010.8721,
+                "max_high_return_pct": -0.42,
+                "min_low": 3927.853,
+                "min_low_return_pct": -2.48
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-05"
+    },
+    {
+      "aweme_id": "7647417640323425457",
+      "published_at": "2026-06-04 14:21:18",
+      "title": "冒充我的骗子太多了，小心上当！",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "冒充我的骗子太多了，小心上当！：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "冒充我的骗子太多了，小心上当！",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-09）：收盘 -1.18%，区间最高 +0.52%，区间最低 -3.20%",
+              "data": {
+                "end_date": "2026-06-09",
+                "end_close": 4010.031,
+                "close_return_pct": -1.18,
+                "max_high": 4078.9319,
+                "max_high_return_pct": 0.52,
+                "min_low": 3927.853,
+                "min_low_return_pct": -3.2
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-04"
+    },
+    {
+      "aweme_id": "7647042350057661873",
+      "published_at": "2026-06-03 14:06:03",
+      "title": "所以你连续亏钱的阶段大概率是行情很差的时候,这时候出现连续亏损,要调整心态",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "所以你连续亏钱的阶段大概率是行情很差的时候,这时候出现连续亏损,要调整心态：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "所以你连续亏钱的阶段大概率是行情很差的时候,这时候出现连续亏损,要调整心态",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-08）：收盘 -3.05%，区间最高 -0.08%，区间最低 -3.82%",
+              "data": {
+                "end_date": "2026-06-08",
+                "end_close": 3959.3379,
+                "close_return_pct": -3.05,
+                "max_high": 4080.718,
+                "max_high_return_pct": -0.08,
+                "min_low": 3927.853,
+                "min_low_return_pct": -3.82
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-03"
+    },
+    {
+      "aweme_id": "7646413297173041777",
+      "published_at": "2026-06-01 21:23:54",
+      "title": "这波吃饭航行的高点是5月14号,我之所以5月14号没跑,是因为我觉得应该会有波浴尾航行,所以我没动,然后调整到5月21号那根大阴线的时候,我觉得情绪冰点到了,如果有浴尾的话,正常的预期就是从5月22号开始,必须得有很强的连续修复,然后5月2",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "这波吃饭航行的高点是5月14号,我之所以5月14号没跑,是因为我觉得应该会有波浴尾航行,所以我没动,然后调整到5月21号那根大阴线的时候,我觉得情绪冰点到了,如果有浴尾的话,正常的预期就是从5月22号开始,必须得有很强的连续修复,然后5月2：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "这波吃饭航行的高点是5月14号,我之所以5月14号没跑,是因为我觉得应该会有波浴尾航行,所以我没动,然后调整到5月21号那根大阴线的时候,我觉得情绪冰点到了,如果有浴尾的话,正常的预期就是从5月22号开始,必须得有很强的连续修复,然后5月2",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-04）：收盘 +0.00%，区间最高 +1.22%，区间最低 -0.62%",
+              "data": {
+                "end_date": "2026-06-04",
+                "end_close": 4057.781,
+                "close_return_pct": 0.0,
+                "max_high": 4107.0459,
+                "max_high_return_pct": 1.22,
+                "min_low": 4032.583,
+                "min_low_return_pct": -0.62
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-01"
+    },
+    {
+      "aweme_id": "7645662793240815025",
+      "published_at": "2026-05-30 20:51:32",
+      "title": "一旦出现黑天鹅,那么这个公式就失效了",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "一旦出现黑天鹅,那么这个公式就失效了：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "一旦出现黑天鹅,那么这个公式就失效了",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-03）：收盘 +0.38%，区间最高 +0.95%，区间最低 -0.88%",
+              "data": {
+                "end_date": "2026-06-03",
+                "end_close": 4083.9741,
+                "close_return_pct": 0.38,
+                "max_high": 4107.0459,
+                "max_high_return_pct": 0.95,
+                "min_low": 4032.583,
+                "min_low_return_pct": -0.88
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-30"
+    },
+    {
+      "aweme_id": "7645281384584000625",
+      "published_at": "2026-05-29 20:11:32",
+      "title": "接下来每一年我可能都会拿出一部分利润来定投高股息的票,攒被动收益",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "接下来每一年我可能都会拿出一部分利润来定投高股息的票,攒被动收益：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "接下来每一年我可能都会拿出一部分利润来定投高股息的票,攒被动收益",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-03）：收盘 +0.38%，区间最高 +0.95%，区间最低 -0.88%",
+              "data": {
+                "end_date": "2026-06-03",
+                "end_close": 4083.9741,
+                "close_return_pct": 0.38,
+                "max_high": 4107.0459,
+                "max_high_return_pct": 0.95,
+                "min_low": 4032.583,
+                "min_low_return_pct": -0.88
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-29"
+    },
+    {
+      "aweme_id": "7644934639790269861",
+      "published_at": "2026-05-28 21:30:53",
+      "title": "另外最近很多朋友加我找我交流我在这统一回复一下我不交流因为交流对于我来说没有任何意义我也没有精力去交流那么多人如果一个人给我发一条私信我都回不过来所以我把私信都给关了我发个抖音只想输出",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "另外最近很多朋友加我找我交流我在这统一回复一下我不交流因为交流对于我来说没有任何意义我也没有精力去交流那么多人如果一个人给我发一条私信我都回不过来所以我把私信都给关了我发个抖音只想输出：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "另外最近很多朋友加我找我交流我在这统一回复一下我不交流因为交流对于我来说没有任何意义我也没有精力去交流那么多人如果一个人给我发一条私信我都回不过来所以我把私信都给关了我发个抖音只想输出",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-02）：收盘 -0.57%，区间最高 +0.35%，区间最低 -1.61%",
+              "data": {
+                "end_date": "2026-06-02",
+                "end_close": 4075.1021,
+                "close_return_pct": -0.57,
+                "max_high": 4112.9551,
+                "max_high_return_pct": 0.35,
+                "min_low": 4032.583,
+                "min_low_return_pct": -1.61
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-28"
+    },
+    {
+      "aweme_id": "7644767035850861745",
+      "published_at": "2026-05-28 10:55:36",
+      "title": "如果他们看到这个市场有明显风险的时候,他们会卖掉持有的高风险板块去买防守板块,因为防守板块跌的可能要比其他板块跌的要少",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果他们看到这个市场有明显风险的时候,他们会卖掉持有的高风险板块去买防守板块,因为防守板块跌的可能要比其他板块跌的要少：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果他们看到这个市场有明显风险的时候,他们会卖掉持有的高风险板块去买防守板块,因为防守板块跌的可能要比其他板块跌的要少",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-02）：收盘 -0.57%，区间最高 +0.35%，区间最低 -1.61%",
+              "data": {
+                "end_date": "2026-06-02",
+                "end_close": 4075.1021,
+                "close_return_pct": -0.57,
+                "max_high": 4112.9551,
+                "max_high_return_pct": 0.35,
+                "min_low": 4032.583,
+                "min_low_return_pct": -1.61
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-28"
+    },
+    {
+      "aweme_id": "7644499012980074161",
+      "published_at": "2026-05-27 17:35:30",
+      "title": "如果你不埋伏,等涨的再去追了,有可能你追,你就成接盘的了",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果你不埋伏,等涨的再去追了,有可能你追,你就成接盘的了：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果你不埋伏,等涨的再去追了,有可能你追,你就成接盘的了",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "nonferrous",
+              "proxy_name": "有色金属ETF",
+              "proxy_role": "铝、有色与小金属代理",
+              "horizon": "3d",
+              "evidence": "有色金属ETF（后续3个交易日至2026-06-01）：收盘 -3.18%，区间最高 +0.75%，区间最低 -3.78%",
+              "data": {
+                "end_date": "2026-06-01",
+                "end_close": 1.949,
+                "close_return_pct": -3.18,
+                "max_high": 2.028,
+                "max_high_return_pct": 0.75,
+                "min_low": 1.937,
+                "min_low_return_pct": -3.78
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：有色金属ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/512400.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "nonferrous"
+      ],
+      "published_date": "2026-05-27"
+    },
+    {
+      "aweme_id": "7644026017695401211",
+      "published_at": "2026-05-26 11:00:04",
+      "title": "提桶跑路，2026.5.26",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "提桶跑路，2026.5.26：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "提桶跑路，2026.5.26",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-29）：收盘 -1.85%，区间最高 +0.20%，区间最低 -2.16%",
+              "data": {
+                "end_date": "2026-05-29",
+                "end_close": 4068.5691,
+                "close_return_pct": -1.85,
+                "max_high": 4153.562,
+                "max_high_return_pct": 0.2,
+                "min_low": 4055.8269,
+                "min_low_return_pct": -2.16
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-26"
+    },
+    {
+      "aweme_id": "7643439772702991537",
+      "published_at": "2026-05-24 21:05:07",
+      "title": "因为美债的利率现在很高,如果加息美债的利率会更高,这会增加美国政府的常债压力",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "因为美债的利率现在很高,如果加息美债的利率会更高,这会增加美国政府的常债压力：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "因为美债的利率现在很高,如果加息美债的利率会更高,这会增加美国政府的常债压力",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-27）：收盘 -0.47%，区间最高 +1.00%，区间最低 -0.86%",
+              "data": {
+                "end_date": "2026-05-27",
+                "end_close": 4093.7271,
+                "close_return_pct": -0.47,
+                "max_high": 4153.8789,
+                "max_high_return_pct": 1.0,
+                "min_low": 4077.616,
+                "min_low_return_pct": -0.86
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-24"
+    },
+    {
+      "aweme_id": "7643305828430254769",
+      "published_at": "2026-05-24 12:25:21",
+      "title": "这种巨头市值越大,红西的资金就越多,市场调整的可能也就越剧烈",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "这种巨头市值越大,红西的资金就越多,市场调整的可能也就越剧烈：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "这种巨头市值越大,红西的资金就越多,市场调整的可能也就越剧烈",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-27）：收盘 -0.47%，区间最高 +1.00%，区间最低 -0.86%",
+              "data": {
+                "end_date": "2026-05-27",
+                "end_close": 4093.7271,
+                "close_return_pct": -0.47,
+                "max_high": 4153.8789,
+                "max_high_return_pct": 1.0,
+                "min_low": 4077.616,
+                "min_low_return_pct": -0.86
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-24"
+    },
+    {
+      "aweme_id": "7642484482499130609",
+      "published_at": "2026-05-22 07:18:07",
+      "title": "当然,它有可能反包,那也有可能不反包",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "当然,它有可能反包,那也有可能不反包：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "当然,它有可能反包,那也有可能不反包",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "broker",
+              "proxy_name": "证券ETF",
+              "proxy_role": "券商板块代理",
+              "horizon": "3d",
+              "evidence": "证券ETF（后续3个交易日至2026-05-27）：收盘 +0.58%，区间最高 +2.89%，区间最低 -0.29%",
+              "data": {
+                "end_date": "2026-05-27",
+                "end_close": 1.043,
+                "close_return_pct": 0.58,
+                "max_high": 1.067,
+                "max_high_return_pct": 2.89,
+                "min_low": 1.034,
+                "min_low_return_pct": -0.29
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：证券ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/512880.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "broker"
+      ],
+      "published_date": "2026-05-22"
+    },
+    {
+      "aweme_id": "7642344453969562033",
+      "published_at": "2026-05-21 22:14:45",
+      "title": "情绪冰点后大概率会出现连续强修复",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "情绪冰点后大概率会出现连续强修复：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "情绪冰点后大概率会出现连续强修复",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-26）：收盘 +1.67%，区间最高 +1.88%，区间最低 -0.23%",
+              "data": {
+                "end_date": "2026-05-26",
+                "end_close": 4145.373,
+                "close_return_pct": 1.67,
+                "max_high": 4153.8789,
+                "max_high_return_pct": 1.88,
+                "min_low": 4067.7471,
+                "min_low_return_pct": -0.23
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-21"
+    },
+    {
+      "aweme_id": "7641583413052940729",
+      "published_at": "2026-05-19 21:01:27",
+      "title": "接下来我可能会找个情绪高点,把所有的仓位都给清了",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "接下来我可能会找个情绪高点,把所有的仓位都给清了：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "接下来我可能会找个情绪高点,把所有的仓位都给清了",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-22）：收盘 -1.36%，区间最高 +0.72%，区间最低 -2.44%",
+              "data": {
+                "end_date": "2026-05-22",
+                "end_close": 4112.8989,
+                "close_return_pct": -1.36,
+                "max_high": 4199.5269,
+                "max_high_return_pct": 0.72,
+                "min_low": 4067.7471,
+                "min_low_return_pct": -2.44
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-19"
+    },
+    {
+      "aweme_id": "7641199246935598181",
+      "published_at": "2026-05-18 20:12:29",
+      "title": "那美国的金融资产大概率是要跌一波的",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "那美国的金融资产大概率是要跌一波的：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "那美国的金融资产大概率是要跌一波的",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-21）：收盘 -1.31%，区间最高 +1.65%，区间最低 -1.39%",
+              "data": {
+                "end_date": "2026-05-21",
+                "end_close": 4077.2771,
+                "close_return_pct": -1.31,
+                "max_high": 4199.5269,
+                "max_high_return_pct": 1.65,
+                "min_low": 4074.217,
+                "min_low_return_pct": -1.39
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-18"
+    },
+    {
+      "aweme_id": "7640351947677841403",
+      "published_at": "2026-05-16 13:22:48",
+      "title": "大幅急跌后大概率会有强修复，吃饭行情还有余味",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "大幅急跌后大概率会有强修复，吃饭行情还有余味：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "大幅急跌后大概率会有强修复，吃饭行情还有余味",
+          "finding": "后续3个交易日的代理行情结果：上证综指为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-20）：收盘 +0.65%，区间最高 +0.84%，区间最低 -0.66%",
+              "data": {
+                "end_date": "2026-05-20",
+                "end_close": 4162.1851,
+                "close_return_pct": 0.65,
+                "max_high": 4170.2891,
+                "max_high_return_pct": 0.84,
+                "min_low": 4107.9951,
+                "min_low_return_pct": -0.66
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-16"
+    },
+    {
+      "aweme_id": "7639721687822582129",
+      "published_at": "2026-05-14 20:21:58",
+      "title": "你想,他们前一天板上买就是当天的最高价买,如果炸板了,当天可能就得吃几个点的面",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "你想,他们前一天板上买就是当天的最高价买,如果炸板了,当天可能就得吃几个点的面：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "你想,他们前一天板上买就是当天的最高价买,如果炸板了,当天可能就得吃几个点的面",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-19）：收盘 -0.20%，区间最高 +0.33%，区间最低 -1.67%",
+              "data": {
+                "end_date": "2026-05-19",
+                "end_close": 4169.5381,
+                "close_return_pct": -0.2,
+                "max_high": 4191.8071,
+                "max_high_return_pct": 0.33,
+                "min_low": 4107.9951,
+                "min_low_return_pct": -1.67
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-14"
+    },
+    {
+      "aweme_id": "7639295249643308785",
+      "published_at": "2026-05-13 17:02:17",
+      "title": "如果你抽到有99颗旗子的罐子,那么你拿到黑子的概率就是99分之49",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果你抽到有99颗旗子的罐子,那么你拿到黑子的概率就是99分之49：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果你抽到有99颗旗子的罐子,那么你拿到黑子的概率就是99分之49",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-18）：收盘 -2.62%，区间最高 +0.38%，区间最低 -3.16%",
+              "data": {
+                "end_date": "2026-05-18",
+                "end_close": 4131.5278,
+                "close_return_pct": -2.62,
+                "max_high": 4258.8628,
+                "max_high_return_pct": 0.38,
+                "min_low": 4108.604,
+                "min_low_return_pct": -3.16
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-13"
+    },
+    {
+      "aweme_id": "7638238213169599483",
+      "published_at": "2026-05-11 12:00:00",
+      "title": "也不至于回撤太多,如果不调整继续涨,你也不至于说全都卖飞了,因为没有人能精准的卖在最高点,只要账户是赚的,我觉得就是好的,觉得有用点点特别关注",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "也不至于回撤太多,如果不调整继续涨,你也不至于说全都卖飞了,因为没有人能精准的卖在最高点,只要账户是赚的,我觉得就是好的,觉得有用点点特别关注：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "也不至于回撤太多,如果不调整继续涨,你也不至于说全都卖飞了,因为没有人能精准的卖在最高点,只要账户是赚的,我觉得就是好的,觉得有用点点特别关注",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-14）：收盘 -1.11%，区间最高 +0.80%，区间最低 -1.11%",
+              "data": {
+                "end_date": "2026-05-14",
+                "end_close": 4177.917,
+                "close_return_pct": -1.11,
+                "max_high": 4258.8628,
+                "max_high_return_pct": 0.8,
+                "min_low": 4177.917,
+                "min_low_return_pct": -1.11
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-11"
+    },
+    {
+      "aweme_id": "7638233662732020197",
+      "published_at": "2026-05-10 20:27:24",
+      "title": "而如果他只是人气高,但逻辑不硬的话,那么可能只有一拨人去买",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "而如果他只是人气高,但逻辑不硬的话,那么可能只有一拨人去买：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "而如果他只是人气高,但逻辑不硬的话,那么可能只有一拨人去买",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-13）：收盘 +1.50%，区间最高 +1.56%，区间最低 +0.15%",
+              "data": {
+                "end_date": "2026-05-13",
+                "end_close": 4242.5718,
+                "close_return_pct": 1.5,
+                "max_high": 4245.0679,
+                "max_high_return_pct": 1.56,
+                "min_low": 4186.082,
+                "min_low_return_pct": 0.15
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-10"
+    },
+    {
+      "aweme_id": "7637746586983398833",
+      "published_at": "2026-05-09 17:00:00",
+      "title": "如果你不会选股,你选好板块之后买板块的ETF也行",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果你不会选股,你选好板块之后买板块的ETF也行：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果你不会选股,你选好板块之后买板块的ETF也行",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-13）：收盘 +1.50%，区间最高 +1.56%，区间最低 +0.15%",
+              "data": {
+                "end_date": "2026-05-13",
+                "end_close": 4242.5718,
+                "close_return_pct": 1.5,
+                "max_high": 4245.0679,
+                "max_high_return_pct": 1.56,
+                "min_low": 4186.082,
+                "min_low_return_pct": 0.15
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-09"
+    },
+    {
+      "aweme_id": "7637486606921000817",
+      "published_at": "2026-05-08 20:06:32",
+      "title": "你如果信了只预测不跟随的鬼话,就容易出现上面老铁说的那种情况",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "你如果信了只预测不跟随的鬼话,就容易出现上面老铁说的那种情况：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "你如果信了只预测不跟随的鬼话,就容易出现上面老铁说的那种情况",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-13）：收盘 +1.50%，区间最高 +1.56%，区间最低 +0.15%",
+              "data": {
+                "end_date": "2026-05-13",
+                "end_close": 4242.5718,
+                "close_return_pct": 1.5,
+                "max_high": 4245.0679,
+                "max_high_return_pct": 1.56,
+                "min_low": 4186.082,
+                "min_low_return_pct": 0.15
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-08"
+    },
+    {
+      "aweme_id": "7636376659960538097",
+      "published_at": "2026-05-06 17:00:00",
+      "title": "我的第一个建议是新手能不来就别来,否则你大概率是要成为镰刀养料的",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "我的第一个建议是新手能不来就别来,否则你大概率是要成为镰刀养料的：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "我的第一个建议是新手能不来就别来,否则你大概率是要成为镰刀养料的",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-11）：收盘 +1.56%，区间最高 +1.67%，区间最低 -0.14%",
+              "data": {
+                "end_date": "2026-05-11",
+                "end_close": 4225.021,
+                "close_return_pct": 1.56,
+                "max_high": 4229.5801,
+                "max_high_return_pct": 1.67,
+                "min_low": 4154.2461,
+                "min_low_return_pct": -0.14
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-06"
+    },
+    {
+      "aweme_id": "7636237487987513851",
+      "published_at": "2026-05-05 11:16:34",
+      "title": "所以只要你还有这种想法",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "所以只要你还有这种想法：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "所以只要你还有这种想法",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-08）：收盘 +1.65%，区间最高 +1.72%，区间最低 +0.43%",
+              "data": {
+                "end_date": "2026-05-08",
+                "end_close": 4179.9531,
+                "close_return_pct": 1.65,
+                "max_high": 4183.063,
+                "max_high_return_pct": 1.72,
+                "min_low": 4129.9111,
+                "min_low_return_pct": 0.43
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-05"
+    },
+    {
+      "aweme_id": "7635487806839929585",
+      "published_at": "2026-05-04 17:00:00",
+      "title": "结构牛就是这样,你买对了票能涨上天,你买错了票不但不涨,还可能会跌",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "结构牛就是这样,你买对了票能涨上天,你买错了票不但不涨,还可能会跌：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "结构牛就是这样,你买对了票能涨上天,你买错了票不但不涨,还可能会跌",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-08）：收盘 +1.65%，区间最高 +1.72%，区间最低 +0.43%",
+              "data": {
+                "end_date": "2026-05-08",
+                "end_close": 4179.9531,
+                "close_return_pct": 1.65,
+                "max_high": 4183.063,
+                "max_high_return_pct": 1.72,
+                "min_low": 4129.9111,
+                "min_low_return_pct": 0.43
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-04"
+    },
+    {
+      "aweme_id": "7635519151444320369",
+      "published_at": "2026-05-03 12:49:02",
+      "title": "因为我走过的弯路,有可能你现在正在走,或者未来有可能会走",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "因为我走过的弯路,有可能你现在正在走,或者未来有可能会走：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "因为我走过的弯路,有可能你现在正在走,或者未来有可能会走",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-08）：收盘 +1.65%，区间最高 +1.72%，区间最低 +0.43%",
+              "data": {
+                "end_date": "2026-05-08",
+                "end_close": 4179.9531,
+                "close_return_pct": 1.65,
+                "max_high": 4183.063,
+                "max_high_return_pct": 1.72,
+                "min_low": 4129.9111,
+                "min_low_return_pct": 0.43
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-03"
+    },
+    {
+      "aweme_id": "7634810730142848369",
+      "published_at": "2026-05-02 17:00:00",
+      "title": "只要别快速加息缩表,这轮结构牛大概率就还会继续",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "只要别快速加息缩表,这轮结构牛大概率就还会继续：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "只要别快速加息缩表,这轮结构牛大概率就还会继续",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-08）：收盘 +1.65%，区间最高 +1.72%，区间最低 +0.43%",
+              "data": {
+                "end_date": "2026-05-08",
+                "end_close": 4179.9531,
+                "close_return_pct": 1.65,
+                "max_high": 4183.063,
+                "max_high_return_pct": 1.72,
+                "min_low": 4129.9111,
+                "min_low_return_pct": 0.43
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-02"
+    },
+    {
+      "aweme_id": "7634801095420126073",
+      "published_at": "2026-05-01 14:22:40",
+      "title": "如果展开讲底层逻辑,讲好几天可能都讲不完",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-09-07",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "如果展开讲底层逻辑,讲好几天可能都讲不完：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "如果展开讲底层逻辑,讲好几天可能都讲不完",
+          "finding": "该观点属于“如果/只要/一旦”式条件策略，不是无条件方向预测；页面保留后续行情供核对，但不把条件分支强行计入准确率。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-08）：收盘 +1.65%，区间最高 +1.72%，区间最低 +0.43%",
+              "data": {
+                "end_date": "2026-05-08",
+                "end_close": 4179.9531,
+                "close_return_pct": 1.65,
+                "max_high": 4183.063,
+                "max_high_return_pct": 1.72,
+                "min_low": 4129.9111,
+                "min_low_return_pct": 0.43
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-01"
+    }
+  ]
+}

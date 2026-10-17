@@ -15,6 +15,9 @@ export default antfu({
 		"public/research-library/catalog.json",
 		"public/research-library/.sync-manifest.json",
 		"research-library/sync-report.json",
+		"research-library/douyin-source/**",
+		"research-library/douyin-source-manifest.json",
+		"automation-runtime/**",
 	],
 	rules: {
 		"style/quotes": ["error", "double"],

@@ -1,0 +1,4 @@
+# Keep reviewed corpus snapshots and their publishing tools byte-for-byte.
+/research-library/douyin-source/** -text
+/research-library/douyin-source-manifest.json -text
+/automation-runtime/** -text

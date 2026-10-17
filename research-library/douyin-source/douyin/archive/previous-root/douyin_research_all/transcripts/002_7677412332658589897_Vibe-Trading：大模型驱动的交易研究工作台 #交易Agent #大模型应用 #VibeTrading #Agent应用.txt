@@ -1,0 +1,94 @@
+你以为Vibe Trading是个炒股机器人,但真正看懂这个项目,你会发现它更像一个金融研究工作台。它也不是只会回答买不买。它真正想做的是,把一句自然语言,变成数据、回测、报告、策略、代码,甚至一个可持续运行的研究流程。
+这条视频,我们不照着资料念。我们拆这个项目,我会把它分成五层来看。它是什么?它能做什么?它怎么接数据和工具?它怎么安装和接入?还有,它的安全边界在哪?
+先给结论,Vibe Trading面向的不是让我一夜暴富。它面向的是另一种人,你有一个交易问题,你想查市场数据,你想把想法写成策略,你想回测。你还想把结果保存,复盘,继续追问。它把这些东西串成一个Agent Workflow。
+这个项目的定位写得很直接,你的个人交易智能体,副标题更狠,一条命令,让你的智能体具备完整交易研究能力。这里的重点是研究能力,不是托管资金,不是替你保证收益,也不是神秘信号群。它的核心定义在What is Vibe Trading那一段。
+这是一个开源研究工作台。它把自然语言提示,连接到市场数据加载器,策略生成,回测引擎,报告,导出,还有持久研究记忆。
+这句话很长,拆开就简单了,你说问题,它去找数据,它写分析和代码,它跑验证,它把产物留住。项目介绍里还专门强调了一句,它面向研究,模拟和回测。
+如果你主动授权券商连接,它可以进入自主交易路径,但它不托管资金,不会超出你设定的限额交易。
+你也可以随时停掉。这句话后面要记住,因为这决定了它不是一个黑平台式自动交易盒子,而是一个带安全边界的研究系统。
+再看它最核心的使用场景。
+第一类是提出交易问题,比如你问英伟达下个季度的风险是什么,或者美联储路径会怎么影响黄金。
+它会调用工具、数据、文档,还有以前session里的上下文给你做市场研究。
+第二类是回测策略想法,你给它一个想法,比如BTC的20日和50日均线交叉。
+它不是只说这个策略可能有效,它要产出策略、代码、指标、benchmark对比、验证、artifacts、还有runcard,听起来像项目文件夹。
+确实,它就是在把一句话变成一组可检查的研究产物。
+第三类是复盘你自己的交易,这就是vibe trading里很重要的shadowaccount。
+你上传券商导出的交易记录,它会解析日志,生成行为画像。
+比如持仓天数、胜率、盈亏比、回撤。
+第四类是多智能体团队,项目里叫swarmworkflows。
+你可以跑投资委员会,多空辩论、量化策略桌、加密交易桌、宏观利率外汇桌、风险委员会。
+这些不是单个agent独白,它更像把不同角色排成一个研究流程。
+第五类是alphaZoo,这是量化玩家会在意的部分,它内置了456个预制alpha因子。
+来源包括Qlib158、Kakushaz的101、Formulaic alphas,
+国君191、还有学术因子。
+你可以一行命令,对一个因子库做横平,看IC、IR,看因子是alive,reversed,还是dead。
+第三类是复盘你自己的交易。
+这就是vibe trading里很重要的shadowaccount。
+你上传券商导出的交易记录,它会解析日志,生成行为画像。
+它能读取铜花顺、东方财富、富途,还有generic csv。
+重点不是兼容表格,而是把真实交易变成可计算的行为样本。
+画像里会看持仓天数、胜率、盈亏比、回撤。
+这些指标不是孤立评价,而是在找你的交易节奏和风险结构。
+它还会看处置效应、过度交易、追涨、锚定这些偏差。
+普通复盘常说,我太冲动,这里会把冲动变成可标注的特征。
+更关键的是规则提取。
+它会把反复出现的入场和出场行为转成明确策略画像,而不是给一段空泛总结。
+然后,它跑一个shadow strategy,真实路径和规则路径放在一起比较。
+你能看到规则违背,过早离场,错过信号和替代交易路径。
+最后,它交付HTML或PDF报告,也可以把这次session留下来继续精修。
+复盘不再是情绪总结,而是一条可审计证据链。
+第四类,是多智能体团队,项目里叫Swarm Workflows。
+你可以跑投资委员会,多空辩论,量化策略桌,加密交易桌,宏观利率外汇桌,风险委员会。
+这些不是单个agent独白,它更像把不同角色排成一个研究流程。
+有人做基本面,有人做量化,有人看风险,再汇总成结论。
+项目提供29个开箱即用的Swarm Presets,比如Investment Committee, Global Equities Desk, Crypto Trading Desk, Quant Strategy Desk, Risk Committee。
+第五类,是AlphaZoo。
+它内置了456个预制Alpha因子,覆盖4个Zoo。
+来源包括Qlib 158,WorldQuant的101 Formulaic Alphas,国泰君安191,还有学术因子。
+每个来源都带公式和许可边界。
+你可以一行命令,对一个因子库做横评,看ICIR,看因子是alive,reversed,还是dead。
+这里不要被数字吓到,456个Alpha不代表456个赚钱机器,它更像一个研究货架。
+真正重要的是公式,来源,look ahead,防护和横评,流程放在一起。
+再看数据层,一次get,market data调用,18个行情数据源。
+source,设成auto,系统会按符号选择数据源,再沿着同市场的fallback链往下走。
+A股链路里,有Tencent,MoodDX,EastMoney,Bowstock,Akshare,Tashhare和Local。
+Local源很重要,它可以从CSV,Parket,DuckDB读OHLCV,而且显示Local永远不会静默fallback到网络源。
+除OHLCV外,还有18个只读数据工具,资金流,龙虎榜,北向,两融,大宗交易,SAC文件,财报,期权链,机构持仓,宏观,都可以经MCP暴露。
+这解决的是交易研究里很烦的一件事,数据源经常挂,经常限流,经常某个市场能用,另一个市场不能用。
+所以重点不是被数据源名字,重点是他承认现实,金融数据不是一个API就能搞定。
+一次研究怎么跑完,项目里有一条很清楚的证据路径,plan,ground,execute,validate,deliver。
+plan是先决定用哪些skills,tools,数据源和swarm preset,它不是一上来就回答,
+ground是把市场数据、文档、网页、上下文和上传文件拉进工作区,让回答站在证据上。
+execute才是生成策略、代码、运行工具、接回测引擎或分析工作流。
+很多AI金融工具只做到execute。
+Vibe Trading反复强调validate,benchmark comparison,monte carlo,bootstrap,walk forward,run cards or warnings。
+最后deliver输出报告,artifacts,tool traces,也能导出到tradingview,tdx,metatrader5,mcp clients,或者后续sessions。
+接着看怎么安装和接入,最小入口是一行PPinstall Vibe Trading AI。
+安装后有三个常用命令,Vibe Trading是CLI,Vibe Trading Serve是web server,Vibe Trading MCP是mcp server。
+项目给了四条路径,docker,本地安装,mcp plugin,clawhub,不同路径服务不同人。
+前置条件也要看清楚,llmapikey或olima,python3.11以上,docker,openai codex,oauth,这些都可能用到。
+provider支持很多,openrouter,openai,deepseek,gemini,groke,quinn,zipu,kimi,minimax,xiaomi,mimo,z.i,olama。
+但模型选择不是越便宜越好。
+Vibe Trading高度依赖工具调用,模型决定agent是真的使用工具,还是凭记忆编答案。
+所以推荐模型分层很重要。
+复杂swarms和常研究session要用工具调用可靠的模型,小型或蒸馏模型要谨慎。
+实操建议是先跑最小闭环,先让一个prompt完成数据,回测,报告,不要一上来接实盘。
+再往外看,Vibe Trading不是只能在命令行里跑,它有web UI和API Server,围绕runs,sessions,upload,swarm,alpha,settings,channels,scheduled runs,这些端点展开。
+web UI里运行过程可以通过事件流推到浏览器,聊天页,运行详情,报告库和设置页,都是同一套运行时的不同入口。
+定时研究也已经有入口,后台执行器默认关闭,必须设置Vibe Trading,Enable Steader等于1,才会真正触发。
+IM通道是一个很新的方向。
+Web Socket,Telegram,Slack,Discord,Matrix,WhatsApp,Signal,QQ,微信,飞书,丁丁,teams,email,mochat,都可以把外部聊天接到同一个session runtime。
+MCP插件则是另一层接入。
+Vibe Trading为MCP Compatible Client暴露54个MCP Tools,作为Steadio Subprocess运行,不需要server setup。
+这些MCP Tools包含research,data,document,backtest,trading connector多层能力,也就是说,别的agent可以把Vibe Trading当金融工具后端来掉。
+所以它的价值不止在一个UI,它更像一个金融研究运行时,可以接浏览器,命令行,IM,MCP客户端和后续自动化。
+最后看安全边界,非本地客户端访问敏感API,需要API,AUTHK。
+Shell Capable Tools默认不会暴露给远程API Sessions。
+文件读取也有限制,默认只在upload和import routes内。
+你可以通过Vibe Trading allowed file routes增加目录,但这是显示授权。
+石盘交易更要谨慎,它不是投资建议,不托管资金,也不运营执行场所。
+券商交易能力是实验性的,只能通过你明确授权的通道和限额运行。
+所以适合的人,是想做研究、量化、复盘和agent工具接入的人。
+不适合的人,是只想问今天买不买,希望系统替自己承担风险的人。
+片尾结论是,不要相信结论,检查证据链。
+Vibe Trading最值得看的,不是它会不会预测涨跌,而是它把交易研究拆成可调用、可验证、可复盘、可接入的系统。

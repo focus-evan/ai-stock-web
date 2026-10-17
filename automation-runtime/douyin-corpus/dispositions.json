@@ -1,0 +1,5 @@
+{
+  "7682460211265089203": {"slug":"liwei","status":"blocked","reason":"页面明确显示购买后可看，当前账号无完整内容访问权限。","source_url":"https://www.douyin.com/video/7682460211265089203","checked_at":"2026-10-14"},
+  "7693818935444036809": {"slug":"liwei","status":"blocked","reason":"本次页面仍显示专属会员、试看00:42及购买，当前无完整访问权限；未处理试看，不作为完整转写入库。","source_url":"https://www.douyin.com/video/7693818935444036809","checked_at":"2026-10-16"},
+  "7693556299737771386": {"slug":"ma-zong","status":"excluded","reason":"原作品作者为小张小张吃饭用缸（吸钱哥），不属于马总本人作品，已从其待处理队列排除。","source_url":"https://www.douyin.com/video/7693556299737771386","checked_at":"2026-10-14"}
+}

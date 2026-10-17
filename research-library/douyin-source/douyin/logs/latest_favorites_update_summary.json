@@ -1,0 +1,16 @@
+{
+  "run_id": "favorites_20261017",
+  "started": "2026-10-17 11:05:36",
+  "finished": "2026-10-17 11:16:23",
+  "status": "ok",
+  "scan_status": "complete",
+  "selected_new": 3,
+  "downloaded": 2,
+  "transcribed": 1,
+  "text_extracted": 2,
+  "merged_new": 3,
+  "pending": 0,
+  "failed": 0,
+  "total_records": 254,
+  "latest_published_at": "2026-10-16 08:25:49"
+}

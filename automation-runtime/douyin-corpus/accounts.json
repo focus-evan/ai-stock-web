@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "site_root": "D:/evan/html/douyin",
+  "accounts": [
+    {
+      "slug": "li-yien",
+      "nickname": "李一恩",
+      "sec_uid": "MS4wLjABAAAAuNn-nvAZ9qSMnElriH-A27sdla-O2ITaRMYPyP5WCziPEmLktuIH0zazDmNMnu_f",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAuNn-nvAZ9qSMnElriH-A27sdla-O2ITaRMYPyP5WCziPEmLktuIH0zazDmNMnu_f",
+      "last_published_at": "2026-09-04 16:16:05",
+      "last_aweme_id": "7681590947650538472",
+      "baseline_ai_count": 84
+    },
+    {
+      "slug": "liwei",
+      "nickname": "立伟",
+      "sec_uid": "MS4wLjABAAAArV-i8PGGGYk9tlP1JGrFxL5BR1VF01lb0Kn5MUOoNcM",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAArV-i8PGGGYk9tlP1JGrFxL5BR1VF01lb0Kn5MUOoNcM",
+      "last_published_at": "2026-09-04 18:27:04",
+      "last_aweme_id": "7681624701999494601",
+      "baseline_ai_count": 10
+    },
+    {
+      "slug": "ma-zong",
+      "nickname": "交易魔法师（马总）",
+      "sec_uid": "MS4wLjABAAAAnB-ki-s2qMUvIDbEQ9FqCn5_81kZL43qWKvUTVkQ9CQ",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAnB-ki-s2qMUvIDbEQ9FqCn5_81kZL43qWKvUTVkQ9CQ",
+      "last_published_at": "2026-09-06 20:55:00",
+      "last_aweme_id": "7682374261492118683",
+      "baseline_ai_count": 262
+    },
+    {
+      "slug": "quan-neng-ye-ren",
+      "nickname": "全能的野人",
+      "sec_uid": "MS4wLjABAAAAjoG0q686OVKqPnPYAhZVaVl5Y6Ul8gbWprwF52ualFY",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAjoG0q686OVKqPnPYAhZVaVl5Y6Ul8gbWprwF52ualFY",
+      "last_published_at": "2026-09-02 22:50:57",
+      "last_aweme_id": "7680950524044379124",
+      "baseline_ai_count": 136
+    },
+    {
+      "slug": "yu-bo-luo",
+      "nickname": "宇菠萝",
+      "sec_uid": "MS4wLjABAAAAfZf5xo0_HNS3M5GMZY183vk7KCHa4nk_HqVq27pipMU",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAfZf5xo0_HNS3M5GMZY183vk7KCHa4nk_HqVq27pipMU",
+      "last_published_at": "2026-09-06 18:21:22",
+      "last_aweme_id": "7682361511919467194",
+      "baseline_ai_count": 5
+    }
+  ]
+}

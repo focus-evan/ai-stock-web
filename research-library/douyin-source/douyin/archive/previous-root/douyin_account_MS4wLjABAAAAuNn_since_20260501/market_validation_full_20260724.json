@@ -1,0 +1,3496 @@
+{
+  "account": "李一恩",
+  "slug": "li-yien",
+  "generated_at": "2026-07-25T11:09:37+08:00",
+  "as_of": "2026-07-24",
+  "summary": {
+    "videos": 57,
+    "generated": 57,
+    "preserved_manual": 0,
+    "verdict_counts": {
+      "观察中": 40,
+      "已验证": 9,
+      "未验证": 2,
+      "部分验证": 6
+    },
+    "scored_videos": 17,
+    "average_score": 70.6
+  },
+  "entries": [
+    {
+      "aweme_id": "7665982753963708259",
+      "published_at": "2026-07-24 14:48:20",
+      "title": "我今天是自己亲身实践了,站在光里",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "我今天是自己亲身实践了,站在光里：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "观察期不足",
+          "claim": "我今天是自己亲身实践了,站在光里",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF：后续3个交易日数据不足",
+              "data": null
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-24"
+    },
+    {
+      "aweme_id": "7665587787693069263",
+      "published_at": "2026-07-23 13:15:39",
+      "title": "、算力的,最好的操作就是拿着别动",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "、算力的,最好的操作就是拿着别动：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "观察期不足",
+          "claim": "、算力的,最好的操作就是拿着别动",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指：后续3个交易日数据不足",
+              "data": null
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF：后续3个交易日数据不足",
+              "data": null
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-07-23"
+    },
+    {
+      "aweme_id": "7665225146878178767",
+      "published_at": "2026-07-22 13:48:26",
+      "title": "科创板高估小票反弹后仍需小心",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "中等",
+      "summary": "科创板高估小票反弹后仍需小心：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "观察期不足",
+          "claim": "科创板高估小票反弹后仍需小心",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为观察期不足。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF：后续3个交易日数据不足",
+              "data": null
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-22"
+    },
+    {
+      "aweme_id": "7664815911304562127",
+      "published_at": "2026-07-21 11:20:23",
+      "title": "光模块和算力反弹：熬过节后调整",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块和算力反弹：熬过节后调整：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块和算力反弹：熬过节后调整",
+          "finding": "观点同时包含进攻和防守条件，无法压缩成单一方向；阶段结果为：5G通信ETF为不可核验。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-24）：收盘 -7.31%，区间最高 +1.26%，区间最低 -7.94%",
+              "data": {
+                "end_date": "2026-07-24",
+                "end_close": 1.027,
+                "close_return_pct": -7.31,
+                "max_high": 1.122,
+                "max_high_return_pct": 1.26,
+                "min_low": 1.02,
+                "min_low_return_pct": -7.94
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-21"
+    },
+    {
+      "aweme_id": "7664445168485735330",
+      "published_at": "2026-07-20 11:21:42",
+      "title": "光模块大票反弹，熬过最难阶段",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "光模块大票反弹，熬过最难阶段：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "光模块大票反弹，熬过最难阶段",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-23）：收盘 +3.83%，区间最高 +10.22%，区间最低 -5.80%",
+              "data": {
+                "end_date": "2026-07-23",
+                "end_close": 1.057,
+                "close_return_pct": 3.83,
+                "max_high": 1.122,
+                "max_high_return_pct": 10.22,
+                "min_low": 0.959,
+                "min_low_return_pct": -5.8
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-20"
+    },
+    {
+      "aweme_id": "7662992790561966563",
+      "published_at": "2026-07-16 13:25:44",
+      "title": "市场下跌已充分，普通散户别乱动",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "市场下跌已充分，普通散户别乱动：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "市场下跌已充分，普通散户别乱动",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-21）：收盘 -0.46%，区间最高 -0.34%，区间最低 -3.64%",
+              "data": {
+                "end_date": "2026-07-21",
+                "end_close": 3864.3669,
+                "close_return_pct": -0.46,
+                "max_high": 3869.2151,
+                "max_high_return_pct": -0.34,
+                "min_low": 3741.1101,
+                "min_low_return_pct": -3.64
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-16"
+    },
+    {
+      "aweme_id": "7661878211848793460",
+      "published_at": "2026-07-13 13:20:36",
+      "title": "频繁操作才是散户亏损主因",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "频繁操作才是散户亏损主因：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "频繁操作才是散户亏损主因",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-16）：收盘 +1.04%，区间最高 +7.68%，区间最低 -1.55%",
+              "data": {
+                "end_date": "2026-07-16",
+                "end_close": 1.171,
+                "close_return_pct": 1.04,
+                "max_high": 1.248,
+                "max_high_return_pct": 7.68,
+                "min_low": 1.141,
+                "min_low_return_pct": -1.55
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-13"
+    },
+    {
+      "aweme_id": "7660787772931801588",
+      "published_at": "2026-07-10 14:49:10",
+      "title": "科技股单日暴跌，继续按策略拿着",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "科技股单日暴跌，继续按策略拿着：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "科技股单日暴跌，继续按策略拿着",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-15）：收盘 -1.96%，区间最高 +2.04%，区间最低 -6.54%",
+              "data": {
+                "end_date": "2026-07-15",
+                "end_close": 1.199,
+                "close_return_pct": -1.96,
+                "max_high": 1.248,
+                "max_high_return_pct": 2.04,
+                "min_low": 1.143,
+                "min_low_return_pct": -6.54
+              }
+            },
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-07-15）：收盘 -11.33%，区间最高 -1.07%，区间最低 -12.32%",
+              "data": {
+                "end_date": "2026-07-15",
+                "end_close": 3.403,
+                "close_return_pct": -11.33,
+                "max_high": 3.797,
+                "max_high_return_pct": -1.07,
+                "min_low": 3.365,
+                "min_low_return_pct": -12.32
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-07-15）：收盘 -3.67%，区间最高 +0.00%，区间最低 -7.34%",
+              "data": {
+                "end_date": "2026-07-15",
+                "end_close": 0.682,
+                "close_return_pct": -3.67,
+                "max_high": 0.708,
+                "max_high_return_pct": 0.0,
+                "min_low": 0.656,
+                "min_low_return_pct": -7.34
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication",
+        "semiconductor",
+        "software"
+      ],
+      "published_date": "2026-07-10"
+    },
+    {
+      "aweme_id": "7660366330285297320",
+      "published_at": "2026-07-09 11:33:44",
+      "title": "光模块前五大龙头低点抬升",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "未验证",
+      "score": 0,
+      "confidence": "中等",
+      "summary": "光模块前五大龙头低点抬升：未验证，0分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不支持",
+          "claim": "光模块前五大龙头低点抬升",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为不支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-14）：收盘 -3.67%，区间最高 +2.50%，区间最低 -10.84%",
+              "data": {
+                "end_date": "2026-07-14",
+                "end_close": 1.235,
+                "close_return_pct": -3.67,
+                "max_high": 1.314,
+                "max_high_return_pct": 2.5,
+                "min_low": 1.143,
+                "min_low_return_pct": -10.84
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-09"
+    },
+    {
+      "aweme_id": "7660357699490916532",
+      "published_at": "2026-07-09 11:00:15",
+      "title": "A股普跌中光模块龙头仍有韧性",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "A股普跌中光模块龙头仍有韧性：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "A股普跌中光模块龙头仍有韧性",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-14）：收盘 -3.67%，区间最高 +2.50%，区间最低 -10.84%",
+              "data": {
+                "end_date": "2026-07-14",
+                "end_close": 1.235,
+                "close_return_pct": -3.67,
+                "max_high": 1.314,
+                "max_high_return_pct": 2.5,
+                "min_low": 1.143,
+                "min_low_return_pct": -10.84
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-09"
+    },
+    {
+      "aweme_id": "7659993701997228175",
+      "published_at": "2026-07-08 11:27:44",
+      "title": "全球AI超跌，指数两次守住3950",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "全球AI超跌，指数两次守住3950：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "全球AI超跌，指数两次守住3950",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-13）：收盘 -1.44%，区间最高 +2.62%，区间最低 -1.77%",
+              "data": {
+                "end_date": "2026-07-13",
+                "end_close": 3913.7939,
+                "close_return_pct": -1.44,
+                "max_high": 4074.8279,
+                "max_high_return_pct": 2.62,
+                "min_low": 3900.667,
+                "min_low_return_pct": -1.77
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-08"
+    },
+    {
+      "aweme_id": "7659622823304733346",
+      "published_at": "2026-07-07 11:28:33",
+      "title": "回顾两次风险提示：减仓别加仓",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "回顾两次风险提示：减仓别加仓：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "回顾两次风险提示：减仓别加仓",
+          "finding": "观点同时包含进攻和防守条件，无法压缩成单一方向；阶段结果为：5G通信ETF为不可核验。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-10）：收盘 +2.00%，区间最高 +9.59%，区间最低 -2.50%",
+              "data": {
+                "end_date": "2026-07-10",
+                "end_close": 1.223,
+                "close_return_pct": 2.0,
+                "max_high": 1.314,
+                "max_high_return_pct": 9.59,
+                "min_low": 1.169,
+                "min_low_return_pct": -2.5
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-07"
+    },
+    {
+      "aweme_id": "7659204693650509544",
+      "published_at": "2026-07-06 08:25:59",
+      "title": "算力并不过剩，国内算力仍紧缺",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "算力并不过剩，国内算力仍紧缺：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "算力并不过剩，国内算力仍紧缺",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-09）：收盘 +6.66%，区间最高 +6.66%，区间最低 -3.00%",
+              "data": {
+                "end_date": "2026-07-09",
+                "end_close": 1.282,
+                "close_return_pct": 6.66,
+                "max_high": 1.282,
+                "max_high_return_pct": 6.66,
+                "min_low": 1.166,
+                "min_low_return_pct": -3.0
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-07-06"
+    },
+    {
+      "aweme_id": "7658119458851449460",
+      "published_at": "2026-07-03 10:14:43",
+      "title": "业绩真空期控制仓位，别赌财报",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "业绩真空期控制仓位，别赌财报：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "业绩真空期控制仓位，别赌财报",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-08）：收盘 -1.80%，区间最高 +0.41%，区间最低 -1.87%",
+              "data": {
+                "end_date": "2026-07-08",
+                "end_close": 3970.8799,
+                "close_return_pct": -1.8,
+                "max_high": 4060.0691,
+                "max_high_return_pct": 0.41,
+                "min_low": 3967.9131,
+                "min_low_return_pct": -1.87
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-07-03"
+    },
+    {
+      "aweme_id": "7657795048419161472",
+      "published_at": "2026-07-02 13:15:50",
+      "title": "量化时代频繁操作更易亏损",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "量化时代频繁操作更易亏损：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "量化时代频繁操作更易亏损",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-07）：收盘 -0.96%，区间最高 +1.12%，区间最低 -1.42%",
+              "data": {
+                "end_date": "2026-07-07",
+                "end_close": 3990.2351,
+                "close_return_pct": -0.96,
+                "max_high": 4073.8799,
+                "max_high_return_pct": 1.12,
+                "min_low": 3971.7129,
+                "min_low_return_pct": -1.42
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-07）：收盘 -1.88%，区间最高 +4.99%，区间最低 -4.58%",
+              "data": {
+                "end_date": "2026-07-07",
+                "end_close": 1.199,
+                "close_return_pct": -1.88,
+                "max_high": 1.283,
+                "max_high_return_pct": 4.99,
+                "min_low": 1.166,
+                "min_low_return_pct": -4.58
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-07-02"
+    },
+    {
+      "aweme_id": "7657424099031074403",
+      "published_at": "2026-07-01 13:16:22",
+      "title": "AI景气确定但杠杆拥挤",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "AI景气确定但杠杆拥挤：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "AI景气确定但杠杆拥挤",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-06）：收盘 -1.73%，区间最高 -0.46%，区间最低 -2.60%",
+              "data": {
+                "end_date": "2026-07-06",
+                "end_close": 4041.238,
+                "close_return_pct": -1.73,
+                "max_high": 4093.678,
+                "max_high_return_pct": -0.46,
+                "min_low": 4005.4141,
+                "min_low_return_pct": -2.6
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-06）：收盘 -9.90%，区间最高 -3.82%，区间最低 -12.29%",
+              "data": {
+                "end_date": "2026-07-06",
+                "end_close": 1.202,
+                "close_return_pct": -9.9,
+                "max_high": 1.283,
+                "max_high_return_pct": -3.82,
+                "min_low": 1.17,
+                "min_low_return_pct": -12.29
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-07-01"
+    },
+    {
+      "aweme_id": "7657060526127625635",
+      "published_at": "2026-06-30 13:45:31",
+      "title": "光模块拿着别动一年多：少操作胜过乱动",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块拿着别动一年多：少操作胜过乱动：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块拿着别动一年多：少操作胜过乱动",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-03）：收盘 -11.10%，区间最高 +1.50%，区间最低 -13.89%",
+              "data": {
+                "end_date": "2026-07-03",
+                "end_close": 1.242,
+                "close_return_pct": -11.1,
+                "max_high": 1.418,
+                "max_high_return_pct": 1.5,
+                "min_low": 1.203,
+                "min_low_return_pct": -13.89
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-30"
+    },
+    {
+      "aweme_id": "7656683640390888360",
+      "published_at": "2026-06-29 13:23:01",
+      "title": "散户亏损常来自追涨杀跌换赛道",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "散户亏损常来自追涨杀跌换赛道：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "散户亏损常来自追涨杀跌换赛道",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-02）：收盘 -8.74%，区间最高 +5.90%，区间最低 -9.56%",
+              "data": {
+                "end_date": "2026-07-02",
+                "end_close": 1.222,
+                "close_return_pct": -8.74,
+                "max_high": 1.418,
+                "max_high_return_pct": 5.9,
+                "min_low": 1.211,
+                "min_low_return_pct": -9.56
+              }
+            },
+            {
+              "proxy_key": "innovative_drug",
+              "proxy_name": "创新药ETF",
+              "proxy_role": "创新药与医药方向代理",
+              "horizon": "3d",
+              "evidence": "创新药ETF（后续3个交易日至2026-07-02）：收盘 +2.69%，区间最高 +4.89%，区间最低 -5.38%",
+              "data": {
+                "end_date": "2026-07-02",
+                "end_close": 0.84,
+                "close_return_pct": 2.69,
+                "max_high": 0.858,
+                "max_high_return_pct": 4.89,
+                "min_low": 0.774,
+                "min_low_return_pct": -5.38
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：创新药ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159992.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication",
+        "innovative_drug"
+      ],
+      "published_date": "2026-06-29"
+    },
+    {
+      "aweme_id": "7655629614002316642",
+      "published_at": "2026-06-26 17:12:51",
+      "title": "指数横盘与抱团加剧，主线仍在AI",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "指数横盘与抱团加剧，主线仍在AI：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "指数横盘与抱团加剧，主线仍在AI",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-07-01）：收盘 +2.12%，区间最高 +2.88%，区间最低 -0.86%",
+              "data": {
+                "end_date": "2026-07-01",
+                "end_close": 4112.4448,
+                "close_return_pct": 2.12,
+                "max_high": 4143.313,
+                "max_high_return_pct": 2.88,
+                "min_low": 3992.552,
+                "min_low_return_pct": -0.86
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-26"
+    },
+    {
+      "aweme_id": "7655536443129062900",
+      "published_at": "2026-06-26 11:11:18",
+      "title": "美股拖累短期调整，别追涨杀跌",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "美股拖累短期调整，别追涨杀跌：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "美股拖累短期调整，别追涨杀跌",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-07-01）：收盘 -1.84%，区间最高 +4.34%，区间最低 -5.81%",
+              "data": {
+                "end_date": "2026-07-01",
+                "end_close": 1.334,
+                "close_return_pct": -1.84,
+                "max_high": 1.418,
+                "max_high_return_pct": 4.34,
+                "min_low": 1.28,
+                "min_low_return_pct": -5.81
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-26"
+    },
+    {
+      "aweme_id": "7655235092139041699",
+      "published_at": "2026-06-25 15:41:54",
+      "title": "光模块分歧：看好科技的人很难被劝变",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块分歧：看好科技的人很难被劝变：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块分歧：看好科技的人很难被劝变",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-30）：收盘 -2.92%，区间最高 -1.88%，区间最低 -11.05%",
+              "data": {
+                "end_date": "2026-06-30",
+                "end_close": 1.397,
+                "close_return_pct": -2.92,
+                "max_high": 1.412,
+                "max_high_return_pct": -1.88,
+                "min_low": 1.28,
+                "min_low_return_pct": -11.05
+              }
+            },
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-06-30）：收盘 +7.80%，区间最高 +7.88%，区间最低 -4.20%",
+              "data": {
+                "end_date": "2026-06-30",
+                "end_close": 4.13,
+                "close_return_pct": 7.8,
+                "max_high": 4.133,
+                "max_high_return_pct": 7.88,
+                "min_low": 3.67,
+                "min_low_return_pct": -4.2
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-06-30）：收盘 -2.56%，区间最高 -0.57%，区间最低 -5.55%",
+              "data": {
+                "end_date": "2026-06-30",
+                "end_close": 0.685,
+                "close_return_pct": -2.56,
+                "max_high": 0.699,
+                "max_high_return_pct": -0.57,
+                "min_low": 0.664,
+                "min_low_return_pct": -5.55
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication",
+        "semiconductor",
+        "software"
+      ],
+      "published_date": "2026-06-25"
+    },
+    {
+      "aweme_id": "7654746597075623011",
+      "published_at": "2026-06-24 08:06:19",
+      "title": "赚大钱三要素：赛道、成本、拿住",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "赚大钱三要素：赛道、成本、拿住：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "赚大钱三要素：赛道、成本、拿住",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-29）：收盘 -3.46%，区间最高 +3.75%，区间最低 -7.71%",
+              "data": {
+                "end_date": "2026-06-29",
+                "end_close": 1.339,
+                "close_return_pct": -3.46,
+                "max_high": 1.439,
+                "max_high_return_pct": 3.75,
+                "min_low": 1.28,
+                "min_low_return_pct": -7.71
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-24"
+    },
+    {
+      "aweme_id": "7654526185473357812",
+      "published_at": "2026-06-23 17:50:59",
+      "title": "满仓涨停再跌停的数学：别频繁操作",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "满仓涨停再跌停的数学：别频繁操作：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "满仓涨停再跌停的数学：别频繁操作",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-26）：收盘 -1.92%，区间最高 +0.65%，区间最低 -2.40%",
+              "data": {
+                "end_date": "2026-06-26",
+                "end_close": 4027.2649,
+                "close_return_pct": -1.92,
+                "max_high": 4133.0981,
+                "max_high_return_pct": 0.65,
+                "min_low": 4007.8589,
+                "min_low_return_pct": -2.4
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-26）：收盘 +1.27%，区间最高 +7.23%，区间最低 -1.19%",
+              "data": {
+                "end_date": "2026-06-26",
+                "end_close": 1.359,
+                "close_return_pct": 1.27,
+                "max_high": 1.439,
+                "max_high_return_pct": 7.23,
+                "min_low": 1.326,
+                "min_low_return_pct": -1.19
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-06-23"
+    },
+    {
+      "aweme_id": "7654077039855715023",
+      "published_at": "2026-06-22 12:48:05",
+      "title": "想操作就每天减5%，别嘲讽其他持仓",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "想操作就每天减5%，别嘲讽其他持仓：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "想操作就每天减5%，别嘲讽其他持仓",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-25）：收盘 +2.27%，区间最高 +2.27%，区间最低 -5.76%",
+              "data": {
+                "end_date": "2026-06-25",
+                "end_close": 1.439,
+                "close_return_pct": 2.27,
+                "max_high": 1.439,
+                "max_high_return_pct": 2.27,
+                "min_low": 1.326,
+                "min_low_return_pct": -5.76
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-22"
+    },
+    {
+      "aweme_id": "7653065440180588160",
+      "published_at": "2026-06-19 19:22:33",
+      "title": "回看2025评论区：科技并未被散户挤满",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "回看2025评论区：科技并未被散户挤满：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "回看2025评论区：科技并未被散户挤满",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-24）：收盘 +0.29%，区间最高 +2.60%，区间最低 -4.12%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 1.387,
+                "close_return_pct": 0.29,
+                "max_high": 1.419,
+                "max_high_return_pct": 2.6,
+                "min_low": 1.326,
+                "min_low_return_pct": -4.12
+              }
+            },
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-06-24）：收盘 +7.64%，区间最高 +7.64%，区间最低 -0.88%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 3.649,
+                "close_return_pct": 7.64,
+                "max_high": 3.649,
+                "max_high_return_pct": 7.64,
+                "min_low": 3.36,
+                "min_low_return_pct": -0.88
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-06-24）：收盘 -0.28%，区间最高 +4.10%，区间最低 -1.84%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 0.706,
+                "close_return_pct": -0.28,
+                "max_high": 0.737,
+                "max_high_return_pct": 4.1,
+                "min_low": 0.695,
+                "min_low_return_pct": -1.84
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication",
+        "semiconductor",
+        "software"
+      ],
+      "published_date": "2026-06-19"
+    },
+    {
+      "aweme_id": "7652599847372127348",
+      "published_at": "2026-06-18 13:15:49",
+      "title": "光模块高低切失败，存量市场继续分化",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块高低切失败，存量市场继续分化：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块高低切失败，存量市场继续分化",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-24）：收盘 +0.50%，区间最高 +2.07%，区间最低 -0.50%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 4110.813,
+                "close_return_pct": 0.5,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 2.07,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.5
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-24）：收盘 +0.29%，区间最高 +2.60%，区间最低 -4.12%",
+              "data": {
+                "end_date": "2026-06-24",
+                "end_close": 1.387,
+                "close_return_pct": 0.29,
+                "max_high": 1.419,
+                "max_high_return_pct": 2.6,
+                "min_low": 1.326,
+                "min_low_return_pct": -4.12
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-06-18"
+    },
+    {
+      "aweme_id": "7652165654506670287",
+      "published_at": "2026-06-17 09:10:56",
+      "title": "美股正常调整，降息预期下别追高",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "美股正常调整，降息预期下别追高：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "美股正常调整，降息预期下别追高",
+          "finding": "后续3个交易日的代理行情结果：上证综指为部分支持、5G通信ETF为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-23）：收盘 -0.04%，区间最高 +1.64%，区间最低 -0.92%",
+              "data": {
+                "end_date": "2026-06-23",
+                "end_close": 4106.251,
+                "close_return_pct": -0.04,
+                "max_high": 4175.3481,
+                "max_high_return_pct": 1.64,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.92
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-23）：收盘 +0.68%，区间最高 +6.45%，区间最低 -0.98%",
+              "data": {
+                "end_date": "2026-06-23",
+                "end_close": 1.342,
+                "close_return_pct": 0.68,
+                "max_high": 1.419,
+                "max_high_return_pct": 6.45,
+                "min_low": 1.32,
+                "min_low_return_pct": -0.98
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-06-17"
+    },
+    {
+      "aweme_id": "7651901748752394658",
+      "published_at": "2026-06-16 16:06:50",
+      "title": "SpaceX暴涨加大波动，本周别加仓",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "SpaceX暴涨加大波动，本周别加仓：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "SpaceX暴涨加大波动，本周别加仓",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持、5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-22）：收盘 +1.74%，区间最高 +1.77%，区间最低 -0.53%",
+              "data": {
+                "end_date": "2026-06-22",
+                "end_close": 4163.0972,
+                "close_return_pct": 1.74,
+                "max_high": 4164.418,
+                "max_high_return_pct": 1.77,
+                "min_low": 4070.1721,
+                "min_low_return_pct": -0.53
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-22）：收盘 +8.65%，区间最高 +9.58%，区间最低 -1.24%",
+              "data": {
+                "end_date": "2026-06-22",
+                "end_close": 1.407,
+                "close_return_pct": 8.65,
+                "max_high": 1.419,
+                "max_high_return_pct": 9.58,
+                "min_low": 1.279,
+                "min_low_return_pct": -1.24
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-06-16"
+    },
+    {
+      "aweme_id": "7651502127958156276",
+      "published_at": "2026-06-15 14:16:06",
+      "title": "老登股冲高回落，科技抱团未瓦解",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "老登股冲高回落，科技抱团未瓦解：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "老登股冲高回落，科技抱团未瓦解",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-18）：收盘 -0.15%，区间最高 +0.51%，区间最低 -0.56%",
+              "data": {
+                "end_date": "2026-06-18",
+                "end_close": 4090.481,
+                "close_return_pct": -0.15,
+                "max_high": 4117.4512,
+                "max_high_return_pct": 0.51,
+                "min_low": 4073.7319,
+                "min_low_return_pct": -0.56
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-18）：收盘 +9.33%，区间最高 +10.28%，区间最低 +0.40%",
+              "data": {
+                "end_date": "2026-06-18",
+                "end_close": 1.383,
+                "close_return_pct": 9.33,
+                "max_high": 1.395,
+                "max_high_return_pct": 10.28,
+                "min_low": 1.27,
+                "min_low_return_pct": 0.4
+              }
+            },
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-06-18）：收盘 +11.51%，区间最高 +12.80%，区间最低 -0.92%",
+              "data": {
+                "end_date": "2026-06-18",
+                "end_close": 3.39,
+                "close_return_pct": 11.51,
+                "max_high": 3.429,
+                "max_high_return_pct": 12.8,
+                "min_low": 3.012,
+                "min_low_return_pct": -0.92
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-06-18）：收盘 +0.57%，区间最高 +1.85%，区间最低 -1.42%",
+              "data": {
+                "end_date": "2026-06-18",
+                "end_close": 0.708,
+                "close_return_pct": 0.57,
+                "max_high": 0.717,
+                "max_high_return_pct": 1.85,
+                "min_low": 0.694,
+                "min_low_return_pct": -1.42
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication",
+        "semiconductor",
+        "software"
+      ],
+      "published_date": "2026-06-15"
+    },
+    {
+      "aweme_id": "7650372290513381859",
+      "published_at": "2026-06-12 13:11:45",
+      "title": "科技未涨、老登股情绪高涨，散户抱团成形",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "科技未涨、老登股情绪高涨，散户抱团成形：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "科技未涨、老登股情绪高涨，散户抱团成形",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-17）：收盘 +1.90%，区间最高 +1.95%，区间最低 +0.48%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 4108.0762,
+                "close_return_pct": 1.9,
+                "max_high": 4109.958,
+                "max_high_return_pct": 1.95,
+                "min_low": 4051.0649,
+                "min_low_return_pct": 0.48
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-17）：收盘 +12.77%，区间最高 +12.86%，区间最低 -0.85%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 1.333,
+                "close_return_pct": 12.77,
+                "max_high": 1.334,
+                "max_high_return_pct": 12.86,
+                "min_low": 1.172,
+                "min_low_return_pct": -0.85
+              }
+            },
+            {
+              "proxy_key": "semiconductor",
+              "proxy_name": "芯片产业ETF",
+              "proxy_role": "半导体、芯片、存储与AI硬件代理",
+              "horizon": "3d",
+              "evidence": "芯片产业ETF（后续3个交易日至2026-06-17）：收盘 +12.75%，区间最高 +12.85%，区间最低 -1.01%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 3.246,
+                "close_return_pct": 12.75,
+                "max_high": 3.249,
+                "max_high_return_pct": 12.85,
+                "min_low": 2.85,
+                "min_low_return_pct": -1.01
+              }
+            },
+            {
+              "proxy_key": "software",
+              "proxy_name": "软件ETF",
+              "proxy_role": "AI应用、软件与IT服务代理",
+              "horizon": "3d",
+              "evidence": "软件ETF（后续3个交易日至2026-06-17）：收盘 +2.63%，区间最高 +3.80%，区间最低 +0.73%",
+              "data": {
+                "end_date": "2026-06-17",
+                "end_close": 0.702,
+                "close_return_pct": 2.63,
+                "max_high": 0.71,
+                "max_high_return_pct": 3.8,
+                "min_low": 0.689,
+                "min_low_return_pct": 0.73
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：芯片产业ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159310.SZ/history/"
+        },
+        {
+          "name": "Yahoo Finance：软件ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159852.SZ/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication",
+        "semiconductor",
+        "software"
+      ],
+      "published_date": "2026-06-12"
+    },
+    {
+      "aweme_id": "7649972923227516367",
+      "published_at": "2026-06-11 11:22:02",
+      "title": "用去年评论区校准情绪，利用市场分歧",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "用去年评论区校准情绪，利用市场分歧：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "用去年评论区校准情绪，利用市场分歧",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-16）：收盘 +2.63%，区间最高 +2.93%，区间最低 +0.53%",
+              "data": {
+                "end_date": "2026-06-16",
+                "end_close": 4091.8921,
+                "close_return_pct": 2.63,
+                "max_high": 4103.9258,
+                "max_high_return_pct": 2.93,
+                "min_low": 4008.177,
+                "min_low_return_pct": 0.53
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-11"
+    },
+    {
+      "aweme_id": "7649633781020320911",
+      "published_at": "2026-06-10 13:25:57",
+      "title": "美股大跌后V回，等待方向选择",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "美股大跌后V回，等待方向选择：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "美股大跌后V回，等待方向选择",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-15）：收盘 +2.59%，区间最高 +2.60%，区间最低 -0.87%",
+              "data": {
+                "end_date": "2026-06-15",
+                "end_close": 4096.4722,
+                "close_return_pct": 2.59,
+                "max_high": 4097.166,
+                "max_high_return_pct": 2.6,
+                "min_low": 3958.437,
+                "min_low_return_pct": -0.87
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-06-10"
+    },
+    {
+      "aweme_id": "7649271540944609896",
+      "published_at": "2026-06-09 14:00:17",
+      "title": "半年报前AI业绩可能继续超预期",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "半年报前AI业绩可能继续超预期：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "半年报前AI业绩可能继续超预期",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-12）：收盘 -5.74%，区间最高 -1.04%，区间最低 -7.50%",
+              "data": {
+                "end_date": "2026-06-12",
+                "end_close": 1.182,
+                "close_return_pct": -5.74,
+                "max_high": 1.241,
+                "max_high_return_pct": -1.04,
+                "min_low": 1.16,
+                "min_low_return_pct": -7.5
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-09"
+    },
+    {
+      "aweme_id": "7648893435080173135",
+      "published_at": "2026-06-08 13:33:02",
+      "title": "AI方向没变，短期重点是去杠杆",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "AI方向没变，短期重点是去杠杆：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "AI方向没变，短期重点是去杠杆",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-11）：收盘 +0.70%，区间最高 +1.30%，区间最低 -0.09%",
+              "data": {
+                "end_date": "2026-06-11",
+                "end_close": 3987.0149,
+                "close_return_pct": 0.7,
+                "max_high": 4010.8721,
+                "max_high_return_pct": 1.3,
+                "min_low": 3955.908,
+                "min_low_return_pct": -0.09
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-11）：收盘 -0.08%，区间最高 +5.47%，区间最低 -2.44%",
+              "data": {
+                "end_date": "2026-06-11",
+                "end_close": 1.188,
+                "close_return_pct": -0.08,
+                "max_high": 1.254,
+                "max_high_return_pct": 5.47,
+                "min_low": 1.16,
+                "min_low_return_pct": -2.44
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-06-08"
+    },
+    {
+      "aweme_id": "7647771862290659572",
+      "published_at": "2026-06-05 13:00:46",
+      "title": "小票反弹大票调整，等待光模块买点",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "小票反弹大票调整，等待光模块买点：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "小票反弹大票调整，等待光模块买点",
+          "finding": "观点同时包含进攻和防守条件，无法压缩成单一方向；阶段结果为：5G通信ETF为不可核验。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-10）：收盘 -2.03%，区间最高 +1.70%，区间最低 -5.92%",
+              "data": {
+                "end_date": "2026-06-10",
+                "end_close": 1.208,
+                "close_return_pct": -2.03,
+                "max_high": 1.254,
+                "max_high_return_pct": 1.7,
+                "min_low": 1.16,
+                "min_low_return_pct": -5.92
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-05"
+    },
+    {
+      "aweme_id": "7647422680748772288",
+      "published_at": "2026-06-04 14:25:45",
+      "title": "光模块和算力继续拿着别动",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块和算力继续拿着别动：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块和算力继续拿着别动",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-09）：收盘 -2.03%，区间最高 +1.72%，区间最低 -9.38%",
+              "data": {
+                "end_date": "2026-06-09",
+                "end_close": 1.254,
+                "close_return_pct": -2.03,
+                "max_high": 1.302,
+                "max_high_return_pct": 1.72,
+                "min_low": 1.16,
+                "min_low_return_pct": -9.38
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-04"
+    },
+    {
+      "aweme_id": "7647043755816503744",
+      "published_at": "2026-06-03 13:55:20",
+      "title": "警惕假号骗局，坚持光模块价值投资",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "警惕假号骗局，坚持光模块价值投资：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "警惕假号骗局，坚持光模块价值投资",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-08）：收盘 -6.45%，区间最高 +2.44%，区间最低 -8.73%",
+              "data": {
+                "end_date": "2026-06-08",
+                "end_close": 1.189,
+                "close_return_pct": -6.45,
+                "max_high": 1.302,
+                "max_high_return_pct": 2.44,
+                "min_low": 1.16,
+                "min_low_return_pct": -8.73
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-03"
+    },
+    {
+      "aweme_id": "7646665836107388559",
+      "published_at": "2026-06-02 13:28:48",
+      "title": "光模块接近新高，别听频繁操作",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "光模块接近新高，别听频繁操作：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "光模块接近新高，别听频繁操作",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-05）：收盘 +0.90%，区间最高 +7.12%，区间最低 -0.33%",
+              "data": {
+                "end_date": "2026-06-05",
+                "end_close": 1.233,
+                "close_return_pct": 0.9,
+                "max_high": 1.309,
+                "max_high_return_pct": 7.12,
+                "min_low": 1.218,
+                "min_low_return_pct": -0.33
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-02"
+    },
+    {
+      "aweme_id": "7646338462497737890",
+      "published_at": "2026-06-01 16:18:26",
+      "title": "散户割肉后分两步看加仓点",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "散户割肉后分两步看加仓点：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "散户割肉后分两步看加仓点",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-04）：收盘 +10.73%，区间最高 +13.24%，区间最低 -0.17%",
+              "data": {
+                "end_date": "2026-06-04",
+                "end_close": 1.28,
+                "close_return_pct": 10.73,
+                "max_high": 1.309,
+                "max_high_return_pct": 13.24,
+                "min_low": 1.154,
+                "min_low_return_pct": -0.17
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-06-01"
+    },
+    {
+      "aweme_id": "7645178600908483727",
+      "published_at": "2026-05-29 13:17:35",
+      "title": "没有恐慌就没有加仓点，继续等待",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "没有恐慌就没有加仓点，继续等待：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "没有恐慌就没有加仓点，继续等待",
+          "finding": "后续3个交易日的代理行情结果：上证综指为部分支持、5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-06-03）：收盘 +0.38%，区间最高 +0.95%，区间最低 -0.88%",
+              "data": {
+                "end_date": "2026-06-03",
+                "end_close": 4083.9741,
+                "close_return_pct": 0.38,
+                "max_high": 4107.0459,
+                "max_high_return_pct": 0.95,
+                "min_low": 4032.583,
+                "min_low_return_pct": -0.88
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-03）：收盘 +5.74%，区间最高 +8.90%，区间最低 -4.08%",
+              "data": {
+                "end_date": "2026-06-03",
+                "end_close": 1.271,
+                "close_return_pct": 5.74,
+                "max_high": 1.309,
+                "max_high_return_pct": 8.9,
+                "min_low": 1.153,
+                "min_low_return_pct": -4.08
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-05-29"
+    },
+    {
+      "aweme_id": "7644812519571596623",
+      "published_at": "2026-05-28 13:37:00",
+      "title": "长期持股胜过小妙招和频繁操作",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "长期持股胜过小妙招和频繁操作：观察中，暂不评分；按截至观察日的阶段表现核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "观察期不足",
+          "claim": "长期持股胜过小妙招和频繁操作",
+          "finding": "原观点属于长期判断，承诺期限尚未结束；截至当前仅作阶段记录：5G通信ETF为观察期不足。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "to_cutoff",
+              "evidence": "5G通信ETF（截至观察日的阶段表现至2026-07-24）：收盘 -16.57%，区间最高 +16.90%，区间最低 -22.10%",
+              "data": {
+                "end_date": "2026-07-24",
+                "end_close": 1.027,
+                "close_return_pct": -16.57,
+                "max_high": 1.439,
+                "max_high_return_pct": 16.9,
+                "min_low": 0.959,
+                "min_low_return_pct": -22.1
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-28"
+    },
+    {
+      "aweme_id": "7644391493142952802",
+      "published_at": "2026-05-27 10:23:12",
+      "title": "光模块/算力“拿着别动”一周年",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块/算力“拿着别动”一周年：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块/算力“拿着别动”一周年",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-06-01）：收盘 -3.43%，区间最高 +4.76%，区间最低 -3.68%",
+              "data": {
+                "end_date": "2026-06-01",
+                "end_close": 1.156,
+                "close_return_pct": -3.43,
+                "max_high": 1.254,
+                "max_high_return_pct": 4.76,
+                "min_low": 1.153,
+                "min_low_return_pct": -3.68
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-27"
+    },
+    {
+      "aweme_id": "7644062652620700904",
+      "published_at": "2026-05-26 13:07:09",
+      "title": "光模块和算力创新高，国产替代分化",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "光模块和算力创新高，国产替代分化：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "光模块和算力创新高，国产替代分化",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-29）：收盘 -0.41%，区间最高 +3.89%，区间最低 -3.40%",
+              "data": {
+                "end_date": "2026-05-29",
+                "end_close": 1.202,
+                "close_return_pct": -0.41,
+                "max_high": 1.254,
+                "max_high_return_pct": 3.89,
+                "min_low": 1.166,
+                "min_low_return_pct": -3.4
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-26"
+    },
+    {
+      "aweme_id": "7643689864861118952",
+      "published_at": "2026-05-25 13:00:31",
+      "title": "一年少踩坑：避开商业航天等热点",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "一年少踩坑：避开商业航天等热点：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "一年少踩坑：避开商业航天等热点",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "aerospace",
+              "proxy_name": "航天ETF",
+              "proxy_role": "商业航天代理",
+              "horizon": "3d",
+              "evidence": "航天ETF（后续3个交易日至2026-05-28）：收盘 -3.12%，区间最高 -0.19%，区间最低 -5.00%",
+              "data": {
+                "end_date": "2026-05-28",
+                "end_close": 1.026,
+                "close_return_pct": -3.12,
+                "max_high": 1.057,
+                "max_high_return_pct": -0.19,
+                "min_low": 1.006,
+                "min_low_return_pct": -5.0
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：航天ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/159267.SZ/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "aerospace"
+      ],
+      "published_date": "2026-05-25"
+    },
+    {
+      "aweme_id": "7642596088607948096",
+      "published_at": "2026-05-22 14:16:06",
+      "title": "光模块与老登股换仓，资金转向券商？",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块与老登股换仓，资金转向券商？：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块与老登股换仓，资金转向券商？",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-27）：收盘 +3.82%，区间最高 +7.29%，区间最低 -0.26%",
+              "data": {
+                "end_date": "2026-05-27",
+                "end_close": 1.197,
+                "close_return_pct": 3.82,
+                "max_high": 1.237,
+                "max_high_return_pct": 7.29,
+                "min_low": 1.15,
+                "min_low_return_pct": -0.26
+              }
+            },
+            {
+              "proxy_key": "broker",
+              "proxy_name": "证券ETF",
+              "proxy_role": "券商板块代理",
+              "horizon": "3d",
+              "evidence": "证券ETF（后续3个交易日至2026-05-27）：收盘 +0.58%，区间最高 +2.89%，区间最低 -0.29%",
+              "data": {
+                "end_date": "2026-05-27",
+                "end_close": 1.043,
+                "close_return_pct": 0.58,
+                "max_high": 1.067,
+                "max_high_return_pct": 2.89,
+                "min_low": 1.034,
+                "min_low_return_pct": -0.29
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：证券ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/512880.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication",
+        "broker"
+      ],
+      "published_date": "2026-05-22"
+    },
+    {
+      "aweme_id": "7642205675418464335",
+      "published_at": "2026-05-21 13:01:07",
+      "title": "买点来自散户割肉，不要追高",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "买点来自散户割肉，不要追高：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "买点来自散户割肉，不要追高",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-26）：收盘 +10.43%，区间最高 +10.61%，区间最低 +0.73%",
+              "data": {
+                "end_date": "2026-05-26",
+                "end_close": 1.207,
+                "close_return_pct": 10.43,
+                "max_high": 1.209,
+                "max_high_return_pct": 10.61,
+                "min_low": 1.101,
+                "min_low_return_pct": 0.73
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-21"
+    },
+    {
+      "aweme_id": "7641838695440995535",
+      "published_at": "2026-05-20 13:17:02",
+      "title": "高位别追别加仓，防范外围风险",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "高位别追别加仓，防范外围风险：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "高位别追别加仓，防范外围风险",
+          "finding": "观点同时包含进攻和防守条件，无法压缩成单一方向；阶段结果为：5G通信ETF为不可核验。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-25）：收盘 +5.79%，区间最高 +5.88%，区间最低 -4.65%",
+              "data": {
+                "end_date": "2026-05-25",
+                "end_close": 1.205,
+                "close_return_pct": 5.79,
+                "max_high": 1.206,
+                "max_high_return_pct": 5.88,
+                "min_low": 1.086,
+                "min_low_return_pct": -4.65
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-20"
+    },
+    {
+      "aweme_id": "7641467296284239284",
+      "published_at": "2026-05-19 13:15:50",
+      "title": "大小光模块节奏错位，不必恐慌",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "大小光模块节奏错位，不必恐慌：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "大小光模块节奏错位，不必恐慌",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-22）：收盘 +1.95%，区间最高 +2.56%，区间最低 -3.98%",
+              "data": {
+                "end_date": "2026-05-22",
+                "end_close": 1.153,
+                "close_return_pct": 1.95,
+                "max_high": 1.16,
+                "max_high_return_pct": 2.56,
+                "min_low": 1.086,
+                "min_low_return_pct": -3.98
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-19"
+    },
+    {
+      "aweme_id": "7641097756387325760",
+      "published_at": "2026-05-18 13:21:49",
+      "title": "超跌反弹后没有加仓点",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "未验证",
+      "score": 0,
+      "confidence": "中等",
+      "summary": "超跌反弹后没有加仓点：未验证，0分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不支持",
+          "claim": "超跌反弹后没有加仓点",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为不支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-21）：收盘 -3.10%，区间最高 +2.84%，区间最低 -4.61%",
+              "data": {
+                "end_date": "2026-05-21",
+                "end_close": 1.093,
+                "close_return_pct": -3.1,
+                "max_high": 1.16,
+                "max_high_return_pct": 2.84,
+                "min_low": 1.076,
+                "min_low_return_pct": -4.61
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-18"
+    },
+    {
+      "aweme_id": "7640010163160408896",
+      "published_at": "2026-05-15 15:01:24",
+      "title": "光模块调整中，散户批量割肉触发短线买点",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "光模块调整中，散户批量割肉触发短线买点：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "光模块调整中，散户批量割肉触发短线买点",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-20）：收盘 +2.80%，区间最高 +3.79%，区间最低 -2.89%",
+              "data": {
+                "end_date": "2026-05-20",
+                "end_close": 1.139,
+                "close_return_pct": 2.8,
+                "max_high": 1.15,
+                "max_high_return_pct": 3.79,
+                "min_low": 1.076,
+                "min_low_return_pct": -2.89
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-15"
+    },
+    {
+      "aweme_id": "7639611852821788003",
+      "published_at": "2026-05-14 13:15:45",
+      "title": "光模块牛市里别金字塔加仓到亏光",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "光模块牛市里别金字塔加仓到亏光：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "光模块牛市里别金字塔加仓到亏光",
+          "finding": "后续3个交易日的代理行情结果：上证综指为部分支持、5G通信ETF为部分支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-19）：收盘 -0.20%，区间最高 +0.33%，区间最低 -1.67%",
+              "data": {
+                "end_date": "2026-05-19",
+                "end_close": 4169.5381,
+                "close_return_pct": -0.2,
+                "max_high": 4191.8071,
+                "max_high_return_pct": 0.33,
+                "min_low": 4107.9951,
+                "min_low_return_pct": -1.67
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-19）：收盘 -0.18%，区间最高 +0.97%，区间最低 -5.03%",
+              "data": {
+                "end_date": "2026-05-19",
+                "end_close": 1.131,
+                "close_return_pct": -0.18,
+                "max_high": 1.144,
+                "max_high_return_pct": 0.97,
+                "min_low": 1.076,
+                "min_low_return_pct": -5.03
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-05-14"
+    },
+    {
+      "aweme_id": "7639241011181650594",
+      "published_at": "2026-05-13 13:16:42",
+      "title": "光模块牛市中，想操作只小幅减仓",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "光模块牛市中，想操作只小幅减仓：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "光模块牛市中，想操作只小幅减仓",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持、5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-18）：收盘 -2.62%，区间最高 +0.38%，区间最低 -3.16%",
+              "data": {
+                "end_date": "2026-05-18",
+                "end_close": 4131.5278,
+                "close_return_pct": -2.62,
+                "max_high": 4258.8628,
+                "max_high_return_pct": 0.38,
+                "min_low": 4108.604,
+                "min_low_return_pct": -3.16
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-18）：收盘 -2.42%，区间最高 +1.56%，区间最低 -6.23%",
+              "data": {
+                "end_date": "2026-05-18",
+                "end_close": 1.128,
+                "close_return_pct": -2.42,
+                "max_high": 1.174,
+                "max_high_return_pct": 1.56,
+                "min_low": 1.084,
+                "min_low_return_pct": -6.23
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-05-13"
+    },
+    {
+      "aweme_id": "7638885867926898856",
+      "published_at": "2026-05-12 14:18:34",
+      "title": "光模块接近新高，减仓是情绪管理",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "光模块接近新高，减仓是情绪管理：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "光模块接近新高，减仓是情绪管理",
+          "finding": "观点同时包含进攻和防守条件，无法压缩成单一方向；阶段结果为：5G通信ETF为不可核验。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-15）：收盘 -66.73%，区间最高 -64.74%，区间最低 -67.45%",
+              "data": {
+                "end_date": "2026-05-15",
+                "end_close": 1.108,
+                "close_return_pct": -66.73,
+                "max_high": 1.174,
+                "max_high_return_pct": -64.74,
+                "min_low": 1.084,
+                "min_low_return_pct": -67.45
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-12"
+    },
+    {
+      "aweme_id": "7638517051645382223",
+      "published_at": "2026-05-11 14:27:23",
+      "title": "高位不敢买，每天减5%保留仓位",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "观察中",
+      "score": null,
+      "confidence": "低",
+      "summary": "高位不敢买，每天减5%保留仓位：观察中，暂不评分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "不可核验",
+          "claim": "高位不敢买，每天减5%保留仓位",
+          "finding": "标题或摘要没有给出可唯一映射到涨跌方向和期限的预测；页面仅列出对应市场行情，不据此判定对错。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-14）：收盘 +3.03%，区间最高 +207.18%，区间最低 -1.06%",
+              "data": {
+                "end_date": "2026-05-14",
+                "end_close": 1.133,
+                "close_return_pct": 3.03,
+                "max_high": 3.378,
+                "max_high_return_pct": 207.18,
+                "min_low": 1.088,
+                "min_low_return_pct": -1.06
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-11"
+    },
+    {
+      "aweme_id": "7637385327439394368",
+      "published_at": "2026-05-08 13:15:42",
+      "title": "指数冲关前拿着别动，别赌加仓",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "指数冲关前拿着别动，别赌加仓：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "指数冲关前拿着别动，别赌加仓",
+          "finding": "后续3个交易日的代理行情结果：上证综指为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-13）：收盘 +1.50%，区间最高 +1.56%，区间最低 +0.15%",
+              "data": {
+                "end_date": "2026-05-13",
+                "end_close": 4242.5718,
+                "close_return_pct": 1.5,
+                "max_high": 4245.0679,
+                "max_high_return_pct": 1.56,
+                "min_low": 4186.082,
+                "min_low_return_pct": 0.15
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market"
+      ],
+      "published_date": "2026-05-08"
+    },
+    {
+      "aweme_id": "7637041673814355170",
+      "published_at": "2026-05-07 15:02:09",
+      "title": "涨高后用小幅减仓保住仓位",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "已验证",
+      "score": 100,
+      "confidence": "中等",
+      "summary": "涨高后用小幅减仓保住仓位：已验证，100分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "支持",
+          "claim": "涨高后用小幅减仓保住仓位",
+          "finding": "后续3个交易日的代理行情结果：5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-12）：收盘 +5.25%，区间最高 +6.76%，区间最低 -66.53%",
+              "data": {
+                "end_date": "2026-05-12",
+                "end_close": 3.33,
+                "close_return_pct": 5.25,
+                "max_high": 3.378,
+                "max_high_return_pct": 6.76,
+                "min_low": 1.059,
+                "min_low_return_pct": -66.53
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "communication"
+      ],
+      "published_date": "2026-05-07"
+    },
+    {
+      "aweme_id": "7636674066971802019",
+      "published_at": "2026-05-06 15:15:39",
+      "title": "万亿成交与4200点附近的减仓方案",
+      "validation_origin": "rule-based-market-v1",
+      "as_of": "2026-07-24",
+      "verdict": "部分验证",
+      "score": 50,
+      "confidence": "中等",
+      "summary": "万亿成交与4200点附近的减仓方案：部分验证，50分；按后续3个交易日核验。",
+      "methodology": "以视频发布日收盘为基准，非交易日取此前最近收盘；根据标题中的明确期限观察下一交易日、后续3/5个交易日或截至日的收盘、区间最高和最低。行业观点使用公开交易ETF作宽口径代理；长期观点、条件策略和无法复原口径的期指持仓不强行计分。",
+      "observations": [
+        {
+          "status": "部分支持",
+          "claim": "万亿成交与4200点附近的减仓方案",
+          "finding": "后续3个交易日的代理行情结果：上证综指为不支持、5G通信ETF为支持。",
+          "metrics": [
+            {
+              "proxy_key": "market",
+              "proxy_name": "上证综指",
+              "proxy_role": "A股大盘方向与关键点位",
+              "horizon": "3d",
+              "evidence": "上证综指（后续3个交易日至2026-05-11）：收盘 +1.56%，区间最高 +1.67%，区间最低 -0.14%",
+              "data": {
+                "end_date": "2026-05-11",
+                "end_close": 4225.021,
+                "close_return_pct": 1.56,
+                "max_high": 4229.5801,
+                "max_high_return_pct": 1.67,
+                "min_low": 4154.2461,
+                "min_low_return_pct": -0.14
+              }
+            },
+            {
+              "proxy_key": "communication",
+              "proxy_name": "5G通信ETF",
+              "proxy_role": "CPO、光模块、通信、液冷与PCB代理",
+              "horizon": "3d",
+              "evidence": "5G通信ETF（后续3个交易日至2026-05-11）：收盘 -63.78%，区间最高 +4.78%，区间最低 -65.12%",
+              "data": {
+                "end_date": "2026-05-11",
+                "end_close": 1.0997,
+                "close_return_pct": -63.78,
+                "max_high": 3.181,
+                "max_high_return_pct": 4.78,
+                "min_low": 1.059,
+                "min_low_return_pct": -65.12
+              }
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "name": "Yahoo Finance：上证综指历史行情",
+          "url": "https://finance.yahoo.com/quote/000001.SS/history/"
+        },
+        {
+          "name": "Yahoo Finance：5G通信ETF历史行情",
+          "url": "https://finance.yahoo.com/quote/515050.SS/history/"
+        },
+        {
+          "name": "上海证券交易所：指数行情",
+          "url": "https://www.sse.com.cn/market/sseindex/quotation/index.shtml"
+        },
+        {
+          "name": "中证指数有限公司：指数与市场基准",
+          "url": "https://www.csindex.com.cn/"
+        }
+      ],
+      "disclaimer": "验证只比较公开市场数据与视频中可量化的主要观点。ETF不能替代具体个股，价格结果不能证明因果，也不能核验未公开持仓；本页不构成投资建议。",
+      "generated_by": "rule-based-market-v1",
+      "proxy_keys": [
+        "market",
+        "communication"
+      ],
+      "published_date": "2026-05-06"
+    }
+  ]
+}

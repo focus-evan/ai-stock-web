@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="从全能的野人账号382条语料中整理的交易方法操作手册：环境、周期、主线、选股、买点、仓位、风控、解套和复盘。">
+  <title>野人交易手册｜从判断到执行</title>
+  <link rel="stylesheet" href="playbook.css?v=20261014b">
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="shell hero-grid">
+      <div>
+        <nav class="crumb" aria-label="页面路径"><a href="../index.html">抖音主页</a><span>/</span><span>野人交易手册</span></nav>
+        <p class="eyebrow">NEW · 账号方法论功能</p>
+        <h1>先看天，再看潮，<br>最后才决定怎么出手</h1>
+        <p class="hero-copy">把全能的野人 382 条语料，整理成一条可以逐项检查的交易流程。这里复原作者的判断框架、操作步骤和失败条件，不提供当日荐股。</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#decision">今天该看什么</a>
+          <a class="secondary-action" href="#methods">查看12种方法</a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="语料统计">
+        <p>语料基础</p>
+        <strong>382</strong><span>条账号记录</span>
+        <strong>21万+</strong><span>字转写文本</span>
+        <strong>12</strong><span>类可执行方法</span>
+        <small>覆盖 2026-05-01 至 2026-10-13</small>
+      </aside>
+    </div>
+  </header>
+
+  <nav class="section-menu" aria-label="功能菜单">
+    <div class="shell">
+      <a href="#map">五步地图</a>
+      <a href="#decision">情景判断</a>
+      <a href="#rescue">个股解套</a>
+      <a href="#methods">方法卡</a>
+      <a href="#checklist">盘前清单</a>
+      <a href="#terms">术语翻译</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section shell" id="map">
+      <div class="section-heading">
+        <div><p class="kicker">总流程</p><h2>不是先找股票，是按五道门依次过滤</h2></div>
+        <p>前一层没有通过，后一层的方法就容易失效。</p>
+      </div>
+      <div class="flow" aria-label="交易方法五步流程">
+        <article><span>01</span><b>看水位</b><p>成交量够不够？决定能不能做大票和趋势。</p></article>
+        <i aria-hidden="true">→</i>
+        <article><span>02</span><b>辨潮汐</b><p>退潮、试错、主升还是高潮分歧？</p></article>
+        <i aria-hidden="true">→</i>
+        <article><span>03</span><b>找主线</b><p>消息、联动、指数、中军、老龙、溢价。</p></article>
+        <i aria-hidden="true">→</i>
+        <article><span>04</span><b>挑核心</b><p>图形、涨停基因、体量和故事空间。</p></article>
+        <i aria-hidden="true">→</i>
+        <article><span>05</span><b>管进退</b><p>试错、确认、加仓、退出和复盘。</p></article>
+      </div>
+      <div class="principle-strip"><b>一句话：</b>环境决定模式，周期决定仓位，主线决定方向，市场强弱决定去留。</div>
+    </section>
+
+    <section class="section decision-section" id="decision">
+      <div class="shell">
+        <div class="section-heading light">
+          <div><p class="kicker">交互判断器</p><h2>把你看到的盘面放进框架</h2></div>
+          <p>它只负责告诉你“该查哪一套方法”，不会生成买卖指令。</p>
+        </div>
+        <div class="decision-grid">
+          <form class="decision-form" id="decision-form">
+            <label>今天的量能状态<select id="volume"><option value="shrink">明显缩量</option><option value="flat">平量震荡</option><option value="expand">持续放量</option></select></label>
+            <label>短线情绪阶段<select id="cycle"><option value="ebb">退潮 / 亏钱扩散</option><option value="pressure">高度压制</option><option value="trial">试错 / 节点出现</option><option value="rise">主升 / 梯队完整</option><option value="split">高潮后分歧</option></select></label>
+            <label>当前仓位状态<select id="position"><option value="cash">空仓或很轻</option><option value="light">已有试错仓</option><option value="heavy">仓位偏重</option><option value="trapped">持仓被套</option></select></label>
+            <button type="submit">生成检查顺序</button>
+          </form>
+          <div class="decision-output" id="decision-output" aria-live="polite">
+            <p class="output-label">框架输出</p>
+            <h3>先选择三个条件</h3>
+            <p>系统会返回环境结论、第一动作、禁止动作和需要继续确认的方法。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section rescue-section" id="rescue">
+      <div class="shell">
+        <div class="section-heading light">
+          <div><p class="kicker">个股分析 · 新功能</p><h2>老太太下楼解套操作台</h2></div>
+          <p>输入股票和持仓，读取最新行情后先过风险门，再判断今天适不适合执行，并计算具体数量、价差和接回后的成本变化。</p>
+        </div>
+        <div class="rescue-layout">
+          <form class="rescue-form" id="rescue-form">
+            <div class="form-block">
+              <div class="form-block-title"><span>1</span><div><b>股票与持仓</b><small>只支持A股六位代码</small></div></div>
+              <div class="field-grid">
+                <label class="wide-field">股票代码<div class="inline-field"><input id="stock-code" inputmode="numeric" maxlength="6" placeholder="例如 300502" required><button id="fetch-quote" type="button">读取最新行情</button></div></label>
+                <label>持仓成本<input id="cost-price" type="number" min="0.01" step="0.01" placeholder="元" required></label>
+                <label>总持仓股数<input id="total-shares" type="number" min="100" step="100" placeholder="股" required></label>
+                <label>今日可卖股数<input id="sellable-shares" type="number" min="0" step="100" placeholder="股" required></label>
+              </div>
+            </div>
+
+            <div class="quote-panel" id="quote-panel" aria-live="polite">
+              <div><span>股票</span><strong id="quote-name">等待读取</strong><small id="quote-code">—</small></div>
+              <div><span>最新价</span><strong id="quote-current">—</strong><small id="quote-change">—</small></div>
+              <div><span>今开 / 均价</span><strong id="quote-open">—</strong><small id="quote-average">—</small></div>
+              <div><span>最高 / 最低</span><strong id="quote-high">—</strong><small id="quote-low">—</small></div>
+              <p id="quote-time">行情尚未读取</p>
+            </div>
+
+            <div class="form-block">
+              <div class="form-block-title"><span>2</span><div><b>执行参数</b><small>参数均可按你的纪律调整</small></div></div>
+              <div class="field-grid three-fields">
+                <label>本次最多操作<select id="tranche-ratio"><option value="20">20%仓位</option><option value="25" selected>25%仓位</option><option value="33">约1/3仓位</option><option value="50">50%仓位</option></select></label>
+                <label>目标价差<input id="target-spread" type="number" min="0.5" max="10" step="0.1" value="1.8"><span class="field-unit">%</span></label>
+                <label>双边综合成本率<input id="fee-rate" type="number" min="0" max="2" step="0.01" value="0.12"><span class="field-unit">%</span></label>
+                <label class="wide-field">当前市场阶段<select id="rescue-cycle"><option value="ebb">退潮 / 亏钱扩散</option><option value="pressure">高度压制</option><option value="trial">试错 / 修复初期</option><option value="rise">主升 / 修复确认</option><option value="split">高潮后分歧</option></select></label>
+              </div>
+            </div>
+
+            <fieldset class="risk-gates">
+              <legend><span>3</span> V2.3.1风险门：四项都确认才能生成执行计划</legend>
+              <label><input class="gate" type="checkbox">名称不含 ST、*ST、退市或其他交易警示</label>
+              <label><input class="gate" type="checkbox">已核对最近两日没有立案、停牌、重大减持或实质利空</label>
+              <label><input class="gate" type="checkbox">公司基本面和原持仓逻辑尚未破坏</label>
+              <label><input class="gate" type="checkbox">输入的是今天真正可卖的旧仓，不包含当天新买仓位</label>
+              <a id="cninfo-link" href="https://www.cninfo.com.cn/new/fulltextSearch" target="_blank" rel="noreferrer">打开巨潮资讯核对公告 ↗</a>
+            </fieldset>
+            <button class="rescue-submit" type="submit">判断今天能否执行，并生成操作单</button>
+          </form>
+
+          <aside class="rescue-result" id="rescue-result" aria-live="polite">
+            <div class="result-placeholder">
+              <span>今日结论</span><h3>先读取行情并填写持仓</h3><p>计划会明确显示：今天适不适合、第一步做什么、卖多少、什么价格条件下接回，以及什么时候必须取消。</p>
+            </div>
+          </aside>
+        </div>
+        <div class="rescue-boundary"><b>使用边界：</b>这个工具计算的是“作者方法＋条件单＋成本变化”，无法替代公司公告、基本面和盘中突发信息。若风险门不通过，系统只给风险处理，不生成低位接回动作。行情数据来自东方财富公开行情接口，公告核验以巨潮资讯、交易所和公司公告为准。</div>
+      </div>
+    </section>
+
+    <section class="section shell" id="methods">
+      <div class="section-heading">
+        <div><p class="kicker">方法库</p><h2>12张方法卡：触发、动作、退出都写清楚</h2></div>
+        <p id="method-count">正在读取方法数据…</p>
+      </div>
+      <div class="tool-row">
+        <label class="search-box"><span>搜索</span><input id="method-search" type="search" placeholder="例如：退潮、弱转强、止损、解套"></label>
+        <div class="filters" id="method-filters" aria-label="方法分类"></div>
+      </div>
+      <div class="method-grid" id="method-grid"></div>
+      <p class="empty-state" id="empty-state" hidden>没有匹配的方法，换一个关键词或分类试试。</p>
+    </section>
+
+    <section class="section checklist-section" id="checklist">
+      <div class="shell checklist-grid">
+        <div>
+          <p class="kicker">执行工具</p>
+          <h2>盘前八问</h2>
+          <p>勾选状态只保存在当前浏览器。它的作用是逼自己按顺序思考，避免看到一只票就跳过环境和周期。</p>
+          <button class="reset-button" id="reset-checklist" type="button">清空勾选</button>
+        </div>
+        <ol class="checklist" id="checklist-items">
+          <li><label><input type="checkbox">今天预计成交量适合哪种模式？</label></li>
+          <li><label><input type="checkbox">当前是退潮、试错、主升还是分歧？</label></li>
+          <li><label><input type="checkbox">题材六个主线信号通过了几个？</label></li>
+          <li><label><input type="checkbox">候选属于核心、中军、补涨还是跟风？</label></li>
+          <li><label><input type="checkbox">这笔是试错仓、确认仓、推仓还是锁仓？</label></li>
+          <li><label><input type="checkbox">入场预期和失效条件写清楚了吗？</label></li>
+          <li><label><input type="checkbox">若次日不符合预期，具体怎么处理？</label></li>
+          <li><label><input type="checkbox">现在不出手，是否反而更符合系统？</label></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section shell" id="terms">
+      <div class="section-heading"><div><p class="kicker">白话词典</p><h2>把野哥术语翻译成普通话</h2></div></div>
+      <div class="term-grid">
+        <article><b>试错</b><p>不知道题材能否走出来时，用小仓位买一张“观察票”。错了只损失小钱。</p></article>
+        <article><b>推仓</b><p>市场按预期确认后才提高仓位，不是跌了以后补仓。</p></article>
+        <article><b>锁仓</b><p>趋势与核心地位确认后减少随意交易，仍要保留失效条件。</p></article>
+        <article><b>节点龙</b><p>旧周期退潮、新周期试错阶段，最先带题材走出穿越的核心。</p></article>
+        <article><b>容量中军</b><p>能容纳大资金、代表题材持续性的中大市值核心。</p></article>
+        <article><b>弱转强</b><p>前日充分换手偏弱，次日竞价和开盘表现高于预期。</p></article>
+        <article><b>去弱留强</b><p>市场给出强弱答案后，处理掉不符合预期的候选，留下核心。</p></article>
+        <article><b>扶老太太</b><p>被套后先卖再低位接回，用向下波动降成本；执行风险很高。</p></article>
+      </div>
+    </section>
+
+    <section class="section shell caution" aria-label="使用边界">
+      <div><span>!</span></div>
+      <div><h2>这是一张方法地图，不是盈利保证</h2><p>账号中的点位、胜率、收益和仓位比例多为个人经验或盘中表达。最值得学习的是判断顺序和纠错机制；最不适合机械照搬的是单票高集中、超短接力和反向做T。</p></div>
+    </section>
+  </main>
+
+  <footer><div class="shell"><p>资料来源：全能的野人账号语料库。每张方法卡均可打开对应原视频整理页。</p><a href="#top">回到顶部 ↑</a></div></footer>
+  <script src="playbook.js?v=20261014b" defer></script>
+</body>
+</html>

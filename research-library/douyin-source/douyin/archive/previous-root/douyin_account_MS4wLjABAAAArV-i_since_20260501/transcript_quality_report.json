@@ -1,0 +1,26 @@
+{
+  "generated": "2026-09-06 23:55",
+  "quality_pass": "finance-context-v3",
+  "glossary": "/Users/evan/.codex/skills/douyin-research-digest/references/finance_asr_glossary.json",
+  "total": 76,
+  "status_counts": {
+    "通过（画面OCR）": 22,
+    "通过（已修正）": 51,
+    "通过": 2,
+    "需复核": 1
+  },
+  "needs_review": 1,
+  "items": [
+    {
+      "aweme_id": "7647685024536300134",
+      "title": "今天早上7:23未分类",
+      "status": "需复核",
+      "score": 85,
+      "transcript_source": "video_ocr",
+      "reasons": [
+        "音频无有效口播，使用画面OCR"
+      ],
+      "suspicious_terms": []
+    }
+  ]
+}

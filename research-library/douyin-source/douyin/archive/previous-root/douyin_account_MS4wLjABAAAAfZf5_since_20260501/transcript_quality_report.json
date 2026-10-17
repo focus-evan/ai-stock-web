@@ -1,0 +1,13 @@
+{
+  "generated": "2026-09-07 00:04",
+  "quality_pass": "finance-context-v3",
+  "glossary": "/Users/evan/.codex/skills/douyin-research-digest/references/finance_asr_glossary.json",
+  "total": 65,
+  "status_counts": {
+    "通过": 51,
+    "通过（画面OCR）": 1,
+    "通过（已修正）": 13
+  },
+  "needs_review": 0,
+  "items": []
+}

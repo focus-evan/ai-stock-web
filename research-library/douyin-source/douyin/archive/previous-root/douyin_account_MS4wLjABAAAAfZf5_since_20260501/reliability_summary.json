@@ -1,0 +1,19 @@
+{
+  "account": "宇菠萝",
+  "slug": "yu-bo-luo",
+  "generated_at": "2026-09-07T00:04:57+08:00",
+  "as_of": "2026-09-07",
+  "reliability": {
+    "rating": "中等",
+    "average_score": 62.5,
+    "scored_videos": 8,
+    "total_videos": 65,
+    "verdict_counts": {
+      "观察中": 57,
+      "部分验证": 2,
+      "已验证": 4,
+      "未验证": 2
+    }
+  },
+  "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
+}

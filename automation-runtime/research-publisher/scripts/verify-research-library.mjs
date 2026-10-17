@@ -1,0 +1,65 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { load } from "cheerio";
+import { defaultSource } from "./sync-research-library.mjs";
+
+const root = path.resolve(process.env.RESEARCH_LIBRARY_DIR || fileURLToPath(new URL("../public/research-library/", import.meta.url)));
+const contentRoot = path.join(root, "content");
+const catalog = JSON.parse(fs.readFileSync(path.join(root, "catalog.json"), "utf8"));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, ".sync-manifest.json"), "utf8"));
+const source = defaultSource();
+const portableBaseline = process.env.RESEARCH_PORTABLE_BASELINE === "1";
+const missing = [];
+const alteredText = [];
+const sourceChanged = [];
+let skippedBaselineFiles = 0;
+let localLinks = 0;
+for (const entry of catalog.entries) {
+	const filename = path.join(root, decodeURIComponent(entry.href));
+	const sourceFilename = path.join(source, entry.id);
+	if (!fs.existsSync(filename)) {
+		if (portableBaseline && !fs.existsSync(sourceFilename)) { skippedBaselineFiles++; continue; }
+		missing.push({ file: entry.id, value: entry.href });
+		continue;
+	}
+	const document = load(fs.readFileSync(filename, "utf8"));
+	assert.equal(document(".rl-reader-toolbar").length, 1, `Reader navigation: ${entry.id}`);
+	if (entry.id.startsWith("douyin/")) assert.equal(document('.rl-reader-toolbar a.rl-reader-methods[href$="content/douyin/methods/index.html"]').length, 1, `Douyin method menu: ${entry.id}`);
+	assert.ok(document('meta[name="viewport"]').attr("content")?.includes("width=device-width"), entry.id);
+	for (const element of document("[href], [src]").toArray()) {
+		const value = document(element).attr("href") ?? document(element).attr("src");
+		if (!value || /^(?:#|https?:|mailto:|tel:|data:|blob:|javascript:|\/\/)/i.test(value)) continue;
+		assert.ok(!/^file:|^[A-Za-z]:/i.test(value), `Non-portable URL: ${entry.id}`);
+		const pathname = decodeURIComponent(value.split(/[?#]/)[0]);
+		const target = pathname.startsWith("/research-library/") ? path.join(root, pathname.slice("/research-library/".length)) : path.resolve(path.dirname(filename), pathname);
+		localLinks++;
+		if (!target.startsWith(path.resolve(root) + path.sep) || !fs.existsSync(target)) missing.push({ file: entry.id, value });
+	}
+	if (fs.existsSync(sourceFilename)) {
+		const original = load(fs.readFileSync(sourceFilename, "utf8"));
+		document(".rl-reader-toolbar, .rl-report-freshness").remove();
+		const text = document("body").text().replace(/\s+/g, " ").trim();
+		const originalText = original("body").text().replace(/\s+/g, " ").trim();
+		if (text !== originalText) alteredText.push(entry.id);
+	}
+}
+for (const attachment of catalog.attachments) {
+	const filename = path.join(root, decodeURIComponent(attachment.href));
+	if (fs.existsSync(filename)) continue;
+	if (portableBaseline && !fs.existsSync(path.join(source, attachment.id))) { skippedBaselineFiles++; continue; }
+	missing.push({ file: attachment.id, value: attachment.href });
+}
+for (const [relative, expected] of Object.entries(manifest.sourceHashes)) {
+	if (fs.existsSync(path.join(source, relative))) {
+		const actual = createHash("sha256").update(fs.readFileSync(path.join(source, relative))).digest("hex");
+		if (actual !== expected) sourceChanged.push(relative);
+	}
+}
+const result = { htmlPages: catalog.entries.length, attachmentCount: catalog.attachments.length, localLinksChecked: localLinks, skippedBaselineFiles, missing, alteredReportText: alteredText, sourceChangedSinceSync: sourceChanged, catalogBytes: fs.statSync(path.join(root, "catalog.json")).size, contentFiles: manifest.files.length };
+console.log(JSON.stringify(result, null, 2));
+assert.equal(missing.length, 0, "Local links must resolve.");
+assert.equal(alteredText.length, 0, "Report wording must be preserved.");
+assert.equal(sourceChanged.length, 0, "Source changed after sync; sync again before verification.");
