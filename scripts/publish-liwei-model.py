@@ -149,19 +149,24 @@ def ssh(args, command):return run(['ssh',*args.ssh,TARGET,command])
 
 def health(args):
     # Content-only preflight. No app checkout, build, service restart or config write.
-    code='''import json,shutil,subprocess,urllib.request
+    code='''import json,re,shutil,subprocess,urllib.request
 from pathlib import Path
 root=Path('/data/research-library-publisher')
 assert shutil.disk_usage(root).free>=8*1024**3,'Disk below 8 GiB'
 release=(root/'current').resolve(strict=True)
 assert release.parent==root/'releases' and (release/'catalog.json').is_file(),'Rollback unavailable'
 n=subprocess.run(['nginx','-t'],capture_output=True);assert n.returncode==0,'Invalid nginx'
+config=Path('/etc/nginx/conf.d/ai-stock-main.conf').read_text()
+filters=re.findall("sub_filter '</head>' '([^']*)';",config)
+assert len(filters)<=1,'Multiple head filters need review'
+replacement=filters[0] if filters else '</head>'
+if filters:assert re.fullmatch(r'<script type="module" src="/assets/research-theme-[A-Za-z0-9_-]+[.]js"></script></head>',replacement),'Unrecognized HTML filter'
 items=json.loads(subprocess.check_output(['docker','inspect']+subprocess.check_output(['docker','ps','-q']).decode().split()))
 services={x['Name']:{'id':x['Id'],'started':x['State']['StartedAt'],'restarts':x['RestartCount'],'oom':x['State']['OOMKilled']} for x in items}
 x=next(x for x in items if x['Name']=='/app_api_main');assert x['State']['Running'] and not x['State']['OOMKilled'] and x['State'].get('Health',{}).get('Status')=='healthy','Backend unhealthy'
 for url in ['http://127.0.0.1:3667/','http://127.0.0.1:3667/api/health','http://127.0.0.1:8001/api/health']:
  with urllib.request.urlopen(url,timeout=20) as r:assert r.status==200
-print(json.dumps({'freeGiB':round(shutil.disk_usage(root).free/1024**3,3),'rollback':str(release),'services':services,'nginxWarnings':n.stderr.decode()}))'''
+print(json.dumps({'freeGiB':round(shutil.disk_usage(root).free/1024**3,3),'rollback':str(release),'services':services,'nginxWarnings':n.stderr.decode(),'htmlHeadReplacement':replacement}))'''
     return json.loads(ssh(args,"python3 - <<'PY'\n"+code+"\nPY"))
 
 def prepare(args):
@@ -230,6 +235,10 @@ def prepare(args):
     print(json.dumps({'status':'prepared','attempt':str(attempt),'changedFiles':len(changed),'as_of':latest['as_of']},ensure_ascii=False),flush=True)
     return attempt
 
+def served_html(raw, replacement):
+    # Reproduce the exact existing Nginx sub_filter, not an arbitrary normalization.
+    return raw.replace(b'</head>',replacement.encode(),1)
+
 def activate(args,attempt):
     record=read(attempt/'prepared.json');request=read(attempt/'_publish-request.json');candidate=attempt/'candidate'
     assert record['candidateHashes']==hashes(candidate),'Candidate changed'
@@ -248,9 +257,13 @@ def activate(args,attempt):
     probes += [PREFIX+read(candidate/PREFIX/'history.json')[0]['href']]
     for name in probes:
         url=PUBLIC+urllib.parse.quote(name,safe='/')+'?verify='+uuid.uuid4().hex
+        raw=(candidate/name).read_bytes() if (candidate/name).is_file() else ssh(args,f'cat {REMOTE}/current/{name}')
+        assert digest(raw)==request['files'][name], 'Release file mismatch: '+name
+        expected=served_html(raw,before['htmlHeadReplacement']) if name.endswith('.html') else raw
         with urllib.request.urlopen(url,timeout=45) as response:
-            assert response.status==200 and digest(response.read())==request['files'][name], 'Public hash mismatch: '+name
+            assert response.status==200 and response.read()==expected, 'Public content mismatch: '+name
     after=health(args)
+    assert before['htmlHeadReplacement']==after['htmlHeadReplacement'],'Nginx HTML filter changed'
     assert before['services']==after['services'],'Container state changed during publication'
     result.update(verifiedAt=dt.datetime.now(TZ).isoformat(),publicUrl=PUBLIC+PREFIX+'index.html',publicProbes=probes,servicesUnchanged=True,as_of=record['as_of'],attempt=str(attempt))
     write(args.state/'last-publish.json',result)

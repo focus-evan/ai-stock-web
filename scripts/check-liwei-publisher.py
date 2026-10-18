@@ -20,6 +20,13 @@ class Checks(unittest.TestCase):
     def test_public_export_has_no_machine_paths(self):
         value={'source_path':'/Users/person/private.json','nested':['file:///Users/person/private','normal']}
         self.assertNotIn('/Users/',json.dumps(m.clean(value)));self.assertNotIn('source_path',m.clean(value))
+    def test_only_configured_nginx_head_filter_is_accepted(self):
+        raw=b'<head><title>report</title></head><body>unchanged</body>'
+        replacement='<script type="module" src="/assets/research-theme-example.js"></script></head>'
+        served=m.served_html(raw,replacement)
+        self.assertEqual(served,raw.replace(b'</head>',replacement.encode(),1))
+        self.assertNotEqual(served,served.replace(b'unchanged',b'changed'))
+        self.assertEqual(m.served_html(b'no explicit head',replacement),b'no explicit head')
     def test_frozen_inputs_reproduce_price_state(self):
         spec=importlib.util.spec_from_file_location('liwei_engine',P.parent/'research-library/liwei-model/engine.py')
         engine=importlib.util.module_from_spec(spec);spec.loader.exec_module(engine)
