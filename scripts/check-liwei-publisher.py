@@ -1,5 +1,5 @@
 """Focused regression checks for scoped publication, history and navigation."""
-import copy, importlib.util, json, pathlib, tempfile, unittest
+import copy, importlib.util, json, pathlib, re, tempfile, unittest
 P=pathlib.Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('publisher',P/'publish-liwei-model.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 
@@ -8,7 +8,7 @@ class Checks(unittest.TestCase):
         original='<main><nav class="portal-menu"><a href="methods/index.html">野人交易手册</a></nav><h2>账号</h2></main>'
         result=m.navigation(original)
         self.assertIn('<a href="methods/index.html">野人交易手册</a>',result)
-        self.assertEqual(result,m.navigation(result));self.assertEqual(result.count('data-liwei-portal'),1)
+        self.assertEqual(result,m.navigation(result));self.assertEqual(len(re.findall(r'<a\b[^>]*\bdata-liwei-portal\b',result)),1)
     def test_corpus_refresh_preserves_independent_report(self):
         before={'entries':[{'id':'douyin/liwei-model/index.html','collection':'douyin','generatedAt':'2026-10-18T20:48:28+08:00'}], 'attachments':[{'id':'douyin/liwei-model/latest.json','collection':'douyin'}]}
         after={'entries':[{'id':'other/index.html','collection':'other'}], 'attachments':[], 'collections':[{'id':'other','pageCount':1},{'id':'douyin','pageCount':0}]}
