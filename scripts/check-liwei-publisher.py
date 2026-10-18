@@ -10,13 +10,15 @@ class Checks(unittest.TestCase):
         self.assertIn('<a href="methods/index.html">野人交易手册</a>',result)
         self.assertEqual(result,m.navigation(result));self.assertEqual(len(re.findall(r'<a\b[^>]*\bdata-liwei-portal\b',result)),1)
     def test_corpus_refresh_preserves_independent_report(self):
-        before={'entries':[{'id':'douyin/liwei-model/index.html','collection':'douyin','generatedAt':'2026-10-18T20:48:28+08:00'}], 'attachments':[{'id':'douyin/liwei-model/latest.json','collection':'douyin'}]}
+        before={'entries':[{'id':'douyin/liwei-model/index.html','collection':'douyin','generatedAt':'2026-10-18T20:48:28+08:00'},{'id':'douyin/methods/index.html','collection':'douyin','title':'野人交易手册'}], 'attachments':[{'id':'douyin/liwei-model/latest.json','collection':'douyin'}]}
         after={'entries':[{'id':'other/index.html','collection':'other'}], 'attachments':[], 'collections':[{'id':'other','pageCount':1},{'id':'douyin','pageCount':0}]}
         with tempfile.TemporaryDirectory() as d:
             root=pathlib.Path(d);m.write(root/'catalog.json',after);(root/'content/douyin').mkdir(parents=True);(root/'content/douyin/index.html').write_text('<h2>账号</h2>')
             m.preserve_liwei(root,before);result=m.read(root/'catalog.json')
             self.assertEqual(result['entries'][0],after['entries'][0]);self.assertEqual(result['entries'][1],before['entries'][0]);self.assertEqual(result['collections'][0],after['collections'][0])
             m.preserve_liwei(root,before);self.assertEqual(result,m.read(root/'catalog.json'))
+            self.assertEqual(result['entries'][2],before['entries'][1])
+            self.assertIn('href="methods/index.html"',(root/'content/douyin/index.html').read_text())
     def test_public_export_has_no_machine_paths(self):
         value={'source_path':'/Users/person/private.json','nested':['file:///Users/person/private','normal']}
         self.assertNotIn('/Users/',json.dumps(m.clean(value)));self.assertNotIn('source_path',m.clean(value))

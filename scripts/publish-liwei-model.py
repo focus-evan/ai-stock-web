@@ -69,11 +69,15 @@ def preserve_liwei(candidate, before):
     catalog=read(candidate/'catalog.json')
     for key in ['entries','attachments']:
         existing={x['id'] for x in catalog[key]}
-        catalog[key].extend(copy.deepcopy(x) for x in before[key] if x['id'].startswith('douyin/liwei-model/') and x['id'] not in existing)
+        catalog[key].extend(copy.deepcopy(x) for x in before[key] if x['id'].startswith(('douyin/liwei-model/','douyin/methods/')) and x['id'] not in existing)
     if not any(x['id']=='douyin/liwei-model/index.html' for x in catalog['entries']):return
     portal=candidate/'content/douyin/index.html'
     prior_portal=portal.read_bytes()
-    portal.write_text(navigation(prior_portal.decode()))
+    decorated=navigation(prior_portal.decode())
+    if any(x['id']=='douyin/methods/index.html' for x in catalog['entries']) and 'href="methods/index.html"' not in decorated:
+        methods='<a class="featured" href="methods/index.html"><b>野人交易手册</b><span>方法卡 · 情景判断 · 盘前清单</span></a>'
+        decorated=decorated.replace('<a class="featured" data-liwei-portal',methods+'<a class="featured" data-liwei-portal',1)
+    portal.write_text(decorated)
     if 'totalBytes' in catalog:catalog['totalBytes']+=len(portal.read_bytes())-len(prior_portal)
     for group in catalog['collections']:
         if group['id']=='douyin':
