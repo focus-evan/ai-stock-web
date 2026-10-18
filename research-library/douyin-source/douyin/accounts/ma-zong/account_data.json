@@ -41712,27 +41712,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261017",
+    "run_id": "daily_20261018",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-17 11:05:35",
+    "scanned_at": "2026-10-18 11:04:34",
     "latest_observed_id": "7697453599010704485",
     "pending_ids": [],
     "blocked_ids": [],
-    "excluded_ids": [
-      "7693556299737771386"
-    ],
-    "exceptions": [
-      {
-        "aweme_id": "7693556299737771386",
-        "slug": "ma-zong",
-        "status": "excluded",
-        "reason": "原作品作者为小张小张吃饭用缸（吸钱哥），不属于马总本人作品，已从其待处理队列排除。",
-        "source_url": "https://www.douyin.com/video/7693556299737771386",
-        "checked_at": "2026-10-14"
-      }
-    ],
-    "merged_new": 3,
+    "excluded_ids": [],
+    "exceptions": [],
+    "merged_new": 0,
     "failed": 0
   }
 }

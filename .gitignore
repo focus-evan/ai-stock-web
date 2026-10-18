@@ -55,4 +55,6 @@ id_rsa*
 # Logs
 *.log
 logs/
+!research-library/douyin-source/douyin/logs/
+!research-library/douyin-source/douyin/logs/*.json
 research-library/publish-state/
