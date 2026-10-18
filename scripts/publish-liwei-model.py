@@ -47,15 +47,21 @@ def esc(value): return html.escape(str(value), quote=True)
 
 def navigation(page):
     """Idempotent, narrowly scoped insertion beside the existing Yeren entry."""
-    if 'data-liwei-portal' in page: return page
     item = '<a class="featured" data-liwei-portal href="liwei-model/index.html"><b>立伟每日研判</b><span>08:30 盘前 · 19:30 复盘 · 历史与模型证据</span></a>'
-    match = re.search(r'<nav\b[^>]*class="[^"]*portal-menu[^"]*"[^>]*>.*?</nav>', page, re.S)
-    if match:
-        section = match.group().replace('</nav>', item + '</nav>')
-        return page[:match.start()] + section + page[match.end():]
-    # Older local archive pages have no portal menu yet.
-    menu = '<nav class="portal-menu" aria-label="抖音资料功能菜单">' + item + '</nav>'
-    return page.replace('<h2>账号</h2>', menu + '<h2>账号</h2>', 1)
+    if 'data-liwei-portal' not in page:
+        match = re.search(r'<nav\b[^>]*class="[^"]*portal-menu[^"]*"[^>]*>.*?</nav>', page, re.S)
+        if match:
+            section = match.group().replace('</nav>', item + '</nav>')
+            page = page[:match.start()] + section + page[match.end():]
+        else:
+            menu = '<nav class="portal-menu" aria-label="抖音资料功能菜单">' + item + '</nav>'
+            page = page.replace('<h2>账号</h2>', menu + '<h2>账号</h2>', 1)
+    if 'id="liwei-portal-style"' not in page:
+        css = '<style id="liwei-portal-style">.portal-menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0}.portal-menu>a{display:flex;flex-direction:column;padding:16px;border:1px solid #dce3e8;border-radius:12px;background:#fff;text-decoration:none;color:#17253a}.portal-menu>a span{font-size:13px;color:#68778a;margin-top:6px}.portal-menu>a[data-liwei-portal]{background:#eef8f5;border-color:#86bfb2}.portal-menu>a b{font-size:17px}</style>'
+        page = page.replace('</head>',css+'</head>',1) if '</head>' in page else css+page
+    if 'data-liwei-toolbar' not in page:
+        page = re.sub(r'(<a[^>]*class="rl-reader-methods"[^>]*>.*?</a>)',r'\1<a class="rl-reader-liwei" data-liwei-toolbar href="liwei-model/index.html">立伟每日研判</a>',page,count=1)
+    return page
 
 def preserve_liwei(candidate, before):
     """Keep independently published Liwei metadata/navigation in a corpus refresh."""
