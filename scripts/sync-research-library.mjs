@@ -194,6 +194,11 @@ export async function syncLibrary({ merge = false, source = defaultSource(), des
 						}
 					}
 				}
+				if (relative === "douyin/index.html" && (fileSet.has("douyin/liwei-model/index.html") || (previousCatalog.entries || []).some(entry => entry.id === "douyin/liwei-model/index.html")) && !$("[data-liwei-portal]").length) {
+					const item = '<a class="featured" data-liwei-portal href="liwei-model/index.html"><b>立伟每日研判</b><span>08:30 盘前 · 19:30 复盘 · 历史与模型证据</span></a>';
+					if ($(".portal-menu").length) $(".portal-menu").append(item);
+					else $("main").prepend(`<nav class="portal-menu" aria-label="抖音资料功能菜单">${item}</nav>`);
+				}
 				if (!$('meta[name="viewport"]').length) $("head").append('<meta name="viewport">');
 				$('meta[name="viewport"]').attr("content", "width=device-width, initial-scale=1, viewport-fit=cover");
 				$("html").attr("data-library-page", "").attr("lang", $("html").attr("lang") || "zh-CN");

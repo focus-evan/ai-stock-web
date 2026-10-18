@@ -1,0 +1,367 @@
+{
+  "name": "立伟公开判断模型",
+  "version": "1.0.0",
+  "frozen_at": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "scope": "指数择时、机会确认、风险与持仓动作条件；每日研究输出，不自动下单",
+  "source_sha256": "e358c76e90716e86b0ec2746e7e23d8555de69b09925b069cca57d3cbeda4c22",
+  "source_count": 94,
+  "source_min_date": "2026-05-06 19:03:56",
+  "source_max_date": "2026-10-09 19:38:28",
+  "attribution": "原文规则是存档文本所载表达，并不代表指标已验证；跨篇推断和工程补充单列。",
+  "states": {
+    "U": "数据待核验",
+    "D": "弱势防御",
+    "B": "破位待确认",
+    "O": "底部候选",
+    "R": "短线修复观察",
+    "C": "右侧条件确认",
+    "H": "上涨末段/过热"
+  },
+  "required_unavailable_modules": [
+    "原版恐贪指标公式与当日四指数读数",
+    "原版底部信号公式/日线收盘证据",
+    "可复现波浪/通道锚点",
+    "完整个股筛选与组合权重"
+  ],
+  "rules": [
+    {
+      "id": "LW01",
+      "name": "行情看多与允许新买分开",
+      "attribution": "原文规则",
+      "condition": "上涨末段/第五浪，即使中期看多",
+      "action": "已有仓与新资金分别判断；不因事后上涨追认买点",
+      "evidence_ids": [
+        "7637499223961983178",
+        "7693818935444036809"
+      ],
+      "limitations": "波浪划分尚无客观算法；不自动推断第五浪。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW02",
+      "name": "右侧确认需要空间与时间",
+      "attribution": "原文规则",
+      "condition": "下降通道有效突破，且反弹持续时间超过此前反弹",
+      "action": "记录右侧候选信号；仍可等待回踩",
+      "evidence_ids": [
+        "7649365731884314350"
+      ],
+      "limitations": "通道锚点、反弹起点必须事前记录；不能用未来拐点补画。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW03",
+      "name": "突破后的不破低点回踩",
+      "attribution": "原文规则",
+      "condition": "已有右侧候选，随后二次回踩不创新低",
+      "action": "列为比立即追入更稳妥的参与候选",
+      "evidence_ids": [
+        "7649365731884314350"
+      ],
+      "limitations": "回踩幅度、止损和失效期限必须逐次定义。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW04",
+      "name": "上证与深指共同确认",
+      "attribution": "原文规则",
+      "condition": "对应交易计划要求的上证和深指压力均突破",
+      "action": "才确认该轮上升路径；仅一个突破仍待确认",
+      "evidence_ids": [
+        "7683132218621049801"
+      ],
+      "limitations": "历史3955/13800仅属当时计划；不可作为永久阈值。",
+      "regime_or_version": "2026-09",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW05",
+      "name": "收盘保留的信号才有效",
+      "attribution": "原文规则",
+      "condition": "盘中出现情绪极值/底部信号，但收盘消失",
+      "action": "不把盘中触及当作收盘买点",
+      "evidence_ids": [
+        "7649365731884314350",
+        "7694631082189004234"
+      ],
+      "limitations": "需明确指标周期与收盘可见时间。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW06",
+      "name": "小周期信号不覆盖大周期风险",
+      "attribution": "原文规则",
+      "condition": "仅30/60分钟底部信号，日线尚未确认且结构破坏",
+      "action": "不能据此宣告中期大底",
+      "evidence_ids": [
+        "7660097991101916234"
+      ],
+      "limitations": "底部指标公式未公开；只能用带时间的原始观测，不能替造。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW07",
+      "name": "计划风险线失守则减仓",
+      "attribution": "原文规则",
+      "condition": "既定关键支撑在指定确认口径下失效",
+      "action": "执行该计划的减仓/退出，不用反弹预测豁免",
+      "evidence_ids": [
+        "7660097991101916234",
+        "7660498221429182153"
+      ],
+      "limitations": "只证明对应案例；不能宣称早期资料从无例外。",
+      "regime_or_version": "2026-07起的风险纪律",
+      "conflict": "与LW08冲突时保留原文差异；工程执行默认EW03。",
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW08",
+      "name": "极端低情绪下等待反弹退出的例外",
+      "attribution": "原文规则",
+      "condition": "情绪达到当时所述下方边界，即使破位",
+      "action": "早期资料允许等待反弹退出",
+      "evidence_ids": [
+        "7645292561996819955"
+      ],
+      "limitations": "适用周期与等待时限缺失，不能自动执行此例外。",
+      "regime_or_version": "2026-05",
+      "conflict": "与LW07/LW09存在张力；不是可随意调用的止损豁免。",
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW09",
+      "name": "长期分界线优先于超跌信号",
+      "attribution": "原文规则",
+      "condition": "价格失守所称牛熊分界线，虽有超跌/底部候选",
+      "action": "先检查能否收复；不能继续沿用牛市抄底条件",
+      "evidence_ids": [
+        "7690447403896269746",
+        "7694264298039014619"
+      ],
+      "limitations": "360日线关联来自7月原话；均线类型仍须核对图表。",
+      "regime_or_version": "2026-09至10",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW10",
+      "name": "破位延续与重新收复要分开确认",
+      "attribution": "原文规则",
+      "condition": "第一次收盘跌破后次日仍未收复；或首次重新站上分界线",
+      "action": "连续两日失守强化防御；重新站上后继续观察而非立即全仓",
+      "evidence_ids": [
+        "7690447403896269746",
+        "7694264298039014619"
+      ],
+      "limitations": "工程版把重新站上后的“多观察2天”写为3个完整收盘，这是实现选择。",
+      "regime_or_version": "2026-09至10",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW11",
+      "name": "情绪阈值随市场状态变化",
+      "attribution": "原文规则",
+      "condition": "较强市场的个位数条件，在弱势环境下未必足够",
+      "action": "熊市情境要求更深极值并与日线信号结合",
+      "evidence_ids": [
+        "7663464919576362651",
+        "7694631082189004234"
+      ],
+      "limitations": "7月样本为小盘9/6，10月提到5以下；不是统一四指数阈值公式。",
+      "regime_or_version": "分阶段",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW12",
+      "name": "压力转支撑与路径失效",
+      "attribution": "原文规则",
+      "condition": "已突破的压力回踩守住；若之后跌破事先低点",
+      "action": "保留或撤销对应上涨情景",
+      "evidence_ids": [
+        "7686818970519918986"
+      ],
+      "limitations": "每个点位要绑定指数、日期、有效期；不得继承过期点位。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW13",
+      "name": "期指数据不能机械预测次日",
+      "attribution": "原文规则",
+      "condition": "会员净多/净空变化出现",
+      "action": "记录方向与口径，仅作背景解释",
+      "evidence_ids": [
+        "7683499950178094491"
+      ],
+      "limitations": "未完整核对合约/会员/移仓时数值为未知；不能等同现货持仓。",
+      "regime_or_version": "2026-09",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW14",
+      "name": "期指对冲解释是可变假设",
+      "attribution": "原文规则",
+      "condition": "空单被解释为对冲或方向性做空",
+      "action": "单独记录解释版本及依据，不固定翻译为多/空",
+      "evidence_ids": [
+        "7663464919576362651",
+        "7664946315206095579"
+      ],
+      "limitations": "作者承认样本不足；禁止根据第二天涨跌反向选解释。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW15",
+      "name": "ETF放量需要进一步辨别",
+      "attribution": "跨篇推断",
+      "condition": "宽基ETF成交量变化",
+      "action": "记录现象、比较基准；不自动认定资金身份",
+      "evidence_ids": [
+        "7694631082189004234",
+        "7690542541414849690"
+      ],
+      "limitations": "作者对资金身份有更强断言；本模型不把该断言升级为事实。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW16",
+      "name": "指数择时与板块选择分别建模",
+      "attribution": "原文规则",
+      "condition": "需要决定持有哪些资产",
+      "action": "指数管理共同风险；另行比较财报/板块并做组合",
+      "evidence_ids": [
+        "7643810108375449766",
+        "7652700164248056218"
+      ],
+      "limitations": "六板块名单、利润口径、权重未公开，选股模块停用。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "LW17",
+      "name": "成本与交易周期需单独记录",
+      "attribution": "跨篇推断",
+      "condition": "已有低成本仓、新买仓、短线仓与波段仓",
+      "action": "分开给持有/新买/退出条件",
+      "evidence_ids": [
+        "7654561395892397542",
+        "7665691847800449417"
+      ],
+      "limitations": "用户未给持仓时只输出模型动作，不推断用户成本或可卖数量。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW01",
+      "name": "价格计算口径",
+      "attribution": "工程补充",
+      "condition": "有按日期排序的完整指数日K",
+      "action": "SMA使用最近N个完整交易日收盘，N=5/10/20/30/60/250/360；每个比较日使用当日均线",
+      "evidence_ids": [],
+      "limitations": "SMA是可复现代理，不声称与作者软件完全一致。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW02",
+      "name": "三值逻辑与数据闸门",
+      "attribution": "工程补充",
+      "condition": "数据缺失、未来数据、日期不一致、信号未经复核",
+      "action": "未知不等于否定；禁止把缺失信号当作买点；核心价格过期则不发新结论",
+      "evidence_ids": [],
+      "limitations": "行情可判断时仍可给价格侧结论，同时列出未决模块。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW03",
+      "name": "冲突时采取有记录的防御路径",
+      "attribution": "工程补充",
+      "condition": "风控与底部信号冲突或规则版本不兼容",
+      "action": "采用最近明确防御规则并暴露冲突，不新增抄底信号",
+      "evidence_ids": [],
+      "limitations": "这是模型的工程选择，不是证明作者始终如此。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW04",
+      "name": "短线修复参考与反转分开",
+      "attribution": "工程补充",
+      "condition": "上证和深指均收复各自前一日高点及当前动态MA5",
+      "action": "仅上调为短线修复观察；长期分界线仍未收复则保持弱势背景",
+      "evidence_ids": [],
+      "limitations": "前一日高点/MA5是透明代理，不是原作者的完整通道突破模型。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW05",
+      "name": "不给缺依据的仓位百分比",
+      "attribution": "工程补充",
+      "condition": "没有用户组合、风险预算和完整入场条件",
+      "action": "给增加/维持/减少风险的条件，不生成固定满仓/半仓公式",
+      "evidence_ids": [],
+      "limitations": "如以后设仓位上限，须另行标记为用户或工程风险参数。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    },
+    {
+      "id": "EW06",
+      "name": "公开表达与交易收益分开验证",
+      "attribution": "工程补充",
+      "condition": "评估模型",
+      "action": "先记录前瞻判断一致性，再在可执行数据上检验收益；不输出未经验证胜率",
+      "evidence_ids": [],
+      "limitations": "当前全部语料均作为开发资料；没有独立样本外业绩。",
+      "regime_or_version": "跨期",
+      "conflict": null,
+      "evidence_strength": "存档段落支持；不是收益置信度"
+    }
+  ],
+  "validation": {
+    "status": "规则原型与前瞻记录已建立；未证明超额收益",
+    "development_corpus": "全部94条均可能被开发者看到；不得冒充未见过的测试集",
+    "prospective_start": "模型冻结后首次真实预测",
+    "metrics": [
+      "下一期是否触发预设条件",
+      "公开动作与模型动作一致率（只在独立新语料上）",
+      "误触发与错过",
+      "若具备完整执行数据，再比较含成本收益/回撤与简单基准"
+    ],
+    "anti_leakage": [
+      "使用发布时间而不是视频声称的回顾日期",
+      "历史点位绑定当时计划，不跨期沿用",
+      "每次先存预测与条件，后存验证，禁止覆写旧预测",
+      "只使用预测截止时可见的数据",
+      "新版本独立记录，旧版本的失败保留"
+    ]
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "model_version": "1.0.0",
+  "as_of": "2026-10-18T20:48:28+08:00",
+  "session": "周末晚间 · 2026-10-19预案",
+  "last_session": "2026-10-16",
+  "next_session": "2026-10-19",
+  "state": "D",
+  "conclusion": "弱势防御，底部尚未确认",
+  "triggered_rules": [
+    "LW09",
+    "LW10",
+    "LW05",
+    "EW02"
+  ],
+  "indices": {
+    "000001.SS": {
+      "name": "上证综指",
+      "date": "2026-10-16",
+      "close": 3716.283935546875,
+      "high": 3750.77001953125,
+      "low": 3681.282958984375,
+      "change_pct": 0.23757028101607514,
+      "five_session_change_pct": -2.5566969893903724,
+      "ma": {
+        "5": 3757.818798828125,
+        "10": 3791.105615234375,
+        "20": 3847.739221191406,
+        "30": 3881.5300130208334,
+        "60": 3882.2469807942707,
+        "250": 3989.1995166015627,
+        "360": 3856.154045952691
+      },
+      "below_ma360_two_closes": true,
+      "above_ma360_three_closes": false,
+      "prior_high": 3724.56103515625,
+      "low5": 3674.81689453125,
+      "bars": 673,
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/000001.SS?period1=1704067200&period2=1792413692&interval=1d&events=history"
+    },
+    "399001.SZ": {
+      "name": "深证成指",
+      "date": "2026-10-16",
+      "close": 11802.4599609375,
+      "high": 11993.849609375,
+      "low": 11698.5,
+      "change_pct": -0.12126878854265,
+      "five_session_change_pct": -6.639848624188072,
+      "ma": {
+        "5": 12093.68203125,
+        "10": 12437.94912109375,
+        "20": 12971.78056640625,
+        "30": 13228.29404296875,
+        "60": 13613.656363932292,
+        "250": 14094.71325390625,
+        "360": 13175.182991536458
+      },
+      "below_ma360_two_closes": true,
+      "above_ma360_three_closes": false,
+      "prior_high": 11940.009765625,
+      "low5": 11698.5,
+      "bars": 673,
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/399001.SZ?period1=1704067200&period2=1792413692&interval=1d&events=history"
+    },
+    "399006.SZ": {
+      "name": "创业板指",
+      "date": "2026-10-16",
+      "close": 2772.383544921875,
+      "high": 2832.130615234375,
+      "low": 2743.869140625,
+      "change_pct": null,
+      "five_session_change_pct": null,
+      "ma": {
+        "5": null,
+        "10": null,
+        "20": null,
+        "30": null,
+        "60": null,
+        "250": null,
+        "360": null
+      },
+      "below_ma360_two_closes": null,
+      "above_ma360_three_closes": null,
+      "prior_high": null,
+      "low5": 2743.869140625,
+      "bars": 1,
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/399006.SZ?period1=1704067200&period2=1792413692&interval=1d&events=history"
+    }
+  },
+  "data_errors": [],
+  "original_indicators": {
+    "original_daily_bottom": null,
+    "original_fear_extreme_for_regime": null,
+    "channel_time_retest_confirmed": null,
+    "late_wave_or_overheat": null
+  },
+  "missing_modules": [
+    "立伟原版四指数恐贪值及其公式：当期未知，未用RSI/宽度替代。",
+    "原版日线底部信号：没有10月16日收盘有效截图或公式，未知。",
+    "可复现波浪/下降通道锚点与反弹持续时间：尚未复核，不能宣告B3或反转。",
+    "10月16日期指会员分合约持仓、完整ETF申赎：未取得，不推断机构身份。",
+    "创业板历史接口只返回1条日线；其均线不计算，方向价格已由新闻交叉核对。",
+    "本地作者最新存档为10月9日；这不能证明作者之后未更新。本期是模型判断，不是其最新表态。",
+    "个人持仓、可卖数量和风险预算未知，未生成个人仓位比例。"
+  ],
+  "context": {
+    "as_of": "2026-10-18T20:48:28+08:00",
+    "session": "周末晚间 · 2026-10-19预案",
+    "expected_last_session": "2026-10-16",
+    "next_session": "2026-10-19",
+    "calendar_verified": true,
+    "calendar_source": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml",
+    "crosschecks": {
+      "000001.SS": {
+        "date": "2026-10-16",
+        "close": 3716.28,
+        "source_url": "https://flash.jin10.com/detail/20261016150736058800"
+      },
+      "399001.SZ": {
+        "date": "2026-10-16",
+        "close": 11802.46,
+        "source_url": "https://flash.jin10.com/detail/20261016150736058800"
+      }
+    },
+    "annotations": {
+      "original_daily_bottom": null,
+      "original_fear_extreme_for_regime": null,
+      "channel_time_retest_confirmed": null,
+      "late_wave_or_overheat": null
+    },
+    "analysis": [
+      "基准结论：弱势防御，尚不能确认底部。10月16日沪指微涨，深证与创业板仍跌；个股上涨家数多于下跌家数，说明出现局部修复，但没有完成沪深同步的趋势确认。",
+      "上证收盘3716.28点，低于MA5 3757.82、MA20 3847.74和MA360 3856.15；最近两个完整交易日均低于各自当日MA360。按LW09/LW10及SMA工程代理，先维持防御。不能把一次尾盘拉升视为重新进入强势市场。",
+      "沪深两市成交约15554亿元，较前一日减少776亿元；澎湃新闻引Wind的沪深北口径为上涨3298家、下跌2123家、平盘148家。市场宽度有所修复，但成交缩量。此宽度不是立伟的恐贪指标。",
+      "美东10月16日收盘，纳指约跌2.15%；同一行情源计算费城半导体约跌3.83%（费半未作第二来源数值核验）。对A股科技方向构成待观察的外部压力；这是传导风险判断，不是对10月19日开盘的确定预测。",
+      "10月16日为10月第三个星期五，属于常规股指期货到期窗口。期指会员变动需剔除到期/移仓影响；本轮未取得完整可核验的分合约会员表，不填入中信净多空数值。",
+      "10月19日香港因重阳节翌日休市，A股按已核实日历正常开市；不能把没有当日港股价格误判为数据故障。当前没有已核实的周一宏观事件精确时点，盘前版需重新检查官方公告。"
+    ],
+    "new_money": "暂不追涨或仅凭超跌增加方向性风险。先等沪深同步修复；原版底部与情绪证据缺失时不发抄底确认。",
+    "existing_positions": "区分波段仓和短线仓，按所持资产自身事前风险线复核。指数反弹未过压力时，优先处理已经破坏计划的弱势仓；不把指数点位直接当作每只股票的止损价。",
+    "scenarios": [
+      {
+        "name": "基准：弱势反弹/震荡",
+        "trigger": "上证未收复3750.77附近前一交易日高点及动态MA5（10月16日参考3757.82）；深指未同步修复。",
+        "action": "维持D；不因单日上涨上调为反转，不新增抄底确认。"
+      },
+      {
+        "name": "上调：短线修复",
+        "trigger": "上证收盘突破3750.77并站上当日MA5；深证同步越过11993.85并站上当日MA5（10月16日参考12093.68）。观察成交和上涨家数能否延续。",
+        "action": "只上调为R短线修复观察。完整右侧确认另需通道/时间/回踩证据，且长期分界线收复后持续观察。"
+      },
+      {
+        "name": "下调：低点再次失守",
+        "trigger": "上证跌破10月15日低点3674.82且收盘未收复；深证再破10月16日低点11698.50则弱势扩大。",
+        "action": "撤销本次弱反弹支撑假设，维持或强化防御；不随价格下跌无限下移原计划风险线。"
+      },
+      {
+        "name": "中期重新评估",
+        "trigger": "上证收复动态长期分界线（当前SMA360参考3856.15，附近MA20参考3847.74），再观察两个完整收盘并复核沪深结构。",
+        "action": "重新评估弱势背景。均线每天变化，不能把3856.15永久固定为作者原版分界线。"
+      }
+    ],
+    "missing_modules": [
+      "立伟原版四指数恐贪值及其公式：当期未知，未用RSI/宽度替代。",
+      "原版日线底部信号：没有10月16日收盘有效截图或公式，未知。",
+      "可复现波浪/下降通道锚点与反弹持续时间：尚未复核，不能宣告B3或反转。",
+      "10月16日期指会员分合约持仓、完整ETF申赎：未取得，不推断机构身份。",
+      "创业板历史接口只返回1条日线；其均线不计算，方向价格已由新闻交叉核对。",
+      "本地作者最新存档为10月9日；这不能证明作者之后未更新。本期是模型判断，不是其最新表态。",
+      "个人持仓、可卖数量和风险预算未知，未生成个人仓位比例。"
+    ],
+    "sources": [
+      {
+        "name": "金十：10月16日收盘快讯",
+        "url": "https://flash.jin10.com/detail/20261016150736058800",
+        "supports": "三大指数与沪深300收盘及涨跌幅"
+      },
+      {
+        "name": "澎湃新闻／东方财富：A股午后单边下行",
+        "url": "https://finance.eastmoney.com/a/202610163898369479.html",
+        "supports": "沪深成交15554亿元、较前日减少776亿元；Wind沪深北涨跌家数"
+      },
+      {
+        "name": "新华财经：美股10月16日收盘",
+        "url": "https://www.cnfin.com/gs-lb/detail/20261017/4482412_1.html",
+        "supports": "纳指收盘26140.034点及科技股下跌；涨幅四舍五入口径略有差异"
+      },
+      {
+        "name": "Yahoo Finance：上证历史日线",
+        "url": "https://query1.finance.yahoo.com/v8/finance/chart/000001.SS?period1=1704067200&period2=1792413692&interval=1d&events=history",
+        "supports": "673条上证日线；均线与近期高低点由本地程序计算"
+      },
+      {
+        "name": "Yahoo Finance：深证历史日线",
+        "url": "https://query1.finance.yahoo.com/v8/finance/chart/399001.SZ?period1=1704067200&period2=1792413692&interval=1d&events=history",
+        "supports": "673条深证日线；均线由本地程序计算"
+      },
+      {
+        "name": "Yahoo Finance：费城半导体",
+        "url": "https://query1.finance.yahoo.com/v8/finance/chart/^SOX?period1=1704067200&period2=1792413876&interval=1d&events=history",
+        "supports": "10月15/16日收盘，本地计算日变动；单来源"
+      },
+      {
+        "name": "上交所：2026年休市安排",
+        "url": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml",
+        "supports": "A股交易日与节假日"
+      },
+      {
+        "name": "港交所：2026年证券市场假期",
+        "url": "https://www.hkex.com.hk/-/media/HKEX-Market/Services/Circulars-and-Notices/Participant-and-Members-Circulars/SEHK/2025/cc_SEHK_CT_075_2025.pdf",
+        "supports": "10月19日香港证券市场休市"
+      },
+      {
+        "name": "中金所：沪深300股指期货交易细则",
+        "url": "https://www.cffex.com.cn/u/cms/www/202003/27160915uqs5.pdf",
+        "supports": "合约到期月份第三个周五；仅引用到期条款，其他交易条款需查现行版"
+      }
+    ],
+    "prior_forecast_review": "首期建模，无前一期冻结预测；不得计算命中率。",
+    "next_checks": [
+      "盘前核对周末新增官方消息及当日事件，排除旧年份搜索结果",
+      "盘后核对沪深是否同步越过修复门槛",
+      "核对作者新增存档与指标画面，原始信号不齐则继续未知",
+      "记录上一期条件是否触发，保留反证"
+    ]
+  },
+  "execution": "研究研判，不自动下单；没有用户持仓，不给个人仓位百分比",
+  "performance": "尚无样本外收益证明",
+  "input_sha256": "1260fed3ef5a3ef556436b1e38917f84962f244d083483dbe2a0e131ae41dfdc"
+}

@@ -56,3 +56,6 @@ id_rsa*
 *.log
 logs/
 research-library/publish-state/
+
+research-library/liwei-publish-state/
+__pycache__/
