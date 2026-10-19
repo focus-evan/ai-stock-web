@@ -52,3 +52,13 @@
 	});
 	toolbar.querySelector("[data-reader-top]").addEventListener("click", () => window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
 })();
+
+// Shared entrypoint covers every account list and individual transcript page.
+(() => {
+	if (!/(?:^|\/)douyin(?:\/|$)/.test(location.pathname) || document.querySelector("script[data-douyin-records]"))
+		return;
+	const script = document.createElement("script");
+	script.dataset.douyinRecords = "";
+	script.src = new URL("douyin-records.js?v=20261019-account-v1", document.currentScript.src).href;
+	document.head.append(script);
+})();
