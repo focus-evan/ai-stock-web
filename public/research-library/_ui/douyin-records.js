@@ -119,7 +119,10 @@
 	const syncButton = button("刷新同步", "刷新账号阅读标记");
 	const syncLabel = element("span", "dyr-count", "正在读取账号标记…");
 	const login = element("a", "dyr-button", "登录后同步");
-	login.href = `/login?redirect=${encodeURIComponent(location.pathname + location.search + location.hash)}`;
+	login.href = "/login";
+	login.target = "_blank";
+	login.rel = "noopener";
+	login.title = "登录后返回本页，阅读标记会自动同步";
 	login.hidden = true;
 	syncRow.append(syncLabel, syncButton, login);
 	panel.append(syncRow);
