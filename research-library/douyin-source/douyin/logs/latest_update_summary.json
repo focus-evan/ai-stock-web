@@ -1,7 +1,7 @@
 {
-  "run_id": "daily_20261018",
-  "started": "2026-10-18 11:05:57",
-  "finished": "2026-10-18 11:08:17",
+  "run_id": "daily_20261019",
+  "started": "2026-10-19 11:00:04",
+  "finished": "2026-10-19 11:07:00",
   "sources": [
     {
       "name": "李一恩",
@@ -18,7 +18,7 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-10-18 11:04:34"
+      "scanned_at": "2026-10-19 10:59:15"
     },
     {
       "name": "立伟",
@@ -35,16 +35,16 @@
       "failed": 0,
       "status": "access_required",
       "scan_status": "complete",
-      "scanned_at": "2026-10-18 11:04:34"
+      "scanned_at": "2026-10-19 10:59:15"
     },
     {
       "name": "交易魔法师（马总）",
       "slug": "ma-zong",
-      "selected_new": 0,
-      "downloaded": 0,
-      "transcribed": 0,
+      "selected_new": 2,
+      "downloaded": 2,
+      "transcribed": 2,
       "text_extracted": 0,
-      "merged_new": 0,
+      "merged_new": 2,
       "added_this_invocation": 0,
       "pending": 0,
       "blocked": 0,
@@ -52,24 +52,24 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-10-18 11:04:34"
+      "scanned_at": "2026-10-19 10:59:15"
     },
     {
       "name": "全能的野人",
       "slug": "quan-neng-ye-ren",
-      "selected_new": 1,
-      "downloaded": 1,
-      "transcribed": 1,
+      "selected_new": 5,
+      "downloaded": 5,
+      "transcribed": 5,
       "text_extracted": 0,
-      "merged_new": 1,
-      "added_this_invocation": 1,
+      "merged_new": 5,
+      "added_this_invocation": 0,
       "pending": 0,
       "blocked": 0,
       "excluded": 0,
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-10-18 11:04:34"
+      "scanned_at": "2026-10-19 10:59:15"
     },
     {
       "name": "宇菠萝",
@@ -86,21 +86,21 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-10-18 11:04:34"
+      "scanned_at": "2026-10-19 10:59:15"
     }
   ],
   "pipeline_version": 2,
-  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261018.json",
+  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261019.json",
   "site": {
     "account_count": 5,
-    "account_records": 1157,
+    "account_records": 1164,
     "favorites_records": 257
   },
   "favorites": {
     "status": "ok",
-    "run_id": "favorites_20261018",
-    "scanned_at": "2026-10-18 11:04:34",
-    "merged_new": 3,
+    "run_id": "favorites_20261019",
+    "scanned_at": "2026-10-19 10:59:15",
+    "merged_new": 0,
     "pending": 0,
     "failed": 0,
     "total_records": 257

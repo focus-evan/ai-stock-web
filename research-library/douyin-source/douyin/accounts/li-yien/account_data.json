@@ -8063,10 +8063,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261018",
+    "run_id": "daily_20261019",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-18 11:04:34",
+    "scanned_at": "2026-10-19 10:59:15",
     "latest_observed_id": "7697165068974639183",
     "pending_ids": [],
     "blocked_ids": [],

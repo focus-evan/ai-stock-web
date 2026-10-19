@@ -136,7 +136,8 @@ function publishLocal(id) {
     const scan=b.scans.find(s=>s.slug===a.slug),candidates=b.items.filter(i=>i.slug===a.slug);let added=0,processed=0,failed=0;
     for(const item of candidates) {
       if(dispositions()[item.aweme_id])continue;
-      if(data.items.some(i=>i.aweme_id===item.aweme_id)) {processed++;continue;}
+      const previousIndex=data.items.findIndex(i=>i.aweme_id===item.aweme_id);
+      if(previousIndex>=0&&data.items[previousIndex].sync_run_id!==id) {processed++;continue;}
       if(!fs.existsSync(resultFile(item)))continue;
       const r=read(resultFile(item));if(r.error){failed++;continue;}if(r.review_status!=='approved')continue;
       const file=`videos/new_${item.aweme_id}.html`;
@@ -146,7 +147,8 @@ function publishLocal(id) {
       fs.writeFileSync(path.join(dir,file),page(`${a.nickname} - ${r.display_title}`,body,3),'utf8');
       const record={aweme_id:item.aweme_id,display_title:r.display_title,title:item.description||r.display_title,published_at:item.published_at,create_time:Math.floor(Date.parse(item.published_at.replace(' ','T')+'+08:00')/1000),duration_seconds:item.duration_seconds||r.duration_seconds,author:a.nickname,share_url:item.source_url,raw_transcript:r.transcript,transcript:r.corrected_transcript,transcript_source:sourceType,asr_backend:sourceType==='audio_asr'?'faster-whisper':undefined,asr_model:sourceType==='audio_asr'?'small/int8':undefined,quality:{status:'通过（文案复核）',uncertain_terms_marked:r.corrected_transcript.includes('待听辨')},points:r.points,category:r.category,ai_related:r.category==='AI',html_file:file,manual_reviewed:false,reviewer:'codex',reviewed_at:r.reviewed_at,sync_run_id:id};
       if(item.extraction_kind)record.extraction_kind=item.extraction_kind;if(item.frame_ocr_count)record.frame_ocr_count=item.frame_ocr_count;
-      data.items.push(record);added++;processed++;
+      if(previousIndex>=0)data.items[previousIndex]=record;else{data.items.push(record);added++;}processed++;
+      $account('.video-list a').filter((_,e)=>$account(e).attr('href')===file).remove();
       $account('.video-list').prepend(`<a class="video-link" href="${file}" data-aweme-id="${item.aweme_id}"><b>新增</b><div><strong>${esc(r.display_title)}</strong><span>${esc(r.points.join('；'))}</span></div><small>${esc(item.published_at)}<br>${duration(record.duration_seconds)}</small></a>`);
     }
     data.items.sort((a,b)=>Number(b.create_time)-Number(a.create_time));

@@ -8763,10 +8763,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261018",
+    "run_id": "daily_20261019",
     "status": "access_required",
     "scan_status": "complete",
-    "scanned_at": "2026-10-18 11:04:34",
+    "scanned_at": "2026-10-19 10:59:15",
     "latest_observed_id": "7697221251865397594",
     "pending_ids": [
       "7693818935444036809",
