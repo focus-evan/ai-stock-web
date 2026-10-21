@@ -7,17 +7,18 @@ import { BellOutlined } from "@ant-design/icons";
 import { Alert, Button, Modal, Space, Tag } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import AlertInvalidConditions from "./AlertInvalidConditions";
 import { UNWIND_ALERT_Z_INDEX, useUnwindMonitorStore } from "./monitor-store";
 import { freshUnwindQuote, MONITOR_INTERVAL, quoteTimestamp } from "./price-alerts";
 import PriceMonitor from "./PriceMonitor";
 import { beijingTime, timestamp } from "./strategy-time";
 import "./strategy-time.css";
 
-interface SavedAlert extends UnwindPriceAlert { id: number, stage: string, read: boolean, shadow: boolean, shares: number }
+interface SavedAlert extends UnwindPriceAlert { id: number, stage: string, read: boolean, shadow: boolean, shares: number, invalidConditions: string[] }
 function savedAlert(event: UnwindAlertEvent): SavedAlert {
 	const signal = event.payload;
 	const at = quoteTimestamp(signal.quote?.as_of);
-	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side: signal.event_action === "BUY_BACK" ? "buy" : "sell", price: signal.quote?.price || 0, target: signal.target_price || signal.limit_price || 0, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteAt: at ? beijingTime(at) : signal.checked_at || "未核验", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.planned_shares || signal.shares || 0 };
+	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side: signal.event_action === "BUY_BACK" ? "buy" : "sell", price: signal.quote?.price || 0, target: signal.target_price || signal.limit_price || 0, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteAt: at ? beijingTime(at) : signal.checked_at || "未核验", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.planned_shares || signal.shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [] };
 }
 const enabledKey = "unwind-price-monitor-enabled-v1";
 function readEnabled(userId: string) {
@@ -240,16 +241,15 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 							<p>
 								检查时价格
 								<b>
-									{alert.symbol}
-									{alert.price.toFixed(3)}
+									{alert.price > 0 ? `${alert.symbol}${alert.price.toFixed(3)}` : "未核验"}
 								</b>
 								{" "}
 								· 目标价
 								<b>
-									{alert.symbol}
-									{alert.target.toFixed(3)}
+									{alert.target > 0 ? `${alert.symbol}${alert.target.toFixed(3)}` : "无下单目标"}
 								</b>
 							</p>
+							<AlertInvalidConditions conditions={alert.invalidConditions} symbol={alert.symbol} />
 							{alert.shares > 0 && (
 								<p>
 									当时计划最多

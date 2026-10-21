@@ -48,6 +48,26 @@ afterEach(() => {
 });
 
 describe("durable unwind notifications", () => {
+	it("shows frozen cancellation and buyback-pause prices inside the popup", async () => {
+		const saved = event();
+		saved.payload.invalid_conditions = ["突破45.41取消卖出", "跌破35.09暂停买回", "报价超过120秒失效"];
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("突破¥45.410 取消卖出");
+		expect(popup).toHaveTextContent("跌破¥35.090 暂停买回");
+		expect(popup).toHaveTextContent("暂停买回线不是接回目标价");
+		expect(popup).not.toHaveTextContent("突破¥12.000");
+	});
+	it("does not invent historical boundaries or show a zero target for risk alerts", async () => {
+		const saved = event(1, "risk");
+		saved.payload.target_price = undefined;
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		expect(screen.getByRole("dialog")).toHaveTextContent("此条历史提醒未保存失效条件");
+		expect(screen.getByRole("dialog")).toHaveTextContent("无下单目标");
+		expect(screen.getByRole("dialog")).not.toHaveTextContent("¥0.000");
+	});
 	it("reads every thirty seconds without invoking the execution writer", async () => {
 		await mount();
 		expect(refreshUnwindExecution).not.toHaveBeenCalled();
