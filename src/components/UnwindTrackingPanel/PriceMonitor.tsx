@@ -26,7 +26,7 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 			<div className="unwind-date-heading">
 				<Space wrap>
 					<BellOutlined />
-					<strong>全局到价提醒 · 每10分钟检查</strong>
+					<strong>全局解套提醒 · 每30秒同步</strong>
 					<Switch aria-label="启用到价监控" checked={enabled} onChange={setEnabled} />
 					<Tag color={enabled ? "blue" : "default"}>{enabled ? "全局监控已开启" : "全局监控已暂停"}</Tag>
 				</Space>
@@ -43,7 +43,7 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 			</div>
 			<div className="unwind-date-meta">
 				<span>
-					上次成功检查：
+					上次读取成功：
 					<strong>{checkedAt ? beijingTime(checkedAt) : "尚未完成"}</strong>
 				</span>
 				<span>
@@ -52,7 +52,7 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 				</span>
 			</div>
 			<p className="unwind-date-note">{checking ? "正在获取最新报价…" : enabled ? note : "已暂停全局价格检查与到价弹窗"}</p>
-			<p className="unwind-date-note">登录后在系统所有页面持续监控，切换页面不会停止；到价后以高优先级弹窗提醒。关闭系统网页或退出登录后停止，浏览器休眠恢复后补查。每10分钟抽查可能错过中间短暂到价，同股、同方向、同目标价每天提醒一次。</p>
+			<p className="unwind-date-note">服务器每60秒核验行情并保存事件，页面每30秒同步；重新登录或休眠恢复后补发未读提醒。候选与确认分别提醒，点击“我已知晓”后保存已读。过期事件仅供复盘，当前动作以最新行情为准。</p>
 			{error && <Alert showIcon type="warning" message={error} />}
 		</section>
 	);

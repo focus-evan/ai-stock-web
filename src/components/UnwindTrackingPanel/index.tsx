@@ -42,6 +42,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ExecutionStatus from "./ExecutionStatus";
 import { freshUnwindQuote, quoteTimestamp } from "./price-alerts";
 import PriceMonitor from "./PriceMonitor";
+import RiskReview from "./RiskReview";
 import { activeUnwindAnalysis, beijingTime, strategyTime } from "./strategy-time";
 import { StrategyDateOverview, StrategyDateStamp } from "./StrategyDate";
 import "#src/pages/short-term-strategy/strategy-visuals.css";
@@ -352,7 +353,7 @@ export default function UnwindTrackingPanel() {
 			if (response.data.errors?.length)
 				message.warning(`已更新${response.data.total}只，${response.data.errors.length}项未就绪，请查看当前动作`);
 			else
-				message.success("分析已刷新，请核对各股票的策略日期与生成时间");
+				message.success("已读取后台快照；行情由服务器定时核验，请核对生成时间");
 			await loadData(false);
 		}
 		catch (error: any) {
@@ -639,6 +640,7 @@ export default function UnwindTrackingPanel() {
 
 									</details>
 									<Space wrap style={{ marginTop: 14 }}>
+										<RiskReview watchlistId={plan.watchlist_id} />
 										<Button disabled={plan.open_sold_shares > 0 || plan.current_shares < lotSize} onClick={() => openTrade(plan, "sell")}>录入已成交卖出</Button>
 										<Button disabled={plan.open_sold_shares < lotSize} onClick={() => openTrade(plan, "buy")}>录入已成交买回</Button>
 										<Text type="secondary">只录入券商已成交记录；按钮不会下单，未录入卖出前不会提示买回。</Text>

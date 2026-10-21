@@ -1,7 +1,7 @@
 import type { UnwindPlan } from "#src/api/strategy";
 import { beijingTime, strategyTime, timestamp } from "./strategy-time";
 
-export const MONITOR_INTERVAL = 10 * 60 * 1000;
+export const MONITOR_INTERVAL = 30 * 1000;
 export interface UnwindPriceAlert {
 	key: string
 	stockName: string
@@ -55,11 +55,11 @@ export function priceAlertForPlan(plan: UnwindPlan, now: Date): UnwindPriceAlert
 	const cancel = Number(analysis.cancel_sell_above);
 	if (!Number.isFinite(pause) || !Number.isFinite(cancel) || quote.price < pause || quote.price > cancel)
 		return null;
-	const reached = side === "buy" ? quote.price <= target! : quote.price >= target! && quote.price <= Number(analysis.sell_zone_high);
+	const reached = side === "buy" ? quote.price <= target! : quote.price >= target!;
 	if (!reached)
 		return null;
 	return {
-		key: `${analysis.trading_date}:${plan.watchlist_id}:${side}:${target}`,
+		key: `${analysis.trading_date}:${plan.watchlist_id}:${side}:${target}:${signal.action === (side === "buy" ? "BUY_BACK" : "SELL") || signal.suggested_action ? "confirmed" : "candidate"}`,
 		stockName: plan.stock_name,
 		stockCode: plan.stock_code,
 		side,

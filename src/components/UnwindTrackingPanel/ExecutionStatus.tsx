@@ -52,7 +52,8 @@ export default function ExecutionStatus({ data, currency }: { data?: UnwindExecu
 							{textTime(signal.checked_at)}
 							。行情超过120秒或收市后自动转为等待。
 						</Typography.Text>
-						{signal.requires_manual_confirmation && <Typography.Text type="warning">小仓位回转可能暂时清仓，请特别核对股数。</Typography.Text>}
+						{signal.validation_status === "shadow" && <Typography.Text type="warning">新规则正在验证；条件满足会留档提醒，验证信号不代表已成交或已实现降本。</Typography.Text>}
+						{signal.requires_manual_confirmation && <Typography.Text type="warning">小仓位滚动占比较高，请核对剩余底仓与可卖旧仓。</Typography.Text>}
 						<Typography.Text type="danger">
 							失效条件：
 							{signal.invalid_conditions?.join("；") || "无当天有效预案、行情过期或市场休市时不操作"}
@@ -79,10 +80,8 @@ export default function ExecutionStatus({ data, currency }: { data?: UnwindExecu
 					<Row gutter={[12, 12]} style={{ marginTop: 12 }}>
 						<Col xs={24} md={8}>
 							<Typography.Text>
-								候选卖区：
+								候选卖价不低于：
 								{money(plan.sell_zone_low)}
-								—
-								{money(plan.sell_zone_high)}
 								<br />
 								计划最多卖出
 								{" "}

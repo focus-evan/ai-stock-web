@@ -1491,6 +1491,9 @@ export interface UnwindPlan {
 
 export interface UnwindSignal {
 	action: "WAIT" | "SELL" | "BUY_BACK"
+	suggested_action?: "SELL" | "BUY_BACK"
+	validation_status?: "shadow"
+	candidate?: "SELL" | "BUY_BACK" | null
 	label: string
 	reason: string
 	shares: number
@@ -1518,12 +1521,48 @@ export interface UnwindExecution {
 }
 
 export function refreshUnwindExecution(watchlistId?: number) {
-	return request.post("strategy/combined/watchlist/unwind-plans/execution/refresh", {
-		searchParams: watchlistId ? { watchlist_id: watchlistId } : {},
-		timeout: 90000,
-		retry: 0,
-	})
-		.json<{ status: "success" | "partial", data: { total: number, errors: Array<{ watchlist_id?: number, stock_code?: string, message: string }> } }>();
+	return fetchUnwindPlans(1).then(response => ({
+		status: response.status === "success" ? "success" as const : "partial" as const,
+		data: { total: response.data.items.filter(item => !watchlistId || item.watchlist_id === watchlistId).length, errors: [] as Array<{ watchlist_id?: number, stock_code?: string, message: string }> },
+	}));
+}
+
+export interface UnwindAlertEvent {
+	id: number
+	stock_code: string
+	stock_name: string
+	trading_date: string
+	stage: "candidate" | "confirmed" | "risk" | "recovery"
+	payload: UnwindSignal & { event_action: string }
+	delivered_at: string | null
+	read_at: string | null
+}
+
+export function fetchUnwindAlerts(includeRead = false) {
+	return request.get("strategy/combined/watchlist/unwind-alerts", { searchParams: { include_read: includeRead }, timeout: 15000, retry: 0 })
+		.json<{ status: string, data: { items: UnwindAlertEvent[], server_time: string } }>();
+}
+
+export function acknowledgeUnwindAlerts(ids: number[], state: "delivered" | "read") {
+	return request.post("strategy/combined/watchlist/unwind-alerts/receipts", { json: { ids, state }, timeout: 15000, retry: 0 }).json<{ status: string }>();
+}
+
+export interface UnwindRiskReview {
+	announcement: "clear" | "blocked" | "unknown"
+	fundamental: "clear" | "blocked" | "unknown"
+	sector: "clear" | "blocked" | "unknown"
+	evidence: string
+	reviewed_at?: string
+	trading_date?: string
+}
+
+export function fetchUnwindRiskReview(id: number) {
+	return request.get(`strategy/combined/watchlist/unwind-alerts/risk/${id}`).json<{ status: string, data: UnwindRiskReview | null }>();
+}
+
+export function saveUnwindRiskReview(id: number, review: UnwindRiskReview) {
+	const { announcement, fundamental, sector, evidence } = review;
+	return request.post(`strategy/combined/watchlist/unwind-alerts/risk/${id}`, { json: { announcement, fundamental, sector, evidence } }).json<{ status: string, data: UnwindRiskReview }>();
 }
 
 export interface UnwindMethod {

@@ -104,9 +104,9 @@ describe("wildman daily guide trade constraints", () => {
 		p.execution!.signal.action = "WAIT";
 		p.execution!.signal.shares = 0;
 		const guide = buildDailyGuide(p, midday);
-		expect(guide.phase).toBe("wait");
-		expect(guide.steps[0].instruction).toContain("RSI≥68");
-		expect(guide.steps[0].instruction).toContain("不满足不得清仓");
+		expect(guide.phase).toBe("blocked");
+		expect(guide.quantity).toBe(0);
+		expect(guide.title).toContain("一手仓保留底仓");
 	});
 	it("does not treat a legacy analysis as today's execution plan", () => {
 		const p = plan();
