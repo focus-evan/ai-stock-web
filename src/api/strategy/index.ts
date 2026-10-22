@@ -1457,7 +1457,7 @@ export interface UnwindAnalysisRecord {
 export interface UnwindTrade {
 	id: number
 	account_id: number
-	side: "sell" | "buy"
+	side: "sell" | "buy" | "add" | "reduce"
 	shares: number
 	price: number
 	fees: number
