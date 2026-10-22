@@ -34,6 +34,11 @@ export default function LayoutMobileMenu() {
 				<Drawer
 					title="功能导航"
 					styles={{
+						header: {
+							backgroundColor: isFixedDarkTheme ? Menu?.darkItemBg : Menu?.itemBg,
+							color: isFixedDarkTheme ? "#e7f2ff" : undefined,
+							borderColor: isFixedDarkTheme ? "#25374f" : undefined,
+						},
 						body: {
 							backgroundColor: isFixedDarkTheme ? Menu?.darkItemBg : Menu?.itemBg,
 						},
@@ -41,7 +46,7 @@ export default function LayoutMobileMenu() {
 					open={sidebarCollapsed}
 					placement="left"
 					width="min(300px, 86vw)"
-					className={cn(classes.drawerStyles)}
+					className={cn("app-mobile-menu", classes.drawerStyles)}
 					onClose={() => setPreferences("sidebarCollapsed", false)}
 				>
 					<Scrollbar>

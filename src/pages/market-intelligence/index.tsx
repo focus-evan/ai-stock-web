@@ -1,6 +1,7 @@
 import type { IntelligenceArticle, IntelligenceRun, IntelligenceSource } from "#src/api/market-intelligence";
 import { fetchIntelligence, fetchIntelligenceRun, refreshIntelligence, setIntelligenceSource } from "#src/api/market-intelligence";
 import { BasicContent } from "#src/components/basic-content";
+import { PageHeading } from "#src/components/page-heading";
 import { useUserStore } from "#src/store/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, App, Button, Card, Col, Drawer, Empty, Input, List, Row, Select, Space, Spin, Statistic, Switch, Table, Tabs, Tag, Typography } from "antd";
@@ -69,12 +70,11 @@ export default function MarketIntelligencePage() {
 	return (
 		<BasicContent>
 			<Space direction="vertical" size="large" style={{ width: "100%" }}>
-				<Row gutter={[12, 12]} justify="space-between" align="middle">
-					<Col>
-						<Title level={3} style={{ marginBottom: 4 }}>每日重点情报</Title>
-						<Text type="secondary">先看新增变化，再看影响与证据</Text>
-					</Col>
-					<Col>
+				<PageHeading
+					eyebrow="01 / MARKET INTELLIGENCE"
+					title="每日重点情报"
+					description="先看新增变化，再看影响与证据"
+					actions={(
 						<Space wrap>
 							<Button onClick={() => {
 								setSelectedRun(null);
@@ -85,8 +85,8 @@ export default function MarketIntelligencePage() {
 							</Button>
 							<Button type="primary" loading={triggering} disabled={isRunning(data?.run?.status)} onClick={trigger}>立即抓取并分析</Button>
 						</Space>
-					</Col>
-				</Row>
+					)}
+				/>
 				<Space wrap>
 					<Tag color={data?.runtime.running ? "blue" : "default"}>{data?.runtime.running ? "每日自动更新" : "自动任务未运行"}</Tag>
 					<Text type="secondary">

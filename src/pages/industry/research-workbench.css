@@ -14,7 +14,7 @@
 .industry-panorama-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 20px; }
 .industry-sector-list { display: flex; flex-direction: column; gap: 8px; }
 .industry-sector-list button { width: 100%; display: flex; flex-direction: column; gap: 6px; padding: 12px; border: 1px solid var(--ant-color-border-secondary, #e6e9ef); border-radius: 10px; background: var(--ant-color-bg-container, white); color: inherit; text-align: left; cursor: pointer; }
-.industry-sector-list button.is-selected { border-color: #cf183b; box-shadow: inset 3px 0 0 #cf183b; }
+.industry-sector-list button.is-selected { border-color: var(--app-accent); box-shadow: inset 3px 0 0 var(--app-accent); }
 .industry-sector-list button:focus-visible { outline: 2px solid #315bd4; outline-offset: 2px; }
 .industry-sector-list button span { font-size: 12px; color: var(--ant-color-text-secondary, #626b79); }
 .industry-sector-list .ant-tag { width: fit-content; }

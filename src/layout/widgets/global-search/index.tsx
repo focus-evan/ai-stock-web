@@ -192,11 +192,11 @@ export function GlobalSearch() {
 				aria-label="搜索功能菜单"
 				aria-expanded={open}
 				onClick={() => setOpen(open => !open)}
-				className="group flex justify-center items-center gap-2 md:bg-colorBgLayout px-3 py-1.5 rounded-full cursor-pointer text-colorTextSecondary hover:text-colorText md:mr-2.5"
+				className="app-command-search group flex justify-center items-center gap-2 md:bg-colorBgLayout px-3 py-1.5 rounded-full cursor-pointer text-colorTextSecondary hover:text-colorText md:mr-2.5"
 			>
 				<SearchOutlined />
 				<span className="hidden text-xs duration-300 md:block">
-					{t("common.search")}
+					搜索功能 / 快速跳转
 				</span>
 				<span className="bg-colorBgContainer relative hidden rounded-sm rounded-r-xl px-1.5 py-1 text-xs leading-none group-hover:opacity-100 md:block">
 					Ctrl / ⌘

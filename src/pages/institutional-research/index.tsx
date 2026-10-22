@@ -2,6 +2,7 @@ import type { ResearchImpact, ResearchReport } from "#src/api/institutional-rese
 import { backfillFocusResearch, backfillInstitutionalResearch, backfillPublicResearch, fetchInstitutionalReport, fetchInstitutionalResearch, rebuildHoldingAssociations, refreshInstitutionalResearch } from "#src/api/institutional-research";
 import { BasicContent } from "#src/components/basic-content";
 import { impactBiasColor, impactBiasLabel, ImpactCard } from "#src/components/institutional-holding-evidence/ImpactCard";
+import { PageHeading } from "#src/components/page-heading";
 import { useUserStore } from "#src/store/user";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, App, Button, Card, Checkbox, Col, Descriptions, Drawer, Empty, Input, List, Row, Select, Space, Spin, Statistic, Table, Tabs, Tag, Typography } from "antd";
@@ -131,12 +132,11 @@ export default function InstitutionalResearchPage() {
 	return (
 		<BasicContent>
 			<Space direction="vertical" size="large" style={{ width: "100%" }}>
-				<Row justify="space-between" gutter={[16, 16]} align="middle">
-					<Col>
-						<Title level={3} style={{ margin: 0 }}>机构观点与消息</Title>
-						<Text type="secondary">汇集公开研报、策略观点、采访发言与新闻快讯，跟踪对持仓的影响</Text>
-					</Col>
-					<Col>
+				<PageHeading
+					eyebrow="RESEARCH / INSTITUTIONAL VIEWS"
+					title="机构观点与消息"
+					description="汇集公开研报与新闻观点，核验来源并跟踪持仓影响"
+					actions={(
 						<Space wrap>
 							<Button onClick={() => query.refetch()}>刷新页面</Button>
 							{admin && (
@@ -154,8 +154,8 @@ export default function InstitutionalResearchPage() {
 								</>
 							)}
 						</Space>
-					</Col>
-				</Row>
+					)}
+				/>
 				{query.isError && <Alert type="error" showIcon message="机构研究数据暂不可用" description="请重试；读取失败不能当作没有研报或没有持仓影响。" />}
 				{query.isLoading && <Spin />}
 				{data && (

@@ -64,6 +64,18 @@ describe("workbench interactions", () => {
 		expect(screen.getByText(/不并入原始账户累计值/)).toBeVisible();
 		expect(screen.getByText("1,000,000.00")).toBeVisible();
 	});
+	it("opens execution focus and clears a previous search so blocked portfolios remain visible", async () => {
+		vi.mocked(fetchDashboard).mockResolvedValue({ status: "success", data: fixture() });
+		open();
+		await screen.findByText("模拟总资产");
+		fireEvent.change(screen.getByRole("textbox", { name: "搜索策略或组合" }), { target: { value: "不存在的组合" } });
+		expect(screen.queryByText("测试组合")).not.toBeInTheDocument();
+		fireEvent.click(screen.getByRole("button", { name: "查看执行概况" }));
+		expect(await screen.findByText("测试组合")).toBeVisible();
+		expect(screen.getByRole("textbox", { name: "搜索策略或组合" })).toHaveValue("");
+		expect(screen.getByRole("link", { name: /开始个股分析/ })).toHaveAttribute("href", "/short-term-strategy/stock-analysis");
+		expect(screen.getByRole("link", { name: /研究与知识库/ })).toHaveAttribute("href", "/research-center");
+	});
 	it("shows a recoverable error without a fictitious zero-value account", async () => {
 		vi.mocked(fetchDashboard).mockResolvedValue({ status: "error", data: fixture() });
 		open();

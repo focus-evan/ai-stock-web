@@ -29,7 +29,7 @@ export const DEFAULT_PREFERENCES = {
 	colorBlindMode: false,
 	colorGrayMode: false,
 	themeRadius: BRAND_RADIUS,
-	builtinTheme: "red",
+	builtinTheme: "blue",
 	themeColorPrimary: BRAND_PRIMARY,
 
 	/* ================== Animation ================== */
@@ -74,12 +74,13 @@ export const DEFAULT_PREFERENCES = {
 /** Upgrade the visual defaults once without losing language, tabs or layout choices. */
 export function migrateBrandPreferences(persisted: unknown) {
 	const previous = persisted && typeof persisted === "object" ? persisted as Partial<PreferencesState> : {};
+	const hasCustomAccent = previous.themeColorPrimary && !["#cf233e", "#1677ff"].includes(previous.themeColorPrimary);
 	return {
 		...previous,
-		builtinTheme: "red" as const,
-		themeColorPrimary: BRAND_PRIMARY,
+		builtinTheme: hasCustomAccent ? previous.builtinTheme ?? "custom" : "blue" as const,
+		themeColorPrimary: hasCustomAccent ? previous.themeColorPrimary : BRAND_PRIMARY,
 		themeRadius: previous.themeRadius === 6 || previous.themeRadius == null ? BRAND_RADIUS : previous.themeRadius,
-		sidebarTheme: "dark" as const,
+		sidebarTheme: previous.sidebarTheme ?? "dark" as const,
 	};
 }
 
@@ -155,7 +156,7 @@ export const usePreferencesStore = create<
 		}),
 		{
 			name: getAppNamespace("preferences"),
-			version: 1,
+			version: 2,
 			migrate: migrateBrandPreferences,
 		},
 	),

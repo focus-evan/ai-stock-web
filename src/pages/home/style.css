@@ -37,3 +37,72 @@
 	border-radius: 8px;
 	background: var(--wb-soft);
 }
+
+/* The terminal header orients the user; each card beneath it opens a real task. */
+.workbench { gap: 18px; }
+.wb-heading { padding: 30px 32px; gap: 32px; flex-wrap: nowrap; }
+.wb-heading-copy { flex: 1; min-width: 0; }
+.wb-heading .wb-eyebrow { color: #7dd9e9; display: flex; align-items: center; gap: 8px; font: 11px/1.8 ui-monospace, Consolas, monospace; letter-spacing: .12em; }
+.wb-brand-dot { width: 7px; height: 7px; background: #64d7e7; border-radius: 2px; }
+.wb-heading h1 { font-size: 34px; margin: 12px 0 8px; font-weight: 700; }
+.wb-heading h1 .ant-tag { background: rgb(82 193 216 / 10%); color: #8de4ef; border-color: #38657b; font-size: 11px; font-weight: 400; }
+.wb-heading p { color: #b6c9df; }
+.wb-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 22px; }
+.wb-primary-link, .wb-library-link { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
+.wb-primary-link { background: #2563eb; border: 1px solid #568bff; color: #fff; border-radius: 8px; padding: 11px 16px; box-shadow: 0 4px 20px rgb(37 99 235 / 25%); }
+.wb-primary-link:hover { background: #3474f5; color: #fff; }
+.wb-library-link { color: #c7def8; padding-block: 10px; }
+.wb-library-link:hover { color: #8de4ef; }
+.wb-focus { width: 318px; flex-shrink: 0; padding: 20px; background: rgb(6 20 37 / 34%); border: 1px solid #34526d; border-radius: 12px; }
+.wb-focus-label { display: flex; justify-content: space-between; gap: 12px; color: #99bed9; font-size: 12px; }
+.wb-focus-label > span:last-child { font: 10px/1.8 ui-monospace, Consolas, monospace; letter-spacing: .1em; }
+.wb-focus > strong { display: block; color: #f2f7ff; font-size: 20px; font-weight: 600; margin: 12px 0 5px; }
+.wb-focus p { font-size: 12px; }
+.wb-focus .ant-btn { margin-top: 16px; width: 100%; text-align: left; justify-content: space-between; flex-direction: row-reverse; }
+.wb-section-label { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
+.wb-section-label > div:first-child { display: flex; align-items: center; gap: 12px; }
+.wb-section-label > div:first-child > span { color: var(--wb-text); font-size: 15px; font-weight: 650; }
+.wb-section-label small { font-size: 11px; color: var(--wb-muted); }
+.wb-shortcut { display: block; padding: 18px 20px; border-radius: 12px; box-shadow: var(--app-shadow); }
+.wb-shortcut:hover { background: var(--wb-bg); box-shadow: 0 5px 16px rgb(37 99 235 / 8%); }
+.wb-shortcut-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.wb-shortcut-top small { font: 10px/1.6 ui-monospace, Consolas, monospace; letter-spacing: .04em; margin: 0; flex: 1; }
+.wb-shortcut-top > .anticon { color: var(--wb-muted); font-size: 12px; }
+.wb-shortcut-icon { display: grid; place-items: center; font-size: 18px; padding: 9px; border-radius: 9px; color: var(--app-accent-text); }
+.wb-shortcut strong { font-size: 16px; letter-spacing: -.02em; }
+.wb-shortcut-copy > small { margin-top: 5px; }
+.wb-metric { box-shadow: var(--app-shadow); }
+.wb-metric-primary { background: var(--wb-primary-bg); border-color: var(--wb-border); border-top-color: var(--wb-primary); }
+.wb-metric-value { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.wb-attention { border-left: 3px solid var(--wb-primary); }
+.wb-attention-warning { border-left-color: #d99718; }
+.wb-attention-warning .wb-eyebrow { color: var(--ant-color-warning-text, #ad6800); }
+.wb-strategy-anchor { scroll-margin-top: 20px; min-width: 0; }
+@media (max-width: 1199px) {
+  .wb-heading { padding: 26px; gap: 20px; }
+  .wb-focus { width: 280px; }
+  .wb-heading h1 { font-size: 29px; }
+  .wb-shortcuts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .wb-shortcut { padding: 15px; }
+  .wb-shortcut-top small { display: none; }
+  .wb-shortcut-top > .anticon { margin-left: auto; }
+}
+@media (max-width: 900px) { .wb-heading { flex-wrap: wrap; } .wb-focus { width: 100%; } .wb-focus .ant-btn { width: auto; } .wb-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wb-shortcut-top small { display: block; } }
+@media (max-width: 767px) {
+  .workbench { gap: 14px; }
+  .wb-heading { padding: 22px 20px; gap: 22px; }
+  .wb-heading h1 { font-size: 28px; flex-wrap: wrap; gap: 8px; }
+  .wb-heading .wb-eyebrow { font-size: 9px; }
+  .wb-hero-actions { gap: 8px 16px; margin-top: 18px; }
+  .wb-focus { padding: 16px; }
+  .wb-focus > strong { font-size: 18px; }
+  .wb-focus .ant-btn { width: 100%; }
+  .wb-shortcut { padding: 14px; }
+  .wb-shortcut strong { font-size: 14px; }
+  .wb-shortcut-top { margin-bottom: 12px; gap: 8px; }
+  .wb-shortcut-top small { font-size: 9px; }
+  .wb-shortcut-top > .anticon { display: none; }
+  .wb-shortcut-copy > small { font-size: 11px; }
+  .wb-section-label > div:first-child { gap: 8px; }
+  .wb-section-label .wb-refresh { justify-content: space-between; }
+}

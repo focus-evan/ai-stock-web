@@ -80,11 +80,17 @@ export default function Login() {
 									<br />
 									把复杂信息，化为有依据的判断。
 								</p>
-								<svg className="app-login-lines" viewBox="0 0 520 130" aria-hidden="true">
-									<path d="M0 110H520M0 65H520M0 20H520" stroke="white" strokeOpacity=".08" />
-									<path d="M0 115L70 94L125 101L180 62L245 73L300 36L350 51L405 18L460 34L520 4" fill="none" stroke="#f4647d" strokeWidth="3" />
-									<path d="M0 122L70 113L125 117L180 98L245 94L300 72L350 74L405 53L460 60L520 36" fill="none" stroke="white" strokeOpacity=".23" strokeWidth="2" />
-								</svg>
+								<div className="app-login-flow" aria-label="研究流程">
+									{["市场情报", "个股研究", "策略跟踪", "交易复盘"].map((label, index) => (
+										<div key={label}>
+											<span>
+												0
+												{index + 1}
+											</span>
+											<strong>{label}</strong>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					</Col>

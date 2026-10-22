@@ -1,18 +1,18 @@
 /* Only library navigation and reading controls are themed. Archived report colours remain intact. */
 html[data-library-page] {
- --rl-chrome: #fffafaf5;
- --rl-border: #e6dce0;
- --rl-ink: #3b2630;
- --rl-accent: #bf1833;
+ --rl-chrome: #f8fbfff5;
+ --rl-border: #dfe7f1;
+ --rl-ink: #172b45;
+ --rl-accent: #1d4ed8;
  --rl-button: #fff;
- --rl-soft: #fff0f2;
+ --rl-soft: #edf4ff;
 }
 html[data-library-page]{scroll-padding-top:68px!important}
 html[data-library-page] .rl-reader-toolbar{position:sticky!important;top:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;gap:14px!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;min-height:53px!important;margin:0!important;padding:9px max(16px,env(safe-area-inset-left))!important;background:var(--rl-chrome)!important;backdrop-filter:blur(12px);border:0!important;border-bottom:1px solid var(--rl-border)!important;border-radius:0!important;color:var(--rl-ink)!important;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif!important;box-shadow:0 3px 18px #1f0d1510!important;overflow:visible!important}
 html[data-library-page] .rl-reader-toolbar a{color:var(--rl-accent)!important;text-decoration:none!important;font-weight:500!important;margin:0!important;padding:8px 0!important;background:transparent!important;font-size:13px!important;line-height:1.5!important;white-space:nowrap!important;border:0!important;display:block!important}
 html[data-library-page] .rl-reader-toolbar .rl-reader-collection{margin-right:auto!important;overflow:hidden!important;text-overflow:ellipsis!important;min-width:0!important}
 html[data-library-page] .rl-reader-toolbar button{font:12px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif!important;min-height:35px!important;padding:7px 10px!important;white-space:nowrap!important;border:1px solid var(--rl-border)!important;border-radius:6px!important;color:var(--rl-accent)!important;background:var(--rl-button)!important;cursor:pointer!important;box-shadow:none!important;width:auto!important;margin:0!important}
-html[data-library-page] .rl-reader-toolbar button[aria-pressed=true]{background:#bf1833!important;color:white!important}
+html[data-library-page] .rl-reader-toolbar button[aria-pressed=true]{background:#1d4ed8!important;color:white!important}
 html[data-library-page] .rl-reader-toolbar a:focus-visible,html[data-library-page] .rl-reader-toolbar button:focus-visible,html[data-library-page] .rl-table-scroll:focus-visible{outline:3px solid var(--rl-accent)!important;outline-offset:2px!important}
 html[data-library-page] .rl-table-scroll{box-sizing:border-box!important;max-width:100%!important;width:100%!important;min-width:0!important;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:12px 0!important}
 html[data-library-page] [data-library-unavailable]{text-decoration:underline dotted!important;text-underline-offset:4px}
@@ -54,12 +54,12 @@ html[data-library-page] .rl-reader-toolbar button:not([aria-pressed=true]):hover
 }
 @media (prefers-color-scheme:dark) {
  html[data-library-page]:not([data-theme="light"]):not(.light) {
-  --rl-chrome:#1d2029f5; --rl-border:#3c323c; --rl-ink:#f2e8ec;
-  --rl-accent:#ff91a0; --rl-button:#252832; --rl-soft:#3d2530;
+  --rl-chrome:#101e32f5; --rl-border:#25374f; --rl-ink:#e6edf7;
+  --rl-accent:#8db5ff; --rl-button:#16263d; --rl-soft:#142c4b;
  }
 }
 html[data-library-page][data-theme="dark"], html[data-library-page].dark {
- --rl-chrome:#1d2029f5; --rl-border:#3c323c; --rl-ink:#f2e8ec;
- --rl-accent:#ff91a0; --rl-button:#252832; --rl-soft:#3d2530;
+ --rl-chrome:#101e32f5; --rl-border:#25374f; --rl-ink:#e6edf7;
+ --rl-accent:#8db5ff; --rl-button:#16263d; --rl-soft:#142c4b;
 }
 @media (prefers-reduced-motion:reduce) { html[data-library-page] { scroll-behavior:auto!important; } }

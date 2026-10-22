@@ -5,7 +5,7 @@ import { BasicContent } from "#src/components/basic-content";
 import { ArrowRightOutlined, BookOutlined, FundOutlined, HistoryOutlined, ReadOutlined, ReloadOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
 import { Alert, Badge, Button, Card, Empty, Input, Select, Skeleton, Space, Table, Tabs, Tag, theme, Typography } from "antd";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { dashboardFromResponse, filterStrategies, formatMetric, formatTime, metricClass, needsAttention, recommendationState, STRATEGIES, strategyName } from "./data";
 import { strategyExecutionStatus } from "./strategy-status";
@@ -15,10 +15,10 @@ import "./style.css";
 const Performance = lazy(() => import("./performance"));
 const { Text } = Typography;
 const shortcuts = [
-	{ path: "/market-intelligence", title: "每日重点情报", description: "看变化，核对来源", icon: <ReadOutlined /> },
-	{ path: "/short-term-strategy/portfolio", title: "策略组合", description: "查看持仓与执行", icon: <FundOutlined /> },
-	{ path: "/short-term-strategy/review", title: "复盘中心", description: "核对成交与判断", icon: <HistoryOutlined /> },
-	{ path: "/research-center", title: "研究与知识库", description: "雷达、深度与方法", icon: <BookOutlined /> },
+	{ path: "/market-intelligence", title: "每日重点情报", description: "捕捉变化 · 核对来源", step: "01 / DISCOVER", icon: <ReadOutlined /> },
+	{ path: "/short-term-strategy/stock-analysis", title: "个股分析", description: "研究公司 · 验证判断", step: "02 / ANALYZE", icon: <SearchOutlined /> },
+	{ path: "/short-term-strategy/portfolio", title: "策略组合", description: "跟踪持仓 · 检查执行", step: "03 / TRACK", icon: <FundOutlined /> },
+	{ path: "/short-term-strategy/review", title: "复盘中心", description: "核对成交 · 回看决策", step: "04 / REVIEW", icon: <HistoryOutlined /> },
 ];
 
 function NumberValue({ value, suffix = "", signed = false }: { value: Metric, suffix?: string, signed?: boolean }) {
@@ -32,6 +32,7 @@ export default function Home() {
 	const [filter, setFilter] = useState("all");
 	const [tab, setTab] = useState("strategies");
 	const [receivedAt, setReceivedAt] = useState<string>();
+	const strategyPanel = useRef<HTMLDivElement>(null);
 	const { data, error, loading, refresh } = useRequest(async () => dashboardFromResponse(await fetchDashboard()), {
 		pollingInterval: pathname === "/home" ? 60000 : 0,
 		pollingWhenHidden: false,
@@ -44,6 +45,12 @@ export default function Home() {
 	const positions = data?.positions || [];
 	const overview = data?.overview;
 	const quality = data?.data_quality;
+	function focusStrategies(nextFilter: string) {
+		setKeyword("");
+		setFilter(nextFilter);
+		setTab("strategies");
+		strategyPanel.current?.scrollIntoView?.({ block: "start", behavior: "instant" });
+	}
 	const styles = {
 		"--wb-bg": token.colorBgContainer,
 		"--wb-soft": token.colorFillAlter,
@@ -319,32 +326,71 @@ export default function Home() {
 
 	return (
 		<BasicContent className="workbench" style={styles}>
-			<header className="wb-heading">
-				<div>
-					<div className="wb-eyebrow">AI STOCK / WORKSPACE</div>
+			<header className="wb-heading app-page-hero">
+				<div className="wb-heading-copy">
+					<div className="wb-eyebrow">
+						<span className="wb-brand-dot" />
+						AI STOCK / RESEARCH TERMINAL
+					</div>
 					<h1>
 						研究工作台
 						<Tag>模拟交易</Tag>
 					</h1>
-					<p>先检查执行与数据，再看组合表现和候选机会。</p>
+					<p>从市场变化，到个股判断、策略执行与复盘。</p>
+					<div className="wb-hero-actions">
+						<Link className="wb-primary-link" to="/short-term-strategy/stock-analysis">
+							<SearchOutlined />
+							开始个股分析
+							<ArrowRightOutlined />
+						</Link>
+						<Link className="wb-library-link" to="/research-center">
+							<BookOutlined />
+							研究与知识库
+							<ArrowRightOutlined />
+						</Link>
+					</div>
+				</div>
+				<aside className="wb-focus" aria-label="当前执行焦点">
+					<div className="wb-focus-label">
+						<span>当前执行焦点</span>
+						<span>EXECUTION</span>
+					</div>
+					<strong>{data ? attention.length ? `${attention.length} 个组合需要关注` : "查看策略执行记录" : error ? "数据连接待恢复" : "正在读取执行状态"}</strong>
+					<p>{data ? "检查阻断原因与价格来源，再看组合表现。" : "数据就绪后，显示组合状态与待关注事项。"}</p>
+					<Button aria-label="查看执行概况" disabled={!data} onClick={() => focusStrategies(attention.length ? "attention" : "all")} icon={<ArrowRightOutlined />}>查看执行概况</Button>
+				</aside>
+			</header>
+			<div className="wb-section-label">
+				<div>
+					<span>研究路径</span>
+					<small>按任务进入，直达重点</small>
+				</div>
+			</div>
+			<nav className="wb-shortcuts" aria-label="常用研究入口">
+				{shortcuts.map(item => (
+					<Link key={item.path} to={item.path} className="wb-shortcut">
+						<span className="wb-shortcut-top">
+							<span className="wb-shortcut-icon">{item.icon}</span>
+							<small>{item.step}</small>
+							<ArrowRightOutlined />
+						</span>
+						<span className="wb-shortcut-copy">
+							<strong>{item.title}</strong>
+							<small>{item.description}</small>
+						</span>
+					</Link>
+				))}
+			</nav>
+			<div className="wb-section-label">
+				<div>
+					<span>组合总览</span>
+					<small>执行状态与资金快照</small>
 				</div>
 				<div className="wb-refresh">
 					<span className="wb-muted wb-small" role="status">{loading ? "正在更新数据…" : error ? "更新失败" : receivedAt ? `最近读取 ${receivedAt}` : "等待数据"}</span>
 					<Button aria-label="刷新数据" icon={<ReloadOutlined />} onClick={refresh} loading={loading}>刷新数据</Button>
 				</div>
-			</header>
-			<nav className="wb-shortcuts" aria-label="常用研究入口">
-				{shortcuts.map(item => (
-					<Link key={item.path} to={item.path} className="wb-shortcut">
-						<span className="wb-shortcut-icon">{item.icon}</span>
-						<span>
-							<strong>{item.title}</strong>
-							<small>{item.description}</small>
-						</span>
-						<ArrowRightOutlined />
-					</Link>
-				))}
-			</nav>
+			</div>
 			{error && <Alert type="error" showIcon message="工作台数据更新失败" description={data ? "当前保留上次成功读取的快照，请重试后再做判断。" : "暂时无法读取组合信息，资产和收益尚不可用。"} action={<Button aria-label="重试" onClick={refresh} loading={loading}>重试</Button>} />}
 			{!data && !error && <Card><Skeleton active paragraph={{ rows: 6 }} /></Card>}
 			{data && (
@@ -358,7 +404,7 @@ export default function Home() {
 						<MetricCard label="可用现金" value={overview?.available_cash} note={`${overview?.positions_count ?? positions.length} 笔持仓 · 同一股票可属于多个组合`} />
 					</section>
 					{!!overview?.history_anomaly_count && <Alert type="warning" showIcon message={`${overview.history_anomaly_count} 个原始账户存在历史价格异常`} description="总览包含这些账户的原始账面金额，不能据此认定有效收益；异常账户已在下表标明。其他账户的历史盈亏继续正常展示。" />}
-					<section className="wb-attention" aria-label="执行概况">
+					<section className={`wb-attention${attention.length ? " wb-attention-warning" : ""}`} aria-label="执行概况">
 						<div>
 							<span className="wb-eyebrow">执行概况</span>
 							<h2>{attention.length ? `${attention.length} 个组合需要关注` : "暂无已识别的执行异常"}</h2>
@@ -370,10 +416,7 @@ export default function Home() {
 									key={item.key}
 									type="button"
 									aria-pressed={tab === "strategies" && filter === item.key}
-									onClick={() => {
-										setFilter(item.key);
-										setTab("strategies");
-									}}
+									onClick={() => focusStrategies(item.key)}
 								>
 									<strong>{item.count}</strong>
 									<span>{item.label}</span>
@@ -381,13 +424,15 @@ export default function Home() {
 							))}
 						</div>
 					</section>
-					<Card className="wb-main-card">
-						<Tabs
-							activeKey={tab}
-							onChange={setTab}
-							items={tabs}
-						/>
-					</Card>
+					<div ref={strategyPanel} className="wb-strategy-anchor">
+						<Card className="wb-main-card">
+							<Tabs
+								activeKey={tab}
+								onChange={setTab}
+								items={tabs}
+							/>
+						</Card>
+					</div>
 					<footer className="wb-footnote">
 						<span>
 							数据快照：
