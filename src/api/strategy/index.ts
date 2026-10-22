@@ -1696,6 +1696,17 @@ export interface StrategyFollowPerformance {
 }
 
 export interface StrategyPerformanceMetric {
+	cluster_evidence?: {
+		policy_version: string
+		forward_sample_count: number
+		independent_entry_dates: number
+		net_mean_pct: number | null
+		net_cluster_ci95_pct: [number | null, number | null]
+		trusted_evidence: boolean
+		regime_coverage: string[]
+	}
+	score_calibration?: { score_monotonic: boolean, reason?: string }
+	shadow_progress?: { available: boolean, observations?: number, observed_days?: number, minimum_observation_days?: number }
 	forward_sample_count?: number
 	origin_counts?: Record<string, number>
 	win_rate_ci95_pct?: [number, number] | null

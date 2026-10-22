@@ -591,6 +591,41 @@ export default function StrategyPerformanceDashboard() {
 			),
 		},
 		{
+			title: "新规则前向证据",
+			key: "auditEvidence",
+			width: 220,
+			render: (_, item) => {
+				const evidence = item.trade.cluster_evidence;
+				const ci = evidence?.net_cluster_ci95_pct;
+				return (
+					<Space direction="vertical" size={2}>
+						<Text>
+							{evidence?.forward_sample_count ?? 0}
+							{" "}
+							笔核验成交 ·
+							{" "}
+							{evidence?.independent_entry_dates ?? 0}
+							{" "}
+							个独立日期
+						</Text>
+						<Text type="secondary">
+							影子观察：
+							{item.trade.shadow_progress?.available ? `${item.trade.shadow_progress.observed_days ?? 0} / 30 个交易日（不计成交）` : "存储待核验"}
+						</Text>
+						<Text type="secondary">
+							扣费后95%区间：
+							{ci?.[0] == null || ci?.[1] == null ? "样本不足" : `${ci[0].toFixed(2)}% ～ ${ci[1].toFixed(2)}%`}
+						</Text>
+						<Tag color={evidence?.trusted_evidence ? "green" : "gold"}>{evidence?.trusted_evidence ? "统计证据通过，仍需账户核验" : "积累中，不能据此跟投"}</Tag>
+						<Text type="secondary">
+							评分：
+							{item.trade.score_calibration?.score_monotonic ? "通过留出单调性检验" : "仅展示"}
+						</Text>
+					</Space>
+				);
+			},
+		},
+		{
 			title: "模拟账户验证",
 			key: "paper",
 			width: 165,
