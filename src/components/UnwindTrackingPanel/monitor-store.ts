@@ -15,6 +15,7 @@ export interface UnwindMonitorView {
 	alertCount: number
 	check: () => Promise<void>
 	setEnabled: (enabled: boolean) => void
+	showCurrent: () => void
 	showHistory: () => void
 }
 

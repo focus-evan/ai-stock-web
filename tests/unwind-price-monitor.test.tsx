@@ -1,5 +1,6 @@
 import type { UnwindAlertEvent, UnwindPlan } from "../src/api/strategy";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { ConfigProvider } from "antd";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { acknowledgeUnwindAlerts, fetchUnwindAlerts, fetchUnwindPlans, refreshUnwindExecution } from "../src/api/strategy";
 import GlobalPriceMonitor from "../src/components/UnwindTrackingPanel/GlobalPriceMonitor";
@@ -14,7 +15,7 @@ function plan(): UnwindPlan {
 	return { watchlist_id: 66, stock_code: "301566", stock_name: "测试持仓", open_sold_shares: 0, execution: { plan: { trading_date: "2026-10-21", technical: { as_of: "2026-10-20" }, generated_at: "2026-10-21 09:00:00", valid_until: "2026-10-21T14:57:00+08:00", sell_zone_high: 10.1, pause_buy_below: 9, cancel_sell_above: 12 }, signal: { action: "WAIT", phase: "intraday", target_price: 10, planned_shares: 100, reason: "等待连续报价确认", quote: { price: 10.2, as_of: now.toISOString() }, valid_until: new Date(now.getTime() + 120000).toISOString() } } } as UnwindPlan;
 }
 function event(id = 1, stage: UnwindAlertEvent["stage"] = "confirmed"): UnwindAlertEvent {
-	return { id, stock_code: "301566", stock_name: "测试持仓", trading_date: "2026-10-21", stage, delivered_at: null, read_at: null, payload: { ...plan().execution!.signal, event_action: "SELL", suggested_action: stage === "confirmed" ? "SELL" : undefined, validation_status: "shadow" } };
+	return { id, stock_code: "301566", stock_name: "测试持仓", trading_date: "2026-10-21", stage, delivered_at: null, read_at: null, payload: { ...plan().execution!.signal, checked_at: now.toISOString(), action: stage === "confirmed" ? "SELL" : "WAIT", shares: stage === "confirmed" ? 100 : 0, limit_price: stage === "confirmed" ? 10 : null, event_action: "SELL" } };
 }
 function alerts(items: UnwindAlertEvent[]) {
 	return { status: "success", data: { items, server_time: new Date().toISOString() } };
@@ -23,10 +24,10 @@ async function mount() {
 	let view!: ReturnType<typeof render>;
 	await act(async () => {
 		view = render(
-			<>
+			<ConfigProvider theme={{ token: { motion: false } }}>
 				<GlobalPriceMonitor />
 				<PriceMonitor />
-			</>,
+			</ConfigProvider>,
 		);
 	});
 	return view;
@@ -64,8 +65,8 @@ describe("durable unwind notifications", () => {
 		saved.payload.target_price = undefined;
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
-		expect(screen.getByRole("dialog")).toHaveTextContent("此条历史提醒未保存失效条件");
-		expect(screen.getByRole("dialog")).toHaveTextContent("无下单目标");
+		expect(screen.getByRole("dialog")).toHaveTextContent("请先处理上述风险事项");
+		expect(screen.getByRole("dialog")).toHaveTextContent("暂停操作并复核风险");
 		expect(screen.getByRole("dialog")).not.toHaveTextContent("¥0.000");
 	});
 	it("reads every thirty seconds without invoking the execution writer", async () => {
@@ -82,28 +83,78 @@ describe("durable unwind notifications", () => {
 		});
 		expect(fetchUnwindAlerts).toHaveBeenCalledTimes(2);
 	});
-	it("recovers expired unread events and never presents them as current orders", async () => {
+	it("keeps expired unread events out of popups and exposes them only in explicit history", async () => {
 		const old = event();
 		old.payload.valid_until = "2026-10-21T09:42:00+08:00";
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([old]));
 		await mount();
-		expect(screen.getByRole("dialog")).toHaveTextContent("已过期 · 仅供复盘");
-		expect(screen.getByRole("dialog")).toHaveTextContent("验证信号 · 暂不下单");
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		expect(screen.getByText("暂无需要操作的提醒")).toBeInTheDocument();
 		await act(async () => {
-			fireEvent.click(screen.getByRole("button", { name: "我已知晓，继续监控" }));
+			fireEvent.click(screen.getByRole("button", { name: "历史记录" }));
 		});
-		expect(acknowledgeUnwindAlerts).toHaveBeenCalledWith([1], "read");
+		expect(fetchUnwindAlerts).toHaveBeenCalledWith(true);
+		expect(screen.getByRole("dialog")).toHaveTextContent("已过期 · 仅供复盘");
+		expect(acknowledgeUnwindAlerts).not.toHaveBeenCalled();
 	});
-	it("reopens for confirmation after a candidate was read", async () => {
+	it("waits through candidates and opens only when an actual instruction arrives", async () => {
 		vi.mocked(fetchUnwindAlerts).mockResolvedValueOnce(alerts([event(1, "candidate")])).mockResolvedValue(alerts([event(2)]));
 		await mount();
-		await act(async () => {
-			fireEvent.click(screen.getByRole("button", { name: "我已知晓，继续监控" }));
-		});
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 		await act(async () => {
 			vi.advanceTimersByTime(MONITOR_INTERVAL);
 		});
-		expect(screen.getByRole("dialog")).toHaveTextContent("验证信号");
+		expect(screen.getByRole("dialog")).toHaveTextContent("现在可卖出");
+	});
+	it("never promotes a shadow confirmation into an operation reminder", async () => {
+		const shadow = event();
+		shadow.payload = { ...shadow.payload, action: "WAIT", shares: 0, limit_price: null, suggested_action: "SELL", validation_status: "shadow" };
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([shadow]));
+		await mount();
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		expect(acknowledgeUnwindAlerts).not.toHaveBeenCalled();
+	});
+	it("withdraws a visible signal at expiry without waiting for the next poll", async () => {
+		const hit = event();
+		hit.payload.valid_until = new Date(now.getTime() + 2000).toISOString();
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([hit]));
+		await mount();
+		expect(screen.getByRole("dialog")).toHaveTextContent("现在可卖出");
+		await act(async () => {
+			vi.advanceTimersByTime(3000);
+		});
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		expect(screen.getByText("暂无需要操作的提醒")).toBeInTheDocument();
+	});
+	it("replaces the live list instead of retaining withdrawn signals", async () => {
+		vi.mocked(fetchUnwindAlerts).mockResolvedValueOnce(alerts([event()])).mockResolvedValue(alerts([]));
+		await mount();
+		await act(async () => {
+			vi.advanceTimersByTime(MONITOR_INTERVAL);
+		});
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		expect(screen.getByText("暂无需要操作的提醒")).toBeInTheDocument();
+	});
+	it("expires against server time even when the computer clock is years ahead", async () => {
+		const hit = event();
+		hit.payload.valid_until = new Date(now.getTime() + 2000).toISOString();
+		vi.setSystemTime(new Date("2030-01-01T10:00:00+08:00"));
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue({ status: "success", data: { items: [hit], server_time: now.toISOString() } });
+		await mount();
+		expect(screen.getByRole("dialog")).toHaveTextContent("现在可卖出");
+		await act(async () => {
+			vi.advanceTimersByTime(3000);
+		});
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+	});
+	it("withdraws an old action if its latest refresh fails", async () => {
+		vi.mocked(fetchUnwindAlerts).mockResolvedValueOnce(alerts([event()])).mockRejectedValue(new Error("offline"));
+		await mount();
+		await act(async () => {
+			vi.advanceTimersByTime(MONITOR_INTERVAL);
+		});
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+		expect(screen.getByText(/暂停展示操作提醒/)).toBeInTheDocument();
 	});
 	it("delivers saved events even when the holding snapshot fails", async () => {
 		vi.mocked(fetchUnwindPlans).mockRejectedValue(new Error("unavailable"));

@@ -20,7 +20,7 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 	}, [current?.plans, current?.checkedAt, onPlans]);
 	if (!current)
 		return <Alert type="info" showIcon message="全局解套监控正在初始化" />;
-	const { enabled, checking, checkedAt, nextAt, note, error, alertCount, check, setEnabled, showHistory } = current;
+	const { enabled, checking, checkedAt, nextAt, note, error, alertCount, check, setEnabled, showCurrent, showHistory } = current;
 	return (
 		<section className="unwind-price-monitor" aria-label="解套到价监控">
 			<div className="unwind-date-heading">
@@ -33,12 +33,14 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 				<Space wrap>
 					<Button icon={<ReloadOutlined />} loading={checking} disabled={!enabled} onClick={() => check()}>立即检查价格</Button>
 					{alertCount > 0 && (
-						<Button onClick={showHistory}>
-							查看提醒记录（
+						<Button type="primary" onClick={showCurrent}>
+							查看当前提醒（
 							{alertCount}
 							）
 						</Button>
 					)}
+					{alertCount === 0 && <Tag>暂无需要操作的提醒</Tag>}
+					<Button type="text" onClick={showHistory}>历史记录</Button>
 				</Space>
 			</div>
 			<div className="unwind-date-meta">
@@ -52,7 +54,7 @@ export default function PriceMonitor({ onPlans }: { onPlans?: (plans: UnwindPlan
 				</span>
 			</div>
 			<p className="unwind-date-note">{checking ? "正在获取最新报价…" : enabled ? note : "已暂停全局价格检查与到价弹窗"}</p>
-			<p className="unwind-date-note">服务器每60秒核验行情并保存事件，页面每30秒同步；重新登录或休眠恢复后补发未读提醒。候选与确认分别提醒，点击“我已知晓”后保存已读。过期事件仅供复盘，当前动作以最新行情为准。</p>
+			<p className="unwind-date-note">服务器每60秒核验行情，页面每30秒同步。只弹出当前有效的操作或风险事项；过期提醒自动撤下，候选和验证信号保存在历史记录中。</p>
 			{error && <Alert showIcon type="warning" message={error} />}
 		</section>
 	);

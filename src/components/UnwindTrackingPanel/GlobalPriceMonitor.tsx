@@ -4,10 +4,11 @@ import { acknowledgeUnwindAlerts, fetchUnwindAlerts, fetchUnwindPlans } from "#s
 import { useAuthStore } from "#src/store/auth";
 import { useUserStore } from "#src/store/user";
 import { BellOutlined } from "@ant-design/icons";
-import { Alert, Button, Modal, Space, Tag } from "antd";
+import { Alert, Button, Empty, Modal, Space, Tag } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import AlertInvalidConditions from "./AlertInvalidConditions";
+import { isLiveUnwindAlert } from "./live-alerts";
 import { UNWIND_ALERT_Z_INDEX, useUnwindMonitorStore } from "./monitor-store";
 import { freshUnwindQuote, MONITOR_INTERVAL, quoteTimestamp } from "./price-alerts";
 import PriceMonitor from "./PriceMonitor";
@@ -18,7 +19,7 @@ interface SavedAlert extends UnwindPriceAlert { id: number, stage: string, read:
 function savedAlert(event: UnwindAlertEvent): SavedAlert {
 	const signal = event.payload;
 	const at = quoteTimestamp(signal.quote?.as_of);
-	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side: signal.event_action === "BUY_BACK" ? "buy" : "sell", price: signal.quote?.price || 0, target: signal.target_price || signal.limit_price || 0, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteAt: at ? beijingTime(at) : signal.checked_at || "未核验", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.planned_shares || signal.shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [] };
+	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side: signal.event_action === "BUY_BACK" ? "buy" : "sell", price: signal.quote?.price || 0, target: event.stage === "confirmed" && signal.action !== "WAIT" ? signal.limit_price || 0 : signal.target_price || 0, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteAt: at ? beijingTime(at) : signal.checked_at || "未核验", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.shares || signal.planned_shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [] };
 }
 const enabledKey = "unwind-price-monitor-enabled-v1";
 function readEnabled(userId: string) {
@@ -39,6 +40,8 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 	const [note, setNote] = useState("正在准备首次价格检查");
 	const [error, setError] = useState("");
 	const [alerts, setAlerts] = useState<SavedAlert[]>([]);
+	const [history, setHistory] = useState<SavedAlert[]>([]);
+	const [historyOpen, setHistoryOpen] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [now, setNow] = useState(() => new Date());
 	const seen = useRef(new Set<number>());
@@ -50,6 +53,8 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 	const inFlight = useRef(false);
 	const generation = useRef(0);
 	const lastAttempt = useRef(0);
+	const clockAnchor = useRef<{ server: number, received: number } | null>(null);
+	const currentAlerts = useMemo(() => alerts.filter(alert => !alert.read && alert.expiresAt > now.getTime()), [alerts, now]);
 	const check = useCallback(async () => {
 		if (inFlight.current)
 			return;
@@ -62,7 +67,11 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 			const [planResult, alertResult] = await Promise.allSettled([fetchUnwindPlans(10), fetchUnwindAlerts()]);
 			if (run !== generation.current)
 				return;
-			const checked = alertResult.status === "fulfilled" ? timestamp(alertResult.value.data.server_time) || new Date() : new Date();
+			const received = Date.now();
+			const server = alertResult.status === "fulfilled" ? timestamp(alertResult.value.data.server_time)?.getTime() : undefined;
+			const estimated = clockAnchor.current ? clockAnchor.current.server + received - clockAnchor.current.received : server ?? received;
+			const checked = new Date(Math.max(server ?? estimated, estimated));
+			clockAnchor.current = { server: checked.getTime(), received };
 			setNow(checked);
 			const failures: string[] = [];
 			if (planResult.status === "fulfilled" && planResult.value.status === "success") {
@@ -71,7 +80,7 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				setCheckedAt(checked);
 				const freshCount = items.filter(plan => freshUnwindQuote(plan, checked)).length;
 				const intraday = items.some(plan => plan.execution?.signal.phase === "intraday");
-				setNote(!intraday ? "非连续交易时段，保留预案和历史提醒" : `已读取 ${items.length} 只 · 有效报价 ${freshCount} 只`);
+				setNote(!intraday ? "非连续交易时段，等待开盘后核验操作机会" : `已读取 ${items.length} 只 · 有效报价 ${freshCount} 只`);
 				if (intraday && freshCount < items.length)
 					failures.push(`${items.length - freshCount} 只报价待更新；其余股票继续监控`);
 			}
@@ -80,22 +89,25 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				failures.push("持仓读取失败，30秒后重试");
 			}
 			if (alertResult.status === "fulfilled" && alertResult.value.status === "success") {
-				const hits = alertResult.value.data.items.map(savedAlert).map(item => ({ ...item, read: item.read || read.current.has(item.id) }));
+				const hits = alertResult.value.data.items.filter(event => isLiveUnwindAlert(event, checked) && !read.current.has(event.id)).map(savedAlert);
 				const unseen = hits.filter(hit => !seen.current.has(hit.id));
 				if (unseen.length) {
 					unseen.forEach(hit => seen.current.add(hit.id));
 					setOpen(true);
 				}
-				setAlerts(previous => [...hits, ...previous.filter(alert => !hits.some(hit => hit.id === alert.id))].slice(0, 200));
+				setAlerts(hits);
 			}
 			else {
-				failures.push("提醒同步失败，未读事件仍在服务器，30秒后重试");
+				setAlerts([]);
+				failures.push("提醒同步失败，暂停展示操作提醒，30秒后重试");
 			}
 			setError(failures.join("；"));
 		}
 		catch {
-			if (run === generation.current)
-				setError("本次同步失败，30秒后重试；未读事件会保留。");
+			if (run === generation.current) {
+				setAlerts([]);
+				setError("本次同步失败，暂停展示操作提醒，30秒后重试。");
+			}
 		}
 		finally {
 			if (run === generation.current) {
@@ -118,8 +130,10 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 			const response = await fetchUnwindAlerts(true);
 			if (run !== generation.current)
 				return;
-			setAlerts(previous => [...previous.filter(alert => !alert.read), ...response.data.items.map(savedAlert).filter(item => !previous.some(alert => !alert.read && alert.id === item.id))]);
-			setOpen(true);
+			if (response.status !== "success")
+				throw new Error("history unavailable");
+			setHistory(response.data.items.map(savedAlert));
+			setHistoryOpen(true);
 		}
 		catch {
 			if (run === generation.current)
@@ -128,7 +142,7 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 	}, []);
 	const acknowledge = async () => {
 		const run = generation.current;
-		const ids = alerts.filter(alert => !alert.read).map(alert => alert.id);
+		const ids = currentAlerts.map(alert => alert.id);
 		setAcknowledging(true);
 		try {
 			for (let i = 0; i < ids.length; i += 100) {
@@ -140,7 +154,7 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				return;
 			ids.forEach(id => read.current.add(id));
 			setAlerts(previous => previous.map(alert => ids.includes(alert.id) ? { ...alert, read: true } : alert));
-			setOpen(alertsRef.current.some(alert => !alert.read && !ids.includes(alert.id)));
+			setOpen(alertsRef.current.some(alert => !alert.read && alert.expiresAt > now.getTime() && !ids.includes(alert.id)));
 		}
 		catch {
 			if (run === generation.current)
@@ -152,9 +166,9 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 		}
 	};
 	useEffect(() => {
-		if (!open || document.visibilityState !== "visible")
+		if (!enabled || !open || document.visibilityState !== "visible")
 			return;
-		const ids = alerts.filter(alert => !delivered.current.has(alert.id)).map(alert => alert.id).slice(0, 100);
+		const ids = currentAlerts.filter(alert => !delivered.current.has(alert.id)).map(alert => alert.id).slice(0, 100);
 		if (!ids.length)
 			return;
 		const run = generation.current;
@@ -162,8 +176,9 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 			if (run === generation.current)
 				ids.forEach(id => delivered.current.add(id));
 		}).catch(() => { /* Remains unread and will retry on the next snapshot. */ });
-	}, [open, alerts]);
-	const view = useMemo(() => ({ userId, plans, enabled, checking, checkedAt, nextAt, note, error, alertCount: alerts.length, check, setEnabled: changeEnabled, showHistory }), [userId, plans, enabled, checking, checkedAt, nextAt, note, error, alerts.length, check, changeEnabled, showHistory]);
+	}, [enabled, open, currentAlerts]);
+	const showCurrent = useCallback(() => setOpen(true), []);
+	const view = useMemo(() => ({ userId, plans, enabled, checking, checkedAt, nextAt, note, error, alertCount: currentAlerts.length, check, setEnabled: changeEnabled, showCurrent, showHistory }), [userId, plans, enabled, checking, checkedAt, nextAt, note, error, currentAlerts.length, check, changeEnabled, showCurrent, showHistory]);
 	useEffect(() => {
 		useUnwindMonitorStore.setState({ view });
 	}, [view]);
@@ -177,7 +192,10 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 		};
 	}, [userId]);
 	useEffect(() => {
-		const clock = window.setInterval(() => setNow(new Date()), 30000);
+		const clock = window.setInterval(() => {
+			const anchor = clockAnchor.current;
+			setNow(new Date(anchor ? anchor.server + Date.now() - anchor.received : Date.now()));
+		}, 1000);
 		return () => window.clearInterval(clock);
 	}, []);
 	useEffect(() => {
@@ -211,7 +229,7 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				title={(
 					<Space>
 						<BellOutlined />
-						高优先级 · 解套到价提醒
+						当前操作提醒
 					</Space>
 				)}
 				rootClassName="unwind-global-alert"
@@ -219,15 +237,15 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				maskClosable={false}
 				keyboard={false}
 				getContainer={() => container}
-				open={open}
+				open={enabled && open && currentAlerts.length > 0}
 				onCancel={() => setOpen(false)}
 				footer={<Button type="primary" loading={acknowledging} onClick={() => void acknowledge()}>我已知晓，继续监控</Button>}
 				width={660}
 			>
-				<Alert type="warning" showIcon message="以下为服务器保存的事件快照。验证信号与过期提醒仅供跟踪；当前操作请核对持仓卡片的最新状态。" style={{ marginBottom: 12 }} />
+				<Alert type="info" showIcon message="只提醒当前有效的操作和风险事项，信号失效后自动撤下。" style={{ marginBottom: 12 }} />
 				{error && <Alert type="warning" showIcon message={error} />}
 				<div style={{ maxHeight: "55vh", overflowY: "auto" }}>
-					{alerts.map(alert => (
+					{currentAlerts.map(alert => (
 						<article className="unwind-price-hit" key={alert.key}>
 							<strong>
 								{alert.stockName}
@@ -235,24 +253,26 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 								{alert.stockCode}
 							</strong>
 							{" "}
-							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "风险需处理" : alert.stage === "recovery" ? "修复或成本线 · 评估退出" : alert.shadow ? "验证信号 · 暂不下单" : alert.confirmed ? "历史条件确认" : "候选到价"}</Tag>
-							{now.getTime() > alert.expiresAt && <Tag>已过期 · 仅供复盘</Tag>}
-							<Tag>{alert.read ? "已读" : "未读"}</Tag>
-							<p>
-								检查时价格
-								<b>
-									{alert.price > 0 ? `${alert.symbol}${alert.price.toFixed(3)}` : "未核验"}
-								</b>
-								{" "}
-								· 目标价
-								<b>
-									{alert.target > 0 ? `${alert.symbol}${alert.target.toFixed(3)}` : "无下单目标"}
-								</b>
-							</p>
-							<AlertInvalidConditions conditions={alert.invalidConditions} symbol={alert.symbol} />
-							{alert.shares > 0 && (
+							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "暂停操作并复核风险" : alert.stage === "recovery" ? "评估减仓或退出" : alert.side === "buy" ? "现在可接回" : "现在可卖出"}</Tag>
+							{alert.confirmed && (
 								<p>
-									当时计划最多
+									最新核验价
+									<b>
+										{alert.price > 0 ? `${alert.symbol}${alert.price.toFixed(3)}` : "未核验"}
+									</b>
+									{" "}
+									·
+									{" "}
+									{alert.side === "buy" ? "接回限价（不高于）" : "卖出限价（不低于）"}
+									<b>
+										{alert.target > 0 ? `${alert.symbol}${alert.target.toFixed(3)}` : "无下单目标"}
+									</b>
+								</p>
+							)}
+							<AlertInvalidConditions conditions={alert.invalidConditions} symbol={alert.symbol} historical={false} />
+							{alert.confirmed && alert.shares > 0 && (
+								<p>
+									本次最多
 									{alert.shares}
 									{" "}
 									股 ·
@@ -269,9 +289,37 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 								（北京时间）
 							</p>
 							<p>
-								<b>{alert.stage === "risk" || alert.stage === "recovery" ? "状态变化，请复核：" : alert.confirmed ? "当时技术条件已通过，仍需复核：" : "仅价格到位，其他条件待确认："}</b>
+								<b>{alert.stage === "risk" || alert.stage === "recovery" ? "当前待办：" : "操作依据："}</b>
 								{alert.reason}
 							</p>
+						</article>
+					))}
+				</div>
+			</Modal>
+			<Modal title="历史提醒 · 仅供复盘" open={historyOpen} onCancel={() => setHistoryOpen(false)} footer={null} width={660} zIndex={UNWIND_ALERT_Z_INDEX - 1} getContainer={() => container}>
+				<Alert type="info" showIcon message="历史记录不会弹窗催办，不计入当前操作提醒。" />
+				<div style={{ maxHeight: "55vh", overflowY: "auto" }}>
+					{history.length === 0 && <Empty description="暂无历史提醒" />}
+					{history.map(alert => (
+						<article className="unwind-price-hit" key={alert.key}>
+							<strong>
+								{alert.stockName}
+								{" "}
+								{alert.stockCode}
+							</strong>
+							{" "}
+							<Tag>{alert.stage === "risk" ? "风险记录" : alert.stage === "recovery" ? "修复观察" : alert.shadow ? "验证信号" : alert.confirmed ? "条件确认记录" : "候选记录"}</Tag>
+							{now.getTime() >= alert.expiresAt && <Tag>已过期 · 仅供复盘</Tag>}
+							<p>
+								策略日期
+								{alert.strategyDate}
+								{" "}
+								· 行情时间
+								{alert.quoteAt}
+								（北京时间）
+							</p>
+							<p>{alert.reason}</p>
+							<AlertInvalidConditions conditions={alert.invalidConditions} symbol={alert.symbol} />
 						</article>
 					))}
 				</div>
