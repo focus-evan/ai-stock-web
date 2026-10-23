@@ -225,6 +225,8 @@ export interface RecordUnwindTradePayloadExt {
 	fees: number
 	trade_date: string
 	note?: string
+	expected_last_trade_id?: number
+	confirm_duplicate?: boolean
 }
 
 export function fetchUnwindAlerts(signal?: AbortSignal) {

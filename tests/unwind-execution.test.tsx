@@ -25,7 +25,8 @@ describe("unwind execution status", () => {
 		vi.mocked(fetchUnwindPlans).mockResolvedValue({ status: "success", data: { items: [item], total: 1, method: { name: "测试规则", capital_rule: "", position_rule: "", trend_rule: "", risk_notice: "", schedule: "" } } });
 		vi.mocked(refreshUnwindPlans).mockResolvedValue({ status: "success", data: { generated: [], errors: [], total: 0 }, message: "已读取" });
 		render(<UnwindTrackingPanel />);
-		fireEvent.click(await screen.findByRole("button", { name: "录入已成交卖出" }));
+		fireEvent.click(await screen.findByRole("button", { name: "记录卖出" }));
+		fireEvent.click(screen.getByRole("radio", { name: "做T卖出，准备接回" }));
 		expect(screen.getByText("只记录已经实际成交的卖单；系统将至少保留800股。")).toBeInTheDocument();
 		expect(screen.getByRole("spinbutton", { name: /实际成交股数/ })).toHaveValue("200");
 		expect(recordUnwindTrade).not.toHaveBeenCalled();

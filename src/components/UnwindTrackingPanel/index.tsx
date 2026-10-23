@@ -7,6 +7,7 @@ import type {
 	UnwindAnalysisExt,
 	UnwindPlanExt,
 	UnwindRecovery,
+	UnwindTradeExt,
 	UnwindTradeSide,
 } from "#src/api/strategy/unwind-extra";
 import {
@@ -26,6 +27,7 @@ import {
 	Alert,
 	Button,
 	Card,
+	Checkbox,
 	Col,
 	Collapse,
 	Empty,
@@ -34,6 +36,7 @@ import {
 	InputNumber,
 	message,
 	Modal,
+	Radio,
 	Row,
 	Space,
 	Spin,
@@ -88,10 +91,10 @@ const decisionColors: Record<string, string> = {
 };
 
 const sideLabels: Record<UnwindTradeSide, string> = {
-	sell: "卖出",
-	buy: "买回",
+	sell: "做T卖出",
+	buy: "做T接回",
 	add: "补仓",
-	reduce: "减仓",
+	reduce: "减仓卖出",
 };
 
 function money(value?: number | null, symbol = "¥") {
@@ -286,6 +289,9 @@ export default function UnwindTrackingPanel() {
 	const [settingsTarget, setSettingsTarget] = useState<UnwindPlanExt | null>(null);
 	const [backtestTarget, setBacktestTarget] = useState<UnwindPlanExt | null>(null);
 	const [savingTrade, setSavingTrade] = useState(false);
+	const savingTradeGuard = useRef(false);
+	const [duplicateMessage, setDuplicateMessage] = useState("");
+	const [confirmDuplicate, setConfirmDuplicate] = useState(false);
 	const [form] = Form.useForm<TradeFormValues>();
 	const autoRefreshAttempted = useRef(false);
 	const loadSequence = useRef(0);
@@ -399,7 +405,9 @@ export default function UnwindTrackingPanel() {
 	};
 
 	const openTrade = (plan: UnwindPlanExt, side: UnwindTradeSide) => {
-		const analysis = ((side === "sell" || side === "buy") ? activeUnwindAnalysis(plan) : (plan.latest_analysis || activeUnwindAnalysis(plan))) as UnwindAnalysisExt;
+		setDuplicateMessage("");
+		setConfirmDuplicate(false);
+		const analysis = (side !== "add" ? activeUnwindAnalysis(plan) : (plan.latest_analysis || activeUnwindAnalysis(plan))) as UnwindAnalysisExt;
 		const lotSize = analysis?.lot_size || 100;
 		form.setFieldsValue({
 			shares: side === "sell"
@@ -407,7 +415,7 @@ export default function UnwindTrackingPanel() {
 				: side === "add"
 					? (analysis?.add_plan?.shares || lotSize)
 					: side === "reduce"
-						? (analysis?.reduce_plan?.shares || lotSize)
+						? lotSize
 						: plan.open_sold_shares,
 			price: side === "sell"
 				? (analysis?.sell_trigger_price || analysis?.sell_zone_low || analysis?.technical?.current_price || 0)
@@ -424,8 +432,9 @@ export default function UnwindTrackingPanel() {
 	};
 
 	const handleTradeSubmit = async () => {
-		if (!tradeTarget)
+		if (!tradeTarget || savingTradeGuard.current)
 			return;
+		savingTradeGuard.current = true;
 		try {
 			const values = await form.validateFields();
 			setSavingTrade(true);
@@ -436,6 +445,8 @@ export default function UnwindTrackingPanel() {
 				fees: values.fees || 0,
 				trade_date: values.trade_date,
 				note: values.note,
+				expected_last_trade_id: Math.max(0, ...tradeTarget.plan.trades.map(trade => trade.id)),
+				confirm_duplicate: Boolean(duplicateMessage && confirmDuplicate),
 			};
 			const response = await recordUnwindTradeExt(tradeTarget.plan.watchlist_id, payload);
 			message.success(response.message || "成交已记录");
@@ -446,9 +457,27 @@ export default function UnwindTrackingPanel() {
 		catch (error: any) {
 			if (error?.errorFields)
 				return;
+			let body;
+			try {
+				body = await error?.response?.clone().json();
+			}
+			catch { /* Network errors may not include a response. */ }
+			if (body?.code === "duplicate_trade") {
+				setDuplicateMessage(body.message || body.detail);
+				setConfirmDuplicate(false);
+				return;
+			}
+			if (body?.code === "ledger_changed") {
+				message.warning(body.message || body.detail);
+				setTradeTarget(null);
+				form.resetFields();
+				await loadData(false);
+				return;
+			}
 			message.error(await getErrorMessage(error, "记录成交失败"));
 		}
 		finally {
+			savingTradeGuard.current = false;
 			setSavingTrade(false);
 		}
 	};
@@ -550,8 +579,10 @@ export default function UnwindTrackingPanel() {
 							const unavailable = pollFailed || Boolean(loadError) || failedRefreshIds.includes(plan.watchlist_id) || refreshing === "all" || refreshing === plan.watchlist_id;
 							const currencySymbol = planCurrencySymbol(plan);
 							const lotSize = plan.execution?.plan?.lot_size || analysis?.lot_size || 100;
-							const pnl = analysis?.pnl_pct ?? 0;
-							const pnlColor = pnl >= 0 ? "#cf1322" : "#389e0d";
+							const referencePrice = quote && !unavailable ? quote.price : Number(analysis?.technical.current_price || 0);
+							const pnl = referencePrice > 0 && plan.effective_cost > 0 ? (referencePrice / plan.effective_cost - 1) * 100 : null;
+							const pnlColor = pnl === null ? undefined : pnl >= 0 ? "#cf1322" : "#389e0d";
+							const breakeven = plan.recovery?.available ? plan.recovery.remaining_breakeven_price : null;
 							return (
 								<Card
 									key={plan.watchlist_id}
@@ -602,13 +633,20 @@ export default function UnwindTrackingPanel() {
 									<StrategyDateStamp plan={plan} now={now} unavailable={unavailable} />
 									{plan.execution && <Alert type={quote && !unavailable ? "info" : "warning"} showIcon style={{ marginBottom: 14 }} message={quote && !unavailable ? `本次监测价 ${money(quote.price, currencySymbol)} · 行情时间 ${beijingTime(quote.at)}` : "盘中报价待更新 / 已过期，不据旧报价操作"} description={`${plan.execution.signal.reason}${quoteAt && !quote ? `；上次行情时间 ${beijingTime(quoteAt)}` : ""}`} />}
 									<Row gutter={[12, 12]}>
-										<Col xs={12} sm={8} md={4}><Statistic title="当前持仓账面成本" value={plan.baseline_cost_price} precision={2} prefix={currencySymbol} /></Col>
-										<Col xs={12} sm={8} md={4}><Statistic title="有效成本" value={plan.effective_cost} precision={2} prefix={currencySymbol} valueStyle={{ color: "#722ed1" }} /></Col>
-										<Col xs={12} sm={8} md={4}><Statistic title="分析时点价格" value={analysis?.technical.current_price || 0} precision={2} prefix={currencySymbol} /></Col>
-										<Col xs={12} sm={8} md={4}><Statistic title="距有效成本" value={pnl} precision={2} suffix="%" valueStyle={{ color: pnlColor }} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title="剩余持仓均价" value={Number(plan.baseline_cost_price).toFixed(2)} precision={2} prefix={currencySymbol} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title="整体回本价（含已实现盈亏）" value={breakeven != null ? Number(breakeven).toFixed(2) : "待核对"} prefix={breakeven != null ? currencySymbol : undefined} valueStyle={{ color: "#722ed1" }} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title={quote && !unavailable ? "最新核验价" : "分析时点价格"} value={referencePrice > 0 ? referencePrice.toFixed(2) : "—"} precision={2} prefix={currencySymbol} /></Col>
+										<Col xs={12} sm={8} md={4}><Statistic title="较策略参考成本" value={pnl != null ? pnl.toFixed(2) : "—"} precision={2} suffix={pnl != null ? "%" : undefined} valueStyle={{ color: pnlColor }} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="当前/本轮基准股数" value={`${plan.current_shares}/${plan.baseline_shares}`} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="滚动资金" value={plan.cash_pool} precision={2} prefix={currencySymbol} /></Col>
 									</Row>
+									<div style={{ marginTop: 8 }}>
+										<Text type="secondary">
+											策略参考成本
+											{money(plan.effective_cost, currencySymbol)}
+											；整体回本价按全部已登记买卖与费用计算。减仓实现的盈亏计入整体回本价，不改写剩余股份的买入均价。
+										</Text>
+									</div>
 
 									<details style={{ marginTop: 14 }}>
 										<summary style={{ cursor: "pointer" }}>盘后技术分析与参考条件（不是当前操作信号）</summary>
@@ -697,8 +735,7 @@ export default function UnwindTrackingPanel() {
 										<Button onClick={() => setSettingsTarget(plan)}>策略设置</Button>
 										<Button onClick={() => setBacktestTarget(plan)}>历史回测</Button>
 										<Button disabled={plan.open_sold_shares > 0} onClick={() => openTrade(plan, "add")}>记录补仓</Button>
-										<Button disabled={plan.open_sold_shares > 0 || plan.current_shares <= 0} onClick={() => openTrade(plan, "reduce")}>记录减仓</Button>
-										<Button disabled={plan.open_sold_shares > 0 || Math.floor(plan.baseline_shares * 0.3 / lotSize) * lotSize < lotSize || plan.current_shares < lotSize} onClick={() => openTrade(plan, "sell")}>录入已成交卖出</Button>
+										<Button disabled={plan.open_sold_shares > 0 || plan.current_shares <= 0} onClick={() => openTrade(plan, "reduce")}>记录卖出</Button>
 										<Button disabled={plan.open_sold_shares < lotSize} onClick={() => openTrade(plan, "buy")}>录入已成交买回</Button>
 										<Text type="secondary">只录入券商已成交记录；按钮不会下单，未录入卖出前不会提示买回。</Text>
 									</Space>
@@ -738,11 +775,11 @@ export default function UnwindTrackingPanel() {
 																dataSource={plan.trades}
 																columns={[
 																	{ title: "日期", dataIndex: "trade_date", width: 110 },
-																	{ title: "方向", dataIndex: "side", width: 90, render: (value: UnwindTradeSide) => <Tag color={value === "sell" || value === "reduce" ? "green" : "red"}>{sideLabels[value] || value}</Tag> },
+																	{ title: "成交用途", dataIndex: "side", width: 120, render: (value: UnwindTradeSide) => <Tag color={value === "sell" || value === "reduce" ? "green" : "red"}>{sideLabels[value] || value}</Tag> },
 																	{ title: "股数", dataIndex: "shares", width: 90 },
 																	{ title: "价格", dataIndex: "price", width: 100, render: value => money(value, currencySymbol) },
 																	{ title: "费用", dataIndex: "fees", width: 90, render: value => money(value, currencySymbol) },
-																	{ title: "本次降本", dataIndex: "cost_reduction", render: value => <Text style={{ color: Number(value) >= 0 ? "#cf1322" : "#389e0d" }}>{money(value, currencySymbol)}</Text> },
+																	{ title: "做T净降本", dataIndex: "cost_reduction", render: (value, trade: UnwindTradeExt) => trade.side === "buy" ? <Text style={{ color: Number(value) >= 0 ? "#cf1322" : "#389e0d" }}>{money(value, currencySymbol)}</Text> : trade.side === "sell" ? "待接回结算" : trade.side === "reduce" ? "计入整体盈亏" : "—" },
 																]}
 															/>
 														)
@@ -762,7 +799,8 @@ export default function UnwindTrackingPanel() {
 				title={tradeTarget
 					? `${tradeTarget.plan.stock_name} · 记录${sideLabels[tradeTarget.side]}成交`
 					: ""}
-				okText="确认记录"
+				okText={duplicateMessage && confirmDuplicate ? "确认登记另一笔" : "确认记录"}
+				okButtonProps={{ disabled: Boolean(duplicateMessage && !confirmDuplicate) }}
 				cancelText="取消"
 				confirmLoading={savingTrade}
 				onOk={handleTradeSubmit}
@@ -774,6 +812,23 @@ export default function UnwindTrackingPanel() {
 			>
 				{tradeTarget && (
 					<>
+						{(tradeTarget.side === "reduce" || tradeTarget.side === "sell") && (
+							<div style={{ marginBottom: 16 }}>
+								<div style={{ marginBottom: 8 }}>这笔卖出是否准备接回？同一笔券商成交只登记一次。</div>
+								<Radio.Group
+									value={tradeTarget.side}
+									onChange={(event) => {
+										setTradeTarget({ ...tradeTarget, side: event.target.value });
+										setDuplicateMessage("");
+										setConfirmDuplicate(false);
+									}}
+								>
+									<Radio value="reduce">减仓，不接回</Radio>
+									<Radio value="sell" disabled={Math.floor(tradeTarget.plan.baseline_shares * 0.3 / (tradeAnalysis?.lot_size || 100)) < 1}>做T卖出，准备接回</Radio>
+								</Radio.Group>
+							</div>
+						)}
+						{duplicateMessage && <Alert type="warning" showIcon message={duplicateMessage} description={<Checkbox checked={confirmDuplicate} onChange={event => setConfirmDuplicate(event.target.checked)}>我已核对券商成交记录，这是另一笔独立成交，仍需登记</Checkbox>} style={{ marginBottom: 16 }} />}
 						<Alert
 							type={tradeTarget.side === "sell" ? "warning" : "info"}
 							showIcon
@@ -788,7 +843,14 @@ export default function UnwindTrackingPanel() {
 										: `只能使用滚动资金池${money(tradeTarget.plan.cash_pool, planCurrencySymbol(tradeTarget.plan))}，最多买回${tradeTarget.plan.open_sold_shares}股。`}
 							style={{ marginBottom: 16 }}
 						/>
-						<Form form={form} layout="vertical">
+						<Form
+							form={form}
+							layout="vertical"
+							onValuesChange={() => {
+								setDuplicateMessage("");
+								setConfirmDuplicate(false);
+							}}
+						>
 							<Row gutter={12}>
 								<Col span={12}>
 									<Form.Item
