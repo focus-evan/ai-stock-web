@@ -59,6 +59,10 @@ describe("durable unwind notifications", () => {
 		expect(popup).toHaveTextContent("跌破¥35.090 暂停买回");
 		expect(popup).toHaveTextContent("暂停买回线不是接回目标价");
 		expect(popup).not.toHaveTextContent("突破¥12.000");
+		expect(popup).toHaveTextContent("当前买卖提醒");
+		expect(popup).toHaveTextContent("最新核验价：¥10.200");
+		expect(popup).toHaveTextContent("卖出限价（不低于）¥10.000");
+		expect(popup).toHaveTextContent("本次最多100 股");
 	});
 	it("does not invent historical boundaries or show a zero target for risk alerts", async () => {
 		const saved = event(1, "risk");
@@ -68,6 +72,52 @@ describe("durable unwind notifications", () => {
 		expect(screen.getByRole("dialog")).toHaveTextContent("请先处理上述风险事项");
 		expect(screen.getByRole("dialog")).toHaveTextContent("暂停操作并复核风险");
 		expect(screen.getByRole("dialog")).not.toHaveTextContent("¥0.000");
+		expect(screen.getByRole("dialog")).toHaveTextContent("风险复核提醒");
+		expect(screen.getByRole("dialog")).toHaveTextContent("最新核验价：¥10.200");
+		expect(screen.getByRole("dialog")).toHaveTextContent("下单限价：暂无");
+		expect(screen.getByRole("dialog")).not.toHaveTextContent("卖出限价（不低于）");
+	});
+	it("labels risk thresholds as references while preserving the fresh market quote", async () => {
+		const saved = event(1, "risk");
+		saved.payload.invalid_conditions = ["突破47.4取消卖出", "跌破35.05暂停买回"];
+		saved.payload.reason = "距起始成本-29.8%，到达复核线";
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("最新核验价：¥10.200");
+		expect(popup).toHaveTextContent("下单限价：暂无");
+		expect(popup).toHaveTextContent("风控参考线（非下单价）");
+		expect(popup).toHaveTextContent("突破¥47.400 取消卖出");
+		expect(popup).toHaveTextContent("跌破¥35.050 暂停买回");
+	});
+	it("does not substitute an expired quote or check timestamp for a fresh market price", async () => {
+		const saved = event(1, "risk");
+		saved.payload.quote = { price: 10.2, as_of: new Date(now.getTime() - 121000).toISOString() };
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("最新核验价：行情待更新");
+		expect(popup).toHaveTextContent(/上次报价\s*¥10\.200（仅供参考）/);
+		expect(popup).not.toHaveTextContent("最新核验价：¥10.200");
+	});
+	it("shows missing risk quotes explicitly without fabricating a zero price", async () => {
+		const saved = event(1, "risk");
+		saved.payload.quote = undefined;
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("行情待更新");
+		expect(popup).toHaveTextContent("行情时间未取得");
+		expect(popup).not.toHaveTextContent("¥0.000");
+	});
+	it("shows the quote for an exit review without inventing a sell order", async () => {
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([event(1, "recovery")]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("退出评估提醒");
+		expect(popup).toHaveTextContent("最新核验价：¥10.200");
+		expect(popup).toHaveTextContent("下单限价：暂无");
+		expect(popup).not.toHaveTextContent("现在可卖出");
 	});
 	it("reads every thirty seconds without invoking the execution writer", async () => {
 		await mount();
