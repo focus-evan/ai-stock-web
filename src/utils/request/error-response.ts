@@ -10,16 +10,21 @@ import { message } from "#src/utils/static-antd";
 export async function handleErrorResponse(response: Response) {
 	try {
 		// 将响应内容解析为 JSON 格式
-		const data = await response.json();
+		// 保留原始响应，业务弹窗仍需读取具体失败原因。
+		const data = await response.clone().json();
 
 		// 判断解析后的数据是否为对象类型
 		if (isObject(data)) {
 			// 将解析后的数据转换为包含错误信息的对象类型
-			const json = data as { errorMsg?: string, message?: string };
+			const json = data as { errorMsg?: string, message?: string, detail?: string | { msg?: string }[] };
+			const detail = typeof json.detail === "string"
+				? json.detail
+				: Array.isArray(json.detail)
+					? json.detail.map(item => item.msg).filter(Boolean).join("；")
+					: undefined;
 
-			// 如果解析后的数据中包含 errorMsg 或 message 属性，则显示错误信息
-			// 否则显示响应的状态文本作为错误信息
-			message.error(json.errorMsg || json.message || response.statusText);
+			// 兼容 FastAPI 的 detail 及既有 errorMsg / message 响应。
+			message.error(detail || json.errorMsg || json.message || response.statusText);
 		}
 		else {
 			// 如果解析后的数据不是对象类型，则直接显示响应的状态文本作为错误信息

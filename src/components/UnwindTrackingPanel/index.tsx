@@ -775,10 +775,10 @@ export default function UnwindTrackingPanel() {
 				{tradeTarget && (
 					<>
 						<Alert
-							type={tradeTarget.side === "sell" || tradeTarget.side === "add" ? "warning" : "info"}
+							type={tradeTarget.side === "sell" ? "warning" : "info"}
 							showIcon
 							message={tradeTarget.side === "add"
-								? `补仓是追加资金，不动滚动资金池；该股补仓预算剩余${money(tradeTarget.plan.add_summary?.add_remaining ?? tradeTarget.plan.settings?.add_budget, "¥")}。成交后成本和股数自动更新。`
+								? "填写券商已成交的股数、价格和日期即可，支持补录昨日成交，无需先配置预算或确认今日资金。保存后自动更新持仓和成本，解套策略及滚动资金池规则不变。"
 								: tradeTarget.side === "reduce"
 									? "记录实际卖出的减仓成交：剩余仓位的每股有效成本不变，回笼资金不进入滚动资金池。"
 									: tradeTarget.side === "sell"
