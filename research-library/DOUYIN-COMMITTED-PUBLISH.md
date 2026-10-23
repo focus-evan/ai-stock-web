@@ -12,4 +12,4 @@
 
 从已推送commit的源码目录调用该commit中的`publish.ps1`：`-HtmlRoot <checkout>/research-library/douyin-source`。设置`RESEARCH_SOURCE_SCOPE=douyin`及`RESEARCH_PUBLISH_REVISION=focus-evan/ai-stock-web@<full-commit>`。生成的目录、文件清单与传输包属于构建产物，发布状态位于用户目录，不回写源码。
 
-发布器仍然使用服务器基线、独立内容指针和回滚版本。上线后逐页验证新增正文、总数、收藏顺序、35个模块及原有目录行；通过后才运行本机媒体缓存清理。交付记录仓库、分支、commit与服务器release/rollback路径。
+发布器仍然使用服务器基线、独立内容指针和回滚版本。上线后逐页验证新增正文、总数、收藏顺序、本轮基线的全部模块ID及原有目录行；允许其他任务新增模块，不以旧的35个模块总数覆盖服务器现状。通过后才运行本机媒体缓存清理。交付记录仓库、分支、commit与服务器release/rollback路径。

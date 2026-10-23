@@ -12,9 +12,10 @@ const base='http://121.196.147.222:3667/research-library/';
 const getText=async p=>(await fetchBytesWithRetry(base+p,{attempts:4})).toString('utf8');
 const get=async p=>JSON.parse(await getText(p));
 const catalog=await get('catalog.json'),summary=await get('content/douyin/logs/latest_update_summary.json'),favoriteSummary=await get('content/douyin/logs/latest_favorites_update_summary.json');
-assert.equal(catalog.collections.length,35);assert.equal(summary.run_id,run_id);assert.equal(summary.favorites.run_id,favorites_run_id);assert.equal(favoriteSummary.run_id,favorites_run_id);assert.equal(favoriteSummary.status,'ok');
+assert.equal(summary.run_id,run_id);assert.equal(summary.favorites.run_id,favorites_run_id);assert.equal(favoriteSummary.run_id,favorites_run_id);assert.equal(favoriteSummary.status,'ok');
 const catalogIds=new Set(catalog.entries.map(e=>e.id));assert.equal(catalogIds.size,catalog.entries.length);
 const baselineFile=path.join(root,'logs',`baseline-catalog-${run_id.match(/\d{8}/)?.[0]}.json`),baseline=read(baselineFile);for(const e of baseline.entries)assert.ok(catalogIds.has(e.id),`Missing baseline catalog row ${e.id}`);
+const collectionIds=new Set(catalog.collections.map(c=>c.id));assert.equal(collectionIds.size,catalog.collections.length);for(const c of baseline.collections)assert.ok(collectionIds.has(c.id),`Missing baseline collection ${c.id}`);
 const expectedCatalogNew=new Set();let newPages=0,accountRecords=0,previousAccounts=0,newAccountItems=0,newFavorites=0;
 async function verifyArticle(directory,item,input){
  const result=read(path.join(root,'results',`${input.slug}_${input.aweme_id}.json`));assert.equal(result.review_status,'approved');assert.equal(item.transcript,result.corrected_transcript);assert.ok(item.transcript?.trim()&&item.points?.length);assert.equal(item.author,input.author||accounts.find(a=>a.slug===input.slug).nickname);
