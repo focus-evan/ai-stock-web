@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-10-23T11:07:49+08:00",
+  "review_window": "使用2026-10-22完整A股与港股收盘验证上一版06:00判断；澜起使用未除息实际收盘175.33，避免10月23日每股0.20元除息回改历史价格。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 9,
+    "useful_but_conservative": 1,
+    "repair_upgrade": 0,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 1,
+    "main_read": "红色组合阀门与橙色宏观预警被市场大跌强化：九只约束完全有效，新易盛、宁德、阿里、联瑞等触发减风险线；仅澜起相对抗跌，方向偏保守但不追高约束有效。橙色铖昌失83后按规则恢复红色。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 294.12,
+      "review_price_date": "2026-10-22",
+      "review_close": 258.01,
+      "review_move_pct": -12.28,
+      "verification": "完全有效",
+      "trigger_check": "放量跌12.28%至258.01、收近最低",
+      "logic_adjustment": "集中度红色防守强验证，升级高位踩踏风险。"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "橙色",
+      "morning_judgement": "利多",
+      "morning_close": 178.34,
+      "review_price_date": "2026-10-22",
+      "review_close": 175.33,
+      "review_move_pct": -1.69,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "实际跌1.69%至175.33，守173.8但未收180",
+      "logic_adjustment": "不追高有效；今日按175.13除息参考观察。"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 257.68,
+      "review_price_date": "2026-10-22",
+      "review_close": 258.82,
+      "review_move_pct": 0.44,
+      "verification": "完全有效",
+      "trigger_check": "逆势涨0.44%至258.82，低257.8守256/252但高271.6回落",
+      "logic_adjustment": "橙色守位与不追高约束均有效。"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 274.0,
+      "review_price_date": "2026-10-22",
+      "review_close": 264.18,
+      "review_move_pct": -3.58,
+      "verification": "完全有效",
+      "trigger_check": "跌3.58%至264.18、失268",
+      "logic_adjustment": "红色防守有效，下移看264/260/255。"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 45.15,
+      "review_price_date": "2026-10-22",
+      "review_close": 43.53,
+      "review_move_pct": -3.59,
+      "verification": "完全有效",
+      "trigger_check": "跌3.59%至43.53、失43.8",
+      "logic_adjustment": "红色纯防守有效。"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 364.8,
+      "review_price_date": "2026-10-22",
+      "review_close": 338.4,
+      "review_move_pct": -7.24,
+      "verification": "完全有效",
+      "trigger_check": "再跌7.24%至338.40、低336",
+      "logic_adjustment": "红色极强防守有效，禁止抄底纪律继续。"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 103.7,
+      "review_price_date": "2026-10-22",
+      "review_close": 97.35,
+      "review_move_pct": -6.12,
+      "verification": "完全有效",
+      "trigger_check": "放量跌6.12%至97.35、失100",
+      "logic_adjustment": "红色强防守有效，关注ADR续跌传导。"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 96.8,
+      "review_price_date": "2026-10-22",
+      "review_close": 92.39,
+      "review_move_pct": -4.56,
+      "verification": "完全有效",
+      "trigger_check": "跌4.56%至92.39、失95",
+      "logic_adjustment": "红色防守有效；增资落地不改变交易破位。"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 102.2,
+      "review_price_date": "2026-10-22",
+      "review_close": 95.32,
+      "review_move_pct": -6.73,
+      "verification": "完全有效",
+      "trigger_check": "跌6.73%至95.32、失97.4",
+      "logic_adjustment": "高位踩踏红色约束有效。"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 85.47,
+      "review_price_date": "2026-10-22",
+      "review_close": 82.55,
+      "review_move_pct": -3.42,
+      "verification": "完全有效",
+      "trigger_check": "跌3.42%至82.55、失85/83",
+      "logic_adjustment": "橙色修复失败条件触发，恢复红色。"
+    }
+  ],
+  "logic_corrections": [
+    "近5000股下跌、涨停少于跌停、放量杀跌和隔夜SOXX急跌构成S0硬风险，宏观雷达由S3直接降至S0。",
+    "新易盛与宁德虽有长期逻辑，但放量连续破位属于流动性踩踏；应先下调交易时点与组合暴露，不改写为公司基本面突然归零。",
+    "澜起10月22日实际收175.33，10月23日除息理论参考175.13；复盘必须使用实际收盘，今天不得把机械除息当跌幅。",
+    "华飞电子8.5亿元增资落地改善资金条件，但雅克股价失95且市场S0，利好不构成加仓权限。",
+    "绿的逆势守位但机器人从扩散转抱团，橙色只能持有观察；S0环境下禁止追强。"
+  ]
+}
