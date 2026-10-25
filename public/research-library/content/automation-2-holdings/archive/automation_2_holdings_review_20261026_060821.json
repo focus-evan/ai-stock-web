@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-10-26T06:08:21+08:00",
+  "review_window": "使用2026-10-23完整A股与港股收盘验证上一版06:00判断；红色总阀门评价仓位纪律，不等于预测所有持仓收跌。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 1,
+    "useful_but_conservative": 7,
+    "repair_upgrade": 2,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 9,
+    "main_read": "S0红色总阀门的操作约束有效，但周五出现强烈冰点反转，方向判断整体偏保守。九只持仓盘中仍触发或接近风险线；澜起首次收180、绿的放量突破，均只升级修复观察。单日深V不足以降低组合红色风险。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 258.01,
+      "review_price_date": "2026-10-23",
+      "review_close": 261.0,
+      "review_move_pct": 1.16,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低236.10触发250/245后收261.00、涨1.16%",
+      "logic_adjustment": "减风险线盘中触发；收盘反弹不等于趋势反转。"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 175.33,
+      "review_price_date": "2026-10-23",
+      "review_close": 180.0,
+      "review_move_pct": 2.66,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "除息后涨2.66%至180.00、高181.88",
+      "logic_adjustment": "首次收180，等待今日守180并收181.9/185。"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 258.82,
+      "review_price_date": "2026-10-23",
+      "review_close": 290.0,
+      "review_move_pct": 12.05,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "涨12.05%至290.00、高297",
+      "logic_adjustment": "修复强但触发橙色高位预警，不得追高。"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 264.18,
+      "review_price_date": "2026-10-23",
+      "review_close": 266.7,
+      "review_move_pct": 0.95,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低252.17触发260/255后收266.70、涨0.95%",
+      "logic_adjustment": "盘中减风险约束有效，收盘未站272。"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 43.53,
+      "review_price_date": "2026-10-23",
+      "review_close": 44.38,
+      "review_move_pct": 1.95,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低40.56失42后收44.38、涨1.95%",
+      "logic_adjustment": "盘中风险线触发，收盘未站45。"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 338.4,
+      "review_price_date": "2026-10-23",
+      "review_close": 356.8,
+      "review_move_pct": 5.44,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低326后反弹5.44%至356.80，未收361",
+      "logic_adjustment": "禁止抄底约束有效；首日修复不降风险。"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 97.35,
+      "review_price_date": "2026-10-23",
+      "review_close": 97.8,
+      "review_move_pct": 0.46,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低95.30后收97.80、涨0.46%，仍未收100",
+      "logic_adjustment": "红色防守有效，ADR未确认。"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 92.39,
+      "review_price_date": "2026-10-23",
+      "review_close": 94.47,
+      "review_move_pct": 2.25,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低85.63失90/88后收94.47、涨2.25%",
+      "logic_adjustment": "盘中风险线触发，增资利好不授权加仓。"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 95.32,
+      "review_price_date": "2026-10-23",
+      "review_close": 94.31,
+      "review_move_pct": -1.06,
+      "verification": "完全有效",
+      "trigger_check": "跌1.06%至94.31、盘中低86.30失90",
+      "logic_adjustment": "高位踩踏红色约束有效。"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 82.55,
+      "review_price_date": "2026-10-23",
+      "review_close": 84.0,
+      "review_move_pct": 1.76,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "低76.50失80.8/78.8后收84.00、涨1.76%",
+      "logic_adjustment": "盘中减风险约束有效，减值公告增加利润压力。"
+    }
+  ],
+  "logic_corrections": [
+    "周五4476股上涨、涨停约82、炸板率约12.8%，宏观状态可由S0上调到S2冰点转折；但需要下一交易日守位，不直接跳到S3/S4。",
+    "新易盛正式回购方案从提议升级为董事会批准，但回购比例仅0.11%-0.14%、用途为激励，价格深V不等于趋势反转。",
+    "绿的5日涨幅约22.5%且放量，满足橙色高位题材条件；板块强修复只调整交易观察，不上调基本面。",
+    "澜起已收180且回购完成4.10228亿元，经营与价格继续共振；仍需今日守180后才降低风险。",
+    "铖昌减值约1497.57万元减少前三季度利润总额，应提高财务风险权重；盘中回收不能抵消减值与参数缺失。"
+  ]
+}
