@@ -1,5 +1,66 @@
 [
   {
+    "aweme_id": "7700242254589569699",
+    "display_title": "踏空后的心理按摩：理性、纪律与交易系统",
+    "title": "#知识分享内容太过真实 #一本正经的唠嗑 #日常随拍分享 #真实生活瞬间 #拒绝数据焦虑",
+    "published_at": "2026-10-24 22:32:00",
+    "create_time": 1792852320,
+    "duration_seconds": 51,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7700242254589569699",
+    "raw_transcript": "这不是一条副判视频 这是一条心理按摩视频\n有好多粉丝给野哥说 野哥我周五套空了怎么办\n怎么调节一下自己的内心\n在我们这里 你敢说你踏空了\n你的胆子真的是肥嘟嘟的\n在我们这里只有早套和晚套的区别\n很多人一进来就是套住再研究\n越研究 套得越多\n这就是 我\n没有踏空于说啊\n特别是我们以大科技为例\n你承受不了70%的回调\n你就吃不到周五了1%的涨幅\n那你说他踏空了没有\n现在你看所有的板块 哪个板块 你敢说你踏空呢\n现在心里舒服了吧\n理性理智 独立思考\n还有交易系统 还有指引止损的概念",
+    "transcript": "这不是一条复盘视频 这是一条心理按摩视频\n有好多粉丝给野哥说 野哥我周五踏空了怎么办\n怎么调节一下自己的内心\n在我们这里 你敢说你踏空了\n你的胆子真的是肥嘟嘟的\n在我们这里只有早套和晚套的区别\n很多人一进来就是套住再研究\n越研究 套得越多\n这就是 我\n没有踏空一说啊\n特别是我们以大科技为例\n你承受不了70%的回调【数字待听辨】\n你就吃不到周五的1%涨幅【数字待听辨】\n那你说他踏空了没有\n现在你看所有的板块 哪个板块 你敢说你踏空呢\n现在心里舒服了吧\n理性理智 独立思考\n还有交易系统 还有止盈止损的概念",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "野人明确称这不是复盘视频，而是回应粉丝踏空焦虑的“心理按摩”。",
+      "他用被套和反弹的反讽说法缓解情绪，最后强调理性、独立思考、交易系统及止盈止损。",
+      "涉及回调和单日涨幅的数字不清，已标为待听辨；不把其中的玩笑当成行情测算。"
+    ],
+    "category": "市场",
+    "ai_related": false,
+    "html_file": "videos/new_7700242254589569699.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-10-25 11:09:39",
+    "sync_run_id": "daily_20261025"
+  },
+  {
+    "aweme_id": "7700067742397885602",
+    "display_title": "打板不烧心：AI生成短剧对白",
+    "title": "第4集 | 打板不烧心， @炒饭加蛋",
+    "published_at": "2026-10-24 11:15:00",
+    "create_time": 1792811700,
+    "duration_seconds": 30.1,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7700067742397885602",
+    "raw_transcript": "明楼与边际雪发 有一滴涤\n我也打过版追过龙头\n我二十岁\n二十岁我就学打板了\n我比谁都神奇\n又怎么样\n我现在还不是这个样子\n李行\n你还要带神奇过\n我呢\n我怎么样",
+    "transcript": "【AI生成短剧对白】\n明楼与边际雪发，有一滴涤【开头待听辨】\n我也打过板追过龙头\n我二十岁\n二十岁我就学打板了\n我比谁都神气\n又怎么样\n我现在还不是这个样子\n李行【称呼待听辨】\n你还要带神气过\n我呢\n我怎么样",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "作品属于账号的“AIGC短剧”栏目，页面明确标注“内容由AI生成”。",
+      "角色对白提到年轻时打板、追龙头和如今处境；开头及部分称呼不清，不能视为野人本人真实交易经历或实盘战绩。"
+    ],
+    "category": "AI短剧",
+    "ai_related": false,
+    "html_file": "videos/new_7700067742397885602.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-10-25 11:09:39",
+    "sync_run_id": "daily_20261025"
+  },
+  {
     "aweme_id": "7699413745831465634",
     "display_title": "10月22日复盘：退潮纪律、补仓风险与交易系统",
     "title": "10月22日本月最后一条复盘视频##正确的看待市场波动 #复盘分析 #市场情绪解读 #金融#A股",

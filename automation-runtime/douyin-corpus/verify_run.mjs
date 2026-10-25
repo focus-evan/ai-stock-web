@@ -22,6 +22,7 @@ async function verifyArticle(directory,item,input){
  const url=directory+item.html_file,$=load(await getText(url));assert.equal($('pre').first().text(),item.transcript,`Published body mismatch ${item.aweme_id}`);assert.equal($('.rl-reader-toolbar').length,1);assert.ok(catalog.entries.some(e=>e.href===url));expectedCatalogNew.add(url.replace(/^content\//,''));
  if(input.extraction_kind==='video_frames'){assert.equal(item.extraction_kind,'video_frames');assert.equal(item.frame_ocr_count,input.frame_ocr_count);assert.ok(item.transcript.includes('视频画面字幕'));}
  else if(input.source_type==='image_ocr'){assert.equal((item.transcript.match(/【图片 \d+】/g)||[]).length,input.ocr_images);assert.equal(input.ocr_images,input.image_files.length);}
+ if(input.audio_asr_evidence){assert.equal(item.audio_transcript,input.audio_asr_evidence.transcript);assert.ok($.text().includes('视频口播与画面文字完成'));}
  newPages++;
 }
 for(const a of accounts){
