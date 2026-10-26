@@ -25,6 +25,7 @@ import {
 import { BasicContent } from "#src/components/basic-content";
 import OptimizationComparison from "#src/components/optimization-comparison";
 import PortfolioAuditPanel from "#src/components/portfolio-audit";
+import StrategyOperationsPanel from "#src/components/strategy-operations";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -949,6 +950,7 @@ export default function PortfolioDashboard() {
 				</Space>
 			</div>
 
+			<StrategyOperationsPanel />
 			<PortfolioAuditPanel />
 			<Collapse
 				style={{ marginBottom: 20 }}
