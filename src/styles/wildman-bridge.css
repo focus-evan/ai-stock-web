@@ -13,7 +13,13 @@ html[data-wildman-live] .hero-panel strong { font-size: 32px; }
 .wm-independent-trial > summary { cursor: pointer; padding: 20px 0; font-size: 17px; font-weight: 650; color: #172b45; }
 .wm-independent-trial > .shell { width: 100%; padding-inline: 0; }
 @media (max-width: 767px) {
-  .wm-live-bridge { padding-top: 22px; padding-bottom: 22px; }
+  html[data-wildman-live] .section-menu .shell { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 10px; overflow-x: auto; }
+  html[data-wildman-live] .section-menu a { flex: 0 0 auto; white-space: nowrap; padding: 12px 8px; }
+  .wm-live-bridge { width: calc(100% - 24px); margin-inline: auto; padding: 22px 0; }
+  .wm-live-intro { display: block; }
+  .wm-live-intro h2 { margin-bottom: 10px; font-size: 22px; }
+  .wm-live-intro p { width: 100%; min-width: 0; max-width: none; }
+  .wm-live-intro > a { display: inline-block; margin-top: 12px; }
   .wm-live-frame { border-radius: 10px; }
   .wm-independent-trial > summary { font-size: 15px; }
 }
