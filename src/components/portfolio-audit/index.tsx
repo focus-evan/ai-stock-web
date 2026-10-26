@@ -33,7 +33,7 @@ export default function PortfolioAuditPanel() {
 	return (
 		<Card title="交易证据与账户核验" style={{ marginBottom: 20 }} extra={<Button onClick={() => void load()} loading={loading}>刷新核验</Button>}>
 			<Space direction="vertical" style={{ width: "100%" }}>
-				<Alert type={error ? "error" : "info"} showIcon message={error || "同时保留现行和归档组合；历史重建成交不计入胜率。"} description="固定周期推荐收益、卖单胜率与完整交易净胜率使用不同分母。分批卖出合并为一轮，缺少盘口或资金证据时显示未验证。" />
+				<Alert type={error ? "error" : "info"} showIcon message={error || "同时保留现行和归档组合；账目修复与历史重建不计有效战绩。"} description="固定周期推荐收益、卖单胜率与完整交易净胜率使用不同分母。分批卖出合并为一轮，缺少盘口或资金证据时显示未验证。" />
 				<Table<PortfolioQualityAudit>
 					rowKey="portfolio_id"
 					loading={loading}
