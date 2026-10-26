@@ -2,6 +2,7 @@ import { useAccessStore } from "#src/store/access";
 import { useAuthStore } from "#src/store/auth";
 import { useTabsStore } from "#src/store/tabs";
 import { useUserStore } from "#src/store/user";
+import { appRouteHref } from "#src/utils/app-route-href";
 import { useEffect, useState } from "react";
 import WildmanDailyRecommendations from "./daily";
 import WildmanHoldingsPanel from "./holdings";
@@ -9,7 +10,7 @@ import "./style.css";
 
 export type WildmanTab = "daily" | "unwind";
 export const WILDMAN_WORKSPACE_PATH = "/short-term-strategy/stock-analysis?tab=wildman";
-export const WILDMAN_LOGIN_PATH = `/login?redirect=${encodeURIComponent(WILDMAN_WORKSPACE_PATH)}`;
+export const WILDMAN_LOGIN_PATH = appRouteHref(`/login?redirect=${encodeURIComponent(WILDMAN_WORKSPACE_PATH)}`);
 
 /** Storage events also reach same-origin iframes, without moving credentials through messages. */
 function useCrossWindowAuthentication() {
@@ -55,7 +56,7 @@ function PrivateWorkspace({ initialTab = "daily", tab, onTabChange, onOpenLedger
 		onTabChange?.(value);
 	};
 	const openLedger = onOpenLedger ?? (() => {
-		window.open("/short-term-strategy/stock-analysis?tab=unwind", "_top");
+		window.open(appRouteHref("/short-term-strategy/stock-analysis?tab=unwind"), "_top");
 	});
 	return (
 		<div className="wildman-workspace">

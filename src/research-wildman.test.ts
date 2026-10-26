@@ -14,9 +14,17 @@ afterEach(() => {
 	document.querySelector("#wildman-live-style")?.remove();
 	window.history.replaceState({}, "", "/");
 	vi.restoreAllMocks();
+	vi.unstubAllEnvs();
 });
 
 describe("live trading manual bridge", () => {
+	it("uses production hash routes for embedded and top-level application navigation", () => {
+		vi.stubEnv("VITE_ROUTER_MODE", "hash");
+		manual();
+		enhanceTradingManual(document);
+		expect(document.querySelector("iframe")?.getAttribute("src")).toBe("/#/wildman-widget?tab=daily");
+		expect(document.querySelector(".wm-live-intro a")?.getAttribute("href")).toBe("/#/short-term-strategy/stock-analysis?tab=wildman");
+	});
 	it("only enhances the exact manual, not other public reports", () => {
 		manual();
 		window.history.replaceState({}, "", "/research-library/content/other/index.html");

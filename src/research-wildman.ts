@@ -1,4 +1,5 @@
 import bridgeStyleUrl from "./styles/wildman-bridge.css?url";
+import { appRouteHref } from "./utils/app-route-href";
 
 const manualPaths = new Set([
 	"/research-library/content/douyin/methods/",
@@ -34,12 +35,12 @@ export function enhanceTradingManual(target: Document) {
 	description.textContent = "读取系统当日策略结果，明确推荐或不推荐；解套自动带入你已登记的实际持仓和真实成交。";
 	heading.append(title, description);
 	const workspaceLink = target.createElement("a");
-	workspaceLink.href = "/short-term-strategy/stock-analysis?tab=wildman";
+	workspaceLink.href = appRouteHref("/short-term-strategy/stock-analysis?tab=wildman");
 	workspaceLink.target = "_top";
 	workspaceLink.textContent = "在完整工作台打开 ↗";
 	heading.append(workspaceLink);
 	const frame = target.createElement("iframe");
-	frame.src = "/wildman-widget?tab=daily";
+	frame.src = appRouteHref("/wildman-widget?tab=daily");
 	frame.title = "野人每日实战与本人登记持仓";
 	frame.className = "wm-live-frame";
 	frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-top-navigation-by-user-activation");

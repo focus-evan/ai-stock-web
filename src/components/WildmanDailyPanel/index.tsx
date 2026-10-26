@@ -3,6 +3,7 @@ import type { UnwindPlanExt } from "#src/api/strategy/unwind-extra";
 import { fetchUnwindPlans, refreshUnwindExecution } from "#src/api/strategy";
 import PriceMonitor from "#src/components/UnwindTrackingPanel/PriceMonitor";
 import { StrategyDateStamp } from "#src/components/UnwindTrackingPanel/StrategyDate";
+import { appRouteHref } from "#src/utils/app-route-href";
 import { CopyOutlined, ReloadOutlined, SwapOutlined } from "@ant-design/icons";
 import { Alert, Button, Checkbox, Collapse, Empty, Input, message, Segmented, Spin, Tag } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -170,7 +171,7 @@ export default function WildmanDailyPanel({ onOpenLedger, embedded = false }: { 
 				? (
 					<p className="wm-footer-note">
 						手册内每60秒读取计划；到价提醒请在
-						<a href="/short-term-strategy/stock-analysis?tab=wildman" target="_top">完整工作台</a>
+						<a href={appRouteHref("/short-term-strategy/stock-analysis?tab=wildman")} target="_top">完整工作台</a>
 						查看。
 					</p>
 				)

@@ -1,6 +1,7 @@
 import { refreshUnwindPlans } from "#src/api/strategy";
 import { fetchWildmanHoldings } from "#src/api/wildman";
 import WildmanDailyPanel from "#src/components/WildmanDailyPanel";
+import { appRouteHref } from "#src/utils/app-route-href";
 import { useEffect, useRef, useState } from "react";
 import { useSnapshot } from "./use-snapshot";
 
@@ -108,7 +109,7 @@ export default function WildmanHoldingsPanel({ onOpenLedger, embedded = false }:
 						{data.total > 0 && <button className="wildman-primary" type="button" onClick={() => void generate()} disabled={generating}>{generating ? "正在生成 / 更新解套…" : "根据我的持仓生成/更新解套"}</button>}
 						{data.initialized > 0 && <button type="button" onClick={() => setShowPlans(value => !value)}>{showPlans ? "收起解套操作单" : "查看已有解套操作单"}</button>}
 						<button type="button" onClick={onOpenLedger}>查看 / 记录真实成交</button>
-						<a href="/short-term-strategy/stock-analysis?tab=watchlist" target="_top">管理已登记持仓</a>
+						<a href={appRouteHref("/short-term-strategy/stock-analysis?tab=watchlist")} target="_top">管理已登记持仓</a>
 					</div>
 				</>
 			)}
