@@ -1,0 +1,2 @@
+.wildman-widget { box-sizing: border-box; width: 100%; min-width: 0; max-height: 10000px; padding: 16px; overflow: auto; background: var(--app-canvas, #f0f4f9); }
+@media (max-width: 600px) { .wildman-widget { padding: 10px; } }

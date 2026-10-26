@@ -7,7 +7,7 @@ import StrategyPerformanceDashboard from "#src/components/StrategyPerformanceDas
 import UnwindTrackingPanel from "#src/components/UnwindTrackingPanel";
 import WatchlistModal from "#src/components/WatchlistModal";
 import WatchlistPanel from "#src/components/WatchlistPanel";
-import WildmanDailyPanel from "#src/components/WildmanDailyPanel";
+import WildmanTradingWorkspace from "#src/components/WildmanTradingWorkspace";
 import { DeleteOutlined, HistoryOutlined, MoreOutlined, ReloadOutlined, SearchOutlined, StarOutlined } from "@ant-design/icons";
 import { Alert, Button, Drawer, Dropdown, Empty, Grid, Input, message, Modal, Pagination, Segmented, Skeleton, Space, Spin, Table, Tabs, Tag } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -497,7 +497,7 @@ export default function StockAnalysisPage() {
 					<span className="sa-muted">{loading ? `正在分析 ${submittedStock} · 已等待 ${elapsed} 秒` : "研究结果与历史快照"}</span>
 				</div>
 			)}
-			{workspace === "tracking" && <div className="sa-subnav"><Segmented value={activeTab} onChange={key => selectTab(key as TabKey)} options={[{ value: "watchlist", label: "自选盯盘" }, { value: "portfolio", label: "整体持仓" }, { value: "unwind", label: "解套跟踪" }, { value: "wildman", label: "野人每日解套" }]} /></div>}
+			{workspace === "tracking" && <div className="sa-subnav"><Segmented value={activeTab} onChange={key => selectTab(key as TabKey)} options={[{ value: "watchlist", label: "自选盯盘" }, { value: "portfolio", label: "整体持仓" }, { value: "unwind", label: "解套跟踪" }, { value: "wildman", label: "野人每日实战" }]} /></div>}
 			{activeTab === "analyze" && (
 				<>
 					{loading && (
@@ -557,7 +557,7 @@ export default function StockAnalysisPage() {
 			{activeTab === "watchlist" && <WatchlistPanel />}
 			{activeTab === "portfolio" && <PortfolioAnalysisPanel />}
 			{activeTab === "unwind" && <UnwindTrackingPanel />}
-			{activeTab === "wildman" && <WildmanDailyPanel onOpenLedger={() => selectTab("unwind")} />}
+			{activeTab === "wildman" && <WildmanTradingWorkspace onOpenLedger={() => selectTab("unwind")} />}
 			{activeTab === "performance" && <StrategyPerformanceDashboard />}
 		</AnalysisSurface>
 	);

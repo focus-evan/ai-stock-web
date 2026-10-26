@@ -1,5 +1,6 @@
 import catalogThemeUrl from "../public/research-library/_ui/catalog.css?url";
 import readerThemeUrl from "../public/research-library/_ui/reader.css?url";
+import { enhanceTradingManual } from "./research-wildman";
 
 const themeId = "ai-stock-research-theme";
 
@@ -15,6 +16,7 @@ export function applyResearchTheme(target: Document | null) {
 	link.href = catalog ? catalogThemeUrl : readerThemeUrl;
 	if (!existing)
 		target.head.append(link);
+	enhanceTradingManual(target);
 }
 
 export function researchCatalogUrl() {

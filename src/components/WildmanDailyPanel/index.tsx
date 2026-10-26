@@ -1,4 +1,5 @@
 import type { UnwindPlan } from "#src/api/strategy";
+import type { UnwindPlanExt } from "#src/api/strategy/unwind-extra";
 import { fetchUnwindPlans, refreshUnwindExecution } from "#src/api/strategy";
 import PriceMonitor from "#src/components/UnwindTrackingPanel/PriceMonitor";
 import { StrategyDateStamp } from "#src/components/UnwindTrackingPanel/StrategyDate";
@@ -12,7 +13,7 @@ const sourceUrl = "/research-library/content/douyin/collections/favorites/videos
 const phaseNames = { sell: "卖点候选", buyback: "已卖待接", recovery: "修复退出", wait: "等待反弹", blocked: "暂停策略" };
 const number = (value: number | undefined | null, digits = 2) => value == null || !Number.isFinite(value) ? "—" : value.toFixed(digits);
 
-export default function WildmanDailyPanel({ onOpenLedger }: { onOpenLedger: () => void }) {
+export default function WildmanDailyPanel({ onOpenLedger, embedded = false }: { onOpenLedger: () => void, embedded?: boolean }) {
 	const [plans, setPlans] = useState<UnwindPlan[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
@@ -56,17 +57,24 @@ export default function WildmanDailyPanel({ onOpenLedger }: { onOpenLedger: () =
 		mounted.current = true;
 		void load();
 		const timer = window.setInterval(() => setNow(new Date()), 30000);
+		const reader = embedded ? window.setInterval(() => void load(), 60000) : null;
 		return () => {
 			mounted.current = false;
 			window.clearInterval(timer);
+			if (reader !== null)
+				window.clearInterval(reader);
 		};
-	}, [load]);
+	}, [load, embedded]);
 	const refresh = async () => {
 		if (refreshingRef.current)
 			return;
 		refreshingRef.current = true;
 		setRefreshing(true);
 		try {
+			if (embedded) {
+				await load();
+				return;
+			}
 			const response = await refreshUnwindExecution();
 			if (!mounted.current)
 				return;
@@ -151,14 +159,22 @@ export default function WildmanDailyPanel({ onOpenLedger }: { onOpenLedger: () =
 					</div>
 				</div>
 				<div className="wm-header-actions">
-					<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={refresh}>更新今日策略 / 行情</Button>
+					<Button type="primary" icon={<ReloadOutlined />} loading={refreshing} onClick={refresh}>{embedded ? "重新读取解套计划" : "更新今日策略 / 行情"}</Button>
 					<Button icon={<SwapOutlined />} onClick={onOpenLedger}>查看 / 记录真实成交</Button>
 					<a href={sourceUrl} target="_blank" rel="noreferrer">查看野人完整讲解 ↗</a>
 				</div>
 			</header>
 			{error && <Alert type="error" showIcon message={error} action={<Button onClick={load}>重试</Button>} />}
-			<Alert type={staleCount ? "warning" : "info"} showIcon message={staleCount ? `${staleCount} 只当天预案待更新 / 已过有效期，其余 ${readyCount} 只可查看计划` : `今日策略已就绪 ${readyCount} 只 · 当前条件通过 ${actionableCount} 只`} description="后台每个交易日09:00起，使用上一交易日完整日线生成当天预案；关闭网页也会生成。页面每10分钟核验价格并到价弹窗。日线依据为前一交易日是正常的；盘中报价超过120秒只暂停当前动作，保留当天计划。实际卖出后先记录成交，再重算接回价与股数。" />
-			<PriceMonitor onPlans={receiveMonitoredPlans} />
+			<Alert type={staleCount ? "warning" : "info"} showIcon message={staleCount ? `${staleCount} 只当天预案待更新 / 已过有效期，其余 ${readyCount} 只可查看计划` : `今日策略已就绪 ${readyCount} 只 · 当前条件通过 ${actionableCount} 只`} description={`后台每个交易日09:00起，使用上一交易日完整日线生成当天预案；关闭网页也会生成。${embedded ? "手册内每60秒读取计划，到价提醒在完整工作台查看。" : "页面每10分钟核验价格并到价弹窗。"}日线依据为前一交易日是正常的；盘中报价超过120秒只暂停当前动作，保留当天计划。实际卖出后先记录成交，再重算接回价与股数。`} />
+			{embedded
+				? (
+					<p className="wm-footer-note">
+						手册内每60秒读取计划；到价提醒请在
+						<a href="/short-term-strategy/stock-analysis?tab=wildman" target="_top">完整工作台</a>
+						查看。
+					</p>
+				)
+				: <PriceMonitor onPlans={receiveMonitoredPlans} />}
 			<div className="wm-summary">
 				<div>
 					<span>今日计划就绪</span>
@@ -211,6 +227,8 @@ export default function WildmanDailyPanel({ onOpenLedger }: { onOpenLedger: () =
 			<div className="wm-cards">
 				{visible.map(({ plan, guide }) => {
 					const a = plan.execution?.plan;
+					const recovery = (plan as UnwindPlanExt).recovery;
+					const recoveryMoney = (value: number | null | undefined) => recovery?.available && typeof value === "number" && Number.isFinite(value) ? `${guide.symbol}${number(value, guide.symbol === "HK$" ? 3 : 2)}` : "未提供";
 					const key = `${clock.date}:${plan.watchlist_id}:${a?.generated_at || "missing"}:${plan.execution?.signal.account_version || ""}`;
 					const checked = checks[key] || [false, false];
 					const precision = guide.symbol === "HK$" ? 3 : 2;
@@ -278,6 +296,14 @@ export default function WildmanDailyPanel({ onOpenLedger }: { onOpenLedger: () =
 										{guide.symbol}
 										{number(plan.effective_cost, precision)}
 									</b>
+								</div>
+								<div>
+									<span>整体回本价（含已实现盈亏）</span>
+									<b>{recoveryMoney(recovery?.remaining_breakeven_price)}</b>
+								</div>
+								<div>
+									<span>累计总盈亏</span>
+									<b>{recoveryMoney(recovery?.total_pnl)}</b>
 								</div>
 								<div>
 									<span>当前 / 已卖待接</span>

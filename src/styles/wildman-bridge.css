@@ -1,0 +1,19 @@
+html[data-wildman-live] .hero { padding-block: 24px 30px; }
+html[data-wildman-live] .hero h1 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.25; margin-block: 12px 16px; }
+html[data-wildman-live] .hero-copy { font-size: 16px; line-height: 1.8; margin-block: 12px 20px; }
+html[data-wildman-live] .hero-panel { padding: 20px; }
+html[data-wildman-live] .hero-panel strong { font-size: 32px; }
+.wm-live-bridge { scroll-margin-top: 88px; padding-top: 32px; padding-bottom: 32px; }
+.wm-live-intro { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-bottom: 18px; }
+.wm-live-intro h2 { flex-basis: 100%; margin: 0; font-size: clamp(22px, 2.5vw, 30px); color: var(--ink, #172b45); }
+.wm-live-intro p { margin: 0; flex: 1; min-width: min(100%, 260px); color: var(--muted, #61738b); line-height: 1.8; }
+.wm-live-intro > a { font-size: 14px; font-weight: 600; color: #1d4ed8; }
+.wm-live-frame { display: block; width: 100%; min-height: 280px; border: 1px solid #dfe7f1; border-radius: 16px; background: #f0f4f9; }
+.wm-independent-trial { border: 1px solid #dfe7f1; border-radius: 12px; background: #fff; }
+.wm-independent-trial > summary { cursor: pointer; padding: 20px 0; font-size: 17px; font-weight: 650; color: #172b45; }
+.wm-independent-trial > .shell { width: 100%; padding-inline: 0; }
+@media (max-width: 767px) {
+  .wm-live-bridge { padding-top: 22px; padding-bottom: 22px; }
+  .wm-live-frame { border-radius: 10px; }
+  .wm-independent-trial > summary { font-size: 15px; }
+}

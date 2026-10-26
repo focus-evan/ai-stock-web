@@ -11,10 +11,10 @@ vi.mock("#src/components/WatchlistModal", () => ({ default: () => null }));
 vi.mock("#src/components/WatchlistPanel", () => ({ default: () => <div>自选内容</div> }));
 vi.mock("#src/components/PortfolioAnalysisPanel", () => ({ default: () => <div>持仓内容</div> }));
 vi.mock("#src/components/UnwindTrackingPanel", () => ({ default: () => <div>解套内容</div> }));
-vi.mock("#src/components/WildmanDailyPanel", () => ({ default: ({ onOpenLedger }: { onOpenLedger: () => void }) => (
+vi.mock("#src/components/WildmanTradingWorkspace", () => ({ default: ({ onOpenLedger }: { onOpenLedger: () => void }) => (
 	<div>
-		野人每日指导内容
-		<button onClick={onOpenLedger}>打开解套成交账本</button>
+		野人每日实战内容
+		<button type="button" onClick={onOpenLedger}>打开解套成交账本</button>
 	</div>
 ) }));
 vi.mock("#src/components/StrategyPerformanceDashboard", () => ({ default: () => <div>绩效内容</div> }));
@@ -39,7 +39,7 @@ describe("stock analysis presentation and request lifecycle", () => {
 	it("opens the wildman daily tab through a shareable link and returns to the existing trade ledger", () => {
 		window.history.replaceState({}, "", "/#/short-term-strategy/stock-analysis?tab=wildman");
 		render(<StockAnalysisPage />);
-		expect(screen.getByText("野人每日指导内容")).toBeInTheDocument();
+		expect(screen.getByText("野人每日实战内容")).toBeInTheDocument();
 		expect(screen.getByRole("tab", { name: "跟踪与持仓" })).toHaveAttribute("aria-selected", "true");
 		fireEvent.click(screen.getByText("打开解套成交账本"));
 		expect(screen.getByText("解套内容")).toBeInTheDocument();
