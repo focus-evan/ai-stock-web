@@ -91,3 +91,16 @@ export async function fetchWildmanHoldings(signal?: AbortSignal): Promise<Wildma
 	}
 	return data;
 }
+
+/** Explicit user action: the legacy execution/refresh endpoint only reads saved plans. */
+export async function generateWildmanUnwindPlans() {
+	const response = await request.post("strategy/combined/watchlist/unwind-plans/refresh", { timeout: 180000, retry: 0 })
+		.json<{ status: "success" | "partial", data: { total: number, errors: unknown[], generated?: unknown[] }, message?: string }>();
+	if (!["success", "partial"].includes(response.status) || !response.data || !Array.isArray(response.data.errors)) {
+		throw new Error("解套生成结果不完整");
+	}
+	if (typeof response.data.total !== "number" || !Number.isFinite(response.data.total) || response.data.total < 0) {
+		throw new Error("解套生成结果不完整");
+	}
+	return response;
+}

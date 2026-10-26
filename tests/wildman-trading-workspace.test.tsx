@@ -1,15 +1,13 @@
 import type { WildmanCandidate, WildmanDaily, WildmanHoldings } from "../src/api/wildman";
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { refreshUnwindPlans } from "../src/api/strategy";
-import { fetchWildmanDaily, fetchWildmanHoldings } from "../src/api/wildman";
+import { fetchWildmanDaily, fetchWildmanHoldings, generateWildmanUnwindPlans } from "../src/api/wildman";
 import WildmanTradingWorkspace, { WILDMAN_LOGIN_PATH } from "../src/components/WildmanTradingWorkspace";
 import WildmanWidget, { MAX_WIDGET_HEIGHT } from "../src/pages/wildman-widget";
 import { useAuthStore } from "../src/store/auth";
 
 const identityCleanup = vi.hoisted(() => ({ access: vi.fn(), tabs: vi.fn() }));
-vi.mock("#src/api/wildman", () => ({ fetchWildmanDaily: vi.fn(), fetchWildmanHoldings: vi.fn() }));
-vi.mock("#src/api/strategy", () => ({ refreshUnwindPlans: vi.fn() }));
+vi.mock("#src/api/wildman", () => ({ fetchWildmanDaily: vi.fn(), fetchWildmanHoldings: vi.fn(), generateWildmanUnwindPlans: vi.fn() }));
 vi.mock("#src/store/access", () => ({ useAccessStore: { getState: () => ({ reset: identityCleanup.access }) } }));
 vi.mock("#src/store/tabs", () => ({ useTabsStore: { getState: () => ({ resetTabs: identityCleanup.tabs }) } }));
 vi.mock("#src/store/auth", async () => {
@@ -68,7 +66,7 @@ describe("wildman private daily workspace", () => {
 		expect(screen.getByRole("link", { name: "登录后查看" })).toHaveAttribute("target", "_top");
 		expect(fetchWildmanDaily).not.toHaveBeenCalled();
 		expect(fetchWildmanHoldings).not.toHaveBeenCalled();
-		expect(refreshUnwindPlans).not.toHaveBeenCalled();
+		expect(generateWildmanUnwindPlans).not.toHaveBeenCalled();
 	});
 	it("shows conditional recommendations and explicit exclusions without an immediate buy action", async () => {
 		render(<WildmanTradingWorkspace />);
@@ -124,7 +122,7 @@ describe("wildman private daily workspace", () => {
 		expect(screen.getByText("300 股")).toBeVisible();
 		expect(screen.getByText("13.50")).toBeVisible();
 		expect(screen.getByText(/不把总持仓当作今日可卖股数/)).toBeVisible();
-		expect(refreshUnwindPlans).not.toHaveBeenCalled();
+		expect(generateWildmanUnwindPlans).not.toHaveBeenCalled();
 		expect(screen.getByText("已有解套操作单")).toBeVisible();
 		expect(screen.getByRole("button", { name: "根据我的持仓生成/更新解套" })).toBeEnabled();
 		fireEvent.click(screen.getByRole("button", { name: "收起解套操作单" }));
@@ -146,7 +144,7 @@ describe("wildman private daily workspace", () => {
 	it("only posts plan generation after the explicit button and never as part of polling", async () => {
 		vi.useFakeTimers();
 		vi.mocked(fetchWildmanHoldings).mockResolvedValue(holdings({ pending: 1, initialized: 0 }));
-		vi.mocked(refreshUnwindPlans).mockResolvedValue({ status: "success", data: { total: 1, generated: [], errors: [] }, message: "done" });
+		vi.mocked(generateWildmanUnwindPlans).mockResolvedValue({ status: "success", data: { total: 1, generated: [], errors: [] }, message: "done" });
 		render(<WildmanTradingWorkspace initialTab="unwind" />);
 		await act(async () => {
 			await Promise.resolve();
@@ -156,12 +154,12 @@ describe("wildman private daily workspace", () => {
 			await vi.advanceTimersByTimeAsync(60000);
 		});
 		expect(fetchWildmanHoldings).toHaveBeenCalledTimes(2);
-		expect(refreshUnwindPlans).not.toHaveBeenCalled();
+		expect(generateWildmanUnwindPlans).not.toHaveBeenCalled();
 		await act(async () => {
 			vi.mocked(fetchWildmanHoldings).mockResolvedValue(holdings());
 			fireEvent.click(screen.getByRole("button", { name: "根据我的持仓生成/更新解套" }));
 		});
-		expect(refreshUnwindPlans).toHaveBeenCalledTimes(1);
+		expect(generateWildmanUnwindPlans).toHaveBeenCalledTimes(1);
 		expect(screen.getByText("已有解套操作单")).toBeVisible();
 	});
 	it("removes a prior user's private holdings and ignores their late read after switching accounts", async () => {

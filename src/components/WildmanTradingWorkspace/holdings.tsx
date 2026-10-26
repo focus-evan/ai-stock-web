@@ -1,5 +1,4 @@
-import { refreshUnwindPlans } from "#src/api/strategy";
-import { fetchWildmanHoldings } from "#src/api/wildman";
+import { fetchWildmanHoldings, generateWildmanUnwindPlans } from "#src/api/wildman";
 import WildmanDailyPanel from "#src/components/WildmanDailyPanel";
 import { appRouteHref } from "#src/utils/app-route-href";
 import { useEffect, useRef, useState } from "react";
@@ -30,7 +29,7 @@ export default function WildmanHoldingsPanel({ onOpenLedger, embedded = false }:
 		setGenerating(true);
 		setGenerationMessage("");
 		try {
-			const result = await refreshUnwindPlans();
+			const result = await generateWildmanUnwindPlans();
 			if (!mounted.current)
 				return;
 			if (!["success", "partial"].includes(result.status))
