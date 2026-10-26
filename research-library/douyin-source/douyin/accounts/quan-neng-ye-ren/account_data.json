@@ -389,6 +389,37 @@
   },
   "items": [
     {
+      "aweme_id": "7700454808565936719",
+      "display_title": "上证指数修订消息的作者解读：权重影响与增量资金",
+      "title": "解读一下修订上证指数的逻辑#上证指数 #大盘分析 #金融#财经#A股",
+      "published_at": "2026-10-25 12:17:00",
+      "create_time": 1792901820,
+      "duration_seconds": 31.5,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7700454808565936719",
+      "raw_transcript": "对你们解读下这个消息\n这个消息的意思就是\n以后权重和大白马\n对指数的影响小了一点\n也就说 哪怕以后\n比如说 凌王啊 耀王啊\n韩王啊 毛王啊\n蝶蹄呢 大盘指数\n它也不会影响太大\n也就说我们前几天\n不是一天杀一个把大白马吗\n就这个意思\n它这里是利好中小市值的\n但是\n没有增量资金的前提下\n这个消息你可以无视啊\n没有用嘛\n拜拜",
+      "transcript": "对你们解读下这个消息\n这个消息的意思就是\n以后权重和大白马\n对指数的影响小了一点\n也就说 哪怕以后\n比如说 宁王啊、药王啊、【原转写“韩王”，俗称待听辨】、茅王啊【股票俗称按语境整理，未映射具体公司】\n跌停呢 大盘指数\n它也不会影响太大\n也就说我们前几天\n不是一天杀一个大白马吗\n就这个意思\n它这里是利好中小市值的\n但是\n没有增量资金的前提下\n这个消息你可以无视啊\n没有用嘛\n拜拜",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "野人将所谈消息理解为权重股和大白马对指数的影响有所减弱，并用几类股票俗称举例。",
+        "他认为这可能对中小市值有利，但强调没有增量资金时不必过分重视该消息。",
+        "视频未附原公告及具体修订细则；仅记录作者的解读，不扩写为已经确认的规则变化或受益股名单。"
+      ],
+      "category": "市场",
+      "ai_related": false,
+      "html_file": "videos/new_7700454808565936719.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-10-26 11:13:48",
+      "sync_run_id": "daily_20261026"
+    },
+    {
       "aweme_id": "7700242254589569699",
       "display_title": "踏空后的心理按摩：理性、纪律与交易系统",
       "title": "#知识分享内容太过真实 #一本正经的唠嗑 #日常随拍分享 #真实生活瞬间 #拒绝数据焦虑",
@@ -35674,16 +35705,16 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261025",
+    "run_id": "daily_20261026",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-25 10:56:53",
-    "latest_observed_id": "7700242254589569699",
+    "scanned_at": "2026-10-26 11:05:28",
+    "latest_observed_id": "7700454808565936719",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 2,
+    "merged_new": 1,
     "failed": 0
   }
 }
