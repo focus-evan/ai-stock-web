@@ -18,10 +18,23 @@ describe("unwind safety presentation", () => {
 		expect(screen.getByText(/破位观察/)).toBeTruthy();
 	});
 	it("keeps a newly triggered review visibly pending", () => {
-		const analysis: any = { diagnosis: { class: "B", label: "下行", why: "趋势" }, review: { triggered: true, pending: true, completed: false, reasons: ["需要事件之后的新报告"] } };
+		const analysis: any = {
+			diagnosis: { class: "B", label: "下行", why: "趋势" },
+			review: { triggered: true, pending: true, completed: false, reasons: ["到达复盘线"] },
+			automatic_fundamental_review: { attempted: true, status: "FAILED", message: "系统自动基本面评估暂时失败，将稍后重试" },
+		};
 		render(<StrategyOverview plan={{} as any} analysis={analysis} />);
-		expect(screen.getByText("已到复盘线，请先完成基本面复核")).toBeTruthy();
-		expect(screen.getByText("需要事件之后的新报告")).toBeTruthy();
+		expect(screen.getByText("系统已自动复核，当前尚未通过")).toBeTruthy();
+		expect(screen.getByText(/系统自动基本面评估暂时失败/)).toBeTruthy();
+	});
+	it("shows the automatic daily emotion gate", () => {
+		const analysis: any = {
+			diagnosis: { class: "C", label: "震荡错杀", why: "结构稳定" },
+			market_emotion: { allowed: true, status: "READY", label: "当日情绪适合解套", reason: "当天情绪中性、风险中" },
+		};
+		render(<StrategyOverview plan={{} as any} analysis={analysis} />);
+		expect(screen.getByText("当日情绪适合解套")).toBeTruthy();
+		expect(screen.getByText(/当天情绪中性/)).toBeTruthy();
 	});
 	it("opens explicit portfolio funding controls with cash-source limitations", async () => {
 		vi.mocked(fetchUnwindPortfolioRisk).mockResolvedValue({ status: "success", data: {

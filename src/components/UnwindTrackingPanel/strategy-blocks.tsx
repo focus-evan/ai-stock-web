@@ -31,7 +31,7 @@ async function errorText(error: any, fallback: string) {
 /** 诊断分类、三维基本面、复盘线与补仓计划的概览。 */
 export function StrategyOverview({ plan, analysis }: { plan: UnwindPlanExt, analysis: UnwindAnalysisExt }) {
 	const symbol = analysis.currency_symbol || "¥";
-	const { diagnosis, fundamentals, add_plan: addPlan, review, rotation_gate: gate } = analysis;
+	const { diagnosis, fundamentals, add_plan: addPlan, review, rotation_gate: gate, market_emotion: marketEmotion, automatic_fundamental_review: automaticReview } = analysis;
 	const recovery = plan.recovery || analysis.recovery;
 	if (!diagnosis && !fundamentals)
 		return null;
@@ -61,6 +61,7 @@ export function StrategyOverview({ plan, analysis }: { plan: UnwindPlanExt, anal
 					</Tag>
 				)}
 				{fundamentals && <Tag color={verdictColors[fundamentals.verdict]}>{fundamentals.verdict_label}</Tag>}
+				{marketEmotion && <Tag color={marketEmotion.allowed ? "green" : "gold"}>{marketEmotion.label}</Tag>}
 				{fundamentals?.layers.map(layer => (
 					<Tag key={layer.key} color={layerColors[layer.status]} title={layer.conclusion}>
 						{`${layer.label}·${layer.status}`}
@@ -83,13 +84,18 @@ export function StrategyOverview({ plan, analysis }: { plan: UnwindPlanExt, anal
 					</Text>
 				</div>
 			)}
+			{marketEmotion && (
+				<div style={{ marginTop: 2 }}>
+					<Text type="secondary">{marketEmotion.reason}</Text>
+				</div>
+			)}
 			{review?.triggered && (
 				<Alert
 					style={{ marginTop: 8 }}
 					showIcon
 					type={review.pending ? "warning" : "success"}
-					message={review.pending ? "已到复盘线，请先完成基本面复核" : "已到复盘线，基本面复核已完成且健康"}
-					description={review.reasons.join("；")}
+					message={review.pending ? "系统已自动复核，当前尚未通过" : "系统已自动复核基本面，结果健康"}
+					description={[automaticReview?.message, review.reasons.join("；")].filter(Boolean).join(" ")}
 				/>
 			)}
 			{addPlan && (
@@ -219,13 +225,13 @@ export function SettingsModal({ plan, onClose, onSaved }: { plan: UnwindPlanExt 
 						showIcon
 						style={{ marginBottom: 16 }}
 						message={`补仓预算已用 ¥${(plan.add_summary?.add_spent ?? 0).toFixed(2)}，剩余 ¥${(plan.add_summary?.add_remaining ?? plan.settings?.add_budget ?? 0).toFixed(2)}`}
-						description="复盘线只触发基本面复核，不会自动买卖；你标记“逻辑已破坏”后，系统会停止补仓和降本，只提示减仓或退出。"
+						description="复盘线会触发系统自动更新公司基本面评估；评估健康且当天情绪允许时，系统直接重算解套策略。你标记“逻辑已破坏”后，系统会停止补仓和降本。"
 					/>
 					<Form form={form} layout="vertical">
 						<Form.Item name="risk_group" label="同产业链风险分组"><Input maxLength={100} placeholder="例如：光通信。同一产业链使用同一名称" /></Form.Item>
 						<Form.Item name="add_thesis" label="新增资金的投资理由"><Input.TextArea maxLength={500} placeholder="为何现在仍值得投入，而不只是摊低原来的成本" /></Form.Item>
 						<Form.Item name="add_max_price" label="基于当前判断的最高买入价"><InputNumber min={0} max={1000000} precision={3} style={{ width: "100%" }} /></Form.Item>
-						<Form.Item name="risk_event_note" label="新的重大风险事件"><Input.TextArea maxLength={500} placeholder="填写或修改事件后，必须重新做个股研究才能解除复核" /></Form.Item>
+						<Form.Item name="risk_event_note" label="新的重大风险事件"><Input.TextArea maxLength={500} placeholder="填写或修改事件后，系统会自动重新评估公司基本面" /></Form.Item>
 						<Form.Item name="logic_broken" label="买入逻辑已被破坏" valuePropName="checked">
 							<Switch />
 						</Form.Item>

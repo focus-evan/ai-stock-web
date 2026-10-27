@@ -76,6 +76,26 @@ export interface UnwindReview {
 	max_wait_days: number
 }
 
+export interface UnwindMarketEmotion {
+	allowed: boolean
+	status: "READY" | "BLOCKED" | "MISSING" | "STALE"
+	label: string
+	reason: string
+	trading_date?: string | null
+	overall_sentiment?: string
+	risk_level?: string
+	risk_score?: number
+	trading_advice?: string
+	max_position_pct?: number
+}
+
+export interface UnwindAutomaticFundamentalReview {
+	attempted: boolean
+	status: "PASSED" | "BLOCKED" | "FAILED" | "COOLDOWN"
+	message: string
+	analyzed_at?: string | null
+}
+
 export interface UnwindGate {
 	allowed: boolean
 	status: string
@@ -137,6 +157,8 @@ export type UnwindAnalysisExt = UnwindAnalysis & Partial<{
 	add_plan: UnwindAddPlan
 	reduce_plan: UnwindReducePlan
 	review: UnwindReview
+	market_emotion: UnwindMarketEmotion
+	automatic_fundamental_review: UnwindAutomaticFundamentalReview
 	rotation_gate: UnwindGate | null
 	backtest: UnwindBacktestSummary | null
 	limit_pct: number
