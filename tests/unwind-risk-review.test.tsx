@@ -15,7 +15,7 @@ describe("dated risk review", () => {
 		vi.mocked(saveUnwindRiskReview).mockResolvedValue({ status: "success", data });
 		render(<RiskReview watchlistId={66} />);
 		await act(async () => {
-			fireEvent.click(screen.getByRole("button", { name: "今日风险核验" }));
+			fireEvent.click(screen.getByRole("button", { name: "补充风险信息（可选）" }));
 		});
 		expect(fetchUnwindRiskReview).toHaveBeenCalledWith(66);
 		expect(screen.getByRole("textbox")).toHaveValue(data.evidence);
@@ -28,7 +28,7 @@ describe("dated risk review", () => {
 		vi.mocked(fetchUnwindRiskReview).mockResolvedValue({ status: "success", data: null });
 		render(<RiskReview watchlistId={66} />);
 		await act(async () => {
-			fireEvent.click(screen.getByRole("button", { name: "今日风险核验" }));
+			fireEvent.click(screen.getByRole("button", { name: "补充风险信息（可选）" }));
 		});
 		expect(screen.getByRole("textbox")).toHaveValue("");
 		await act(async () => {

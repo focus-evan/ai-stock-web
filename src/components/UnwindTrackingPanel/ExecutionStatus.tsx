@@ -28,11 +28,13 @@ export default function ExecutionStatus({ data, currency }: { data?: UnwindExecu
 							{signal.label}
 						</Typography.Text>
 						<Tag>盘中触发跟踪</Tag>
+						{signal.validation_status === "auto_assessed" && <Tag color="green">基本面与当日情绪已通过</Tag>}
 					</Space>
 				)}
 				description={(
 					<Space direction="vertical" style={{ width: "100%" }}>
 						<Typography.Text>{signal.reason || "当天跟踪尚未就绪，点击刷新检查"}</Typography.Text>
+						{signal.market_emotion && <Typography.Text type="secondary">{signal.market_emotion.reason}</Typography.Text>}
 						<Row gutter={[16, 10]} style={{ width: "100%" }}>
 							<Col xs={12} md={6}><Statistic title="当前操作股数" value={signal.shares} suffix="股" /></Col>
 							<Col xs={12} md={6}><Statistic title={signal.action === "SELL" ? "卖出限价（不低于）" : signal.action === "BUY_BACK" ? "买回限价（不高于）" : "当前下单价格"} value={money(signal.limit_price)} /></Col>

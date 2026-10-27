@@ -24,7 +24,7 @@ describe("unwind safety presentation", () => {
 			automatic_fundamental_review: { attempted: true, status: "FAILED", message: "系统自动基本面评估暂时失败，将稍后重试" },
 		};
 		render(<StrategyOverview plan={{} as any} analysis={analysis} />);
-		expect(screen.getByText("系统已自动复核，当前尚未通过")).toBeTruthy();
+		expect(screen.getByText("自动基本面评估暂不可用，稍后重试")).toBeTruthy();
 		expect(screen.getByText(/系统自动基本面评估暂时失败/)).toBeTruthy();
 	});
 	it("shows the automatic daily emotion gate", () => {

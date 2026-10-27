@@ -52,7 +52,7 @@ export function StrategyOverview({ plan, analysis }: { plan: UnwindPlanExt, anal
 					</>
 				)
 				: <Alert type="warning" showIcon message={recovery.reason || "账本需核对"} />)}
-			<Alert type="info" showIcon message="新策略处于验证阶段，以下是复核与研究候选；正式盘中指令仍以执行状态为准。" style={{ marginBottom: 8 }} />
+			<Alert type="info" showIcon message="系统自动评估基本面与当天情绪，满足条件后生成解套策略；当前操作看上方实时结果。" style={{ marginBottom: 8 }} />
 			<Space wrap size={[6, 6]}>
 				<SafetyOutlined style={{ color: "#722ed1" }} />
 				{diagnosis && (
@@ -94,7 +94,7 @@ export function StrategyOverview({ plan, analysis }: { plan: UnwindPlanExt, anal
 					style={{ marginTop: 8 }}
 					showIcon
 					type={review.pending ? "warning" : "success"}
-					message={review.pending ? "系统已自动复核，当前尚未通过" : "系统已自动复核基本面，结果健康"}
+					message={review.pending ? automaticReview?.status === "FAILED" ? "自动基本面评估暂不可用，稍后重试" : automaticReview?.status === "BLOCKED" ? "基本面评估未通过" : "系统正在自动评估基本面" : "基本面评估已通过"}
 					description={[automaticReview?.message, review.reasons.join("；")].filter(Boolean).join(" ")}
 				/>
 			)}

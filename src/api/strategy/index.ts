@@ -1492,7 +1492,9 @@ export interface UnwindPlan {
 export interface UnwindSignal {
 	action: "WAIT" | "SELL" | "BUY_BACK"
 	suggested_action?: "SELL" | "BUY_BACK"
-	validation_status?: "shadow"
+	validation_status?: "shadow" | "auto_assessed"
+	market_emotion?: { allowed: boolean, label: string, reason: string }
+	automatic_fundamental_review?: { status: string, message: string }
 	candidate?: "SELL" | "BUY_BACK" | null
 	label: string
 	reason: string

@@ -91,7 +91,7 @@ export interface UnwindMarketEmotion {
 
 export interface UnwindAutomaticFundamentalReview {
 	attempted: boolean
-	status: "PASSED" | "BLOCKED" | "FAILED" | "COOLDOWN"
+	status: "PASSED" | "BLOCKED" | "FAILED" | "COOLDOWN" | "PENDING"
 	message: string
 	analyzed_at?: string | null
 }
