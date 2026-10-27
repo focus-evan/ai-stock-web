@@ -359,6 +359,66 @@
   },
   "items": [
     {
+      "aweme_id": "7701138859169845218",
+      "display_title": "10月27日早间：海外市场与光模块、AI硬件预期",
+      "title": "10月27日早间：海外市场与光模块、AI硬件预期",
+      "published_at": "2026-10-27 08:31",
+      "create_time": 1793061060,
+      "duration_seconds": 19.806009,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7701138859169845218",
+      "raw_transcript": "兄弟们 现在是早上八点半啊\n韩国股市这边一开盘 涨了三个点\n然后我看外围对我们A股的预期\n就主流的光模块以及AI硬件品种\n基本上是高三个点开盘\n如果今天那支不扎盘\n应该就是三个点往上走啊",
+      "transcript": "兄弟们 现在是早上八点半啊\n韩国股市这边一开盘 涨了三个点\n然后我看外围对我们A股的预期\n就主流的光模块以及AI硬件品种\n基本上是高三个点开盘\n如果今天内资不砸盘\n应该就是三个点往上走啊",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": false
+      },
+      "points": [
+        "李一恩在早上八点半观察韩国股市，并表达对光模块和AI硬件开盘表现的预期。",
+        "作者提到约三个点的涨幅，并附有“内资不砸盘”的条件；相关词语已用视频字幕核对，不据此生成确定走势判断。"
+      ],
+      "category": "AI",
+      "ai_related": true,
+      "html_file": "videos/new_7701138859169845218.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-10-27 12:43:46",
+      "sync_run_id": "daily_20261027"
+    },
+    {
+      "aweme_id": "7700844196978137954",
+      "display_title": "10月26日午后：光模块消息与市场信心",
+      "title": "10月26日午后：光模块消息与市场信心",
+      "published_at": "2026-10-26 13:28",
+      "create_time": 1792992480,
+      "duration_seconds": 33.166667,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7700844196978137954",
+      "raw_transcript": "市场终于好一点了 开始就是 周五就一波 今天情况也差不多 中午的时候辟谣嘛 就说光模块订单没问题 然后下午1点多钟又拿起来了\n整体来说 旧股价的动作越来越多 大家还是有点信心\n我个人的看法是这样的 就是这个位置开工就没有回头建了嘛 对吧 你周五的时候1000多亿的主义资金已经进去了\n下来市场还是值得期待的 不用太悲观",
+      "transcript": "市场终于好一点了 开始救市了 周五【“就一波”待听辨】 今天情况也差不多 中午的时候辟谣嘛 就说光模块订单没问题 然后下午1点多钟又拉起来了\n整体来说 救股价的动作越来越多 大家还是有点信心\n我个人的看法是这样的 就是这个位置开弓就没有回头箭了嘛 对吧 你周五的时候1000多亿的主力资金已经进去了\n下来市场还是值得期待的 不用太悲观",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者称午间出现有关光模块订单的辟谣消息，随后相关行情有所回升；视频未提供可独立核验的订单材料。",
+        "他以此前资金进入市场为依据表达偏乐观预期；字幕中“1000多亿的主力资金”仅作为作者口述保留，不当作已核验资金数据。"
+      ],
+      "category": "AI",
+      "ai_related": true,
+      "html_file": "videos/new_7700844196978137954.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-10-27 12:43:46",
+      "sync_run_id": "daily_20261027"
+    },
+    {
       "aweme_id": "7698344930322884840",
       "display_title": "AI债务风险的两种看法：悲观传导与利润覆盖",
       "title": "AI债务风险的两种看法：悲观传导与利润覆盖",
@@ -8094,16 +8154,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261026",
+    "run_id": "daily_20261027",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-26 11:05:27",
-    "latest_observed_id": "7698344930322884840",
+    "scanned_at": "2026-10-27 12:41:26",
+    "latest_observed_id": "7701138859169845218",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 0,
+    "merged_new": 2,
     "failed": 0
   }
 }
