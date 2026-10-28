@@ -8154,16 +8154,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261027",
+    "run_id": "daily_20261028",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-27 12:41:26",
+    "scanned_at": "2026-10-28 11:01:43",
     "latest_observed_id": "7701138859169845218",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 2,
+    "merged_new": 0,
     "failed": 0
   }
 }
