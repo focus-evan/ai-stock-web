@@ -12,7 +12,7 @@ import { useUserStore } from "../src/store/user";
 vi.mock("#src/api/strategy", () => ({ acknowledgeUnwindAlerts: vi.fn(), fetchUnwindAlerts: vi.fn(), fetchUnwindPlans: vi.fn(), refreshUnwindExecution: vi.fn() }));
 const now = new Date("2026-10-21T10:00:00+08:00");
 function plan(): UnwindPlan {
-	return { watchlist_id: 66, stock_code: "301566", stock_name: "测试持仓", open_sold_shares: 0, execution: { plan: { trading_date: "2026-10-21", technical: { as_of: "2026-10-20" }, generated_at: "2026-10-21 09:00:00", valid_until: "2026-10-21T14:57:00+08:00", sell_zone_high: 10.1, pause_buy_below: 9, cancel_sell_above: 12 }, signal: { action: "WAIT", phase: "intraday", target_price: 10, planned_shares: 100, reason: "等待连续报价确认", quote: { price: 10.2, as_of: now.toISOString() }, valid_until: new Date(now.getTime() + 120000).toISOString() } } } as UnwindPlan;
+	return { watchlist_id: 66, stock_code: "301566", stock_name: "测试持仓", open_sold_shares: 0, execution: { plan: { trading_date: "2026-10-21", technical: { as_of: "2026-10-20" }, generated_at: "2026-10-21 09:00:00", valid_until: "2026-10-21T14:57:00+08:00", sell_zone_low: 10, sell_zone_high: 10.1, buyback_price: 9.8, pause_buy_below: 9, cancel_sell_above: 12 }, signal: { action: "WAIT", phase: "intraday", target_price: 10, buyback_target_price: 9.8, planned_shares: 100, reason: "等待连续报价确认", quote: { price: 10.2, as_of: now.toISOString() }, valid_until: new Date(now.getTime() + 120000).toISOString() } } } as UnwindPlan;
 }
 function event(id = 1, stage: UnwindAlertEvent["stage"] = "confirmed"): UnwindAlertEvent {
 	return { id, stock_code: "301566", stock_name: "测试持仓", trading_date: "2026-10-21", stage, delivered_at: null, read_at: null, payload: { ...plan().execution!.signal, checked_at: now.toISOString(), action: stage === "confirmed" ? "SELL" : "WAIT", shares: stage === "confirmed" ? 100 : 0, limit_price: stage === "confirmed" ? 10 : null, event_action: "SELL" } };
@@ -49,19 +49,18 @@ afterEach(() => {
 });
 
 describe("durable unwind notifications", () => {
-	it("shows frozen cancellation and buyback-pause prices inside the popup", async () => {
+	it("keeps the popup focused on planned sell and buyback prices", async () => {
 		const saved = event();
 		saved.payload.invalid_conditions = ["突破45.41取消卖出", "跌破35.09暂停买回", "报价超过120秒失效"];
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
 		const popup = screen.getByRole("dialog");
-		expect(popup).toHaveTextContent("突破¥45.410 取消卖出");
-		expect(popup).toHaveTextContent("跌破¥35.090 暂停买回");
-		expect(popup).toHaveTextContent("暂停买回线不是接回目标价");
-		expect(popup).not.toHaveTextContent("突破¥12.000");
+		expect(popup).toHaveTextContent("计划卖出价（不低于）¥10.000");
+		expect(popup).toHaveTextContent("计划买回价（不高于）¥9.800");
+		expect(popup).not.toHaveTextContent("风控参考线");
+		expect(popup).not.toHaveTextContent("突破¥45.410");
 		expect(popup).toHaveTextContent("当前买卖提醒");
-		expect(popup).toHaveTextContent("最新核验价：¥10.200");
-		expect(popup).toHaveTextContent("卖出限价（不低于）¥10.000");
+		expect(popup).toHaveTextContent("现价：¥10.200");
 		expect(popup).toHaveTextContent("本次最多100 股");
 	});
 	it("does not invent historical boundaries or show a zero target for risk alerts", async () => {
@@ -69,26 +68,26 @@ describe("durable unwind notifications", () => {
 		saved.payload.target_price = undefined;
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
-		expect(screen.getByRole("dialog")).toHaveTextContent("请先处理上述风险事项");
-		expect(screen.getByRole("dialog")).toHaveTextContent("暂停操作并复核风险");
+		expect(screen.getByRole("dialog")).toHaveTextContent("计划卖出价（不低于）¥10.000");
+		expect(screen.getByRole("dialog")).toHaveTextContent("计划买回价（不高于）¥9.800");
+		expect(screen.getByRole("dialog")).toHaveTextContent("风险复核中");
 		expect(screen.getByRole("dialog")).not.toHaveTextContent("¥0.000");
 		expect(screen.getByRole("dialog")).toHaveTextContent("风险复核提醒");
-		expect(screen.getByRole("dialog")).toHaveTextContent("最新核验价：¥10.200");
-		expect(screen.getByRole("dialog")).toHaveTextContent("下单限价：暂无");
-		expect(screen.getByRole("dialog")).not.toHaveTextContent("卖出限价（不低于）");
+		expect(screen.getByRole("dialog")).toHaveTextContent("现价：¥10.200");
+		expect(screen.getByRole("dialog")).not.toHaveTextContent("下单限价：暂无");
 	});
-	it("labels risk thresholds as references while preserving the fresh market quote", async () => {
+	it("does not let risk reference lines crowd the two planned prices", async () => {
 		const saved = event(1, "risk");
 		saved.payload.invalid_conditions = ["突破47.4取消卖出", "跌破35.05暂停买回"];
 		saved.payload.reason = "距起始成本-29.8%，到达复核线";
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
 		const popup = screen.getByRole("dialog");
-		expect(popup).toHaveTextContent("最新核验价：¥10.200");
-		expect(popup).toHaveTextContent("下单限价：暂无");
-		expect(popup).toHaveTextContent("风控参考线（非下单价）");
-		expect(popup).toHaveTextContent("突破¥47.400 取消卖出");
-		expect(popup).toHaveTextContent("跌破¥35.050 暂停买回");
+		expect(popup).toHaveTextContent("现价：¥10.200");
+		expect(popup).toHaveTextContent("计划卖出价（不低于）¥10.000");
+		expect(popup).toHaveTextContent("计划买回价（不高于）¥9.800");
+		expect(popup).not.toHaveTextContent("风控参考线（非下单价）");
+		expect(popup).not.toHaveTextContent("突破¥47.400 取消卖出");
 	});
 	it("does not substitute an expired quote or check timestamp for a fresh market price", async () => {
 		const saved = event(1, "risk");
@@ -96,9 +95,9 @@ describe("durable unwind notifications", () => {
 		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
 		const popup = screen.getByRole("dialog");
-		expect(popup).toHaveTextContent("最新核验价：行情待更新");
+		expect(popup).toHaveTextContent("现价：行情待更新");
 		expect(popup).toHaveTextContent(/上次报价\s*¥10\.200（仅供参考）/);
-		expect(popup).not.toHaveTextContent("最新核验价：¥10.200");
+		expect(popup).not.toHaveTextContent("现价：¥10.200");
 	});
 	it("shows missing risk quotes explicitly without fabricating a zero price", async () => {
 		const saved = event(1, "risk");
@@ -115,8 +114,9 @@ describe("durable unwind notifications", () => {
 		await mount();
 		const popup = screen.getByRole("dialog");
 		expect(popup).toHaveTextContent("退出评估提醒");
-		expect(popup).toHaveTextContent("最新核验价：¥10.200");
-		expect(popup).toHaveTextContent("下单限价：暂无");
+		expect(popup).toHaveTextContent("现价：¥10.200");
+		expect(popup).toHaveTextContent("计划卖出价（不低于）¥10.000");
+		expect(popup).toHaveTextContent("计划买回价（不高于）¥9.800");
 		expect(popup).not.toHaveTextContent("现在可卖出");
 	});
 	it("reads every thirty seconds without invoking the execution writer", async () => {

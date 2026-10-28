@@ -15,11 +15,17 @@ import PriceMonitor from "./PriceMonitor";
 import { beijingTime, timestamp } from "./strategy-time";
 import "./strategy-time.css";
 
-interface SavedAlert extends UnwindPriceAlert { id: number, stage: string, read: boolean, shadow: boolean, shares: number, quoteTime: number, invalidConditions: string[] }
-function savedAlert(event: UnwindAlertEvent): SavedAlert {
+interface SavedAlert extends UnwindPriceAlert { id: number, stage: string, read: boolean, shadow: boolean, shares: number, quoteTime: number, invalidConditions: string[], plannedSell: number, plannedBuyback: number }
+function firstPrice(...values: Array<number | null | undefined>) {
+	return values.find(value => Number.isFinite(value) && Number(value) > 0) || 0;
+}
+function savedAlert(event: UnwindAlertEvent, plan?: UnwindPlan): SavedAlert {
 	const signal = event.payload;
 	const at = quoteTimestamp(signal.quote?.as_of);
-	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side: signal.event_action === "BUY_BACK" ? "buy" : "sell", price: signal.quote?.price || 0, target: event.stage === "confirmed" && signal.action !== "WAIT" ? signal.limit_price || 0 : signal.target_price || 0, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteTime: at?.getTime() || 0, quoteAt: at ? beijingTime(at) : "未取得", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.shares || signal.planned_shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [] };
+	const side = signal.event_action === "BUY_BACK" ? "buy" : "sell";
+	const dailyPlan = plan?.execution?.plan;
+	const target = event.stage === "confirmed" && signal.action !== "WAIT" ? signal.limit_price || 0 : signal.target_price || 0;
+	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side, price: signal.quote?.price || 0, target, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteTime: at?.getTime() || 0, quoteAt: at ? beijingTime(at) : "未取得", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.shares || signal.planned_shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [], plannedSell: firstPrice(side === "sell" ? signal.limit_price : null, side === "sell" ? signal.target_price : null, dailyPlan?.sell_zone_low), plannedBuyback: firstPrice(signal.buyback_target_price, side === "buy" ? signal.limit_price : null, side === "buy" ? signal.target_price : null, dailyPlan?.buyback_price) };
 }
 function hasFreshPrice(alert: SavedAlert, now: Date) {
 	const age = now.getTime() - alert.quoteTime;
@@ -81,8 +87,8 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 			clockAnchor.current = { server: checked.getTime(), received };
 			setNow(checked);
 			const failures: string[] = [];
+			const items = planResult.status === "fulfilled" && planResult.value.status === "success" ? planResult.value.data.items : [];
 			if (planResult.status === "fulfilled" && planResult.value.status === "success") {
-				const items = planResult.value.data.items;
 				setPlans(items);
 				setCheckedAt(checked);
 				const freshCount = items.filter(plan => freshUnwindQuote(plan, checked)).length;
@@ -96,7 +102,8 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				failures.push("持仓读取失败，30秒后重试");
 			}
 			if (alertResult.status === "fulfilled" && alertResult.value.status === "success") {
-				const hits = alertResult.value.data.items.filter(event => isLiveUnwindAlert(event, checked) && !read.current.has(event.id)).map(savedAlert);
+				const planByStock = new Map(items.map(plan => [plan.stock_code, plan]));
+				const hits = alertResult.value.data.items.filter(event => isLiveUnwindAlert(event, checked) && !read.current.has(event.id)).map(event => savedAlert(event, planByStock.get(event.stock_code)));
 				const unseen = hits.filter(hit => !seen.current.has(hit.id));
 				if (unseen.length) {
 					unseen.forEach(hit => seen.current.add(hit.id));
@@ -139,14 +146,15 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				return;
 			if (response.status !== "success")
 				throw new Error("history unavailable");
-			setHistory(response.data.items.map(savedAlert));
+			const planByStock = new Map(plans.map(plan => [plan.stock_code, plan]));
+			setHistory(response.data.items.map(event => savedAlert(event, planByStock.get(event.stock_code))));
 			setHistoryOpen(true);
 		}
 		catch {
 			if (run === generation.current)
 				setError("历史提醒读取失败，请重试");
 		}
-	}, []);
+	}, [plans]);
 	const acknowledge = async () => {
 		const run = generation.current;
 		const ids = currentAlerts.map(alert => alert.id);
@@ -249,7 +257,6 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				footer={<Button type="primary" loading={acknowledging} onClick={() => void acknowledge()}>我已知晓，继续监控</Button>}
 				width={660}
 			>
-				<Alert type="info" showIcon message={reviewOnly ? "当前是复核事项，尚无买卖指令。最新核验价仅作行情参考。" : "买卖提醒列出下单限价和股数；风险复核事项单独标明暂无下单限价。"} style={{ marginBottom: 12 }} />
 				{error && <Alert type="warning" showIcon message={error} />}
 				<div style={{ maxHeight: "55vh", overflowY: "auto" }}>
 					{currentAlerts.map(alert => (
@@ -260,9 +267,9 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 								{alert.stockCode}
 							</strong>
 							{" "}
-							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "暂停操作并复核风险" : alert.stage === "recovery" ? "评估减仓或退出" : alert.side === "buy" ? "现在可接回" : "现在可卖出"}</Tag>
+							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "风险复核中" : alert.stage === "recovery" ? "评估减仓或退出" : alert.side === "buy" ? "现在可接回" : "现在可卖出"}</Tag>
 							<p>
-								最新核验价：
+								现价：
 								<b>{hasFreshPrice(alert, now) ? `${alert.symbol}${alert.price.toFixed(3)}` : "行情待更新"}</b>
 								{!hasFreshPrice(alert, now) && alert.price > 0 && Number.isFinite(alert.price) && (
 									<span>
@@ -274,28 +281,20 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 									</span>
 								)}
 							</p>
-							{alert.confirmed && (
-								<p>
-									{alert.side === "buy" ? "接回限价（不高于）" : "卖出限价（不低于）"}
-									<b>
-										{alert.target > 0 ? `${alert.symbol}${alert.target.toFixed(3)}` : "无下单目标"}
-									</b>
-								</p>
-							)}
-							{!alert.confirmed && (
-								<p>
-									<b>下单限价：暂无</b>
-									{" "}
-									·
-									{" "}
-									{alert.stage === "risk" ? "当前暂停操作，先完成风险复核" : "先评估减仓或退出，尚未生成买卖指令"}
-								</p>
-							)}
+							<div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10, margin: "10px 0" }} aria-label="计划价格">
+								<div style={{ padding: "10px 12px", borderRadius: 8, background: "var(--ant-color-warning-bg, #fffbe6)" }}>
+									<div>计划卖出价（不低于）</div>
+									<strong style={{ fontSize: 22 }}>{alert.plannedSell > 0 ? `${alert.symbol}${alert.plannedSell.toFixed(3)}` : "待生成"}</strong>
+								</div>
+								<div style={{ padding: "10px 12px", borderRadius: 8, background: "var(--ant-color-error-bg, #fff2f0)" }}>
+									<div>计划买回价（不高于）</div>
+									<strong style={{ fontSize: 22 }}>{alert.plannedBuyback > 0 ? `${alert.symbol}${alert.plannedBuyback.toFixed(3)}` : "待生成"}</strong>
+								</div>
+							</div>
 							<p>
-								<b>{alert.stage === "risk" || alert.stage === "recovery" ? "当前待办：" : "操作依据："}</b>
+								<b>{alert.stage === "risk" ? "暂停原因：" : alert.stage === "recovery" ? "当前待办：" : "操作依据："}</b>
 								{alert.reason}
 							</p>
-							<AlertInvalidConditions conditions={alert.invalidConditions} symbol={alert.symbol} historical={false} instruction={alert.confirmed} />
 							{alert.confirmed && alert.shares > 0 && (
 								<p>
 									本次最多
