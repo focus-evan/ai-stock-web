@@ -49,11 +49,11 @@ import dayjs from "dayjs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ExecutionStatus from "./ExecutionStatus";
 import PortfolioRisk from "./portfolio-risk";
-import { freshUnwindQuote, quoteTimestamp } from "./price-alerts";
+import { freshUnwindQuote } from "./price-alerts";
 import PriceMonitor from "./PriceMonitor";
 import RiskReview from "./RiskReview";
 import { BacktestModal, SettingsModal, StrategyOverview } from "./strategy-blocks";
-import { activeUnwindAnalysis, beijingTime, strategyTime } from "./strategy-time";
+import { activeUnwindAnalysis, strategyTime } from "./strategy-time";
 import { StrategyDateOverview, StrategyDateStamp } from "./StrategyDate";
 import "#src/pages/short-term-strategy/strategy-visuals.css";
 
@@ -575,7 +575,6 @@ export default function UnwindTrackingPanel() {
 							const analysis = activeUnwindAnalysis(plan);
 							const time = strategyTime(analysis, now);
 							const quote = freshUnwindQuote(plan, now);
-							const quoteAt = quoteTimestamp(plan.execution?.signal.quote?.as_of);
 							const unavailable = pollFailed || Boolean(loadError) || failedRefreshIds.includes(plan.watchlist_id) || refreshing === "all" || refreshing === plan.watchlist_id;
 							const currencySymbol = planCurrencySymbol(plan);
 							const lotSize = plan.execution?.plan?.lot_size || analysis?.lot_size || 100;
@@ -628,10 +627,9 @@ export default function UnwindTrackingPanel() {
 										</Button>
 									)}
 								>
-									<ExecutionStatus data={unavailable ? undefined : plan.execution} currency={currencySymbol} />
+									<ExecutionStatus data={unavailable ? undefined : plan.execution} currency={currencySymbol} stockCode={plan.stock_code} stockName={plan.stock_name} />
 									{(plan.latest_analysis || analysis) && <StrategyOverview plan={plan} analysis={(plan.latest_analysis || analysis) as UnwindAnalysisExt} />}
 									<StrategyDateStamp plan={plan} now={now} unavailable={unavailable} />
-									{plan.execution && <Alert type={quote && !unavailable ? "info" : "warning"} showIcon style={{ marginBottom: 14 }} message={quote && !unavailable ? `本次监测价 ${money(quote.price, currencySymbol)} · 行情时间 ${beijingTime(quote.at)}` : "盘中报价待更新 / 已过期，不据旧报价操作"} description={`${plan.execution.signal.reason}${quoteAt && !quote ? `；上次行情时间 ${beijingTime(quoteAt)}` : ""}`} />}
 									<Row gutter={[12, 12]}>
 										<Col xs={12} sm={8} md={4}><Statistic title="剩余持仓均价" value={Number(plan.baseline_cost_price).toFixed(2)} precision={2} prefix={currencySymbol} /></Col>
 										<Col xs={12} sm={8} md={4}><Statistic title="整体回本价（含已实现盈亏）" value={breakeven != null ? Number(breakeven).toFixed(2) : "待核对"} prefix={breakeven != null ? currencySymbol : undefined} valueStyle={{ color: "#722ed1" }} /></Col>

@@ -1495,6 +1495,7 @@ export interface UnwindSignal {
 	validation_status?: "shadow" | "auto_assessed"
 	market_emotion?: { allowed: boolean, label: string, reason: string }
 	automatic_fundamental_review?: { status: string, message: string }
+	review_v2?: { pending?: boolean, triggered_at?: string, reasons?: string[], completed?: boolean }
 	candidate?: "SELL" | "BUY_BACK" | null
 	label: string
 	reason: string
@@ -1510,7 +1511,7 @@ export interface UnwindSignal {
 	invalidated?: boolean
 	invalid_conditions?: string[]
 	requires_manual_confirmation?: boolean
-	quote?: { price?: number, bid?: number, ask?: number, as_of?: string, source?: string }
+	quote?: { price?: number, bid?: number, ask?: number, prev_close?: number, as_of?: string, source?: string }
 }
 
 export interface UnwindExecution {

@@ -45,8 +45,10 @@ describe("unwind execution status", () => {
 	it("renders current instruction separately from the historical review", () => {
 		render(<ExecutionStatus data={fixture} currency="¥" />);
 		expect(screen.getByText("现在：卖出")).toBeInTheDocument();
-		expect(screen.getByText("卖出限价（不低于）")).toBeInTheDocument();
-		expect(screen.getByText("¥11.000")).toBeInTheDocument();
+		expect(screen.getByText(/卖出限价（不低于）.*¥11.00/)).toBeInTheDocument();
+		expect(screen.getByText("200 股")).toBeInTheDocument();
+		expect(screen.queryByText(/突破11.5取消卖出/)).not.toBeInTheDocument();
+		fireEvent.click(screen.getByText("复核与价位依据"));
 		expect(screen.getByText(/突破11.5取消卖出/)).toBeInTheDocument();
 		expect(screen.getByText("盘后实际成交复盘")).toBeInTheDocument();
 	});
@@ -56,7 +58,7 @@ describe("unwind execution status", () => {
 		render(<ExecutionStatus data={fixture} currency="¥" />);
 		expect(screen.getByText("现在：卖出")).toBeInTheDocument();
 		await act(async () => vi.advanceTimersByTime(121000));
-		expect(screen.getByText("现在：等待")).toBeInTheDocument();
-		expect(screen.queryByText("¥11.000")).not.toBeInTheDocument();
+		expect(screen.getByText("现在：暂不操作")).toBeInTheDocument();
+		expect(screen.queryByText(/卖出限价（不低于）/)).not.toBeInTheDocument();
 	});
 });
