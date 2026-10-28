@@ -53,10 +53,10 @@ describe("focused unwind status", () => {
 	it("explains structural prices on request and distinguishes unreachable upper from reachable lower", () => {
 		render(<ExecutionStatus data={waiting} currency="¥" stockCode="300502" stockName="新易盛" />);
 		fireEvent.click(screen.getByText("复核与价位依据（卖出观察价超出今日常规范围）"));
-		expect(screen.getByText(/结构取消卖出线 ¥354.55/)).toBeInTheDocument();
-		expect(screen.getByText(/结构暂停买回线 ¥224.01/)).toBeInTheDocument();
-		expect(screen.getByText(/10日最高价 ¥348.50.*0.25.*24.1621/)).toBeInTheDocument();
-		expect(screen.getByText(/10日最低价 ¥236.10.*0.5.*24.1621/)).toBeInTheDocument();
+		expect(screen.getByText(/结构取消卖出线\s*¥354.55/)).toBeInTheDocument();
+		expect(screen.getByText(/结构暂停买回线\s*¥224.01/)).toBeInTheDocument();
+		expect(screen.getByText(/10日最高价\s*¥348.50.*0.25.*24.1621/)).toBeInTheDocument();
+		expect(screen.getByText(/10日最低价\s*¥236.10.*0.5.*24.1621/)).toBeInTheDocument();
 		expect(screen.getByText(/今日范围为¥190.07—¥285.11/)).toBeInTheDocument();
 		expect(screen.getByText(/在今日常规涨跌幅范围内；用于重新评估下行风险/)).toBeInTheDocument();
 		expect(screen.getByText(/原始触发说明（2026-10-26 10:15:00）/)).toBeInTheDocument();
