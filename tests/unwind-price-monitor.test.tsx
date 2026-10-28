@@ -110,7 +110,10 @@ describe("durable unwind notifications", () => {
 		expect(popup).not.toHaveTextContent("¥0.000");
 	});
 	it("shows the quote for an exit review without inventing a sell order", async () => {
-		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([event(1, "recovery")]));
+		const saved = event(1, "recovery");
+		saved.payload.event_action = "EXIT_REVIEW";
+		saved.payload.target_price = 12.5;
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
 		await mount();
 		const popup = screen.getByRole("dialog");
 		expect(popup).toHaveTextContent("退出评估提醒");
@@ -118,6 +121,30 @@ describe("durable unwind notifications", () => {
 		expect(popup).toHaveTextContent("计划卖出价（不低于）¥10.000");
 		expect(popup).toHaveTextContent("计划买回价（不高于）¥9.800");
 		expect(popup).not.toHaveTextContent("现在可卖出");
+		expect(popup).not.toHaveTextContent("¥12.500");
+		expect(popup).toHaveTextContent("暂停执行");
+	});
+	it("uses the confirmed buyback limit ahead of an earlier target", async () => {
+		const saved = event();
+		saved.payload = { ...saved.payload, action: "BUY_BACK", event_action: "BUY_BACK", limit_price: 9.7, target_price: 9.7 };
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		expect(screen.getByRole("dialog")).toHaveTextContent("计划买回价（不高于）¥9.700");
+	});
+	it("does not fill missing prices from an old-day plan or risk target", async () => {
+		const old = plan();
+		old.execution!.plan!.trading_date = "2026-10-20";
+		vi.mocked(fetchUnwindPlans).mockResolvedValue({ status: "success", data: { items: [old], total: 1, method: {} as never } });
+		const saved = event(1, "risk");
+		saved.payload.event_action = "WAIT";
+		saved.payload.target_price = 35;
+		saved.payload.buyback_target_price = undefined;
+		vi.mocked(fetchUnwindAlerts).mockResolvedValue(alerts([saved]));
+		await mount();
+		const popup = screen.getByRole("dialog");
+		expect(popup).toHaveTextContent("计划卖出价（不低于）待生成");
+		expect(popup).toHaveTextContent("计划买回价（不高于）待生成");
+		expect(popup).not.toHaveTextContent("¥35.000");
 	});
 	it("reads every thirty seconds without invoking the execution writer", async () => {
 		await mount();

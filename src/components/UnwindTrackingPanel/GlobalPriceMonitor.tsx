@@ -23,9 +23,12 @@ function savedAlert(event: UnwindAlertEvent, plan?: UnwindPlan): SavedAlert {
 	const signal = event.payload;
 	const at = quoteTimestamp(signal.quote?.as_of);
 	const side = signal.event_action === "BUY_BACK" ? "buy" : "sell";
-	const dailyPlan = plan?.execution?.plan;
+	const datedPlan = plan?.execution?.plan;
+	const dailyPlan = datedPlan?.trading_date === event.trading_date ? datedPlan : undefined;
+	const sellSignal = signal.event_action === "SELL" && event.stage === "confirmed";
+	const buySignal = signal.event_action === "BUY_BACK" && event.stage === "confirmed";
 	const target = event.stage === "confirmed" && signal.action !== "WAIT" ? signal.limit_price || 0 : signal.target_price || 0;
-	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side, price: signal.quote?.price || 0, target, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteTime: at?.getTime() || 0, quoteAt: at ? beijingTime(at) : "未取得", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.shares || signal.planned_shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [], plannedSell: firstPrice(side === "sell" ? signal.limit_price : null, side === "sell" ? signal.target_price : null, dailyPlan?.sell_zone_low), plannedBuyback: firstPrice(signal.buyback_target_price, side === "buy" ? signal.limit_price : null, side === "buy" ? signal.target_price : null, dailyPlan?.buyback_price) };
+	return { id: event.id, key: String(event.id), stockCode: event.stock_code, stockName: event.stock_name, side, price: signal.quote?.price || 0, target, symbol: /^\d{5}$/.test(event.stock_code) ? "HK$" : "¥", quoteTime: at?.getTime() || 0, quoteAt: at ? beijingTime(at) : "未取得", expiresAt: timestamp(signal.valid_until)?.getTime() || 0, strategyDate: event.trading_date, reason: signal.reason, confirmed: event.stage === "confirmed", stage: event.stage, read: Boolean(event.read_at), shadow: signal.validation_status === "shadow", shares: signal.shares || signal.planned_shares || 0, invalidConditions: Array.isArray(signal.invalid_conditions) ? signal.invalid_conditions.filter(value => typeof value === "string" && value.trim()) : [], plannedSell: firstPrice(sellSignal ? signal.limit_price : null, sellSignal ? signal.target_price : null, dailyPlan?.sell_zone_low), plannedBuyback: firstPrice(buySignal ? signal.limit_price : null, signal.buyback_target_price, buySignal ? signal.target_price : null, dailyPlan?.buyback_price) };
 }
 function hasFreshPrice(alert: SavedAlert, now: Date) {
 	const age = now.getTime() - alert.quoteTime;
@@ -146,15 +149,14 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 				return;
 			if (response.status !== "success")
 				throw new Error("history unavailable");
-			const planByStock = new Map(plans.map(plan => [plan.stock_code, plan]));
-			setHistory(response.data.items.map(event => savedAlert(event, planByStock.get(event.stock_code))));
+			setHistory(response.data.items.map(event => savedAlert(event)));
 			setHistoryOpen(true);
 		}
 		catch {
 			if (run === generation.current)
 				setError("历史提醒读取失败，请重试");
 		}
-	}, [plans]);
+	}, []);
 	const acknowledge = async () => {
 		const run = generation.current;
 		const ids = currentAlerts.map(alert => alert.id);
@@ -267,7 +269,7 @@ function UnwindMonitorSession({ userId }: { userId: string }) {
 								{alert.stockCode}
 							</strong>
 							{" "}
-							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "风险复核中" : alert.stage === "recovery" ? "评估减仓或退出" : alert.side === "buy" ? "现在可接回" : "现在可卖出"}</Tag>
+							<Tag color={alert.stage === "risk" ? "red" : "orange"}>{alert.stage === "risk" ? "暂停执行 · 风险复核中" : alert.stage === "recovery" ? "暂停执行 · 评估减仓或退出" : alert.side === "buy" ? "现在可接回" : "现在可卖出"}</Tag>
 							<p>
 								现价：
 								<b>{hasFreshPrice(alert, now) ? `${alert.symbol}${alert.price.toFixed(3)}` : "行情待更新"}</b>
