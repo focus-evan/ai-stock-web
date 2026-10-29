@@ -359,6 +359,37 @@
   },
   "items": [
     {
+      "aweme_id": "7701583815605501922",
+      "display_title": "10月28日午间：大阳线反弹与能否企稳的作者观察",
+      "title": "10月28日午间：大阳线反弹与能否企稳的作者观察",
+      "published_at": "2026-10-28 13:18",
+      "create_time": 1793164680,
+      "duration_seconds": 35.166667,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7701583815605501922",
+      "raw_transcript": "今天算是终于反弹了 虽然有一部分的股票没有把昨天的下跌给收回去\n但基本上都是大阳线 他主要没有收回去的原因是昨天的那个阴陷\n尾盘砸砸砸太厉害 那个阴陷有点太大了\n但是今天这么大跟实体阳线 我觉得\n大家还是乐观一点的 就终于有人来救咱们了\n如果这里能够撑住\n毕竟跌了这么久了嘛 已经从\n7月份跌到现在了\n后面怎么朝夜该给个饭谈",
+      "transcript": "今天算是终于反弹了 虽然有一部分的股票没有把昨天的下跌给收回去\n但基本上都是大阳线 他主要没有收回去的原因是昨天的那个阴线\n尾盘砸砸砸太厉害 那个阴线有点太大了\n但是今天这么大根实体阳线 我觉得\n大家还是乐观一点的 就终于有人来救咱们了\n如果这里能够撑住\n毕竟跌了这么久了嘛 已经从\n7月份跌到现在了\n后面怎么着也该给个反弹",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": false
+      },
+      "points": [
+        "李一恩认为当日多数股票出现较大阳线，但部分尚未收复前一交易日尾盘的大幅下跌。",
+        "他的乐观判断带有条件：若当前位置能够撑住，长时间调整后可能出现进一步反弹；视频没有给出个股、仓位或具体进出价格。",
+        "原作品未填写发布文案。页面发布时间为10月28日13:18，画面标记为当日13:15；正文来自实际35秒视频口播。"
+      ],
+      "category": "市场",
+      "ai_related": false,
+      "html_file": "videos/new_7701583815605501922.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-10-29 11:15:06",
+      "sync_run_id": "daily_20261029"
+    },
+    {
       "aweme_id": "7701138859169845218",
       "display_title": "10月27日早间：海外市场与光模块、AI硬件预期",
       "title": "10月27日早间：海外市场与光模块、AI硬件预期",
@@ -8154,16 +8185,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261028",
+    "run_id": "daily_20261029",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-28 11:01:43",
-    "latest_observed_id": "7701138859169845218",
+    "scanned_at": "2026-10-29 10:58:55",
+    "latest_observed_id": "7701583815605501922",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 0,
+    "merged_new": 1,
     "failed": 0
   }
 }
