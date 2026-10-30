@@ -1,16 +1,16 @@
 {
-  "run_id": "favorites_20261029",
-  "started": "2026-10-29 10:59:51",
-  "finished": "2026-10-29 11:15:08",
+  "run_id": "favorites_20261030",
+  "started": "2026-10-30 11:01:49",
+  "finished": "2026-10-30 11:13:39",
   "status": "ok",
   "scan_status": "complete",
-  "selected_new": 5,
-  "downloaded": 4,
-  "transcribed": 4,
+  "selected_new": 1,
+  "downloaded": 1,
+  "transcribed": 1,
   "text_extracted": 1,
-  "merged_new": 5,
+  "merged_new": 1,
   "pending": 0,
   "failed": 0,
-  "total_records": 282,
-  "latest_published_at": "2026-10-28 23:17"
+  "total_records": 283,
+  "latest_published_at": "2026-10-29 20:51"
 }

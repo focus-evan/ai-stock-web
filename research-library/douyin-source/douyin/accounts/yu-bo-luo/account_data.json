@@ -7268,10 +7268,10 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261029",
+    "run_id": "daily_20261030",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-29 10:59:26",
+    "scanned_at": "2026-10-30 11:01:35",
     "latest_observed_id": "7700074457155565681",
     "pending_ids": [],
     "blocked_ids": [],
