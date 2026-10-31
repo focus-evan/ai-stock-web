@@ -380,6 +380,37 @@
   },
   "items": [
     {
+      "aweme_id": "7702355542539797881",
+      "display_title": "10月30日收评：低吸仍被套，关注市场情绪与休息",
+      "title": "庶民无措，空悲切 #股票 #股民 #马总 #财经 #同花顺",
+      "published_at": "2026-10-30 15:13",
+      "create_time": 1793344380,
+      "duration_seconds": 35.943991,
+      "author": "交易魔法师（马总）",
+      "share_url": "https://www.douyin.com/video/7702355542539797881",
+      "raw_transcript": "10月30号收盘总结 今天真是自闭了 我玩了这么多年 我真没见过这样的 我无话可说\n我现在低息啊 也是追高 然后上午循子低息点 黄天我看位置不高 当天直接套了五个点\n这根本没法玩 不知道为什么杀这么狠下午 这抱团银行保险白酒\n如果现在亏钱啊 我觉得也不用从自己身上找原因了\n这原因这不是很明确就是 算了 也不太敢说 不说了\n大家周末好好休息一下吧 缓解缓解情绪\n真的是让人太难过了",
+      "transcript": "10月30号收盘总结 今天真是自闭了 我玩了这么多年 我真没见过这样的 我无话可说\n我现在低吸啊 也是追高 然后上午寻思低吸点航天【衔接词待听辨】我看位置不高 当天直接套了五个点\n这根本没法玩 不知道为什么杀这么狠下午 这抱团银行保险白酒\n如果现在亏钱啊 我觉得也不用从自己身上找原因了\n这原因这不是很明确就是 算了 也不太敢说 不说了\n大家周末好好休息一下吧 缓解缓解情绪\n真的是让人太难过了",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "马总回顾当日尝试低吸航天但仍被套约5个点，认为在急跌环境中，位置看起来不高也不等于安全。",
+        "他观察到下午资金抱团银行、保险、白酒，整条视频主要表达交易受挫与情绪压力，没有给出新的具体买卖计划。",
+        "结尾建议周末休息、缓解情绪；“被套5个点”等为作者交易自述，未独立核验。"
+      ],
+      "category": "市场",
+      "ai_related": false,
+      "html_file": "videos/new_7702355542539797881.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-10-31 11:44:57",
+      "sync_run_id": "daily_20261031"
+    },
+    {
       "aweme_id": "7702283113234131633",
       "display_title": "10月30日盘中：小仓位短线与作者的止损纪律",
       "title": "短线马回归 #股票 #股民 #马总 #财经 #同花顺",
@@ -43012,16 +43043,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261030",
+    "run_id": "daily_20261031",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-30 11:01:12",
-    "latest_observed_id": "7702283113234131633",
+    "scanned_at": "2026-10-31 11:13:29",
+    "latest_observed_id": "7702355542539797881",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 3,
+    "merged_new": 1,
     "failed": 0
   }
 }

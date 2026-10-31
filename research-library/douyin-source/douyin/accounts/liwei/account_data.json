@@ -8945,10 +8945,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261030",
+    "run_id": "daily_20261031",
     "status": "access_required",
     "scan_status": "complete",
-    "scanned_at": "2026-10-30 11:00:59",
+    "scanned_at": "2026-10-31 11:13:27",
     "latest_observed_id": "7702071704605023462",
     "pending_ids": [
       "7693818935444036809",
@@ -8977,7 +8977,7 @@
         "checked_at": "2026-10-14"
       }
     ],
-    "merged_new": 1,
+    "merged_new": 0,
     "failed": 0
   }
 }
