@@ -8247,10 +8247,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261031",
+    "run_id": "daily_20261101",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-10-31 11:13:25",
+    "scanned_at": "2026-11-01 11:05:17",
     "latest_observed_id": "7702239368585928296",
     "pending_ids": [],
     "blocked_ids": [],
