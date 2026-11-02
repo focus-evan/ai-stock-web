@@ -8945,10 +8945,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261101",
+    "run_id": "daily_20261102",
     "status": "access_required",
     "scan_status": "complete",
-    "scanned_at": "2026-11-01 11:05:19",
+    "scanned_at": "2026-11-02 12:13:21",
     "latest_observed_id": "7702071704605023462",
     "pending_ids": [
       "7693818935444036809",
