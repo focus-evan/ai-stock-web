@@ -1,16 +1,16 @@
 {
-  "run_id": "daily_20261102",
-  "started": "2026-11-02 12:14:25",
-  "finished": "2026-11-02 12:27:24",
+  "run_id": "daily_20261103",
+  "started": "2026-11-03 11:34:04",
+  "finished": "2026-11-03 11:44:51",
   "sources": [
     {
       "name": "李一恩",
       "slug": "li-yien",
-      "selected_new": 0,
-      "downloaded": 0,
-      "transcribed": 0,
+      "selected_new": 1,
+      "downloaded": 1,
+      "transcribed": 1,
       "text_extracted": 0,
-      "merged_new": 0,
+      "merged_new": 1,
       "added_this_invocation": 0,
       "pending": 0,
       "blocked": 0,
@@ -18,12 +18,12 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-11-02 12:13:19"
+      "scanned_at": "2026-11-03 11:31"
     },
     {
       "name": "立伟",
       "slug": "liwei",
-      "selected_new": 2,
+      "selected_new": 0,
       "downloaded": 0,
       "transcribed": 0,
       "text_extracted": 0,
@@ -35,41 +35,41 @@
       "failed": 0,
       "status": "access_required",
       "scan_status": "complete",
-      "scanned_at": "2026-11-02 12:13:21"
+      "scanned_at": "2026-11-03 11:31"
     },
     {
       "name": "交易魔法师（马总）",
       "slug": "ma-zong",
-      "selected_new": 3,
-      "downloaded": 3,
-      "transcribed": 3,
+      "selected_new": 2,
+      "downloaded": 0,
+      "transcribed": 0,
       "text_extracted": 0,
-      "merged_new": 3,
-      "added_this_invocation": 3,
-      "pending": 0,
+      "merged_new": 0,
+      "added_this_invocation": 0,
+      "pending": 2,
       "blocked": 0,
       "excluded": 0,
-      "failed": 0,
-      "status": "ok",
+      "failed": 2,
+      "status": "processing_pending",
       "scan_status": "complete",
-      "scanned_at": "2026-11-02 12:13:23"
+      "scanned_at": "2026-11-03 11:31"
     },
     {
       "name": "全能的野人",
       "slug": "quan-neng-ye-ren",
-      "selected_new": 2,
+      "selected_new": 4,
       "downloaded": 2,
       "transcribed": 2,
-      "text_extracted": 1,
+      "text_extracted": 0,
       "merged_new": 2,
-      "added_this_invocation": 2,
-      "pending": 0,
+      "added_this_invocation": 0,
+      "pending": 2,
       "blocked": 0,
       "excluded": 0,
-      "failed": 0,
-      "status": "ok",
+      "failed": 2,
+      "status": "processing_pending",
       "scan_status": "complete",
-      "scanned_at": "2026-11-02 12:14:20"
+      "scanned_at": "2026-11-03 11:31"
     },
     {
       "name": "宇菠萝",
@@ -86,23 +86,23 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-11-02 12:14:23"
+      "scanned_at": "2026-11-03 11:31"
     }
   ],
   "pipeline_version": 2,
-  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261102.json",
+  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261103.json",
   "site": {
     "account_count": 5,
-    "account_records": 1247,
+    "account_records": 1250,
     "favorites_records": 285
   },
   "favorites": {
-    "status": "ok",
-    "run_id": "favorites_20261102",
-    "scanned_at": "2026-11-02 12:14:46",
+    "status": "processing_pending",
+    "run_id": "favorites_20261103",
+    "scanned_at": "2026-11-03 11:34",
     "merged_new": 0,
-    "pending": 0,
-    "failed": 0,
+    "pending": 1,
+    "failed": 1,
     "total_records": 285
   }
 }

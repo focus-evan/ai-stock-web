@@ -169,7 +169,7 @@ function publishLocal(id) {
     const links=new Map($account('.video-list a').toArray().map(e=>[($account(e).attr('href')||'').match(/\d{16,22}/)?.[0],$account.html(e)]));
     $account('.video-list').html(data.items.map(i=>links.get(i.aweme_id)||'').join(''));
     const states=dispositions();
-    const pending=(scan?.new_ids||[]).filter(vid=>!data.items.some(i=>i.aweme_id===vid)&&states[vid]?.status!=='excluded');
+    const priorPending=data.sync?.pending_ids||[];const pending=[...new Set([...priorPending,...(scan?.new_ids||[])])].filter(vid=>!data.items.some(i=>i.aweme_id===vid)&&states[vid]?.status!=='excluded');
     const blocked=pending.filter(vid=>states[vid]?.status==='blocked');
     const excluded=(scan?.new_ids||[]).filter(vid=>states[vid]?.status==='excluded');
     const scanStatus=scan?.status||'not_scanned';

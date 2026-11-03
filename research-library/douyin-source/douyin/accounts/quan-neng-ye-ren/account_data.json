@@ -389,6 +389,66 @@
   },
   "items": [
     {
+      "aweme_id": "7703758502472866624",
+      "display_title": "11月3日上午9点半：自称“反面教材”的加仓片段",
+      "title": "11月3日上午9点半#金融#财经#股票#股市#股民",
+      "published_at": "2026-11-03 09:57",
+      "create_time": 1793671020,
+      "duration_seconds": 11.980998,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7703758502472866624",
+      "raw_transcript": "兄弟们 下班了 等了这么多天 终于趁机去了\n福音加仓 一把亏光 我是反面教材 拜拜",
+      "transcript": "兄弟们，下班了。等了这么多天，终于趁机去了〔待听辨〕。“福音加仓”〔待听辨〕，一把亏光。我是反面教材，拜拜。",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者说等了多天后趁机做了某个动作，关键动作词与“福音加仓”一段无法可靠听辨。",
+        "他提到“一把亏光”，并自称是反面教材。因关键语句不清，无法从这段短片提炼可执行的交易规则。"
+      ],
+      "category": "交易经历",
+      "ai_related": false,
+      "html_file": "videos/new_7703758502472866624.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-03 11:37:39",
+      "sync_run_id": "daily_20261103"
+    },
+    {
+      "aweme_id": "7703556252147702351",
+      "display_title": "解读新闻：定向回购贷款与上市公司行为",
+      "title": "解读新闻#普通人的财经认知 #说真话的博主 #个人观点干货 #金融#财经",
+      "published_at": "2026-11-02 20:52",
+      "create_time": 1793623920,
+      "duration_seconds": 55.366667,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7703556252147702351",
+      "raw_transcript": "我来解读一下这条新闻\n你们大部分是看不懂的\n你们不要被这个标题 这个降息给迷惑了\n它这个是定向的 不是像所有人去发放的\n它是定向的 就是它这一部分资金是发放给上市公司\n用于回购自家股票的贷款 能懂吧\n也就是说 它的目的是\n托 让上市公司回购自家的股票给情绪啊 托个底啊 其实说就是只托啊\n但是这里我有一点是不爽的 就是说上市公司啊 大部分高位减持\n走跌下来之后还能得到这个专项的贷款啊 去回购自家的肤票\n不就是高抛低息吗 我靠",
+      "transcript": "我来解读一下这条新闻。你们大部分是看不懂的。你们不要被这个标题、这个“降息”给迷惑了。它这个是定向的，不是向所有人发放的。它是定向的，就是这一部分资金是发放给上市公司、用于回购自家股票的贷款，能懂吧？也就是说，它的目的是——托……让上市公司回购自家的股票，给情绪托个底。其实说就是只托……〔待听辨〕。但是这里我有一点不爽，就是说上市公司大部分高位减持，跌下来之后还能得到这个专项的贷款去回购自家的股票，不就是高抛低吸〔初始转写为“高抛低息”，待听辨〕吗？我靠。",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者称这项安排是定向资金，不是面向所有人的普遍降息；其理解是资金以贷款形式提供给上市公司用于回购自家股票，意在托住情绪。",
+        "他质疑部分公司高位减持后，股价下跌时又获得专项贷款回购，并用“高抛低吸”概括这种情形。此处是作者的评论，不是对政策条款或公司行为的独立核验。"
+      ],
+      "category": "政策/市场",
+      "ai_related": false,
+      "html_file": "videos/new_7703556252147702351.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-03 11:37:39",
+      "sync_run_id": "daily_20261103"
+    },
+    {
       "aweme_id": "7703411280497884386",
       "display_title": "11月2日午间：金融板块走强、量能与短线核心",
       "title": "11月2日中午#金融#财经#股市#A股",
@@ -36120,16 +36180,19 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261102",
-    "status": "ok",
+    "run_id": "daily_20261103",
+    "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-02 12:14:20",
-    "latest_observed_id": "7703411280497884386",
-    "pending_ids": [],
+    "scanned_at": "2026-11-03 11:31",
+    "latest_observed_id": "7703758502472866624",
+    "pending_ids": [
+      "7703527907523658088",
+      "7703477527960510080"
+    ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
     "merged_new": 2,
-    "failed": 0
+    "failed": 2
   }
 }

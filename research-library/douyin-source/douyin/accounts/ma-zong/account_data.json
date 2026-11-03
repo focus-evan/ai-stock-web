@@ -43171,16 +43171,19 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261102",
-    "status": "ok",
+    "run_id": "daily_20261103",
+    "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-02 12:13:23",
-    "latest_observed_id": "7703412795887315633",
-    "pending_ids": [],
+    "scanned_at": "2026-11-03 11:31",
+    "latest_observed_id": "7703587238021520296",
+    "pending_ids": [
+      "7703587238021520296",
+      "7703467980097230181"
+    ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 3,
-    "failed": 0
+    "merged_new": 0,
+    "failed": 2
   }
 }
