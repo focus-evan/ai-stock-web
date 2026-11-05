@@ -13442,11 +13442,11 @@
     }
   ],
   "sync": {
-    "run_id": "favorites_20261103",
+    "run_id": "favorites_20261105",
     "status": "processing_pending",
     "scan_status": "complete",
     "previous_ai_count": 190,
-    "scanned_at": "2026-11-03 11:34",
+    "scanned_at": "2026-11-05 11:09",
     "selected_new": 1,
     "merged_new": 0,
     "failed": 1,

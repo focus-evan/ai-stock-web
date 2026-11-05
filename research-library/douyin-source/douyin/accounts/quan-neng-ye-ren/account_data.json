@@ -389,6 +389,36 @@
   },
   "items": [
     {
+      "aweme_id": "7704505239097377231",
+      "display_title": "11月5日上午十点：穿越板与地天板片段",
+      "title": "11月5日上午十点#金融#财经#股票",
+      "published_at": "2026-11-05 10:15",
+      "create_time": 1793844900,
+      "duration_seconds": 21.8,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7704505239097377231",
+      "raw_transcript": "我现在是红的啊\n感谢主力啊\n我不用去擦遍你都擦了\n我以前给你们补级过一个知识啊\n一般就是走穿越的东西\n会先三到四百度\n做你的地天啊\n地天是为了辨识度嘛\n辨识度是为了干凌的话\n以前的切片因为听过\n真久",
+      "transcript": "我现在是红的啊，感谢主力啊。我不用去擦遍、你都擦了〔待听辨〕。我以前给你们补充过一个知识啊，一般就是走穿越的东西，会先三到四板〔初始转写“三到四百度”，待听辨〕，做个地天啊，地天是为了辨识度嘛，辨识度是为了〔待听辨〕。以前的切片你们听过？真久〔待听辨〕。",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者说自己当前“是红的”，并感谢主力；具体指个股还是账户收益，无法从短片确认。",
+        "他提到“走穿越”的形态可能先到三到四板，并说“地天”与辨识度有关。后半段转写噪声较重，无法确认完整条件或可执行步骤。"
+      ],
+      "category": "交易经验",
+      "ai_related": false,
+      "html_file": "videos/new_7704505239097377231.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-05 11:12:35",
+      "sync_run_id": "daily_20261105"
+    },
+    {
       "aweme_id": "7703758502472866624",
       "display_title": "11月3日上午9点半：自称“反面教材”的加仓片段",
       "title": "11月3日上午9点半#金融#财经#股票#股市#股民",
@@ -36180,19 +36210,25 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261103",
+    "run_id": "daily_20261105",
     "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-03 11:31",
-    "latest_observed_id": "7703758502472866624",
+    "scanned_at": "2026-11-05 11:09",
+    "latest_observed_id": "7704505239097377231",
     "pending_ids": [
       "7703527907523658088",
-      "7703477527960510080"
+      "7703477527960510080",
+      "7704481450201367395",
+      "7704210224148432320",
+      "7704162305827469667",
+      "7704153489513867496",
+      "7703882047920811087",
+      "7703792564336484066"
     ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 2,
-    "failed": 2
+    "merged_new": 1,
+    "failed": 8
   }
 }

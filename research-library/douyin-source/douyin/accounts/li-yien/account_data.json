@@ -359,6 +359,36 @@
   },
   "items": [
     {
+      "aweme_id": "7704197777463174307",
+      "display_title": "李一恩：多地市场拉升，原因尚未确认",
+      "title": "李一恩在抖音记录美好生活20261104",
+      "published_at": "2026-11-04 14:22",
+      "create_time": 1793773320,
+      "duration_seconds": 23.520998,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7704197777463174307",
+      "raw_transcript": "就在刚刚啊 不知道发生什么利好\n权拽起来了 先是中午的时候 美股不知道为什么纳斯达克\n那个妻子从富瓦拽到-0.6\n拽了1.4个点\n然后就是韩国股市开始翻红\n然后就是A股这边就跟着拽\n到现在我都还没有看到新闻是啥\n但是兄弟们天亮啊",
+      "transcript": "就在刚刚啊，不知道发生了什么利好，〔市场/指数〕拉起来了〔初始转写“权拽起来”，待听辨〕。先是中午的时候，美股不知道为什么，纳斯达克那个指数从〔数值待核〕拉到-0.6〔待核〕，拉了1.4个点〔待核〕。然后韩国股市开始翻红，A股这边也跟着拉。到现在我都还没有看到新闻是啥。但是兄弟们，天亮了〔待听辨〕。",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者称纳斯达克、韩国股市和A股先后回升，但录制时自己还没有找到对应消息。",
+        "指数名称、起始数值和涨幅存在明显识别噪声；不能据此确认具体行情幅度或上涨原因。"
+      ],
+      "category": "市场",
+      "ai_related": false,
+      "html_file": "videos/new_7704197777463174307.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-05 11:12:35",
+      "sync_run_id": "daily_20261105"
+    },
+    {
       "aweme_id": "7703446289250712994",
       "display_title": "李一恩：美国市场与中期选举的短期观察",
       "title": "李一恩：美国市场与中期选举的短期观察",
@@ -8277,11 +8307,11 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261103",
+    "run_id": "daily_20261105",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-11-03 11:31",
-    "latest_observed_id": "7703446289250712994",
+    "scanned_at": "2026-11-05 11:09",
+    "latest_observed_id": "7704197777463174307",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
