@@ -20,13 +20,13 @@
       "author_profile_url": "https://www.douyin.com/user/MS4wLjABAAAAx2vxO1h3EvOAeMFrXgMpvSHpQMqgN3oA22PJJqGFlNvY7AO6Oks3cPr9NtjQ-jNU",
       "share_url": "https://www.douyin.com/video/7704372827307491002",
       "raw_transcript": "横不入盖 横不入盖 群不落地 群不落地 逐笔要延伸\n右小右靠下 左小左靠上",
-      "transcript": "横不入盖〔疑〕，横不入盖重复，群不落地〔疑〕，群不落地重复，逐笔要延伸〔疑〕，右小右靠下，左小左靠上。",
+      "transcript": "横不入盖〔待听辨〕、横不入盖；群不落地、群不落地；逐笔要延伸；右小右靠下，左小左靠上。",
       "transcript_source": "audio_asr",
       "asr_backend": "faster-whisper",
       "asr_model": "small/int8",
       "quality": {
         "status": "通过（文案复核）",
-        "uncertain_terms_marked": false
+        "uncertain_terms_marked": true
       },
       "points": [
         "作品讲解硬笔字的间架结构，口播列出“横不入盖”“群不落地”“逐笔要延伸”等口诀，并以“右小右靠下、左小左靠上”收尾。",
@@ -34,7 +34,7 @@
       ],
       "category": "书法",
       "html_file": "videos/new_7704372827307491002.html",
-      "reviewed_at": "2026-11-06 11:18:48",
+      "reviewed_at": "2026-11-06 11:23:38",
       "sync_run_id": "favorites_20261106",
       "favorite_order": 0
     },
