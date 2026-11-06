@@ -359,6 +359,36 @@
   },
   "items": [
     {
+      "aweme_id": "7704590382872675299",
+      "display_title": "李一恩：普涨与大科技回落并存",
+      "title": "李一恩在抖音记录美好生活20261105",
+      "published_at": "2026-11-05 15:45",
+      "create_time": 1793864700,
+      "duration_seconds": 16.648005,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7704590382872675299",
+      "raw_transcript": "能说什么啊 整个市场四千五百家股票上涨\n要说行情好嘛 是真的好\n但是大科技还在跌",
+      "transcript": "能说什么啊？整个市场四千五百家股票上涨。要说行情好嘛，是真的好，但是大科技还在跌。",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": false
+      },
+      "points": [
+        "作者称当天市场有约四千五百只股票上涨，并认为整体行情不错。",
+        "他同时提到大科技板块仍在下跌，没有在片段中给出原因或具体操作。行情数字和评价是作者当时的说法，未独立核验。"
+      ],
+      "category": "市场",
+      "ai_related": false,
+      "html_file": "videos/new_7704590382872675299.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-06 11:18:29",
+      "sync_run_id": "daily_20261106"
+    },
+    {
       "aweme_id": "7704197777463174307",
       "display_title": "李一恩：多地市场拉升，原因尚未确认",
       "title": "李一恩在抖音记录美好生活20261104",
@@ -8307,16 +8337,18 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261105",
-    "status": "ok",
+    "run_id": "daily_20261106",
+    "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-05 11:09",
-    "latest_observed_id": "7704197777463174307",
-    "pending_ids": [],
+    "scanned_at": "2026-11-06 11:10",
+    "latest_observed_id": "7704677430066092431",
+    "pending_ids": [
+      "7704677430066092431"
+    ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
     "merged_new": 1,
-    "failed": 0
+    "failed": 1
   }
 }

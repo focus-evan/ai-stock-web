@@ -1,5 +1,65 @@
 [
   {
+    "aweme_id": "7704885518978486626",
+    "display_title": "什么是干净的筹码？谷堆悖论谈判断边界",
+    "title": "什么是干净的筹码。 #温馨相处瞬间 #触及真心名场面 #情感共鸣剧",
+    "published_at": "2026-11-06 10:50",
+    "create_time": 1793933400,
+    "duration_seconds": 31.167007,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7704885518978486626",
+    "raw_transcript": "拿走一粒 它还是骨堆\n可究竟拿走几粒 它就不再是骨堆\n量变到质变的界线到底在哪儿\n你不停拿走 骨堆就可以慢慢变小\n我究竟在哪一刻明确察觉到它发生改变了\n变化不存在一条真实的分界线\n只是我们主观上觉得它变了\n界线本无定数 变化全在人心感知之间",
+    "transcript": "拿走一粒，它还是谷堆〔初始转写“骨堆”，待听辨〕。可究竟拿走几粒，它就不再是谷堆〔待听辨〕？量变到质变的界线到底在哪儿？你不停拿走，谷堆就可以慢慢变小。我究竟在哪一刻明确察觉到它发生改变了？变化不存在一条真实的分界线，只是我们主观上觉得它变了。界线本无定数，变化全在人心感知之间。",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "口播通过“拿走一粒谷物仍然是谷堆”的例子，讨论量变到质变的界线何时出现。",
+      "作者认为变化没有一条客观分界线，很多时候是观察者主观感知；把这一段与标题中的“干净筹码”联系起来属于标题语境下的理解，口播没有展开交易判断。"
+    ],
+    "category": "交易认知",
+    "ai_related": false,
+    "html_file": "videos/new_7704885518978486626.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-06 11:18:29",
+    "sync_run_id": "daily_20261106"
+  },
+  {
+    "aweme_id": "7704872934929679464",
+    "display_title": "11月6日上午9点50分：开盘观察片段（待听辨）",
+    "title": "11月6日上午9点50分#金融#财经#股票#股市",
+    "published_at": "2026-11-06 10:02",
+    "create_time": 1793930520,
+    "duration_seconds": 24.8,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7704872934929679464",
+    "raw_transcript": "今天太惨了 早上一开盘就八十几家是红的\n但是 一个就在那八十几家里面 哈哈哈\n下班了 上四楼 炸起来 头发\n等一下我绑个头发",
+    "transcript": "今天太惨了，早上一开盘就八十几家是红的〔可能指股票家数，口径待听辨〕。但是，一个就在那八十几家里面〔待听辨〕，哈哈哈。下班了，上四楼〔待听辨〕，炸起来头发〔待听辨〕，等一下我绑个头发。",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "作者称早盘开盘时只有八十多家“是红的”，具体统计对象和口径不清。",
+      "后续语音跳到下班、上楼和绑头发等内容，未能形成清晰的市场判断或可执行交易方法。"
+    ],
+    "category": "市场",
+    "ai_related": false,
+    "html_file": "videos/new_7704872934929679464.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-06 11:18:29",
+    "sync_run_id": "daily_20261106"
+  },
+  {
     "aweme_id": "7704505239097377231",
     "display_title": "11月5日上午十点：穿越板与地天板片段",
     "title": "11月5日上午十点#金融#财经#股票",
