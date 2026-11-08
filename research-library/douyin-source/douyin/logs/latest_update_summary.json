@@ -1,24 +1,24 @@
 {
-  "run_id": "daily_20261106",
-  "started": "2026-11-06 11:10:40",
-  "finished": "2026-11-06 11:19:11",
+  "run_id": "daily_20261108",
+  "started": "2026-11-08 11:15:16",
+  "finished": "2026-11-08 11:25:03",
   "sources": [
     {
       "name": "李一恩",
       "slug": "li-yien",
-      "selected_new": 2,
-      "downloaded": 1,
-      "transcribed": 1,
+      "selected_new": 1,
+      "downloaded": 0,
+      "transcribed": 0,
       "text_extracted": 0,
-      "merged_new": 1,
-      "added_this_invocation": 1,
+      "merged_new": 0,
+      "added_this_invocation": 0,
       "pending": 1,
       "blocked": 0,
       "excluded": 0,
-      "failed": 1,
+      "failed": 0,
       "status": "processing_pending",
       "scan_status": "complete",
-      "scanned_at": "2026-11-06 11:10"
+      "scanned_at": "2026-11-08 11:02 +08:00"
     },
     {
       "name": "立伟",
@@ -35,29 +35,12 @@
       "failed": 0,
       "status": "access_required",
       "scan_status": "complete",
-      "scanned_at": "2026-11-06 11:10"
+      "scanned_at": "2026-11-08 11:02 +08:00"
     },
     {
       "name": "交易魔法师（马总）",
       "slug": "ma-zong",
-      "selected_new": 10,
-      "downloaded": 2,
-      "transcribed": 2,
-      "text_extracted": 0,
-      "merged_new": 2,
-      "added_this_invocation": 2,
-      "pending": 10,
-      "blocked": 0,
-      "excluded": 0,
-      "failed": 10,
-      "status": "processing_pending",
-      "scan_status": "complete",
-      "scanned_at": "2026-11-06 11:10"
-    },
-    {
-      "name": "全能的野人",
-      "slug": "quan-neng-ye-ren",
-      "selected_new": 12,
+      "selected_new": 5,
       "downloaded": 2,
       "transcribed": 2,
       "text_extracted": 0,
@@ -66,10 +49,27 @@
       "pending": 12,
       "blocked": 0,
       "excluded": 0,
-      "failed": 12,
+      "failed": 0,
       "status": "processing_pending",
       "scan_status": "complete",
-      "scanned_at": "2026-11-06 11:10"
+      "scanned_at": "2026-11-08 11:02 +08:00"
+    },
+    {
+      "name": "全能的野人",
+      "slug": "quan-neng-ye-ren",
+      "selected_new": 2,
+      "downloaded": 1,
+      "transcribed": 1,
+      "text_extracted": 0,
+      "merged_new": 1,
+      "added_this_invocation": 1,
+      "pending": 13,
+      "blocked": 0,
+      "excluded": 0,
+      "failed": 0,
+      "status": "processing_pending",
+      "scan_status": "complete",
+      "scanned_at": "2026-11-08 11:02 +08:00"
     },
     {
       "name": "宇菠萝",
@@ -86,23 +86,23 @@
       "failed": 0,
       "status": "ok",
       "scan_status": "complete",
-      "scanned_at": "2026-11-06 11:10"
+      "scanned_at": "2026-11-08 11:02 +08:00"
     }
   ],
   "pipeline_version": 2,
-  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261106.json",
+  "log": "D:\\evan\\codes\\.codex-automation-runtime\\douyin-corpus\\logs\\daily_20261108.json",
   "site": {
     "account_count": 5,
-    "account_records": 1258,
-    "favorites_records": 286
+    "account_records": 1261,
+    "favorites_records": 288
   },
   "favorites": {
     "status": "processing_pending",
-    "run_id": "favorites_20261106",
-    "scanned_at": "2026-11-06 11:10",
-    "merged_new": 1,
+    "run_id": "favorites_20261108",
+    "scanned_at": "2026-11-08 11:10 +08:00",
+    "merged_new": 2,
     "pending": 2,
-    "failed": 2,
-    "total_records": 286
+    "failed": 0,
+    "total_records": 288
   }
 }
