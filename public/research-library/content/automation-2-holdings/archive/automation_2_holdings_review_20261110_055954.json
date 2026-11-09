@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-11-10T05:59:54+08:00",
+  "review_window": "使用2026-11-09完整A股与港股收盘验证上一版06:00判断；隔夜美股11月9日表现仅用于新一版预警。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 7,
+    "useful_but_conservative": 0,
+    "repair_upgrade": 3,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 3,
+    "main_read": "市场从S0极端退潮转入弱修复，但指数与宽度背离、量能缩至1.48万亿元。新易盛、澜起等仍未收复关键位；绿的、联瑞、铖昌完成首日修复，分类为修复有效需上调观察。红色总阀门作为仓位约束继续有效。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 172.1,
+      "review_price_date": "2026-11-09",
+      "review_close": 176.0,
+      "review_move_pct": 2.27,
+      "verification": "完全有效",
+      "trigger_check": "涨2.27%至176、未收180",
+      "logic_adjustment": "S0不追与关键位约束有效；资金回流不足以升级。"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 150.1,
+      "review_price_date": "2026-11-09",
+      "review_close": 149.67,
+      "review_move_pct": -0.29,
+      "verification": "完全有效",
+      "trigger_check": "跌0.29%至149.67、高154.7回落",
+      "logic_adjustment": "经营强与价格弱背离未改善。"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 285.05,
+      "review_price_date": "2026-11-09",
+      "review_close": 296.2,
+      "review_move_pct": 3.91,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "涨3.91%至296.20、收回286",
+      "logic_adjustment": "Q3超预期重新获价格反馈，需次日守位。"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 254.0,
+      "review_price_date": "2026-11-09",
+      "review_close": 248.0,
+      "review_move_pct": -2.36,
+      "verification": "完全有效",
+      "trigger_check": "跌2.36%至248、守242",
+      "logic_adjustment": "橙色不追与回购待实施约束有效。"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 37.33,
+      "review_price_date": "2026-11-09",
+      "review_close": 37.42,
+      "review_move_pct": 0.24,
+      "verification": "完全有效",
+      "trigger_check": "微涨至37.42、仍未收37.8",
+      "logic_adjustment": "止跌弱，红色经营约束有效。"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 380.0,
+      "review_price_date": "2026-11-09",
+      "review_close": 369.8,
+      "review_move_pct": -2.68,
+      "verification": "完全有效",
+      "trigger_check": "跌2.68%至369.8、失370",
+      "logic_adjustment": "橙色不追与失位降级规则有效。"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 104.9,
+      "review_price_date": "2026-11-09",
+      "review_close": 104.6,
+      "review_move_pct": -0.29,
+      "verification": "完全有效",
+      "trigger_check": "微跌至104.6、守103.3",
+      "logic_adjustment": "相对强守位但未突破，橙色约束有效。"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 85.67,
+      "review_price_date": "2026-11-09",
+      "review_close": 85.76,
+      "review_move_pct": 0.11,
+      "verification": "完全有效",
+      "trigger_check": "微涨至85.76、未收86",
+      "logic_adjustment": "盘中冲高未确认，红色约束有效。"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 79.9,
+      "review_price_date": "2026-11-09",
+      "review_close": 80.25,
+      "review_move_pct": 0.44,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "涨0.44%至80.25、首日收80",
+      "logic_adjustment": "首日收回关键位，只上调为修复观察。"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 84.75,
+      "review_price_date": "2026-11-09",
+      "review_close": 88.27,
+      "review_move_pct": 4.15,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "涨4.15%至88.27、首日收87.4",
+      "logic_adjustment": "题材修复有效，等待下一交易日守位。"
+    }
+  ],
+  "logic_corrections": [
+    "上涨家数回升但仍少于下跌家数，指数小涨不能视作宽度修复，宏观仅由S0升至S1冰点观察。",
+    "通信/电子资金回流改善局部承接，但新易盛高184.12回落、澜起高154.7回落，资金流入不等于趋势确认。",
+    "绿的、联瑞、铖昌只完成首日收回关键位，必须等待下一完整交易日守位。",
+    "宁德失370触发降级；中铝战略合作属于产业催化，不提前计入利润。",
+    "SOXX大涨而NVDA/BABA下跌说明外围内部仍分化，不能解除组合科技同变量约束。"
+  ]
+}
