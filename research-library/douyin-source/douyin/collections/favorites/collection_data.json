@@ -13531,15 +13531,16 @@
     }
   ],
   "sync": {
-    "run_id": "favorites_20261108",
+    "run_id": "favorites_20261109",
     "status": "processing_pending",
     "scan_status": "complete",
-    "previous_ai_count": 190,
-    "scanned_at": "2026-11-08 11:10 +08:00",
-    "selected_new": 4,
-    "merged_new": 2,
-    "failed": 0,
+    "previous_ai_count": 192,
+    "scanned_at": "2026-11-09 11:04 +08:00",
+    "selected_new": 5,
+    "merged_new": 0,
+    "failed": 1,
     "pending_ids": [
+      "7699436690292608307",
       "7704534305246137654",
       "7703048940762492480"
     ]
