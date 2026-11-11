@@ -13625,13 +13625,15 @@
   ],
   "sync": {
     "run_id": "favorites_20261111",
-    "status": "ok",
+    "status": "processing_pending",
     "scan_status": "complete",
     "previous_ai_count": 192,
-    "scanned_at": "2026-11-11 11:04 +08:00",
-    "selected_new": 5,
+    "scanned_at": "2026-11-11 11:31 +08:00",
+    "selected_new": 6,
     "merged_new": 3,
     "failed": 0,
-    "pending_ids": []
+    "pending_ids": [
+      "7706545977787755259"
+    ]
   }
 }

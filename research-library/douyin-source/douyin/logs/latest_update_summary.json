@@ -97,11 +97,11 @@
     "favorites_records": 291
   },
   "favorites": {
-    "status": "ok",
+    "status": "processing_pending",
     "run_id": "favorites_20261111",
-    "scanned_at": "2026-11-11 11:04 +08:00",
+    "scanned_at": "2026-11-11 11:31 +08:00",
     "merged_new": 3,
-    "pending": 0,
+    "pending": 1,
     "failed": 0,
     "total_records": 291
   }
