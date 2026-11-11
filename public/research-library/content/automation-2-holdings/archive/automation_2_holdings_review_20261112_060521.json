@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-11-12T06:05:21+08:00",
+  "review_window": "使用2026-11-11完整A股与港股收盘验证上一版06:00判断；隔夜美股11月11日表现仅用于新一版预警。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 9,
+    "useful_but_conservative": 0,
+    "repair_upgrade": 1,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 1,
+    "main_read": "A股广度和成长风格连续第二日转强，新易盛、澜起、英维克、宁德完成第二日守位，分类为完全有效；雅克首日收回88.6，分类为修复有效需上调观察。红色总阀门作为不追涨/不加仓纪律有效，组合风险按规则仅降为橙色。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 183.8,
+      "review_price_date": "2026-11-11",
+      "review_close": 215.0,
+      "review_move_pct": 16.97,
+      "verification": "完全有效",
+      "trigger_check": "涨16.97%至215、第二日守180",
+      "logic_adjustment": "修复方向获第二日确认，但因3日涨幅逼近25%转为高位橙色观察。"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 154.8,
+      "review_price_date": "2026-11-11",
+      "review_close": 162.86,
+      "review_move_pct": 5.21,
+      "verification": "完全有效",
+      "trigger_check": "涨5.21%至162.86、第二日守150",
+      "logic_adjustment": "第二日守位并收159，修复确认；减持约束保留。"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "橙色",
+      "morning_judgement": "利多",
+      "morning_close": 302.76,
+      "review_price_date": "2026-11-11",
+      "review_close": 303.0,
+      "review_move_pct": 0.08,
+      "verification": "完全有效",
+      "trigger_check": "收303、继续守300/286",
+      "logic_adjustment": "业绩与价格修复方向延续，橙色不追仍有效。"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 245.66,
+      "review_price_date": "2026-11-11",
+      "review_close": 250.0,
+      "review_move_pct": 1.77,
+      "verification": "完全有效",
+      "trigger_check": "涨1.77%至250、盘中失242后回收",
+      "logic_adjustment": "公司层承接和橙色波动约束均有效。"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 39.38,
+      "review_price_date": "2026-11-11",
+      "review_close": 43.32,
+      "review_move_pct": 10.01,
+      "verification": "完全有效",
+      "trigger_check": "涨停43.32、第二日守37.8",
+      "logic_adjustment": "修复方向确认，但经营质量要求继续禁止追涨。"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "橙色",
+      "morning_judgement": "中性",
+      "morning_close": 378.0,
+      "review_price_date": "2026-11-11",
+      "review_close": 387.4,
+      "review_move_pct": 2.49,
+      "verification": "完全有效",
+      "trigger_check": "涨2.49%至387.4、第二日守377",
+      "logic_adjustment": "第二日守位且收382，修复确认；业绩约束保留。"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 101.6,
+      "review_price_date": "2026-11-11",
+      "review_close": 100.6,
+      "review_move_pct": -0.98,
+      "verification": "完全有效",
+      "trigger_check": "跌0.98%至100.6、仍未复103.3",
+      "logic_adjustment": "红色跨市场弱势判断和100防线继续有效。"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 85.97,
+      "review_price_date": "2026-11-11",
+      "review_close": 89.31,
+      "review_move_pct": 3.89,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "涨3.89%至89.31、首日收88.6",
+      "logic_adjustment": "首次收回关键位，从红色防守上调为橙色修复观察。"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "橙色",
+      "morning_judgement": "利多",
+      "morning_close": 83.23,
+      "review_price_date": "2026-11-11",
+      "review_close": 89.9,
+      "review_move_pct": 8.01,
+      "verification": "完全有效",
+      "trigger_check": "涨8.01%至89.9、第三日守80",
+      "logic_adjustment": "Q3超预期修复延续，橙色不追约束有效。"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "橙色",
+      "morning_judgement": "利多",
+      "morning_close": 91.04,
+      "review_price_date": "2026-11-11",
+      "review_close": 90.73,
+      "review_move_pct": -0.34,
+      "verification": "完全有效",
+      "trigger_check": "跌0.34%至90.73、继续守90/86",
+      "logic_adjustment": "题材修复与高波动约束同时有效。"
+    }
+  ],
+  "logic_corrections": [
+    "约3456股上涨、成交约1.68万亿元，指数与成长风格获得第二日确认，宏观由S2上调至S3。",
+    "新易盛、澜起、英维克、宁德第二日守位，允许从纯修复观察升级为确认，但不等于允许追高。",
+    "雅克只完成首日收回86/88.6，至少再等一日守位后才能降低个股风险。",
+    "新易盛3日+24.93%已逼近25%硬阈值，英维克涨停，风险权重从破位转为高位拥挤。",
+    "阿里H股和ADR继续偏弱，产品催化仍不能替代盈利与价格确认。"
+  ]
+}
