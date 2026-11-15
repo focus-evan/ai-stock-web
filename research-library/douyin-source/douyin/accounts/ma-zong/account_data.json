@@ -43819,11 +43819,11 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261114",
+    "run_id": "daily_20261115",
     "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-14 10:56 +08:00",
-    "latest_observed_id": "7707553493167138683",
+    "scanned_at": "2026-11-15 11:03 +08:00",
+    "latest_observed_id": "7707994425171393531",
     "pending_ids": [
       "7704330918665047781",
       "7704218546919023615",
@@ -43840,12 +43840,13 @@
       "7706833585856661371",
       "7707232538453176994",
       "7707180632909241984",
-      "7707154784079758521"
+      "7707154784079758521",
+      "7707994425171393531"
     ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 3,
-    "failed": 0
+    "merged_new": 0,
+    "failed": 1
   }
 }
