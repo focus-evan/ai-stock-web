@@ -8368,22 +8368,23 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261115",
+    "run_id": "daily_20261116",
     "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-15 11:03 +08:00",
-    "latest_observed_id": "7707470080267960419",
+    "scanned_at": "2026-11-16 12:03 +08:00",
+    "latest_observed_id": "7708604874426568256",
     "pending_ids": [
       "7706037587342203363",
       "7706404047721333480",
       "7706779830058489000",
       "7707470080267960419",
-      "7707149644278694848"
+      "7707149644278694848",
+      "7708604874426568256"
     ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
     "merged_new": 0,
-    "failed": 0
+    "failed": 1
   }
 }

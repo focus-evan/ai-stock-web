@@ -9032,15 +9032,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261115",
+    "run_id": "daily_20261116",
     "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-15 11:03 +08:00",
-    "latest_observed_id": "7707624989734922918",
+    "scanned_at": "2026-11-16 12:03 +08:00",
+    "latest_observed_id": "7708347166020640934",
     "pending_ids": [
       "7693818935444036809",
       "7682460211265089203",
-      "7707624989734922918"
+      "7707624989734922918",
+      "7708347166020640934"
     ],
     "blocked_ids": [
       "7693818935444036809",
