@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-16T06:09:07+08:00",
-  "review_window": "使用2026-11-13完整A股与港股收盘验证上一版06:00判断；美股11月13日与周末消息仅用于周一新预警，未回填A/H复盘。",
+  "generated_at": "2026-11-17T06:04:48+08:00",
+  "review_window": "使用2026-11-16完整A股与港股收盘验证上一版06:00判断；隔夜美股11月16日表现仅用于新一版预警。",
   "summary": {
     "reviewed_count": 10,
     "exact_effective": 10,
@@ -9,7 +9,7 @@
     "underestimated_risk": 0,
     "effective_or_useful": 10,
     "needs_calibration": 0,
-    "main_read": "上一版S0红色总阀门与全部个股关键位纪律在11月13日完全有效：八只A股持仓全部下跌，新易盛、澜起、英维克、雅克、联瑞和铖昌继续失位，宁德与阿里港股继续走弱。红色总阀门是仓位/加仓纪律，不等于对每只持仓跌幅的预测。"
+    "main_read": "上一版S7红色总阀门与全部关键位纪律在11月16日完全有效：八只A股持仓全部继续下跌，新易盛、英维克、雅克、联瑞和铖昌跌幅超过8%，铖昌跌停；宁德和阿里港股也未形成修复。红色总阀门验证的是仓位/加仓纪律，不是每只持仓跌幅预测。"
   },
   "items": [
     {
@@ -17,137 +17,137 @@
       "code": "300502",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 205.58,
-      "review_price_date": "2026-11-13",
-      "review_close": 187.58,
-      "review_move_pct": -8.76,
+      "morning_close": 187.58,
+      "review_price_date": "2026-11-16",
+      "review_close": 166.8,
+      "review_move_pct": -11.08,
       "verification": "完全有效",
-      "trigger_check": "再跌8.76%至187.58、失200/195",
-      "logic_adjustment": "红色反抽减压和失位降风险条件完全有效。"
+      "trigger_check": "跌11.08%至166.8、失180/176",
+      "logic_adjustment": "S7只减不加和失位降风险条件完全有效。"
     },
     {
       "name": "澜起科技",
       "code": "688008",
       "morning_risk": "红色",
-      "morning_judgement": "中性",
-      "morning_close": 162.89,
-      "review_price_date": "2026-11-13",
-      "review_close": 150.97,
-      "review_move_pct": -7.32,
+      "morning_judgement": "利空",
+      "morning_close": 150.97,
+      "review_price_date": "2026-11-16",
+      "review_close": 139.79,
+      "review_move_pct": -7.41,
       "verification": "完全有效",
-      "trigger_check": "跌7.32%至150.97、失160/155",
-      "logic_adjustment": "红色系统门控覆盖前一日相对强势，失位条件触发。"
+      "trigger_check": "跌7.41%至139.79、失143",
+      "logic_adjustment": "红色防守与失147.5/143降风险条件触发。"
     },
     {
       "name": "绿的谐波",
       "code": "688017",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 283.93,
-      "review_price_date": "2026-11-13",
-      "review_close": 281.8,
-      "review_move_pct": -0.75,
+      "morning_close": 281.8,
+      "review_price_date": "2026-11-16",
+      "review_close": 265.26,
+      "review_move_pct": -5.87,
       "verification": "完全有效",
-      "trigger_check": "收281.8、继续失283",
-      "logic_adjustment": "红色踩踏风险和反抽不追约束有效。"
+      "trigger_check": "跌5.87%至265.26、失278/270",
+      "logic_adjustment": "红色踩踏与失位减风险约束准确。"
     },
     {
       "name": "中微公司",
       "code": "688012",
       "morning_risk": "红色",
       "morning_judgement": "中性",
-      "morning_close": 252.55,
-      "review_price_date": "2026-11-13",
-      "review_close": 245.9,
-      "review_move_pct": -2.63,
+      "morning_close": 245.9,
+      "review_price_date": "2026-11-16",
+      "review_close": 233.2,
+      "review_move_pct": -5.16,
       "verification": "完全有效",
-      "trigger_check": "跌2.63%至245.9、守245临界",
-      "logic_adjustment": "红色门控与245/242承接观察有效。"
+      "trigger_check": "跌5.16%至233.2、失242/238",
+      "logic_adjustment": "行动方案不构成买点、关键位约束有效。"
     },
     {
       "name": "英维克",
       "code": "002837",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 40.98,
-      "review_price_date": "2026-11-13",
-      "review_close": 38.36,
-      "review_move_pct": -6.39,
+      "morning_close": 38.36,
+      "review_price_date": "2026-11-16",
+      "review_close": 34.84,
+      "review_move_pct": -9.18,
       "verification": "完全有效",
-      "trigger_check": "再跌6.39%至38.36、失38.8",
-      "logic_adjustment": "红色不追和失位降风险条件准确。"
+      "trigger_check": "跌9.18%至34.84、失37.3",
+      "logic_adjustment": "红色只减不加和失位条件完全有效。"
     },
     {
       "name": "宁德时代-H",
       "code": "03750.HK",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 374.2,
-      "review_price_date": "2026-11-13",
-      "review_close": 369.8,
-      "review_move_pct": -1.18,
+      "morning_close": 369.8,
+      "review_price_date": "2026-11-16",
+      "review_close": 366.4,
+      "review_move_pct": -0.92,
       "verification": "完全有效",
-      "trigger_check": "跌1.18%至369.8、失370",
-      "logic_adjustment": "红色防守和失370减风险条件触发。"
+      "trigger_check": "跌0.92%至366.4、失367",
+      "logic_adjustment": "红色防守与失367条件触发。"
     },
     {
       "name": "阿里巴巴-W",
       "code": "09988.HK",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 93.8,
-      "review_price_date": "2026-11-13",
-      "review_close": 90.55,
-      "review_move_pct": -3.46,
+      "morning_close": 90.55,
+      "review_price_date": "2026-11-16",
+      "review_close": 90.15,
+      "review_move_pct": -0.44,
       "verification": "完全有效",
-      "trigger_check": "跌3.46%至90.55、盘中失90",
-      "logic_adjustment": "红色防守与失93.3继续降风险条件准确。"
+      "trigger_check": "跌0.44%至90.15、守89.8",
+      "logic_adjustment": "红色业绩前不摊低纪律有效，抗跌不等于修复。"
     },
     {
       "name": "雅克科技",
       "code": "002409",
       "morning_risk": "红色",
-      "morning_judgement": "中性",
-      "morning_close": 90.37,
-      "review_price_date": "2026-11-13",
-      "review_close": 86.34,
-      "review_move_pct": -4.46,
+      "morning_judgement": "利空",
+      "morning_close": 86.34,
+      "review_price_date": "2026-11-16",
+      "review_close": 79.3,
+      "review_move_pct": -8.15,
       "verification": "完全有效",
-      "trigger_check": "跌4.46%至86.34、失90/88.6",
-      "logic_adjustment": "红色系统门控识别修复失败，失位条件触发。"
+      "trigger_check": "跌8.15%至79.3、失82.7",
+      "logic_adjustment": "红色失位降风险条件完全有效。"
     },
     {
       "name": "联瑞新材",
       "code": "688300",
       "morning_risk": "红色",
-      "morning_judgement": "中性",
-      "morning_close": 89.31,
-      "review_price_date": "2026-11-13",
-      "review_close": 80.49,
-      "review_move_pct": -9.88,
+      "morning_judgement": "利空",
+      "morning_close": 80.49,
+      "review_price_date": "2026-11-16",
+      "review_close": 73.31,
+      "review_move_pct": -8.92,
       "verification": "完全有效",
-      "trigger_check": "项目公告后跌9.88%至80.49",
-      "logic_adjustment": "不因项目签约追高、失87降风险约束完全有效。"
+      "trigger_check": "跌8.92%至73.31、失78.2",
+      "logic_adjustment": "战略期权不计买点和失位降风险约束有效。"
     },
     {
       "name": "铖昌科技",
       "code": "001270",
       "morning_risk": "红色",
       "morning_judgement": "利空",
-      "morning_close": 87.27,
-      "review_price_date": "2026-11-13",
-      "review_close": 85.19,
-      "review_move_pct": -2.38,
+      "morning_close": 85.19,
+      "review_price_date": "2026-11-16",
+      "review_close": 76.67,
+      "review_move_pct": -10.0,
       "verification": "完全有效",
-      "trigger_check": "跌2.38%至85.19、失87",
-      "logic_adjustment": "红色踩踏与失87减风险条件触发。"
+      "trigger_check": "跌停76.67、失80",
+      "logic_adjustment": "红色高位踩踏与流动性风险判断完全有效。"
     }
   ],
   "logic_corrections": [
-    "连续第二日约4500股以上下跌，跌停升至38、昨日涨停平均-1.54%，状态由S0风险处理升级描述为S7退潮确认。",
-    "新易盛失200/195、澜起失160/155、英维克失38.8、雅克失88.6、联瑞失84.3，上一版关键位纪律应继续执行。",
-    "中微行动方案提供营收、重复订单和出货经营证据，但属于前瞻性规划，不覆盖价格与系统风险。",
-    "联瑞项目公告后跌9.88%，再次验证战略期权不能提前计入利润和交易买点。",
-    "周末证监会稳市与长期资本表态是政策缓冲，至少等待下一完整交易日宽度和跌停共同改善。"
+    "下跌仍超4100家且跌停升至64，少数涨停平均收益转正不足以解除全市场S7。",
+    "新易盛失176、澜起失143、英维克失36.2、雅克失82.7、联瑞失78.2、铖昌跌停，关键位纪律继续执行。",
+    "阿里H股守89.8只构成相对抗跌，隔夜ADR下跌和业绩事件风险要求维持红色。",
+    "隔夜SOXX/NVDA再度暴跌，组合相同宏观变量风险权重继续上调。",
+    "风险预算上限由10%降至5%；解除S7至少要求两个完整交易日宽度和跌停持续改善。"
   ]
 }
