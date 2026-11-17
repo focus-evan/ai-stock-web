@@ -8368,10 +8368,10 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261116",
+    "run_id": "daily_20261117",
     "status": "processing_pending",
     "scan_status": "complete",
-    "scanned_at": "2026-11-16 12:03 +08:00",
+    "scanned_at": "2026-11-17 12:04 +08:00",
     "latest_observed_id": "7708604874426568256",
     "pending_ids": [
       "7706037587342203363",
