@@ -9088,16 +9088,18 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261118",
-    "status": "processing_pending",
-    "scan_status": "complete",
-    "scanned_at": "2026-11-18 11:13 +08:00",
-    "latest_observed_id": "7709066233978695515",
+    "run_id": "daily_20261120",
+    "status": "partial",
+    "scan_status": "partial",
+    "scanned_at": "2026-11-20 10:55 +08:00",
+    "latest_observed_id": "7709854888397850057",
     "pending_ids": [
       "7693818935444036809",
       "7682460211265089203",
       "7707624989734922918",
-      "7708347166020640934"
+      "7708347166020640934",
+      "7709854888397850057",
+      "7709393943436196187"
     ],
     "blocked_ids": [
       "7693818935444036809",
@@ -9122,7 +9124,7 @@
         "checked_at": "2026-10-14"
       }
     ],
-    "merged_new": 2,
-    "failed": 0
+    "merged_new": 0,
+    "failed": 2
   }
 }

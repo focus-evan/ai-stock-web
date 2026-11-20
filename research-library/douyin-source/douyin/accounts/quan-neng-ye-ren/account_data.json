@@ -389,6 +389,64 @@
   },
   "items": [
     {
+      "aweme_id": "7710075023880536783",
+      "display_title": "全能的野人：谈当前市场赚钱效应",
+      "title": "11月20日上午十点，到底谁在挣钱啊#金融#财经#股市#A股",
+      "published_at": "2026-11-20 10:28",
+      "create_time": 1795141680,
+      "duration_seconds": 13.816,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7710075023880536783",
+      "raw_transcript": "这个市场到底谁在赚钱\n说出来 让我一个死心\n连我都在亏钱\n这个市场真的是\n独立行情一样 欺宾",
+      "transcript": "这个市场到底谁在赚钱\n说出来 让我一个死心\n连我都在亏钱\n这个市场真的是\n独立行情一样 欺宾\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作品表达情绪和市场感受，没有明确可执行的交易条件。"
+      ],
+      "category": "市场与交易",
+      "ai_related": false,
+      "html_file": "videos/new_7710075023880536783.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-20 11:17:27",
+      "sync_run_id": "daily_20261120"
+    },
+    {
+      "aweme_id": "7709867407796255040",
+      "display_title": "全能的野人：按开盘量能区分情景",
+      "title": "晚上9点加更一条 11月19日晚上9点#金融#财经#股市#股票#股民",
+      "published_at": "2026-11-19 21:03",
+      "create_time": 1795093380,
+      "duration_seconds": 50.833,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7709867407796255040",
+      "raw_transcript": "他跟一条视频 晚上老美的盘钱是大涨的\n那不管今晚老美啊 是走势是什么样的 不管是他的大涨还是大低啊\n明天我们这里都是走独立行墙\n因为我们现在没有量 是存量资金的博弈\n能不能听懂 那明天我们开盘之后啊 开盘的前十分钟 我们只关注\n量能 如果明天我们放量能放量两千亿啊\n以上 或者两千亿左右 明天我们将是一个铺掌行情\n也就是跟着老美去修复\n如果明天发量在一千亿左右\n那我们明天就冲高回落的这种行情\n如果明天一开盘 就是缩量行情\n那不用怀疑 明天就是欺宾\n好吧 那说到这两天\n没什么事 我都会少发视频的\n拜拜吧",
+      "transcript": "他跟一条视频 晚上老美的盘钱是大涨的\n那不管今晚老美啊 是走势是什么样的 不管是他的大涨还是大低啊\n明天我们这里都是走独立行墙\n因为我们现在没有量 是存量资金的博弈\n能不能听懂 那明天我们开盘之后啊 开盘的前十分钟 我们只关注\n量能 如果明天我们放量能放量两千亿啊\n以上 或者两千亿左右 明天我们将是一个铺掌行情\n也就是跟着老美去修复\n如果明天发量在一千亿左右\n那我们明天就冲高回落的这种行情\n如果明天一开盘 就是缩量行情\n那不用怀疑 明天就是欺宾\n好吧 那说到这两天\n没什么事 我都会少发视频的\n拜拜吧\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "可执行观察项是开盘量能及其对应情景；量能数字、市场口径需结合原视频确认。"
+      ],
+      "category": "市场与交易",
+      "ai_related": false,
+      "html_file": "videos/new_7709867407796255040.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-20 11:17:27",
+      "sync_run_id": "daily_20261120"
+    },
+    {
       "aweme_id": "7708758845057578211",
       "display_title": "野人生活段子：KTV求职对话",
       "title": "#内容过于真实的段子 #日常套路对象 #一本正经的接电话 #日常随拍分享 #手机通话",
@@ -36760,11 +36818,11 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261118",
-    "status": "processing_pending",
-    "scan_status": "complete",
-    "scanned_at": "2026-11-18 11:13 +08:00",
-    "latest_observed_id": "7709034938309595106",
+    "run_id": "daily_20261120",
+    "status": "partial",
+    "scan_status": "partial",
+    "scanned_at": "2026-11-20 10:55 +08:00",
+    "latest_observed_id": "7710075023880536783",
     "pending_ids": [
       "7703527907523658088",
       "7704481450201367395",
@@ -36795,12 +36853,16 @@
       "7708750313671776463",
       "7708669830400197327",
       "7708618875092724963",
-      "7706571961229902952"
+      "7706571961229902952",
+      "7709781592835813568",
+      "7709722502449220160",
+      "7709523443821606818",
+      "7709428596516183720"
     ],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 5,
-    "failed": 7
+    "merged_new": 2,
+    "failed": 4
   }
 }
