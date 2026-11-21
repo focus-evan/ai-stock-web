@@ -389,6 +389,95 @@
   },
   "items": [
     {
+      "aweme_id": "7710438058240030376",
+      "display_title": "全能的野人：周一分歧中的应对表达",
+      "title": "11月21日周末复盘#金融#财经#美股大跌#股市",
+      "published_at": "2026-11-21 09:57",
+      "create_time": 1795226220,
+      "duration_seconds": 57.333,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7710438058240030376",
+      "raw_transcript": "很多小伙伴一觉睡醒 添塌了吧 懵了吧\n老美那边大盘能跌五个多点\n打子能跌十几个点\n这个已经超冲击的认知了吧\n其实这里啊\n逻辑我已经放在致敬视频了\n以前我就给你们讲过叫\n加息周期的道类\n什么万事万物都逃不过两个字\n周期啊\n这就是底层逻辑和知识\n我都传授过给你们了\n很多小伙伴问我们周一怎么办\n周一也得送你们八个赞\n分歧 切核心\n博士 企业报团 就这八个字能够很多投资者搅一辈子\n好吧 那在周一这么困难的日子里 野歌\n贡献绵薄的力量 就是\n锁仓不动 为国护盘\n在这里还要中告一句 就是普通投资者\n不要在这股市里想着发财\n你在这里就是当先前玩一玩的 娱乐娱乐的\n拜拜",
+      "transcript": "很多小伙伴一觉睡醒 添塌了吧 懵了吧\n老美那边大盘能跌五个多点\n打子能跌十几个点\n这个已经超冲击的认知了吧\n其实这里啊\n逻辑我已经放在致敬视频了\n以前我就给你们讲过叫\n加息周期的道类\n什么万事万物都逃不过两个字\n周期啊\n这就是底层逻辑和知识\n我都传授过给你们了\n很多小伙伴问我们周一怎么办\n周一也得送你们八个赞\n分歧 切核心\n博士 企业报团 就这八个字能够很多投资者搅一辈子\n好吧 那在周一这么困难的日子里 野歌\n贡献绵薄的力量 就是\n锁仓不动 为国护盘\n在这里还要中告一句 就是普通投资者\n不要在这股市里想着发财\n你在这里就是当先前玩一玩的 娱乐娱乐的\n拜拜\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者谈到海外市场大跌后的情绪冲击，称此前讲过周期，并用“分歧、切核心”等短语描述周一思路。",
+        "作者另表示普通投资者不应把股市当作发财捷径。"
+      ],
+      "category": "市场与交易",
+      "ai_related": false,
+      "html_file": "videos/new_7710438058240030376.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
+    },
+    {
+      "aweme_id": "7710161087081839715",
+      "display_title": "全能的野人：澄清账号与防骗提醒",
+      "title": "麻烦大家把我视频推荐转发一下。澄清一下#特别声明",
+      "published_at": "2026-11-20 16:02",
+      "create_time": 1795161720,
+      "duration_seconds": 44.233,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7710161087081839715",
+      "raw_transcript": "好多小伙伴在问我 这个是不是我 这个不是我\n一个在其他平台都没有自媒体账号\n包括什么 母红书 母威 母博\n什么 母手 都没有\n我只有赌应的一个账号\n我也不会拉你们进群\n也不会私了你们\n更不会跟你聊天\n哪怕你是宝马大肠腿\n我都不会啊\n这个是野歌的原则和底线\n这些人才是真正的产业年\n他们会把你拉下去啊\n各种这种诱导你们\n一定不要上当受骗\n拜拜",
+      "transcript": "好多小伙伴在问我 这个是不是我 这个不是我\n一个在其他平台都没有自媒体账号\n包括什么 母红书 母威 母博\n什么 母手 都没有\n我只有赌应的一个账号\n我也不会拉你们进群\n也不会私了你们\n更不会跟你聊天\n哪怕你是宝马大肠腿\n我都不会啊\n这个是野歌的原则和底线\n这些人才是真正的产业年\n他们会把你拉下去啊\n各种这种诱导你们\n一定不要上当受骗\n拜拜\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者否认其他平台账号、拉群及私聊，提醒粉丝警惕冒充账号和诱导行为。",
+        "本条没有交易方法或行情判断。"
+      ],
+      "category": "账号动态",
+      "ai_related": false,
+      "html_file": "videos/new_7710161087081839715.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
+    },
+    {
+      "aweme_id": "7710148935155143055",
+      "display_title": "全能的野人：周末补仓的情绪化段子",
+      "title": "11月20日收入#金融#A股#财经#强者思维逻辑",
+      "published_at": "2026-11-20 15:15",
+      "create_time": 1795158900,
+      "duration_seconds": 47.767,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7710148935155143055",
+      "raw_transcript": "周茂愉快 兄弟们\n野歌周茂要去补仓了啊\n我只能去掏我朋友了\n只能四方会谈掏他们口袋了啊\n那今天啊\n恭喜我们的银行是跨连板块啊\n腰鼓就出在银行板块里面\n那今天是不是如野歌所说的\n我们是欺兵\n那这里啊\n还是那句话\n底不是护士人\n护士人也不是底\n会不会有八兵和九兵呢\n那今天好多小伙伴啊\n老里面把你们放出来了\n放出来之后你们又去追其他的东西了吧\n又去追脏毛了吧\n一面点吃了吧\n哎呀 我们讲\n做交易一定不能一面点吃\n要聚焦和心样\n周末愿快 拜拜",
+      "transcript": "周茂愉快 兄弟们\n野歌周茂要去补仓了啊\n我只能去掏我朋友了\n只能四方会谈掏他们口袋了啊\n那今天啊\n恭喜我们的银行是跨连板块啊\n腰鼓就出在银行板块里面\n那今天是不是如野歌所说的\n我们是欺兵\n那这里啊\n还是那句话\n底不是护士人\n护士人也不是底\n会不会有八兵和九兵呢\n那今天好多小伙伴啊\n老里面把你们放出来了\n放出来之后你们又去追其他的东西了吧\n又去追脏毛了吧\n一面点吃了吧\n哎呀 我们讲\n做交易一定不能一面点吃\n要聚焦和心样\n周末愿快 拜拜\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者以调侃口吻谈周末补仓、银行板块及市场情绪，未形成清楚的可执行条件。"
+      ],
+      "category": "账号动态",
+      "ai_related": false,
+      "html_file": "videos/new_7710148935155143055.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
+    },
+    {
       "aweme_id": "7710075023880536783",
       "display_title": "全能的野人：谈当前市场赚钱效应",
       "title": "11月20日上午十点，到底谁在挣钱啊#金融#财经#股市#A股",
@@ -447,6 +536,35 @@
       "sync_run_id": "daily_20261120"
     },
     {
+      "aweme_id": "7708970393248206031",
+      "display_title": "全能的野人：生活化短视频",
+      "title": "11月17日中午 今天吃顿好的#金融#财经#股市#股票#股民",
+      "published_at": "2026-11-17 11:02",
+      "create_time": 1794884520,
+      "duration_seconds": 24.967,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7708970393248206031",
+      "raw_transcript": "喂 紫兹 今晚不结伙了啊 今晚不去了\n昨天 野歌很迷茫\n那么今天 野歌就是最亮的仔\n天赋亦禀\n主板 可能有创业版的叔叔\n这是第一次听说呀",
+      "transcript": "喂 紫兹 今晚不结伙了啊 今晚不去了\n昨天 野歌很迷茫\n那么今天 野歌就是最亮的仔\n天赋亦禀\n主板 可能有创业版的叔叔\n这是第一次听说呀\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "视频以不参加聚会的对话开场，随后出现主板和创业板相关的碎片化表达，缺少完整论证。"
+      ],
+      "category": "账号动态",
+      "ai_related": false,
+      "html_file": "videos/new_7708970393248206031.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
+    },
+    {
       "aweme_id": "7708758845057578211",
       "display_title": "野人生活段子：KTV求职对话",
       "title": "#内容过于真实的段子 #日常套路对象 #一本正经的接电话 #日常随拍分享 #手机通话",
@@ -477,6 +595,35 @@
       "sync_run_id": "daily_20261118"
     },
     {
+      "aweme_id": "7708596959918034152",
+      "display_title": "全能的野人：短句式情绪表达",
+      "title": "11月16日上午#财经",
+      "published_at": "2026-11-16 10:53",
+      "create_time": 1794797580,
+      "duration_seconds": 22.167,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7708596959918034152",
+      "raw_transcript": "大到五十 天眼四十九 人对其异\n现在能不能理解这句话啊\n全网都不看好 偏偏你最真情\n分歧切合机 若是切莽赶 也可大半\n现在这个短片中\n用风光划 做什么都没有\n真是的\n哎呀 就这样子吧",
+      "transcript": "大到五十 天眼四十九 人对其异\n现在能不能理解这句话啊\n全网都不看好 偏偏你最真情\n分歧切合机 若是切莽赶 也可大半\n现在这个短片中\n用风光划 做什么都没有\n真是的\n哎呀 就这样子吧\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "视频包含“全网不看好、你最真情”等短句，以及疑似市场术语片段，语义不完整。"
+      ],
+      "category": "账号动态",
+      "ai_related": false,
+      "html_file": "videos/new_7708596959918034152.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
+    },
+    {
       "aweme_id": "7708300237219731875",
       "display_title": "野人11月15日复盘",
       "title": "11月15日复盘#金融#财经#股市#股票#股民",
@@ -505,6 +652,36 @@
       "reviewer": "codex",
       "reviewed_at": "2026-11-18 11:28:49",
       "sync_run_id": "daily_20261118"
+    },
+    {
+      "aweme_id": "7708254450759011939",
+      "display_title": "全能的野人：粉丝理发店趣事",
+      "title": "遇到粉丝了#金融财经#股市#股票#粉丝",
+      "published_at": "2026-11-15 12:44",
+      "create_time": 1794717840,
+      "duration_seconds": 49.167,
+      "author": "全能的野人",
+      "share_url": "https://www.douyin.com/video/7708254450759011939",
+      "raw_transcript": "刚才我去理发 理发结束了\n在理发店的时候 有一个拖地老师 是我的粉丝\n他说他是我的粉丝 他把他的账户给我看了\n他近三个月亏成百分之六十八 总共亏成百分之九十七\n他说也跟你放心 我的理发技术一定比超古技术好\n他说我是你的粉丝 求求你让我理一下吧\n我说行行行 我说给你理吧\n你的时候我觉得 我因为他是我的粉丝\n我就睡着了 你知道吧\n等到你完之后我一看\n这他的技术我 我百分之百确定啊\n他的理发技术和他的超股技术是一样的\n但是啊 盛秦兰却我也没好意思说他\n那现在我要吐槽了\n他绝对不是我的好粉\n绝对是我的黑粉\n怎么理的",
+      "transcript": "刚才我去理发 理发结束了\n在理发店的时候 有一个拖地老师 是我的粉丝\n他说他是我的粉丝 他把他的账户给我看了\n他近三个月亏成百分之六十八 总共亏成百分之九十七\n他说也跟你放心 我的理发技术一定比超古技术好\n他说我是你的粉丝 求求你让我理一下吧\n我说行行行 我说给你理吧\n你的时候我觉得 我因为他是我的粉丝\n我就睡着了 你知道吧\n等到你完之后我一看\n这他的技术我 我百分之百确定啊\n他的理发技术和他的超股技术是一样的\n但是啊 盛秦兰却我也没好意思说他\n那现在我要吐槽了\n他绝对不是我的好粉\n绝对是我的黑粉\n怎么理的\n【待听辨：专名、数字、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者讲述一位粉丝自述交易亏损后到理发店找他理发的趣事。",
+        "相关亏损比例是作者转述的个人说法，未核实，也不是交易绩效数据。"
+      ],
+      "category": "账号动态",
+      "ai_related": false,
+      "html_file": "videos/new_7708254450759011939.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-21 11:20:58",
+      "sync_run_id": "daily_20261121"
     },
     {
       "aweme_id": "7708243937639304320",
@@ -36818,11 +36995,11 @@
     "methodology_note": "准确率只统计含明确方向和可核验期限的观点；条件策略、复盘陈述、长期观点和观察期不足项目不强行计分。行业判断使用公开ETF作宽口径代理。"
   },
   "sync": {
-    "run_id": "daily_20261120",
-    "status": "partial",
-    "scan_status": "partial",
-    "scanned_at": "2026-11-20 10:55 +08:00",
-    "latest_observed_id": "7710075023880536783",
+    "run_id": "daily_20261121",
+    "status": "processing_pending",
+    "scan_status": "complete",
+    "scanned_at": "2026-11-21 10:45 +08:00",
+    "latest_observed_id": "7710438058240030376",
     "pending_ids": [
       "7703527907523658088",
       "7704481450201367395",
@@ -36846,10 +37023,7 @@
       "7707510445293736143",
       "7707497627609686095",
       "7708020826892958799",
-      "7708596959918034152",
-      "7708254450759011939",
       "7709034938309595106",
-      "7708970393248206031",
       "7708750313671776463",
       "7708669830400197327",
       "7708618875092724963",
@@ -36862,7 +37036,7 @@
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 2,
-    "failed": 4
+    "merged_new": 6,
+    "failed": 0
   }
 }
