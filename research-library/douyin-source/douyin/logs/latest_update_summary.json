@@ -1,7 +1,7 @@
 {
   "run_id": "daily_20261121",
   "started": "2026-11-21 10:45:00",
-  "finished": "2026-11-21 11:21:06",
+  "finished": "2026-11-21 11:27:42",
   "sources": [
     {
       "name": "李一恩",
@@ -45,7 +45,7 @@
       "transcribed": 11,
       "text_extracted": 0,
       "merged_new": 11,
-      "added_this_invocation": 11,
+      "added_this_invocation": 0,
       "pending": 21,
       "blocked": 0,
       "excluded": 0,
@@ -62,7 +62,7 @@
       "transcribed": 6,
       "text_extracted": 0,
       "merged_new": 6,
-      "added_this_invocation": 6,
+      "added_this_invocation": 0,
       "pending": 31,
       "blocked": 0,
       "excluded": 0,
