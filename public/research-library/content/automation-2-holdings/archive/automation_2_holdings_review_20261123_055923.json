@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-11-23T05:59:23+08:00",
+  "review_window": "使用2026-11-20完整A/H收盘验证上一版06:00判断；周五美股用于周一新预警。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 9,
+    "useful_but_conservative": 1,
+    "repair_upgrade": 0,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 1,
+    "main_read": "红色S7纪律继续有效；阿里业绩后相对强但操作约束仍有效。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 167.06,
+      "review_price_date": "2026-11-20",
+      "review_close": 165.0,
+      "review_move_pct": -1.23,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 137.6,
+      "review_price_date": "2026-11-20",
+      "review_close": 128.41,
+      "review_move_pct": -6.68,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 245.8,
+      "review_price_date": "2026-11-20",
+      "review_close": 230.8,
+      "review_move_pct": -6.1,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "橙色",
+      "morning_judgement": "利多",
+      "morning_close": 256.5,
+      "review_price_date": "2026-11-20",
+      "review_close": 261.5,
+      "review_move_pct": 1.95,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 34.62,
+      "review_price_date": "2026-11-20",
+      "review_close": 32.04,
+      "review_move_pct": -7.45,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 349.8,
+      "review_price_date": "2026-11-20",
+      "review_close": 335.0,
+      "review_move_pct": -4.23,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 80.55,
+      "review_price_date": "2026-11-20",
+      "review_close": 83.35,
+      "review_move_pct": 3.48,
+      "verification": "方向偏保守但操作有效",
+      "trigger_check": "H股业绩后+3.48%、强于港科指",
+      "logic_adjustment": "红色不追与事件纪律仍有效"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 82.64,
+      "review_price_date": "2026-11-20",
+      "review_close": 75.28,
+      "review_move_pct": -8.91,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 73.54,
+      "review_price_date": "2026-11-20",
+      "review_close": 67.89,
+      "review_move_pct": -7.68,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 70.69,
+      "review_price_date": "2026-11-20",
+      "review_close": 65.42,
+      "review_move_pct": -7.46,
+      "verification": "完全有效",
+      "trigger_check": "关键位与红色纪律有效",
+      "logic_adjustment": "维持防守"
+    }
+  ],
+  "logic_corrections": [
+    "A股5083股下跌与海外科技暴跌触发S0。",
+    "阿里业绩与价格分开评估。",
+    "风险预算降至0%-5%。"
+  ]
+}
