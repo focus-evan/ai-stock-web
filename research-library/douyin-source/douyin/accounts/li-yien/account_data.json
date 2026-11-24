@@ -359,6 +359,36 @@
   },
   "items": [
     {
+      "aweme_id": "7711217283662195520",
+      "display_title": "李一恩：对阶段性底部与空头回补的看法",
+      "title": "李一恩公开视频 7711217283662195520",
+      "published_at": "2026-11-23 12:21",
+      "create_time": 1795407660,
+      "duration_seconds": 40.24,
+      "author": "李一恩",
+      "share_url": "https://www.douyin.com/video/7711217283662195520",
+      "raw_transcript": "今天早上那个杂下人的以下来 基本上算是短期阶段性的底部啊\n这里是可以抄底的\n呃后面应该也有一个还行的反弹\n他这一波主要是空头一直在空码 然后人家赚了很多钱\n赚到这里人家觉得差不多了 然后开始平仓\n空头平仓就是把股票买回来嘛 所以市场的抛压明显减少\n并且开始有人拉嘛 他就是这么个原因\n那么接下来行情能持续多久 主要是看空头平仓的规模\n如果空头平仓规模比较多 那么可能反弹的力度还会比较强",
+      "transcript": "今天早上那个杂下人的以下来 基本上算是短期阶段性的底部啊\n这里是可以抄底的\n呃后面应该也有一个还行的反弹\n他这一波主要是空头一直在空码 然后人家赚了很多钱\n赚到这里人家觉得差不多了 然后开始平仓\n空头平仓就是把股票买回来嘛 所以市场的抛压明显减少\n并且开始有人拉嘛 他就是这么个原因\n那么接下来行情能持续多久 主要是看空头平仓的规模\n如果空头平仓规模比较多 那么可能反弹的力度还会比较强\n【待听辨：点位、专名、交易术语】",
+      "transcript_source": "audio_asr",
+      "asr_backend": "faster-whisper",
+      "asr_model": "small/int8",
+      "quality": {
+        "status": "通过（文案复核）",
+        "uncertain_terms_marked": true
+      },
+      "points": [
+        "作者认为当日下跌后可能进入短期阶段性底部，并解释说空头平仓买回股票会减少抛压，可能带来反弹。",
+        "作者称后续反弹力度取决于空头平仓规模。"
+      ],
+      "category": "市场与交易",
+      "ai_related": false,
+      "html_file": "videos/new_7711217283662195520.html",
+      "manual_reviewed": false,
+      "reviewer": "codex",
+      "reviewed_at": "2026-11-24 11:09:21",
+      "sync_run_id": "daily_20261124"
+    },
+    {
       "aweme_id": "7708604874426568256",
       "display_title": "李一恩：解释市场下跌与提前避险",
       "title": "李一恩视频 7708604874426568256",
@@ -8542,16 +8572,16 @@
   "targets": null,
   "reliability": null,
   "sync": {
-    "run_id": "daily_20261123",
+    "run_id": "daily_20261124",
     "status": "ok",
     "scan_status": "complete",
-    "scanned_at": "2026-11-23 10:48 +08:00",
-    "latest_observed_id": "7708604874426568256",
+    "scanned_at": "2026-11-24 10:45 +08:00",
+    "latest_observed_id": "7711217283662195520",
     "pending_ids": [],
     "blocked_ids": [],
     "excluded_ids": [],
     "exceptions": [],
-    "merged_new": 0,
+    "merged_new": 1,
     "failed": 0
   }
 }
