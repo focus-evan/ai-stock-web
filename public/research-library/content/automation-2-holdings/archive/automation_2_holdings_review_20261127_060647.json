@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-11-27T06:06:47+08:00",
+  "review_window": "使用2026-11-26完整A/H收盘验证上一版06:00判断；美国感恩节无新交易日。",
+  "summary": {
+    "reviewed_count": 10,
+    "exact_effective": 5,
+    "useful_but_conservative": 0,
+    "repair_upgrade": 5,
+    "underestimated_risk": 0,
+    "effective_or_useful": 10,
+    "needs_calibration": 5,
+    "main_read": "红色总阀门有效；新易盛、阿里、雅克、联瑞、铖昌首次收回更高关键位，只升级为修复观察。澜起、绿的、中微、英维克与宁德仍未完成趋势修复。"
+  },
+  "items": [
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "morning_risk": "红色",
+      "morning_judgement": "中性",
+      "morning_close": 181.3,
+      "review_price_date": "2026-11-26",
+      "review_close": 189.03,
+      "review_move_pct": 4.26,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "首次收回185",
+      "logic_adjustment": "只上调修复观察，至少等待下一完整交易日守位"
+    },
+    {
+      "name": "澜起科技",
+      "code": "688008",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 126.4,
+      "review_price_date": "2026-11-26",
+      "review_close": 124.9,
+      "review_move_pct": -1.19,
+      "verification": "完全有效",
+      "trigger_check": "红色纪律与关键位约束有效",
+      "logic_adjustment": "维持防守或等待确认"
+    },
+    {
+      "name": "绿的谐波",
+      "code": "688017",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 241.4,
+      "review_price_date": "2026-11-26",
+      "review_close": 227.54,
+      "review_move_pct": -5.74,
+      "verification": "完全有效",
+      "trigger_check": "红色纪律与关键位约束有效",
+      "logic_adjustment": "维持防守或等待确认"
+    },
+    {
+      "name": "中微公司",
+      "code": "688012",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 239.9,
+      "review_price_date": "2026-11-26",
+      "review_close": 224.25,
+      "review_move_pct": -6.52,
+      "verification": "完全有效",
+      "trigger_check": "红色纪律与关键位约束有效",
+      "logic_adjustment": "维持防守或等待确认"
+    },
+    {
+      "name": "英维克",
+      "code": "002837",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 30.7,
+      "review_price_date": "2026-11-26",
+      "review_close": 30.58,
+      "review_move_pct": -0.39,
+      "verification": "完全有效",
+      "trigger_check": "红色纪律与关键位约束有效",
+      "logic_adjustment": "维持防守或等待确认"
+    },
+    {
+      "name": "宁德时代-H",
+      "code": "03750.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 295.6,
+      "review_price_date": "2026-11-26",
+      "review_close": 297.0,
+      "review_move_pct": 0.47,
+      "verification": "完全有效",
+      "trigger_check": "红色纪律与关键位约束有效",
+      "logic_adjustment": "维持防守或等待确认"
+    },
+    {
+      "name": "阿里巴巴-W",
+      "code": "09988.HK",
+      "morning_risk": "红色",
+      "morning_judgement": "中性偏利空",
+      "morning_close": 81.2,
+      "review_price_date": "2026-11-26",
+      "review_close": 82.5,
+      "review_move_pct": 1.6,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "首次收回82",
+      "logic_adjustment": "只上调修复观察，至少等待下一完整交易日守位"
+    },
+    {
+      "name": "雅克科技",
+      "code": "002409",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 71.68,
+      "review_price_date": "2026-11-26",
+      "review_close": 72.85,
+      "review_move_pct": 1.63,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "首次收回72",
+      "logic_adjustment": "只上调修复观察，至少等待下一完整交易日守位"
+    },
+    {
+      "name": "联瑞新材",
+      "code": "688300",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 69.23,
+      "review_price_date": "2026-11-26",
+      "review_close": 70.44,
+      "review_move_pct": 1.75,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "首次收回70",
+      "logic_adjustment": "只上调修复观察，至少等待下一完整交易日守位"
+    },
+    {
+      "name": "铖昌科技",
+      "code": "001270",
+      "morning_risk": "红色",
+      "morning_judgement": "利空",
+      "morning_close": 65.53,
+      "review_price_date": "2026-11-26",
+      "review_close": 67.35,
+      "review_move_pct": 2.78,
+      "verification": "修复有效需上调观察",
+      "trigger_check": "首次收回66",
+      "logic_adjustment": "只上调修复观察，至少等待下一完整交易日守位"
+    }
+  ],
+  "logic_corrections": [
+    "指数平盘但下跌家数仍3642，宏观仅从S7升至S1冰点观察。",
+    "五只收位个股需下一完整交易日守位，不直接降低组合总风险。",
+    "英维克需求旺盛与利润/现金流兑现分开，调研不作为财务评分上调依据。"
+  ]
+}
