@@ -1,5 +1,95 @@
 [
   {
+    "aweme_id": "7712338497168673634",
+    "display_title": "回应朋友亏损传闻：提到预期差与科创板",
+    "title": "笑死了，希望多几个女明星关注我，#金融#财经#股市#股票#娱乐圈",
+    "published_at": "2026-11-26 12:52",
+    "create_time": 1795668720,
+    "duration_seconds": 32.433333,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7712338497168673634",
+    "raw_transcript": "关于昨晚我发的那个视频 说我有个朋友超谷亏钱了\n不是全哥 你们别误会啊\n本人也批谣了\n因为我们超谷有个东西叫预计差\n你们所有人都认为是全哥的\n那就肯定不是全哥\n对吧\n全哥也批谣了\n他和我一样就喜欢倒谷一下科创25\n现在可能变成科创20了\n今天全哥也发视频了\n乌王祖训\n不",
+    "transcript": "关于昨晚我发的那个视频，说我有个朋友[待听辨：超谷亏钱]，不是全哥，你们别误会啊。[待听辨：本人也辟谣了]，因为我们[待听辨]有个东西叫预期差。你们所有人都认为是全哥的，那就肯定不是全哥，对吧？全哥也辟谣了。他和我一样，就喜欢[待听辨]一下科创[待听辨数字]，现在可能变成科创20了。今天全哥也发视频了。[待听辨：乌王祖训]。不……",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "作者回应前一条视频里的朋友亏损话题，表示不是某位被误认的人，并提到市场信息中的“预期差”。",
+      "口播提到科创板指数，但“全哥/超谷/科创25或科创20”等名词数字无法确认，不据此补充具体标的或行情结论。",
+      "末尾话语识别不清，保留待听辨；摘要只归纳作者回应传闻的内容。"
+    ],
+    "category": "市场",
+    "ai_related": false,
+    "html_file": "videos/new_7712338497168673634.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-27 11:03:55",
+    "sync_run_id": "daily_20261127"
+  },
+  {
+    "aweme_id": "7712322023671194594",
+    "display_title": "复盘连板低走行情：商业航天波段操作口吻",
+    "title": "11月26日中午 #金融#股市#股票#股民#A股",
+    "published_at": "2026-11-26 11:48",
+    "create_time": 1795664880,
+    "duration_seconds": 21.133333,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7712322023671194594",
+    "raw_transcript": "高开低走 低开低走 平开低走 就是一个字 低走\n那今天商业房间做波段的人啊 你赶紧指引立场吧\n你不能说别人问野哥 我怎么办 怎么办\n我不想管你们了\n那野哥现在靠的就是信仰了\n哎呀 走一步看一步吧 拜拜",
+    "transcript": "高开低走，低开低走，平开低走，就是一个字：低走。那今天商业航天做波段的人啊，你赶紧[待听辨：指引立场？]吧。你不能说别人问野哥“我怎么办、怎么办”，我不想管你们了。那野哥现在靠的就是信仰了。哎呀，走一步看一步吧，拜拜。",
+    "transcript_source": "audio_asr",
+    "asr_backend": "faster-whisper",
+    "asr_model": "small/int8",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": true
+    },
+    "points": [
+      "作者连续描述高开低走、低开低走、平开低走，强调当日市场走弱。",
+      "他提及做商业航天波段的参与者，催促对方明确应对态度；具体“指引立场”一词识别不清，不能当成明确卖出指令。",
+      "作者随后说自己不想再回答“怎么办”，以“靠信仰、走一步看一步”收尾。"
+    ],
+    "category": "市场",
+    "ai_related": false,
+    "html_file": "videos/new_7712322023671194594.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-27 11:03:55",
+    "sync_run_id": "daily_20261127"
+  },
+  {
+    "aweme_id": "7712320058002202979",
+    "display_title": "11月26日中午：原帖发布说明",
+    "title": "11月26日中午 #每个时代有每个时代的审美 #审美霸权 #颜值与知识碰撞 #股市",
+    "published_at": "2026-11-26 11:40",
+    "create_time": 1795664400,
+    "duration_seconds": 10.066667,
+    "author": "全能的野人",
+    "share_url": "https://www.douyin.com/video/7712320058002202979",
+    "raw_transcript": "11月26日中午 #每个时代有每个时代的审美 #审美霸权 #颜值与知识碰撞 #股市",
+    "transcript": "11月26日中午 #每个时代有每个时代的审美 #审美霸权 #颜值与知识碰撞 #股市",
+    "transcript_source": "published_caption",
+    "quality": {
+      "status": "通过（文案复核）",
+      "uncertain_terms_marked": false
+    },
+    "points": [
+      "作品页没有检测到可辨认口播；此条仅保存作者可见发布正文和标签。",
+      "发布文字只有“11月26日中午”及审美、股市相关标签，没有从标签推演画面含义。"
+    ],
+    "category": "published_caption",
+    "ai_related": false,
+    "html_file": "videos/new_7712320058002202979.html",
+    "manual_reviewed": false,
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-27 11:03:55",
+    "sync_run_id": "daily_20261127"
+  },
+  {
     "aweme_id": "7712153893417788072",
     "display_title": "坏事了，被套了：美股波动下的持仓玩笑",
     "title": "坏事了，被套了#金融#财经#股市#股票#美股大跌",
